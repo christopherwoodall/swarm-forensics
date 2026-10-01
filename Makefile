@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help setup data-info data-schema data-download data-sample data-validate replay-mock replay-export replay-serve test lint
+.PHONY: help setup data-info data-schema data-download data-sample data-validate replay-mock replay-export replay-serve pivot-check pivot-serve test lint
 
 # The repository can sit on a different filesystem than the uv cache.
 export UV_LINK_MODE := copy
@@ -16,6 +16,10 @@ LIMIT ?= 100
 # Replay viewer defaults. The case file stays under data/raw/.
 CASE ?= $(RAW_DIR)/replay/sample-case.json
 PORT ?= 8000
+
+# Pivot graph viewer (v3_transluce).
+PIVOT_FILE ?= data/viz_mock/v3_transluce/data/graph.json
+PIVOT_PORT ?= 8001
 
 DOWNLOAD_ARGS := --dest $(RAW_DIR) $(if $(TABLES),--tables $(TABLES)) $(if $(REVISION),--revision $(REVISION))
 
@@ -50,8 +54,14 @@ replay-export: setup ## Export one real session as a replay case (SESSION=<uuid>
 replay-serve: setup ## Serve the 3D viz on 127.0.0.1 (CASE=<json>, PORT=8000)
 	$(RUN) python data/viz_mock/v2/serve.py --case $(CASE) --port $(PORT)
 
+pivot-check: setup ## Check the pivot graph file shape (PIVOT_FILE=<json>)
+	$(RUN) python -m swarm_forensics.pivot --file $(PIVOT_FILE)
+
+pivot-serve: setup ## Serve the pivot graph viewer on 127.0.0.1 (PIVOT_PORT=8001)
+	$(RUN) python data/viz_mock/v3_transluce/serve.py --port $(PIVOT_PORT)
+
 test: setup ## Run the offline unit tests
 	$(RUN) python -m unittest discover -s src -t src -p "test_*.py"
 
 lint: setup ## Check code style with ruff
-	$(RUN) ruff check src data/viz_mock/v2/serve.py
+	$(RUN) ruff check src data/viz_mock/v2/serve.py data/viz_mock/v3_transluce/serve.py
