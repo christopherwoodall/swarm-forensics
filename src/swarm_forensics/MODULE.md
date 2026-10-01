@@ -27,5 +27,6 @@ Read [PROJECT_BRIEF.md](../../PROJECT_BRIEF.md) for the proposed direction and d
 
 ## 5. Pruned Decisions (Keep max 3)
 - [2026-10-01 Hermes]: Separate discussion proposals from verified acquisition tooling. Correct the documentation's unimplemented export claims.
+- [2026-10-01 FairyStack]: Record Jessald's authorization for merges without human review. Retain test, lint, and conflict gates.
+- [2026-10-01 FairyStack]: Use a documentation-only test branch to verify GitHub collaboration from the Multi app box.
 - [2026-10-01 Droid]: Put data acquisition in the `ingest/` subpackage. It has its own `MODULE.md`.
-- [Initial Setup]: Seeded initial blackboard structure.
