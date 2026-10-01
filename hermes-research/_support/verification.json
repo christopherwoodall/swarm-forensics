@@ -1,0 +1,152 @@
+{
+  "research_date": "2026-10-01",
+  "status": "completed",
+  "ok": true,
+  "structural_audit": {
+    "ok": true,
+    "document_count": 10,
+    "case_count": 11,
+    "cited_source_count": 38,
+    "matched_evidence_quotes": 65,
+    "checked_local_links": 39,
+    "files": [
+      {
+        "file": "01-definitions-and-characteristics.md",
+        "bytes": 11771,
+        "body_words": 1446,
+        "lines": 108,
+        "cited_sources": 6
+      },
+      {
+        "file": "02-online-cases-fox8-and-openai-may-2024.md",
+        "bytes": 11997,
+        "body_words": 1451,
+        "lines": 130,
+        "cited_sources": 6
+      },
+      {
+        "file": "03-online-cases-spamouflage-zero-zeno-storm2035.md",
+        "bytes": 12866,
+        "body_words": 1531,
+        "lines": 131,
+        "cited_sources": 7
+      },
+      {
+        "file": "04-physical-swarm-cases.md",
+        "bytes": 11528,
+        "body_words": 1377,
+        "lines": 127,
+        "cited_sources": 5
+      },
+      {
+        "file": "05-digital-agent-experiments.md",
+        "bytes": 9757,
+        "body_words": 1106,
+        "lines": 105,
+        "cited_sources": 5
+      },
+      {
+        "file": "06-detection-current-and-evaluated.md",
+        "bytes": 14748,
+        "body_words": 1659,
+        "lines": 150,
+        "cited_sources": 14
+      },
+      {
+        "file": "07-detection-proposals-and-frontiers.md",
+        "bytes": 14530,
+        "body_words": 1584,
+        "lines": 152,
+        "cited_sources": 15
+      },
+      {
+        "file": "08-implications-and-research-agenda.md",
+        "bytes": 11642,
+        "body_words": 1473,
+        "lines": 132,
+        "cited_sources": 5
+      },
+      {
+        "file": "09-source-guide.md",
+        "bytes": 25390,
+        "body_words": 2516,
+        "lines": 233,
+        "cited_sources": 38
+      },
+      {
+        "file": "README.md",
+        "bytes": 8194,
+        "body_words": 751,
+        "lines": 87,
+        "cited_sources": 13
+      }
+    ],
+    "errors": [],
+    "limits": "Structural and excerpt checks, not independent scientific replication or automated validation of every interpretation."
+  },
+  "citation_audits": [
+    {
+      "file": "01-definitions-and-characteristics.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/01-definitions-and-characteristics.md\ninfo: stats: 79 prose sentence(s), 20 with declared provenance (25%) — 20 cited, 0 marked [unverified] (a sentence may be both); 6 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [25], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59], [60], [61], [62], [63]\ncitations OK"
+    },
+    {
+      "file": "02-online-cases-fox8-and-openai-may-2024.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/02-online-cases-fox8-and-openai-may-2024.md\ninfo: stats: 81 prose sentence(s), 35 with declared provenance (43%) — 35 cited, 0 marked [unverified] (a sentence may be both); 6 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [24], [25], [26], [27], [31], [32], [33], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59], [60], [61], [62], [63]\ncitations OK"
+    },
+    {
+      "file": "03-online-cases-spamouflage-zero-zeno-storm2035.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/03-online-cases-spamouflage-zero-zeno-storm2035.md\ninfo: stats: 97 prose sentence(s), 38 with declared provenance (39%) — 38 cited, 0 marked [unverified] (a sentence may be both); 7 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [24], [25], [26], [27], [28], [29], [30], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59], [60], [61], [62], [63]\ncitations OK"
+    },
+    {
+      "file": "04-physical-swarm-cases.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/04-physical-swarm-cases.md\ninfo: stats: 76 prose sentence(s), 31 with declared provenance (41%) — 31 cited, 0 marked [unverified] (a sentence may be both); 5 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [53], [54], [55], [57], [60], [61], [62], [63]\ncitations OK"
+    },
+    {
+      "file": "05-digital-agent-experiments.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/05-digital-agent-experiments.md\ninfo: stats: 67 prose sentence(s), 28 with declared provenance (42%) — 28 cited, 0 marked [unverified] (a sentence may be both); 5 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [25], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [55], [56], [57], [58], [59], [60], [61], [62], [63]\ncitations OK"
+    },
+    {
+      "file": "06-detection-current-and-evaluated.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/06-detection-current-and-evaluated.md\ninfo: stats: 93 prose sentence(s), 39 with declared provenance (42%) — 39 cited, 0 marked [unverified] (a sentence may be both); 14 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [24], [25], [26], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [43], [46], [51], [52], [53], [54], [55], [56], [57], [58], [59], [61], [62], [63]\ncitations OK"
+    },
+    {
+      "file": "07-detection-proposals-and-frontiers.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/07-detection-proposals-and-frontiers.md\ninfo: stats: 97 prose sentence(s), 24 with declared provenance (25%) — 24 cited, 0 marked [unverified] (a sentence may be both); 15 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [25], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [39], [41], [42], [47], [49], [51], [52], [55], [56], [57], [58], [59], [61], [62], [63]\ncitations OK"
+    },
+    {
+      "file": "08-implications-and-research-agenda.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/08-implications-and-research-agenda.md\ninfo: stats: 83 prose sentence(s), 11 with declared provenance (13%) — 11 cited, 0 marked [unverified] (a sentence may be both); 5 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [25], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59], [60], [61], [62], [63]\ncitations OK"
+    },
+    {
+      "file": "09-source-guide.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/09-source-guide.md\ninfo: stats: 164 prose sentence(s), 45 with declared provenance (27%) — 45 cited, 0 marked [unverified] (a sentence may be both); 38 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [25], [57], [61], [62], [63]\ncitations OK"
+    },
+    {
+      "file": "README.md",
+      "exit_code": 0,
+      "output": "Sources block rewritten in /home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/README.md\ninfo: stats: 46 prose sentence(s), 8 with declared provenance (17%) — 8 cited, 0 marked [unverified] (a sentence may be both); 13 distinct source(s) cited, 63 in ledger (39 with evidence quotes)\nwarn: registered in the ledger but not cited in this draft: [1], [2], [3], [4], [5], [6], [7], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [24], [25], [26], [27], [29], [30], [31], [32], [33], [34], [35], [36], [39], [40], [41], [42], [43], [45], [46], [47], [49], [52], [55], [56], [57], [58], [59], [61], [62], [63]\ncitations OK"
+    }
+  ],
+  "negative_tests": [
+    {
+      "test": "Saved evidence missing its supporting excerpt is rejected",
+      "passed": true,
+      "observed_error": "[8]: excerpt not found in saved body"
+    },
+    {
+      "test": "Missing case manifest cannot pass",
+      "passed": true
+    }
+  ],
+  "warning_interpretation": "Per-document warnings about other registered but uncited sources are expected in a shared collection ledger. The cited-source union matches the guide and preserved metadata. Prose coverage statistics are heuristic, especially for paragraphs containing multiple sentences and explicitly marked synthesis; no blanket sentence-coverage claim is made.",
+  "verification_limits": "IDs, URLs, excerpt matches, links, inventory and case coverage checked. This is not independent replication, access to private provider logs, or automated proof of every interpretation."
+}

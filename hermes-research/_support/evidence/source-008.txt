@@ -1,0 +1,155 @@
+# Swarm Intelligence
+
+**From Scholarpedia**
+
+From Scholarpedia, the free peer-reviewed encyclopedia p.22437
+
+Curator: Marco Dorigo, IRIDIA, Université Libre de Bruxelles, Brussels, Belgium Curator: Mauro Birattari, IRIDIA, Université Libre de Bruxelles, Brussels, Belgium
+
+**Swarm intelligence is the discipline that deals with natural and artificial systems composed of many individuals that coordinate using** decentralized control and self-organization. In particular, the discipline focuses on the collective behaviors that result from the local interactions of the individuals with each other and with their environment. Examples of systems studied by swarm intelligence are colonies of ants and termites, schools of fish, flocks of birds, herds of land animals. Some human artifacts also fall into the domain of swarm intelligence, notably some multi-robot systems, and also certain computer programs that are written to tackle optimization and data analysis problems.
+
+**Contents**
+
+1 Taxonomy of Swarm Intelligence
+
+1.1 Natural/Scientific: Foraging Behavior of Ants
+1.2 Artificial/Scientific: Clustering by a Swarm of Robots
+1.3 Natural/Engineering: Exploitation of collective behaviors of animal societies
+1.4 Artificial/Engineering: Swarm-based Data Analysis
+2 Properties of a Swarm Intelligence System 3 Studies and Applications of Swarm Intelligence
+
+3.1 Clustering Behavior of Ants
+3.2 Nest Building Behavior of Wasps and Termites
+3.3 Flocking and Schooling in Birds and Fish
+3.4 Ant Colony Optimization
+3.5 Particle Swarm Optimization
+3.6 Swarm-based Network Management
+3.7 Cooperative Behavior in Swarms of Robots
+4 References 5 External Links 6 See Also
+
+## Taxonomy of Swarm Intelligence
+
+Swarm intelligence has a marked multidisciplinary character since systems with the above mentioned characteristics can be observed in a variety of domains. Research in swarm intelligence can be classified according to different criteria. **Natural vs. Artificial: It is customary to divide swarm intelligence research into two areas according to the nature of the systems** under analysis. We speak therefore of natural swarm intelligence research, where biological systems are studied; and of artificial swarm intelligence, where human artifacts are studied. **Scientific vs. Engineering: An alternative and somehow more informative classification of swarm intelligence research can be** given based on the goals that are pursued: we can identify a scientific and an engineering stream. The goal of the scientific stream is to model swarm intelligence systems and to single out and understand the mechanisms that allow a system as a whole to behave in a coordinated way as a result of local individual-individual and individual-environment interactions. On the other hand, the goal of the engineering stream is to exploit the understanding developed by the scientific stream in order to design systems that are able to solve problems of practical relevance. The two dichotomies natural/artificial and scientific/engineering are orthogonal: although the typical scientific investigation concerns natural systems and the typical engineering application concerns the development of an artificial system, a number of swarm intelligence studies have been performed with swarms of robots for validating mathematical models of biological systems. These studies are of a merely speculative nature and definitely belong in the scientific stream of swarm intelligence. On the other hand, one could influence or modify the behavior of the individuals in a biological swarm so that a new swarm-level behavior emerges that is somehow functional to the solution of some task of practical interest. In this case, although the system at hand is a natural one, the goals pursued are definitely those of an engineering application. In the following, an example is given for each of the four possible cases.
+
+**Natural/Scientific: Foraging Behavior of Ants**
+
+In a now classic experiment done in 1990, Deneubourg and his group showed that, when given the choice between two paths of different length joining the nest to a food source, a colony of ants has a high probability to collectively choose the shorter one. Deneubourg has shown that this behavior can be explained via a simple probabilistic model in which each ant decides where to go by taking random decisions based on the intensity of pheromone perceived on the ground, the pheromone being deposited by the ants while moving from the nest to the food source and back.
+
+**Artificial/Scientific: Clustering by a Swarm of Robots**
+
+Several ant species cluster corpses to form cemeteries. Deneubourg et al. (1991) were among the first to propose a distributed probabilistic model to explain this clustering behavior. In their model, ants pick up and drop items with probabilities that depend on information on corpse density which is locally available to the ants. Beckers et al. (1994) have programmed a group of robots to implement a similar clustering behavior demonstrating in this way one of the first swarm intelligence scientific oriented studies in which artificial agents were used.
+
+**Natural/Engineering: Exploitation of collective behaviors of animal societies**
+
+A possible development of swarm intelligence is the controlled exploitation of the collective behavior of animal societies. No example is available in this area of swarm intelligence although some promising research is currently in progress: For example, in the Leurre ([http://leurre.ulb.ac.be/index2.html](http://leurre.ulb.ac.be/index2.html)) project, small insect-like robots are used as lures to influence the behavior of a group of cockroaches. The technology developed within this project could be applied to various domains including agriculture and cattle breeding.
+
+**Artificial/Engineering: Swarm-based Data Analysis**
+
+Engineers have used the models of the clustering behavior of ants as an inspiration for designing data mining algorithms. A seminal work in this direction was undertaken by Lumer and Faieta in 1994. They defined an artificial environment in which artificial ants pick up and drop data items with probabilities that are governed by the similarities of other data items already present in their neighborhood. The same algorithm has also been used for solving combinatorial optimization problems reformulated as clustering problems (Bonabeau et al. 1999).
+
+## Properties of a Swarm Intelligence System
+
+The typical swarm intelligence system has the following properties: it is composed of many individuals; the individuals are relatively homogeneous (i.e., they are either all identical or they belong to a few typologies); the interactions among the individuals are based on simple behavioral rules that exploit only local information that the individuals exchange directly or via the environment (stigmergy); the overall behaviour of the system results from the interactions of individuals with each other and with their environment, that is, the group behavior self-organizes. The characterizing property of a swarm intelligence system is its ability to act in a coordinated way without the presence of a coordinator or of an external controller. Many examples can be observed in nature of swarms that perform some collective behavior without any individual controlling the group, or being aware of the overall group behavior. Notwithstanding the lack of individuals in charge of the group, the swarm as a whole can show an intelligent behavior. This is the result of the interaction of spatially neighboring individuals that act on the basis of simple rules.
+
+Most often, the behavior of each individual of the swarm is described in probabilistic terms: Each individual has a stochastic behavior that depends on his local perception of the neighborhood.
+
+## Studies and Applications of Swarm Intelligence
+
+This section briefly presents a few examples of scientific and engineering swarm intelligence studies.
+
+**Clustering Behavior of Ants**
+
+Ants build cemeteries by collecting dead bodies into a single place in the nest. They also organize the spatial disposition of larvae into clusters with the younger, smaller larvae in the cluster center and the older ones at its periphery. This clustering behavior has motivated a number of scientific studies. Scientists have built simple probabilistic models of these behaviors and have tested them in simulation (Bonabeau et al. 1999). The basic models state that an unloaded ant has a probability to pick up a corpse or a larva that is inversely proportional to their locally perceived density, while the probability that a loaded ant has to drop the carried item is proportional to the local density of similar items. This model has been validated against experimental data obtained with real ants. In the taxonomy this is an example of natural/scientific swarm intelligence system.
+
+---
+
+**Nest Building Behavior of Wasps and Termites**
+
+Wasps build nests with a highly complex internal structure that is well beyond the cognitive capabilities of a single wasp. Termites build nests whose dimensions (they can reach many meters of diameter and height) are enormous when compared to a single individual, which can measure as little as a few millimeters. Scientists have been studying the coordination mechanisms that allow the construction of these structures and have proposed probabilistic models exploiting stigmergic communication to explain the insects' behavior. Some of these models have been implemented in computer programs and used to produce simulated structures that recall the morphology of the real nests (Bonabeau et al. 1999). In the taxonomy this is an example of natural/scientific swarm intelligence system.
+
+**Flocking and Schooling in Birds and Fish**
+
+Flocking and schooling are examples of highly coordinated group behaviors exhibited by large groups of birds and fish. Scientists have shown that these elegant swarm-level behaviors can be
+
+Figure 1: A termite mound.
+
+understood as the result of a self-organized process where no leader is in charge and each individual bases its movement decisions solely on locally available information: the distance, perceived speed, and direction of movement of neighbours. These studies have inspired a number of computer simulations (of which Reynolds' Boids simulation program ([http://www.red3d.com/cwr/boids/](http://www.red3d.com/cwr/boids/)) was the first one) that are now used in the computer graphics industry for the realistic reproduction of flocking in movies and computer games. In the taxonomy these are examples respectively of natural/scientific and artificial/engineering swarm intelligence systems.
+
+**Ant Colony Optimization**
+
+Ant colony optimization (Dorigo, Maniezzo and Colorni 1991; Dorigo and Stützle 2004) is a population-based metaheuristic that can be used to find approximate solutions to difficult optimization problems. It is inspired by the above-described foraging behavior of ant colonies. In ant colony optimization (ACO), a set of software agents called "artificial ants" search for good solutions to a given optimization problem transformed into the problem of finding the minimum cost path on a weighted graph. The artificial ants incrementally build solutions by moving on the graph. The solution construction process is stochastic and is biased by a pheromone model, that is, a set of parameters associated with graph components (either nodes or edges) the values of which are modified at runtime by the ants. ACO has been applied successfully to many classical combinatorial optimization problems, as well as to discrete optimization problems that have stochastic and/or dynamic components. Examples are the application to routing in communication networks (see also the Swarm-based Network Management section below) and to stochastic version of well-known combinatorial optimization problem, such as the probabilistic traveling salesman problem. Moreover, ACO has been extended so that it can be used to solve continuous and mixed-variable optimization problems (Socha and Dorigo in press). Ant colony optimization is probably the most successful example of artificial/engineering swarm intelligence system with numerous applications to real-world problems.
+
+**Particle Swarm Optimization**
+
+Particle swarm optimization (Kennedy and Eberhart 1995; Kennedy, Eberhart and Shi, 2001) is a population based stochastic optimization technique for the solution of continuous optimization problems. It is inspired by social behaviors in flocks of birds and schools of fish. In particle swarm optimization (PSO), a set of software agents called particles search for good solutions to a given continuous optimization problem. Each particle is a solution of the considered problem and uses its own experience and the experience of neighbor particles to choose how to move in the search space. In practice, in the initialization phase each particle is given a random initial position and an initial velocity. The position of the particle represents a solution of the problem and has therefore a value, given by the objective function. While moving in the search space, particles memorize the position of the best solution they found. At each iteration of the algorithm, each particle moves with a velocity that is a weighted sum of three components: the old velocity, a velocity component that drives the particle towards the location in the search space where it previously found the best solution so far, and a velocity component that drives the particle towards the location in the search space where the neighbor particles found the best solution so far. PSO has been applied to many different problems and is another example of successful artificial/engineering swarm intelligence system.
+
+**Swarm-based Network Management**
+
+The first swarm-based approaches to network management were proposed in 1996 by Schoonderwoerd et al., and in 1998 by Di Caro and Dorigo. Schoonderwoerd et al. proposed Ant-based Control (ABC), an algorithm for routing and load balancing in circuit-switched networks; Di Caro and Dorigo proposed AntNet, an algorithm for routing in packet-switched networks. While ABC was a proof-of-concept, AntNet, which is an ACO algorithm, was compared to many state-of-the-art algorithms and its performance was found to be competitive especially in situation of highly dynamic and stochastic data traffic as can be observed in Internet-like networks. An extension of AntNet has been successfully applied to ad-hoc networks (Di Caro, Ducatelle and Gambardella 2005). These algorithms are another example of successful artificial/engineering swarm intelligence system.
+
+---
+
+Cooperative Behavior in Swarms of Robots
+
+There are a number of swarm behaviors observed in natural systems that have inspired innovative 
+ways of solving problems by using swarms of robots. This is what is called swarm robotics. In other 
+words, swarm robotics is the application of swarm intelligence principles to the control of swarms of 
+robots. As with swarm intelligence systems in general, swarm robotics systems can have either a 
+scientific or an engineering flavour. Clustering in a swarm of robots was mentioned above as an 
+example of artificial/scientific system. An example of artificial/engineering swarm intelligence system 
+is the collective transport of an item too heavy for a single robot, a behavior also often observed in 
+ant colonies.
+
+Figure 2: A of obstacle. robots 
+collaborate to swarm pass an
+
+References 
+E. Bonabeau, M. Dorigo, and G. Theraulaz. Swarm Intelligence: From Natural to Artificial System. Oxford University Press, New 
+York,  1999.
+J.-L.  Deneubourg,  S.  Aron,  S.  Goss,  and  J.-M.  Pasteels.  The self-organizing exploratory pattern of the  Argentine ant.  Journal of Insect 
+Behavior,  3:159-168,  1990.
+G. Di Caro and M. Dorigo. AntNet: Distributed stigmergetic control for communications networks. Journal of Artificial Intelligence 
+Research,  9:317-365,  1998.
+G. Di Caro, F. Ducatelle, L. M. Gambardella. AntHocNet: An adaptive nature-inspired algorithm for routing in mobile ad hoc 
+networks.  European  Transactions  on  Telecommunications,  16(5):443-455,  2005.
+M. Dorigo, V. Maniezzo, and A. Colorni. Positive feedback as a search strategy.  Technical  Report  91-016,  Dipartimento di  Elettronica, 
+Politecnico di Milano, Milan, Italy, 1991. Revised version published as: M. Dorigo, V. Maniezzo, and A. Colorni. Ant System:
+Optimization by a colony of cooperating agents.  IEEE  Transactions on  Systems,  Man,  and  Cybernetics  -  Part  B,  26(1):29-41,  1996.
+M. Dorigo and T. Stützle. Ant  Colony  Optimization. MIT Press,  Cambridge, MA,  2004.
+J. Kennedy and R. C. Eberhart. Particle swarm optimization. Proceedings of  IEEE  International  Conference on  Neural  Networks, IEEE 
+Press,  Piscataway,  NJ,  pp.  1942-1948,  1995.
+J. Kennedy, R. C. Eberhart, and Y. Shi. Swarm  Intelligence.  Morgan  Kaufmann,  San  Francisco,  CA,  2001.
+E. Lumer and B. Faieta. Diversity and adaptation in populations of clustering ants. Proceedings of the  Third  International  Conference 
+on  Simulation of  Adaptive  Behavior:  From  Animals to  Animats  3,  MIT  Press,  Cambridge,  CA,  pp.  501-508,  1994.
+R.  Schoonderwoerd,  O.  Holland,  J.  Bruten and  L.  Rothkrantz.  Ant-based  Load  Balancing in  Telecommunications  Networks.  Adaptive 
+Behavior,  5(2):169-207,  1996.
+K.  Socha and  M.  Dorigo.  Ant colony optimization for continuous domains.  European  Journal of  Operational  Research, in press.
+External Links 
+www.aco-metaheuristic.org  (http://www.aco-metaheuristic.org/)  :  These are the official web pages dedicated to collect 
+information about  ACO.
+www.swarmintelligence.org (http://www.swarmintelligence.org/) : These are the official web pages dedicated to collect 
+information about  PSO.
+Swarm  Intelligence  (http://www.springer.com/11721)  :  The main journal in the field.
+ANTS - From Ant Colonies to Artificial Ants: A Series of International Workshops on Ant Algorithms (http://iridia.ulb.ac.be/~ants)
+
+www.aco-metaheuristic.org  (http://www.aco-metaheuristic.org/)  :  These are the official web pages dedicated to collect 
+information about  ACO.
+www.swarmintelligence.org (http://www.swarmintelligence.org/) : These are the official web pages dedicated to collect 
+information about  PSO.
+Swarm  Intelligence  (http://www.springer.com/11721)  :  The main journal in the field.
+ANTS - From Ant Colonies to Artificial Ants: A Series of International Workshops on Ant Algorithms (http://iridia.ulb.ac.be/~ants) 
+: This series of conferences, held for the first time in 1998, is the oldest in the swarm intelligence field.
+IEEE  Swarm  Intelligence  Symposia (http://www.computelligence.org/sis/2006/past.php)  :  Another more recent,  started in  2003, 
+series of conferences dedicated to swarm intelligence.
+www.swarm-robotics.org  (http://www.swarm-robotics.org)  :  This are web pages dedicated to swarm robotics.
+See Also
+
+Reviewer A: Alan Winfield, University of the West of England, Bristol, UK
+Reviewer B: Vito Trianni, Institute of Cognitive Sciences and Technologies, CNR, Italy
+Retrieved from  "http://www.scholarpedia.org/article/Swarm_Intelligence"
+
+This page was last modified 09:32, 1 October 2007.
+
+---
+
+[4 watching user/s] Patent pending. Served in 0.435 sec.

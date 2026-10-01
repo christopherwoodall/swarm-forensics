@@ -8,6 +8,14 @@ No chat messages have been read or captured.
 These empty sections MUST NOT imply that discussion occurred without decisions.
 Watcher rules are recorded in `WATCHER.md`.
 
+## Local Setup Amendments
+
+Maria may request one confirmation message to test the app.
+This is a possible future request, not current authorization to post.
+Read-only observation MUST resume after an authorized test.
+Source: Maria's follow-up in the local Hermes conversation.
+No FairyStack test message has been sent.
+
 ## Current Decisions
 
 No chat evidence recorded.

@@ -121,6 +121,16 @@ A configured summary action or authorized ledger query MAY surface information.
 Suggestions MUST require an explicit request.
 Observation MUST NOT authorize task execution.
 
+### Optional Connection Test
+
+Maria MAY explicitly request one confirmation message to test the app's posting function.
+This possible future request does not authorize posting now.
+The requested confirmation is an exception to the acknowledgment restriction.
+Hermes MUST verify the posted message by reading the exact conversation.
+Hermes MUST NOT send another message merely because confirmation is uncertain.
+Hermes MUST return to read-only observation after the test.
+The test MUST NOT authorize ongoing participation.
+
 ## Verified Connection Reference
 
 Source: https://multi.fairystack.com/agent-guide.md
