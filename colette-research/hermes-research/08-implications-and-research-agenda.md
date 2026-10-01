@@ -1,0 +1,132 @@
+# Implications, failure modes, and a bounded research agenda
+
+Research date: 2026-10-01. Status: advisory synthesis. This document is not an investigation of any live network and does not authorize collection or intervention.
+
+## 1. The important unit is a dependency structure
+
+Classical swarm intelligence concerns collective behavior arising through interaction; the recent malicious-swarm threat model concerns synthetic actors coordinating while adapting to people and platforms.[8][23]
+
+**Research implication:** the central forensic object should be a dependency structure—who responds to which event, who uses which shared artifact, and what decisions become linked—not merely a pile of suspicious sentences. An account-level score and a campaign-level finding answer different questions.
+
+An analyst can use this conceptual schema:
+
+```text
+actor -> action -> artifact / target -> observable response
+                           ^                   |
+                           |_____ next action _|
+```
+
+The arrows are hypotheses until supported by timestamps, execution logs, repeated observations, or a lawful experiment. A graph visualizer that draws every topical similarity as a causal edge would manufacture the phenomenon it claims to observe.
+
+## 2. Stigmergy changes what a trace means
+
+An environmental trace can both record past activity and stimulate future action. Heylighen's account therefore provides a way to think about asynchronous coordination that does not depend on direct agent conversations.[24]
+
+**Synthesis:** a swarm trace may need to include reads as well as writes. If agents react to a shared document, knowing that the document changed is not enough; knowing which version each agent observed helps reconstruct the coordination. For an owned runtime, this is feasible instrumentation. For an external online campaign, those internal reads may be unavailable, so the inference must remain weaker.
+
+A useful distinction is:
+
+- **Trace as evidence:** an artifact helps a researcher reconstruct behavior.
+- **Trace as mechanism:** the artifact actually influenced an agent's later behavior.
+
+The former does not automatically establish the latter. This distinction follows from defining stigmergy through stimulation of subsequent action, rather than mere coexistence of artifacts.[24]
+
+## 3. Synthetic consensus is a dependence problem, not just a truth problem
+
+Schroeder and colleagues warn that apparently independent synthetic voices can fabricate agreement and distort the independence on which collective judgment relies. They describe this as a conditional harm pathway, not a universal measurement of existing campaigns' effects.[23]
+
+**Synthesis:** a set of statements can be factually correct yet deceptive about how many independent people support them. Conversely, humans can sincerely converge on a false belief without being an artificial swarm. A detector focused only on truth or only on AI-authorship misses this distinction.
+
+The relevant questions become: how many independent decision processes are represented, which relationships are disclosed, and does the apparent crowd conceal a common operator or dependency? Those are harder questions than counting profiles.
+
+## 4. A collective can amplify error as well as competence
+
+The MAST taxonomy identifies inter-agent misalignment and verification failures alongside specification problems. Its concrete examples show that repetition, lost context, ignored input, and incorrect stopping decisions are system-level issues rather than proof of collective reasoning gains.[27]
+
+**Engineering implication:** if one agent's unsupported assertion becomes several agents' premise, the resulting agreement is not independent corroboration. A research tool should record the origin of a claim and its propagation, distinguishing a fresh observation from a copied conclusion.
+
+For owned systems, useful inspection questions include:
+
+- Did a purported second check read the original evidence or only the first agent's summary?
+- Did a reviewer inspect the actual artifact or a description of it?
+- Did the process stop because acceptance criteria were verified, or because agents agreed it was finished?
+- Which decisions were structural guards, and which were unenforced instructions?
+
+These are proposed inspection questions, not findings about this repository.
+
+## 5. Simulations can be useful and misleading
+
+Controlled simulation is proposed as a means to stress-test swarm defenses. The Science Policy Forum suggests artificial networks with modeled graph structure, posting cadence, and recommender logic.[23]
+
+However, Zhou and colleagues show why an omniscient script generator can make social interaction look more successful than separately informed agents actually are. Their work argues for examining information asymmetry and reporting the simulation setting clearly.[26]
+
+**Research implication:** a detector benchmark should not consist only of synthetic accounts generated by one prompt under a single scheduler. Otherwise it may learn the generator's fingerprints instead of coordination. Include several control architectures, separate memories, partial observations, legitimate human coordination, and platform noise. A simulation result is evidence about that simulation, not proof of field accuracy.
+
+## 6. Deception, autonomy, and impact need separate axes
+
+The malicious-swarm policy definition combines persistent identity, shared goals, adaptation, low human oversight, and cross-platform capability. Each is a distinct empirical claim.[23]
+
+**Synthesis:** report at least four independent dimensions:
+
+| Dimension | Example of the question being asked |
+|---|---|
+| AI involvement | Was content generated, imagery synthesized, or action selection model-controlled? |
+| Coordination | Which behavioral or infrastructure links join participants? |
+| Deception / intent | Were identities or sponsorship concealed, and what evidence supports the goal? |
+| Impact | Did real people encounter it, engage, change beliefs, or alter behavior? |
+
+A positive result on one dimension does not fill the others. In particular, an operation can be deceptive without being autonomous, and autonomous behavior can be benign and disclosed.
+
+## 7. The epistemic risk runs in both directions
+
+The Policy Forum explicitly warns that wrongly accusing people of being bots can discredit legitimate speech. It also notes that verification requirements can endanger dissidents and that defensive AI can itself flood or politically distort the public sphere.[23]
+
+**Research implication:** maintain two error budgets: missed coordinated synthetic activity and false allegations against people. “More detector alerts” is not an adequate success measure. Prefer qualified case records, reproducible evidence, independent review, corrections, and proportionate interventions.
+
+A lawful research tool should avoid turning uncertainty into public accusations, especially when evidence consists of language style, shared political views, coordinated activism, or unusual posting times. None of those alone establishes artificial control.
+
+## 8. Provenance is not the same as truth
+
+The policy proposals include cryptographic attestations, passkeys, federated reputation, and verified-but-anonymous approaches, while explicitly recognizing hijacked accounts and privacy risks.[23]
+
+**Synthesis:** a signed statement can establish who signed it or which tool produced it; it cannot by itself establish factual accuracy, authentic belief, independent authorship, or absence of a common operator. Provenance should supply evidence to analysis rather than function as a universal trust badge.
+
+The same applies to model traces. A model version and prompt hash help identify a reproducible run, but do not prove the model did what the operator claims without observable results.
+
+## 9. A future research sequence that stays within this request
+
+The following is a proposed sequence, not executed work or an accepted implementation plan:
+
+1. **Ontology first.** Define actors, processes, accounts, artifacts, actions, channels, goals, observations, and claims. Preserve “unknown” explicitly.
+2. **Published-case replay.** Reconstruct relationships from authorized public research datasets or documented case extracts. Do not silently expand into live-account collection.
+3. **Benign controls.** Include disclosed automation, breaking-news bursts, fandoms, civic organizing, and ordinary syndication. Coordination without deception must be representable.
+4. **Owned-runtime instrumentation.** In a sandboxed system, capture action/state transitions and evidence lineage. Keep credentials and private prompt contents outside the research trace by default.
+5. **Detector comparison.** Evaluate timing, shared-artifact, network, semantic, and provenance approaches independently before combining them.
+6. **Claim ladder.** Separate “unusual similarity,” “likely coordination,” “confirmed common operation,” “AI-assisted,” and “adaptive autonomous swarm.” Require distinct evidence for each transition.
+7. **Error analysis and review.** Report misses, false positives, language bias, platform blind spots, and analyst disagreement—not just aggregate scores.
+8. **External investigation only after a new authorization.** Sampling live communities, probing suspected agents, or publishing accusations would be a separate task with a defined legal/privacy boundary.
+
+## 10. Open questions worth keeping open
+
+These are synthesis questions motivated by the literature, not claims that the answers are already known.[23][24][27]
+
+- Can coordination be inferred reliably when agents deliberately vary wording and timing but share artifacts or goals?
+- Which observed properties discriminate central orchestration from local adaptation without privileged logs?
+- How can detection preserve pseudonymity while measuring operator independence?
+- Which patterns are genuine emergence versus artifacts of prompts, synchronized environments, or common training data?
+- Can a shared medium provide coordination while also supporting trustworthy evidence of who observed what?
+- When does a large agent population improve a task rather than simply multiply cost, failure opportunities, and correlated judgment?
+- What measurements establish persuasive impact instead of output volume or apparent popularity?
+- How can a detector remain useful across languages, platforms, and model generations without treating entire communities as suspect?
+
+The useful ambition is not “recognize an AI hive mind from its vibe.” It is **make specific claims about collective behavior inspectable, falsifiable, and bounded by the available evidence**.
+
+Continue with [operational detection](06-detection-current-and-evaluated.md), [proposed methods](07-detection-proposals-and-frontiers.md), and the [source guide](09-source-guide.md).
+
+## Sources
+
+[8] https://iridia.ulb.ac.be/~mdorigo/Published_papers/All_Dorigo_papers/DorBir2007sch-si.pdf — [PDF] Swarm Intelligence - Scholarpedia - IRIDIA
+[23] https://arxiv.org/html/2506.06299v4 — How malicious AI swarms can threaten democracy — Schroeder et al.
+[24] https://pespmc1.vub.ac.be/Papers/StigmergyICognSystems.pdf — Stigmergy as a universal coordination mechanism I: Definition and components — Heylighen
+[26] https://aclanthology.org/2024.emnlp-main.1208.pdf — Is this the real life? Is this just fantasy? The Misleading Success of Simulating Social Interactions With LLMs — Zhou et al.
+[27] https://arxiv.org/html/2503.13657v3 — Why Do Multi-Agent LLM Systems Fail? — Cemri et al.

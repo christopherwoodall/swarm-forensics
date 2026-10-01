@@ -1,0 +1,356 @@
+ATLAS
+
+GRAPHIKA REPORT
+
+The #Americans
+
+Chinese State-Linked Influence Operation Spamouflage Masquerades as U.S. Voters to Push Divisive Online Narratives Ahead of 2024 Election
+
+The Graphika Team
+
+---
+
+[Image: Im0]
+
+The #Americans
+
+Chinese State-Linked Infl uence Operation Spamoufl age Masquerades as
+U.S. Voters to Push Divisive Online Narratives Ahead of 2024 Election
+
+Key Findings
+
+● Chinese state-linked infl uence operation (IO) Spamoufl age has become more aggressive in its
+efforts to infl uence U.S. political conversations ahead of the 2024 presidential election. This
+includes expanding its use of personas that impersonate U.S. voters on social media
+platforms and spreading divisive narratives about sensitive social issues in the U.S.
+
+● Through Graphika’s ATLAS intelligence reporting, we identifi ed 15 Spamoufl age accounts on X
+and one account on TikTok claiming to be U.S. citizens and/or U.S.-focused peace, human
+rights, and information integrity advocates frustrated by American politics and the West. We
+also identifi ed a cross-platform Spamoufl age persona operating as an inauthentic
+U.S.-focused media outlet.
+
+● In the run-up to the 2024 election, these accounts have seeded and amplifi ed content
+denigrating Democratic and Republican candidates, sowing doubt in the legitimacy of the U.S.
+electoral process, and spreading divisive narratives about sensitive social issues including gun
+control, homelessness, drug abuse, racial inequality, and the Israel-Hamas confl ict. This
+content, some of which was almost certainly AI-generated, has targeted President Joe Biden,
+former President Donald Trump, and, more recently, Vice President Kamala Harris.
+
+● Despite attempts to masquerade as U.S. users and engage with hot-button issues, the
+accounts failed to garner signifi cant traction in authentic online communities discussing the
+election. The rare exception was an inauthentic media outlet operating on TikTok which
+posted a video in July that has received 1.5 million views to date.
+
+● We assess that Spamoufl age and other Chinese IO actors will almost certainly continue their
+efforts to infl uence U.S. political conversations throughout the 2024 presidential election
+cycle, leveraging social divisions in a polarized information environment to portray the U.S. as
+a declining global power with weak leaders and a failing system of governance.
+
+---
+
+[Image: Im0]
+
+● We assess that Spamoufl age and other Chinese IO actors will very likely continue to
+experiment with and expand on new tactics, techniques, and procedures, including using
+generative AI tools to create deceptive content and scale their activities, developing
+higher-quality inauthentic personas, and co-opting authentic online voices, such as social
+media infl uencers.
+
+Overview
+
+Spamoufl age (also tracked as Dragonbridge, Taizi Flood, and Empire Dragon) is an infl uence
+operation that Graphika has monitored since 2019. It is active across more than 40 online
+platforms where it employs inauthentic accounts to seed and amplify videos and cartoons that
+promote pro-China and anti-Western narratives. Based on open-source indicators and
+assessments shared by industry partners, Graphika attributes this activity with high confi dence to
+Chinese state-linked actors.
+
+Spamoufl age’s tactics have evolved over the last fi ve years, including engaging with broader
+geopolitical topics, producing content in multiple languages across mainstream and alternative
+social media platforms, experimenting with persona building, and leveraging AI tools to create
+content. In that time, our monitoring shows the operation has become markedly more aggressive
+in its attempts to infl uence online discourse about U.S. politics.
+
+● In 2020, the operation frequently criticized the U.S. political system and policies but rarely
+directly referenced U.S. elections.
+
+● In the months before the 2022 U.S. midterm elections, the operation began to engage
+explicitly with election-related topics. It spread content that directly criticized the Republican
+and Democratic parties and their leaders, and cast U.S. domestic and foreign policy “failures”
+as a product of the country’s political system.
+
+● In addition to this shift in content, since mid-2023, Spamoufl age has expanded its use of
+inauthentic online personas that impersonate U.S. voters or U.S.-based social media users.
+This activity is just a fraction of the larger Spamoufl age network but is distinct from the
+operation’s typical use of low-quality inauthentic accounts with generic and thinly developed
+personas.
+
+---
+
+Our fi ndings corroborate and build on research ISD published in April 2024, which documented a
+set of four Spamoufl age accounts on X posing as supporters of Trump and the MAGA movement.
+While we note similarities between these “MAGAfl age” accounts and the activity discussed in this
+report, we currently view them as adjacent but separate clusters based on the following
+observations:
+
+● The “MAGAfl age” accounts ISD identifi ed target audiences supporting Trump, while the larger
+set of accounts we observed target a broader range of U.S. audiences with content
+emphasizing patriotism and national pride over political personalities.
+
+● The accounts described in this report sometimes posted pro-Trump content but also
+criticized the former president and, with one exception, did not explicitly assume or reference
+a “MAGA” identity.
+
+● While the persona and accounts we identifi ed engaged with pro-Trump and
+conservative-aligned narratives, their activity appears to be more representative of wider
+Spamoufl age efforts to exacerbate U.S. social divisions and portray the U.S. as a declining
+global power with weak leaders.
+
+Spamoufl age accounts on several platforms have increasingly spread videos, memes, and other content attempting to
+discredit U.S. President Joe Biden and former President Donald Trump. For example, we observed Spamoufl age
+accounts spreading this image portraying U.S. radio host Lenard McKelvey, known professionally as
+Charlamagne tha God, thinking of Trump as a “fraud” and Biden as a “coward.”
+
+---
+
+[Image: Im0]
+
+Observations & Analysis
+
+We identifi ed 15 Spamoufl age accounts on X and one account on TikTok claiming to be U.S.
+citizens and/or U.S.-focused peace, human rights, and information integrity advocates frustrated
+by American politics and the West. We also identifi ed a cross-platform Spamoufl age persona
+purporting to be a U.S.-focused news outlet. This persona comprised accounts on TikTok and X
+and a now-suspended Instagram account and YouTube channel.
+
+While Spamoufl age accounts typically post videos and cartoons with distinct visual indicators,
+these accounts frequently amplifi ed organic content from authentic users, including
+anti-establishment infl uencers and Trump supporters. Often, these accounts criticized Biden and
+the U.S. over sensitive U.S. social and political issues, such as U.S. policy toward Israel over the
+Israel-Hamas confl ict. A smaller number of posts also criticized Trump and the Republican Party,
+indicating the actors did not intend to promote a specifi c presidential candidate but rather
+disparage U.S. politicians more broadly.
+
+Many of the accounts’ bios suggested the U.S. is deteriorating and fi lled with discrimination. For
+example, some posed rhetorical questions with awkward grammar, such as “is the present
+America still our America?” or “is the current president our president?” likely to present themselves
+as U.S. voters disappointed in the current administration.
+
+[Image: Im2]
+
+[Image: Im2]
+
+An example of a Spamou[Image: Im2]fl age account on X with a bio that suggests the user is an American
+frustrated by U.S. politics. Redactions added by Graphika.
+
+---
+
+‘I am an American’
+
+The accounts we identifi ed attempted to pose as U.S. patriots and/or rights defenders by using
+relevant symbols, including images of U.S. fl ags and soldiers, in their bios, usernames, and profi le
+pictures. They repeatedly used #American and other U.S.-related hashtags in their posts. At least
+fi ve accounts explicitly stated that they were American voters, soldiers, or someone who “love(s)
+America” but had supposedly become disappointed at the U.S. government and the current
+administration. One account vowed that they wouldn’t vote for Biden. Another pretended to be a
+person residing in a U.S. state that allowed abortion who worried about women in other states
+“denied their reproductive rights.”
+
+[Image: Im1]
+
+[Image: Im1]
+
+[Image: Im1]
+
+[Image: Im1]
+
+Example of a Spamoufl age account on X that explicitly claimed to be “an American” in a post
+criticizing NATO and the U.S. government. Redactions added by Graphika.
+
+---
+
+*Examples of two Spamoufl age accounts on X using the same meme to promote narratives about homelessness in the*
+
+*U.S. One account (left) referred to President Joe Biden as “our president” and claimed that they “won’t vote for him” next*
+*time. The other (right) stated, “I have no home in America!” Redactions added by Graphika.*
+
+These accounts made various attempts to appear as authentic persons, such as attempting to explain lapses in posting activity. In one instance, an X account that purported to be an anti-war activist stopped posting between May 27 and June 17, 2023. On June 18, 2023, the X account resumed its posting activity and claimed that they were suffering from a “depression relapse” and “followed the doctor's advice and went out to relax.”
+
+---
+
+*A Spamoufl age account on X that purported to be an anti-war activist explained a lapse in posting* *activity by claiming they were following a doctor’s advice to treat depression.* *Redactions added by Graphika.*
+
+Despite these efforts, the accounts all bore hallmarks of Spamoufl age activity.
+
+- The accounts used personas that we assess are almost certainly inauthentic, based on discrepancies in their bios, use of stock images as profi le pictures, their posting activity, and other indicators.
+- The accounts engaged in coordinated amplifi cation, resharing the same posts and content from each other and the wider Spamoufl age network. This included coordinated posting with Spamoufl age assets on other platforms.
+- The accounts seeded and amplifi ed cartoons and videos that researchers at Graphika, ISD, Microsoft, and Recorded Future have independently identifi ed as Spamoufl age content. We also observed limited instances of accounts posting in Chinese, with signs this activity was unintentional. For example, an account on X that claimed to be a journalism student with “no home in America” published a Chinese-language post that read “水电费水电费“ [hydro bill hydro bill] on July 20, 2023. The post was subsequently deleted.
+
+---
+
+On another occasion, a persona on X identifying as an anti-war activist posted a link to an X
+community with the Chinese language caption “看看我创建的社群:” [Check out the community I
+created:]. Based on a review of X platform features, this post was very likely automatically
+generated when the account operator selected the “Post your Community” feature, suggesting
+they were browsing X in Chinese or using an operating system set to Chinese. The community,
+called “NO WAR,” had 25 members, 11 of which belonged to the set of 15 Spamoufl age accounts
+on X discussed in this report.
+
+A Spamoufl age account on X posted a link to an X community with the Chinese
+language caption “看看我创建的社群:” [Check out the community I created:].
+Redactions added by Graphika.
+
+Deep Red typically presents as a “patriotic” pro-China media outlet and posts content with
+distinctive visual indicators, including a red bird logo with its name in Chinese characters and the
+English word "sparks," a likely reference to a Mao Zedong quote. Videos that include the Deep Red
+logo were among the most frequently shared content Spamoufl age accounts posted across
+Facebook, X, and YouTube in 2021. The persona has previously maintained a presence on
+
+Just a ‘Common Fireman’
+
+---
+
+Facebook, Telegram, TikTok, X, and YouTube but currently operates two X accounts and one
+TikTok account.
+
+Created in March 2023, one of the X accounts previously had the display name 짙은 붉은 [Deep
+Red] and posted Deep Red-branded content in Korean. In late 2023, however, this account began
+posting more generic Chinese state-aligned and Spamoufl age content in English. The account
+then changed its name to Common fi reman and updated its profi le and cover images to pictures
+of the U.S. fl ag. Since then, it has posted almost exclusively about U.S. political issues, sharing
+screenshots and text taken from authentic U.S. media reports about topics including the risk of
+violent threats against U.S. election offi cials, health worker strikes, and the U.S. ban on TikTok.
+
+[Image: Im1] [Image: Im2]
+This X account previously used the display name 짙은 붉은 [Deep Red] and posted Deep Red-branded content in Korean
+(left) but in late 2023 adopted the persona of a U.S. user with the display name Common fi reman (right).
+Redactions added by Graphika.
+
+\underline{{x2n}}\underline{{\ v2}}\underline{{v e n}}\underline{{v e n}}
+
+Stolen Valor and a ‘Pure Patriotic Girl’
+
+Lastly, we identifi ed a cross-platform persona that purports to be a U.S. conservative news outlet
+and social media infl uencer. The Harlan Report persona operates accounts on TikTok and X, and
+previously ran a now-removed Instagram account and YouTube channel. It primarily amplifi es
+content supporting Trump and the MAGA movement while denigrating Biden, particularly over his
+age and health. The Harlan Report TikTok account garnered signifi cant views for several videos,
+including one pinned video mocking Biden with 1.5 million views.
+
+---
+
+The Harlan Report persona posts portrait-oriented videos with a distinctive template across its social media accounts.
+Some of these videos are branded with the persona’s name and logo, likely in an effort to present as a
+legitimate media outlet. Redactions added by Graphika.
+
+[Image: Im3]
+
+---
+
+Over the past 15 months, the persona has used multiple identities, deleted past posts on X, and
+leveraged an AI-generated avatar as part of efforts we assess were very likely intended to
+obfuscate its past activity and links to the Spamoufl age operation.
+
+Reinvention of the persona: Harlan Report has assumed different guises on its X account. Under
+the handle @HarlanManning19 and username “Warrior Harlan🇺🇸 ,” the account originally posed as
+a New York-based U.S. military veteran critical of Biden and supportive of the MAGA movement.
+Between Nov. 14 and Dec. 15, 2023, it changed its handle to @Harlan_RNC and took on the
+persona of a 29-year-old Trump supporter with the screen name “Biden Hamas™🇺🇸 .” Most
+recently, it has adopted the identity of a 31-year-old Republican social media infl uencer in Florida
+posting under the name “Harlan Report™🇺🇸 .”
+
+[Image: Im2]
+
+[Image: Im2]
+
+[Image: Im2]
+
+[Image: Im2]
+
+[Image: Im3]
+
+[Image: Im3]
+
+[Image: Im3]
+
+[Image: Im3]
+
+The three iterations of the Spamoufl age X account as “Warrior Harlan🇺🇸 ” (top left),
+“Biden Hamas™🇺🇸 ” (top right), and fi nally “Harlan Report™🇺🇸 .”
+
+---
+
+Deleting old posts: While using the @Harlan_RNC username, the X account deleted a series of
+past posts, including one containing a cartoon criticizing Chinese virologist Yan Limeng that has
+previously been seeded and promoted by the wider Spamoufl age network. The account posted
+this cartoon in June 2023 under the username @HarlanManning19. Yan Limeng is one of
+Spamoufl age’s most frequent and consistent targets.
+
+[Image: Im1]
+
+The Harlan Report persona posted a cartoon targeting Chinese virologist
+Yan Limeng under the @HarlanManning19 handle on X. The account later
+deleted this post after changing to the @Harlan_RNC handle.
+
+Recycling of likely AI-generated avatars from Spamoufl age videos: Before using the “Harlan
+Report” logos on its accounts, the persona used a likely AI-generated avatar as its profi le picture
+on X. We previously observed a Spamoufl age-linked video targeting Biden using the same avatar.
+
+[Image: Im2]
+
+The @Harlan_RNC X account previously used the same likely AI-generated avatar (left) featured in a
+Spamoufl age-linked video (right).
+
+---
+
+
+
+---
+
+[Image: Im0]
+
+Estimative Language Legend
+
+Assessments of Likelihood
+
+Graphika uses the following vocabulary to indicate the likelihood of a hypothesis proving correct.
+If we are unable to assess likelihood due to limited or non-existent information, we may use terms
+such as “suggest.”
+
+| Almost No Chance | Very Unlikely | Unlikely | Real Chance | Likely | Very Likely | Almost Certain(ly) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1-5% | 5-20% | 20-45% | 45-55% | 55-80% | 80-95% | 95-99% |
+
+Confi dence Levels: Indicators of Sourcing and Corroboration
+
+Graphika uses confi dence levels to indicate the quality of information, sources, and corroboration
+underpinning our assessments.
+
+| Low Confidence | Medium Confidence | High Confidence |
+| --- | --- | --- |
+| Assessment based on information from a non-trusted source and/or information we have not been able to independently corroborate. | Assessment based on information that we are unable to sufficiently corroborate and/or information open to multiple interpretations. | Assessment based on information from multiple trusted sources that we are able to fully corroborate. |
+
+---
+
+[Image: Im0]
+
+[Image: Im1]
+
+About Us
+
+Graphika is the most trusted provider of actionable open-source intelligence to help organizations
+stay ahead of emerging online events and make decisions on how to navigate them. Led by
+prominent innovators and technologists in the fi eld of online discourse analysis, Graphika supports
+global enterprises and public sector customers across trust & safety, cyber threat intelligence, and
+strategic communications spanning industries including intelligence, technology, media and
+entertainment, and global banking. Graphika continually integrates new and emerging technologies
+into our proprietary intelligence platform and analytic services, empowering our customers with
+high-precision intelligence and confi dence to operate in a complex and continuously evolving
+information environment.
+
+For more information or to request a demo, visit our website.
+
+---
+
+© Graphika All Rights Reserved 2024

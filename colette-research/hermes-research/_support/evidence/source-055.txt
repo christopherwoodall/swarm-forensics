@@ -1,0 +1,227 @@
+[Google apps](https://www.google.com/intl/en/about/products?tab=ph "Google apps")
+
+[Sign in](https://www.google.com/accounts/Login?service=print&continue=https://books.google.com/books%3Fid%3DfcTcHvSsRMYC%26hl%3Den&hl=en&ec=GAZACg)
+
+[Books](https://books.google.com/?hl=en&tab=pp "Books")
+
+Hidden fields
+
+[![](https://books.google.com/googlebooks/images/material/book_icon_color.png)Try the new Your Library![](https://books.google.com/googlebooks/images/material/arrow_right_black_24dp.png)](https://www.google.com/books/library?hl=en)
+
+[![Screen reader users: click this link for accessible mode. Accessible mode has the same essential features but works better with your reader.](https://www.google.com/images/cleardot.gif)](https://books.google.com/books/about/Swarm_Intelligence.html?id=fcTcHvSsRMYC&hl=en&output=html_text "Screen reader users: click this link for accessible mode. Accessible mode has the same essential features but works better with your reader.")
+
+## [Books](https://books.google.com/books)
+
+View sample
+
+Add to my library![](https://books.google.com/googlebooks/images/kennedy/menu_down_arrow.png)
+
+![](https://books.google.com/googlebooks/images/kennedy/settings.png)
+
+Try the new Your Library
+
+Classic My Library will soon be turned off. Visit the new Your Library experience to import your bookshelves.
+
+[Go to Your Library](https://www.google.com/books/library?hl=en)
+Dismiss
+
+![](https://books.google.com/googlebooks/images/material/ogen_bookshelf.png)
+
+1. [Try the new Google Books](https://www.google.com/books/edition/Swarm_Intelligence/fcTcHvSsRMYC?hl=en&newbks=1)
+2. [My library](https://www.google.com/accounts/Login?service=print&continue=https://books.google.com/books%3Fop%3Dlibrary&hl=en)
+3. [Help](http://books.google.com/support/topic/4359341?hl=en)
+4. [Advanced Book Search](https://books.google.com/advanced_book_search)
+
+|     |     |
+| --- | --- |
+| #### Good for:<br>- [Web](https://books.google.com/help/ebooks/webreader.html)<br>- [Tablet / iPad](https://books.google.com/help/ebooks/devices.html)<br>- [eReader](https://books.google.com/help/ebooks/ereader.html)<br>- [Smartphone](https://books.google.com/help/ebooks/devices.html) | #### Features:<br>- [Flowing text](https://books.google.com/support/bin/answer.py?answer=1062949)<br>- [Scanned pages](https://books.google.com/support/bin/answer.py?answer=1062949)<br>[Help with devices & formats](https://books.google.com/support/bin/answer.py?answer=1062949) |
+
+[Learn more about books on Google Play](https://books.google.com/support/bin/topic.py?topic=28528)
+
+[Buy eBook - $54.39](https://play.google.com/store/books/details?id=fcTcHvSsRMYC&rdid=book-fcTcHvSsRMYC&rdot=1&source=gbs_atb&pcampaignid=books_booksearch_atb)
+
+Get this book in print▼
+
+- [Oxford University Press](http://www.oup.com/localecatalogue/google/?i=9780198030157)
+- [Amazon.com](http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords=9780198030157)
+- [Barnes&Noble.com](https://www.barnesandnoble.com/w/_/_?ean=9780198030157)
+- [Books-A-Million](http://www.booksamillion.com/product/9780198030157)
+- [IndieBound](http://www.indiebound.org/book/9780198030157)
+- * * *
+
+- [Find in a library](https://books.google.com/url?id=fcTcHvSsRMYC&q=http://worldcat.org/oclc/1037706109&clientid=librarylink&usg=AOvVaw0hve75h70aJ9NpIiVWSZxT&source=gbs_buy_r)
+- [All sellers »](https://books.google.com/books?id=fcTcHvSsRMYC&sitesec=buy&source=gbs_buy_r)
+
+[My library](https://books.google.com/books?uid=114584440181414684107&source=gbs_lp_bookshelf_list)
+
+My History
+
+|     |     |     |
+| --- | --- | --- |
+| # Swarm Intelligence: From Natural to Artificial Systems
+
+[![Front Cover](https://books.google.com/books/content?id=fcTcHvSsRMYC&printsec=frontcover&img=1&zoom=1&edge=curl&imgtk=AFLRE72T2CQ9-4J5aV-8LKd_FDgDxXLVixfIXeGWzmfyVAu6_MI4Ni5VAZakHSXCN5oBGAmNi11XqRKhfzApwTUqs_HQ0HKuufgPH8GhSvMshK4lxGUWzpNTB1lZZZqT2Zo5JkmqCbi8)](https://books.google.com/books?id=fcTcHvSsRMYC&printsec=frontcover&source=gbs_ge_summary_r&cad=0)
+
+[Eric Bonabeau](https://www.google.com/search?tbo=p&tbm=bks&q=inauthor:%22Eric+Bonabeau%22), [Marco Dorigo](https://www.google.com/search?tbo=p&tbm=bks&q=inauthor:%22Marco+Dorigo%22), [Guy Theraulaz](https://www.google.com/search?tbo=p&tbm=bks&q=inauthor:%22Guy+Theraulaz%22)
+
+Oxford University Press, Sep 23, 1999 \- [Computers](https://www.google.com/search?tbo=p&tbm=bks&q=subject:%22Computers%22&source=gbs_ge_summary_r&cad=0) \- 320 pages
+
+Social insects--ants, bees, termites, and wasps--can be viewed as powerful problem-solving systems with sophisticated collective intelligence. Composed of simple interacting agents, this intelligence lies in the networks of interactions among individuals and between individuals and the environment. A fascinating subject, social insects are also a powerful metaphor for artificial intelligence, and the problems they solve--finding food, dividing labor among nestmates, building nests, responding to external challenges--have important counterparts in engineering and computer science. This book provides a detailed look at models of social insect behavior and how to apply these models in the design of complex systems. The book shows how these models replace an emphasis on control, preprogramming, and centralization with designs featuring autonomy, emergence, and distributed functioning. These designs are proving immensely flexible and robust, able to adapt quickly to changing environments and to continue functioning even when individual elements fail. In particular, these designs are an exciting approach to the tremendous growth of complexity in software and information. Swarm Intelligence draws on up-to-date research from biology, neuroscience, artificial intelligence, robotics, operations research, and computer graphics, and each chapter is organized around a particular biological example, which is then used to develop an algorithm, a multiagent system, or a group of robots. The book will be an invaluable resource for a broad range of disciplines.
+
+More »
+
+|     |     |     |
+| --- | --- | --- |
+|  |  |  |
+
+[Preview this book »](https://books.google.com/books?id=fcTcHvSsRMYC&printsec=frontcover) |
+
+### Selected pages
+
+[![Page 5](https://books.google.com/books/content?id=fcTcHvSsRMYC&pg=PA5&img=1&zoom=1&sig=ACfU3U2josLy_Bga_Ch0k0YztHbgq8bvng)](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA5&source=gbs_selected_pages&cad=1)
+
+[Page 5](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA5&source=gbs_selected_pages&cad=1)
+
+[![Title Page](https://books.google.com/books/content?id=fcTcHvSsRMYC&pg=PR3&img=1&zoom=1&sig=ACfU3U3ltrnVTag7l3q9I_WFw23CF6QohA)](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PR3&source=gbs_selected_pages&cad=1)
+
+[Title Page](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PR3&source=gbs_selected_pages&cad=1)
+
+[![Table of Contents](https://books.google.com/books/content?id=fcTcHvSsRMYC&pg=PR9&img=1&zoom=1&sig=ACfU3U1Ww_gw5yuyNVld4I-GM5wSupovhA)](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PR9&source=gbs_selected_pages&cad=1)
+
+[Table of Contents](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PR9&source=gbs_selected_pages&cad=1)
+
+[![Index](https://books.google.com/books/content?id=fcTcHvSsRMYC&pg=PA297&img=1&zoom=1&sig=ACfU3U2NQuu740Vw7J5PjSNbwsspqvd4tw)](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA297&source=gbs_selected_pages&cad=1)
+
+[Index](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA297&source=gbs_selected_pages&cad=1)
+
+[![References](https://books.google.com/books/content?id=fcTcHvSsRMYC&pg=PA275&img=1&zoom=1&sig=ACfU3U1apSD_HJOXNFFQtNdGIuybaswnrg)](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA275&source=gbs_selected_pages&cad=1)
+
+[References](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA275&source=gbs_selected_pages&cad=1)
+
+### Contents
+
+|     |     |
+| --- | --- |
+| [CHAPTER 1 Introduction](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA1&source=gbs_toc_r&cad=2) | 1 |
+|  |  |
+| CHAPTER 2 Ant Foraging Behavior Combinatorial Optimization and Routing in Communications Network | 25 |
+|  |  |
+| CHAPTER 3 Division of Labor and Task Allocation | 109 |
+|  |  |
+| CHAPTER 4 Cemetery Organization Brood Sorting Data Analysis and Graph Partitioning | 149 |
+|  |  |
+| Application to Data Analysis and Graph Partitioning | 183 |
+|  |  |
+| CHAPTER 6 Nest Building and SelfAssembling | 205 |
+|  |  |
+
+|     |     |
+| --- | --- |
+| CHAPTER 7 Cooperative Transport by Insects and Robots | 253 |
+|  |  |
+| CHAPTER 8 Epilogue | 271 |
+|  |  |
+| [Bibliography](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA275&source=gbs_toc_r&cad=2) | 275 |
+|  |  |
+| [Index](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA297&source=gbs_toc_r&cad=2) | 297 |
+|  |  |
+| [Copyright](https://books.google.com/books?id=fcTcHvSsRMYC&printsec=copyright) |  |
+|  |  |
+
+### Other editions - [View all](https://books.google.com/books?q=editions:ISBN0198030150&id=fcTcHvSsRMYC)
+
+‹
+
+[![](https://books.google.com/books/content?id=8HVPAwAAQBAJ&printsec=frontcover&img=1&zoom=1&h=160&stbn=1)](https://books.google.com/books?id=8HVPAwAAQBAJ&source=gbs_book_other_versions)
+
+Sep 23, 1999
+
+Limited preview
+
+[![](https://books.google.com/books/content?id=PvTDhzqMr7cC&printsec=frontcover&img=1&zoom=1&h=160&stbn=1)](https://books.google.com/books?id=PvTDhzqMr7cC&source=gbs_book_other_versions)
+
+1999
+
+Limited preview
+
+[![](https://books.google.com/books/content?id=tdLnCwAAQBAJ&printsec=frontcover&img=1&zoom=1&h=160&stbn=1)](https://books.google.com/books?id=tdLnCwAAQBAJ&source=gbs_book_other_versions)
+
+Oct 21, 1999
+
+Limited preview
+
+[![](https://books.google.com/books/content?id=mhLj70l8HfAC&printsec=frontcover&img=1&zoom=1&h=160&stbn=1)](https://books.google.com/books?id=mhLj70l8HfAC&source=gbs_book_other_versions)
+
+Sep 23, 1999
+
+No preview
+
+[![](https://books.google.com/books/content?id=zKEgAQAAMAAJ&printsec=frontcover&img=1&zoom=1&h=160&stbn=1)](https://books.google.com/books?id=zKEgAQAAMAAJ&source=gbs_book_other_versions)
+
+Oct 21, 1999
+
+No preview
+
+›
+
+### Common terms and phrases
+
+[ACO algorithms](https://books.google.com/books?id=fcTcHvSsRMYC&q=ACO+algorithms&source=gbs_word_cloud_r&cad=4) [ACS-TSP](https://books.google.com/books?id=fcTcHvSsRMYC&q=ACS-TSP&source=gbs_word_cloud_r&cad=4) [active](https://books.google.com/books?id=fcTcHvSsRMYC&q=active&source=gbs_word_cloud_r&cad=4) [agents](https://books.google.com/books?id=fcTcHvSsRMYC&q=agents&source=gbs_word_cloud_r&cad=4) [ant colony algorithm](https://books.google.com/books?id=fcTcHvSsRMYC&q=ant+colony+algorithm&source=gbs_word_cloud_r&cad=4) [ant colony optimization](https://books.google.com/books?id=fcTcHvSsRMYC&q=ant+colony+optimization&source=gbs_word_cloud_r&cad=4) [AntNet](https://books.google.com/books?id=fcTcHvSsRMYC&q=AntNet&source=gbs_word_cloud_r&cad=4) [applied](https://books.google.com/books?id=fcTcHvSsRMYC&q=applied&source=gbs_word_cloud_r&cad=4) [architectures](https://books.google.com/books?id=fcTcHvSsRMYC&q=architectures&source=gbs_word_cloud_r&cad=4) [AS-QAP](https://books.google.com/books?id=fcTcHvSsRMYC&q=AS-QAP&source=gbs_word_cloud_r&cad=4) [average](https://books.google.com/books?id=fcTcHvSsRMYC&q=average&source=gbs_word_cloud_r&cad=4) [behavior](https://books.google.com/books?id=fcTcHvSsRMYC&q=behavior&source=gbs_word_cloud_r&cad=4) [Bonabeau](https://books.google.com/books?id=fcTcHvSsRMYC&q=Bonabeau&source=gbs_word_cloud_r&cad=4) [brick](https://books.google.com/books?id=fcTcHvSsRMYC&q=brick&source=gbs_word_cloud_r&cad=4) [brood](https://books.google.com/books?id=fcTcHvSsRMYC&q=brood&source=gbs_word_cloud_r&cad=4) [building](https://books.google.com/books?id=fcTcHvSsRMYC&q=building&source=gbs_word_cloud_r&cad=4) [clusters](https://books.google.com/books?id=fcTcHvSsRMYC&q=clusters&source=gbs_word_cloud_r&cad=4) [colony](https://books.google.com/books?id=fcTcHvSsRMYC&q=colony&source=gbs_word_cloud_r&cad=4) [Compute](https://books.google.com/books?id=fcTcHvSsRMYC&q=Compute&source=gbs_word_cloud_r&cad=4) [connected](https://books.google.com/books?id=fcTcHvSsRMYC&q=connected&source=gbs_word_cloud_r&cad=4) [constraints](https://books.google.com/books?id=fcTcHvSsRMYC&q=constraints&source=gbs_word_cloud_r&cad=4) [coordinated](https://books.google.com/books?id=fcTcHvSsRMYC&q=coordinated&source=gbs_word_cloud_r&cad=4) [Deneubourg](https://books.google.com/books?id=fcTcHvSsRMYC&q=Deneubourg&source=gbs_word_cloud_r&cad=4) [deposit](https://books.google.com/books?id=fcTcHvSsRMYC&q=deposit&source=gbs_word_cloud_r&cad=4) [destination node](https://books.google.com/books?id=fcTcHvSsRMYC&q=destination+node&source=gbs_word_cloud_r&cad=4) [distance](https://books.google.com/books?id=fcTcHvSsRMYC&q=distance&source=gbs_word_cloud_r&cad=4) [distribution](https://books.google.com/books?id=fcTcHvSsRMYC&q=distribution&source=gbs_word_cloud_r&cad=4) [Dorigo](https://books.google.com/books?id=fcTcHvSsRMYC&q=Dorigo&source=gbs_word_cloud_r&cad=4) [dynamics](https://books.google.com/books?id=fcTcHvSsRMYC&q=dynamics&source=gbs_word_cloud_r&cad=4) [edges](https://books.google.com/books?id=fcTcHvSsRMYC&q=edges&source=gbs_word_cloud_r&cad=4) [example](https://books.google.com/books?id=fcTcHvSsRMYC&q=example&source=gbs_word_cloud_r&cad=4) [experiments](https://books.google.com/books?id=fcTcHvSsRMYC&q=experiments&source=gbs_word_cloud_r&cad=4) [exploration](https://books.google.com/books?id=fcTcHvSsRMYC&q=exploration&source=gbs_word_cloud_r&cad=4) [Figure](https://books.google.com/books?id=fcTcHvSsRMYC&q=Figure&source=gbs_word_cloud_r&cad=4) [fitness function](https://books.google.com/books?id=fcTcHvSsRMYC&q=fitness+function&source=gbs_word_cloud_r&cad=4) [food source](https://books.google.com/books?id=fcTcHvSsRMYC&q=food+source&source=gbs_word_cloud_r&cad=4) [foraging](https://books.google.com/books?id=fcTcHvSsRMYC&q=foraging&source=gbs_word_cloud_r&cad=4) [fraction](https://books.google.com/books?id=fcTcHvSsRMYC&q=fraction&source=gbs_word_cloud_r&cad=4) [genetic algorithm](https://books.google.com/books?id=fcTcHvSsRMYC&q=genetic+algorithm&source=gbs_word_cloud_r&cad=4) [given](https://books.google.com/books?id=fcTcHvSsRMYC&q=given&source=gbs_word_cloud_r&cad=4) [graph](https://books.google.com/books?id=fcTcHvSsRMYC&q=graph&source=gbs_word_cloud_r&cad=4) [graph partitioning](https://books.google.com/books?id=fcTcHvSsRMYC&q=graph+partitioning&source=gbs_word_cloud_r&cad=4) [heuristic](https://books.google.com/books?id=fcTcHvSsRMYC&q=heuristic&source=gbs_word_cloud_r&cad=4) [individual](https://books.google.com/books?id=fcTcHvSsRMYC&q=individual&source=gbs_word_cloud_r&cad=4) [initial](https://books.google.com/books?id=fcTcHvSsRMYC&q=initial&source=gbs_word_cloud_r&cad=4) [interactions](https://books.google.com/books?id=fcTcHvSsRMYC&q=interactions&source=gbs_word_cloud_r&cad=4) [iterations](https://books.google.com/books?id=fcTcHvSsRMYC&q=iterations&source=gbs_word_cloud_r&cad=4) [k₁](https://books.google.com/books?id=fcTcHvSsRMYC&q=k%E2%82%81&source=gbs_word_cloud_r&cad=4) [Kube](https://books.google.com/books?id=fcTcHvSsRMYC&q=Kube&source=gbs_word_cloud_r&cad=4) [microrules](https://books.google.com/books?id=fcTcHvSsRMYC&q=microrules&source=gbs_word_cloud_r&cad=4) [module](https://books.google.com/books?id=fcTcHvSsRMYC&q=module&source=gbs_word_cloud_r&cad=4) [move](https://books.google.com/books?id=fcTcHvSsRMYC&q=move&source=gbs_word_cloud_r&cad=4) [neighbor](https://books.google.com/books?id=fcTcHvSsRMYC&q=neighbor&source=gbs_word_cloud_r&cad=4) [nest](https://books.google.com/books?id=fcTcHvSsRMYC&q=nest&source=gbs_word_cloud_r&cad=4) [nestmates](https://books.google.com/books?id=fcTcHvSsRMYC&q=nestmates&source=gbs_word_cloud_r&cad=4) [obtained](https://books.google.com/books?id=fcTcHvSsRMYC&q=obtained&source=gbs_word_cloud_r&cad=4) [optimization](https://books.google.com/books?id=fcTcHvSsRMYC&q=optimization&source=gbs_word_cloud_r&cad=4) [packets](https://books.google.com/books?id=fcTcHvSsRMYC&q=packets&source=gbs_word_cloud_r&cad=4) [parameters](https://books.google.com/books?id=fcTcHvSsRMYC&q=parameters&source=gbs_word_cloud_r&cad=4) [path](https://books.google.com/books?id=fcTcHvSsRMYC&q=path&source=gbs_word_cloud_r&cad=4) [patterns](https://books.google.com/books?id=fcTcHvSsRMYC&q=patterns&source=gbs_word_cloud_r&cad=4) [performing task](https://books.google.com/books?id=fcTcHvSsRMYC&q=performing+task&source=gbs_word_cloud_r&cad=4) [Pheidole](https://books.google.com/books?id=fcTcHvSsRMYC&q=Pheidole&source=gbs_word_cloud_r&cad=4) [pheromone trail](https://books.google.com/books?id=fcTcHvSsRMYC&q=pheromone+trail&source=gbs_word_cloud_r&cad=4) [prey](https://books.google.com/books?id=fcTcHvSsRMYC&q=prey&source=gbs_word_cloud_r&cad=4) [probabilistic](https://books.google.com/books?id=fcTcHvSsRMYC&q=probabilistic&source=gbs_word_cloud_r&cad=4) [probability](https://books.google.com/books?id=fcTcHvSsRMYC&q=probability&source=gbs_word_cloud_r&cad=4) [problem](https://books.google.com/books?id=fcTcHvSsRMYC&q=problem&source=gbs_word_cloud_r&cad=4) [pucks](https://books.google.com/books?id=fcTcHvSsRMYC&q=pucks&source=gbs_word_cloud_r&cad=4) [random](https://books.google.com/books?id=fcTcHvSsRMYC&q=random&source=gbs_word_cloud_r&cad=4) [randomly](https://books.google.com/books?id=fcTcHvSsRMYC&q=randomly&source=gbs_word_cloud_r&cad=4) [reinforcement](https://books.google.com/books?id=fcTcHvSsRMYC&q=reinforcement&source=gbs_word_cloud_r&cad=4) [representation](https://books.google.com/books?id=fcTcHvSsRMYC&q=representation&source=gbs_word_cloud_r&cad=4) [Reprinted by permission](https://books.google.com/books?id=fcTcHvSsRMYC&q=Reprinted+by+permission&source=gbs_word_cloud_r&cad=4) [response thresholds](https://books.google.com/books?id=fcTcHvSsRMYC&q=response+thresholds&source=gbs_word_cloud_r&cad=4) [robotic systems](https://books.google.com/books?id=fcTcHvSsRMYC&q=robotic+systems&source=gbs_word_cloud_r&cad=4) [routing tables](https://books.google.com/books?id=fcTcHvSsRMYC&q=routing+tables&source=gbs_word_cloud_r&cad=4) [Santa Fe Institute](https://books.google.com/books?id=fcTcHvSsRMYC&q=Santa+Fe+Institute&source=gbs_word_cloud_r&cad=4) [Schoonderwoerd](https://books.google.com/books?id=fcTcHvSsRMYC&q=Schoonderwoerd&source=gbs_word_cloud_r&cad=4) [selected](https://books.google.com/books?id=fcTcHvSsRMYC&q=selected&source=gbs_word_cloud_r&cad=4) [self-assembling](https://books.google.com/books?id=fcTcHvSsRMYC&q=self-assembling&source=gbs_word_cloud_r&cad=4) [self-organization](https://books.google.com/books?id=fcTcHvSsRMYC&q=self-organization&source=gbs_word_cloud_r&cad=4) [simulations](https://books.google.com/books?id=fcTcHvSsRMYC&q=simulations&source=gbs_word_cloud_r&cad=4) [social insects](https://books.google.com/books?id=fcTcHvSsRMYC&q=social+insects&source=gbs_word_cloud_r&cad=4) [solutions](https://books.google.com/books?id=fcTcHvSsRMYC&q=solutions&source=gbs_word_cloud_r&cad=4) [space](https://books.google.com/books?id=fcTcHvSsRMYC&q=space&source=gbs_word_cloud_r&cad=4) [spatial](https://books.google.com/books?id=fcTcHvSsRMYC&q=spatial&source=gbs_word_cloud_r&cad=4) [species](https://books.google.com/books?id=fcTcHvSsRMYC&q=species&source=gbs_word_cloud_r&cad=4) [steps](https://books.google.com/books?id=fcTcHvSsRMYC&q=steps&source=gbs_word_cloud_r&cad=4) [stigmergy](https://books.google.com/books?id=fcTcHvSsRMYC&q=stigmergy&source=gbs_word_cloud_r&cad=4) [structure](https://books.google.com/books?id=fcTcHvSsRMYC&q=structure&source=gbs_word_cloud_r&cad=4) [swarm](https://books.google.com/books?id=fcTcHvSsRMYC&q=swarm&source=gbs_word_cloud_r&cad=4) [swarm intelligence](https://books.google.com/books?id=fcTcHvSsRMYC&q=swarm+intelligence&source=gbs_word_cloud_r&cad=4) [swarm-based](https://books.google.com/books?id=fcTcHvSsRMYC&q=swarm-based&source=gbs_word_cloud_r&cad=4) [tabu search](https://books.google.com/books?id=fcTcHvSsRMYC&q=tabu+search&source=gbs_word_cloud_r&cad=4) [task performance](https://books.google.com/books?id=fcTcHvSsRMYC&q=task+performance&source=gbs_word_cloud_r&cad=4) [template](https://books.google.com/books?id=fcTcHvSsRMYC&q=template&source=gbs_word_cloud_r&cad=4) [termites](https://books.google.com/books?id=fcTcHvSsRMYC&q=termites&source=gbs_word_cloud_r&cad=4) [Theraulaz](https://books.google.com/books?id=fcTcHvSsRMYC&q=Theraulaz&source=gbs_word_cloud_r&cad=4) [tour](https://books.google.com/books?id=fcTcHvSsRMYC&q=tour&source=gbs_word_cloud_r&cad=4) [traffic](https://books.google.com/books?id=fcTcHvSsRMYC&q=traffic&source=gbs_word_cloud_r&cad=4) [transport](https://books.google.com/books?id=fcTcHvSsRMYC&q=transport&source=gbs_word_cloud_r&cad=4) [Traveling salesman problem](https://books.google.com/books?id=fcTcHvSsRMYC&q=Traveling+salesman+problem&source=gbs_word_cloud_r&cad=4) [unit](https://books.google.com/books?id=fcTcHvSsRMYC&q=unit&source=gbs_word_cloud_r&cad=4) [updating rule](https://books.google.com/books?id=fcTcHvSsRMYC&q=updating+rule&source=gbs_word_cloud_r&cad=4) [vertices](https://books.google.com/books?id=fcTcHvSsRMYC&q=vertices&source=gbs_word_cloud_r&cad=4) [wasps](https://books.google.com/books?id=fcTcHvSsRMYC&q=wasps&source=gbs_word_cloud_r&cad=4) [workers](https://books.google.com/books?id=fcTcHvSsRMYC&q=workers&source=gbs_word_cloud_r&cad=4)
+
+### Popular passages
+
+[Page vi](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PR6&vq=%22Marcus+W.+Feldman+Director,+Institute+for+Population+%26+Resource+Studies,+Stanford+University+Prof.+Murray+Gell-Mann+Division+of+Physics+%26:+Astronomy,%22&source=gbs_quotes_r&cad=5) \- Prof. Marcus W. Feldman Director, Institute for Population & Resource Studies, Stanford University Prof. Murray Gell-Mann Division of Physics & Astronomy, California Institute of Technology Prof.‎
+
+[Appears in 36 books from 1989-2006](https://books.google.com/books?id=fcTcHvSsRMYC&qtid=e37e78c5&source=gbs_quotes_r&cad=5)
+
+[Page vi](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PR6&vq=%22Dr.+Alan+S.+Perelson+Theoretical+Division,+Los+Alamos+National+Laboratory+Prof.+David+Pines+Department+of+Physics,+University+of+Illinois+Dr.%22&source=gbs_quotes_r&cad=5) \- Professor, George Mason University Dr. Alan S. Perelson Theoretical Division, Los Alamos National Laboratory Prof. David Pines Department of Physics, University of Illinois Prof. Harry L. Swinney Department of Physics, University of Texas \* Santa Fe Institute Studies in the Sciences of Complexity Proceedings Volumes Vol.‎
+
+[Appears in 20 books from 1993-2003](https://books.google.com/books?id=fcTcHvSsRMYC&qtid=4f7e78c6&source=gbs_quotes_r&cad=5)
+
+More
+
+[Page 282](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA282&vq=%22and+M.+Dorigo.+Two+Ant+Colony+Algorithms+for+Best-Effort+Routing+in+Datagram+Networks.+In+Proceedings+of+the+10th+IASTED+International%22&source=gbs_quotes_r&cad=5) \- Two ant colony algorithms for best-effort routing in datagram networks...‎
+
+[Appears in 10 books from 1984-2006](https://books.google.com/books?id=fcTcHvSsRMYC&qtid=627e798e&source=gbs_quotes_r&cad=5)
+
+[Page 290](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA290&vq=%22AJ+Ijspeert,+and+F.+Mondada.+Understanding+Collective+Aggregation+Mechanisms:+From+Probabilistic+Modelling+to+Experiments+with+Real+Robots.+Robotics+and+Autonomous%22&source=gbs_quotes_r&cad=5) \- A. Martinoli, AJ Ijspeert, and F. Mondada, "Understanding Collective Aggregation Mechanisms: From Probabilistic Modelling to Experiments with Real Robots," Robotics & Autonomous Systems, pp.‎
+
+[Appears in 12 books from 1999-2007](https://books.google.com/books?id=fcTcHvSsRMYC&qtid=327e7991&source=gbs_quotes_r&cad=5)
+
+[Page 284](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA284&vq=%22and+P.+Merz.+Genetic+Local+Search+Algorithm+for+Solving+Symmetric+and+Asymmetric+Traveling+Salesman+Problems.+In+Proceedings%22&source=gbs_quotes_r&cad=5) \- A Genetic Local Search Algorithm for Solving Symmetric and Asymmetric Traveling Salesman Problems," in Proceedings of the 1996 IEEE International Conference on Evolutionary Computation, (T.‎
+
+[Appears in 32 books from 1977-2007](https://books.google.com/books?id=fcTcHvSsRMYC&qtid=7a7e7989&source=gbs_quotes_r&cad=5)
+
+[Page 7](https://books.google.com/books?id=fcTcHvSsRMYC&pg=PA7&vq=%22any+attempt+to+design+algorithms+or+distributed+problem-solving+devices+inspired+by+the+collective+behavior+of+social+insect+colonies+and+other%22&source=gbs_quotes_r&cad=5) \- swarm intelligence" to describe only this work seems unnecessarily restrictive: that is why we extend its definition to include any attempt to design algorithms or distributed problem-solving devices inspired by the collective behavior of social insect colonies and other animal societies.‎
+
+[Appears in 12 books from 1999-2008](https://books.google.com/books?id=fcTcHvSsRMYC&qtid=7c7e78c8&source=gbs_quotes_r&cad=5)
+
+Less
+
+### References to this book
+
+|     |     |     |
+| --- | --- | --- |
+| [![](https://books.google.com/books/content?id=S8VbgW9pZGUC&printsec=frontcover&img=1&zoom=5)](https://books.google.com/books?id=S8VbgW9pZGUC&source=gbs_citations_module_r&cad=6) | [Resilience Engineering: Concepts and Precepts](https://books.google.com/books?id=S8VbgW9pZGUC&printsec=references&vq=%22Swarm+Intelligence%22&source=gbs_citations_module_r&cad=6)<br>[Erik Hollnagel](https://books.google.com/books/about/Swarm_Intelligence.html?id=fcTcHvSsRMYC), [David D. Woods](https://books.google.com/books/about/Swarm_Intelligence.html?id=fcTcHvSsRMYC), [Nancy Leveson](https://books.google.com/books/about/Swarm_Intelligence.html?id=fcTcHvSsRMYC)<br>No preview available \- 2006 |  |
+
+|     |     |     |
+| --- | --- | --- |
+| [![](https://books.google.com/books/content?id=eUoolrxSFy0C&printsec=frontcover&img=1&zoom=5&edge=curl)](https://books.google.com/books?id=eUoolrxSFy0C&source=gbs_citations_module_r&cad=6) | [The Origin of Wealth: Evolution, Complexity, and the Radical Remaking of ...](https://books.google.com/books?id=eUoolrxSFy0C&printsec=frontcover&vq=%22Swarm+Intelligence%22&source=gbs_citations_module_r&cad=6)<br>[Eric D. Beinhocker](https://www.google.com/search?tbo=p&tbm=bks&q=inauthor:%22Eric+D.+Beinhocker%22)<br>Limited preview \- 2006 |  |
+
+[All Book Search results &raquo;](https://books.google.com/books?q=cites:ISBN0198030150&id=fcTcHvSsRMYC&source=gbs_citations_module_r&cad=6)
+
+### Bibliographic information
+
+|     |     |
+| --- | --- |
+| Title | Swarm Intelligence: From Natural to Artificial Systems<br>[_Santa Fe Institute Studies on the Sciences of Complexity_](https://www.google.com/search?tbo=p&tbm=bks&q=bibliogroup:%22Santa+Fe+Institute+Studies+on+the+Sciences+of+Complexity%22&source=gbs_metadata_r&cad=7) |
+| Authors | [Eric Bonabeau](https://www.google.com/search?tbo=p&tbm=bks&q=inauthor:%22Eric+Bonabeau%22&source=gbs_metadata_r&cad=7), [Marco Dorigo](https://www.google.com/search?tbo=p&tbm=bks&q=inauthor:%22Marco+Dorigo%22&source=gbs_metadata_r&cad=7), [Guy Theraulaz](https://www.google.com/search?tbo=p&tbm=bks&q=inauthor:%22Guy+Theraulaz%22&source=gbs_metadata_r&cad=7) |
+| Edition | reprint |
+| Publisher | Oxford University Press, 1999 |
+| ISBN | 0198030150, 9780198030157 |
+| Length | 320 pages |
+| Subjects | [Science](https://www.google.com/search?tbo=p&tbm=bks&q=subject:%22Science%22)<br> › <br>[Life Sciences](https://www.google.com/search?tbo=p&tbm=bks&q=subject:%22Science+Life+Sciences%22)<br> › <br>[Zoology](https://www.google.com/search?tbo=p&tbm=bks&q=subject:%22Science+Life+Sciences+Zoology%22)<br> › <br>[Entomology](https://www.google.com/search?tbo=p&tbm=bks&q=subject:%22Science+Life+Sciences+Zoology+Entomology%22)<br>[Computers / Artificial Intelligence / General](https://www.google.com/search?tbo=p&tbm=bks&q=subject:%22Computers+/+Artificial+Intelligence+/+General%22&source=gbs_metadata_r&cad=7)<br>[Medical / Neuroscience](https://www.google.com/search?tbo=p&tbm=bks&q=subject:%22Medical+/+Neuroscience%22&source=gbs_metadata_r&cad=7)<br>[Science / Life Sciences / Ecology](https://www.google.com/search?tbo=p&tbm=bks&q=subject:%22Science+/+Life+Sciences+/+Ecology%22&source=gbs_metadata_r&cad=7)<br>[Science / Life Sciences / Zoology / Entomology](https://www.google.com/search?tbo=p&tbm=bks&q=subject:%22Science+/+Life+Sciences+/+Zoology+/+Entomology%22&source=gbs_metadata_r&cad=7) |
+|  |  |
+| Export Citation | [BiBTeX](https://books.google.com/books/download/Swarm_Intelligence.bibtex?id=fcTcHvSsRMYC&output=bibtex) [EndNote](https://books.google.com/books/download/Swarm_Intelligence.enw?id=fcTcHvSsRMYC&output=enw) [RefMan](https://books.google.com/books/download/Swarm_Intelligence.ris?id=fcTcHvSsRMYC&output=ris) |
+
+[About Google Books](https://books.google.com/intl/en/googlebooks/about.html) \- [Privacy Policy](https://books.google.com/intl/en/googlebooks/privacy.html) \- [Terms of Service](https://books.google.com/intl/en/googlebooks/tos.html) \- [Information for Publishers](http://books.google.com/support/partner/?hl=en) \- [Report an issue](http://books.google.com/support/answer/180577?hl=en&url=https://books.google.com/books/about/Swarm_Intelligence.html?id=fcTcHvSsRMYC&hl=en&v=fcTcHvSsRMYC&is=atb) \- [Help](http://books.google.com/support/topic/4359341?hl=en) \- [Google Home](https://www.google.com/)

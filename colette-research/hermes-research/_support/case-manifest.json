@@ -1,0 +1,113 @@
+{
+  "case_count": 11,
+  "classification": "Selected documented cases; no prevalence estimate; reporting slices deduplicated by family.",
+  "cases": [
+    {
+      "id": "O1",
+      "name": "FOX8",
+      "category": "online",
+      "file": "02-online-cases-fox8-and-openai-may-2024.md",
+      "source_ids": [
+        28,
+        47
+      ]
+    },
+    {
+      "id": "O2",
+      "name": "Bad Grammar",
+      "category": "online",
+      "file": "02-online-cases-fox8-and-openai-may-2024.md",
+      "source_ids": [
+        29,
+        34
+      ]
+    },
+    {
+      "id": "O3",
+      "name": "Doppelganger",
+      "category": "online",
+      "file": "02-online-cases-fox8-and-openai-may-2024.md",
+      "source_ids": [
+        30,
+        34
+      ]
+    },
+    {
+      "id": "O4",
+      "name": "Spamouflage (one family, three reporting slices)",
+      "category": "online",
+      "file": "03-online-cases-spamouflage-zero-zeno-storm2035.md",
+      "source_ids": [
+        31,
+        35,
+        36
+      ]
+    },
+    {
+      "id": "O5",
+      "name": "STOIC / Zero Zeno",
+      "category": "online",
+      "file": "03-online-cases-spamouflage-zero-zeno-storm2035.md",
+      "source_ids": [
+        32,
+        34
+      ]
+    },
+    {
+      "id": "O6",
+      "name": "Storm-2035",
+      "category": "online",
+      "file": "03-online-cases-spamouflage-zero-zeno-storm2035.md",
+      "source_ids": [
+        33
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "Kilobot self-assembly",
+      "category": "physical",
+      "file": "04-physical-swarm-cases.md",
+      "source_ids": [
+        56,
+        58,
+        59
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Micro flying robots in the wild",
+      "category": "physical",
+      "file": "04-physical-swarm-cases.md",
+      "source_ids": [
+        51
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Perdix",
+      "category": "physical",
+      "file": "04-physical-swarm-cases.md",
+      "source_ids": [
+        52
+      ]
+    },
+    {
+      "id": "D1",
+      "name": "Generative Agents / Smallville",
+      "category": "digital_experiment",
+      "file": "05-digital-agent-experiments.md",
+      "source_ids": [
+        53
+      ]
+    },
+    {
+      "id": "D2",
+      "name": "Emergent social conventions and collective bias",
+      "category": "digital_experiment",
+      "file": "05-digital-agent-experiments.md",
+      "source_ids": [
+        54
+      ]
+    }
+  ]
+}

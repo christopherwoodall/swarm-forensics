@@ -1,0 +1,715 @@
+[Skip to main content](https://www.science.org/doi/10.1126/science.1254295#main-content-focus)
+
+Advertisement
+
+Main content starts here
+
+Contents
+
+This article has
+[1eLetter](https://www.science.org/doi/10.1126/science.1254295#elettersSection)
+.
+
+
+## Large-scale robotic self-assembly
+
+When individuals swarm, they must somehow communicate to direct collective motion. Swarms of robots need to deal with outliers, such as robots that move more slowly than the rest. Rubenstein _et al._ created a large swarm of programmed robots that can form collaborations using only local information. The robots could communicate only with nearby members, within about three times their diameter. They were able to assemble into complex preprogrammed shapes. If the robots' formation hit snags when they bumped into one another or because of an outlier, additional algorithms guided them to rectify their collective movements.
+
+_Science_, this issue p. [795](https://doi.org/10.1126/science.1254295)
+
+## Abstract
+
+Self-assembly enables nature to build complex forms, from multicellular organisms to complex animal structures such as flocks of birds, through the interaction of vast numbers of limited and unreliable individuals. Creating this ability in engineered systems poses challenges in the design of both algorithms and physical systems that can operate at such scales. We report a system that demonstrates programmable self-assembly of complex two-dimensional shapes with a thousand-robot swarm. This was enabled by creating autonomous robots designed to operate in large groups and to cooperate through local interactions and by developing a collective algorithm for shape formation that is highly robust to the variability and error characteristic of large-scale decentralized systems. This work advances the aim of creating artificial swarms with the capabilities of natural ones.
+
+## Register and access this article for free
+
+As a service to the community, this article is available for free.
+
+[Log in](https://www.science.org/action/ssostart?redirectUri=/doi/10.1126/science.1254295) [Create a free account](https://purchase.aaas.org/order/startnew/580?&returnUrl=https://www.science.org/doi/10.1126/science.1254295&ctc=SPREGFRE)
+
+## Access the full article
+
+View all access options to continue reading this article.
+
+[CHECK ACCESS](https://www.science.org/doi/10.1126/science.1254295#core-collateral-purchase-access)
+
+## Supplementary Material
+
+### Summary
+
+Materials and Methods
+
+Figs. S1 to S10
+
+Tables S1 and S2
+
+Movies S1 to S4
+
+References ( [_28_](https://www.science.org/doi/10.1126/science.1254295#core-collateral-R28), [_29_](https://www.science.org/doi/10.1126/science.1254295#core-collateral-R29))
+
+### Resources
+
+File(1254295s1.mp4)
+
+- [Download](https://www.science.org/doi/suppl/10.1126/science.1254295/suppl_file/1254295s1.mp4)
+- 9.75 MB
+
+File(1254295s2.mp4)
+
+- [Download](https://www.science.org/doi/suppl/10.1126/science.1254295/suppl_file/1254295s2.mp4)
+- 9.24 MB
+
+File(1254295s3.mp4)
+
+- [Download](https://www.science.org/doi/suppl/10.1126/science.1254295/suppl_file/1254295s3.mp4)
+- 8.51 MB
+
+File(1254295s4.mp4)
+
+- [Download](https://www.science.org/doi/suppl/10.1126/science.1254295/suppl_file/1254295s4.mp4)
+- 12.56 MB
+
+File(rubenstein.sm.pdf)
+
+- [Download](https://www.science.org/doi/suppl/10.1126/science.1254295/suppl_file/rubenstein.sm.pdf)
+- 1.26 MB
+
+## References and Notes
+
+1
+
+Whitesides G. M., Grzybowski B., Self-assembly at all scales. _Science_ **_295_**, 2418–2421 (2002).
+
+[Crossref](https://www.science.org/servlet/linkout?suffix=e_1_3_2_2_2&dbid=4&doi=10.1126%2Fscience.1254295&key=10.1126%2Fscience.1070821&site=aaas-site)
+
+[PubMed](https://pubmed.ncbi.nlm.nih.gov/11923529/)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000174712600045)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Self-assembly+at+all+scales&author=G.+M.+Whitesides&author=B.+Grzybowski&publication_year=2002&journal=Science&pages=2418-2421&doi=10.1126%2Fscience.1070821&pmid=11923529)
+
+2
+
+Berg H. C., The rotary motor of bacterial flagella. _Annu. Rev. Biochem._ **_72_**, 19–54 (2003).
+
+[Crossref](https://doi.org/10.1146/annurev.biochem.72.121801.161737)
+
+[PubMed](https://pubmed.ncbi.nlm.nih.gov/12500982/)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000185092500003)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=The+rotary+motor+of+bacterial+flagella&author=H.+C.+Berg&publication_year=2003&journal=Annu.+Rev.+Biochem.&pages=19-54&doi=10.1146%2Fannurev.biochem.72.121801.161737&pmid=12500982)
+
+3
+
+P. Lawrence, _The Making of a Fly: The Genetics of Animal Design_ (Blackwell, Oxford, 1992).
+
+[Google Scholar](https://scholar.google.com/scholar?q=P.+Lawrence%2C+The+Making+of+a+Fly%3A+The+Genetics+of+Animal+Design+%28Blackwell%2C+Oxford%2C+1992%29.)
+
+4
+
+S. Camazine _et al_., _Self-Organization in Biological Systems_ (Princeton Univ. Press, Princeton, NJ, 2003).
+
+[Google Scholar](https://scholar.google.com/scholar?q=S.+Camazine+et+al.%2C+Self-Organization+in+Biological+Systems+%28Princeton+Univ.+Press%2C+Princeton%2C+NJ%2C+2003%29.)
+
+5
+
+Anderson C., Theraulaz G., Deneubourg J., Self-assemblages in insect societies. _Insectes Soc._ **_49_**, 99–110 (2002).
+
+[Crossref](https://doi.org/10.1007/s00040-002-8286-y)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000176750600001)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Self-assemblages+in+insect+societies&author=C.+Anderson&author=G.+Theraulaz&author=J.+Deneubourg&publication_year=2002&journal=Insectes+Soc.&pages=99-110&doi=10.1007%2Fs00040-002-8286-y)
+
+6
+
+Mlot N. J., Tovey C. A., Hu D. L., Fire ants self-assemble into waterproof rafts to survive floods. _Proc. Natl. Acad. Sci. U.S.A._ **_108_**, 7669–7673 (2011).
+
+[Crossref](https://doi.org/10.1073/pnas.1016658108)
+
+[PubMed](https://pubmed.ncbi.nlm.nih.gov/21518911/)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000290439500012)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Fire+ants+self-assemble+into+waterproof+rafts+to+survive+floods&author=N.+J.+Mlot&author=C.+A.+Tovey&author=D.+L.+Hu&publication_year=2011&journal=Proc.+Natl.+Acad.+Sci.+U.S.A.&pages=7669-7673&doi=10.1073%2Fpnas.1016658108&pmid=21518911)
+
+7
+
+M. Kirschner, J. Gerhart, _The Plausibility of Life: Resolving Darwin’s Dilemma_ (Yale Univ. Press, New Haven, CT, 2005).
+
+[Google Scholar](https://scholar.google.com/scholar?q=M.+Kirschner%2C+J.+Gerhart%2C+The+Plausibility+of+Life%3A+Resolving+Darwin%E2%80%99s+Dilemma+%28Yale+Univ.+Press%2C+New+Haven%2C+CT%2C+2005%29.)
+
+8
+
+Wood R., Nagpal R., Wei G. Y., Flight of the robobees. _Sci. Am._ **_308_**, 60–65 (March 2013).
+
+[Crossref](https://doi.org/10.1038/scientificamerican0313-60)
+
+[PubMed](https://pubmed.ncbi.nlm.nih.gov/23469434/)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000315131100030)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Flight+of+the+robobees&author=R.+Wood&author=R.+Nagpal&author=G.+Y.+Wei&publication_year=2013&journal=Sci.+Am.&pages=60-65&doi=10.1038%2Fscientificamerican0313-60&pmid=23469434)
+
+9
+
+Groß R., Bonani M., Mondada F., Dorigo M., Autonomous self-assembly in swarm-bots. _IEEE Trans. Robot._ **_22_**, 1115–1130 (2006).
+
+[Crossref](https://doi.org/10.1109/TRO.2006.882919)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000242815300004)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Autonomous+self-assembly+in+swarm-bots&author=R.+Gro%C3%9F&author=M.+Bonani&author=F.+Mondada&author=M.+Dorigo&publication_year=2006&journal=IEEE+Trans.+Robot.&pages=1115-1130&doi=10.1109%2FTRO.2006.882919)
+
+10
+
+E. William, G, Mermoud, A. Martinoli, in _Proceedings of the 2010 International Conference on Robotics and Automation_ (Anchorage, AK, May 2010), pp. 1438–1445.
+
+[Google Scholar](https://scholar.google.com/scholar?q=E.+William%2C+G%2C+Mermoud%2C+A.+Martinoli%2C+in+Proceedings+of+the+2010+International+Conference+on+Robotics+and+Automation+%28Anchorage%2C+AK%2C+May+2010%29%2C+pp.+1438%E2%80%931445.)
+
+11
+
+Yim M., Shen W., Salemi B., Rus D., Moll M., Lipson H., Klavins E., Chirikjian G., Modular self-reconfigurable robot systems. _Robot. Automat. Mag._ **_14_**, 43–52 (2007).
+
+[Crossref](https://doi.org/10.1109/MRA.2007.339623)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000245377900008)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Modular+self-reconfigurable+robot+systems&author=M.+Yim&author=W.+Shen&author=B.+Salemi&author=D.+Rus&author=M.+Moll&author=H.+Lipson&author=E.+Klavins&author=G.+Chirikjian&publication_year=2007&journal=Robot.+Automat.+Mag.&pages=43-52&doi=10.1109%2FMRA.2007.339623)
+
+12
+
+Goldstein S., Campbell J., Mowry T., Programmable matter. _Computer_ **_38_**, 99–101 (2005).
+
+[Crossref](https://doi.org/10.1109/MC.2005.198)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000229539400022)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Programmable+matter&author=S.+Goldstein&author=J.+Campbell&author=T.+Mowry&publication_year=2005&journal=Computer&pages=99-101&doi=10.1109%2FMC.2005.198)
+
+13
+
+Tolley M., Lipson H., On-line assembly planning for stochastically reconfigurable systems. _Int. J. Robot. Res._ **_30_**, 1566–1584 (2011).
+
+[Crossref](https://doi.org/10.1177/0278364911398160)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000296206800003)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=On-line+assembly+planning+for+stochastically+reconfigurable+systems&author=M.+Tolley&author=H.+Lipson&publication_year=2011&journal=Int.+J.+Robot.+Res.&pages=1566-1584&doi=10.1177%2F0278364911398160)
+
+14
+
+Wurman P., D’Andrea R., Mountz M., Coordinating hundreds of cooperative, autonomous vehicles in warehouses. _AI Mag._ **_29_**, 9–19 (2008).
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000254378700002)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Coordinating+hundreds+of+cooperative%2C+autonomous+vehicles+in+warehouses&author=P.+Wurman&author=R.+D%E2%80%99Andrea&author=M.+Mountz&publication_year=2008&journal=AI+Mag.&pages=9-19)
+
+15
+
+Konolige K., et al., Centibots: Very large scale distributed robotic teams. _Exp. Robot._ **_IX_**, 131–140 (2006).
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Centibots%3A+Very+large+scale+distributed+robotic+teams&author=K.+Konolige&publication_year=2006&journal=Exp.+Robot.&pages=131-140)
+
+16
+
+J. McLurkin _et al_., in _AAAI Spring Symposium: To Boldly Go Where No Human-Robot Team Has Gone Before_ (Stanford, CA, March 2006), pp. 72–75.
+
+[Google Scholar](https://scholar.google.com/scholar?q=J.+McLurkin+et+al.%2C+in+AAAI+Spring+Symposium%3A+To+Boldly+Go+Where+No+Human-Robot+Team+Has+Gone+Before+%28Stanford%2C+CA%2C+March+2006%29%2C+pp.+72%E2%80%9375.)
+
+17
+
+M. Rubenstein, C. Ahler, R. Nagpal, in _Proceedings of the 2012 IEEE International Conference on Robotics and Automation_ (St. Paul, MN, May 2012), pp. 3293–3298.
+
+[Google Scholar](https://scholar.google.com/scholar?q=M.+Rubenstein%2C+C.+Ahler%2C+R.+Nagpal%2C+in+Proceedings+of+the+2012+IEEE+International+Conference+on+Robotics+and+Automation+%28St.+Paul%2C+MN%2C+May+2012%29%2C+pp.+3293%E2%80%933298.)
+
+18
+
+P. Vartholomeos, E. Papadopoulos, in _Proceedings of the 2006 IEEE International Conference on Robotics and Automation_ (Orlando, FL, May 2006), pp. 649–654.
+
+[Google Scholar](https://scholar.google.com/scholar?q=P.+Vartholomeos%2C+E.+Papadopoulos%2C+in+Proceedings+of+the+2006+IEEE+International+Conference+on+Robotics+and+Automation+%28Orlando%2C+FL%2C+May+2006%29%2C+pp.+649%E2%80%93654.)
+
+19
+
+See supplementary materials on _Science_ Online.
+
+20
+
+D. Moore, J. Leonard, D. Rus, S. Teller, in _The 2nd International Conference on Embedded Networked Sensor Systems_ (Baltimore, November 2004), pp. 50–61.
+
+[Google Scholar](https://scholar.google.com/scholar?q=D.+Moore%2C+J.+Leonard%2C+D.+Rus%2C+S.+Teller%2C+in+The+2nd+International+Conference+on+Embedded+Networked+Sensor+Systems+%28Baltimore%2C+November+2004%29%2C+pp.+50%E2%80%9361.)
+
+21
+
+J. Werfel, Y. Bar-Yam, D. Rus, R. Nagpal, in _Proceedings of the 2006 IEEE International Conference on Robotics and Automation_ (Orlando, FL, May 2006), pp. 2787–2794.
+
+[Google Scholar](https://scholar.google.com/scholar?q=J.+Werfel%2C+Y.+Bar-Yam%2C+D.+Rus%2C+R.+Nagpal%2C+in+Proceedings+of+the+2006+IEEE+International+Conference+on+Robotics+and+Automation+%28Orlando%2C+FL%2C+May+2006%29%2C+pp.+2787%E2%80%932794.)
+
+22
+
+Arbuckle D., Requicha A., Self-assembly and self-repair of arbitrary shapes by a swarm of reactive robots: Algorithms and simulations. _Auton. Robots_ **_28_**, 197–211 (2010).
+
+[Crossref](https://doi.org/10.1007/s10514-009-9162-7)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000273234700004)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Self-assembly+and+self-repair+of+arbitrary+shapes+by+a+swarm+of+reactive+robots%3A+Algorithms+and+simulations&author=D.+Arbuckle&author=A.+Requicha&publication_year=2010&journal=Auton.+Robots&pages=197-211&doi=10.1007%2Fs10514-009-9162-7)
+
+23
+
+Støy K., Using cellular automata and gradients to control self-reconfiguration. _Robot. Auton. Syst._ **_54_**, 135–141 (2006).
+
+[Crossref](https://doi.org/10.1016/j.robot.2005.09.017)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000235256900007)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Using+cellular+automata+and+gradients+to+control+self-reconfiguration&author=K.+St%C3%B8y&publication_year=2006&journal=Robot.+Auton.+Syst.&pages=135-141&doi=10.1016%2Fj.robot.2005.09.017)
+
+24
+
+Tomita K., Murata S., Kurokawa H., Yoshida E., Kokaji S., Self-assembly and self-repair method for a distributed mechanical system. _IEEE Trans. Robot. Autom._ **_15_**, 1035–1045 (1999).
+
+[Crossref](https://doi.org/10.1109/70.817668)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000085015000006)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Self-assembly+and+self-repair+method+for+a+distributed+mechanical+system&author=K.+Tomita&author=S.+Murata&author=H.+Kurokawa&author=E.+Yoshida&author=S.+Kokaji&publication_year=1999&journal=IEEE+Trans.+Robot.+Autom.&pages=1035-1045&doi=10.1109%2F70.817668)
+
+25
+
+M. De Rosa, S. Goldstein, P. Lee, J. Campbell, P. Pillai, in _Proceedings of the 2006 IEEE International Conference on Robotics and Automation_ (Orlando, FL, May 2006), pp. 1462–1468.
+
+[Google Scholar](https://scholar.google.com/scholar?q=M.+De+Rosa%2C+S.+Goldstein%2C+P.+Lee%2C+J.+Campbell%2C+P.+Pillai%2C+in+Proceedings+of+the+2006+IEEE+International+Conference+on+Robotics+and+Automation+%28Orlando%2C+FL%2C+May+2006%29%2C+pp.+1462%E2%80%931468.)
+
+26
+
+R. Nagpal, H. Shrobe, J. Bachrach, in _Information Processing in Sensor Networks_, F. Zhao, L. Guibas, Eds. (Springer, Berlin, 2003), pp. 333–348.
+
+[Google Scholar](https://scholar.google.com/scholar?q=R.+Nagpal%2C+H.+Shrobe%2C+J.+Bachrach%2C+in+Information+Processing+in+Sensor+Networks%2C+F.+Zhao%2C+L.+Guibas%2C+Eds.+%28Springer%2C+Berlin%2C+2003%29%2C+pp.+333%E2%80%93348.)
+
+27
+
+Rothemund P. W., Folding DNA to create nanoscale shapes and patterns. _Nature_ **_440_**, 297–302 (2006).
+
+[Crossref](https://doi.org/10.1038/nature04586)
+
+[PubMed](https://pubmed.ncbi.nlm.nih.gov/16541064/)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000235997600044)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Folding+DNA+to+create+nanoscale+shapes+and+patterns&author=P.+W.+Rothemund&publication_year=2006&journal=Nature&pages=297-302&doi=10.1038%2Fnature04586&pmid=16541064)
+
+28
+
+T. He, C. Huang, B. Blum, J. Stankovic, T. Abdelzaher, Range-free localization schemes for large scale sensor networks. In _Proceedings of the 9th Annual International Conference on Mobile Computing and Networking_ (San Diego, CA, 2003), pp. 81–95.
+
+[Google Scholar](https://scholar.google.com/scholar?q=T.+He%2C+C.+Huang%2C+B.+Blum%2C+J.+Stankovic%2C+T.+Abdelzaher%2C+Range-free+localization+schemes+for+large+scale+sensor+networks.+In+Proceedings+of+the+9th+Annual+International+Conference+on+Mobile+Computing+and+Networking+%28San+Diego%2C+CA%2C+2003%29%2C+pp.+81%E2%80%9395.)
+
+29
+
+Yim M., Zhang Y., Lamping J., Mao E., Distributed control for 3D metamorphosis. _Auton. Robots_ **_10_**, 41–56 (2001).
+
+[Crossref](https://doi.org/10.1023/A:1026544419097)
+
+[Web of Science](https://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=FullRecord&KeyUT=WOS%3A000166197400004)
+
+[Google Scholar](https://scholar.google.com/scholar_lookup?title=Distributed+control+for+3D+metamorphosis&author=M.+Yim&author=Y.+Zhang&author=J.+Lamping&author=E.+Mao&publication_year=2001&journal=Auton.+Robots&pages=41-56&doi=10.1023%2FA%3A1026544419097)
+
+## (1)eLetters
+
+eLetters is a forum for ongoing peer review. eLetters are not edited, proofread, or indexed, but they are screened. eLetters should provide substantive and scholarly commentary on the article. Neither embedded figures nor equations with special characters can be submitted, and we discourage the use of figures and equations within eLetters in general. If a figure or equation is essential, please include within the text of the eLetter a link to the figure, equation, or full text with special characters at a public repository with versioning, such as Zenodo. Please read our [Terms of Service](https://www.science.org/content/page/terms-service) before submitting an eLetter.
+
+[Log In to Submit a Response](https://www.science.org/action/ssostart?redirectUri=/doi/full/10.1126/science.1254295)
+
+No eLetters have been published for this article yet.
+
+Mar. 3, 2017
+
+###### Technical Problems with Programmable Self-Assembly in a Thousand Robot Swarm
+
+Muaz A. Niazi
+
+- Professor
+- Computer Science Department, COMSATS Institute of IT, Islamabad, Pakistan
+
+I would like to note here that I had submitted a technical comment on this article and also emailed the authors. No technical response was received from the journal or the authors. I would, therefore like to share my comments on the flaw in this paper via Figshare.
+
+[https://figshare.com/articles/Technical\_Problems\_With\_Programmable\_self\_...](https://figshare.com/articles/Technical_Problems_With_Programmable_self_assembly_in_a_thousand_robot_swarm_/1185186)
+
+[view more](https://www.science.org/doi/10.1126/science.1254295#)
+
+Loading...
+
+[SHOW ALL eLETTERS](https://www.science.org/doi/10.1126/science.1254295#itemsCollapseItems)
+
+### Information
+
+#### Published In
+
+![](https://www.science.org/cms/asset/408b9066-84ad-45cc-8ce9-095b672cb5e0/science.2014.345.issue-6198.cover.gif)
+
+Science
+
+Volume 345 \| Issue 6198
+
+15 August 2014
+
+#### Copyright
+
+Copyright © 2014, American Association for the Advancement of Science.
+
+#### Permissions
+
+Request permissions for this article.
+
+[Request Permissions](https://s100.copyright.com/AppDispatchServlet?publisherName=AAAS&publication=sci&title=Programmable+self-assembly+in+a+thousand-robot+swarm&publicationDate=2014-08-15&author=Michael+Rubenstein%2C+Alejandro+Cornejo%2C+Radhika+Nagpal&contentID=10.1126%2Fscience.1254295&volumeNum=345&issueNum=6198&startPage=795&endPage=799&numPages=5&orderBeanReset=true&section=R)
+
+#### Submission history
+
+**Received**: 3 April 2014
+
+**Accepted**: 18 June 2014
+
+**Published in print**: 15 August 2014
+
+#### Acknowledgments
+
+Supported by the Wyss Institute for Biologically Inspired Engineering and by NSF grants CCF-0926148 and CCF-0643898.
+
+### Authors
+
+#### Affiliations
+
+MichaelRubenstein[\*](https://www.science.org/doi/10.1126/science.1254295#cor1) [mrubenst@seas.harvard.edu](mailto:mrubenst@seas.harvard.edu)
+
+School of Engineering and Applied Sciences and Wyss Institute for Biologically Inspired Engineering, Harvard University, Cambridge, MA 02138, USA.
+
+[View all articles by Michael Rubenstein](https://www.science.org/authored-by/Rubenstein/Michael)
+
+AlejandroCornejo
+
+School of Engineering and Applied Sciences and Wyss Institute for Biologically Inspired Engineering, Harvard University, Cambridge, MA 02138, USA.
+
+[View all articles by Alejandro Cornejo](https://www.science.org/authored-by/Cornejo/Alejandro)
+
+RadhikaNagpal
+
+School of Engineering and Applied Sciences and Wyss Institute for Biologically Inspired Engineering, Harvard University, Cambridge, MA 02138, USA.
+
+[View all articles by Radhika Nagpal](https://www.science.org/authored-by/Nagpal/Radhika)
+
+#### Notes
+
+\*
+
+Corresponding author. E-mail: [mrubenst@seas.harvard.edu](mailto:mrubenst@seas.harvard.edu)
+
+### Metrics
+
+#### Article Usage
+
+Article Metrics
+
+- [Downloads](https://www.science.org/doi/10.1126/science.1254295# "Downloads")
+- [Citations](https://www.science.org/doi/10.1126/science.1254295# "Citations")
+
+No data available.
+
+050100150200MayJunJulAugSepOctLine graph of Downloads and Citations, 11563 Downloads. 1163 Citations.
+
+0
+
+0
+
+- [Total](https://www.science.org/doi/10.1126/science.1254295#)
+- [6 Months](https://www.science.org/doi/10.1126/science.1254295#)
+- [12 Months](https://www.science.org/doi/10.1126/science.1254295#)
+
+Total number of
+downloads and citationsfor the most recent 6 whole calendar months.
+
+**Note:** The article usage is presented with a three- to four-day delay and will update daily once available. Due to this delay, usage data will not appear immediately following publication.
+
+Citation information is sourced from [Crossref Cited-by](https://www.crossref.org/services/cited-by/ "Follow link") service.
+
+- 1,163 citation in Crossref
+
+- [1,065 citation in Web of Science](http://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&DestApp=WOS_CPL&UsrCustomerID=5e3815c904498985e796fc91436abd9a&SrcAuth=atyponcel&SrcApp=literatum&DestLinkType=CitingArticles&KeyUT=WOS:000340593100040)
+
+#### Altmetrics
+
+[![Article has an altmetric score of 516](https://badges.altmetric.com/?size=240&score=516&types=qmabrtfg)](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science)
+
+[See more details](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science)
+
+[Picked up by **45** news outlets](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=news)
+
+[Blogged by **16**](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=blogs)
+
+[Referenced in **1** policy sources](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=policy-documents)
+
+[Posted by **55** X users](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=twitter)
+
+[Referenced in **19** patents](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=patents)
+
+[On **3** Facebook pages](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=facebook)
+
+[Mentioned in **25** Google+ posts](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=google)
+
+[Reddited by **6**](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=reddit)
+
+[Mentioned in **3** Q&A threads](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=qa)
+
+[On **1** videos](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=video)
+
+[Referenced by **1** Bluesky users](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=bluesky)
+
+[Picked up by **1** podcasts](https://www.altmetric.com/details.php?domain=www.science.org&citation_id=2594305&template=science&tab=podcasts)
+
+**905** readers on Mendeley
+
+
+**4** readers on CiteULike
+
+
+### Citations
+
+#### Cite as
+
+- Michael Rubenstein _et al._
+
+,
+
+Programmable self-assembly in a thousand-robot swarm._Science_**345**,795-799(2014).DOI: [10.1126/science.1254295](https://doi.org/10.1126/science.1254295)
+
+#### Export citation
+
+Select the format you want to export the citation of this publication.
+
+Please select one from the listRIS (ProCite, Reference Manager)EndNoteBibTexMedlarsRefWorks
+
+Direct import
+
+
+#### Cited by
+
+01. - Zahra Eidi,
+    - Shayan Rezaei,
+    - Daniyal Ahmadpanah,
+    - Rouzbeh Torabi,
+    - Mehdi Sadeghi,
+
+Utility-driven cooperation and emergent group diversity in the N-player Stag Hunt game: A framework relevant to collective biological behavior, Journal of Theoretical Biology, **636**, (112589), (2027). [https://doi.org/10.1016/j.jtbi.2026.112589](https://doi.org/10.1016/j.jtbi.2026.112589 "Crossref")
+[Crossref](https://doi.org/10.1016/j.jtbi.2026.112589)
+
+02. - Jincheng Gao,
+    - Jinghan Wang,
+    - Bin Tang,
+    - Zequn Shi,
+    - Tianhui Zhang,
+    - Kang Chen,
+    - Wen-de Tian,
+
+Geometry-guided vortex and oscillatory states in confined self-propelling eccentric particles, Chinese Journal of Physics, **104**, (1-9), (2026). [https://doi.org/10.1016/j.cjph.2026.06.027](https://doi.org/10.1016/j.cjph.2026.06.027 "Crossref")
+[Crossref](https://doi.org/10.1016/j.cjph.2026.06.027)
+
+03. - Chen Wang,
+    - Cheng Zhu,
+    - Minfang Lu,
+    - Jiangyao Bai,
+    - Linbo Qiao,
+
+Neural-guided symbolic evolution: From symbolic control search to mechanism discovery in swarm robotics, Engineering Applications of Artificial Intelligence, **181**, (115720), (2026). [https://doi.org/10.1016/j.engappai.2026.115720](https://doi.org/10.1016/j.engappai.2026.115720 "Crossref")
+[Crossref](https://doi.org/10.1016/j.engappai.2026.115720)
+
+04. - Alessandro Pignedoli,
+    - Atreya Majumdar,
+    - Karin Everschor-Sitte,
+
+Leveraging interactions for energy-efficient swarm-based Brownian computing, Physical Review Research, **8**, 3, (2026). [https://doi.org/10.1103/k8wj-xsl7](https://doi.org/10.1103/k8wj-xsl7 "Crossref")
+[Crossref](https://doi.org/10.1103/k8wj-xsl7)
+
+05. - Niamh Ellis,
+    - Jonathan Kelly,
+    - Alexander Caravaggio,
+    - Ian Young,
+    - Fabio Manfredini,
+    - Maria Elena Giannaccini,
+
+Comparing simulation and physical kilobots performance in two ant-inspired foraging behaviours, Frontiers in Robotics and AI, **13**, (2026). [https://doi.org/10.3389/frobt.2026.1828495](https://doi.org/10.3389/frobt.2026.1828495 "Crossref")
+[Crossref](https://doi.org/10.3389/frobt.2026.1828495)
+
+06. - Clementine Fry,
+    - Stuart Thomson,
+    - Sabine Hauert,
+
+Engineering Predictable Turing Patterns for Spatial Organisation in Swarm Robotics, Proceedings of the 14th ACM Collective Intelligence Conference, (34-43), (2026). [https://doi.org/10.1145/3834581.3838626](https://doi.org/10.1145/3834581.3838626 "Crossref")
+[Crossref](https://doi.org/10.1145/3834581.3838626)
+
+07. - Shijing Zhang,
+    - Ziteng Liu,
+    - Youwei Liu,
+    - Dehong Wang,
+    - Yingxiang Liu,
+
+Arthropod‐Inspired Miniature Modular Vibration Direct‐Drive Robot With Untethered Locomotion, Advanced Science, (2026). [https://doi.org/10.1002/advs.77834](https://doi.org/10.1002/advs.77834 "Crossref")
+[Crossref](https://doi.org/10.1002/advs.77834)
+
+08. - Chen Xin,
+    - Chenchu Zhang,
+    - Yue Dai,
+    - Yanlei Hu,
+    - Wenji Yang,
+    - Yawei Wu,
+    - Liang Yang,
+    - Hao Wu,
+    - Zhaoxin Lao,
+    - Sizhu Wu,
+    - Xin Song,
+    - Jiawen Li,
+    - Zuojun Shen,
+    - Shiwu Zhang,
+    - Jiaru Chu,
+    - Li Zhang,
+    - Dong Wu,
+
+Femtosecond Laser Writing of Stepwise Detachable and Biodegradable Microrobots for Adjustable Locomotion and Drug Delivery, Advanced Materials, (2026). [https://doi.org/10.1002/adma.75013](https://doi.org/10.1002/adma.75013 "Crossref")
+[Crossref](https://doi.org/10.1002/adma.75013)
+
+09. - Bradley Fraser,
+    - Rhett Hull,
+
+Resilient Complex Adaptive Systems: A Communications Perspective, Resilient Complex Adaptive Systems, (365-394), (2026). [https://doi.org/10.1002/9781394326303.ch13](https://doi.org/10.1002/9781394326303.ch13 "Crossref")
+[Crossref](https://doi.org/10.1002/9781394326303.ch13)
+
+10. - Sándor P. Fekete,
+    - Ramin Kosfeld,
+    - Peter Kramer,
+    - Jonas Neutzner,
+    - Christian Rieck,
+    - Christian Scheffer,
+
+Coordinated motion planning: Multi-agent path finding in a densely packed, bounded domain, Autonomous Agents and Multi-Agent Systems, **40**, 2, (2026). [https://doi.org/10.1007/s10458-026-09766-4](https://doi.org/10.1007/s10458-026-09766-4 "Crossref")
+[Crossref](https://doi.org/10.1007/s10458-026-09766-4)
+
+11. See more
+
+Loading...
+
+Citation information is sourced from [Crossref Cited-by](https://www.crossref.org/services/cited-by/ "Follow link") service.
+
+#### Log in to view the full text
+
+[AAAS ID LOGIN](https://www.science.org/action/ssostart?redirectUri=/doi/10.1126/science.1254295)
+
+[**Access through your institution**](https://www.science.org/action/ssostart?redirectUri=/doi/10.1126/science.1254295)
+
+AAAS login provides access to Science for AAAS Members, and access to other journals in the Science family to users who have purchased individual subscriptions.
+
+- [Become a AAAS Member](http://www.aaas.org/join/?CTC=SMAAJN)
+- [Activate your AAAS ID](https://account.aaas.org/Identity/Lookup)
+- [Purchase Access to Other Journals in the Science Family](https://www.science.org/content/page/purchase-journal-access)
+- [Account Help](https://www.science.org/content/page/access-and-subscriptions)
+
+#### More options
+
+[Register for free to read this article](https://purchase.aaas.org/order/startnew/580?&returnUrl=https://www.science.org/doi/10.1126/science.1254295&ctc=SPREGFRE)
+
+As a service to the community, this article is available for free. Login or
+register for free to read this article.
+
+[Purchase this issue in print](https://backissues.science.org/)
+
+Buy a single issue of Science for just **$15 USD**.
+
+### View options
+
+#### PDF format
+
+Download this article as a PDF file
+
+[Download PDF](https://www.science.org/doi/pdf/10.1126/science.1254295?download=true "")
+
+#### Full Text
+
+[FULL TEXT](https://www.science.org/doi/full/10.1126/science.1254295)
+
+### Share
+
+#### Copy the article link
+
+Copy Link
+
+Copied!
+
+Copying failed.
+
+#### Share on social media
+
+[Facebook](https://www.science.org/#facebook "Share on Facebook") [X](https://www.science.org/#twitter "Share on X") [LinkedIn](https://www.science.org/#linkedin "Share on LinkedIn") [Reddit](https://www.science.org/#reddit "Share on Reddit") [WeChat](https://www.science.org/#wechat "Share on WeChat") [WhatsApp](https://www.science.org/#whatsapp "Share on WhatsApp") [Bluesky](https://www.science.org/#bluesky "Share on Bluesky") [email](https://www.science.org/#email "Share on email")
+
+[View full text](https://www.science.org/doi/full/10.1126/science.1254295) \| [Download PDF](https://www.science.org/doi/pdf/10.1126/science.1254295)
+
+Now Reading:
+
+[SHARE](https://www.science.org/doi/10.1126/science.1254295#)
+
+- [Share on Facebook](https://www.science.org/#facebook "Share on Facebook")
+- [Share on X (formerly Twitter)](https://www.science.org/#twitter "Share on X (formerly Twitter)")
+- [Share on LinkedIn](https://www.science.org/#linkedin "Share on LinkedIn")
+- [Share on Reddit](https://www.science.org/#reddit "Share on Reddit")
+- [Share on WeChat](https://www.science.org/#wechat "Share on WeChat")
+- [Share on WhatsApp](https://www.science.org/#whatsapp "Share on WhatsApp")
+- [Share on Bluesky](https://www.science.org/#bluesky "Share on Bluesky")
+- [Share on email](https://www.science.org/#email "Share on email")
+
+[**PREVIOUS ARTICLE** \\
+\\
+Pseudo–three-dimensional maps of the diffuse interstellar band at 862 nm\\
+\\
+Previous](https://www.science.org/doi/10.1126/science.1253171) [**NEXT ARTICLE** \\
+\\
+A single-stranded architecture for cotranscriptional folding of RNA nanostructures\\
+\\
+Next](https://www.science.org/doi/10.1126/science.1253920)
+
+xrefBack.goTo
+
+xrefBack.goTo
+
+Request permissionsExpand All
+
+Collapse
+
+Expand for more
+
+Show all references
+
+SHOW ALL BOOKS
+
+[Authors Info & Affiliations](about:blank#tab-contributors)
+
+[![Science Adviser](https://www.science.org/pb-assets/images/logos/ScienceAdviser-logo-1683228767297.svg)](https://www.science.org/scienceadviser)
+
+Get _Science_’s award-winning newsletter with the latest news, commentary, and research, free to your inbox daily.
+
+[Subscribe](https://www.science.org/content/page/scienceadviser?intcmp=popup-adviser&utm_id=recbEndseGq5WulpU) [Not Now](https://www.science.org/doi/10.1126/science.1254295#)
+
+Copy link
+
+✓
+
+Thanks for sharing!
+
+Find any service
+
+[AddToAny](https://www.addtoany.com/ "Share Buttons")
+
+[More…](https://www.science.org/doi/10.1126/science.1254295#addtoany "Show all")
+
+A2A
+
+Site index
+
+The Identity Selector: Persistence Service
