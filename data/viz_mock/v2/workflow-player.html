@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<!--
+AI VILLAGE // workflow replay
+=============================
+Data: ./case.json, exported by `make replay-mock` or `make replay-export SESSION=<uuid>`.
+Each step is one recorded computer_use_turns row. Nothing here is inferred or scored.
+Labels: "village activity". This is not an attack finding.
+
+Tiers (top to bottom): 1 Agents -> 2 Execution surface -> 3 Work type -> 4 Destinations.
+Destination edges: "requested" = the command fetches or pushes (curl, wget, requests, git push).
+                   "referenced" = the host only appears in the command text.
+Status: stderr_recorded = text exists in the error (stderr) field. It does not prove failure.
+        output_recorded = output exists.
+        no_output = nothing stored. No status means the action succeeded.
+Camera: fixed. Playback never moves it. Drag to orbit, scroll to zoom, "VIEW" resets it.
+Text from the dataset is written with textContent only.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI VILLAGE // workflow replay</title>
+<style>
+  html, body { height: 100%; }
+  body { margin: 0; overflow: hidden; background: #f2f4f6;
+         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+         color: #1a2433; }
+  #scene { position: fixed; inset: 0; }
+  .panel { position: fixed; background: rgba(255,255,255,.88);
+           border: 1px solid #d4dbe3; border-radius: 6px;
+           backdrop-filter: blur(6px); padding: 10px 12px; box-sizing: border-box; }
+  .micro { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #6b7686; }
+  h1 { font-size: 13px; margin: 4px 0; letter-spacing: .06em; }
+  p, .note { font-size: 11px; line-height: 1.5; color: #4a5565; margin: 4px 0; }
+  details { font-size: 11px; margin-top: 6px; color: #3c4655; }
+  details summary { cursor: pointer; color: #3b5bdb; }
+  details pre { white-space: pre-wrap; word-break: break-word; margin: 4px 0 0;
+                font: inherit; max-height: 140px; overflow: auto; }
+  #left { position: fixed; top: 14px; left: 14px; bottom: 84px; width: 320px; display: flex;
+          flex-direction: column; gap: 10px; }
+  #left .panel { position: static; }
+  #title { flex: none; max-height: 52vh; overflow-y: auto; }
+  .badge { display: inline-block; font-size: 10px; letter-spacing: .08em; padding: 2px 6px;
+           border-radius: 3px; border: 1px solid #c3ccd6; background: #fff; margin-right: 4px; }
+  .badge.syn { border-color: #d97706; color: #92400e; }
+  .badge.err { border-color: #be123c; color: #be123c; }
+  .badge.out { border-color: #0d9488; color: #0f766e; }
+  .badge.none { border-color: #7a8696; color: #566170; }
+  #legend { margin-top: 8px; }
+  #legend .row { display: flex; align-items: center; gap: 8px; font-size: 11px; margin-top: 4px; }
+  #legend .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  #legend .bar { width: 18px; height: 0; border-top: 3px solid; flex: none; }
+  #legend .bar.dash { border-top-style: dashed; }
+  #steps { flex: 1; min-height: 120px; overflow-y: auto; padding: 6px; }
+  .step { display: grid; grid-template-columns: 26px 1fr; gap: 4px 6px; font-size: 11px;
+          padding: 6px; border-radius: 4px; cursor: pointer; border: 1px solid transparent;
+          line-height: 1.35; }
+  .step:hover { background: #f3f6fb; }
+  .step.cur { background: #eef4ff; border-color: #c9d8f5; }
+  .step.future { opacity: .55; }
+  .step .n { color: #8a94a3; text-align: right; }
+  .step .s { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .step .m { grid-column: 2; font-size: 10px; color: #6b7686; }
+  .pip { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
+  #evidence { right: 14px; top: 14px; bottom: 84px; width: 380px; overflow-y: auto; }
+  #evidence h2 { font-size: 12px; margin: 4px 0 6px; letter-spacing: .06em; }
+  #evidence .kv { font-size: 11px; margin: 3px 0; color: #3c4655; word-break: break-word; }
+  #evidence .kv b { color: #1a2433; font-weight: 600; }
+  #evidence .sec { margin-top: 10px; }
+  #evidence pre { white-space: pre-wrap; word-break: break-word; margin: 4px 0 0; padding: 6px 8px;
+                  font: inherit; font-size: 11px; background: #f6f8fa; border: 1px solid #e0e5eb;
+                  border-radius: 4px; max-height: 170px; overflow: auto; }
+  #evidence pre.error { border-color: #f0b4c2; background: #fff5f7; }
+  #evidence .ctx { font-size: 11px; margin: 4px 0; padding-left: 8px; border-left: 3px solid #c3ccd6; }
+  #evidence .ctx.sess { border-left-color: #3b5bdb; }
+  #controls { left: 50%; transform: translateX(-50%); bottom: 14px; display: flex;
+              align-items: center; gap: 8px; white-space: nowrap; }
+  #controls button, #controls select { font: inherit; font-size: 11px; letter-spacing: .08em;
+        background: #fff; border: 1px solid #c3ccd6; border-radius: 4px; padding: 6px 10px;
+        cursor: pointer; color: #1a2433; }
+  #controls button:hover { border-color: #3b5bdb; color: #3b5bdb; }
+  #controls button.on { background: #3b5bdb; border-color: #3b5bdb; color: #fff; }
+  #controls input[type=range] { width: 260px; accent-color: #3b5bdb; }
+  #read { font-size: 12px; min-width: 120px; text-align: center; }
+  .tiertag { position: fixed; left: 346px; pointer-events: none; font-size: 11px; letter-spacing: .12em;
+             color: #3c4655; transform: translateY(-50%); white-space: nowrap; }
+  .tiertag b { display: inline-block; width: 22px; }
+  .tiertag i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+  #tip { position: fixed; pointer-events: none; display: none; z-index: 10; background: #1a2433;
+         color: #eef1f5; font-size: 11px; padding: 5px 9px; border-radius: 4px; max-width: 320px; }
+  #loaderr { top: 50%; left: 50%; transform: translate(-50%,-50%); max-width: 440px;
+             text-align: center; font-size: 12px; line-height: 1.6; }
+  #loaderr.err { border-color: #be123c; color: #7f1d1d; }
+  .hidden { display: none; }
+  @media (max-width: 1100px) { #left { display: none; } #evidence { width: 320px; } }
+  @media (max-width: 760px) { #evidence { display: none; } #controls input[type=range] { width: 120px; } }
+</style>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js" } }
+</script>
+</head>
+<body>
+<div id="scene"></div>
+
+<div id="left">
+<div class="panel" id="title">
+  <div class="micro">ai village // workflow replay</div>
+  <h1 id="case-title">Loading</h1>
+  <div id="case-badges"></div>
+  <p id="case-note"></p>
+  <details id="goal-box"><summary>Session goal (recorded)</summary><pre id="goal"></pre></details>
+  <details id="limit-box"><summary>Limits and handling</summary><pre id="limits"></pre></details>
+  <div id="legend">
+  <div class="micro">how to read</div>
+  <div class="row"><span class="dot" style="background:#be123c"></span>step with stderr or error text</div>
+  <div class="row"><span class="dot" style="background:#0d9488"></span>step with recorded output</div>
+  <div class="row"><span class="dot" style="background:#7a8696"></span>step with no recorded output</div>
+  <div class="row"><span class="bar" style="border-color:#d97706"></span>requested host (fetch or push)</div>
+  <div class="row"><span class="bar dash" style="border-color:#d97706"></span>referenced host (text only)</div>
+  <p>Colour shows what the dataset stored. It does not show whether a step worked.</p>
+  </div>
+</div>
+<div class="panel" id="steps" aria-label="Step list"></div>
+</div>
+<div class="panel" id="evidence" aria-live="polite"></div>
+
+<div class="panel" id="controls">
+  <button id="btn-prev" aria-label="Previous step">&#9664;</button>
+  <button id="btn-play" aria-label="Play or pause">PLAY</button>
+  <button id="btn-next" aria-label="Next step">&#9654;</button>
+  <input type="range" id="scrub" min="1" max="1" step="1" value="1" aria-label="Step">
+  <span id="read">STEP -</span>
+  <select id="speed" aria-label="Speed">
+    <option value="0.5">0.5x</option><option value="1" selected>1x</option>
+    <option value="2">2x</option><option value="4">4x</option>
+  </select>
+  <button id="btn-reset" aria-label="Reset to step 1">RESET</button>
+  <button id="btn-view" aria-label="Reset the camera">VIEW</button>
+</div>
+
+<div class="panel" id="loaderr"><span class="micro">loading</span><br>fetching case.json</div>
+<div id="tags"></div>
+<div id="tip"></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from './vendor/OrbitControls.js';
+
+const STEP_SECONDS = 1.6;   // one step at 1x speed
+const LABEL_MAX = 26;
+const TIERS = [
+  { id: 'agent',   n: '01', label: 'AGENTS',       y: 12,  color: 0x3b5bdb },
+  { id: 'surface', n: '02', label: 'EXECUTION',    y: 4,   color: 0x0d9488 },
+  { id: 'work',    n: '03', label: 'WORK TYPE',    y: -4,  color: 0x7c3aed },
+  { id: 'dest',    n: '04', label: 'DESTINATIONS', y: -12, color: 0xd97706 },
+];
+const STATUS = {
+  stderr_recorded:  { label: 'STDERR TEXT',      css: 'err',  color: 0xbe123c, hex: '#be123c' },
+  output_recorded: { label: 'OUTPUT RECORDED', css: 'out',  color: 0x0d9488, hex: '#0d9488' },
+  no_output:       { label: 'NO OUTPUT',       css: 'none', color: 0x7a8696, hex: '#7a8696' },
+};
+
+/* ---------- DOM helpers: record text only ever goes through textContent ---------- */
+const $ = (id) => document.getElementById(id);
+function el(tag, cls, text) {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  if (text !== undefined && text !== null) node.textContent = String(text);
+  return node;
+}
+function kv(label, value) {
+  const row = el('div', 'kv');
+  row.appendChild(el('b', null, label + ': '));
+  row.appendChild(document.createTextNode(String(value)));
+  return row;
+}
+function clip(text, max) {
+  const s = String(text);
+  return s.length > max ? s.slice(0, max - 1) + '\u2026' : s;
+}
+function fail(message) {
+  const box = $('loaderr');
+  box.classList.add('err');
+  box.classList.remove('hidden');
+  box.replaceChildren(el('span', 'micro', 'cannot load'), el('br'), document.createTextNode(message));
+}
+
+/* ---------- load and check the case ---------- */
+function checkCase(c) {
+  const need = (cond, msg) => { if (!cond) throw new Error(msg); };
+  need(c && typeof c === 'object', 'case.json is not an object');
+  need(c.schema_version === 1, 'unsupported schema_version');
+  need(Array.isArray(c.steps) && c.steps.length > 0, 'case has no steps');
+  need(c.legend && c.legend.surfaces && c.legend.work, 'legend is missing');
+  need(c.actor && c.session, 'actor or session is missing');
+  c.steps.forEach((s, i) => {
+    need(s.i === i + 1, `step ${i + 1} is out of order`);
+    need(STATUS[s.status], `step ${i + 1} has an unknown status`);
+    need(s.evidence && s.source && Array.isArray(s.destinations), `step ${i + 1} is incomplete`);
+  });
+  if (!Array.isArray(c.context)) c.context = [];
+}
+
+let CASE = null;
+try {
+  const res = await fetch('./case.json');
+  if (!res.ok) throw new Error(`case.json returned HTTP ${res.status}. Run make replay-mock or make replay-export.`);
+  CASE = await res.json();
+  checkCase(CASE);
+  $('loaderr').classList.add('hidden');
+} catch (err) {
+  fail(err && err.message ? err.message : 'unreadable case file');
+  throw err;
+}
+const STEPS = CASE.steps;
+const N = STEPS.length;
+
+/* ---------- graph model built from the case ---------- */
+const nodes = new Map();   // id -> { id, tier, label, steps:Set }
+const edges = new Map();   // key -> { key, a, b, steps:[], relation }
+function addNode(tier, id, label) {
+  if (!nodes.has(id)) nodes.set(id, { id, tier, label, steps: new Set() });
+  return nodes.get(id);
+}
+function addEdge(a, b, step, relation) {
+  const key = a + '>' + b;
+  let e = edges.get(key);
+  if (!e) { e = { key, a, b, steps: [], relation: relation || null }; edges.set(key, e); }
+  e.steps.push(step.i);
+  if (relation === 'requested') e.relation = 'requested';
+  nodes.get(a).steps.add(step.i);
+  nodes.get(b).steps.add(step.i);
+}
+const provider = addNode('agent', 'provider', CASE.actor.provider);
+const agent = addNode('agent', 'agent', CASE.actor.model);
+const stepEdges = [];      // per step: list of edge keys
+for (const s of STEPS) {
+  const keys = [];
+  const sid = 'surface:' + s.surface, wid = 'work:' + s.work;
+  addNode('surface', sid, CASE.legend.surfaces[s.surface] || s.surface);
+  addNode('work', wid, CASE.legend.work[s.work] || s.work);
+  const chain = [['provider', 'agent'], ['agent', sid], [sid, wid]];
+  for (const [a, b] of chain) { addEdge(a, b, s); keys.push(a + '>' + b); }
+  for (const d of s.destinations) {
+    const did = 'dest:' + d.host;
+    addNode('dest', did, d.host);
+    addEdge(wid, did, s, d.relation);
+    keys.push(wid + '>' + did);
+  }
+  stepEdges.push(keys);
+}
+if (![...nodes.values()].some((n) => n.tier === 'dest')) addNode('dest', 'dest:none', 'No host recorded');
+const firstStep = (n) => (n.steps.size ? Math.min(...n.steps) : Infinity);
+
+/* ---------- scene ---------- */
+let renderer = null;
+try {
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+} catch (err) {
+  $('scene').appendChild(el('p', null, 'WebGL is unavailable. The step list and evidence panel still work.'));
+}
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xf2f4f6);
+const camera = new THREE.PerspectiveCamera(46, innerWidth / innerHeight, 0.1, 600);
+const CAM_HOME = new THREE.Vector3(22, 17, 38);
+const TGT_HOME = new THREE.Vector3(0, 0, 0);
+camera.position.copy(CAM_HOME);
+let controls = null;
+if (renderer) {
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  $('scene').appendChild(renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.copy(TGT_HOME);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.minDistance = 10;
+  controls.maxDistance = 140;
+}
+
+function textSprite(text, { size = 40, color = '#1a2433', scale = 1 } = {}) {
+  const font = `600 ${size}px ui-monospace, Menlo, Consolas, monospace`;
+  const cv = document.createElement('canvas');
+  const ctx = cv.getContext('2d');
+  ctx.font = font;
+  const pad = 14;
+  const w = Math.ceil(ctx.measureText(text).width) + pad * 2, h = size + pad * 2;
+  cv.width = w; cv.height = h;
+  ctx.font = font; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+  ctx.lineWidth = 9; ctx.strokeStyle = 'rgba(242,244,246,.95)';
+  ctx.strokeText(text, pad, h / 2);
+  ctx.fillStyle = color;
+  ctx.fillText(text, pad, h / 2);
+  const tex = new THREE.CanvasTexture(cv);
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
+  sp.scale.set((w / h) * scale, scale, 1);
+  return sp;
+}
+function ring(radius, color, opacity, y) {
+  const pts = [];
+  for (let i = 0; i <= 96; i++) {
+    const t = (i / 96) * Math.PI * 2;
+    pts.push(new THREE.Vector3(Math.cos(t) * radius, y, Math.sin(t) * radius));
+  }
+  return new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),
+    new THREE.LineBasicMaterial({ color, transparent: true, opacity }));
+}
+
+const tierById = Object.fromEntries(TIERS.map((t) => [t.id, t]));
+const pickables = [];
+const nodeGeo = new THREE.SphereGeometry(0.7, 24, 18);
+const haloGeo = new THREE.SphereGeometry(1.05, 16, 12);
+
+for (const t of TIERS) {
+  scene.add(ring(5.5, 0x9aa5b3, 0.5, t.y));
+  scene.add(ring(9.5, t.color, 0.55, t.y));
+  const tag = el('div', 'tiertag');
+  const dot = el('i');
+  dot.style.background = '#' + t.color.toString(16).padStart(6, '0');
+  tag.append(dot, el('b', null, t.n), document.createTextNode(t.label));
+  $('tags').appendChild(tag);
+  t.tag = tag;
+  const members = [...nodes.values()].filter((n) => n.tier === t.id);
+  members.forEach((n, k) => {
+    const th = (k / members.length) * Math.PI * 2 + Math.PI / 6;
+    const r = members.length === 1 ? 0 : (t.id === 'agent' ? 3.2 : 7);
+    n.pos = new THREE.Vector3(Math.cos(th) * r, t.y, Math.sin(th) * r);
+    n.mat = new THREE.MeshBasicMaterial({ color: t.color, transparent: true, opacity: 1 });
+    n.mesh = new THREE.Mesh(nodeGeo, n.mat);
+    n.mesh.position.copy(n.pos);
+    n.mesh.userData.nodeId = n.id;
+    n.halo = new THREE.Mesh(haloGeo, new THREE.MeshBasicMaterial({ color: t.color, transparent: true, opacity: 0.1 }));
+    n.halo.position.copy(n.pos);
+    n.label = textSprite(clip(n.label, LABEL_MAX), { size: 34, color: '#2b3542', scale: 0.9 });
+    n.label.position.set(n.pos.x, n.pos.y + ((k % 2 || members.length === 1) ? -1.9 : 1.9), n.pos.z);
+    scene.add(n.mesh, n.halo, n.label);
+    pickables.push(n.mesh);
+    n.cur = { op: 0.25, halo: 0.1, s: 1 };
+  });
+}
+
+function curveFor(a, b) {
+  const mid = a.clone().add(b).multiplyScalar(0.5);
+  mid.x += (b.z - a.z) * 0.12; mid.z -= (b.x - a.x) * 0.12;
+  return new THREE.QuadraticBezierCurve3(a, mid, b);
+}
+for (const e of edges.values()) {
+  e.curve = curveFor(nodes.get(e.a).pos, nodes.get(e.b).pos);
+  e.first = Math.min(...e.steps);
+  e.mat = new THREE.LineBasicMaterial({ color: 0x9aa5b3, transparent: true, opacity: 0.05 });
+  e.line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(e.curve.getPoints(28)), e.mat);
+  e.cur = 0.05;
+  scene.add(e.line);
+}
+const pulse = new THREE.Mesh(new THREE.SphereGeometry(0.28, 12, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+const pulses = [];
+for (let i = 0; i < 8; i++) { const p = pulse.clone(); p.material = pulse.material.clone(); p.visible = false; scene.add(p); pulses.push(p); }
+
+/* ---------- state and views ---------- */
+let idx = 1;               // 1-based current step
+let playing = false;
+let acc = 0;
+let selectedNode = null;
+const stepNodes = $('steps');
+const ctxByStep = (() => {
+  const map = new Map(STEPS.map((s) => [s.i, []]));
+  const times = STEPS.map((s) => Date.parse(s.ts));
+  for (const c of CASE.context) {
+    const t = Date.parse(c.ts);
+    let k = 0;
+    for (let j = 0; j < times.length; j++) if (times[j] <= t) k = j;
+    map.get(STEPS[k].i).push(c);
+  }
+  return map;
+})();
+
+function fmtOffset(ms) {
+  const s = Math.floor(ms / 1000), m = Math.floor(s / 60);
+  return `+${String(m).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+}
+
+function buildHeader() {
+  $('case-title').textContent = CASE.title || CASE.case_id;
+  const badges = $('case-badges');
+  badges.appendChild(el('span', 'badge', String(CASE.classification).replace('_', ' ').toUpperCase()));
+  if (CASE.synthetic) badges.appendChild(el('span', 'badge syn', 'SYNTHETIC'));
+  $('case-note').textContent = `${CASE.classification_note || ''} Actor: ${CASE.actor.model} (${CASE.actor.provider}, by model name). `
+    + `${N} recorded steps, ${CASE.context.length} context events.`;
+  $('goal').textContent = CASE.session.goal || '(no goal recorded)';
+  const lim = CASE.limits || {};
+  const lines = [...(lim.notes || [])];
+  lines.push(`Turns dropped by the step limit: ${lim.turns_dropped || 0}`);
+  lines.push(`Fields cut to a length limit: ${lim.truncated_fields || 0}`);
+  lines.push(`Values masked by the exporter: ${lim.masked_values || 0}`);
+  lines.push('Typed text and screenshots are not exported.');
+  $('limits').textContent = lines.join('\n');
+}
+
+function buildStepList() {
+  for (const s of STEPS) {
+    const row = el('div', 'step');
+    row.dataset.i = s.i;
+    row.appendChild(el('div', 'n', s.i));
+    const text = el('div', 's');
+    const pip = el('span', 'pip');
+    pip.style.background = STATUS[s.status].hex;
+    text.append(pip, document.createTextNode(clip(s.summary || s.action_type, 70)));
+    row.appendChild(text);
+    row.appendChild(el('div', 'm', `${fmtOffset(s.t_ms)}  ${CASE.legend.work[s.work] || s.work}`));
+    row.addEventListener('click', () => { setPlaying(false); go(s.i); });
+    stepNodes.appendChild(row);
+  }
+}
+
+function section(title) {
+  const box = el('div', 'sec');
+  box.appendChild(el('div', 'micro', title));
+  return box;
+}
+function block(box, text, cls) {
+  const pre = el('pre', cls, text);
+  box.appendChild(pre);
+}
+
+function renderEvidence() {
+  const s = STEPS[idx - 1];
+  const st = STATUS[s.status];
+  const box = $('evidence');
+  const frag = document.createDocumentFragment();
+  frag.appendChild(el('div', 'micro', 'evidence // recorded step'));
+  frag.appendChild(el('h2', null, `Step ${s.i} of ${N}: ${CASE.legend.work[s.work] || s.work}`));
+  const badges = el('div');
+  badges.appendChild(el('span', `badge ${st.css}`, st.label));
+  for (const g of s.signals) badges.appendChild(el('span', 'badge', g));
+  frag.appendChild(badges);
+  frag.appendChild(el('p', null, s.outcome_note));
+
+  const who = section('who, when, where');
+  who.appendChild(kv('Actor', `${CASE.actor.model} (agent ${s.actor})`));
+  who.appendChild(kv('Time', `${s.ts}  ${fmtOffset(s.t_ms)} from first step`));
+  who.appendChild(kv('Session', s.session_id));
+  who.appendChild(kv('Source record', `${s.source.table} / ${s.source.id}`));
+  who.appendChild(kv('Surface', CASE.legend.surfaces[s.surface] || s.surface));
+  who.appendChild(kv('Action type', s.action_type));
+  frag.appendChild(who);
+
+  if (s.command) { const b = section('command (masked, length-limited)'); block(b, s.command); frag.appendChild(b); }
+  if (s.claim) { const b = section(s.action_type === 'search_history' ? 'query' : 'message text'); block(b, s.claim); frag.appendChild(b); }
+  if (s.output) { const b = section('recorded output'); block(b, s.output); frag.appendChild(b); }
+  if (s.error) { const b = section('recorded stderr / error field'); block(b, s.error, 'error'); frag.appendChild(b); }
+  const detailKeys = Object.keys(s.detail || {});
+  if (detailKeys.length) {
+    const b = section('action detail');
+    for (const k of detailKeys) b.appendChild(kv(k, JSON.stringify(s.detail[k])));
+    frag.appendChild(b);
+  }
+
+  const dests = section('destinations in the command text');
+  if (s.destinations.length) {
+    for (const d of s.destinations) {
+      dests.appendChild(kv(d.host, d.relation === 'requested' ? 'requested (fetch or push command)' : 'referenced (text only)'));
+    }
+  } else {
+    dests.appendChild(el('p', null, 'No host name found in this step.'));
+  }
+  frag.appendChild(dests);
+
+  const ev = s.evidence;
+  const handling = section('evidence handling');
+  handling.appendChild(kv('Cut to length limit', ev.truncated.length ? ev.truncated.join(', ') : 'none'));
+  handling.appendChild(kv('Values masked', ev.masked_values));
+  handling.appendChild(kv('Upstream [REDACTED] markers', ev.upstream_redactions));
+  handling.appendChild(kv('Screenshot redacted upstream', ev.screenshot_redacted ? 'yes' : 'no'));
+  frag.appendChild(handling);
+
+  const ctx = ctxByStep.get(s.i) || [];
+  const cbox = section('nearby village events');
+  if (ctx.length) {
+    for (const c of ctx) {
+      const row = el('div', c.link === 'session_id' ? 'ctx sess' : 'ctx');
+      const label = c.link === 'session_id' ? 'linked by session id' : 'same agent, same time window (not causal)';
+      row.appendChild(el('div', 'micro', `${c.action_type}  ${c.ts}`));
+      row.appendChild(document.createTextNode(`${label}${c.text ? ': ' + c.text : ''}`));
+      cbox.appendChild(row);
+    }
+  } else {
+    cbox.appendChild(el('p', null, 'No linked event between this step and the next.'));
+  }
+  frag.appendChild(cbox);
+  box.replaceChildren(frag);
+  box.scrollTop = 0;
+}
+
+/* ---------- apply a step to the scene ---------- */
+const targets = { nodes: new Map(), edges: new Map(), active: [], statusColor: new THREE.Color() };
+function applyStep() {
+  const s = STEPS[idx - 1];
+  const active = new Set(stepEdges[idx - 1]);
+  const activeNodes = new Set();
+  for (const k of active) { const e = edges.get(k); activeNodes.add(e.a); activeNodes.add(e.b); }
+  targets.statusColor.set(STATUS[s.status].color);
+  for (const n of nodes.values()) {
+    const seen = firstStep(n) <= idx;
+    const now = activeNodes.has(n.id);
+    const picked = selectedNode === n.id;
+    n.t = { op: now || picked ? 1 : seen ? 0.7 : 0.22, halo: now ? 0.38 : picked ? 0.3 : seen ? 0.12 : 0.04, s: now ? 1.35 : 1 };
+  }
+  for (const e of edges.values()) {
+    const seen = e.first <= idx;
+    e.t = active.has(e.key) ? 1 : seen ? 0.28 : 0.05;
+    e.activeNow = active.has(e.key);
+  }
+  targets.active = [...active].map((k) => edges.get(k));
+  for (const e of edges.values()) {
+    e.mat.color.set(e.activeNow ? STATUS[s.status].color
+      : e.relation ? 0xd97706 : 0x9aa5b3);
+  }
+  renderEvidence();
+  stepNodes.querySelectorAll('.step').forEach((row) => {
+    const i = Number(row.dataset.i);
+    row.classList.toggle('cur', i === idx);
+    row.classList.toggle('future', i > idx);
+  });
+  const cur = stepNodes.querySelector('.step.cur');
+  if (cur) cur.scrollIntoView({ block: 'nearest' });
+  $('scrub').value = idx;
+  $('read').textContent = `STEP ${idx} / ${N}  ${fmtOffset(s.t_ms)}`;
+}
+function go(i) {
+  idx = Math.min(N, Math.max(1, i));
+  acc = 0;
+  applyStep();
+}
+function setPlaying(on) {
+  playing = on;
+  const b = $('btn-play');
+  b.textContent = on ? 'PAUSE' : 'PLAY';
+  b.classList.toggle('on', on);
+}
+
+/* ---------- controls ---------- */
+$('scrub').max = N;
+$('btn-play').addEventListener('click', () => {
+  if (!playing && idx >= N) go(1);
+  setPlaying(!playing);
+});
+$('btn-prev').addEventListener('click', () => { setPlaying(false); go(idx - 1); });
+$('btn-next').addEventListener('click', () => { setPlaying(false); go(idx + 1); });
+$('btn-reset').addEventListener('click', () => { setPlaying(false); selectedNode = null; go(1); });
+$('btn-view').addEventListener('click', () => {
+  camera.position.copy(CAM_HOME);
+  if (controls) { controls.target.copy(TGT_HOME); controls.update(); }
+});
+$('scrub').addEventListener('input', (ev) => { setPlaying(false); go(Number(ev.target.value)); });
+addEventListener('keydown', (ev) => {
+  if (ev.target && ['SELECT', 'INPUT'].includes(ev.target.tagName) && ev.key !== ' ') return;
+  if (ev.key === ' ') { ev.preventDefault(); $('btn-play').click(); }
+  else if (ev.key === 'ArrowRight') $('btn-next').click();
+  else if (ev.key === 'ArrowLeft') $('btn-prev').click();
+});
+
+/* ---------- node picking (click jumps to the next step that uses the node) ---------- */
+const ray = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const tip = $('tip');
+function pick(ev) {
+  if (!renderer) return null;
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.set(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(mouse, camera);
+  const hits = ray.intersectObjects(pickables, false);
+  return hits.length ? nodes.get(hits[0].object.userData.nodeId) : null;
+}
+if (renderer) {
+  let down = null;
+  renderer.domElement.addEventListener('pointerdown', (ev) => { down = [ev.clientX, ev.clientY]; });
+  renderer.domElement.addEventListener('pointerup', (ev) => {
+    if (!down || Math.hypot(ev.clientX - down[0], ev.clientY - down[1]) > 4) return;
+    const n = pick(ev);
+    selectedNode = n ? n.id : null;
+    if (n && n.steps.size) {
+      const list = [...n.steps].sort((a, b) => a - b);
+      const next = list.find((i) => i > idx) || list[0];
+      setPlaying(false);
+      go(next);
+    } else applyStep();
+  });
+  renderer.domElement.addEventListener('pointermove', (ev) => {
+    const n = pick(ev);
+    if (!n) { tip.style.display = 'none'; return; }
+    tip.textContent = `${n.label} | used in ${n.steps.size} step${n.steps.size === 1 ? '' : 's'}`
+      + (n.steps.size ? ` (${[...n.steps].sort((a, b) => a - b).slice(0, 12).join(', ')}${n.steps.size > 12 ? ', ...' : ''})` : '');
+    tip.style.left = ev.clientX + 12 + 'px';
+    tip.style.top = ev.clientY + 12 + 'px';
+    tip.style.display = 'block';
+  });
+  renderer.domElement.addEventListener('pointerleave', () => { tip.style.display = 'none'; });
+}
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  if (renderer) renderer.setSize(innerWidth, innerHeight);
+});
+
+/* ---------- animation loop (never moves the camera) ---------- */
+const clock = new THREE.Clock();
+const lerp = (a, b, k) => a + (b - a) * k;
+function frame() {
+  const dt = Math.min(clock.getDelta(), 0.1);
+  const speed = Number($('speed').value) || 1;
+  if (playing) {
+    acc += dt * speed;
+    if (acc >= STEP_SECONDS) {
+      if (idx >= N) setPlaying(false); else go(idx + 1);
+    }
+  }
+  const k = 1 - Math.pow(0.0006, dt);
+  for (const n of nodes.values()) {
+    if (!n.t) continue;
+    n.cur.op = lerp(n.cur.op, n.t.op, k);
+    n.cur.halo = lerp(n.cur.halo, n.t.halo, k);
+    n.cur.s = lerp(n.cur.s, n.t.s, k);
+    n.mat.opacity = n.cur.op;
+    n.halo.material.opacity = n.cur.halo;
+    n.mesh.scale.setScalar(n.cur.s);
+  }
+  for (const e of edges.values()) {
+    if (e.t === undefined) continue;
+    e.cur = lerp(e.cur, e.t, k);
+    e.mat.opacity = e.cur;
+  }
+  const phase = (clock.elapsedTime * 0.6 * speed) % 1;
+  pulses.forEach((p, i) => {
+    const e = targets.active[i];
+    p.visible = !!e;
+    if (e) { p.position.copy(e.curve.getPoint(phase)); p.material.color.copy(targets.statusColor); }
+  });
+  if (renderer) {
+    controls.update();
+    renderer.render(scene, camera);
+    const h = innerHeight;
+    for (const t of TIERS) {
+      const v = new THREE.Vector3(0, t.y, 0).project(camera);
+      t.tag.style.top = ((1 - v.y) / 2) * h + 'px';
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+buildHeader();
+buildStepList();
+applyStep();
+frame();
+</script>
+</body>
+</html>

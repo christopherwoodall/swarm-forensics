@@ -36,6 +36,8 @@ TABLES = (
     "villages",
 )
 
+SCHEMA_FILES = ("CHANGELOG.md", "SCHEMA.md", "manifest.json")
+
 IMAGE_DIRECTORY = "images/"
 IMAGE_SUFFIXES = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".tiff", ".svg")
 IGNORED_FILES = frozenset({".gitattributes"})
@@ -60,12 +62,20 @@ def parse_tables(names: list[str]) -> list[str]:
     return list(dict.fromkeys(names))
 
 
-def select_files(files: dict[str, int], tables: list[str] | None = None) -> dict[str, int]:
+def select_files(
+    files: dict[str, int], tables: list[str] | None = None, schema_only: bool = False
+) -> dict[str, int]:
     """Return the repository files to download, mapped to their size in bytes.
 
     Without `tables`, select every file that is not an image.
     With `tables`, select only the matching `<table>.jsonl.gz` files.
+    With `schema_only`, select only the files in `SCHEMA_FILES`.
     """
+    if schema_only:
+        missing = [path for path in SCHEMA_FILES if path not in files]
+        if missing:
+            raise DownloadError(f"Reference file not found in the dataset: {', '.join(missing)}.")
+        return {path: files[path] for path in sorted(SCHEMA_FILES)}
     if tables is None:
         return {
             path: size
@@ -179,12 +189,20 @@ def download_files(selected: dict[str, int], sha: str, dest: Path, token: str) -
             raise DownloadError(f"{path}: {describe_http_error(error)}") from None
 
 
-def run(command: str, tables: list[str] | None, revision: str | None, dest: Path) -> None:
+def run(
+    command: str,
+    tables: list[str] | None,
+    revision: str | None,
+    dest: Path,
+    schema_only: bool = False,
+) -> None:
     """Run one command: `info` lists the plan, `download` also transfers the files."""
+    if schema_only and tables:
+        raise DownloadError("Use either --schema-only or --tables, not both.")
     names = parse_tables(tables) if tables else None
     token = read_token()
     sha, files = resolve_dataset(token, revision)
-    selected = select_files(files, names)
+    selected = select_files(files, names, schema_only)
     pending = print_plan(sha, selected, dest)
     if command == "info":
         return
@@ -198,6 +216,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("command", choices=("info", "download"))
     parser.add_argument("--tables", nargs="+", metavar="TABLE", help="download only these tables")
+    parser.add_argument(
+        "--schema-only",
+        action="store_true",
+        help="select only SCHEMA.md, CHANGELOG.md, and manifest.json",
+    )
     parser.add_argument("--revision", help="commit hash, branch, or tag (default: main)")
     parser.add_argument("--dest", type=Path, default=DEFAULT_DEST, help="default: data/raw")
     return parser
@@ -206,7 +229,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        run(args.command, args.tables, args.revision, args.dest)
+        run(args.command, args.tables, args.revision, args.dest, args.schema_only)
     except DownloadError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
