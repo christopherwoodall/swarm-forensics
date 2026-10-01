@@ -55,15 +55,23 @@ After clarification, agents MUST update the file in place, remove the superseded
 * Default to synthetic data using `make data-sample` or `--mock`.
 * Stream `.jsonl.gz` files with `gzip.open()`.
 * Process records one line at a time.
-* Download only required datasets: `events`, `chat_messages`, `agent_goals`.
+* Download only non-image dataset files. Exclude `images/`.
+* Run `make data-download` only when the user asks for it.
 * Read `$HF_TOKEN` directly from the environment.
 * Never log, hard-code, or commit credentials.
 * Never load the full dataset into memory.
 
 ## 6. Tooling & Workspace
 
+* Treat the root `Makefile` as the single entry point for project commands.
+* Run setup, test, lint, data, and build tasks through `make` targets.
+* Do not call `python`, `uv`, `npm`, or similar tools directly when a target exists.
+* Add a Makefile target for each new command. Do this for every language.
+* Make `make test` and `make lint` cover every language in the repository.
+* Describe each target with a `## description` comment. `make help` MUST list it.
+* Python code MUST use `uv` and the `.venv` environment. Declare dependencies in `pyproject.toml`.
+* JavaScript code SHOULD declare dependencies in `package.json`. Wrap its commands in `make` targets.
 * Prefer Python standard-library modules for routine operations.
-* Use Makefile targets such as `make test`, `make lint`, and `make help`.
 * Make the smallest change required for the task.
 * Do not create temporary files or unnecessary artifacts.
 

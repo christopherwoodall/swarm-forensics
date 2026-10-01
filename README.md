@@ -57,25 +57,48 @@ This repository employs a **Blackboard Living Documentation** tree governed by A
 
 ## 🚀 Getting Started
 
+The `Makefile` is the single entry point for all project commands. Run `make help` to list them.
+
 ### Installation
+
+Requirements: [uv](https://docs.astral.sh/uv/) and `make`.
 
 ```bash
 git clone https://github.com/your-org/swarm-forensics.git
 cd swarm-forensics
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt  # once initialized
+make setup   # runs `uv sync`: creates .venv and installs pyproject.toml dependencies
+make test
 ```
 
-### Loading Data from Hugging Face
+Every `make` target runs inside the `.venv` environment through `uv run`.
+
+### Getting the Data
+
+Raw data goes to the untracked `data/raw/` directory.
+
+```bash
+make data-sample     # synthetic tables in data/raw/sample/ (offline, no token)
+
+export HF_TOKEN=...  # token of an account with approved dataset access
+make data-info       # list files, sizes, and free disk space (no download)
+make data-download   # all non-image files, about 5.8 GB
+make data-download TABLES="events chat_messages agent_goals"   # selected tables only
+make data-download REVISION=<commit>                           # pin a dataset commit
+```
+
+`make data-download` skips `images/` (the screenshot archives) and resumes completed files.
+
+### Streaming the Data
+
+Read tables one line at a time. Do not load a complete table into memory.
 
 ```python
-from datasets import load_dataset
+import gzip
+import json
 
-# Load structured events table
-events = load_dataset("aidigestorg/ai-village", "events", split="train", streaming=True)
-
-for event in events:
-    print(event["actionType"], event["created_at"])
-    break
+with gzip.open("data/raw/events.jsonl.gz", "rt", encoding="utf-8") as handle:
+    for line in handle:
+        event = json.loads(line)
+        print(event["data"]["actionType"], event["created_at"])
+        break
 ```
