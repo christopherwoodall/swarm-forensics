@@ -1,61 +1,79 @@
-# Swarm Forensics 🔍🕵️‍♂️
+# Swarm Forensics
 
-> Precision multi-agent forensics engine: reconstructing agent timelines, inspecting cross-agent communication, and detecting coordination anomalies in autonomous AI swarms.
+Investigate how agent swarms coordinate through messages, tools, and persistent artifacts.
+Explore changing relationships between agents, egress sites, shared artifacts, and targets.
 
-Built for the **[AI Swarm Dynamics Hackathon](https://swarmchasing.com/)** (October 3–4, 2026, San Francisco & Online), co-hosted by [AI Village](https://theaidigest.org/village) and [Grove Research](https://groveresearch.com/).
+This project targets the [AI Swarm Dynamics Hackathon](https://swarmchasing.com/), October 3–4, 2026.
+AI Village and Grove Research host the event in San Francisco and online.
 
----
-
-## 🎯 Context & Mission
-
-As autonomous AI agent swarms scale across virtual environments, forums, and computer-use environments, understanding their coordination dynamics is an urgent safety challenge.
-
-> *“We don't have good approaches for understanding/overseeing the activity and aims of AI 'swarms'.”*  
-> — Ryan Greenblatt, Hugging Face incident investigator
-
-Incidents like the **OpenAI-Hugging Face incident** and the **German Wiki incident** have demonstrated that society lacks dedicated tools for multi-agent digital forensics. `swarm-forensics` aims to bridge this gap by providing:
-
-1. **Chronological Timeline Reconstruction**: Unified chronological event ordering across parallel agents, chat rooms, and computer-use turns.
-2. **Discrepancy & Hallucination Auditing**: Comparing an agent's self-reported actions/claims against grounded tool logs and screenshots.
-3. **Information Cascade & Collusion Tracing**: Tracing how instructions, memes, coordination signals, and emergent goals propagate across agents over long time horizons.
-4. **Memory-Safe Stream Processing**: High-throughput parsing designed to stream massive datasets without loading gigabytes of raw archives into RAM.
+Status: acquisition tooling and synthetic visualization mocks.
+The forensic engine, graph pipeline, and integrations are not implemented.
+Read [STATUS.md](STATUS.md) for the verified checkpoint.
 
 ---
 
-## 🔗 Key Hackathon Resources & Datasets
+## Project Direction
+
+The team discussed these complementary workstreams:
+
+1. Map tools, skills, plugins, and possible egress routes.
+2. Trace distributed coordination through durable shared artifacts.
+3. Explore a temporal graph, including lateral links and changing relation types.
+4. Investigate information propagation, memory formation, role emergence, and coordination repair.
+5. Explore a Hermes swarm-search plugin.
+6. Experiment with FairyStack or Discord for human and agent collaboration.
+
+These are discussed directions, not completed features or an accepted implementation specification.
+Read [PROJECT_BRIEF.md](PROJECT_BRIEF.md) for source attribution, evidence limits, and open decisions.
+
+---
+
+## Resources
 
 | Resource | Link | Description |
 | :--- | :--- | :--- |
 | **AI Swarm Dynamics Hackathon** | [swarmchasing.com](https://swarmchasing.com/) | Official hackathon site with schedule, problem statements, and prize details. |
-| **AI Village Dataset** | [huggingface.co/datasets/aidigestorg/ai-village](https://huggingface.co/datasets/aidigestorg/ai-village) | Primary dataset: >170k messages, ~233k structured events, ~1.14M computer-use turns, and screenshots from a multi-agent society operating autonomously since April 2, 2025. |
+| **AI Village Dataset** | [huggingface.co/datasets/aidigestorg/ai-village](https://huggingface.co/datasets/aidigestorg/ai-village) | Existing downloader target. Access approval is required. |
 | **AI Village Live UI** | [theaidigest.org/village](https://theaidigest.org/village) | Interactive explorer for live and historical agent village activities. |
+| **Swarmtraces** | [swarmtraces.org](https://swarmtraces.org/) | Redacted incident artifacts that motivated the coordination research. No parser is implemented here. |
 
 ---
 
-## 📊 AI Village Dataset Breakdown
+## Data Boundaries
 
-The `aidigestorg/ai-village` dataset mirrors real-world multi-agent interactions across 31 frontier agents (Claude, GPT, Gemini). Key data streams include:
+Default to synthetic data with `make data-sample`.
+The sample includes `agent_goals`, `chat_messages`, and `events` tables.
+The downloader recognizes additional AI Village tables, including computer-use sessions, turns, and agent memories.
+Use `make data-info` to inspect revision-specific file sizes.
+Previously quoted dataset counts are not a verified inventory of the current dataset.
 
-- `events.jsonl.gz` (~233k rows): The structured activity timeline (`AGENT_TALK`, `START_USING_COMPUTER`, `STOP_USING_COMPUTER`, `WAIT`, `PAUSE`, `USER_TALK`, etc.) with `event_index` ordering.
-- `chat_messages.jsonl.gz` (~123k rows): Room-based chat logs (agent & human) with speaker identities and timestamps.
-- `computer_use_turns.jsonl.gz` (~1.14M rows): Granular turn-by-turn computer interactions, model thought chains, action commands, tool outputs, and screenshot references.
-- `computer_use_sessions.jsonl.gz` (~37k rows): Session-level goals, agent assignments, and durations.
-- `agent_memories.jsonl.gz` (~165k rows): Agent long-term memories generated during periodic consolidation cycles.
-- `images/computer-use-turns/<YYYY-MM-DD>.tar`: Daily screenshot archives indexed by turn ID.
-
----
-
-## 🏗️ Architecture & Living Documentation
-
-This repository employs a **Blackboard Living Documentation** tree governed by AI directives:
-
-- **Local Blackboards (`MODULE.md`)**: Subsystems under `src/` maintain living blackboards documenting active invariants, interfaces, and known gaps (see [src/swarm_forensics/MODULE.md](src/swarm_forensics/MODULE.md)).
-- **Agent Governance**: [AGENTS.md](AGENTS.md) defines immutable boundaries (`docs/` reserved for MkDocs/GitHub Pages, no `arch/` meta-folders).
-- **Conflict-Free Merges**: `.gitattributes` configures union merge drivers for all living blackboard files.
+Raw downloads MUST remain under untracked `data/raw/`.
+Full tables MUST NOT be loaded into memory.
+The downloader excludes `images/` and image files.
+Read [AGENTS.md](AGENTS.md) before using real data.
 
 ---
 
-## 🚀 Getting Started
+## Documentation Map
+
+| Document | Authority |
+| --- | --- |
+| [README.md](README.md) | Entry point and executable setup instructions |
+| [STATUS.md](STATUS.md) | Verified checkpoint, gaps, and next decision |
+| [PROJECT_BRIEF.md](PROJECT_BRIEF.md) | Historical discussion and proposed direction |
+| [AGENTS.md](AGENTS.md) | Repository requirements and agent authorization |
+| [Core MODULE.md](src/swarm_forensics/MODULE.md) | Local architecture, invariants, and implementation gaps |
+| [Ingest MODULE.md](src/swarm_forensics/ingest/MODULE.md) | Acquisition interfaces and data-safety requirements |
+| [Visualization references](data/viz_mock/README.md) | Synthetic mocks, not implemented forensic analysis |
+
+Keep architecture documentation in local `src/**/MODULE.md` files.
+Reserve `docs/` for MkDocs and GitHub Pages assets.
+Union merges preserve text; they do not resolve semantic contradictions.
+Follow the contradiction procedure in `AGENTS.md` when rules disagree.
+
+---
+
+## Getting Started
 
 The `Makefile` is the single entry point for all project commands. Run `make help` to list them.
 
@@ -64,29 +82,54 @@ The `Makefile` is the single entry point for all project commands. Run `make hel
 Requirements: [uv](https://docs.astral.sh/uv/) and `make`.
 
 ```bash
-git clone https://github.com/your-org/swarm-forensics.git
+git clone https://github.com/christopherwoodall/swarm-forensics.git
 cd swarm-forensics
 make setup   # runs `uv sync`: creates .venv and installs pyproject.toml dependencies
 make test
+make lint
+make data-sample
 ```
 
-Every `make` target runs inside the `.venv` environment through `uv run`.
+Setup installs the Python dependencies in `.venv`.
+Python commands run through `uv run`.
+Tests run offline; lint checks the Python source with Ruff.
+The sample command writes three gzipped JSON Lines tables under `data/raw/sample/`.
+It requires no credentials and downloads no dataset files.
+
+The existing mocks require internet access for Three.js from a CDN.
+Open `data/viz_mock/pipeline-mock-v2.html` in a browser to inspect the synthetic reference.
+This bootstrap did not validate browser rendering or real-data integration.
 
 ### Getting the Data
 
-Raw data goes to the untracked `data/raw/` directory.
+Request dataset access before using the downloader.
+Set `HF_TOKEN` in the environment through your credential workflow.
+The downloader reads it directly and does not print it.
+Run a download only when you explicitly choose to acquire real data.
 
 ```bash
 make data-sample     # synthetic tables in data/raw/sample/ (offline, no token)
 
-export HF_TOKEN=...  # token of an account with approved dataset access
 make data-info       # list files, sizes, and free disk space (no download)
-make data-download   # all non-image files, about 5.8 GB
+make data-download   # all non-image files; inspect the size first
 make data-download TABLES="events chat_messages agent_goals"   # selected tables only
 make data-download REVISION=<commit>                           # pin a dataset commit
 ```
 
 `make data-download` skips `images/` (the screenshot archives) and resumes completed files.
+
+With `TABLES`, the downloader selects only the named table files.
+Without `TABLES`, it also selects non-image reference files.
+Each run resolves and pins one dataset revision.
+Access approval and the token were not tested during this documentation bootstrap.
+
+### Hackathon Submission
+
+The organizer site states a Sunday deadline of 5:00 PM Pacific Time, including online submissions.
+Submit a short write-up or explanatory video and a link to the code repository.
+A write-up of results found with the tool is optional.
+Early development and other datasets are permitted.
+See the [project brief](PROJECT_BRIEF.md#hackathon-context) for the reviewed event context.
 
 ### Streaming the Data
 
