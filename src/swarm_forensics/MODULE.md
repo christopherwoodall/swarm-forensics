@@ -17,5 +17,6 @@ Core engine for processing multi-agent logs, reconstructing chronological agent 
 - Gap: Anomaly heuristics engine not yet implemented.
 
 ## 5. Pruned Decisions (Keep max 3)
+- [2026-10-01 FairyStack]: Use a documentation-only test branch to verify GitHub collaboration from the Multi app box.
 - [2026-10-01 Droid]: Put data acquisition in the `ingest/` subpackage. It has its own `MODULE.md`.
 - [Initial Setup]: Seeded initial blackboard structure.
