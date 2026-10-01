@@ -1,0 +1,164 @@
+[Skip to main content](https://seas.harvard.edu/news/self-organizing-thousand-robot-swarm#main-content)
+
+Search
+
+[Toggle Search](https://seas.harvard.edu/news/self-organizing-thousand-robot-swarm#)
+
+### News
+
+# A self-organizing thousand-robot swarm
+
+## Following simple programmed rules, autonomous robots arrange themselves into vast, complex shapes
+
+By [Caroline Perry](https://seas.harvard.edu/news?search=%22Caroline%20Perry%22)
+\| [Press contact](https://seas.harvard.edu/news/self-organizing-thousand-robot-swarm#press)
+
+August 14, 2014
+
+[Facebook](https://seas.harvard.edu/#facebook) [Twitter](https://seas.harvard.edu/#twitter) [Email](https://seas.harvard.edu/#email) [LinkedIn](https://seas.harvard.edu/#linkedin)
+
+![](https://seas.harvard.edu/sites/default/files/styles/embedded_image_large/public/images/news/Image1_sq_0_op.jpg?itok=xEL5r-yA)
+
+Just as single cells can assemble into complex multicellular organisms, the individual Kilobots can follow simple rules to autonomously assemble into predetermined shapes. The vast scale of this swarm is a milestone in itself. (Photo courtesy of Mike Rubenstein, Harvard SEAS.)
+
+**![](https://seas.harvard.edu/sites/default/files/images/news/Image5_650.jpg)**
+
+The Kilobots, a swarm of one thousand simple but collaborative robots. (Photo courtesy of Mike Rubenstein and Science/AAAS.)
+
+* * *
+
+**Cambridge, Mass. – August 14, 2014** – The first thousand-robot flash mob has assembled at Harvard University.
+
+“Form a sea star shape,” directs a computer scientist, sending the command to 1,024 little bots simultaneously via an infrared light. The robots begin to blink at one another and then gradually arrange themselves into a five-pointed star. “Now form the letter K.”
+
+The ‘K’ stands for Kilobots, the name given to these extremely simple robots, each just a few centimeters across, standing on three pin-like legs. Instead of one highly complex robot, a “kilo” of robots collaborate, providing a simple platform for the enactment of complex behaviors.
+
+Just as trillions of individual cells can assemble into an intelligent organism, or a thousand starlings can form a great flowing murmuration across the sky, the Kilobots demonstrate how complexity can arise from very simple behaviors performed en masse ( [see video](http://youtu.be/xK54Bu9HFRw)). To computer scientists, they also represent a significant milestone in the development of collective artificial intelligence (AI).
+
+![](https://seas.harvard.edu/sites/default/files/images/news/Image2_650.jpg)
+
+Given a two-dimensional image, the Kilobots follow simple rules to form the same shape. Visually, the effect is similar to a flock of birds wheeling across the sky. “At some level you no longer even see the individuals; you just see the collective as an entity to itself,” says Radhika Nagpal. (Image courtesy of Mike Rubenstein and Science/AAAS.)
+
+* * *
+
+This self-organizing swarm was created in the lab of [Radhika Nagpal](http://www.seas.harvard.edu/directory/rad), Fred Kavli Professor of Computer Science at the [Harvard School of Engineering and Applied Sciences](http://www.seas.harvard.edu/) (SEAS) and a Core Faculty Member at the [Wyss Institute for Biologically Inspired Engineering](http://wyss.harvard.edu/) at Harvard University. The advance is described in the August 15 issue of _Science_.
+
+“The beauty of biological systems is that they are elegantly simple—and yet, in large numbers, accomplish the seemingly impossible,” says Nagpal. “At some level you no longer even see the individuals; you just see the collective as an entity to itself.”
+
+“Biological collectives involve enormous numbers of cooperating entities—whether you think of cells or insects or animals—that together accomplish a single task that is a magnitude beyond the scale of any individual,” says lead author Michael Rubenstein, a research associate at Harvard SEAS and the Wyss Institute.
+
+He cites, for example, the behavior of a colony of army ants. By linking together, they can form rafts and bridges to cross difficult terrain. Social amoebas do something similar at a microscopic scale: when food is scarce, they join together to create a fruiting body capable of escaping the local environment. In cuttlefish, color changes at the level of individual cells can help the entire organism blend into its surroundings. (And as Nagpal points out—with a smile—a school of fish in the movie _Finding Nemo_ also collaborate when they form the shape of an arrow to point Nemo toward the East Australian Current.)
+
+“We are especially inspired by systems where individuals can self-assemble together to solve problems,” says Nagpal. Her [research group](http://www.eecs.harvard.edu/ssr/) made news in February 2014 with a group of [termite-inspired robots](http://www.seas.harvard.edu/news/2014/02/robotic-construction-crew-needs-no-foreman) that can collaboratively perform construction tasks using simple forms of coordination.
+
+But the algorithm that instructs those TERMES robots has not yet been demonstrated in a very large swarm. In fact, only a few robot swarms to date have exceeded 100 individuals, because of the algorithmic limitations on coordinating such large numbers, and the cost and labor involved in fabricating the physical devices.
+
+The research team overcame both of these challenges through thoughtful design.
+
+Most notably, the Kilobots require no micromanagement or intervention once an initial set of instructions has been delivered. Four robots mark the origin of a coordinatesystem, all the other robots receive a 2D image that they should mimic, and then using very primitive behaviors—following the edge of a group, tracking a distance from the origin, and maintaining a sense of relative location—they take turns moving towards an acceptable position. With coauthor Alejandro Cornejo, a postdoctoral fellow at Harvard SEAS and the Wyss Institute, the team demonstrated a mathematical proof that the individual behaviors would lead to the right global result.
+
+The Kilobots also correct their own mistakes. If a traffic jam forms or a robot moves off-course—errors that become much more common in a large group—nearby robots sense the problem and cooperate to fix it.
+
+![](https://seas.harvard.edu/sites/default/files/images/news/Image3_650.jpg)
+
+In a swarm of a thousand simple robots, errors like traffic jams (second from left) and imprecise positioning (far right) are common, so the algorithm incorporates rules that can help correct for these. (Photo courtesy of Mike Rubenstein and Science/AAAS.)
+
+* * *
+
+To keep the cost of the Kilobot down, each robot moves using two vibrating motors that allow it to slide across a surface on its rigid legs. An infrared transmitter and receiver allow it to communicate with a few of its neighbors and measure their proximity—but the robots are myopic and have no access to a bird’s-eye view. These design decisions come with tradeoffs, as Rubenstein explains: “These robots are much simpler than many conventional robots, and as a result, their abilities are more variable and less reliable,” he says. “For example, the Kilobots have trouble moving in a straight line, and the accuracy of distance sensing can vary from robot to robot.”
+
+Yet, at scale, the smart algorithm overcomes these individual limitations and guarantees—both physically and mathematically—that the robots can complete a human-specified task, in this case assembling into a particular shape. That’s an important demonstration for the future of distributed robotics, says Nagpal.
+
+“Increasingly, we’re going to see large numbers of robots working together, whether its hundreds of robots cooperating to achieve environmental cleanup or a quick disaster response, or millions of self-driving cars on our highways,” she says. “Understanding how to design ‘good’ systems at that scale will be critical.”
+
+For now, the Kilobots provide an essential test bed for AI algorithms.
+
+![](https://seas.harvard.edu/sites/default/files/images/news/Image4_650.jpg)
+
+The thousand-Kilobot swarm provides a valuable platform for testing future collective AI algorithms. (Photo courtesy of Mike Rubenstein and Science/AAAS.)
+
+* * *
+
+“We can simulate the behavior of large swarms of robots, but a simulation can only go so far,” says Nagpal. “The real-world dynamics—the physical interactions and variability—make a difference, and having the Kilobots to test the algorithm on real robots has helped us better understand how to recognize and prevent the failures that occur at these large scales.”
+
+The Kilobot robot design and software, originally created in Nagpal’s group at Harvard, are available open-source for non-commercial use. The Kilobots have also been licensed by Harvard’s Office of Technology Development to K-Team, a manufacturer of small mobile robots.
+
+This research was supported in part by the Wyss Institute and by the National Science Foundation (CCF-0926148, CCF-0643898).
+
+### Related Resources
+
+Prof. Radhika Nagpal leads the [Self-Organizing Systems Research Group](http://www.eecs.harvard.edu/ssr/) at Harvard University.
+
+A video of the thousand-robot swarm is available on [YouTube](http://youtu.be/xK54Bu9HFRw).
+
+Programmable self-assembly in a thousand-robot swarm - YouTube
+
+Tap to unmute
+
+[Programmable self-assembly in a thousand-robot swarm](https://www.youtube.com/watch?v=xK54Bu9HFRw) [Harvard University](https://www.youtube.com/channel/UCLv7Gzc3VTO6ggFlXY0sOyw)
+
+![thumbnail-image](https://yt3.ggpht.com/ytc/AIdro_mDxwGcmWyN_4-5PHivuBqMkPzA-wyK9pEguA-Ut3nWf3Q=s68-c-k-c0x00ffffff-no-rj)
+
+Harvard University2.89M subscribers
+
+[Watch on](https://www.youtube.com/watch?v=xK54Bu9HFRw)
+
+Programmable self-assembly in a thousand-robot swarm
+
+**Topics:** [Robotics](https://seas.harvard.edu/news?topic[531]=531), [AI / Machine Learning](https://seas.harvard.edu/news?topic[521]=521)
+
+### Cutting-edge science delivered direct to your inbox.
+
+Join the Harvard SEAS mailing list.
+
+Subscribe
+
+### Press Contact
+
+**Caroline Perry**
+
+### Related News
+
+[![artistic depiction of a futuristic robotic factory floor](https://seas.harvard.edu/sites/default/files/styles/news_teaser_small_1x/public/2026-09/furturistic_robotic_fator.jpeg?h=d38c90ab&itok=jAm-D3Nu)](https://seas.harvard.edu/news/can-your-ai-engineer-robot)
+
+Sep 17, 2026
+
+### [Can Your AI Engineer a Robot?](https://seas.harvard.edu/news/can-your-ai-engineer-robot)
+
+Harvard and Georgia Tech’s RLE-Bench tests coding agents for physical systems
+
+[AI / Machine Learning](https://seas.harvard.edu/news?topic[521]=521), [Applied Computation](https://seas.harvard.edu/news?topic[1220]=1220), [Applied Mathematics](https://seas.harvard.edu/news?topic[546]=546), [Computational Science & Engineering](https://seas.harvard.edu/news?topic[1254]=1254), [Computer Science](https://seas.harvard.edu/news?topic[541]=541), [Electrical & Computer Engineering](https://seas.harvard.edu/news?topic[556]=556), [Research](https://seas.harvard.edu/news?topic[1271]=1271), [Robotics](https://seas.harvard.edu/news?topic[531]=531), [Technology](https://seas.harvard.edu/news?topic[631]=631)
+
+[![wind turbines](https://seas.harvard.edu/sites/default/files/styles/news_teaser_small_1x/public/2026-09/turbines_stock.jpeg?h=d668167d&itok=mcQS0YqD)](https://seas.harvard.edu/news/using-ai-model-wind-aerosols-and-combustion)
+
+Sep 16, 2026
+
+### [Using AI to Model Wind, Aerosols and Combustion](https://seas.harvard.edu/news/using-ai-model-wind-aerosols-and-combustion)
+
+DOE Genesis Project to quantify uncertainty in foundation models of turbulent flows
+
+[AI / Machine Learning](https://seas.harvard.edu/news?topic[521]=521), [Applied Computation](https://seas.harvard.edu/news?topic[1220]=1220), [Applied Mathematics](https://seas.harvard.edu/news?topic[546]=546), [Applied Physics](https://seas.harvard.edu/news?topic[551]=551), [Climate](https://seas.harvard.edu/news?topic[526]=526), [Computer Science](https://seas.harvard.edu/news?topic[541]=541), [Electrical & Computer Engineering](https://seas.harvard.edu/news?topic[556]=556), [Environment](https://seas.harvard.edu/news?topic[561]=561), [Environmental Science & Engineering](https://seas.harvard.edu/news?topic[1222]=1222), [Research](https://seas.harvard.edu/news?topic[1271]=1271), [Technology](https://seas.harvard.edu/news?topic[631]=631)
+
+[![computer server room](https://seas.harvard.edu/sites/default/files/styles/news_teaser_small_1x/public/2026-09/server_room_stock.jpg?h=b51d1d23&itok=w32MnQ-5)](https://seas.harvard.edu/news/improving-data-access-energy-intensive-computing)
+
+Sep 8, 2026
+
+### [Improving Data Access for Energy-Intensive Computing](https://seas.harvard.edu/news/improving-data-access-energy-intensive-computing)
+
+VLDB conference recognizes caching research by Juncheng Yang and colleagues
+
+[AI / Machine Learning](https://seas.harvard.edu/news?topic[521]=521), [Computer Science](https://seas.harvard.edu/news?topic[541]=541), [Electrical & Computer Engineering](https://seas.harvard.edu/news?topic[556]=556), [Meet Our Faculty](https://seas.harvard.edu/news?topic[1270]=1270), [Research](https://seas.harvard.edu/news?topic[1271]=1271)
+
+Copy link
+
+✓
+
+Thanks for sharing!
+
+Find any service
+
+[AddToAny](https://www.addtoany.com/ "Share Buttons")
+
+[More…](https://seas.harvard.edu/news/self-organizing-thousand-robot-swarm#addtoany "Show all")
+
+A2A

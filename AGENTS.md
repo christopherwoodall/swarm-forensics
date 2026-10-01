@@ -86,3 +86,15 @@ Before completing a task, agents MUST:
 5. Confirm no unintended temporary files or untracked directories remain.
 
 Agents MUST report skipped checks and test failures instead of claiming completion.
+
+## 8. Merge Policy
+
+Jessald authorized this policy on 2026-10-01. It applies only to this repository until revoked.
+
+* Agents MAY merge pull requests for authorized work without human review.
+* Agents MUST run `make test` and `make lint` on the proposed revision before merging.
+* Agents MUST wait for configured required checks to pass.
+* Failed checks or merge conflicts MUST stop the merge.
+* Agents MUST NOT bypass branch protections.
+* Agents SHOULD use squash merges and report the resulting commit.
+* Human review MUST resume when Jessald requests it.

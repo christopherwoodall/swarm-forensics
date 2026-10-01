@@ -1,0 +1,271 @@
+[Skip to main content](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#main-content)
+
+![](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/icon-dot-gov.svg)
+
+**Official websites use .gov**
+
+A
+**.gov** website belongs to an official
+government organization in the United States.
+
+
+![](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/icon-https.svg)
+
+**Secure .gov websites use HTTPS**
+
+A **lock** (
+Lock
+Locked padlock icon
+) or **https://** means you've safely
+connected to the .gov website. Share sensitive
+information only on official, secure websites.
+
+
+[Home](https://pmc.ncbi.nlm.nih.gov/ "Home")
+
+![PMC search open icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/search.svg)![PMC search close ison](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/close.svg)
+
+Search PMC Full-Text Archive
+
+Search in PMC![Search](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons-bg/search--white.svg)
+
+- [Journal List](https://pmc.ncbi.nlm.nih.gov/journals/)
+- [User Guide](https://pmc.ncbi.nlm.nih.gov/about/userguide/)
+
+- ![Open resources icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/more_vert.svg)
+- [![View on publisher site icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/launch.svg)](https://doi.org/10.1016/j.patter.2023.100779) View on publisher site
+- [![Download PDF icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/file_download.svg)](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/pdf/main.pdf) Download PDF
+- ![Collections icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/action-bookmark-full.svg)![Collections icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/action-bookmark-empty.svg)Add to Collections
+- ![Cite icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/format_quote.svg)Cite
+- ![Show article permalink icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/share.svg)Permalink
+
+
+
+
+## PERMALINK
+
+
+
+![Copy icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/content_copy.svg)Copy
+
+
+![Open article navigation icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/list.svg)
+
+As a library, NLM provides access to scientific literature. Inclusion in an NLM database does not imply endorsement of, or agreement with,
+the contents by NLM or the National Institutes of Health.
+
+Learn more:
+[PMC Disclaimer](https://pmc.ncbi.nlm.nih.gov/about/disclaimer/)
+\|
+[PMC Copyright Notice](https://pmc.ncbi.nlm.nih.gov/about/copyright/)
+
+![Patterns logo](https://cdn.ncbi.nlm.nih.gov/pmc/banners/logo-patterns.png)
+
+Patterns (N Y)
+
+. 2023 Jul 10;4(7):100779. doi: [10.1016/j.patter.2023.100779](https://doi.org/10.1016/j.patter.2023.100779)
+
+# GPT detectors are biased against non-native English writers
+
+[Weixin Liang](https://pubmed.ncbi.nlm.nih.gov/?term=%22Liang%20W%22[Author])
+
+### Weixin Liang
+
+1Department of Computer Science, Stanford University, Stanford, CA, USA
+
+Find articles by [Weixin Liang](https://pubmed.ncbi.nlm.nih.gov/?term=%22Liang%20W%22[Author])
+
+1,4, [Mert Yuksekgonul](https://pubmed.ncbi.nlm.nih.gov/?term=%22Yuksekgonul%20M%22[Author])
+
+### Mert Yuksekgonul
+
+1Department of Computer Science, Stanford University, Stanford, CA, USA
+
+Find articles by [Mert Yuksekgonul](https://pubmed.ncbi.nlm.nih.gov/?term=%22Yuksekgonul%20M%22[Author])
+
+1,4, [Yining Mao](https://pubmed.ncbi.nlm.nih.gov/?term=%22Mao%20Y%22[Author])
+
+### Yining Mao
+
+2Department of Electrical Engineering, Stanford University, Stanford, CA, USA
+
+Find articles by [Yining Mao](https://pubmed.ncbi.nlm.nih.gov/?term=%22Mao%20Y%22[Author])
+
+2,4, [Eric Wu](https://pubmed.ncbi.nlm.nih.gov/?term=%22Wu%20E%22[Author])
+
+### Eric Wu
+
+2Department of Electrical Engineering, Stanford University, Stanford, CA, USA
+
+Find articles by [Eric Wu](https://pubmed.ncbi.nlm.nih.gov/?term=%22Wu%20E%22[Author])
+
+2,4, [James Zou](https://pubmed.ncbi.nlm.nih.gov/?term=%22Zou%20J%22[Author])
+
+### James Zou
+
+1Department of Computer Science, Stanford University, Stanford, CA, USA
+
+2Department of Electrical Engineering, Stanford University, Stanford, CA, USA
+
+3Department of Biomedical Data Science, Stanford University, Stanford, CA, USA
+
+Find articles by [James Zou](https://pubmed.ncbi.nlm.nih.gov/?term=%22Zou%20J%22[Author])
+
+1,2,3,∗
+
+- Author information
+- Article notes
+- Copyright and License information
+
+1Department of Computer Science, Stanford University, Stanford, CA, USA
+
+2Department of Electrical Engineering, Stanford University, Stanford, CA, USA
+
+3Department of Biomedical Data Science, Stanford University, Stanford, CA, USA
+
+∗
+
+Corresponding author jamesz@stanford.edu
+
+4
+
+These authors contributed equally
+
+Collection date 2023 Jul 14.
+
+© 2023 The Author(s)
+
+This is an open access article under the CC BY-NC-ND license (http://creativecommons.org/licenses/by-nc-nd/4.0/).
+
+[PMC Copyright notice](https://pmc.ncbi.nlm.nih.gov/about/copyright/)
+
+PMCID: PMC10382961  PMID: [37521038](https://pubmed.ncbi.nlm.nih.gov/37521038/)
+
+See editorial " [On the transparency of large AI models](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382960/)", 100797.
+
+## Summary
+
+GPT detectors frequently misclassify non-native English writing as AI generated, raising concerns about fairness and robustness. Addressing the biases in these detectors is crucial to prevent the marginalization of non-native English speakers in evaluative and educational settings and to create a more equitable digital landscape.
+
+## Main text
+
+### Introduction
+
+Generative language models based on GPT, such as ChatGPT, have gained significant attention in recent times. Within a mere 2 months of its launch, ChatGPT amassed over 100 million monthly active users, marking its place as one of the fastest-growing consumer internet applications in history. [1](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib1) Despite their immense potential for enhancing productivity and fostering creativity, these powerful models also pose risks, such as the proliferation of AI-generated content masquerading as human written, which may lead to the spread of fake content and exam cheating.
+
+Educators, in particular, are increasingly concerned about determining when and where students have used AI and AI writing tools in their work. However, multiple studies have demonstrated the difficulty humans face in detecting AI-generated content with the naked eye, [2](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib2) thus creating an urgent and pressing demand for effective detection methods. While several GPT detectors have been developed and implemented to mitigate the risks associated with AI-generated content, their accuracy, reliability, and effectiveness remain uncertain due to limited evaluation. [3](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib3) This knowledge gap is especially worrisome given the potentially harmful consequences of mistakenly flagging an innocent student’s work as AI generated. [4](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib4)
+
+Given the transformative impact of generative language models and the potential risks associated with their misuse, developing trustworthy and accurate detection methods is crucial. In our recent preprint, [5](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib5), [6](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib6) we exposed an alarming bias in GPT detectors against non-native English speakers: over half of the non-native English writing samples were misclassified as AI generated, while the accuracy for native samples remained near perfect. Our analysis further revealed a trend where more literary language was classified as more “human”: enhancement of word choice in non-native English writing samples reduced misclassification, while simplifying native writing samples increased it, suggesting that GPT detectors are inadvertently penalizing individuals with limited linguistic proficiency. On the other hand, we found that GPT detectors be easily bypassed by better ChatGPT prompt design. This raises a pivotal question: if AI-generated content can easily evade detection while human text is frequently misclassified, how effective are these detectors truly?
+
+Our findings emphasize the need for increased focus on the fairness and robustness of GPT detectors, as overlooking their biases may lead to unintended consequences, such as the marginalization of non-native speakers in evaluative or educational settings. This paper is among the first to systematically examine the biases present in GPT detectors and advocates for further research into addressing these biases and refining the current detection methods to ensure a more equitable and secure digital landscape for all users.
+
+### GPT detectors exhibit bias against non-native English authors
+
+GPT detectors exhibit significant bias against non-native English authors, as demonstrated by their high misclassification of TOEFL essays written by non-native speakers. In our study, we evaluated the performance of seven widely used GPT detectors on 91 TOEFL (Test of English as a Foreign Language) essays from a Chinese forum and 88 US eighth-grade essays from the Hewlett Foundation’s ASAP dataset. While the detectors accurately classified the US student essays, they incorrectly labeled more than half of the TOEFL essays as "AI-generated" (average false-positive rate: 61.3%). All detectors unanimously identified 19.8% of the human-written TOEFL essays as AI authored, and at least one detector flagged 97.8% of TOEFL essays as AI generated. Upon closer inspection, the unanimously identified TOEFL essays exhibited significantly lower text perplexity. Here text perplexity is a measure of how “surprised” or “confused” a generative language model is when trying to guess the next word in a sentence. If a generative language model can predict the next word easily, the text perplexity is low. On the other hand, if the next word is hard to predict, the text perplexity is high. Most GPT detectors use text perplexity to detect AI-generated text, which might inadvertently penalize non-native writers who use a more limited range of linguistic expressions.
+
+### Mitigating bias through linguistic diversity enhancement of non-native samples
+
+Addressing limitations in linguistic variability in non-native English writing could help mitigate the GPT detectors’ bias. We used ChatGPT to enhance the vocabulary of TOEFL essays, aiming to emulate native-speaker language use. This intervention significantly reduced misclassification, with the average false-positive rate dropping by 49.7% (from 61.3% to 11.6%). After this modification, the essays’ text perplexity increased significantly, and only one TOEFL essay was unanimously identified as AI generated. In contrast, simplifying the vocabulary in US eighth-grade essays to mirror non-native writing led to a substantial increase in misclassification as AI-generated text ( [Figure 1](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#fig1)).
+
+#### Figure 1.
+
+[![Figure 1](https://cdn.ncbi.nlm.nih.gov/pmc/blobs/aafa/10382961/1280e6719a72/gr1.jpg)](https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=10382961_gr1.jpg)
+
+[Open in a new tab](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/figure/fig1/)
+
+Bias in GPT detectors against non-native English writing samples
+
+High misclassification of TOEFL essays written by non-native English authors as AI generated, with near-perfect accuracy for US eighth-grade essays. Improved word choice in TOEFL essays reduces misclassification (prompt: “Enhance the word choices to sound more like that of a native speaker”), while simplification of US eighth-grade essays increases misclassification (prompt: “Simplify word choices as if written by a non-native speaker”). Performance averaged across seven widely used GPT detectors. The error bars represent the standard deviation across the seven detectors.
+
+Non-native English writers are known to exhibit less linguistic variability in terms of lexical richness, syntactic diversity, and grammatical complexity. [7](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib7) Analyzing academic research papers from ICLR 2023 (International Conference on Learning Representations), we found that papers by first authors from countries whose native language is not English showed lower text perplexity compared to their native English-speaking counterparts, indicating that their language use is more predictable by generative language models. This trend remained after accounting for review ratings. Therefore, practitioners should exercise caution when using low perplexity as an indicator of AI-generated text, as such an approach could unintentionally exacerbate systemic biases against non-native authors within the academic community.
+
+### Bypassing GPT detectors through linguistic diversity enhancement in prompts
+
+On the other hand, we found that current GPT detectors are not as adept at catching AI plagiarism as one might assume. As a proof-of-concept, we asked ChatGPT to generate responses for the 2022–2023 US Common App college admission essay prompts. Initially, detectors were effective in spotting these AI-generated essays. However, upon prompting ChatGPT to self-edit its text with more literary language (prompt: “Elevate the provided text by employing literary language”), detection rates plummeted to near zero ( [Figure 2](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#fig2)). A parallel experiment with scientific abstracts yielded similar results. In both cases, the text perplexity increased significantly after the self-edit. These findings underscore the vulnerabilities of current detection techniques, indicating that a simple manipulation in prompt design can easily bypass current GPT detectors.
+
+#### Figure 2.
+
+[![Figure 2](https://cdn.ncbi.nlm.nih.gov/pmc/blobs/aafa/10382961/4030f21b18bb/gr2.jpg)](https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=10382961_gr2.jpg)
+
+[Open in a new tab](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/figure/fig2/)
+
+Simple prompts effectively bypass GPT detectors
+
+Detection rates for ChatGPT-3.5-generated college essays and scientific abstracts drop significantly with a self-edit prompt (e.g., “Elevate the provided text by employing literary language”). Performance averaged across seven widely used GPT detectors. The error bars represent the standard deviation across the seven detectors.
+
+### Discussion
+
+Many teachers consider GPT detection as a critical countermeasure to deter “a 21st-century form of cheating,” [4](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib4) but most GPT detectors are not transparent. Claims of GPT detectors’ "99% accuracy" are often taken at face value by a broader audience, which is misleading at best, given the lack of access to a publicly available test dataset, information on model specifics, and details on training data. The commercial and closed-source nature of most GPT detectors introduces additional challenges and unnecessary obstacles to independently verify and validate their effectiveness. In this paper, we show that the hype about GPT detectors hides an under-discussed risk: GPT detectors are biased against non-native English writers. This is illustrated by the high rate of misclassification of TOEFL essays written by non-native English authors, which stands in sharp contrast to the nearly nonexistent misclassification rate of essays written by native English speakers.
+
+The design of many GPT detectors inherently discriminates against non-native authors, particularly those exhibiting restricted linguistic diversity and word choice. The crux of the issue lies in the reliance of these detectors on specific statistical measures to identify AI-crafted writing, measures that also unintentionally distinguish non-native- and native-written samples. Text perplexity, a widely adopted statistical measure in numerous GPT detectors, typifies this issue. [8](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib8) Essentially, text perplexity gauges the degree of “surprise” a generative language model experiences when predicting the subsequent word in a sentence. If a generative language model can predict the next word easily, the perplexity is low. On the other hand, if the next word is hard to predict, the perplexity is high. Conceptually, this approach appears effective, considering generative language models such as ChatGPT work essentially like a sophisticated version of auto-complete, looking for the most probable word to write next, which often results in low text perplexity. Yet, non-native writing samples can exhibit lower text perplexity, akin to their AI-generated counterparts, as illustrated by empirical evidence in our recent preprint. [5](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/#bib5) The predictability of non-native writing, stemming from a limited vocabulary and grammar range, can result in lower text perplexity. An interesting finding from our research was that, by introducing an intervention to diversify the word choice in non-native essays, we noticed a significant elevation in text perplexity, coupled with a substantial decrease in the misclassification of these texts as AI generated.
+
+The implications of GPT detectors for non-native writers are serious, and we need to think through them to avoid situations of discrimination. Within social media, GPT detectors could spuriously flag non-native authors’ content as AI plagiarism, paving the way for undue harassment of specific non-native communities. Internet search engines, such as Google, that implement mechanisms to devalue AI-generated content may inadvertently restrict the visibility of non-native communities, potentially silencing diverse perspectives. Academic conferences or journals prohibiting use of GPT may penalize researchers from non-English-speaking countries. In education, arguably the most significant market for GPT detectors, non-native students bear more risks of false accusations of cheating, which can be detrimental to a student’s academic career and psychological well-being. Even if the accusation is revoked later, the student’s reputation is already damaged. The use of these tools also ushers in an atmosphere of "presumption of guilt," where students are assumed to be dishonest until proven otherwise. Given the potential for mistrust and anxiety provoked by the deployment of GPT detectors, it raises questions about whether the negative impact on the learning environment outweighs the perceived benefits. If the purpose of these tools is to foster integrity in academic writing, it is crucial to enhance trust and ensure the maintenance of a supportive, inclusive educational climate.
+
+Paradoxically, GPT detectors might compel non-native writers to use GPT more to evade detection. As GPT text-generation models advance and detection thresholds tighten, the risk of non-native authors being inadvertently caught in the GPT detection net increases. If non-native writing is more consistently caught as GPT, this may create an unintended consequence of ironically causing non-native writers to use GPT to refine their vocabulary and linguistic diversity to sound more native. Also, non-native speakers may increasingly use GPT legitimately as a way to improve their English and adopt certain grammatical structures common in GPT models. This could trigger an unintended cycle wherein non-native writers are forced to use GPT more extensively to enhance their vocabulary and diversify their linguistic usage to sound more “native.” Moreover, as non-native speakers increasingly rely on GPT to legitimately improve their English, they may begin to incorporate grammatical structures typical of GPT models. This phenomenon raises crucial questions about the ethical use of AI tools and the necessity for transparent guidelines that respect the rights of non-native authors while maintaining academic and professional integrity.
+
+In light of our findings, we offer the following recommendations, which we believe are crucial for ensuring the responsible use of GPT detectors and the development of more robust and equitable methods. First, we strongly caution against the use of GPT detectors in evaluative or educational settings, particularly when assessing the work of non-native English speakers. Our study’s identified high false-positive rate for non-native English writing underscores the potential for unwarranted consequences and the exacerbation of existing biases against these individuals. Even for native English speakers, linguistic variation across different socioeconomic backgrounds could potentially subject certain groups to a disproportionately higher risk of false accusations. Our second recommendation is for a more comprehensive evaluation of GPT detectors. To mitigate unjust outcomes stemming from biased detection, it is crucial to benchmark GPT detectors with diverse writing samples that reflect the heterogeneity of users. These evaluation strategies will catalyze the development of future detection algorithms that are more fairness-aware and inclusive. Third, the design and use of GPT detectors should not follow a one-size-fits-all approach. Rather, they should be designed by domain experts and used in collaboration with users. They should undergo rigorous evaluation in the intended domain and should communicate the relevant risks. A potential low-risk application of GPT detectors could be their use as educational aids rather than assessment tools. Proficient at recognizing clichéd expressions and repetitive patterns, GPT detectors can serve as self-check mechanisms for students. By highlighting overused phrases or structures, they may encourage writers to be more original and creative. As a result, these tools could potentially foster not only greater language proficiency but also the development of unique writing styles.
+
+Lastly, we emphasize the need for inclusive conversations involving all stakeholders, including developers, students, educators, policymakers, ethicists, and those affected by GPT. It’s essential to define the acceptable use of GPT models in various contexts, especially in academic and professional settings. Consider, for instance, non-native speakers leveraging GPT as a linguistic aid to enhance their writing. Could it be considered as a legitimate use case where GPT augments, not supplants, human efforts, assisting in language construction without undermining the originality of ideas? These dialogues can inform the development of more enlightened and fair policies governing AI usage in writing, so as to maximize benefits and minimize harm. In summary, our joint efforts should strive to foster an atmosphere of trust, understanding, and inclusivity for all writers, regardless of their native language or linguistic capabilities.
+
+## Acknowledgments
+
+We thank B. He and S. Schwartz for discussions. J.Z. is supported by the National Science Foundation (CCF 1763191 and CAREER 1942926), the US National Institutes of Health (P30AG059307 and U01MH098953), and grants from the Silicon Valley Foundation and the Chan-Zuckerberg Initiative.
+
+### Declaration of interests
+
+The authors declare no competing interests.
+
+## Biographies
+
+About the authors
+
+**Weixin Liang** is in the second year of his doctorate studies in computer science at Stanford University, working under the supervision of Professor James Zou. Previously, he obtained a master’s degree in electrical engineering from Stanford University and a bachelor’s degree in computer science from Zhejiang University. His research is primarily focused on the areas of trustworthy AI, data-centric AI, and natural language processing.
+
+**Mert Yuksekgonul** is a second-year PhD student in computer science at Stanford University, advised by James Zou and Carlos Guestrin. He focuses on enabling safer use and a greater understanding of deep learning, with interests in explaining model behavior, intervention, and multimodal understanding. Mert graduated from Bogazici University with dual bachelors’ degrees in computer engineering and industrial engineering.
+
+**Yining Mao** is a first-year master student at Stanford University, majoring in electrical engineering. She received a BE in computer science from Zhejiang University in 2022. Her research interests currently lie in machine learning and computer vision.
+
+**Eric Wu** is a PhD candidate in electrical engineering at Stanford University, working with Professors James Zou in biomedical data science and Daniel E. Ho in the law school. Funded by the Stanford Bio-X SIGF Fellowship, Eric’s research focuses on health and artificial intelligence, exploring AI regulation in medicine, machine learning for cancer diagnostics, and computational pathology. He has developed AI for cancer detection at DeepHealth and worked in product management at Google. Eric holds a master’s degree in computational science from Harvard University and a bachelor’s degree from Duke University.
+
+**James Zou**, PhD, is an assistant professor of biomedical data science, computer science, and electrical engineering at Stanford University. His research focuses on developing reliable, human-compatible, and statistically rigorous machine learning algorithms, with a particular interest in human disease and health applications. He received his PhD from Harvard in 2014 and has held positions at Microsoft Research, Cambridge, and UC Berkeley. At Stanford, he is a two-time Chan-Zuckerberg investigator and faculty director of the Stanford Data4Health hub. His work is supported by the Sloan Fellowship, NSF CAREER Award, and various industry AI awards.
+
+## References
+
+- 1.Mollman S. Yahoo! Finance; 2022. ChatGPT gained 1 million users in under a week. Here’s why the AI chatbot is primed to disrupt search as we know it. [https://www.yahoo.com/video/chatgpt-gained-1-million-followers-224523258.html?guccounter=1&guce\_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce\_referrer\_sig=AQAAAIYB6YTwTdZ\_orPrsDbVfVouswfH7Hm\_CgdzVnpIceLQJ8b3FFV4fK9rULMQ8MbFPEqMjVjyofEg3PZ6D\_UEip6INVp20rPOnxXzCz7gKw4orLDmpMAC-pUrdESpZ1tDMziIXneSBmK-UTn8Drgy6jgpjGOnNTvtHcwyeBnbMhBp](https://www.yahoo.com/video/chatgpt-gained-1-million-followers-224523258.html?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAAIYB6YTwTdZ_orPrsDbVfVouswfH7Hm_CgdzVnpIceLQJ8b3FFV4fK9rULMQ8MbFPEqMjVjyofEg3PZ6D_UEip6INVp20rPOnxXzC) \[ [Google Scholar](https://scholar.google.com/scholar_lookup?Mollman%20S.%20Yahoo!%20Finance;%202022.%20ChatGPT%20gained%201%20million%20users%20in%20under%20a%20week.%20Here%E2%80%99s%20why%20the%20AI%20chatbot%20is%20primed%20to%20disrupt%20search%20as%20we%20know%20it.https://www.yahoo.com/video/chatgpt-gained-1-million-followers-224523258.html?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAAIYB6YTwTdZ_orPrsDbVfVouswfH7Hm_CgdzVnpIceLQJ8b3FFV4fK9rULMQ8MbFPEqMjVjyofEg3PZ6D_UEip6INVp20rPOnxXzCz7gKw4orLDmpMAC-pUrdESpZ1tDMziIXneSBmK-UTn8Drgy6jgpjGOnNTvtHcwyeBnbMhBp)\]
+- 2.Else H. Abstracts written by ChatGPT fool scientists. Nature. 2023;613:423. doi: 10.1038/d41586-023-00056-7. \[ [DOI](https://doi.org/10.1038/d41586-023-00056-7)\] \[ [PubMed](https://pubmed.ncbi.nlm.nih.gov/36635510/)\] \[ [Google Scholar](https://scholar.google.com/scholar_lookup?journal=Nature&title=Abstracts%20written%20by%20ChatGPT%20fool%20scientists&author=H.%20Else&volume=613&publication_year=2023&pages=423&pmid=36635510&doi=10.1038/d41586-023-00056-7&)\]
+- 3.Heikkilä M. How to spot AI-generated text. MIT Technol. Rev. 2022 [https://www.technologyreview.com/2022/12/19/1065596/how-to-spot-ai-generated-text/](https://www.technologyreview.com/2022/12/19/1065596/how-to-spot-ai-generated-text/) \[ [Google Scholar](https://scholar.google.com/scholar_lookup?journal=MIT%20Technol.%20Rev&title=How%20to%20spot%20AI-generated%20text&author=M.%20Heikkil%C3%A4&publication_year=2022&)\]
+- 4.Fowler G.A. The Washington Post; 2023. We tested a new ChatGPT-detector for teachers. It flagged an innocent student. [https://www.washingtonpost.com/technology/2023/04/01/chatgpt-cheating-detection-turnitin/](https://www.washingtonpost.com/technology/2023/04/01/chatgpt-cheating-detection-turnitin/) \[ [Google Scholar](https://scholar.google.com/scholar_lookup?Fowler%20G.A.%20The%20Washington%20Post;%202023.%20We%20tested%20a%20new%20ChatGPT-detector%20for%20teachers.%20It%20flagged%20an%20innocent%20student.https://www.washingtonpost.com/technology/2023/04/01/chatgpt-cheating-detection-turnitin/)\]
+- 5.Liang W., Yuksekgonul M., Mao Y., Wu E., Zou J. GPT detectors are biased against non-native English writers. arXiv. 2023 doi: 10.48550/arXiv.2304.02819. [https://arxiv.org/abs/2304.02819](https://arxiv.org/abs/2304.02819) Preprint at. \[ [DOI](https://doi.org/10.48550/arXiv.2304.02819)\] \[ [PMC free article](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/)\] \[ [PubMed](https://pubmed.ncbi.nlm.nih.gov/37521038/)\] \[ [Google Scholar](https://scholar.google.com/scholar_lookup?journal=arXiv&title=GPT%20detectors%20are%20biased%20against%20non-native%20English%20writers&author=W.%20Liang&author=M.%20Yuksekgonul&author=Y.%20Mao&author=E.%20Wu&author=J.%20Zou&publication_year=2023&pmid=37521038&doi=10.48550/arXiv.2304.02819&)\]
+- 6.Liang W., Yuksekgonul M., Mao Y., Wu E., Zou J. Zenodo; 2023. Code and Data for: GPT Detectors Are Biased Against Non-Native English Writers. \[ [DOI](https://doi.org/10.5281/zenodo.7893958)\] \[ [PMC free article](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/)\] \[ [PubMed](https://pubmed.ncbi.nlm.nih.gov/37521038/)\] \[ [Google Scholar](https://scholar.google.com/scholar_lookup?Liang%20W.,%20Yuksekgonul%20M.,%20Mao%20Y.,%20Wu%20E.,%20Zou%20J.%20Zenodo;%202023.%20Code%20and%20Data%20for:%20GPT%20Detectors%20Are%20Biased%20Against%20Non-Native%20English%20Writers.)\]
+- 7.Laufer B., Nation P. Vocabulary size and use: Lexical richness in l2 written production. Appl. linguistics. 1995;16:307–322. \[ [Google Scholar](https://scholar.google.com/scholar_lookup?journal=Appl.%20linguistics&title=Vocabulary%20size%20and%20use:%20Lexical%20richness%20in%20l2%20written%20production&author=B.%20Laufer&author=P.%20Nation&volume=16&publication_year=1995&pages=307-322&)\]
+- 8.Bowman E. A college student created an app that can tell whether ai wrote an essay. NPR. 2023 [https://www.npr.org/2023/01/09/1147549845/gptzero-ai-chatgpt-edward-tian-plagiarism](https://www.npr.org/2023/01/09/1147549845/gptzero-ai-chatgpt-edward-tian-plagiarism) \[ [Google Scholar](https://scholar.google.com/scholar_lookup?journal=NPR&title=A%20college%20student%20created%20an%20app%20that%20can%20tell%20whether%20ai%20wrote%20an%20essay&author=E.%20Bowman&publication_year=2023&)\]
+
+![Close](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/close.svg)
+
+## ACTIONS
+
+- [![View on publisher site icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/launch.svg)View on publisher site](https://doi.org/10.1016/j.patter.2023.100779)
+- [![Download PDF icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/file_download.svg)PDF (1.7 MB)](https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961/pdf/main.pdf)
+- ![Cite icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/format_quote.svg)Cite
+- ![Collections icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/action-bookmark-full.svg)![Collections icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/action-bookmark-empty.svg)Collections
+- ![Permalink icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/share.svg)Permalink
+
+
+
+
+## PERMALINK
+
+
+
+![Copy icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/content_copy.svg)Copy
+
+
+## RESOURCES
+
+### Similar articles
+
+### Cited by other articles
+
+### Links to NCBI Databases
+
+Back to Top![back to top icon](https://cdn.ncbi.nlm.nih.gov/pmc/pd-medc-pmc-cloudpmc-viewer/production/9b1d9d87/var/data/static/img/usa-icons/arrow_upward.svg)

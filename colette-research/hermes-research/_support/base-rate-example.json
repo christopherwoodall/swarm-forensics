@@ -1,0 +1,11 @@
+{
+  "illustration_only": true,
+  "not_measured_prevalence": true,
+  "population": 100000,
+  "prevalence": 0.01,
+  "sensitivity": 0.9,
+  "specificity": 0.95,
+  "true_positives": 900,
+  "false_positives": 4950,
+  "precision": 0.15384615384615372
+}

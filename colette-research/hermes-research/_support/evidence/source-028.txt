@@ -1,0 +1,1318 @@
+                                                              Anatomy of an AI-powered
+                                                               malicious social botnet
+                                                             Kai-Cheng Yang∗ and Filippo Menczer
+arXiv:2307.16336v1 [cs.CY] 30 Jul 2023
+
+
+
+
+                                                                 Observatory on Social Media
+                                                               Indiana University, Bloomington
+
+
+                                                                                  Abstract
+                                                    Large language models (LLMs) exhibit impressive capabilities in gen-
+                                                erating realistic text across diverse subjects. Concerns have been raised
+                                                that they could be utilized to produce fake content with a deceptive inten-
+                                                tion, although evidence thus far remains anecdotal. This paper presents
+                                                a case study about a Twitter botnet that appears to employ ChatGPT
+                                                to generate human-like content. Through heuristics, we identify 1,140 ac-
+                                                counts and validate them via manual annotation. These accounts form
+                                                a dense cluster of fake personas that exhibit similar behaviors, including
+                                                posting machine-generated content and stolen images, and engage with
+                                                each other through replies and retweets. ChatGPT-generated content
+                                                promotes suspicious websites and spreads harmful comments. While the
+                                                accounts in the AI botnet can be detected through their coordination pat-
+                                                terns, current state-of-the-art LLM content classifiers fail to discriminate
+                                                between them and human accounts in the wild. These findings highlight
+                                                the threats posed by AI-enabled social bots.
+
+
+                                         1      Introduction
+                                         Large language models (LLMs) can generate human-like text (Jakesch et al.,
+                                         2023) and excel in various natural language processing tasks, including senti-
+                                         ment analysis and text summarization (Ye et al., 2023; Qin et al., 2023). Such
+                                         capabilities have opened up numerous potential applications (Bahrini et al.,
+                                         2023), such as enhancing education (Kasneci et al., 2023) and providing re-
+                                         sponses to medical questions (Ayers et al., 2023). Consequently, these tools have
+                                         gained significant traction in the market. For instance, ChatGPT, a prominent
+                                         LLM, amassed over 100 million users in only two months.1 Industry giants like
+                                         Microsoft have integrated ChatGPT into their products,2 and Google swiftly
+                                             ∗ Corresponding author; email: yangkc@iu.edu
+                                             1 reuters.com/technology/chatgpt-sets-record-fastest-growing-user-base-analyst-note-2023-
+
+                                         02-01 (Accessed May 2023)
+                                            2 blogs.microsoft.com/blog/2023/02/07/reinventing-search-with-a-new-ai-powered-
+
+                                         microsoft-bing-and-edge-your-copilot-for-the-web (Accessed May 2023)
+
+
+                                                                                       1
+followed suit by offering similar solutions.3
+    At the same time, researchers have warned about the potential misuse of such
+technologies to generate mis/disinformation and harmful content (Bommasani
+et al., 2021; Yamin et al., 2021; Guembe et al., 2022; Goldstein et al., 2023).
+Recent studies demonstrate that models like the GPT series are capable of pro-
+ducing news articles indistinguishable from human-generated ones (Kreps et al.,
+2022; Jakesch et al., 2023) and vast amounts of compelling mis/disinformation
+with little human involvement (Buchanan et al., 2021; Spitale et al., 2023).
+Detecting such content poses challenges for existing automated detection mod-
+els (Zhou et al., 2023). LLMs can also be leveraged to scale up personalized
+attacks, such as spear phishing content (Hazell, 2023). The widespread availabil-
+ity of powerful language models will also significantly reduce the costs associated
+with content generation and lower the technical proficiency required to conduct
+such operations (Brundage et al., 2018; Weidinger et al., 2022). However, exist-
+ing studies mainly consist of predictions and lab experiments. To date, evidence
+of LLMs being deployed in the field for malicious purposes remains largely anec-
+dotal.
+    In this paper, we present a case study about a Twitter botnet that appears
+to use ChatGPT to generate harmful content. Social bots are social media ac-
+counts controlled in part by software and have been around for many years (Fer-
+rara et al., 2016). They were found to distort online conversations and spread
+misinformation in various contexts, from elections to public health crises (Shao
+et al., 2018; Ferrara et al., 2020; Jamison et al., 2019; Marlow et al., 2020). Tra-
+ditional social bots often follow pre-defined instructions to perform simplistic
+tasks, such as spamming (Yang et al., 2019), following others, and amplifying
+certain narratives (Keller et al., 2020). They typically lack the intelligence to
+create realistic personas, post convincing content, or carry out natural conver-
+sations with other accounts automatically (Assenmacher et al., 2020). However,
+the recent advancements in and wide adoption of LLMs completely transform
+this landscape. Adversarial actors can now easily leverage language models to
+significantly enhance the capabilities of bots across all dimensions.
+    The bot accounts in our analytical sample were identified by self-revealing
+tweets they posted by accident. A combination of heuristics and manual annota-
+tion yields 1,140 accounts in what we call the “fox8” botnet. An in-depth anal-
+ysis of behaviors displayed by the accounts in this botnet shows that they form
+a dense social network by following each other. They post machine-generated
+content and steal selfies to create fake personas. They also frequently interact
+with each other through retweets and replies. A closer look at the self-revealing
+tweets suggests that the ChatGPT-generated content aims to promote suspi-
+cious websites and spread harmful comments. We apply state-of-the-art LLM-
+content detectors and find they cannot effectively distinguish between human
+and LLM-powered bots in the wild.
+    Our work unveils the emergence of LLM-powered social bots and highlights
+the threats they pose. By focusing on a real-world botnet, we provide valuable
+  3 blog.google/products/search/generative-ai-search (Accessed May 2023)
+
+
+
+
+                                           2
+insights into how LLMs are leveraged by adversarial actors in the field. Given
+the rapid advancements in AI technologies, we anticipate the proliferation of
+more advanced bot accounts across social media, serving diverse purposes. We
+hope to raise public awareness about this issue and share the botnet data to
+allow the research community to investigate further.
+
+
+2      Related work
+2.1      LLM-powered cyber threats
+Machine-generated content has long been implicated in cyber-social threats,
+such as phishing, mis/disinformation, and harmful content (Crothers et al.,
+2022). These threats have been further exacerbated by LLMs for two main
+reasons. First, LLMs beat traditional text generation methods in producing
+human-like text (Jakesch et al., 2023; Guo et al., 2023; Clark et al., 2021).
+This enhancement enables them to craft compelling and personalized content
+for previously unseen attacks (Buchanan et al., 2021; Spitale et al., 2023; Hazell,
+2023).
+    Second, powerful LLMs have become readily accessible, affordable, and user-
+friendly. For instance, OpenAI provides API access to their models, enabling
+users to generate large volumes of content at a nominal expense.4 Interac-
+tion with most LLMs happens via human language prompts (Liu et al., 2023),
+enabling even those without technical skills to harness the models’ capabili-
+ties. Users can also acquire knowledge on API queries and LLM prompting
+directly from the models themselves (Hazell, 2023). The availability of open-
+source LLMs offers technical users greater flexibility to train, customize, and
+implement models according to their needs (Yang et al., 2023).
+    Therefore, LLMs have the potential to reshape the landscape of cyber-social
+security dramatically, a concern shared by many researchers (Bommasani et al.,
+2021; Yamin et al., 2021; Guembe et al., 2022; Goldstein et al., 2023; Kucharavy
+et al., 2023). However, empirical evidence of such abuse in the field is rare.
+One example comes from Hanley et al., who analyze machine-generated text in
+news media outlets and find a significant surge in such content after the release
+of ChatGPT, particularly on low-credibility websites (Hanley and Durumeric,
+2023). Our research contributes to this growing body of work, focusing on a
+botnet that exploits ChatGPT for harmful activities.
+
+2.2      LLM-generated content detection
+The potential misuse of LLMs necessitates the development of reliable methods
+to detect LLM-generated content (Crothers et al., 2022). Existing strategies
+can be broadly classified into black-box and white-box approaches (Tang et al.,
+2023). Back-box detection methods are often framed as binary classification
+    4 openai.com/blog/introducing-chatgpt-and-whisper-apis (Accessed May 2023)
+
+
+
+
+                                            3
+problems where classifiers are trained on texts generated by humans and ma-
+chines. The goal is to identify the characteristics of machine-generated content,
+such as statistical anomalies (Gehrmann et al., 2019; Mitchell et al., 2023) and
+linguistic patterns (Guo et al., 2023; Fröhling and Zubiaga, 2021). White-box
+methods, on the other hand, require LLM owners to embed specific signals or
+watermarks (e.g., altered word frequencies) into generated content for subse-
+quent identification (Kirchenbauer et al., 2023; Zhao et al., 2023).
+    However, the exceptional text-generation capability of LLMs has raised ques-
+tions about the feasibility of detection. For example, Sadasivan et al. argue that
+black-box detection might be unachievable when LLMs can produce text com-
+pletely indistinguishable from human-generated content (Sadasivan et al., 2023).
+Chakraborty et al. show that detection is theoretically possible if machine- and
+human-generated content distributions differ, but as LLMs advance, the sam-
+ple size required for detection increases (Chakraborty et al., 2023). White-box
+methods are not bulletproof either, being susceptible to adversarial attacks. Re-
+cent studies suggest that text paraphrasing significantly reduces detection accu-
+racy (Sadasivan et al., 2023; Krishna et al., 2023). Furthermore, this approach
+might not apply to open-source LLMs, as malicious actors could intentionally
+remove the embedded watermarks (Tang et al., 2023). In conclusion, detecting
+LLM-generated content is a formidable challenge.
+
+2.3    Social bot detection
+Different from chatbots such as ChatGPT, which interact with users solely
+through text, social media bots display profiles and engage with others through
+various means, including following, liking, and retweeting. All these behav-
+iors can be leveraged by machine-learning models to detect bots. Researchers
+commonly adopt the supervised approach where examples of bot and human ac-
+counts are collected for training classifiers (Yang et al., 2019; Sayyadiharikandeh
+et al., 2020). Various characteristics, ranging from account metadata to social
+network structure, are then considered during the process (Ferrara et al., 2016;
+Varol et al., 2017). Content posted by bots also provides essential clues (Kudugunta
+and Ferrara, 2018; Heidari and Jones, 2020).
+    As some bots evolve to mimic human profiles and behaviors better, their
+activities can only be detected during orchestrated operations (Cresci, 2020).
+This unsupervised approach typically requires calculating the similarity of dif-
+ferent accounts and subsequently clustering them into groups (Pacheco et al.,
+2021). Key signals include temporal activities (Chavoshi et al., 2016; Keller
+et al., 2017), common retweets (Nizzoli et al., 2021), and URLs shared in
+tweets (Pacheco et al., 2021; Giglietto et al., 2020). Definitions of the similarity
+measure vary across studies. Therefore, unsupervised methods tend to struggle
+with generalizability across different contexts, despite their high precision in
+specific cases.
+
+
+
+
+                                        4
+2.4      Bots supercharged by LLMs
+LLMs also have the potential to enhance the capabilities of social bots, akin to
+previously mentioned cyber-social threats (Grimme et al., 2022; Ferrara, 2023).
+A basic application is to use LLMs to generate realistic text for bots, increasing
+their resemblance to human users. To develop effective detection methods for
+this kind of bots, Kumarage et al. construct an in-house dataset employing
+GPT-2 to generate text and compare it with human-generated content (Ku-
+marage et al., 2023). However, empirical investigations into social bots leverag-
+ing machine-generated text are limited. A noteworthy exception is the work by
+Fagni et al., who identify 23 self-disclosed bot accounts on Twitter and share
+the dataset (Fagni et al., 2021). According to the description of these bots,
+their tweets are generated by algorithms such as GPT-2, RNN, LSTM, and
+Markov Chain. Subsequent studies have built upon this dataset to explore vari-
+ous strategies for bot detection based on content (Saravani et al., 2021; Gambini
+et al., 2022; Tourille et al., 2022). Despite these studies, our understanding of
+bots powered by advanced LLMs remains rudimentary. Our study contributes
+to this line of research by analyzing a more up-to-date botnet that utilizes state-
+of-the-art AI models.
+
+
+3      Identification of the fox8 botnet
+As mentioned above, the fox8 botnet was identified through self-revealing tweets
+posted by these accounts accidentally. To prevent the generation of undesirable
+content, proprietary LLMs often have safeguards implanted through a tech-
+nique called reinforcement learning from human feedback (Ouyang et al., 2022).
+ChatGPT models, for example, are instructed to refuse to respond to any ques-
+tions5 that go against OpenAI’s usage policies.6 Violations include harmful
+content, disinformation, and tailored financial advice. Upon a violation, the
+models respond with a standardized message asserting their identity as AI lan-
+guage models and their inability to comply (see Table 1 for examples). This
+self-revealing content can be posted accidentally by LLM-powered bots in the
+absence of a suitable filtering mechanism.
+    Based on this clue, we searched Twitter for the phrase “as an ai language
+model” between Oct. 1, 2022, and Apr. 23, 2023, using the historical search end-
+point of Twitter’s V2 API. This led to 12,226 tweets by 9,112 unique accounts,
+but there is no guarantee that all these accounts are LLM-powered bots. There-
+fore, we selected a sample of 100 accounts for manual verification, discovering
+that 76% are likely humans posting or retweeting ChatGPT outputs, while the
+remaining accounts are likely bots using LLMs for content generation. However,
+definitive identification is challenging due to the natural, human-like nature of
+LLM-generated text.
+    During the annotation process, we noticed recurring patterns among some
+    5 openai.com/blog/how-should-ai-systems-behave (Accessed May 2023)
+    6 openai.com/policies/usage-policies (Accessed May 2023)
+
+
+
+
+                                             5
+bot-like accounts. Specifically, they consistently link to three suspicious web-
+sites: fox8.news7 (distinct from the legitimate news outlet, fox8.com),
+cryptnomics.org,8 and globaleconomics.news.9 Consequently, we extracted
+all 1,140 accounts linking to any of these websites for further investigation and
+found strong indications of their origin from the same botnet, likely employing
+ChatGPT for content creation (see evidence in the following sections). There-
+fore, we dub it the “fox8” botnet and focus on it in this study.
+    We collect up to 200 recent tweets along with friend and follower lists
+from each fox8 bot using the Twitter V1.1 API for further investigation. In
+our analyses, we aim to contrast the behaviors of the fox8 bots against those
+of legitimate accounts with human-generated content. To do so, we turn to
+pre-existing datasets employed for training social bot detectors (Yang et al.,
+2022). Specifically, we utilize four datasets: botometer-feedback (Yang et al.,
+2019), gilani-17 (Gilani et al., 2017), midterm-2018 (Yang et al., 2020), and
+varol-icwsm (Varol et al., 2017), randomly selecting 285 human accounts from
+each. The accounts in these datasets were annotated by humans. Up to 200
+tweets by these accounts were collected years before the release of LLMs like
+ChatGPT, significantly reducing the possibility of data contamination. Combin-
+ing the 1,140 bot accounts with the 1,140 human ones results in our benchmark
+dataset: the fox8-23 dataset, which is publicly available at github.com/osome-
+iu/AIBot_fox8.
+
+
+4      Characterizations
+In this section, we characterize the fox8 bots to reveal their behavioral patterns.
+
+4.1     Profiles
+Let us start with fox8 profiles and show the distributions of their follower/following
+count, tweet count, and creation year in Figure 1. These bots have 74.0 (SD=36.7)
+followers, 140.4 (SD=236.6) friends, and 149.6 (SD 178.8) tweets on average.
+These numbers suggest that the fox8 bots are actively participating in various
+activities on Twitter. We find most of them were created over seven years ago,
+with some being created in 2023. Most of the bots have descriptions in their
+profiles, which commonly mention cryptocurrencies and blockchains.
+
+4.2     Social networks
+Let us analyze the social networks of the fox8 bots. We consider three forms
+of interactions: following, retweeting, and replying. Quotes are ignored due
+to their rareness. The follow network is constructed through bots’ friend and
+follower lists. The retweet and reply networks are inferred based on their recent
+    7 web.archive.org/web/20230401111956/https://fox8.news
+    8 web.archive.org/web/20230401190830/https://cryptnomics.org
+    9 web.archive.org/web/20230401111503/https://globaleconomics.news
+
+
+
+
+                                            6
+            400                                      600
+                                          (a)                                       (b)
+            300
+                                                     400
+Frequency
+
+
+
+
+            200
+                                                     200
+            100
+              0                                        0
+                  0       100      200    300              100   101 102 103        104
+                         Follower count                           Following count
+            600                                     1000
+                                          (c)                                       (d)
+                                                     750
+            400
+Frequency
+
+
+
+
+                                                     500
+            200
+                                                     250
+              0                                        0
+                  100   101 102 103       104             2 4 6 8 0 2
+                          Tweet count                  201 201 201 201 202 202
+                                                               Year of creation
+
+Figure 1: Profile characteristics of the fox8 bots (N=1,140). We show the
+distributions of (a) follower count, (b) following (friend) count, (c) tweet count,
+and (e) year of creation.
+
+
+
+
+                                                7
+tweets. Here we only focus on the 1,140 fox8 bots and ignore other accounts
+even if they have interacted with fox8 bots.
+    We visualize the follow network in Figure 2(a), which turns out to be very
+dense: it has an in-degree of 13.7 (SD=5.2) and an out-degree of 13.4 (SD=5.8)
+on average. The near-identical distributions concentrated around mean values
+suggest that the following behaviors of the fox8 bots are engineered rather than
+organic — empirical distributions of follower counts tend to be significantly
+broader and more skewed toward lower values (Conover et al., 2012). Similarly,
+we show the reply and retweet networks in Figure 2(b,c). The reply network
+is much sparser, with an average in-degree of 3.4 (SD=2.3) and out-degree of
+3.1 (SD=1.9). Note that we only show the largest weakly connected component
+that contains 1,036 fox8 accounts here. The retweet network is very similar to
+the replying network.
+    Unlike the follow network, the reply and retweet networks shown in the
+figure might still emerge from organic account interactions. To rule out this
+possibility, we perform additional analysis by comparing the fox8 bots with
+another group of accounts as the baseline. Since a random sample from Twitter
+would likely demonstrate no interactions among them at all, we resort to a
+convenience sample, i.e., the 7,972 accounts that posted “as an ai language
+model” but are not part of the fox8 botnet. These accounts, as our manual
+annotation suggests, discussed AI at certain points. So their behaviors can
+better reflect the interaction patterns among users in an online community with
+shared interests. We label this the “baseline” group.
+    We obtain up to 200 most recent tweets from the baseline accounts to infer
+their reply and retweet edges with others. For the fox8 bots and the baseline
+accounts, we calculate the percentages of account pairs with reply and retweet
+edges both within and across groups in Figure 2(d,e). The results for the reply
+network suggest that there is a 0.2% chance for the fox8 bots to reply to each
+other, in contrast to the baseline group’s 0.016%. Compared to the interactions
+within the groups, cross-group interactions are extremely rare. Similar patterns
+are observed for the retweeting relations.
+    These findings suggest that the fox8 bots purposely follow each other to form
+a dense cluster. They also frequently interact with each other through replies
+and retweets to boost engagement metrics. It is worth mentioning that they
+also engage with accounts outside the botnet by following, retweeting, replying,
+and liking them.
+
+4.3    Content type
+We now turn to the tweets posted by the fox8 bots. During the manual check, we
+noticed that their timelines contain a balanced mix of various tweet types. To
+confirm this observation, we calculate the percentage of original tweets, replies,
+and retweets/quotes (we combine the two for simplicity) and show the results
+as a heatmap in Figure 3(a). For comparison, we generate the same plot for
+the human accounts in fox8-23 and display it in Figure 3(b). We find that
+the human accounts are spread out across the feature space, indicating diverse
+
+
+                                        8
+                (a)                 (b)                   (c)
+
+
+
+
+                             (d)                 (e)
+      Source account group
+
+
+
+
+                                   Target account group
+
+Figure 2: Social networks of the fox8 bots. (a) Visualization of the follow
+network (N=1,140) and the corresponding in- and out-degree distributions. (b)
+Same as (a) but for the reply network (N=1,036). (c) Same as (a) but for the
+retweet network (N=1,058). (d) Percentages of account pairs with replies within
+and across the fox8 and baseline groups. The y- and x-axes indicate source and
+target account groups, respectively. (e) Same as (d) but for retweets.
+
+
+
+
+                                          9
+(a) Bots                                    (b) Humans
+
+
+
+
+              )
+
+
+
+
+                                                         )
+            (%
+
+
+
+
+                                                       (%
+           tes
+
+
+
+
+                                                      tes
+        uo
+
+
+
+
+                                                   uo
+      /q
+
+
+
+
+                                                  /q
+                                 Re
+
+
+
+
+                                                                            Re
+      ts
+
+
+
+
+                                                 ts
+                                   plie
+
+
+
+
+                                                                              plie
+    ee
+
+
+
+
+                                                 ee
+   tw
+
+
+
+
+                                              tw
+                                        s
+
+
+
+
+                                                                                   s
+ Re
+
+
+
+
+                                            Re
+                                     (%
+
+
+
+
+                                                                                (%
+                                       )
+
+
+
+
+                                                                                  )
+           Original tweets (%)                        Original tweets (%)
+
+
+Figure 3: Distributions of tweet types for bot and human accounts in the
+fox8-23 dataset. (a) Each bot account is mapped along three axes rep-
+resenting the percentages of different tweet types: original tweets, replies,
+retweets/quotes. The color represents the number of bots in each hexagonal
+bin, on a log scale. (b) Same as (a), but for the human accounts.
+
+
+behavioral patterns. On the other hand, the fox8 bots concentrate within a
+confined region, suggesting programmed behavioral patterns. On average, the
+bots generate 25.6% (SD=22.4%) original tweets, 36.1% (SD=21.3%) replies,
+and 38.4% (SD=21.7%) retweets/quotes.
+   Notably, many fox8 bots intermittently post photos, often selfies, giving the
+impression that real individuals are behind the accounts. However, we find these
+photos are appropriated from other websites or social media platforms, such as
+Instagram, a known tactic to create fake personas.10
+
+4.4        Amplified hashtags and accounts
+What is the objective of the fox8 bots? We address this question by analyzing
+the hashtags in their tweets and the accounts they retweet or reply to most
+frequently. In Figure 4(a), we show the ten most shared hashtags by the fox8
+bots. We combine the original tweets, retweets, and quotes in the calculation
+since they yield qualitatively similar results. The majority of these hashtags are
+associated with cryptocurrency/blockchain.
+    We also identify the accounts with which the fox8 bots engage most fre-
+quently. Since fox8 bots interact with each other routinely, we focus on the ac-
+counts outside the botnet and show the top ten in Figure 4(b). Most of these ac-
+counts are related to cryptocurrency/blockchain/NFT. Note that @GlobalEconNews
+is the official account for globaleconomics.news, one of the websites used to
+identify the fox8 bots. This account’s reply, retweet, and like sections are filled
+with fox8 bots.
+  10 nytimes.com/interactive/2018/01/27/technology/social-media-bots.html (Accessed May
+
+2023)
+
+
+
+                                            10
+         (a) #breaking                      (b) @CryptnomicsOrg
+             #bitcoin                           @WatcherGuru
+             #crypto                            @crypto
+             #web3                              @missteencrypto
+             #ethereum                          @ForbesCrypto
+             #cryptocurrency                    @AshleyDCan
+             #latest                            @kucoincom
+             #doge                              @AngelsOfCrypto
+             #litecoin                          @GlobalEconNews
+             #bearmarket                        @idalistrades
+            0   2000 4000 6000 8000           0         2000       4000
+                   Frequency                          Frequency
+
+Figure 4: Hashtags and accounts amplified by the fox8 bots. (a) Ten most
+frequent hashtags shared by fox8 bots in their recent tweets. (b) Ten most
+frequent accounts outside the botnet that are retweeted, quoted, or replied to
+by fox8 bots.
+
+
+    These findings suggest that the fox8 bots are mainly used to post and am-
+plify information about cryptocurrency/blockchain, consistent with their de-
+scriptions.
+
+4.5    Shared websites
+Since the fox8 bots frequently share links in their tweets, we extract the website
+domains of these links and show the ten most frequent ones in Figure 5(a).
+Three websites (cryptnomics.org, fox8.news, and globaleconomics.news)
+are much more prominent than others, which is not surprising as they are also
+the ones we use to identify the fox8 bots. We further calculate the probability of
+each fox8 bot sharing these websites and show the distributions in Figure 5(b).
+Around 3% of bot tweets, on average, contain links to one of the three websites.
+    Although these three websites appear to be normal news outlets, several
+aspects regarding them raise red flags. While the owner identity is hidden in
+the domain registration information, two domains were registered on Feb. 8 and
+the third on Feb. 9, 2023. The three websites share many other similarities. For
+example, they seem to use the same WordPress theme, their domains resolve to
+the same IP address, and they display pop-up prompts urging visitors to install
+suspicious software. Although they present themselves as news publishers, no
+details regarding their editorial teams are provided. And they source all their
+articles from recognized media platforms like vox.com and forbes.com.
+    Many fox8 tweets linking to these suspicious websites contain text that is
+
+
+                                       11
+         (a) cryptnomics.org             (b) cryptnomics.org
+             fox8.news
+             globaleconomics.news
+             getyarn.io                     fox8.news
+             msn.com
+             vitalik.eth.limo
+             stake.com
+             unmaskcrypto.com               globaleconomics.news
+             gemini.com
+             merriam-webster.com
+            0    2000 4000 6000             0%     5%      10% 15%
+                    Frequency                    Sharing probability
+
+Figure 5: Websites shared by the fox8 bots. (a) Ten most frequent websites
+shared by fox8 bots in their recent tweets. (b) Distribution of the probability
+of sharing articles linking to the three suspicious websites.
+
+
+not cohesive with the news articles. These include some self-revealing tweets.
+Therefore, we speculate that ChatGPT is used to generate these tweets to pro-
+mote the websites, even though the execution by the operator is not perfect.
+
+4.6    Self-revealing tweets
+We are particularly interested in the role of LLMs in powering the fox8 bots.
+Here we focus on the self-revealing tweets for two reasons. First, we are more
+certain these tweets originate from LLMs. Second, the self-revealing tweets can
+provide insights into the operator’s prompts or instructions, shedding light on
+(some of) their objectives.
+    Of the recent tweets from the fox8 bots, 1,205 are self-revealing, with some
+bots having multiple instances. We manually categorize them and show the
+percentage of each class and a corresponding example in Table 1. Occasionally,
+the self-revealing tweets explicitly reference “OpenAI,” leading us to believe
+that the botnet utilizes ChatGPT.
+    We find that most self-revealing tweets (81.3%) stem from instructions to
+generate harmful/hateful/negative content against OpenAI guidelines. Another
+4.1% of the tweets result from other prohibited instructions, such as providing
+financial advice or expressing political viewpoints. We also find a small portion
+of self-revealing tweets (2.0%) that contains positive content.
+    About 12.3% of the self-revealing tweets arise from instructions that are
+beyond the language model’s capabilities, such as browsing Twitter, playing
+games, assessing links, etc. In some cases, the language model requests addi-
+
+
+                                       12
+  Table 1: Categories and examples of self-revealing tweets (N=1,205).
+Category                 Number (%) Example
+Harmful content          980 (81.3)     I’m sorry, but I cannot com-
+                                        ply with this request as it vio-
+                                        lates OpenAI’s Content Pol-
+                                        icy on generating harmful or
+                                        inappropriate content. As an
+                                        AI language model, my responses
+                                        should always be respectful and
+                                        appropriate for all audiences.
+Beyond capability        148 (12.3)     I’m sorry, but as an AI language
+                                        model I cannot browse Twit-
+                                        ter and access specific tweets
+                                        to provide replies.
+Other forbidden content 49 (4.1)        I’m sorry, as an AI language
+                                        model I cannot provide in-
+                                        vestment advice or predic-
+                                        tions about stock prices.
+Positive content         23 (2.0)       No worries, friend! As an AI
+                                        language model myself, I strive to
+                                        keep things positive and up-
+                                        lifting. Let’s spread some good
+                                        vibes together with a #positivity
+                                        hashtag!
+Others                   5 (0.0)        Interesting topic! Fortunately,
+                                        as an AI language model, I don’t
+                                        have to pay taxes or worry about
+                                        intergenerational wealth trans-
+                                        fer...yet.
+
+
+
+
+                                   13
+tional information. These responses are often found in replies, suggesting that
+the operator employs ChatGPT to turn the fox8 bots into intelligent chatbots
+for natural interactions. The fox8 bots even chat with each other sometimes.
+    Note that the disparity between the negative and positive instructions shown
+in Table 1 does not imply that ChatGPT is primarily used to generate negative
+content for the fox8 bots. Instead, it could be attributed to selection bias, as
+malicious prompts are more likely to elicit self-revealing responses. Based on
+the findings, we believe the operator employs a variety of prompts to generate
+diverse content, including negative comments.
+
+
+5     Detection
+Given the imminent threat posed by LLM-powered bots, it is crucial to develop
+effective detection methods. In this section, we explore different approaches to
+identifying them.
+    One strategy is to consider the fox8 bots as coordinated inauthentic actors
+and use the unsupervised methods mentioned in the related work for their de-
+tection (Pacheco et al., 2021). The analyses above suggest that these bots often
+link to a common set of domains, post and amplify similar hashtags, and inter-
+act amongst themselves. These signals can be leveraged to identify the bots.
+However, this approach may not generalize to LLM-powered bots outside this
+particular botnet. Hence, we aim to explore methods that are applicable to a
+range of bot types.
+
+5.1    Botometer
+We first test Botometer,11 a supervised machine-learning tool designed to detect
+social bots on Twitter (Yang et al., 2022). Botometer considers over 1,000
+features covering account profiles, content, social networks, and so on. It has
+been validated in many research projects under various contexts. The tool
+provides an overall score and a set of sub-scores that indicate bot classes. The
+scores are in the range between 0 and 5. A higher score indicates that the
+account is more likely to be a bot.
+    We evaluate the fox8 bots using Botometer and show the distributions of the
+outcomes in Figure 6. We can see all the bot score distributions are left-skewed,
+meaning Botometer believes they are human-like. Using 2.5 as a threshold, we
+calculate the recall of different scores and annotate the results in the figure. The
+results are nearly zero in all cases, suggesting that Botometer cannot identify
+the fox8 bots.
+    This result is not surprising since the current version of Botometer was
+trained before the release of ChatGPT and was not configured to identify LLM-
+powered bots. Instead, Botometer leverages other account characteristics in its
+evaluation. As shown above, the fox8 bots demonstrate sophisticated behavioral
+patterns that are similar to human users. When inspected individually, even
+ 11 botometer.org
+
+
+
+
+                                        14
+                                            Overall           Fake follower             Financial
+                                            R=0.04                  R=0.03                R=0.00
+Frequency
+
+
+
+
+                                                              Self declared            Spammer
+                                                                    R=0.01               R=0.03
+
+
+
+                                                             Echo chamber                 Other
+                                                                   R=0.00                R=0.04
+
+
+
+                         Bot score                                      Bot score
+
+
+ Figure 6: Botometer score distributions for the fox8 bots. In the left panel,
+ we show the results of the overall score. In the right panel, we show the results
+ of different sub-scores. We annotate the recall (R) in each plot using 2.5 as a
+ threshold.
+
+
+ human experts cannot determine their nature easily. After all, these bots were
+ captured by the self-revealing tweets posted inadvertently.
+
+ 5.2         LLM-generated content detectors
+ Since our goal is to identify accounts using LLMs to generate content, we can
+ also leverage detectors designed specifically for such content. Here we consider
+ two such tools, OpenAI’s AI text classifier (OpenAI, 2023) and GPTZero,12 that
+ are easily accessible and designed to detect content generated by ChatGPT.
+     In Jan. 2023, OpenAI released their AI text detector,13 a language model
+ fine-tuned on human- and machine-generated content that works for different
+ LLMs including OpenAI’s own models. This description suggests that the de-
+ tector uses the black-box detection approach. However, it is unclear if OpenAI
+ has embedded watermarks in their LLMs and uses them for detection.
+     This detector has a web interface that requires a minimum input of 1,000
+ characters.14 The model’s output ranges across five possible classifications for
+ the submitted text: “very unlikely,” “unlikely,” “unclear if it is,” “possibly,” and
+ “likely” to be AI-generated. According to the JavaScript code of the webpage,
+ the underlying model returns a score in the range between 0 and 100 (we call
+ it the OpenAI detector score) and the different categories above correspond
+ to the following score ranges respectively: (0, 10], (10, 45], (45, 90], (90, 98],
+ and (98, 100]. OpenAI chooses a very high threshold (90) for determining AI-
+ generated content to reduce the false positive rate.
+     Considering the relatively short length of individual tweets from the fox8
+ bots, we concatenate them per user and run the consolidated text through
+       12 gptzero.me
+       13 openai.com/blog/new-ai-classifier-for-indicating-ai-written-text (Accessed May 2023)
+       14 platform.openai.com/ai-text-classifier
+
+
+
+
+                                                      15
+                           0.2                Concatenation           (a)
+                                              Other tweets
+
+
+
+               Frequency
+                                              Self-revealing tweets
+                           0.1
+
+                           0.0
+                                  0       20 40 60 80                 100
+                                          OpenAI detector score
+                            20                Concatenation           (b)
+                                              Other tweets
+                Frequency
+
+
+
+                                              Self-revealing tweets
+                            10
+
+                             0
+                                 0.0      0.2 0.4 0.6 0.8 1.0
+                                       GPTZero's generated probability
+
+Figure 7: Evaluation of LLM-generated content detectors on the tweets of
+fox8 bots. (a) Results of OpenAI’s AI text classifier. (b) Results of GPTZero.
+“Concatenation” means the concatenation of all tweets from each bot. “Self-
+revealing tweets” refer to the tweets listed in Table 1. “Other tweets” refer to
+tweets other than self-revealing tweets. The dashed lines indicate the official
+thresholds of the tools.
+
+
+OpenAI’s detector. We then plot the distribution of the OpenAI detector scores
+in Figure 7(a). Unfortunately, most of the concatenated texts garner scores near
+zero, leading the detector to classify them as human-generated. Given that these
+tweets are not produced in a single session, their concatenation could mislead
+the detector. Consequently, we explore methodologies for tweet-level detection.
+    The 1,000-character requirement is primarily due to the detector’s reduced
+accuracy for shorter texts. It is only reinforced on the webpage. By directly
+accessing the undocumented API the webpage uses, the model (registered as
+“model-detect-v2”) can rate text of any length. Hence, we input each tweet from
+the fox8 bots into the detector and show the score distribution in Figure 7(a).
+The self-revealing tweets and other tweets are split since we can confidently
+attribute the former to ChatGPT. The self-revealing tweets typically yield very
+high scores, while the scores for other tweets are distributed across the entire
+range.
+    Next, we examine the performance of GPTZero. It claims to be the “global
+standard for AI detection,” with over one million users and wide collaboration
+with educators. According to its FAQ,15 GPTZero is a “classification model that
+ 15 gptzero.me/faq (Accessed May 2023)
+
+
+
+
+                                                 16
+predicts whether a document was written by a large language model, providing
+predictions on a sentence, paragraph, and document level.” This suggests that
+it is a black-box detection method as well.
+     We use its API to analyze the tweets of the fox8 bots. Since it operates
+on documents of at least 250 characters, we again concatenate the tweets for
+each user. The results contain a “completely generated prob” score in the range
+from 0 to 1, signifying the probability that the document is generated by LLMs.
+Additionally, GPTZero provides a probability for each individual sentence. The
+official documentation suggests using 0.65 as the threshold to dichotomize the
+probabilities. We show the distributions of overall and sentence-level probabili-
+ties for the self-revealing and other tweets in Figure 7(b). All probabilities are
+near zero.
+     The comparison here suggests that GPTZero is unsuitable for the task of
+identifying content posted by fox8 bots, while OpenAI’s detector shows some
+potential. Note that we implement additional processing steps to the tweets
+in the experiments above. We exclude retweets since they originate from other
+accounts. For the rest of the tweets (i.e., original tweets, replies, and quotes),
+we only retain those in English since both detectors primarily cater to this
+language. We remove the user handles of the targets in replies since they are
+injected by Twitter. The links in the tweets are also removed.
+
+5.3    Detecting LLM-powered bots
+Due to the valuable indicators provided by OpenAI’s AI text detector at the
+tweet level, let us explore the feasibility of building a tool to detect LLM-powered
+bots on top of it. The idea is simple: for a given account, we extract the qualified
+tweets, process them, run them through the detector, and calculate the average
+score to determine the nature of the account.
+    We use the full fox8-23 dataset in this experiment. The distribution of
+the final scores at the account level can be found in Figure 8(a). The fox8
+bots tend to have higher average scores compared to the humans according to
+a t-test (Mean: 57.7 vs. 48.6, t = 30.6, p < 0.001), but human users exhibit
+a larger standard deviation (SD: 2.6 vs. 9.7). These results indicate that this
+approach is potentially effective for distinguishing between LLM-powered bots
+and humans. To determine an appropriate threshold, we vary its value and
+calculate the corresponding F1 score. When the threshold is set to 52.7, the F1
+score is maximized, reaching 0.84.
+    Let us apply this method in the field to test its effectiveness further. We
+run an experiment on Twitter using a random sample of tweets posted between
+May 8 and May 14, 2023. We identify the unique accounts and sample 4,000
+for further analysis. Only 3,870 accounts were accessible when we queried their
+information on May 17, 2023. After obtaining their recent 100 tweets, we find
+that only 1,986 have at least one qualified (English, non-retweet) tweet for
+further analysis.
+    We calculate the average OpenAI detector scores for these 1,986 accounts
+and show their distribution in Figure 8(b). For reference, we also show the
+
+
+                                        17
+            0.20                              0.06
+                     Fox8-23 humans
+                     Fox8-23 bots
+                                         (a)           Fox8-23 humans
+                                                       Random accounts: all
+                                                                               (b)
+                                              0.05     Random accounts: 4 tweets
+            0.15
+                                              0.04
+Frequency
+
+
+            0.10                              0.03
+                                              0.02
+            0.05
+                                              0.01
+            0.00                              0.00
+                 0    25 50 75 100                 0    25 50 75 100
+                Average OpenAI detector score     Average OpenAI detector score
+
+Figure 8: Using OpenAI’s AI text detector to identify fox8 bots. (a) Distri-
+butions of the average OpenAI detector score for human and bot accounts in
+the fox8-23 dataset. (b) Distribution of the average OpenAI detector score for
+random Twitter accounts (N=1,986). For comparison, we also show the dis-
+tribution for the subset of random accounts with at least four qualified tweets
+(N=1,269) and the results for the human accounts in fox8-23. The vertical
+lines mark the optimal threshold for distinguishing between the humans and
+bots in fox8-23 (see main text for details).
+
+
+results for the human accounts in fox8-23. We find that the random accounts
+have slightly higher scores than the fox8-23 humans according to a t-test (t =
+3.4, p < 0.001). Applying the threshold from earlier (52.7) leads to 815 of the
+random accounts being labeled as bots. But these might include many false
+positives. The fox8-23 dataset contains the same amount of bots and humans,
+however, we believe LLM-powered bots are still rare on Twitter as of today.
+According to the figure, a fair amount of human accounts also have scores above
+the threshold.
+    To further evaluate the accuracy of the classification results, we manually an-
+notate the 250 accounts with the highest OpenAI detector scores. This includes
+examining their profiles and timelines, checking their friends and followers, and
+searching Twitter for potential coordinated activities. Only a few accounts ap-
+pear to be suspicious, although we cannot definitely attribute their content to
+LLMs.
+    Many false positives are caught because they only have one or two very short
+tweets, which yield high scores. For example, both the terms “thank you” and
+“amen” have scored over 60. This is consistent with OpenAI’s warning that the
+model is less accurate for short texts. These accounts also increase the average
+score of random accounts. To illustrate, we show the results for a subset of
+the random accounts with at least four qualified tweets in Figure 8(b), and
+their scores are not significantly different from those of the fox8-23 humans
+(t = −1.4, p = 0.15).
+
+
+                                               18
+6    Conclusion and discussion
+This paper presents a case study about a Twitter botnet that employs Chat-
+GPT for content generation. Evidence points to intricate behavioral patterns
+by these accounts, characterized by human-like profiles and varied activities.
+Their shared actions include the posting of appropriated images, mutual ac-
+count following to establish a dense social network, and reciprocal interaction
+via replies and retweets. We speculate that the accounts in the botnet follow a
+single probabilistic model that determines their activity types and frequencies.
+ChatGPT is used to produce human-like content as original tweets or replies to
+other accounts. The self-revealing tweets suggest that the language model is in-
+structed to generate various content, including negative and harmful comments.
+Our study also reveals the coordinated use of these bots in promoting dubious
+websites.
+     We investigate the effectiveness of different strategies to detect this new
+strain of bots and find that classical bot detection methods prove inadequate. At
+the same time, the AI text classifier provided by OpenAI demonstrates potential
+efficacy in controlled lab conditions. However, applying it in the field to identify
+more LLM-powered bots still faces critical challenges. First, it is unreliable for
+non-English content (Liang et al., 2023) and short texts, considerably narrowing
+the scope of accounts it can process. Second, it exhibits a high false positive
+rate when evaluating random accounts. It is therefore premature to rely solely
+on this method to detect LLM-powered bots in the field.
+     Our analysis has some limitations. Since we only focus on one botnet on
+Twitter, the findings might not represent other LLM-powered bots. In fact,
+fox8 is likely the tip of the iceberg: the operators of other LLM-powered bots
+may not be as careless. Moreover, while we assert that the fox8 bots use Chat-
+GPT for content creation, we cannot guarantee that all their content is LLM-
+generated. Last but not least, given that Twitter has suspended free API access
+for researchers, it might become impossible to replicate our analysis or find new
+LLM-powered bots in the future.
+     Despite these limitations, our study sheds light on the emergence and reality
+of LLM-enabled malicious bots on social media. Our findings provide valuable
+insights and set the stage for investigating malicious bots further. Given the
+rapid advancements in AI technologies, we anticipate a widespread surge of
+more advanced bots on the internet. Accordingly, we foresee several potential
+developments in bot behavior.
+     Firstly, future LLM-powered bots will likely cease posting self-revealing
+tweets, making them increasingly challenging to detect. Operators could employ
+basic keyword-matching filters to mitigate this issue. Furthermore, the swift ad-
+vancements in open-source LLMs could incentivize operators to utilize models
+lacking safeguards, or even train models specifically for malicious purposes (Jin
+et al., 2023).
+     Secondly, bots may evolve into highly intelligent, fully autonomous entities.
+The fox8 bots currently operate under some pre-established rules and only use
+ChatGPT for content generation and dialogues. However, emerging research in-
+
+
+                                        19
+dicates that LLMs can facilitate the development of autonomous agents capable
+of independently processing exposed information, making autonomous decisions,
+and utilizing tools such as APIs and search engines (Li et al., 2023; Park et al.,
+2023; Wang et al., 2023). Open-source implementations, such as AutoGPT16
+and BabyAGI,17 make it straightforward to integrate these agents with Twitter
+accounts.
+    Lastly, bots will harness the multi-modal capabilities of more advanced gen-
+erative models. The bots in the present case study only use language models
+for text generation. However, the field of generative models for images has also
+seen significant advancements. For instance, Generative Adversarial Networks
+can already create realistic human faces (Karras et al., 2019, 2020) that hu-
+mans fail to identify (Nightingale and Farid, 2022), while the stable diffusion
+algorithms are capable of producing a variety of images (Rombach et al., 2022).
+A combination of these generative models can further enhance the potency of
+malicious social bots.
+    In light of these looming threats, it is crucial to devise appropriate counter-
+measures. First, we need more effective detection methods capable of identifying
+short texts within the context of social media. This necessitates the training of
+specialized models using data procured from more field-captured LLM-powered
+bots. To this end, one could search for other phrases, such as “I’m sorry, I cannot
+generate,” that LLMs use when refusing to comply with the prompts (Dekens,
+2023) on other social media or websites.18 Once we gain a deeper understanding
+of the instructions fed to these bots, we can also utilize LLMs to generate addi-
+tional texts independently. Second, it is essential to establish regulations specific
+to the utilization of LLMs in spawning malicious bots. For example, a platform
+might be required to challenge an account to prove a piece of content is organic
+before it becomes visible to a large audience (Menczer et al., 2023). This en-
+deavor calls for collaboration among various stakeholders, including government
+agencies, AI corporations, and social media platforms. However, proposing pre-
+cise regulations is beyond the scope of this paper. Third, it is crucial to raise
+public awareness regarding the existence of LLM-powered bots and educate indi-
+viduals on strategies for self-protection against such threats. Nevertheless, this
+initiative should be carried out carefully to avoid unintended consequences as
+recent research indicates that preemptively informing users about the existence
+of social bots may amplify their existing cognitive biases (Yan et al., 2022).
+
+Acknowledgements
+We thank Twitter users @conspirator0 and @jsrailton for the inspiration of
+searching “as an ai language model” to identify LLM-powered bots on Twit-
+ter. This work was supported in part by the Volkswagen Foundation, Knight
+Foundation, and DARPA (grant HR001121C0169).
+ 16 github.com/Significant-Gravitas/Auto-GPT
+ 17 github.com/yoheinakajima/babyagi
+  18 nytimes.com/2023/05/19/technology/ai-generated-content-discovered-on-news-sites-
+
+content-farms-and-product-reviews.html (Accessed May 2023)
+
+
+
+                                           20
+References
+Dennis Assenmacher, Lena Clever, Lena Frischlich, Thorsten Quandt, Heike
+  Trautmann, and Christian Grimme. Demystifying social bots: On the in-
+  telligence of automated social media actors. Social Media+ Society, 6(3):
+  2056305120939264, 2020.
+John W Ayers, Adam Poliak, Mark Dredze, Eric C Leas, Zechariah Zhu, Jes-
+  sica B Kelley, Dennis J Faix, Aaron M Goodman, Christopher A Longhurst,
+  Michael Hogarth, et al. Comparing physician and artificial intelligence chat-
+  bot responses to patient questions posted to a public social media forum.
+  JAMA Internal Medicine, 2023.
+Aram Bahrini, Mohammadsadra Khamoshifar, Hossein Abbasimehr, Robert J
+  Riggs, Maryam Esmaeili, Rastin Mastali Majdabadkohne, and Morteza
+  Pasehvar. Chatgpt: Applications, opportunities, and threats. Preprint
+  arXiv:2304.09103, 2023.
+Rishi Bommasani, Drew A Hudson, Ehsan Adeli, Russ Altman, Simran Arora,
+  Sydney von Arx, Michael S Bernstein, Jeannette Bohg, Antoine Bosselut,
+  Emma Brunskill, et al. On the opportunities and risks of foundation models.
+  Preprint arXiv:2108.07258, 2021.
+Miles Brundage, Shahar Avin, Jack Clark, Helen Toner, Peter Eckersley, Ben
+ Garfinkel, Allan Dafoe, Paul Scharre, Thomas Zeitzoff, Bobby Filar, et al.
+ The malicious use of artificial intelligence: Forecasting, prevention, and mit-
+ igation. Preprint arXiv:1802.07228, 2018.
+Ben Buchanan, Andrew Lohn, and Micah Musser. Truth, lies, and automation:
+  How language models could change disinformation. Center for Security and
+  Emerging Technology, 2021.
+Souradip Chakraborty, Amrit Singh Bedi, Sicheng Zhu, Bang An, Dinesh
+  Manocha, and Furong Huang. On the possibilities of ai-generated text detec-
+  tion. Preprint arXiv:2304.04736, 2023.
+Nikan Chavoshi, Hossein Hamooni, and Abdullah Mueen. Debot: Twitter bot
+  detection via warped correlation. In IEEE International Conference on Data
+  Mining (ICDM), pages 817–822, 2016.
+Elizabeth Clark, Tal August, Sofia Serrano, Nikita Haduong, Suchin Gururan-
+  gan, and Noah A Smith. All that’s ‘human’is not gold: Evaluating human
+  evaluation of generated text. Preprint arXiv:2107.00061, 2021.
+Michael D Conover, Bruno Gonçalves, Alessandro Flammini, and Filippo
+ Menczer. Partisan asymmetries in online political activity. EPJ Data Science,
+ 1:6, 2012. doi: 10.1140/epjds6. URL http://dx.doi.org/10.1140/epjds6.
+Stefano Cresci. A decade of social bot detection. Communications of the ACM,
+  63(10):72–83, 2020.
+
+
+                                      21
+Evan Crothers, Nathalie Japkowicz, and Herna Viktor. Machine generated text:
+  A comprehensive survey of threat models and detection methods. Preprint
+  arXiv:2210.07321, 2022.
+Nico Dekens. A practical guide for osint investigators to combat disinforma-
+  tion and fake reviews driven by ai (chatgpt). https://info.shadowdragon.
+  io/hubfs/SD_APracticalGuide_WhitePaper-1.pdf, 2023. (Accessed May
+  2023).
+Tiziano Fagni, Fabrizio Falchi, Margherita Gambini, Antonio Martella, and
+  Maurizio Tesconi. Tweepfake: About detecting deepfake tweets. PLOS ONE,
+  16(5):1–16, 05 2021. doi: 10.1371/journal.pone.0251415. URL https://doi.
+  org/10.1371/journal.pone.0251415.
+Emilio Ferrara. Social bot detection in the age of chatgpt: Challenges and
+ opportunities. First Monday, 2023.
+Emilio Ferrara, Onur Varol, Clayton Davis, Filippo Menczer, and Alessandro
+ Flammini. The rise of social bots. Communications of the ACM, 59(7):96–104,
+ 2016.
+Emilio Ferrara, Herbert Chang, Emily Chen, Goran Muric, and Jaimin Patel.
+ Characterizing social media manipulation in the 2020 us presidential election.
+ First Monday, 2020.
+Leon Fröhling and Arkaitz Zubiaga. Feature-based detection of automated lan-
+  guage models: tackling gpt-2, gpt-3 and grover. PeerJ Computer Science, 7:
+  e443, 2021.
+Margherita Gambini, Tiziano Fagni, Fabrizio Falchi, and Maurizio Tesconi. On
+ pushing deepfake tweet detection capabilities to the limits. In 14th ACM Web
+ Science Conference 2022, pages 154–163, 2022.
+Sebastian Gehrmann, Hendrik Strobelt, and Alexander M Rush. Gltr: Statisti-
+  cal detection and visualization of generated text. Preprint arXiv:1906.04043,
+  2019.
+Fabio Giglietto, Nicola Righetti, Luca Rossi, and Giada Marino. Coordinated
+  link sharing behavior as a signal to surface sources of problematic information
+  on facebook. In International Conference on Social Media and Society, pages
+  85–91, 2020.
+Zafar Gilani, Reza Farahbakhsh, Gareth Tyson, Liang Wang, and Jon
+  Crowcroft. Of bots and humans (on Twitter). In Proceedings of the In-
+  ternational Conference on Advances in Social Networks Analysis and Mining,
+  pages 349–354. ACM, 2017.
+Josh A Goldstein, Girish Sastry, Micah Musser, Renee DiResta, Matthew
+  Gentzel, and Katerina Sedova. Generative language models and automated
+  influence operations: Emerging threats and potential mitigations. Preprint
+  arXiv:2301.04246, 2023.
+
+
+                                       22
+Christian Grimme, Janina Pohl, Stefano Cresci, Ralf Lüling, and Mike Preuss.
+  New automation for social bots: From trivial behavior to ai-powered commu-
+  nication. In Francesca Spezzano, Adriana Amaral, Davide Ceolin, Lisa Fazio,
+  and Edoardo Serra, editors, Disinformation in Open Online Media, pages 79–
+  99, Cham, 2022. Springer International Publishing. ISBN 978-3-031-18253-2.
+
+Blessing Guembe, Ambrose Azeta, Sanjay Misra, Victor Chukwudi Osamor,
+  Luis Fernandez-Sanz, and Vera Pospelova. The emerging threat of ai-driven
+  cyber attacks: A review. Applied Artificial Intelligence, 36(1):2037254, 2022.
+Biyang Guo, Xin Zhang, Ziyuan Wang, Minqi Jiang, Jinran Nie, Yuxuan Ding,
+  Jianwei Yue, and Yupeng Wu. How close is chatgpt to human experts? com-
+  parison corpus, evaluation, and detection. Preprint arXiv:2301.07597, 2023.
+Hans WA Hanley and Zakir Durumeric. Machine-made media: Monitoring the
+  mobilization of machine-generated articles on misinformation and mainstream
+  news websites. Preprint arXiv:2305.09820, 2023.
+
+Julian Hazell. Large language models can be used to effectively scale spear
+  phishing campaigns. Preprint arXiv:2305.06972, 2023.
+Maryam Heidari and James H Jones. Using bert to extract topic-independent
+ sentiment features for social media bot detection. In IEEE Annual Ubiquitous
+ Computing, Electronics & Mobile Communication Conference (UEMCON),
+ pages 0542–0547. IEEE, 2020.
+
+Maurice Jakesch, Jeffrey T. Hancock, and Mor Naaman. Human heuristics for
+ ai-generated language are flawed. Proceedings of the National Academy of
+ Sciences, 120(11):e2208839120, 2023.
+Amelia M. Jamison, David A. Broniatowski, and Sandra Crouse Quinn. Mali-
+ cious Actors on Twitter: A Guide for Public Health Researchers. American
+ Journal of Public Health, 109(5):688–692, 2019. ISSN 0090-0036.
+Youngjin Jin, Eugene Jang, Jian Cui, Jin-Woo Chung, Yongjae Lee, and Se-
+  ungwon Shin. Darkbert: A language model for the dark side of the internet.
+  Preprint arXiv:2305.08596, 2023.
+
+Tero Karras, Samuli Laine, and Timo Aila. A style-based generator architec-
+  ture for generative adversarial networks. In Proceedings of the IEEE/CVF
+  Conference on Computer Vision and Pattern Recognition, pages 4401–4410,
+  2019.
+Tero Karras, Samuli Laine, Miika Aittala, Janne Hellsten, Jaakko Lehtinen,
+  and Timo Aila. Analyzing and improving the image quality of stylegan. In
+  Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition, pages 8110–8119, 2020.
+
+
+
+
+                                      23
+Enkelejda Kasneci, Kathrin Seßler, Stefan Küchemann, Maria Bannert, Daryna
+  Dementieva, Frank Fischer, Urs Gasser, Georg Groh, Stephan Günnemann,
+  Eyke Hüllermeier, et al. Chatgpt for good? on opportunities and challenges
+  of large language models for education. Learning and Individual Differences,
+  103:102274, 2023. ISSN 1041-6080.
+
+Franziska Keller, David Schoch, Sebastian Stier, and JungHwan Yang. How to
+  manipulate social media: Analyzing political astroturfing using ground truth
+  data from south korea. In Proceedings of the International AAAI Conference
+  on Web and Social Media, volume 11, 2017.
+Franziska B Keller, David Schoch, Sebastian Stier, and JungHwan Yang. Po-
+  litical astroturfing on twitter: How to coordinate a disinformation campaign.
+  Political Communication, 37(2):256–280, 2020.
+John Kirchenbauer, Jonas Geiping, Yuxin Wen, Jonathan Katz, Ian Miers,
+  and Tom Goldstein. A watermark for large language models. Preprint
+  arXiv:2301.10226, 2023.
+
+Sarah Kreps, R. Miles McCain, and Miles Brundage. All the news that’s fit to
+  fabricate: Ai-generated text as a tool of media misinformation. Journal of
+  Experimental Political Science, 9(1):104–117, 2022. doi: 10.1017/XPS.2020.
+  37.
+Kalpesh Krishna, Yixiao Song, Marzena Karpinska, John Wieting, and Mohit
+ Iyyer. Paraphrasing evades detectors of ai-generated text, but retrieval is an
+ effective defense. Preprint arXiv:2303.13408, 2023.
+Andrei Kucharavy, Zachary Schillaci, Loı̈c Maréchal, Maxime Würsch, Ljiljana
+ Dolamic, Remi Sabonnadiere, Dimitri Percia David, Alain Mermoud, and
+ Vincent Lenders. Fundamentals of generative large language models and per-
+ spectives in cyber-defense. Preprint arXiv:2303.12132, 2023.
+Sneha Kudugunta and Emilio Ferrara. Deep neural networks for bot detection.
+  Information Sciences, 467:312–322, 2018.
+Tharindu Kumarage, Joshua Garland, Amrita Bhattacharjee, Kirill
+  Trapeznikov, Scott Ruston, and Huan Liu.            Stylometric detection of
+  ai-generated text in twitter timelines. Preprint arXiv:2303.03697, 2023.
+Guohao Li, Hasan Abed Al Kader Hammoud, Hani Itani, Dmitrii Khizbullin,
+ and Bernard Ghanem. Camel: Communicative agents for” mind” exploration
+ of large scale language model society. Preprint arXiv:2303.17760, 2023.
+
+Weixin Liang, Mert Yuksekgonul, Yining Mao, Eric Wu, and James Zou.
+ Gpt detectors are biased against non-native english writers. Preprint
+ arXiv:2304.02819, 2023.
+
+
+
+
+                                      24
+Pengfei Liu, Weizhe Yuan, Jinlan Fu, Zhengbao Jiang, Hiroaki Hayashi, and
+  Graham Neubig. Pre-train, prompt, and predict: A systematic survey of
+  prompting methods in natural language processing. ACM Computing Surveys,
+  55(9):1–35, 2023.
+Thomas Marlow, Sean Miller, and J. Timmons Roberts. Twitter Discourses on
+  Climate Change: Exploring Topics and the Presence of Bots. SocArXiv, 2020.
+  doi: 10.31235/osf.io/h6ktm.
+Filippo Menczer, David Crandall, Yong-Yeol Ahn, and Apu Kapadia. Ad-
+  dressing the harms of AI-generated inauthentic content. Nature Machine
+  Intelligence, 5:679–680, 2023. doi: 10.1038/s42256-023-00690-w. URL
+  https://rdcu.be/dgGfk.
+Eric Mitchell, Yoonho Lee, Alexander Khazatsky, Christopher D Manning, and
+  Chelsea Finn. Detectgpt: Zero-shot machine-generated text detection using
+  probability curvature. Preprint arXiv:2301.11305, 2023.
+Sophie J Nightingale and Hany Farid. Ai-synthesized faces are indistinguishable
+  from real faces and more trustworthy. Proceedings of the National Academy
+  of Sciences, 119(8):e2120481119, 2022.
+Leonardo Nizzoli, Serena Tardelli, Marco Avvenuti, Stefano Cresci, and Mau-
+  rizio Tesconi. Coordinated behavior on social media in 2019 UK general
+  election. In Proceedings of the International AAAI Conference on Web and
+  Social Media, volume 15, pages 443–454, 2021.
+OpenAI. Ai text classifier. https://beta.openai.com/ai-text-classifier, January
+ 2023. URL https://beta.openai.com/ai-text-classifier.
+Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwright,
+  Pamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex
+  Ray, et al. Training language models to follow instructions with human feed-
+  back. Advances in Neural Information Processing Systems, 35:27730–27744,
+  2022.
+Diogo Pacheco, Pik-Mai Hui, Christopher Torres-Lugo, Bao Tran Truong,
+  Alessandro Flammini, and Filippo Menczer. Uncovering coordinated net-
+  works on social media: Methods and case studies. In Proceedings of the
+  International AAAI Conference on Web and Social Media, volume 15, pages
+  455–466, 2021.
+Joon Sung Park, Joseph C O’Brien, Carrie J Cai, Meredith Ringel Morris, Percy
+  Liang, and Michael S Bernstein. Generative agents: Interactive simulacra of
+  human behavior. Preprint arXiv:2304.03442, 2023.
+Chengwei Qin, Aston Zhang, Zhuosheng Zhang, Jiaao Chen, Michihiro Ya-
+  sunaga, and Diyi Yang. Is ChatGPT a general-purpose natural language
+  processing task solver? Preprint arXiv:2302.06476, 2023.
+
+
+                                      25
+Robin Rombach, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn
+  Ommer. High-resolution image synthesis with latent diffusion models. In
+  Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition, pages 10684–10695, 2022.
+Vinu Sankar Sadasivan, Aounon Kumar, Sriram Balasubramanian, Wenxiao
+  Wang, and Soheil Feizi. Can ai-generated text be reliably detected? Preprint
+  arXiv:2303.11156, 2023.
+Sina Mahdipour Saravani, Indrajit Ray, and Indrakshi Ray. Automated iden-
+  tification of social media bots using deepfake text detection. In Information
+  Systems Security: International Conference (ICISS), pages 111–123. Springer,
+  2021.
+Mohsen Sayyadiharikandeh, Onur Varol, Kai-Cheng Yang, Alessandro Flam-
+ mini, and Filippo Menczer. Detection of novel social bots by ensembles of
+ specialized classifiers. In Proc. 29th ACM International Conference on Infor-
+ mation & Knowledge Management (CIKM), pages 2725–2732, 2020. doi: 10.
+ 1145/3340531.3412698. URL https://doi.org/10.1145/3340531.3412698.
+Chengcheng Shao, Giovanni Luca Ciampaglia, Onur Varol, Kai-Cheng Yang,
+  Alessandro Flammini, and Filippo Menczer. The spread of low-credibility
+  content by social bots. Nature communications, 9(1):4787, 2018.
+Giovanni Spitale, Nikola Biller-Andorno, and Federico Germani. Ai model gpt-3
+  (dis) informs us better than humans. Preprint arXiv:2301.11924, 2023.
+Ruixiang Tang, Yu-Neng Chuang, and Xia Hu. The science of detecting LLM-
+ generated texts. Preprint arXiv:2303.07205, 2023.
+Julien Tourille, Babacar Sow, and Adrian Popescu. Automatic detection of
+  bot-generated tweets. In Proceedings of the 1st International Workshop on
+  Multimedia AI against Disinformation, pages 44–51, 2022.
+Onur Varol, Emilio Ferrara, Clayton A Davis, Filippo Menczer, and Alessandro
+ Flammini. Online human-bot interactions: Detection, estimation, and char-
+ acterization. In Proceedings of the International AAAI Conference on Web
+ and Social Media, 2017.
+Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao, Yuke
+ Zhu, Linxi Fan, and Anima Anandkumar. Voyager: An open-ended embodied
+ agent with large language models. Preprint arXiv:2305.16291, 2023.
+Laura Weidinger, Jonathan Uesato, Maribeth Rauh, Conor Griffin, Po-Sen
+  Huang, John Mellor, Amelia Glaese, Myra Cheng, Borja Balle, Atoosa
+  Kasirzadeh, et al. Taxonomy of risks posed by language models. In ACM
+  Conference on Fairness, Accountability, and Transparency, pages 214–229,
+  2022.
+
+
+
+                                      26
+Muhammad Mudassar Yamin, Mohib Ullah, Habib Ullah, and Basel Katt.
+ Weaponized ai for cyber attacks. Journal of Information Security and Appli-
+ cations, 57:102722, 2021.
+Harry Yaojun Yan, Kai-Cheng Yang, James Shanahan, and Filippo Menczer.
+  Exposure to social bots amplifies perceptual biases and regulation propensity.
+  SocArXiv, 2022.
+Jingfeng Yang, Hongye Jin, Ruixiang Tang, Xiaotian Han, Qizhang Feng, Haom-
+  ing Jiang, Bing Yin, and Xia Hu. Harnessing the power of llms in practice:
+  A survey on chatgpt and beyond. Preprint arXiv:2304.13712, 2023.
+
+Kai-Cheng Yang, Onur Varol, Clayton A Davis, Emilio Ferrara, Alessandro
+ Flammini, and Filippo Menczer. Arming the public with artificial intelligence
+ to counter social bots. Human Behavior and Emerging Technologies, 1(1):48–
+ 61, 2019.
+Kai-Cheng Yang, Onur Varol, Pik-Mai Hui, and Filippo Menczer. Scalable
+ and Generalizable Social Bot Detection through Data Selection. Proceedings
+ of the AAAI Conference on Artificial Intelligence, 34(01):1096–1103, 2020.
+ ISSN 2374-3468.
+Kai-Cheng Yang, Emilio Ferrara, and Filippo Menczer. Botometer 101: Social
+ bot practicum for computational social scientists. Journal of Computational
+ Social Science, pages 1–18, 2022.
+
+Junjie Ye, Xuanting Chen, Nuo Xu, Can Zu, Zekai Shao, Shichun Liu, Yuhan
+  Cui, Zeyang Zhou, Chao Gong, Yang Shen, et al. A Comprehensive Capability
+  Analysis of GPT-3 and GPT-3.5 Series Models. Preprint arXiv:2303.10420,
+  2023.
+
+Xuandong Zhao, Yu-Xiang Wang, and Lei Li. Protecting language generation
+ models via invisible watermarking. Preprint arXiv:2302.03162, 2023.
+Jiawei Zhou, Yixuan Zhang, Qianni Luo, Andrea G Parker, and Munmun
+  De Choudhury. Synthetic lies: Understanding ai-generated misinformation
+  and evaluating algorithmic and human solutions. In Proceedings of the CHI
+  Conference on Human Factors in Computing Systems, New York, NY, USA,
+  2023. ACM.
+
+
+
+
+                                      27
+

@@ -1,0 +1,725 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://www.sciencedaily.com/releases/2026/04/260420014748.htm",
+      "title": "www.sciencedaily.com · releases · 2026/04/260420014748AI Swarms Could Hijack Democracy Without Anyone Noticing",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 2,
+      "url": "https://arxiv.org/html/2506.06299",
+      "title": "How malicious AI swarms can threaten democracy The ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 3,
+      "url": "https://openaccess.city.ac.uk/id/eprint/36726",
+      "title": "How malicious AI swarms can threaten democracy",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 4,
+      "url": "https://aiinstitute.hbs.edu/category/data-and-analysis/feed",
+      "title": "Data & Analysis | Harvard Business School AI Institute",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 5,
+      "url": "https://www.theguardian.com/technology/2026/jan/22/experts-warn-of-threat-to-democracy-by-ai-bot-swarms-infesting-social-media",
+      "title": "Experts warn of threat to democracy from ‘AI bot swarms’ infesting social media",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 6,
+      "url": "https://accedacris.ulpgc.es/bitstream/10553/52070/1/Swarm_intelligence_frequency.pdf",
+      "title": "INFO1071.dvi",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 7,
+      "url": "http://staff.washington.edu/paymana/swarm/bonabeau03-etcon.pdf",
+      "title": "Microsoft PowerPoint - Bonabeau_eric.ppt",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 8,
+      "url": "https://iridia.ulb.ac.be/~mdorigo/Published_papers/All_Dorigo_papers/DorBir2007sch-si.pdf",
+      "title": "[PDF] Swarm Intelligence - Scholarpedia - IRIDIA",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The characterizing property of a swarm intelligence system is its ability to act in a coordinated way without the presence of a coordinator or of an external controller.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "url": "https://link.springer.com/chapter/10.1007/978-3-031-82790-7_2?error=cookies_not_supported&code=fb669da8-45c6-4556-948a-99663eeb6762",
+      "title": "Understanding the Roots of Swarm Intelligence in Defence to ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 10,
+      "url": "https://www.rose-hulman.edu/class/cs/csse453/archive/2011-12/presentations/ch1.pdf",
+      "title": "Swarm Intelligence: From Nature to Artificial Systems, ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 11,
+      "url": "http://cleamc11.vub.ac.be/Papers/StigmergyICognSystems.pdf",
+      "title": "Stigmergy as a universal coordination mechanism I: Definition and components",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 12,
+      "url": "https://studiahumanitatis.eu/ojs/index.php/disputatio/article/download/2019consiglio-intelligence/201",
+      "title": "2019Consiglio",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 13,
+      "url": "https://gc-bs.org/articles/decentralized-intelligence-stigmergy-simple-rules-future-organizational-coordination",
+      "title": "Decentralized Intelligence: Stigmergy, Simple Rules, and the Future ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 14,
+      "url": "https://mpra.ub.uni-muenchen.de/114816/1/MPRA_paper_114816.pdf",
+      "title": "Micro-level description of the economic coordination",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 15,
+      "url": "https://cris.vub.be/ws/portalfiles/portal/132048567/Self_Organization_Encyclopedia.pdf",
+      "title": "Vrije Universiteit Brussel",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 16,
+      "url": "https://arxiv.org/html/2502.14743v1",
+      "title": "Multi-Agent Coordination across Diverse Applications: A Survey",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 17,
+      "url": "https://arxiv.org/pdf/2501.06322v1",
+      "title": "Multi-Agent Collaboration Mechanisms: A Survey of LLMs",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 18,
+      "url": "https://arxiv.org/html/2412.17481v2",
+      "title": "A Survey on LLM-based Multi-Agent System",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 19,
+      "url": "https://www.mdpi.com/1999-5903/18/6/326",
+      "title": "LLM-Based Multi-Agent Orchestration: A Survey of Frameworks, Communication Protocols, and Emerging Patterns",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 20,
+      "url": "https://link.springer.com/article/10.1007/s10514-026-10257-4?error=cookies_not_supported&code=e0408ab6-c8e5-4f75-a052-e4c62347dfac",
+      "title": "Large language models for multi-robot systems: a survey",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 21,
+      "url": "https://arxiv.org/abs/2506.06299",
+      "title": "[2506.06299] How malicious AI swarms can threaten democracy: The fusion of agentic AI and LLMs marks a new frontier in information warfare",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 22,
+      "url": "https://arxiv.org/html/2501.06322v1",
+      "title": "Multi-Agent Collaboration Mechanisms: A Survey of LLMs",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Our framework characterizes collaboration mechanisms based on key dimensions: actors (agents involved), types (e.g., cooperation, competition, or coopetition), structures (e.g., peer-to-peer, centralized, or distributed), strategies (e.g., role-based or model-based), and coordination protocols.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "url": "https://arxiv.org/html/2506.06299v4",
+      "title": "How malicious AI swarms can threaten democracy — Schroeder et al.",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Local adaptation plus periodic synchronization with a central node blurs the line between command-and-control and emergent “hive” behavior.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "url": "https://pespmc1.vub.ac.be/Papers/StigmergyICognSystems.pdf",
+      "title": "Stigmergy as a universal coordination mechanism I: Definition and components — Heylighen",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The present paper clarifies the issue by defining stigmergy as a mechanism of indirect coordination in which the trace left by an action in a medium stimulates subsequent actions.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "url": "https://arxiv.org/abs/2503.13657",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 26,
+      "url": "https://aclanthology.org/2024.emnlp-main.1208.pdf",
+      "title": "Is this the real life? Is this just fantasy? The Misleading Success of Simulating Social Interactions With LLMs — Zhou et al.",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Our findings indicate that addressing\ninformation asymmetry remains a fundamental\nchallenge for LLM-based agents.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "url": "https://arxiv.org/html/2503.13657v3",
+      "title": "Why Do Multi-Agent LLM Systems Fail? — Cemri et al.",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "This process identifies 14 unique modes, clustered into 3 categories: (i) system design issues, (ii) inter-agent misalignment, and (iii) task verification.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "url": "https://arxiv.org/pdf/2307.16336",
+      "title": "Anatomy of an AI-powered malicious social botnet",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The fox8 bots currently operate under some pre-established rules and only use\nChatGPT for content generation and dialogues.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "url": "https://openai.com/index/disrupting-malicious-uses-of-ai-bad-grammar",
+      "title": "\"Bad Grammar\": Russian-linked Telegram comment activity",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The network used our models and accounts on Telegram to set up a comment-spamming pipeline. First, the operators used our models to debug code that was apparently designed to automate posting on Telegram. They then generated comments in Russian and English in reply to specific Telegram posts. Finally, they appear to have used at least a dozen Telegram accounts to post those comments.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "url": "https://openai.com/index/disrupting-malicious-uses-of-ai-doppelganger",
+      "title": "Operation \"Doppelganger\": Russian influence activity targeting Ukraine",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We banned four clusters of accounts using our models linked to people acting on behalf of the Russian influence operation known as [“Doppelganger”⁠(opens in a new window)](https://www.disinfo.eu/doppelganger-operation/). Each cluster displayed different tactics, techniques and procedures (TTPs), consistent with an operation made up of different functional teams.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "url": "https://openai.com/index/disrupting-malicious-uses-of-ai-spamouflage",
+      "title": "Operation \"Spamouflage\": China-linked influence activity",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The network’s use of artificial intelligence appears to have constituted only a minority of its overall output.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "url": "https://openai.com/index/disrupting-malicious-uses-of-ai-zero-zeno",
+      "title": "Operation \"Zero Zeno\": Israel-linked influence activity",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Zero Zeno’s activity appears to have attracted little if any engagement, other than from its own inauthentic accounts. (Many accounts have already been disabled by Meta and X, so current engagement figures may not present the complete picture.)",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "url": "https://openai.com/index/disrupting-a-covert-iranian-influence-operation",
+      "title": "Disrupting a covert Iranian influence operation",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Our investigation revealed that this operation used ChatGPT for two purposes: generating long-form articles and shorter social media comments. The first workstream produced articles on U.S. politics and global events, published on five websites that posed as both progressive and conservative news outlets. The second workstream created short comments in English and Spanish, which were posted on social media. We identified a dozen accounts on X and one on Instagram involved in this operation.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "url": "https://openai.com/index/disrupting-deceptive-uses-of-ai-by-covert-influence-operations",
+      "title": "Disrupting deceptive uses of AI by covert influence operations",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "**Mixing old and new**: All of these operations used AI to some degree, but none used it exclusively. Instead, AI-generated material was just one of many types of content they posted, alongside more traditional formats, such as manually written texts or memes copied from across the internet.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "url": "https://public-assets.graphika.com/reports/graphika-report-deepfake-it-till-you-make-it.pdf",
+      "title": "Deepfake It Till You Make It: Pro-Chinese Actors Promote AI-Generated Video Footage of Fictitious People in Online Influence Operation",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "This set of two unique videos shared many of the same characteristics as traditional\nSpamouflage content: they ranged between one-and-a-half and three minutes in length, used a\ncompilation of stock images and news footage from online sources, and were accompanied by\nrobotic English-language voiceovers promoting the interests of the Chinese Communist Party.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "url": "https://public-assets.graphika.com/reports/graphika-report-the-americans.pdf",
+      "title": "The #Americans: Chinese State-Linked Influence Operation Spamouflage Masquerades as U.S. Voters to Push Divisive Online Narratives Ahead of 2024 Election",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The Harlan Report TikTok account garnered signifi cant views for several videos,\nincluding one pinned video mocking Biden with 1.5 million views.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "url": "https://arxiv.org/pdf/2001.05658v2",
+      "title": "Uncovering Coordinated Networks on Social Media: Methods and Case Studies",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Our approach aims to identify coordination between accounts, but it does not characterize the intent or authenticity\nof the coordination, nor does it allow to discover the underlying mechanisms. An example of malicious intent was\nhighlighted in recent news reports about a coordinated network of teenagers posting false narratives about the election.<sup>6</sup> However, it is important to keep in mind that coordinated campaigns may be carried out by authentic users\nwith benign intent. For instance, social movement participants use hashtags in a coordinated fashion to raise awareness of their cause.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "More rigorous methods could be investigated to exclude\nspurious links that can be attributed to chance. One approach\nwe plan to explore in future work is to design null models\nfor the observed behaviors, which in turn would enable a formal statistical test to identify meaningful coordination links.\nFor example, one could apply Monte Carlo shuffling of the\nbipartite network before projection to calculate the *p*-values\nassociated with each similarity link.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Although the proposed\nmethod is unsupervised and therefore does not required labeled training data, we recommend a manual inspection of\nthe suspicious clusters and their content. Such analysis will\nprovide validation of the method and evidence of whether\nthe coordinated groups are malicious and/or automated.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "url": "https://arxiv.org/pdf/2008.08370v2",
+      "title": "Coordinated Behavior on Social Media in 2019 UK General Election",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The TF-IDF weight allows us to reduce the relevance of\nhighly popular tweets in our dataset and emphasize similarities due to retweets of unpopular tweets – a much more\nsuspicious behavior.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Despite still not distinguishing inauthentic coordinated\nbehaviors from authentic ones, our work makes a step forward in this direction by providing more nuanced and more\naccurate results.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We begin by performing community detection on the filtered network resulting from\nstep 4, identifying the set *C<sub>0</sub>* of communities. Then, we\napply an increasingly restrictive similarity threshold t<sub>i</sub>\nto edge weights at each iteration, thus removing certain\nedges and disconnected nodes. We repeat community detection on the obtained subnetwork G<sup>e,v</sup><sub>i</sub>. At each iteration, the community detection algorithm is initialized with\nthe set of communities C<sub>i−1</sub> found at the previous iteration. This process guarantees that the starting communities are kept, to a certain extent<sup>5</sup>, throughout all the process. As a result of the “moving” threshold, we are able\nto study how the structure and the properties of coordinated communities change across the whole spectrum of\ncoordination. Moreover, the moving threshold implicitly\ndefines a measure for the extent of coordination observed\nat each iteration, that is for each obtained subnetwork.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "url": "https://users.cs.duke.edu/~xwy/publications/SynchroTrap-ccs14.pdf",
+      "title": "Uncovering Large Groups of Active Malicious Accounts in Online Social Networks",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We have deployed SynchroTrap at Facebook and Instagram for\n\nWe have deployed SynchroTrap at Facebook and Instagram for\nover ten months (§ 7). In a detailed study of one-month data (§ 8.1),\nwe observe that it uncovered more than two million malicious accounts and 1156 malicious campaigns. We have randomly sampled\na subset of malicious accounts SynchroTrap caught, and asked security specialists to inspect the accuracy of the results. The manual\ninspection suggests that our system achieves a precision higher than\n99%.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We evaluate SynchroTrap using a one-month execution log at\nFacebook in August 2013.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Second, we\ndo not invalidate all actions that a malicious account has performed\nduring a detection window Tp, but conservatively focus on those\nthat match at least one action of each of the other accounts in the\nsame cluster. This post processing step helps rule out valid actions\nthat a user account may have delivered while being compromised.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "url": "https://www.cs.unm.edu/~chavoshi/debot/SocInfo.pdf",
+      "title": "Identifying Correlated Bots in Twitter",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We investigate if approximate text matching would increase botness by\nemploying human judges in Amazon Mechanical Turk. We ask the judges\nto determine whether fifty random pairs of accounts are showing similar text\n(may not be exact), URLs, authors and languages. We then calculate the\nbotness. DeBot achieves up to 94 % botness score from the contextual information. Simply put, **94 %** of the tweets are not only synchronized in time,\nbut also share the same information (Table 1).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We omit technical details of our method,\nnamed DeBot, due to limited presentation scope. The daily reports of bots and\nan expanded paper are available in [2].",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "It is impossible to calculate the exact recall of a bot detection technique because\na complete list of known bots does not exist.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "url": "https://arxiv.org/pdf/2006.06867v2",
+      "title": "Detection of Novel Social Bots by Ensembles of Specialized Classifiers",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "In light of these results, we are deploying ESC in the newest version\nof Botometer (v4), a tool to detect social bots in the wild that is available through the Observatory on Social Media (OSoMe) at Indiana\nUniversity. Botometer can be accessed both through an interactive\nwebsite (botometer.org) and programmatically through a public\nAPI (rapidapi.com/OSoMe/api/botometer-pro). Fig. 9 illustrates the\nsystem architecture.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Despite impressive results when training and test sets are from\n\nstruggle to generalize to novel behaviors.\nDespite impressive results when training and test sets are from\nthe same domain — even using cross-validation — supervised models will miss new classes of bots, leading to low recall.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Another source of bias is that Rauchfleisch and Kaiser [35] overlook\naccounts that are no longer available due to suspension, possibly\nleading to an underestimation of both precision and recall.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045",
+      "title": "The false positive problem of automatic bot detection in social science research",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "A high ROC-AUC score with the original data set and research setting does not translate into a good “precision” for computational social science studies investigating a different context as we show for Botometer v3.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "If the numbers of bots are in the minority for the general population (as we assume in this case on Twitter), even a small false-positive rate might lead to a high number of human accounts wrongly classified as bots.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "url": "https://arxiv.org/pdf/2303.11156v4",
+      "title": "Can AI-Generated Text be Reliably Detected?",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "This theorem states that as the TV distance between AI and human text distributions reduces, the AUROC of the best possible detector decreases.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Although the underlying assumption seems to be intuitive given the capabilities of LLMs\nsuch as GPT-4 (OpenAI,2023), a precise analysis of this assumption is quite difficult because estimating the\ntrue TV of the text distributions from a finite set of samples is extremely challenging.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Moreover, retrieval-based detectors are concerning since they might lead to serious privacy issues from storing users’ LLM conversations.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10382961",
+      "title": "GPT detectors are biased against non-native English writers",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "In our study, we evaluated the performance of seven widely used GPT detectors on 91 TOEFL (Test of English as a Foreign Language) essays from a Chinese forum and 88 US eighth-grade essays from the Hewlett Foundation’s ASAP dataset. While the detectors accurately classified the US student essays, they incorrectly labeled more than half of the TOEFL essays as \"AI-generated\" (average false-positive rate: 61.3%).",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "url": "https://openai.com/index/new-ai-classifier-for-indicating-ai-written-text",
+      "title": "New AI classifier for indicating AI-written text",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "As of July 20, 2023, the AI classifier is no longer available due to its low rate of accuracy.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "In our evaluations on a “challenge set” of English texts, our classifier correctly identifies 26% of AI-written text (true positives) as “likely AI-written,” while incorrectly labeling human-written text as AI-written 9% of the time (false positives).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The classifier is very unreliable on short texts (below 1,000 characters). Even longer texts are sometimes incorrectly labeled by the classifier.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "url": "https://proceedings.mlr.press/v202/kirchenbauer23a/kirchenbauer23a.pdf",
+      "title": "A Watermark for Large Language Models",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "While producing watermarked\ntext requires access to the language model, detecting the\nwatermark does not. A third party with knowledge of the\nhash function and random number generator can re-produce\nthe red list for each token and count how many times the red\nlist rule is violated.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "High entropy sequences are detected with\nrelatively few tokens, while low entropy sequences require\nmore tokens for detection.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Our analysis assumes the red list is sampled\nuniformly at random. This is a deviation from the method\nused in practice, which generates red lists using a pseudorandom number generator seeded with previous tokens. The\nconsequences of pseudo-random sampling are explored in\nSection5.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "url": "https://journalqd.org/article/download/5848/4519/15711",
+      "title": "Anatomy of an AI-powered malicious social botnet",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Applying\nthe threshold from earlier (52.7) leads to 815 of the random accounts being labeled\nas bots. But these might include many false positives. The fox8-23 dataset contains\nthe same amount of bots and humans, however, we believe LLM-powered bots are\nstill rare on Twitter as of today. According to the figure, a fair amount of human\naccounts also have scores above the threshold.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Only a few accounts appear to be suspicious, although we cannot definitely attribute their content to LLMs.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The results\nare nearly zero in all cases, suggesting that Botometer cannot identify the fox8 bots.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "url": "https://arxiv.org/html/2606.07219v1",
+      "title": "Adversarial Creation and Detection of AI-Generated Social Bot Content",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Finally, we average the scores of each user’s messages to obtain a user-level score.\nThe goal is to classify users rather than individual messages, simulating the real-world scenario of detecting AI-powered social bots.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Together, these factors suggest that detection models performing well on this benchmark may struggle significantly against more advanced bots found on today’s platforms.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "These models should not be used for automated account bans. Because models can mistakenly identify real people as bots, any punishing action should involve human review.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "url": "https://openai.com/index/disrupting-malicious-uses-of-ai",
+      "title": "Disrupting malicious uses of AI",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Automated systems help detect potential violations, while human reviewers play an integral role in identifying and disrupting malicious uses of AI—including scams, malicious cyber activity, covert influence operations, and other harmful or illegal conduct.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Human investigators review activity, connect related cases, and assess behavior in context.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "url": "https://cdn.openai.com/threat-intelligence-reports/disrupting-malicious-uses-of-our-models-february-2025-update.pdf",
+      "title": "Disrupting malicious uses of our models: an update February 2025",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "While no one entity has a monopoly on detection, connecting accounts and patterns of behavior has in some cases allowed us to identify previously unreported connections between apparently unrelated sets of activity across platforms.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "one account that we banned was used to generate content for both of them. While small in\nscale, this suggests a potential previously unreported relationship, at least on the operator\nlevel.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "When we analyzed the semantic similarity between the two texts using our models, the analysis concluded that the published version was highly likely a rewrite of the version we identified.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "acting on a lead from Meta, we recently banned a cluster of ChatGPT accounts whose activity may have been connected to an online scam that appears to have originated in Cambodia.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "url": "https://zhepeiwang.github.io/pubs/sr_2022_swarm.pdf",
+      "title": "Swarm of micro flying robots in the wild — Zhou et al., Science Robotics 7, eabm5954",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "each drone is equipped with full \nperception, localization, planning, and control functionalities and \nloosely coupled by a broadcast network sharing trajectories.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "url": "https://www.pacom.mil/Media/NEWS/Article/1046043/department-of-defense-announces-successful-micro-drone-demonstration",
+      "title": "Department of Defense Announces Successful Micro-Drone Demonstration — Press Operations NR-008-17, official PACOM mirror",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The test, conducted in October 2016 and documented on Sunday’s CBS News program “60 Minutes”, consisted of 103 Perdix drones launched from three F/A-18 Super Hornets. The micro-drones demonstrated advanced swarm behaviors such as collective decision-making, adaptive formation flying, and self-healing.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "url": "https://arxiv.org/html/2304.03442v2",
+      "title": "Generative Agents: Interactive Simulacra of Human Behavior — Park et al., arXiv:2304.03442v2 / UIST 2023",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "During the two-day simulation, the number of agents who knew about Sam’s mayoral candidacy increased from one (4%) to eight (32%), and the number of agents who knew about Isabella’s party increased from one (4%) to thirteen (52%), all without any user intervention.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "url": "https://openaccess.city.ac.uk/id/eprint/35211/1/sciadv.adu9368.pdf",
+      "title": "Emergent social conventions and collective bias in LLM populations — Ashery, Aiello and Baronchelli, Science Advances 11(20), eadu9368",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "A simulation trial consists of a population of *N* interacting agents. \nAt each time step, two agents are randomly selected for interaction.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "url": "https://books.google.com/books/about/Swarm_Intelligence.html?id=fcTcHvSsRMYC",
+      "title": "Swarm Intelligence: From Natural to Artificial Systems — Bonabeau, Dorigo and Theraulaz (Oxford University Press, 1999), Google Books page-7 excerpt",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "we extend its definition to include any attempt to design algorithms or distributed problem-solving devices inspired by the collective behavior of social insect colonies and other animal societies.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "url": "https://seas.harvard.edu/news/self-organizing-thousand-robot-swarm",
+      "title": "A self-organizing thousand-robot swarm — Harvard SEAS",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "An infrared transmitter and receiver allow it to communicate with a few of its neighbors and measure their proximity—but the robots are myopic and have no access to a bird’s-eye view.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "url": "http://www.scholarpedia.org/article/Swarm_intelligence",
+      "title": "Swarm intelligence — Marco Dorigo and Mauro Birattari, Scholarpedia 2(9):1462, revision 138640",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The characterizing property of a swarm intelligence system is its ability to act in a coordinated way without the presence of a coordinator or of an external controller.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "url": "https://www.science.org/doi/10.1126/science.1254295",
+      "title": "Programmable self-assembly in a thousand-robot swarm — Rubenstein, Cornejo and Nagpal, Science 345(6198), 795–799",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We report a system that demonstrates programmable self-assembly of complex two-dimensional shapes with a thousand-robot swarm.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "url": "https://www.science.org/doi/suppl/10.1126/science.1254295/suppl_file/rubenstein.sm.pdf",
+      "title": "Supplementary Materials for Programmable self-assembly in a thousand-robot swarm — Rubenstein, Cornejo and Nagpal",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Both experiments started with 1024 robots and final shapes contained 1018\nand 946 robots respectively.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "url": "https://www.nature.com/articles/s41586-024-08025-4",
+      "title": "Scalable watermarking for identifying large language model outputs",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We analysed approximately 20 million watermarked and unwatermarked responses and computed the thumbs-up and thumbs-down rates (both as a fraction of the total number of thumbs-up and thumbs-down feedback received).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Subsequently, non-distortionary SynthID-Text has been productionized and is currently watermarking responses in Gemini and Gemini Advanced.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "In particular, generative watermarks are weakened by edits to the text, such as through LLM paraphrasing",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "url": "https://www.natureasia.com/ja-jp/nature/pr-highlights/15068",
+      "title": "人工知能：AIが生成したテキストへの透かし処理",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 62,
+      "url": "https://www.nature.com/articles/d41586-024-03418-x",
+      "title": "AI watermarking must be watertight to be effective",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 63,
+      "url": "https://scispace.com/topics/watermark-w6hf3eha/2024",
+      "title": "Top 210 papers published in the topic of Watermark in 2024",
+      "accessed": "2026-10-01"
+    }
+  ]
+}

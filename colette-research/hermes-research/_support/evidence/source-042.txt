@@ -1,0 +1,604 @@
+Browse Subject Areas
+
+
+?
+
+Click through the PLOS taxonomy to find articles in your field.
+
+For more information about PLOS Subject Areas, click
+[here](https://github.com/PLOS/plos-thesaurus/blob/master/README.md "Link opens in new window").
+
+
+- [Article](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045)
+- [Authors](https://journals.plos.org/plosone/article/authors?id=10.1371/journal.pone.0241045)
+- [Metrics](https://journals.plos.org/plosone/article/metrics?id=10.1371/journal.pone.0241045)
+- [Comments](https://journals.plos.org/plosone/article/comments?id=10.1371/journal.pone.0241045)
+- [Media Coverage](http://plos.altmetric.com/details/doi/10.1371/journal.pone.0241045)
+
+- [Abstract](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#abstract0)
+- [Introduction](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#sec001)
+- [Research questions](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#sec002)
+- [Data and methods](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#sec003)
+- [Results](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#sec004)
+- [Discussion](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#sec005)
+- [Supporting information](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#sec006)
+- [Acknowledgments](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#ack)
+- [References](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#references)
+
+- [Reader Comments](https://journals.plos.org/plosone/article/comments?id=10.1371/journal.pone.0241045)
+- [Figures](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#)
+
+## Abstract
+
+The identification of bots is an important and complicated task. The bot classifier _"Botometer"_ was successfully introduced as a way to estimate the number of bots in a given list of accounts and, as a consequence, has been frequently used in academic publications. Given its relevance for academic research and our understanding of the presence of automated accounts in any given Twitter discourse, we are interested in _Botometer_’s diagnostic ability over time. To do so, we collected the _Botometer_ scores for five datasets (three verified as bots, two verified as human; n = 4,134) in two languages (English/German) over three months. We show that the _Botometer_ scores are imprecise when it comes to estimating bots; especially in a different language. We further show in an analysis of _Botometer_ scores over time that _Botometer_'s thresholds, even when used very conservatively, are prone to variance, which, in turn, will lead to false negatives (i.e., bots being classified as humans) and false positives (i.e., humans being classified as bots). This has immediate consequences for academic research as most studies in social science using the tool will unknowingly count a high number of human users as bots and vice versa. We conclude our study with a discussion about how computational social scientists should evaluate machine learning systems that are developed for identifying bots.
+
+## Figures
+
+![Fig 8](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g008)
+
+![Table 1](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t001)
+
+![Fig 1](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g001)
+
+![Fig 2](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g002)
+
+![Table 2](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t002)
+
+![Fig 3](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g003)
+
+![Table 3](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t003)
+
+![Fig 4](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g004)
+
+![Fig 5](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g005)
+
+![Table 4](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t004)
+
+![Table 5](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t005)
+
+![Fig 6](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g006)
+
+![Fig 7](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g007)
+
+![Fig 8](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g008)
+
+![Table 1](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t001)
+
+**Citation:** Rauchfleisch A, Kaiser J (2020) The False positive problem of automatic bot detection in social science research. PLoS ONE 15(10):
+e0241045.
+
+https://doi.org/10.1371/journal.pone.0241045
+
+**Editor:** Fabiana Zollo, Ca' Foscari University of Venice, ITALY
+
+**Received:** April 14, 2020; **Accepted:** October 7, 2020; **Published:** October 22, 2020
+
+**Copyright:** © 2020 Rauchfleisch, Kaiser. This is an open access article distributed under the terms of the [Creative Commons Attribution License](http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.
+
+**Data Availability:** Data underlying this study can be downloaded from the Harvard Dataverse, V3 ( [https://doi.org/10.7910/DVN/XVCKRS](https://doi.org/10.7910/DVN/XVCKRS)).
+
+**Funding:** This work was supported by the Ministry of Science and Technology, Taiwan (R.O.C) (Grant No 108-2410-H-002 -007 -MY2). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.
+
+**Competing interests:** The authors have declared that no competing interests exist.
+
+## Introduction
+
+Identifying bots (here understood as fully automated accounts) on social media platforms like Twitter is a task that is as important as it is challenging. Indeed, being able to estimate the authenticity of a Twitter discourse by detecting malicious botnets or identifying how many “real” (i.e. human) followers a politician has, is an important baseline for computational social scientists. This is not only relevant in the context of political communication but especially so when it comes to the detection of disinformation campaigns and strengthening a platform’s security. Consequently, several methods have been introduced to get a handle on this problem, including a generic activity filter \[ [1](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref001)\], an analysis of posting patterns \[ [2](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref002)\], as well as machine-learning based classifiers \[ [3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref003)\]. Especially the trained classifier _Botometer_ \[ [3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref003), [4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref004)\] has established itself in the social sciences to estimate the number of bots within a given dataset.
+
+In April 2018, for example, Pew Research Center published a large-scale study analyzing Tweets with links to popular websites finding that two-thirds of the analyzed tweets are posted by automated accounts \[ [5](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref005)\]. Another study by Bessi and Ferrara \[ [6](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref006)\] estimated that 19% of the tweets published during the 2016 presidential election in the US were posted by “social bots”. A study conducted in the German context found that 9.9% of the followers of German national party accounts on Twitter are “social bots” \[ [7](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref007)\]. And a study published in Science found that fake news spread faster on Twitter due to humans and not bots \[ [8](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref008)\]. These studies share a common feature: the bot detection tool _Botometer_ \[ [4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref004)\] which was formerly known as _BotOrNot_ \[ [3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref003)\]. It is, however, worth noting that these are by far not the only studies making use of this particular form of bot detection method. A simple Google Scholar search for ““botometer” OR “botornot”” yields 918 results (as of July 28, 2020) with 439 results since 2019. It is thus fair to say that the tool is arguably the most popular bot detection method in the social sciences and applications of the tools have been published both in field specific journals such as _Political Communication_ \[ [7](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref007)\] as well as high-ranked general-interest journals like _Science_ \[ [8](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref008)\] or _Nature Communications_ \[ [9](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref009)\]. This, then, would suggest that _Botometer_ is the de-facto standard of bot detection in computational social science.
+
+Bot detection, however, is notoriously tricky. Not only will bot creators (especially in the context of fraudulent social bots that pretend to be human) try to convince users as well as researchers applying their detection methods that their bots are legitimate humans but they will also adjust their bots to the newest identification methods and will thus often be one step ahead of researchers. This, of course, goes hand in hand with a certain uncertainty when it comes to detecting bots. There are numerous cases of Twitter accounts that look like bots but are actually human and vice versa; some accounts are both: semi-automated and semi-manual. To account for this complexity, Botometer does not say whether a user is a bot or not but rather will give a probability estimate between 0–1 (1 = most likely bot, 0 = most likely being human; the scale can also be 0–5 as shown on _Botometer_’s homepage). Researchers consequently have to define a manual threshold that seems reasonable to them if they want to classify accounts in a binary fashion. If an account has a higher score than the defined threshold, it will be defined as bot by the researchers. Wojcik et al. \[ [5](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref005)\], for example, chose 0.43, while Keller and Klinger \[ [7](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref007)\] opted for 0.76. In contrast, Zhang et al. \[ [10](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref010)\] use a rather low threshold of .25 for the _complete automation probability_ (CAP) which is also provided by _Botometer_.
+
+For researchers, established tools like _Botometer_ that come with a large body of peer-reviewed publications that lend authority and legitimacy to the tool as well as an easy to access API, are an important resource in their goal to shine a light into the role of bots on social media platforms such as Twitter and their potential impact on the public discourse. However, _Botometer_ is not above criticism. Grimme et al. \[ [11](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref011)\] show in their study, for example, that _Botometer_ could not classify the hybrid and full automation bot accounts that the authors had created precisely. The original creators acknowledge these potential limitations of their tool and admit that “many machine learning algorithms, including those used by _Botometer_, do not make it easy to interpret their classifications” \[ [12](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref012)\]. They further suggest in the official FAQ on the homepage of _Botometer_ that “\[i\]t’s tempting to set some arbitrary threshold score and consider everything above that number a bot and everything below a human, but this is probably not the best way to think about it \[the bot score\]” \[ [13](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref013)\]. Yet, as we have already indicated above, many studies relying on _Botometer_ as a tool do use a fixed threshold \[ [5](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref005), [7](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref007), [8](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref008)\].
+
+Still, there are some notable few exceptions in the literature where researchers have validated existing tools like _Bototmeter_ in a first step and, then, opted for a self-developed solution instead. While not explicitly discussing the diagnostic ability of _Botometer_, Fernquist et al. \[ [14](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref014)\] indicate in their study of Swedish Twitter data that _Botometer_ struggles with non-English language tweets and report that their own supervised classifier outperforms _Botometer_. Echeverría et al. \[ [15](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref015)\] developed their own approach and showed that _Botometer_ struggles with some of their bot data sets. Cresci and colleagues \[ [16](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref016)\], for example, compare the performance of an earlier version of Botometer (BotOrNot) with other methods as well as their own method \[ [17](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref017)\] and show that BotOrNot struggles with more recent versions of spambots. So while _Botometer_ is one of the most popular bot detection some researchers have shown that other approaches outperform _Botometer_ on certain data sets \[ [16](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref016), [18](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref018), [19](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref019)\]. The examples above show that many different methods exist besides _Botometer_’s method. Orabi et al. \[ [20](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref020)\] identified 53 different methods in their survey of the bot classification literature. In general, supervised and unsupervised methods can be distinguished \[ [20](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref020)\] that are sometimes even combined \[ [21](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref021)\]. Cresci \[ [22](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref022)\] points out in his survey of the last decade of bot detection research that while the early days of bot detection methods were coined by supervised classifiers focusing on single accounts, more recently, many unsupervised methods \[ [17](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref017), [23](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref023)\] focusing on groups \[ [23](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref023)\] instead of single accounts were developed. Besides these mainly inferential approaches, Grimme and colleagues \[ [11](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref011)\] discuss descriptive approaches in which researchers usually manually analyse specific campaigns. Some of these descriptive approaches are a combination of classifiers and manual analysis \[ [24](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref024)\]. Even though many new bot detection methods are developed every year—outperforming _Botometer_ in some cases—\[ [15](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref015), [16](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref016), [18](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref018)\], we focus on _Botometer_ as it is by far the most used tool in studies analyzing bots on Twitter \[ [12](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref012)\], especially in social science \[ [5](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref005), [7](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref007), [10](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref010)\].
+
+In this paper we will use the term “bot” throughout. We acknowledge that other researchers have talked about “automated accounts” \[ [1](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref001)\] or “social bots” \[ [7](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref007)\] but since the creators of _Botometer_ specifically talk about identifying “bots” we will use the same terminology \[ [13](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref013)\]. It is noteworthy that the creators of _Botometer_ will generally speak of “social bots” in their academic work \[ [3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref003), [6](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref006), [12](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref012), [25](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref025)\], but have not used the term in the tool’s FAQ system until recently. In Luceri et al. \[ [26](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref026)\], one of the original _Botometer_ creators even understands bot as short for “social media bot”, adding to the confusion. While there is agreement on the definition of “bot” (automation as a deciding factor), the social in “social bot” is contested. Yet, a debate about this part is beyond the scope of this paper and Gorwa and Guilbeault \[ [27](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref027)\] have already clarified many aspects of the conceptual confusion in their bot typology.
+
+The goal of this paper is twofold. Firstly, we want to critically assess, as we have shown above, one of the most popular bot detection tools used in social science. Secondly, we want to stimulate reflections on the role of computational methods as some of our findings help to better understand the limitations of machine learning systems that are developed to identify bots on social media platforms.
+
+## Research questions
+
+Given that it is very complicated to detect bots and _Botometer_’s prominence in the social sciences we ask: _How precise is Botometer in detecting bots_? More specifically we are interested in four different research questions. Firstly, we are interested in the general diagnostic ability of _Botometer_. We want to assess _Botometer_ with the Receiver Operating Characteristics (ROC) curve as this is the common approach used, for example, by Varol et al. \[ [4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref004)\]. This approach allows us to assess how well _Botometer_ can distinguish between bots and human users overall.
+
+RQ1: How good is _Botometer_’s diagnostic ability for five distinct sets of Twitter accounts?
+
+Yet, in practice many researchers analyze data sets that are sampled from the general Twitter population and manually define thresholds of what qualifies as a bot and what not. We are thus interested in the precision (percentage of accounts that are classified as bots) as well as the recall (percentage of identified bots from the whole population).
+
+RQ2: How good is the precision and the recall of _Botometer_ scores when used for five distinct sets of Twitter accounts representing the bot/human ratio in the general Twitter population?
+
+As Fernquist et al.’s \[ [14](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref014)\] analysis already indicates, there might be differences between languages with regard to _Botometer_‘s performance. The data analysis for the first two research questions allows us also to specifically assess whether there are differences between languages.
+
+RQ3: Does _Botometer_’s performance differ between languages?
+
+In an experimental setting, Grimme et al. \[ [11](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref011)\] showed that the classification score is not stable over time. Therefore, we are interested in not only measuring the _Botometer_ score once but instead tracking accounts over a longer period of time.
+
+RQ4: How stable are _Botometer_ classifications over time?
+
+In answering these four questions, we want to add to the literature on bots by shining a light on some of the issues that _Botometer_ has and discuss what consequences this has for social scientists conducting research on bots.
+
+## Data and methods
+
+To answer these research questions, we rely on five data sets. We included all official accounts of German members of parliament based on a list of personally confirmed official accounts ( _German politicians_: n = 532) and all members of the 115th U.S. Congress with a Twitter account ( _US politicians_: n = 516) \[ [28](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref028)\] as “human” accounts. We also created a list of obvious bots ( _new bots_: n = 935). We used all bots listed on [https://botwiki.org/](https://botwiki.org/), a database with the goal to preserve interesting and creative Twitter bots as well as a number of other labelled bots we identified on Twitter. Most of these accounts are labelled as bots and for many even their code is available on GitHub. As most of these bots use the English language, we also collected an additional list of German language bots ( _German bots_: n = 27). As a fifth dataset we use a manually annotated data set with human (n = 1747) and bot accounts (n = 826) that was created by the makers of _Botometer_ \[ [4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref004)\]. We combined these data sets for our data analysis (see [Table 1](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t001)). For the first three research questions we need bots as well as human accounts combined as we are evaluating how well _Botometer_ can distinguish automated from human accounts. We therefore combine the different datasets (see [Table 1](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t001)). For RQ4, however, we can use single datasets consisting only of bots or humans.
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t001)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.t001 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.t001)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.t001)
+
+Table 1.  Data sets and how we combined them for our analysis.
+
+[https://doi.org/10.1371/journal.pone.0241045.t001](https://doi.org/10.1371/journal.pone.0241045.t001)
+
+Our selection of the data sets is based on one basic assumption: bot detection tools like _Botometer_ will perform better in distinguishing between bots and humans when the cases are clear-cut. As can be seen in [Fig 1](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g001), clear cut bot accounts will often outright state in their description that they are, in fact, bots; occasionally even sharing the code on GitHub. Similarly, clear-cut human cases will often have indicators that signal their authenticity such as a blue checkmark (Twitter’s verification badge) or their personal website. To make it even clearer, we chose elected national politicians with their official accounts, i.e. people that are in the public limelight and often have high follower numbers, where suspicious Twitter activity would automatically lead to media attention and increased scrutiny. In Germany, for example, journalists have discovered a network around AfD politicians’ Twitter accounts that consisted of sockpuppets that boosted engagement numbers \[ [29](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref029)\]. This is not to say that politicians might not make use of any automation but rather that this form of automation is and should not be confused with bots or social bots. Finally, we also included Varol’s list that included both bots as well as humans. While we were not always able to individually verify whether an account was a bot or a human, we trust in the initial categorization which parts of _Botometer’s_ training is based on. As a result, we have four data sets of accounts that human coders would have no difficulty in differentiating between bots and humans and one which was used to train the _Botometer_ classifier on. Based on these criteria, we would expect the _Botometer_ tool to perform rather well as the “real world” data from Twitter is much messier.
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g001)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.g001 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.g001)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.g001)
+
+Fig 1.  Example accounts for each data set.
+
+[https://doi.org/10.1371/journal.pone.0241045.g001](https://doi.org/10.1371/journal.pone.0241045.g001)
+
+To conduct this test, we created a Python script that ran every day at 00:00 UTC time on an Ubuntu Linux server for 3 months (3rd March– 2nd of June, 2019). The data collection went uninterrupted. For every account in our sample (n = 4,583) we requested the Twitter data via the Twitter search API and the _Botometer_ user scores via the _Botometer_ API giving us a total of 374,724 valid scores. For the analysis we accessed Botometer v3 \[ [12](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref012)\] which was the latest version of the tool in March 2019. Besides an empty timeline ( _Botometer_ needs at least one tweet– 2,021 calls had to be excluded), missing accounts (mainly from Varol’s data set which includes accounts that do not exist anymore– 11,197 calls) and private accounts (also mainly from Varol’s data set– 33,608 calls had to be excluded), only 86 calls (less than 0.05% of all calls) returned an error because of a technical API issue from _Botometer_ or the Twitter API. Eventually we could analyze 4,134 existing accounts that could be accessed at least once during the process of data collection and have at least one tweet on their timeline (see [Table 1](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t001)). For the following analysis we use the language-independent universal _Botometer_ score between 0 and 1 (which corresponds to the score 0–5 also used by _Botometer_—e.g., 0.5 will be 2.5), the specific English language Botometer score between 0 and 1, as well as _Botometer_’s newly integrated English and universal complete automation probability (CAP) (ranging between 0 and 1). While we are aware that the _Botometer_ creators offer more fine-grained feature scores besides the overall universal scores, we focus on the universal overall scores as they are the scores used by social scientists in their studies and are independent from the language that the accounts tweet in. Still, as we are interested in language differences we also report _Botometer_’s English scores for our third research question (see also [S1](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.s001)– [S5](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.s005) Figs for all other visualizations with the English score and CAP).
+
+For RQ1 we compared the ROC-AUC (Receiver Operating Characteristics-Area Under The Curve) with the old ROC-AUC reported in older studies for _Botometer_ to evaluate _Botometer_’s diagnostic ability. ROC-AUC indicates how well a model discriminates between two classes (bot and no bot). The true positive rate on the y-axis is plotted against the false positive rate on the x-axis. While this statistic is useful to directly compare the overall performance of different models and labelled data sets with regard to the accuracy of the classifications, this evaluation method also has its limitations \[ [30](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref030), [31](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref031)\]. Researchers, for example, are often not interested in all potential score thresholds as used in the AUC-ROC approach and instead only in specific classification values \[ [32](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref032)\]. The AUC-ROC approach does not consider the cost of false-positive and false-negatives and does not fully consider imbalances in the general population \[ [33](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref033)\]. However, in their original paper for the first version of the tool ( _BotOrNot_) the authors transparently warn that the accuracy of their model (they received a ROC-AUC of 0.95/0.94) overestimates future performance due to the age of the training data \[ [3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref003)\].
+
+As the ROC-AUC approach has limitations, we also use a different approach for RQ2. In bot research the biggest problem is the lower occurrence of bots in relation to humans. In the general population of all Twitter users there are more real users than bots. However, the ROC-AUC approach does not consider the baseline in the Twitter population. This is a general problem with classifiers if the structure of the population in which the classifier should be later used is ignored. In the case of bots, we want to clearly identify bots and make statements about the number of bots in a data set. This becomes even clearer when the main goal as well as the wording in bot studies is considered. Researchers are interested in the number of bots and not mainly in the number of human users. Therefore, even a small false-positive rate (FPR) has a large impact on the results. The data used to test (as in our case) and train _Botometer_ is often more balanced than the rather imbalanced general Twitter population. Saito and Rehmsmeier \[ [33](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref033)\] advocate in such cases to evaluate the performance of a classifier based on the Precision-Recall (PR) curves as they “allow for an accurate and intuitive interpretation of practical classifier performance”. While the so-called Matthews correlation coefficient is better than the F1 score if researchers use only one specific threshold, PR curves are recommended \[ [34](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref034), [35](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref035)\] if different threshold levels exist as in the case with _Botometer_. To simulate a population that represents the same assumed real ratio of the general Twitter population with 15% bots \[ [4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref004)\] and 85% non-bots, we resampled the different data sets for RQ2.
+
+## Results
+
+Our analysis (see [Fig 2](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g002) and [Table 2](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t002)) shows that the ROC-AUC is worse with our complete data (AUC = 0.85) than with the data sets used in the _Botometer_ creators’ original papers which received an AUC of 0.94 \[ [4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref004)\]. However, their baseline model also received only an AUC of 0.85 in the original paper. The nearer the ROC curve ( [Fig 2](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g002)) is to the upper-left corner and the more space is under the curve, the better _Botometer_ can distinguish between bots and humans. In the lower-left corner the curve starts with a threshold of 0 for the _Botometer_ which means the false-positive rate is 0 but at the same time 0 of the bots in the population will be identified. The curve ends with a threshold of 1 in the upper-right corner as then all bots in the population will be identified. However, such a threshold also means that all human accounts will be wrongly classified as bots (false-positive rate = 1). Each point in the curve thus represents a specific threshold for which the true positive rate as well as the false positive rate is shown.
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g002)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.g002 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.g002)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.g002)
+
+Fig 2.  Receiver operating characteristics curve for Botometer and the universal score (average over 3 months for each account).
+
+The x-axis represents the false positive rate and the y-axis represents the true positive rate (sensitivity).
+
+[https://doi.org/10.1371/journal.pone.0241045.g002](https://doi.org/10.1371/journal.pone.0241045.g002)
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t002)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.t002 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.t002)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.t002)
+
+Table 2.  ROC-AUC as well as the PR-AUC universal score.
+
+[https://doi.org/10.1371/journal.pone.0241045.t002](https://doi.org/10.1371/journal.pone.0241045.t002)
+
+When applying this to our data sets, we see that the classifier has the highest AUC score for the _US politicians and bots_ data set (0.93) followed by Varol et al.’s labeled data set (0.86). The score for the _German politicians and German bots_ yields a lower score (0.76). As we only had a few German bots we also tested the _German politicians and bots_ (with the new bots instead of the German bots) which had a slightly higher AUC (0.78).
+
+We, then, calculated the ROC-AUC for the universal CAP (complete automation probability; [Fig 3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g003) and [Table 3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t003)). We could observe similar results as before for the universal score: the US politicians received the highest AUC (0.94) followed by Varol et al. (0.86), the complete data set (0.86), the German politicians with the new bots (0.78) and the German politicians and the German bots (0.77).
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g003)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.g003 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.g003)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.g003)
+
+Fig 3.  Receiver operating characteristics curve for Botometer and the universal complete automation probability (CAP) (average over 3 months for each account).
+
+The x-axis represents the false positive rate and the y-axis represents the true positive rate (sensitivity).
+
+[https://doi.org/10.1371/journal.pone.0241045.g003](https://doi.org/10.1371/journal.pone.0241045.g003)
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t003)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.t003 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.t003)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.t003)
+
+Table 3.  ROC-AUC as well as the PR-AUC scores universal CAP.
+
+[https://doi.org/10.1371/journal.pone.0241045.t003](https://doi.org/10.1371/journal.pone.0241045.t003)
+
+For RQ2 we suggest a thought experiment based on the data sets analyzed in this study. While the data sets are not perfectly balanced, they definitely do not represent the imbalanced ratio of bots and human accounts of the real Twitter population. We thus assume for our simulation that the Twitter population has 15% bots \[ [4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref004)\] and 85% non-bots. We first gave every single account a sampling probability that reflects the occurrence of cases in the Twitter population (n bots/0.15 and n humans/0.85) and took 100,000 random samples with replacement for every analyzed data set. As a result, we created new data sets that have 15,000 bots and 85,000 non-bots. We then calculated for all the data sets the ROC-AUC as well as the PR-AUC (see Tables [2](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t002) and [3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t003)). As expected the ROC-AUC is the same with the new sample data for all analyzed data sets, which is also in line with what Saito & Rehmsmeier \[ [33](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref033)\] show in their study. However, the PR-AUC shows a different score for the resampled data sets as the PR-AUC changes depending on the imbalance in a data set. The only exception is the in its original form highly skewed German politicians and German bots data set which shows an improvement but overall still an extremely low score (from 0.10 to 0.27).
+
+The PR curves allow us to better evaluate how many bots will be amongst the accounts that _Botometer_ classified as bots, and how many bots were not identified if we use a high threshold (as many studies do with this tool, e.g. \[ [7](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref007)\]). PR curves start on the right with a _Botometer_ score threshold of 0. If an extremely low threshold is used, all bots in the population will be identified (recall = 1) but the number of false-positive cases will be extremely high. The precision is thus .15 as 85% of the accounts in the sample are humans. On the left, the curve ends with an extremely high threshold for the _Botometer_ score which means that the precision is extremely high (the classified bot accounts are all bots) but the recall is extremely low (almost all bots in the general population are not identified). We can now also check the precision and recall for specific thresholds. For example, if 0.76 is used as a threshold for the resampled _all_ data set, 59% real bots (precision = 0.59) and 41% false-positive humans will be amongst the accounts classified as bots (see [Fig 4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g004)). However, around 80% (recall = 0.2) of the bots in the population will not be identified (false-negatives). If we consider the _German politician and bots_ data set, the results are even worse. Of the accounts classified as “bot” only around 24% (precision = 0.24) would be bots and 76% of the accounts would be false-positive human accounts. Moreover, around 90% (recall = 0.1) of the bots in the Twitter population would not be identified (see [Fig 4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g004)).
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g004)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.g004 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.g004)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.g004)
+
+Fig 4.  Universal score precision-recall curves for the resampled data sets.
+
+We consider the population baseline on Twitter (15% bots) for the universal Botometer score, black points indicate the precision and the recall for the Botometer score 0.76. With the German politicians and bots data set, for almost every threshold level the identified sample of bots has more humans than real bots (precision). The x-axis represents the recall (sensitivity) and the y-axis represents the precision.
+
+[https://doi.org/10.1371/journal.pone.0241045.g004](https://doi.org/10.1371/journal.pone.0241045.g004)
+
+We then also calculated the PR-AUC for the universal CAP with the newly weighted resamples (see [Table 3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t003)). With regard to the PR-AUC and the ROC-AUC, the results are almost the same as for the universal _Botometer_ scores. When calculating the CAP and using a threshold of 0.25–as used by Zhang et al. \[ [10](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref010)\], the accounts, classified as bots by _Botometer_, would consist of around 55% bots (precision = 0.55) and 45% humans. However, around 71% (recall = .29) of the bots in the population would not be identified. If we calculate the same for the _German politicians with bots_, we have 70% false-positive human accounts and 30% bots (precision = 0.3) in the sample that _Botometer_ classified as “bots” (see [Fig 5](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g005)). Around 82% of the bots (recall = 0.18) in the population would not be identified. For these tests, too, we used a resample of 100,000 accounts for every data set which are based on the population assumption that 15% of bots were present in the Twitter population. This quantitative thought experiment, then, shows the impact these scores can have on findings estimating the number of humans and bots.
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g005)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.g005 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.g005)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.g005)
+
+Fig 5.  CAP precision-recall curves for the resampled data sets.
+
+We consider the population baseline on Twitter (15% bots) for the universal CAP Botometer score, Black points indicate the precision and the recall for the universal CAP 0.25. With the German politicians and bots for almost every threshold level the identified sample of bots has more humans than real bots (precision). The x-axis represents the recall (sensitivity) and the y-axis represents the precision.
+
+[https://doi.org/10.1371/journal.pone.0241045.g005](https://doi.org/10.1371/journal.pone.0241045.g005)
+
+In our third research question we are interested in the difference between languages. First of all, _Botometer_’s English score ( [Table 4](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t004)) works better with English accounts (e.g., Varol et al. data set: ROC-AUC English = 0.90; universal = 0.86; PR-AUC sample English = 0.69; universal = 0.58) and performs worse with mainly non-English accounts (e.g., German politicians and German bots data set: ROC-AUC English = 0.69; universal = 0.76; PR-AUC sample English = 0.23; universal = 0.27). The same holds true for the universal and English CAP ( [Table 5](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t005)). A comparison between the different data sets shows that the tool works better with data from the US/English (see Figs [2](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g002)– [5](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g005) –see also [S1](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.s001) and [S3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.s003) Figs). However, _Botometer_ is neither working well with the German politicians nor the new English-language bots we tested, even with the English scores. We further tested with unpaired DeLong tests \[ [36](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref036), [37](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref037)\] whether the ROC-AUC of the German data sets are statistically different from other data sets. Our test shows that the ROC-AUC for the German data sets are significantly different from the ROC-AUC of the _US politicians and bots_ with regard to the universal score (German politicians and bots: _D_ = -10.58, df = 2133.1, _p_ < 0.001; German politicians and German bots: _D_ = -4.67, _df_ = 586.12, _p_ < 0.001; Bonferroni correction _α_ = 0.005) as well as the universal CAP (German politicians and bots: _D_ = -4.81, df = 579.12, _p_ < 0.001; German politicians and German bots: _D_ = -10.65, df = 2066.3, _p_ < 0.001; Bonferroni correction _α_ = 0.005; see also Tables [2](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t002) and [3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-t003)). The same holds true for the English scores. Furthermore, if _Botometer_ is used with German accounts, the real rate of false-positives is higher than researchers might assume when their only indicator for performance is the ROC-AUC. While the ROC-AUC approach is a good indicator for the original study and data set, researchers should be cautious to assume the same level of discriminatory power can be reached with a new data set from a different account population. Additionally, researchers should consider the absolute number of false-positives in the classified sample and report the MCC, precision as well as the recall for the threshold used in a study.
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t004)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.t004 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.t004)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.t004)
+
+Table 4.  ROC-AUC as well as the PR-AUC English score.
+
+[https://doi.org/10.1371/journal.pone.0241045.t004](https://doi.org/10.1371/journal.pone.0241045.t004)
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.t005)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.t005 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.t005)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.t005)
+
+Table 5.  ROC-AUC as well as the PR-AUC for the English CAP.
+
+[https://doi.org/10.1371/journal.pone.0241045.t005](https://doi.org/10.1371/journal.pone.0241045.t005)
+
+Finally, in RQ4 we are interested in the temporal volatility of _Botometer_ scores. We identified substantive changes in the bot scores on an individual level. We first calculated the standard deviation of the universal score as well as the universal CAP for every single account, ie. for each account in our analysis based on all individual measurements over time and then plotted the density of all the individual account SDs for every individual data set to evaluate the volatility of the scores over time. The SD will be high if the _Botometer_ scores of an account have a high variability over time. Our analysis indicates that especially the accounts in the bot datasets show high standard deviations and thus are rather volatile over time ( [Fig 6](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g006)). The only noteworthy difference between the universal score and the universal CAP is that the CAP overall seems to be slightly less volatile overall (see also [S2 Fig](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.s002)).
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g006)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.g006 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.g006)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.g006)
+
+Fig 6.  Density plot of the SDs for single accounts plotted for each group.
+
+Left for the Botometer universal score, right for the Botometer CAP. Bandwith of 0.015 was used for the CAP and the universal scores. The x-axis represents standard deviation and the y-axis represents the density.
+
+[https://doi.org/10.1371/journal.pone.0241045.g006](https://doi.org/10.1371/journal.pone.0241045.g006)
+
+Lastly, we also checked how many accounts in each data set are classified differently during the three months. The volatility alone is only a problem if single accounts are depending on the day below or above a chosen threshold used by researchers to classify bots. If we chose a threshold of 0.76, 27.2% of the new bots, 22.2% of the German bots and 13.9% of the Varol bots will have a daily measurement above and below the threshold at least once. For the humans the volatility is less severe with regard to the classification based on a high threshold. 7.4% of the German politicians, 3.1% of the Varol humans and only 0.6% of the US politicians have a daily measurement above and below the threshold at least once.
+
+We also calculated the change of classification for a threshold of 0.25 for the universal CAP. We see that 37.5% of the new bots, 33.3% of the German bots, 10.7% of the German politicians as well as 1% of the US politicians have a score below as well as above the threshold at least once. Of the Varol bot data set 17.7% and of the Varol human data set 4.7% are a bot or a human at least once.
+
+We additionally calculated the percentage of accounts that have a score in the three months below as well as above the threshold at least once for all thresholds between 0 and 1 in steps of 0.05 (see [Fig 7](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g007); see also [S3 Fig](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.s003)). Our analysis shows that overall bots are more prone to have a score below and above the threshold for both the universal CAP and the universal score at least once. However, the universal CAP, works better for the _new bots_ as well as the _German bots_.
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g007)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.g007 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.g007)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.g007)
+
+Fig 7.  Changing score over time.
+
+Percentage of accounts (y-axis) that have at least once a score in the three months below as well as above the threshold for all thresholds between 0 and 1 in steps of 0.05. The x-axis represents the chosen threshold for the _Botometer_ score. Left for the universal score, right for the universal CAP.
+
+[https://doi.org/10.1371/journal.pone.0241045.g007](https://doi.org/10.1371/journal.pone.0241045.g007)
+
+## Discussion
+
+In a time where terms like “computational propaganda” \[ [38](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref038)\], “disinformation campaigns” \[ [39](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref039)\] or “coordinated inauthentic behavior” \[ [40](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref040)\] are often used, identifying the automated accounts that spread disinformation or attempt to shift the conversation seems paramount. Indeed, being able to estimate the degree of inauthentic behaviors within a given online discourse and understanding their patterns could lead to the identification of coordinated disinformation campaigns. Consequently, there was and still is an academic demand for tools like _Botometer_ that did not only come with an API but, more importantly, also with the necessary academic credentials (i.e. institution and citations). _Botometer_ was and is a very good example of how supervised machine learning models analysing single accounts can be trained and what the potential outcome might be.
+
+Yet, as we show in this study, researchers should be cautious using tools that were developed by other scientists, sometimes in a totally different context. A high ROC-AUC score with the original data set and research setting does not translate into a good “precision” for computational social science studies investigating a different context as we show for Botometer v3. Our results are thus in line with what some prior studies could show for older versions of _Botometer_ \[ [14](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref014), [16](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref016)\]. Even a good diagnostic ability (ROC-AUC) leads to problematic outcomes when the population baseline is considered. In other words: just because the model works with the test data set, does not mean that the results are reliable for a specific use case. As scientists we should care about reliability, validity, and reproducibility \[ [41](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref041), [42](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref042)\]. In many of the social science studies that make use of _Botometer_, these criteria have been disregarded. As we have shown with our analysis, _Botometer_ has problems in identifying false positives and false negatives in our collections when applying analytical approaches from computational social sciences; especially with thresholds used in prior studies. This is noteworthy, as our data sets consisted either of accounts that _Botometer_ was directly trained on or where the cases were clear-cut and easily identifiable for a human coder. The _Botometer_ creators \[ [43](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref043)\] argue in their newest paper that some of the German politicians’ accounts used in our study might have a certain degree of automation. However, we manually checked all false-positive politician accounts (score above .76) and only one out of 27 false-positive politicians shows some behavior that might be classified by _Botometer_ as Automation. Namely, the politician had synchronized her Facebook account with her Twitter account and all Facebook posts were also pushed over Twitter. This shows that _Botometer_’s misclassification is not due to real automation by the political accounts. Indeed, most of the other accounts that had been falsely classified as bots were mostly inactive and hadn’t tweeted in that time period. Furthermore, we show that the scores change over time, thus, effectively, making studies that use _Botometer_ data from one day or a week hard to replicate. _Botometer_ worked, unsurprisingly, better on accounts that the algorithm was trained on even in our analysis over time. However, the tool was imprecise over time for the new bots as well as the German dataset. In addition, bots that are not aimed at entertaining other users but rather aim at obfuscating their automated identity and real goals (e.g., spreading misinformation) will pretend to be humans, thus making it even harder for bot detection tools to identify them \[ [11](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref011), [16](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref016)\]. In this sense, distinguishing clearly between humans as well as bots is the minimum that bot detection tools should accomplish. Indeed, as researchers we should be careful when relying on existing tools and, as our thought experiment highlighted, also have to be mindful of the population we apply the classifiers on. If the numbers of bots are in the minority for the general population (as we assume in this case on Twitter), even a small false-positive rate might lead to a high number of human accounts wrongly classified as bots.
+
+This, then, raises the question if researchers should make use of _Botometer_ at all. And while an argument in favor of _Botometer_ would be that, while not perfect, it is at least an approximation towards identifying bots on Twitter, our counter-argument would be that the issue of false positive and false negative rates for specific thresholds with data sets based on the general Twitter population as well as the tool’s vulnerability to temporal changes or different languages do call the tool’s classifications into question. A solution researchers might come up with would be to shift the focus from thresholds to the overall distribution of the raw scores to evaluate the prevalence of bots in a data set, i.e. to measure the “bottiness”. However, based on our analysis we would not recommend such an approach as different data sets with the same human to bot ratio as well as our human data sets can look differently in density plots (see [Fig 8](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone-0241045-g008); see also [S5 Fig](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.s005)). While the shift from individual accounts analysed with supervised classifiers to unsupervised classifiers focusing on group behaviour is promising \[ [16](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref016), [22](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref022)\], researchers should also be cautious if they arbitrarily choose thresholds \[ [44](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref044)\]. Even a good classifier can be bad if researchers use it in the wrong context without any validation.
+
+[![thumbnail](https://journals.plos.org/plosone/article/figure/image?size=inline&id=10.1371/journal.pone.0241045.g008)](https://journals.plos.org/plosone/article/figure/image?size=medium&id=10.1371/journal.pone.0241045.g008 "Click for larger image")
+
+Download:
+
+
+- [PNG\\
+\\
+larger image](https://journals.plos.org/plosone/article/figure/image?download&size=large&id=10.1371/journal.pone.0241045.g008)
+- [TIFF\\
+\\
+original image](https://journals.plos.org/plosone/article/figure/image?download&size=original&id=10.1371/journal.pone.0241045.g008)
+
+Fig 8.  Density plots for the different data sets.
+
+Left: Density plots for the different combined data sets in our analysis showing the distribution of Botometer’s universal score. We used the resampled data sets with 15% bots and 85% humans with a total n = 100,000 for each data set. Right: Density plots for the human accounts data sets. Lines indicate the median, a bandwidth of 0.04 was used for all data sets. The x-axis represents the _Botometer_ score and the y-axis represents the density.
+
+[https://doi.org/10.1371/journal.pone.0241045.g008](https://doi.org/10.1371/journal.pone.0241045.g008)
+
+However, we also have to add as a limitation that we tested the tool with a few specific data sets. We have chosen data sets that make it easy for us to evaluate the ground truth and we still expect very similar results with future analyses. Furthermore, we have used a data set of bots that includes some of the most obvious bots. If researchers manually validate the tool again with their own unique data analysis, they of course should make use of the tool. Our analysis also shows what Saito and Rehmsmeier \[ [33](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref033)\] recommend in their study: the PR-curve is more informative if we are dealing with imbalanced data in the population.
+
+With that having said, we want to emphasize that we do not think that _Botometer_ is a bad tool in general; we rather suggest that researchers should be aware of _Botometer_’s limitations when using the tool and care about validation with their own labeled data sets like Fernquist et al. \[ [14](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref014)\], Cresci and colleagues \[ [16](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref016)\], as well as Echeverrìa et al. \[ [15](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref015)\] did in their studies. Our results are in line with this prior research as Botometer struggles with specific types of accounts, bots and humans, that are not covered by the training data \[ [18](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref018)\]. We do think that _Botometer_ can still be a useful tool for researchers, journalists as well as citizens. Just recently a new version (v4) of _Botometer_ was released that addressed some aspects of our criticism \[ [43](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref043)\] and has overall a better performance than prior versions of _Botometer_, such as the one (v3) analyzed in our study. Yet, major points of criticism that we identified here such as unclarity regarding what type of bot _Botometer_ identifies, inadequate training data for other languages, and the potential vulnerability to temporal patterns still apply for _Botometer_’s new version. _Botometer_ thus should, in this context, only be one step of a multi-step process that is built around human investigation of individual accounts \[ [11](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref011)\]. While prior research has shown that humans in the case of crowdsourcing fail with more complex bots \[ [16](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref016)\], we believe experienced researchers will still be able to identify bots with a combination of classifiers and manual forensic analysis. However, we believe that for computational social scientists working at scale, the uncertainty is too high. At least researchers should be aware of the data used as training data for the classifier that might only cover certain types of bots \[ [15](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref015), [16](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref016), [18](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref018)\]. If researchers want to use _Botometer_ for their datasets or even develop their own new classifiers we suggest certain steps going forward:
+
+1. Manual classification: They should manually analyze a substantial sample of the classified bot and human accounts that were classified by the machine learning system. Researchers could then calculate the intercoder-reliability between the machine learning system’s classification and the human coder classification. While the percentage agreement is already an interesting indicator, we would highly recommend the use of a measurement like Krippendorff’s alpha \[ [45](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref045)\] that takes into account chance agreement. They should also always manually validate, if possible, all the accounts that were classified as bots by the machine learning system if researchers want to make statements about the number of bots in a population. When a data set is too large for a complete manual analysis researchers should at least take an appropriate random sample for a manual classification. Furthermore, if the accounts in a data set are not homogenous (e.g., different languages, different topical context) researchers should use a stratified sampling strategy for manual post-hoc validation (see also point 4 below).
+2. Time: Researchers should validate their results over time. As we’ve shown with _Botometer_, the scores are prone to changes over time. Consequently, researchers using _Botometer_ or developing a new machine learning classifier should test their data set over time and look at the changes over time.
+3. Language: Researchers should be aware of _Botometer_’s limitations (that are even stated by the creators of the tool) when it comes to classifying accounts that tweet in other languages. Hence, scholars will have to consider using other tools to check the number of bots in their data set; e.g., manual coding. Future machine learning systems should also consider different languages.
+4. Data sharing: Researchers analyzing bots should share the user ids of the classified “bots” as the Twitter developer terms allows researchers to share the id of users. While the creators of _Botometer_ share their lists of bots on their official homepage, social scientists using _Botometer_ or similar machine learning systems in their studies often do not even share the ids of the accounts that got classified as bots.
+5. Improvements: Going forward, researchers should support tools that are not based on black boxes but rather commit to the idea of open science. We should be able to work together on finding solutions and improving those solutions over time. This, then, would also allow us to deal more transparently with potential weaknesses.
+
+Finally, there are other ways to identify bots on Twitter as Cresci \[ [22](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref022)\] and Orabi et al. \[ [20](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref020)\] show in their overviews. We believe it is important to consider the context as Bastos and Mercea \[ [2](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref002)\], for example, have investigated suspicious patterns based on communication metrics as well as network analytics. And while this method might be more complicated and computationally expensive, it offers social scientists a way forward in identifying bots and understanding patterns of disinformation campaigns. Overall it is also important to broaden the perspective and focus more on political digital astroturfing \[ [46](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref046)\] for which bots are just one potential dimension \[ [47](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref047)\]. A potential solution could be to focus, as suggested in the literature, more on group behavior with unsupervised classifiers \[ [22](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref022)\] in combination with a descriptive digital forensic analysis \[ [11](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref011)\]. Still, our suggestions from above hold true even in this new scenario as Vargas and colleagues \[ [44](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045#pone.0241045.ref044)\] show in the evaluation of such methods.
+
+## Supporting information
+
+Skip to fig **share** navigation
+
+### [S1 Fig.](https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0241045.s001) Receiver operating characteristics curve for Botometer.
+
+The English score (left) and the English CAP (right). Average score over 3 months for each account.
+
+[https://doi.org/10.1371/journal.pone.0241045.s001](https://doi.org/10.1371/journal.pone.0241045.s001)
+
+(DOCX)
+
+### [S2 Fig.](https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0241045.s002) Distribution of the SD for single accounts plotted as groups.
+
+Left for the Botometer English score, right for the Botometer English CAP. Bandwith of 0.015 was used for the both.
+
+[https://doi.org/10.1371/journal.pone.0241045.s002](https://doi.org/10.1371/journal.pone.0241045.s002)
+
+(DOCX)
+
+### [S3 Fig.](https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0241045.s003) Changing score over time.
+
+Percentage of accounts (y-axis) that have at least once a score in the three months below as well as above the threshold for all thresholds between 0 and 1 in steps of 0.05. Left for the English score, right for the English CAP.
+
+[https://doi.org/10.1371/journal.pone.0241045.s003](https://doi.org/10.1371/journal.pone.0241045.s003)
+
+(DOCX)
+
+### [S4 Fig.](https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0241045.s004) CAP precision-recall curves for the resampled data sets.
+
+We consider the population baseline on Twitter (15% bots) for the English score (left) and the English CAP score (right). Black points indicate the precision and the recall for the Botometer English score 0.76 (left) and for the English CAP 0.25 (right). With the German politicians and bots for almost every threshold level the identified sample of bots has more humans than real bots (precision).
+
+[https://doi.org/10.1371/journal.pone.0241045.s004](https://doi.org/10.1371/journal.pone.0241045.s004)
+
+(DOCX)
+
+### [S5 Fig.](https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0241045.s005) Density plots for the different data sets.
+
+Left: Density plots for the different combined data sets in our analysis showing the distribution of Botometer’s English score. We used the resampled data sets with 15% bots and 85% humans with a total n = 100,000 for each data set. Right: Density plots for the human accounts data sets. Lines indicate the median, a bandwidth of 0.04 was used for all data sets.
+
+[https://doi.org/10.1371/journal.pone.0241045.s005](https://doi.org/10.1371/journal.pone.0241045.s005)
+
+(DOCX)
+
+## Acknowledgments
+
+We thank Chung-hong Chan as well as Momin M. Malik for their valuable feedback that helped us to substantially improve our paper. We also want to thank Martin Fuchs for providing us with his manually validated list of German Members of Parliament.
+
+## References
+
+01. 1.
+     Howard PN, Kollanyi B. Bots, #Strongerin, and #Brexit: Computational Propaganda During the UK-EU Referendum. SSRN Journal. 2016.
+    - [View Article](https://doi.org/10.2139/ssrn.2798311 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Bots%2C+%23Strongerin%2C+and+%23Brexit%3A+Computational+Propaganda+During+the+UK-EU+Referendum+Howard+2016 "Go to article in Google Scholar")
+02. 2.
+     Bastos MT, Mercea D. The Brexit Botnet and User-Generated Hyperpartisan News. Social Science Computer Review. 2019; 37:38–54.
+    - [View Article](https://doi.org/10.1177/0894439317734157 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=The+Brexit+Botnet+and+User-Generated+Hyperpartisan+News+Bastos+2019 "Go to article in Google Scholar")
+03. 3.
+     Davis CA, Varol O, Ferrara E, Flammini A, Menczer F. BotOrNot: A System to Evaluate Social Bots. In: Bourdeau J, Hendler JA, Nkambou RN, Horrocks I, Zhao BY, editors. Proceedings of the 25th International Conference Companion on World Wide Web—WWW '16 Companion. New York, New York, USA: ACM Press; 2016. pp. 273–4.
+04. 4.
+     Varol O, Ferrara E, Davis C, Menczer F, Flammini A. Online Human-Bot Interactions: Detection, Estimation, and Characterization; 2017. [https://aaai.org/ocs/index.php/ICWSM/ICWSM17/paper/view/15587/14817](https://aaai.org/ocs/index.php/ICWSM/ICWSM17/paper/view/15587/14817).
+05. 5.
+     Wojcik S, Messing S, Smith A, Rainie L, Htilin P. Twitter Bots: An Analysis of the Links Automated Accounts Share. 2018 \[cited 27 Feb 2019\]. [http://www.pewinternet.org/2018/04/09/bots-in-the-twittersphere](http://www.pewinternet.org/2018/04/09/bots-in-the-twittersphere).
+06. 6.
+     Bessi A, Ferrara E. Social bots distort the 2016 U.S. Presidential election online discussion. First Monday. 2016; 21.
+    - [View Article](https://doi.org/10.5210/fm.v21i11.7090 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Social+bots+distort+the+2016+U.S.+Presidential+election+online+discussion+Bessi+2016 "Go to article in Google Scholar")
+07. 7.
+     Keller TR, Klinger U. Social Bots in Election Campaigns: Theoretical, Empirical, and Methodological Implications. Political Communication. 2019; 36:171–89.
+    - [View Article](https://doi.org/10.1080/10584609.2018.1526238 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Social+Bots+in+Election+Campaigns%3A+Theoretical%2C+Empirical%2C+and+Methodological+Implications+Keller+2019 "Go to article in Google Scholar")
+08. 8.
+     Vosoughi S, Roy D, Aral S. The spread of true and false news online. Science. 2018; 359:1146–51. pmid:29590045
+    - [View Article](https://doi.org/10.1126/science.aap9559 "Go to article")
+    - [PubMed/NCBI](http://www.ncbi.nlm.nih.gov/pubmed/29590045 "Go to article in PubMed")
+    - [Google Scholar](http://scholar.google.com/scholar?q=The+spread+of+true+and+false+news+online+Vosoughi+2018 "Go to article in Google Scholar")
+09. 9.
+     Shao C, Ciampaglia GL, Varol O, Yang K-C, Flammini A, Menczer F. The spread of low-credibility content by social bots. Nat Commun. 2018; 9:4787. pmid:30459415.
+    - [View Article](https://doi.org/10.1038/s41467-018-06930-7 "Go to article")
+    - [PubMed/NCBI](http://www.ncbi.nlm.nih.gov/pubmed/30459415 "Go to article in PubMed")
+    - [Google Scholar](http://scholar.google.com/scholar?q=The+spread+of+low-credibility+content+by+social+bots+Shao+2018 "Go to article in Google Scholar")
+10. 10.
+     Zhang Y, Shah D, Foley J, Abhishek A, Lukito J, Suk J, et al. Whose Lives Matter? Mass Shootings and Social Media Discourses of Sympathy and Policy, 2012–2014. Journal of Computer-Mediated Communication. 2019; 24:182–202.
+    - [View Article](https://doi.org/10.1093/jcmc/zmz009 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Whose+Lives+Matter%3F+Mass+Shootings+and+Social+Media+Discourses+of+Sympathy+and+Policy%2C+2012%E2%80%932014+Zhang+2019 "Go to article in Google Scholar")
+11. 11.
+     Grimme C, Assenmacher D, Adam L. Changing Perspectives: Is It Sufficient to Detect Social Bots. In: Meiselwitz G, editor. Social Computing and Social Media. User Experience and Behavior. Cham: Springer International Publishing; 2018. pp. 445–61.
+12. 12.
+     Yang K‐ C, Varol O, Davis CA, Ferrara E, Flammini A, Menczer F. Arming the public with artificial intelligence to counter social bots. Hum Behav & Emerg Tech. 2019; 1:48–61.
+    - [View Article](https://doi.org/10.1002/hbe2.115 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Arming+the+public+with+artificial+intelligence+to+counter+social+bots+Yang+K%E2%80%90+2019 "Go to article in Google Scholar")
+13. 13.
+     Botometer. FAQ. 2019 \[cited 24 Jun 2019\]. [https://botometer.iuni.iu.edu/#!/faq](https://botometer.iuni.iu.edu/%23!/faq).
+14. 14.
+     Fernquist J, Kaati L, Schroeder R. Political Bots and the Swedish General Election. 2018 IEEE International Conference on Intelligence and Security Informatics (ISI). IEEE; 2018. pp. 124–9.
+15. 15.
+     Echeverría J, Cristofaro E de, Kourtellis N, Leontiadis I, Stringhini G, Zhou S. LOBO. Proceedings of the 34th Annual Computer Security Applications Conference. New York, NY, USA: ACM; 2018. pp. 137–46.
+16. 16.
+     Cresci S, Di Pietro R, Petrocchi M, Spognardi A, Tesconi M. The Paradigm-Shift of Social Spambots. In: Barrett R, Cummings R, Agichtein E, Gabrilovich E, editors. Proceedings of the 26th International Conference on World Wide Web Companion—WWW '17 Companion. New York, New York, USA: ACM Press; 2017. pp. 963–72.
+17. 17.
+     Cresci S, Di Pietro R, Petrocchi M, Spognardi A, Tesconi M. Social fingerprinting: detection of spambot groups through DNA-inspired behavioral modeling. IEEE Trans Dependable and Secure Comput. 2017:1.
+    - [View Article](https://doi.org/10.1109/TDSC.2017.2681672 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Social+fingerprinting%3A+detection+of+spambot+groups+through+DNA-inspired+behavioral+modeling+Cresci+2017 "Go to article in Google Scholar")
+18. 18.
+     Yang K-C, Varol O, Hui P-M, Menczer F. Scalable and Generalizable Social Bot Detection through Data Selection. AAAI. 2020; 34:1096–103.
+    - [View Article](https://doi.org/10.1609/aaai.v34i01.5460 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Scalable+and+Generalizable+Social+Bot+Detection+through+Data+Selection+Yang+2020 "Go to article in Google Scholar")
+19. 19.
+     Mazza M, Cresci S, Avvenuti M, Quattrociocchi W, Tesconi M. RTbust. In: Boldi P, Welles BF, Kinder-Kurlanda K, Wilson C, Peters I, et al., editors. Proceedings of the 10th ACM Conference on Web Science—WebSci '19. New York, New York, USA: ACM Press; 2019. pp. 183–92.
+20. 20.
+     Orabi M, Mouheb D, Al Aghbari Z, Kamel I. Detection of Bots in Social Media: A Systematic Review. Information Processing & Management. 2020; 57:102250.
+    - [View Article](https://doi.org/10.1016/j.ipm.2020.102250 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Detection+of+Bots+in+Social+Media%3A+A+Systematic+Review+Orabi+2020 "Go to article in Google Scholar")
+21. 21.
+     Daya AA, Salahuddin MA, Limam N, Boutaba R. BotChase: Graph-Based Bot Detection Using Machine Learning. IEEE Trans Netw Serv Manage. 2020; 17:15–29.
+    - [View Article](https://doi.org/10.1109/TNSM.2020.2972405 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=BotChase%3A+Graph-Based+Bot+Detection+Using+Machine+Learning+Daya+2020 "Go to article in Google Scholar")
+22. 22.
+     Cresci S. A decade of social bot detection. Commun ACM. 2020; 63:72–83.
+    - [View Article](https://doi.org/10.1145/3409116 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=A+decade+of+social+bot+detection+Cresci+2020 "Go to article in Google Scholar")
+23. 23.
+     Chavoshi N, Hamooni H, Mueen A. DeBot: Twitter Bot Detection via Warped Correlation. 2016 IEEE 16th International Conference on Data Mining (ICDM). IEEE; 12/12/2016–12/15/2016. pp. 817–22.
+24. 24.
+     Hegelich S, Janetzko D. Are Social Bots on Twitter Political Actors? Empirical Evidence from a Ukrainian Social Botnet. Tenth International AAAI Conference on Web and Social Media. AAAI Press; 2016.
+25. 25.
+     Ferrara E, Varol O, Davis C, Menczer F, Flammini A. The rise of social bots. Commun ACM. 2016; 59:96–104.
+    - [View Article](https://doi.org/10.1145/2818717 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=The+rise+of+social+bots+Ferrara+2016 "Go to article in Google Scholar")
+26. 26.
+     Luceri L, Deb A, Giordano S, Ferrara E. Evolution of bot and human behavior during elections. First Monday. 2019; 24. Available from: [https://journals.uic.edu/ojs/index.php/fm/article/view/10213](https://journals.uic.edu/ojs/index.php/fm/article/view/10213).
+    - [View Article](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045# "Go to article in CrossRef")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Evolution+of+bot+and+human+behavior+during+elections+Luceri+2019 "Go to article in Google Scholar")
+27. 27.
+     Gorwa R, Guilbeault D. Unpacking the Social Media Bot: A Typology to Guide Research and Policy. Policy & Internet. 2018; 40:420.
+    - [View Article](https://doi.org/10.1002/poi3.184 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Unpacking+the+Social+Media+Bot%3A+A+Typology+to+Guide+Research+and+Policy+Gorwa+2018 "Go to article in Google Scholar")
+28. 28.
+     Social Feed Manager. A List of Twitter Handles for Members of Congress. 2017 \[cited 27 Feb 2019\]. [https://gwu-libraries.github.io/sfm-ui/posts/2017-05-23-congress-seed-list](https://gwu-libraries.github.io/sfm-ui/posts/2017-05-23-congress-seed-list).
+29. 29.
+     Reuter M. Fälschen, züchten und verstärken: Fragwürdige Twitter-Tricks bei der AfD. 23.05.2019 \[cited 27 Jul 2020\]. [https://netzpolitik.org/2019/faelschen-zuechten-und-verstaerken-fragwuerdige-twitter-tricks-bei-der-afd/](https://netzpolitik.org/2019/faelschen-zuechten-und-verstaerken-fragwuerdige-twitter-tricks-bei-der-afd/).
+30. 30.
+     Halligan S, Altman DG, Mallett S. Disadvantages of using the area under the receiver operating characteristic curve to assess imaging tests: a discussion and proposal for an alternative approach. Eur Radiol. 2015; 25:932–9. pmid:25599932.
+    - [View Article](https://doi.org/10.1007/s00330-014-3487-0 "Go to article")
+    - [PubMed/NCBI](http://www.ncbi.nlm.nih.gov/pubmed/25599932 "Go to article in PubMed")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Disadvantages+of+using+the+area+under+the+receiver+operating+characteristic+curve+to+assess+imaging+tests%3A+a+discussion+and+proposal+for+an+alternative+approach+Halligan+2015 "Go to article in Google Scholar")
+31. 31.
+     Davis J, Goadrich M. The relationship between Precision-Recall and ROC curves. In: Cohen W, Moore A, editors. Proceedings of the 23rd international conference on Machine learning—ICML '06. New York, New York, USA: ACM Press; 2006. pp. 233–40.
+32. 32.
+     Lobo JM, Jiménez-Valverde A, Real R. AUC: a misleading measure of the performance of predictive distribution models. Global Ecol Biogeography. 2008; 17:145–51.
+    - [View Article](https://doi.org/10.1111/j.1466-8238.2007.00358.x "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=AUC%3A+a+misleading+measure+of+the+performance+of+predictive+distribution+models+Lobo+2008 "Go to article in Google Scholar")
+33. 33.
+     Saito T, Rehmsmeier M. The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. PLoS ONE. 2015; 10:e0118432. pmid:25738806.
+    - [View Article](https://doi.org/10.1371/journal.pone.0118432 "Go to article")
+    - [PubMed/NCBI](http://www.ncbi.nlm.nih.gov/pubmed/25738806 "Go to article in PubMed")
+    - [Google Scholar](http://scholar.google.com/scholar?q=The+precision-recall+plot+is+more+informative+than+the+ROC+plot+when+evaluating+binary+classifiers+on+imbalanced+datasets+Saito+2015 "Go to article in Google Scholar")
+34. 34.
+     Chicco D. Ten quick tips for machine learning in computational biology. BioData Min. 2017; 10:35. pmid:29234465
+    - [View Article](https://doi.org/10.1186/s13040-017-0155-3 "Go to article")
+    - [PubMed/NCBI](http://www.ncbi.nlm.nih.gov/pubmed/29234465 "Go to article in PubMed")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Ten+quick+tips+for+machine+learning+in+computational+biology+Chicco+2017 "Go to article in Google Scholar")
+35. 35.
+     Chicco D, Jurman G. The advantages of the Matthews correlation coefficient (MCC) over F1 score and accuracy in binary classification evaluation. BMC Genomics. 2020; 21:6. pmid:31898477.
+    - [View Article](https://doi.org/10.1186/s12864-019-6413-7 "Go to article")
+    - [PubMed/NCBI](http://www.ncbi.nlm.nih.gov/pubmed/31898477 "Go to article in PubMed")
+    - [Google Scholar](http://scholar.google.com/scholar?q=The+advantages+of+the+Matthews+correlation+coefficient+%28MCC%29+over+F1+score+and+accuracy+in+binary+classification+evaluation+Chicco+2020 "Go to article in Google Scholar")
+36. 36.
+     DeLong ER, DeLong DM, Clarke-Pearson DL. Comparing the Areas under Two or More Correlated Receiver Operating Characteristic Curves: A Nonparametric Approach. Biometrics. 1988; 44:837. pmid:3203132
+    - [View Article](https://doi.org/10.2307/2531595 "Go to article")
+    - [PubMed/NCBI](http://www.ncbi.nlm.nih.gov/pubmed/3203132 "Go to article in PubMed")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Comparing+the+Areas+under+Two+or+More+Correlated+Receiver+Operating+Characteristic+Curves%3A+A+Nonparametric+Approach+DeLong+1988 "Go to article in Google Scholar")
+37. 37.
+     Sun X, Xu W. Fast Implementation of DeLong’s Algorithm for Comparing the Areas Under Correlated Receiver Operating Characteristic Curves. IEEE Signal Process Lett. 2014; 21:1389–93.
+    - [View Article](https://doi.org/10.1109/LSP.2014.2337313 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Fast+Implementation+of+DeLong%E2%80%99s+Algorithm+for+Comparing+the+Areas+Under+Correlated+Receiver+Operating+Characteristic+Curves+Sun+2014 "Go to article in Google Scholar")
+38. 38.
+     Bradshaw S, Howard PN, Kollanyi B, Neudert L-M. Sourcing and Automation of Political News and Information over Social Media in the United States, 2016–2018. Political Communication. 2019; 15:1–21.
+    - [View Article](https://doi.org/10.1080/10584609.2019.1663322 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Sourcing+and+Automation+of+Political+News+and+Information+over+Social+Media+in+the+United+States%2C+2016%E2%80%932018+Bradshaw+2019 "Go to article in Google Scholar")
+39. 39.
+     Bradshaw S, Howard PN. THE GLOBAL ORGANIZATION OF SOCIAL MEDIA DISINFORMATION CAMPAIGNS. Journal of International Affairs. 2018; 71:23–32. Available from: [https://www.jstor.org/stable/26508115](https://www.jstor.org/stable/26508115).
+    - [View Article](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0241045# "Go to article in CrossRef")
+    - [Google Scholar](http://scholar.google.com/scholar?q=THE+GLOBAL+ORGANIZATION+OF+SOCIAL+MEDIA+DISINFORMATION+CAMPAIGNS+Bradshaw+2018 "Go to article in Google Scholar")
+40. 40.
+     Facebook. 20. Inauthentic Behavior. 2020 \[cited 27 Jul 2020\]. [https://www.facebook.com/communitystandards/inauthentic\_behavior](https://www.facebook.com/communitystandards/inauthentic_behavior).
+41. 41.
+     Christensen GS, Freese J, Miguel E. Transparent and reproducible social science research. How to do open science / Garret Christensen, Jeremy Freese, and Edward Miguel. Oakland, California: University of California Press; 2019.
+42. 42.
+     Fernández DM, Graziotin D, Wagner S, Seibold H. Open Science in Software Engineering; 2019. [https://arxiv.org/abs/1904.06499](https://arxiv.org/abs/1904.06499).
+43. 43.
+     Sayyadiharikandeh M, Varol O, Yang K-C, Flammini A, Menczer F. Detection of Novel Social Bots by Ensembles of Specialized Classifiers. 2020 \[cited 6 Oct 2020\]. [https://arxiv.org/abs/2006.06867](https://arxiv.org/abs/2006.06867).
+44. 44.
+     Vargas L, Emami P, Traynor P. On the Detection of Disinformation Campaign Activity with Network Analysis; 2020. [https://arxiv.org/abs/2005.13466v1](https://arxiv.org/abs/2005.13466v1).
+45. 45.
+     Hayes AF, Krippendorff K. Answering the Call for a Standard Reliability Measure for Coding Data. Communication Methods and Measures. 2007; 1:77–89.
+    - [View Article](https://doi.org/10.1080/19312450709336664 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Answering+the+Call+for+a+Standard+Reliability+Measure+for+Coding+Data+Hayes+2007 "Go to article in Google Scholar")
+46. 46.
+     Keller FB, Schoch D, Stier S, Yang J. Political Astroturfing on Twitter: How to Coordinate a Disinformation Campaign. Political Communication. 2019; 63:1–25.
+    - [View Article](https://doi.org/10.1080/10584609.2019.1661888 "Go to article")
+    - [Google Scholar](http://scholar.google.com/scholar?q=Political+Astroturfing+on+Twitter%3A+How+to+Coordinate+a+Disinformation+Campaign+Keller+2019 "Go to article in Google Scholar")
+47. 47.
+     Kovic M, Rauchfleisch A, Sele M, Caspar C. Digital astroturfing in politics: Definition, typology, and countermeasures: Studies in Communication Sciences; 2018.
+
+Twitter Widget Iframe

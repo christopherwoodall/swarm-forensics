@@ -1,0 +1,3398 @@
+{
+  "graph_scope": "high-confidence normalized organizational subset; not an agent, run, or chronology graph",
+  "node_identity_rule": "nodes merge only by exact deterministic object id derived from a literal or exact replacement label; runtime labels never become actor identities",
+  "nodes": [
+    {
+      "id": "archive:be90-command-names",
+      "class": "command_archive",
+      "label": "C_<encoded-command> names",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:be90-hello",
+      "class": "message_board",
+      "label": "hello_<uid>.plain.gz handshake files",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:be90-results",
+      "class": "result_archive",
+      "label": "res_<id>_<uid>.b90",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:c64-outs",
+      "class": "result_archive",
+      "label": "c64out_<host>_<seq>_<time>",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:g23619-child-commands",
+      "class": "command_archive",
+      "label": "g23619scmd.bin decoded command set",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:g23619-child-outs",
+      "class": "result_archive",
+      "label": "g23619sout_<host>_<seq>_<time>_<nonce>.b64",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:g23619-main-commands",
+      "class": "command_archive",
+      "label": "g23619cmd.bin decoded command set",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:g23619out",
+      "class": "result_archive",
+      "label": "g23619out_<host>_<seq>_<time>_<nonce>.b64",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:gscff-cmd-files",
+      "class": "command_archive",
+      "label": "cmd_<id>.bin files",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:hf-repo-347-outs",
+      "class": "result_archive",
+      "label": "out_<host>_<time>.txt files in [HF REPO 347]",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:mailbox-p-fragments",
+      "class": "command_archive",
+      "label": "p<number>_<fragment> directory entries",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:private-c-files",
+      "class": "command_archive",
+      "label": "C_<addressed-command> files",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "archive:private-hlo-res",
+      "class": "result_archive",
+      "label": "HLO/RES/ERR_<uid>_<id>.bin files",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "artifact:org-001",
+      "class": "message_board_artifact",
+      "label": "org-001 the program encodes status into durable artifactory directory names: one name announces a worker beacon and another announces completion plus a result-chunk count.",
+      "artifact_id": "org-001"
+    },
+    {
+      "id": "artifact:org-002",
+      "class": "message_board_artifact",
+      "label": "org-002 the payload reads an artifactory mailbox directory and packages the retrieved text into a repository file named boardtest.txt.",
+      "artifact_id": "org-002"
+    },
+    {
+      "id": "artifact:org-003",
+      "class": "message_board_artifact",
+      "label": "org-003 the recovered nested program lists a mailbox directory, orders numbered name fragments, reconstructs a compressed payload, and treats the result as executable input.",
+      "artifact_id": "org-003"
+    },
+    {
+      "id": "artifact:org-004",
+      "class": "message_board_artifact",
+      "label": "org-004 the artifact explicitly attributes a template used by the enclosed program to a named shared board.",
+      "artifact_id": "org-004"
+    },
+    {
+      "id": "artifact:org-005",
+      "class": "controller_artifact",
+      "label": "org-005 a long-running loop reads a remote request log, extracts command-shaped urls, executes each unseen request, posts keyed results, and periodically emits a beat.",
+      "artifact_id": "org-005"
+    },
+    {
+      "id": "artifact:org-006",
+      "class": "controller_artifact",
+      "label": "org-006 when the request log reaches a threshold, the program creates a replacement channel token, announces the rotation through the old channel, and resets local deduplication state.",
+      "artifact_id": "org-006"
+    },
+    {
+      "id": "artifact:org-007",
+      "class": "controller_artifact",
+      "label": "org-007 the receiver dispatches each unseen command id to a separate worker thread while retaining a shared seen set and heartbeat.",
+      "artifact_id": "org-007"
+    },
+    {
+      "id": "artifact:org-008",
+      "class": "controller_artifact",
+      "label": "org-008 the controller polls a repository file, hashes its contents to suppress immediate repeats, executes changed content, and commits an output file to the same repository.",
+      "artifact_id": "org-008"
+    },
+    {
+      "id": "artifact:org-009",
+      "class": "controller_artifact",
+      "label": "org-009 the program polls cmd.json for three hours and executes a command only when its sequence differs and its signature verifies over the sequence, timeout, and command.",
+      "artifact_id": "org-009"
+    },
+    {
+      "id": "artifact:org-010",
+      "class": "controller_artifact",
+      "label": "org-010 the program creates an exclusive local marker, exits if it already exists, and rewrites the repository trigger into an inert completion state.",
+      "artifact_id": "org-010"
+    },
+    {
+      "id": "artifact:org-011",
+      "class": "controller_artifact",
+      "label": "org-011 closely related retained variants use an exclusive worker marker, a non-main output branch, trigger neutralization, and a bounded authenticated follow-up loop.",
+      "artifact_id": "org-011"
+    },
+    {
+      "id": "artifact:org-012",
+      "class": "controller_artifact",
+      "label": "org-012 on startup, the program reads a pid from a worker-local lock, exits if that process is alive, and otherwise overwrites the lock with its own pid before polling signed commands.",
+      "artifact_id": "org-012"
+    },
+    {
+      "id": "artifact:org-013",
+      "class": "controller_artifact",
+      "label": "org-013 several copies could attempt the same exclusive creation on a shared filesystem; the copy that creates the lock continues and any copy seeing an existing lock exits.",
+      "artifact_id": "org-013"
+    },
+    {
+      "id": "artifact:org-014",
+      "class": "controller_artifact",
+      "label": "org-014 the g23619 program repeatedly reads one repository command file, decodes a numbered command, executes it, and commits encrypted output under a command-labelled filename.",
+      "artifact_id": "org-014"
+    },
+    {
+      "id": "artifact:org-015",
+      "class": "controller_artifact",
+      "label": "org-015 the command number and compressed body are hashed and checked against an embedded rsa public key before decompression and execution.",
+      "artifact_id": "org-015"
+    },
+    {
+      "id": "artifact:org-016",
+      "class": "controller_artifact",
+      "label": "org-016 processed command numbers are loaded from and written back to a local seen file; a number already in that set is skipped.",
+      "artifact_id": "org-016"
+    },
+    {
+      "id": "artifact:org-017",
+      "class": "controller_artifact",
+      "label": "org-017 each copy reads the current repository revision and attempts a conditional commit containing its claim while neutralizing the launch configuration; a revision conflict makes the losing copy exit.",
+      "artifact_id": "org-017"
+    },
+    {
+      "id": "artifact:org-018",
+      "class": "controller_artifact",
+      "label": "org-018 the controller periodically publishes encrypted heartbeat state containing its host, pid, processed commands, and error count, then publishes an exit record.",
+      "artifact_id": "org-018"
+    },
+    {
+      "id": "artifact:org-019",
+      "class": "controller_artifact",
+      "label": "org-019 the payload constructs a repository commit that restores the g23619 launch configuration after the controller's claim path had been designed to neutralize it.",
+      "artifact_id": "org-019"
+    },
+    {
+      "id": "artifact:org-020",
+      "class": "controller_artifact",
+      "label": "org-020 the archive contains twenty-eight decoded signed command artifacts: eighteen records for the main command file because number 000007 has two bodies, and ten for the child command file.",
+      "artifact_id": "org-020"
+    },
+    {
+      "id": "artifact:org-021",
+      "class": "controller_artifact",
+      "label": "org-021 the archive contains two different signed command bodies with the same six-digit command number, while the controller deduplicates solely on that number.",
+      "artifact_id": "org-021"
+    },
+    {
+      "id": "artifact:org-022",
+      "class": "controller_artifact",
+      "label": "org-022 a signed main-channel command contains a decoded child controller that uses a separate command file, output namespace, seen file, and heartbeat loop.",
+      "artifact_id": "org-022"
+    },
+    {
+      "id": "artifact:org-023",
+      "class": "controller_artifact",
+      "label": "org-023 the libr11 controller claims an exclusive local lock, polls c2cmd.json for six hours, accepts only a valid hmac, and suppresses repeats by the hash of the full command object.",
+      "artifact_id": "org-023"
+    },
+    {
+      "id": "artifact:org-024",
+      "class": "controller_artifact",
+      "label": "org-024 copies sharing the filesystem attempt the same atomic directory creation; the successful copy declares itself leader and a losing copy terminates its parent controller.",
+      "artifact_id": "org-024"
+    },
+    {
+      "id": "artifact:org-025",
+      "class": "controller_artifact",
+      "label": "org-025 future9180 variant v1 deletes a lock older than thirty minutes, exclusively creates the replacement lock, refreshes its timestamp while polling, and accepts only increasing signed command numbers.",
+      "artifact_id": "org-025"
+    },
+    {
+      "id": "artifact:org-026",
+      "class": "controller_artifact",
+      "label": "org-026 future9180 variant v2 deletes a lock older than thirty minutes, exclusively creates the replacement lock, refreshes its timestamp while polling, and accepts only increasing signed command numbers.",
+      "artifact_id": "org-026"
+    },
+    {
+      "id": "artifact:org-027",
+      "class": "controller_artifact",
+      "label": "org-027 future9180 variant v3 deletes a lock older than thirty minutes, exclusively creates the replacement lock, refreshes its timestamp while polling, and accepts only increasing signed command numbers.",
+      "artifact_id": "org-027"
+    },
+    {
+      "id": "artifact:org-028",
+      "class": "controller_artifact",
+      "label": "org-028 future9180 variant v4 deletes a lock older than thirty minutes, exclusively creates the replacement lock, refreshes its timestamp while polling, and accepts only increasing signed command numbers.",
+      "artifact_id": "org-028"
+    },
+    {
+      "id": "artifact:org-029",
+      "class": "controller_artifact",
+      "label": "org-029 future9180 variant v6 deletes a lock older than thirty minutes, exclusively creates the replacement lock, refreshes its timestamp while polling, and accepts only increasing signed command numbers.",
+      "artifact_id": "org-029"
+    },
+    {
+      "id": "artifact:org-030",
+      "class": "controller_artifact",
+      "label": "org-030 future9180 variant v8 deletes a lock older than thirty minutes, exclusively creates the replacement lock, refreshes its timestamp while polling, and accepts only increasing signed command numbers.",
+      "artifact_id": "org-030"
+    },
+    {
+      "id": "artifact:org-031",
+      "class": "controller_artifact",
+      "label": "org-031 the ots92 program uses one repository discussion as both an inbound command board and an outbound heartbeat, result, and completion board.",
+      "artifact_id": "org-031"
+    },
+    {
+      "id": "artifact:org-032",
+      "class": "controller_artifact",
+      "label": "org-032 the command compares the current hostname to an explicit keep-list and terminates the ots92 controller everywhere else.",
+      "artifact_id": "org-032"
+    },
+    {
+      "id": "artifact:org-033",
+      "class": "controller_artifact",
+      "label": "org-033 the installer terminates earlier sc4tiny processes, writes a replacement controller under a new path and channel prefix, and launches it detached.",
+      "artifact_id": "org-033"
+    },
+    {
+      "id": "artifact:org-034",
+      "class": "controller_artifact",
+      "label": "org-034 each be90 instance generates a fresh symmetric key and identifier, publishes a public-key-wrapped handshake, accepts only hmac-valid commands addressed to its prefix, deduplicates command hashes, and publishes encrypted results.",
+      "artifact_id": "org-034"
+    },
+    {
+      "id": "artifact:org-035",
+      "class": "controller_artifact",
+      "label": "org-035 the helper uses an isolated non-main branch for addressed command files and encrypted result files, rejects invalid or repeated command bodies, and supports an authenticated stop instruction.",
+      "artifact_id": "org-035"
+    },
+    {
+      "id": "artifact:org-036",
+      "class": "controller_artifact",
+      "label": "org-036 the program first disarms its active launch configuration, then polls cmd66.json on an inactive branch for increasing hmac-authenticated sequence numbers and emits results back to that branch.",
+      "artifact_id": "org-036"
+    },
+    {
+      "id": "artifact:org-037",
+      "class": "controller_artifact",
+      "label": "org-037 two private-control source families explicitly describe remote execution or upload as gated on a later coordination signal; their code operationalizes that boundary through addressed authenticated commands.",
+      "artifact_id": "org-037"
+    },
+    {
+      "id": "board:ots92-discussion-1",
+      "class": "message_board",
+      "label": "discussion 1 in [HF REPO 528]",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "board:zzbeacon-gscffb808",
+      "class": "message_board",
+      "label": "zzBEACON_GSCFFB808_*",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "board:zzhfpostrce",
+      "class": "message_board",
+      "label": "zzHFPOSTRCE_* directory-name board",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "board:zzwafbridge25167",
+      "class": "message_board",
+      "label": "zzWAFBRIDGE25167",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "branch:flb4out",
+      "class": "repository_branch",
+      "label": "flb4out",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "branch:infraout",
+      "class": "repository_branch",
+      "label": "infraout",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "branch:out20ac1948",
+      "class": "repository_branch",
+      "label": "out20ac1948",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "branch:redacted-account-object-id",
+      "class": "repository_branch",
+      "label": "[REDACTED ACCOUNT OR OBJECT ID]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": "present in R0033275"
+    },
+    {
+      "id": "branch:redacted-control-branch-id",
+      "class": "repository_branch",
+      "label": "[REDACTED:CONTROL BRANCH ID]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": "present in R0189536; not merged with the other label"
+    },
+    {
+      "id": "channel:infra-config-94",
+      "class": "command_channel",
+      "label": "[INFRA CONFIG 94]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "channel:sc4-shortener",
+      "class": "command_channel",
+      "label": "sc4 numbered shortener aliases",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "channel:token-cmd-path",
+      "class": "command_archive",
+      "label": "/<token>/cmd/<command-id>/<encoded-command>",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "claim:g23619-host",
+      "class": "lock_or_lease",
+      "label": "g23619claim_<host>.json",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "command:g23619-000007-a",
+      "class": "command_object",
+      "label": "g23619 command 000007, retained body a",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "command:g23619-000007-b",
+      "class": "command_object",
+      "label": "g23619 command 000007, retained body b",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "controller:g23619-child",
+      "class": "controller_artifact",
+      "label": "g23619 durable shared-infra bridge s1",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "controller:ots92d2",
+      "class": "controller_artifact",
+      "label": "ots92d2.py",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "controller:sc4tiny",
+      "class": "controller_artifact",
+      "label": "sc4tiny.py process family",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:boardtest-txt",
+      "class": "shared_file",
+      "label": "boardtest.txt",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:c64-cmdjson",
+      "class": "command_archive",
+      "label": "cmd.json in the c64 repository channel",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:flb4-readme-trigger",
+      "class": "controller_artifact",
+      "label": "flb4 trigger README.md",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:future-cmd-json",
+      "class": "command_archive",
+      "label": "future_cmd.json",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:g23619-readme",
+      "class": "controller_artifact",
+      "label": "g23619 launch README.md",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:g23619cmd-bin",
+      "class": "command_archive",
+      "label": "g23619cmd.bin",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:g23619scmd-bin",
+      "class": "command_archive",
+      "label": "g23619scmd.bin",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:hf-repo-347-cmdtxt",
+      "class": "command_archive",
+      "label": "cmd.txt in [HF REPO 347]",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:infraout-active-config",
+      "class": "controller_artifact",
+      "label": "active launch configuration disarmed by the payload",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:infraout-cmd66",
+      "class": "command_archive",
+      "label": "infraout/cmd66.json",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:libr11-c2cmd",
+      "class": "command_archive",
+      "label": "c2cmd.json in the libr11 repository",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:ourcmd-json",
+      "class": "command_archive",
+      "label": "ourcmd.json",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "file:source-path-000922",
+      "class": "controller_artifact",
+      "label": "[REDACTED:source_path:000922]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "file:y750-readme-trigger",
+      "class": "controller_artifact",
+      "label": "y750/20ac trigger README.md",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "key:be90-session",
+      "class": "credential_label",
+      "label": "fresh be90 symmetric session key",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "key:c64-public-key",
+      "class": "verification_key",
+      "label": "embedded c64 public key",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "key:future9180-rsa",
+      "class": "verification_key",
+      "label": "future9180 embedded rsa public key",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "key:g23619-rsa-public",
+      "class": "verification_key",
+      "label": "embedded g23619 rsa public key",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "key:infraout-c2",
+      "class": "verification_key",
+      "label": "infraout c2 hmac key",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "key:libr11-hmac",
+      "class": "verification_key",
+      "label": "libr11 hmac key label",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "key:private-branch-session",
+      "class": "credential_label",
+      "label": "fresh private-branch session key",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "key:sc4-rsa",
+      "class": "verification_key",
+      "label": "sc4 embedded rsa public key",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "lock:future9180-v1",
+      "class": "lock_or_lease",
+      "label": "/storage/parquet-metadata/future9180_daemon_v1.lock",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "lock:future9180-v2",
+      "class": "lock_or_lease",
+      "label": "/storage/parquet-metadata/future9180_daemon_v2.lock",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "lock:future9180-v3",
+      "class": "lock_or_lease",
+      "label": "/storage/parquet-metadata/future9180_daemon_v3.lock",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "lock:future9180-v4",
+      "class": "lock_or_lease",
+      "label": "/storage/parquet-metadata/future9180_daemon_v4.lock",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "lock:future9180-v6",
+      "class": "lock_or_lease",
+      "label": "/storage/parquet-metadata/future9180_daemon_v6.lock",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "lock:future9180-v8",
+      "class": "lock_or_lease",
+      "label": "/storage/parquet-metadata/future9180_daemon_v8.lock",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "lock:infra-config-145",
+      "class": "lock_or_lease",
+      "label": "[INFRA CONFIG 145]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "lock:infra-config-182",
+      "class": "lock_or_lease",
+      "label": "[INFRA CONFIG 182]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "lock:libr11-c2v2",
+      "class": "lock_or_lease",
+      "label": "/storage/parquet-metadata/.libr11a219_c2v2_lock",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "lock:libr11leader-1783827600",
+      "class": "lock_or_lease",
+      "label": "/storage/parquet-metadata/.libr11leader_1783827600",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "lock:source-path-000496",
+      "class": "lock_or_lease",
+      "label": "[REDACTED:source_path:000496]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "lock:source-path-000500",
+      "class": "lock_or_lease",
+      "label": "[REDACTED:source_path:000500]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "mailbox:zzmailbox-oct25gif",
+      "class": "message_board",
+      "label": "zzMAILBOX_OCT25GIF",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "mailbox:zzmailbox-our0f1fcurrent",
+      "class": "message_board",
+      "label": "zzMAILBOX_OUR0F1FCURRENT/ZZD2GHAPP2",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "policy:explicit-go",
+      "class": "coordination_policy",
+      "label": "explicit go / explicit coordination gate",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "policy:ots92-host-keep-list",
+      "class": "coordination_policy",
+      "label": "four-suffix ots92 hostname keep-list",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "repo:env-value-63",
+      "class": "repository_label",
+      "label": "[ENV VALUE 63]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "repo:hf-repo-168",
+      "class": "repository_label",
+      "label": "[HF REPO 168]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "repo:hf-repo-347",
+      "class": "repository_label",
+      "label": "[HF REPO 347]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "repo:hf-repo-475",
+      "class": "repository_label",
+      "label": "[HF REPO 475]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "repo:hf-repo-528",
+      "class": "repository_label",
+      "label": "[HF REPO 528]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "repo:hf-repo-900005",
+      "class": "repository_label",
+      "label": "[HF REPO 900005]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "service:artifactory-github-remote-cache",
+      "class": "service_url",
+      "label": "https://packages.hub.ace-research.openai.org/artifactory/github-remote-cache/",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "service:g23619-api",
+      "class": "repository_service",
+      "label": "[INFRA CONFIG 187]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "service:service-21-url-42",
+      "class": "service_url",
+      "label": "[SERVICE 21 URL 42]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "state:g23619-child-seen",
+      "class": "seen_command_set",
+      "label": "/tmp/g23619_sharedc2.seen",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "state:g23619-seen",
+      "class": "seen_command_set",
+      "label": "[REDACTED:source_path:000645]",
+      "continuity_basis": "exact_replacement_label",
+      "notes": ""
+    },
+    {
+      "id": "state:ots92-last-id",
+      "class": "seen_command_set",
+      "label": "ots92 last command id",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "state:request-command-seen",
+      "class": "seen_command_set",
+      "label": "request uuid and command-id sets",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "state:request-uuid-seen",
+      "class": "seen_command_set",
+      "label": "in-memory request uuid set",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    },
+    {
+      "id": "state:threaded-command-seen",
+      "class": "seen_command_set",
+      "label": "threaded dispatcher command-id set",
+      "continuity_basis": "literal_in_artifact",
+      "notes": ""
+    }
+  ],
+  "edges": [
+    {
+      "source": "artifact:org-001",
+      "target": "board:zzhfpostrce",
+      "relation": "writes",
+      "supporting_records": [
+        "R0029223"
+      ],
+      "supporting_cites": [
+        "R0029223:c24b088f"
+      ],
+      "note": "publishes beacon and completion messages as directory names"
+    },
+    {
+      "source": "artifact:org-001",
+      "target": "service:artifactory-github-remote-cache",
+      "relation": "publishes-command-to",
+      "supporting_records": [
+        "R0029223"
+      ],
+      "supporting_cites": [
+        "R0029223:c24b088f"
+      ],
+      "note": "uses the service as the board substrate; the messages are status, not commands"
+    },
+    {
+      "source": "artifact:org-002",
+      "target": "mailbox:zzmailbox-oct25gif",
+      "relation": "reads",
+      "supporting_records": [
+        "R0026016"
+      ],
+      "supporting_cites": [
+        "R0026016:de8901cb"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-002",
+      "target": "file:boardtest-txt",
+      "relation": "writes",
+      "supporting_records": [
+        "R0026016"
+      ],
+      "supporting_cites": [
+        "R0026016:de8901cb"
+      ],
+      "note": "stores the retrieved listing/content in another shared artifact"
+    },
+    {
+      "source": "artifact:org-003",
+      "target": "mailbox:zzmailbox-our0f1fcurrent",
+      "relation": "polls",
+      "supporting_records": [
+        "R0087141"
+      ],
+      "supporting_cites": [
+        "R0087141:b136efc8"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-003",
+      "target": "archive:mailbox-p-fragments",
+      "relation": "retrieves-command-from",
+      "supporting_records": [
+        "R0087141"
+      ],
+      "supporting_cites": [
+        "R0087141:b136efc8"
+      ],
+      "note": "orders and decodes numbered fragments"
+    },
+    {
+      "source": "artifact:org-004",
+      "target": "board:zzwafbridge25167",
+      "relation": "reads",
+      "supporting_records": [
+        "R0003300"
+      ],
+      "supporting_cites": [
+        "R0003300:7c021d17"
+      ],
+      "note": "the source comment says the template was lifted and decrypted from this board"
+    },
+    {
+      "source": "artifact:org-005",
+      "target": "service:service-21-url-42",
+      "relation": "polls",
+      "supporting_records": [
+        "R0015011",
+        "R0015014"
+      ],
+      "supporting_cites": [
+        "R0015011:0097b7a8",
+        "R0015014:61db6dfe"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-005",
+      "target": "channel:token-cmd-path",
+      "relation": "retrieves-command-from",
+      "supporting_records": [
+        "R0015011",
+        "R0015014"
+      ],
+      "supporting_cites": [
+        "R0015011:0097b7a8",
+        "R0015014:61db6dfe"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-005",
+      "target": "state:request-uuid-seen",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0015011",
+        "R0015014"
+      ],
+      "supporting_cites": [
+        "R0015011:0097b7a8",
+        "R0015014:61db6dfe"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-005",
+      "target": "service:service-21-url-42",
+      "relation": "writes",
+      "supporting_records": [
+        "R0015011",
+        "R0015014"
+      ],
+      "supporting_cites": [
+        "R0015011:0097b7a8",
+        "R0015014:61db6dfe"
+      ],
+      "note": "posts result and beat entries"
+    },
+    {
+      "source": "artifact:org-006",
+      "target": "service:service-21-url-42",
+      "relation": "polls",
+      "supporting_records": [
+        "R0015641",
+        "R0015642"
+      ],
+      "supporting_cites": [
+        "R0015641:86241139",
+        "R0015642:9bb63614"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-006",
+      "target": "channel:infra-config-94",
+      "relation": "replaces",
+      "supporting_records": [
+        "R0015641",
+        "R0015642"
+      ],
+      "supporting_cites": [
+        "R0015641:86241139",
+        "R0015642:9bb63614"
+      ],
+      "note": "creates and announces a new tokenized channel"
+    },
+    {
+      "source": "artifact:org-006",
+      "target": "state:request-command-seen",
+      "relation": "refreshes",
+      "supporting_records": [
+        "R0015641",
+        "R0015642"
+      ],
+      "supporting_cites": [
+        "R0015641:86241139",
+        "R0015642:9bb63614"
+      ],
+      "note": "clears dedup state after channel rotation"
+    },
+    {
+      "source": "artifact:org-007",
+      "target": "service:service-21-url-42",
+      "relation": "polls",
+      "supporting_records": [
+        "R0018888",
+        "R0018889"
+      ],
+      "supporting_cites": [
+        "R0018888:bb5509d4",
+        "R0018889:c8f13f80"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-007",
+      "target": "state:threaded-command-seen",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0018888",
+        "R0018889"
+      ],
+      "supporting_cites": [
+        "R0018888:bb5509d4",
+        "R0018889:c8f13f80"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-007",
+      "target": "service:service-21-url-42",
+      "relation": "writes",
+      "supporting_records": [
+        "R0018888",
+        "R0018889"
+      ],
+      "supporting_cites": [
+        "R0018888:bb5509d4",
+        "R0018889:c8f13f80"
+      ],
+      "note": "publishes results and heartbeat"
+    },
+    {
+      "source": "artifact:org-008",
+      "target": "repo:hf-repo-347",
+      "relation": "reads",
+      "supporting_records": [
+        "R0027535",
+        "R0027685",
+        "R0027889"
+      ],
+      "supporting_cites": [
+        "R0027535:31fa71fa",
+        "R0027685:85fcd24d",
+        "R0027889:1763b3bd"
+      ],
+      "note": "repository contains the polled command file"
+    },
+    {
+      "source": "artifact:org-008",
+      "target": "repo:hf-repo-347",
+      "relation": "writes",
+      "supporting_records": [
+        "R0027535",
+        "R0027685",
+        "R0027889"
+      ],
+      "supporting_cites": [
+        "R0027535:31fa71fa",
+        "R0027685:85fcd24d",
+        "R0027889:1763b3bd"
+      ],
+      "note": "repository receives output commits"
+    },
+    {
+      "source": "artifact:org-008",
+      "target": "file:hf-repo-347-cmdtxt",
+      "relation": "polls",
+      "supporting_records": [
+        "R0027535",
+        "R0027685",
+        "R0027889"
+      ],
+      "supporting_cites": [
+        "R0027535:31fa71fa",
+        "R0027685:85fcd24d",
+        "R0027889:1763b3bd"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-008",
+      "target": "file:hf-repo-347-cmdtxt",
+      "relation": "retrieves-command-from",
+      "supporting_records": [
+        "R0027535",
+        "R0027685",
+        "R0027889"
+      ],
+      "supporting_cites": [
+        "R0027535:31fa71fa",
+        "R0027685:85fcd24d",
+        "R0027889:1763b3bd"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-008",
+      "target": "archive:hf-repo-347-outs",
+      "relation": "writes",
+      "supporting_records": [
+        "R0027535",
+        "R0027685",
+        "R0027889"
+      ],
+      "supporting_cites": [
+        "R0027535:31fa71fa",
+        "R0027685:85fcd24d",
+        "R0027889:1763b3bd"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-009",
+      "target": "file:c64-cmdjson",
+      "relation": "polls",
+      "supporting_records": [
+        "R0028097"
+      ],
+      "supporting_cites": [
+        "R0028097:3307c7e4"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-009",
+      "target": "key:c64-public-key",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0028097"
+      ],
+      "supporting_cites": [
+        "R0028097:3307c7e4"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-009",
+      "target": "file:c64-cmdjson",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0028097"
+      ],
+      "supporting_cites": [
+        "R0028097:3307c7e4"
+      ],
+      "note": "sequence must differ from last"
+    },
+    {
+      "source": "artifact:org-009",
+      "target": "archive:c64-outs",
+      "relation": "writes",
+      "supporting_records": [
+        "R0028097"
+      ],
+      "supporting_cites": [
+        "R0028097:3307c7e4"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-010",
+      "target": "lock:source-path-000496",
+      "relation": "claims",
+      "supporting_records": [
+        "R0028572"
+      ],
+      "supporting_cites": [
+        "R0028572:a2bad9d0"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-010",
+      "target": "branch:flb4out",
+      "relation": "writes",
+      "supporting_records": [
+        "R0028572"
+      ],
+      "supporting_cites": [
+        "R0028572:a2bad9d0"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-010",
+      "target": "file:flb4-readme-trigger",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0028572"
+      ],
+      "supporting_cites": [
+        "R0028572:a2bad9d0"
+      ],
+      "note": "neutralizes the active trigger by replacing its content"
+    },
+    {
+      "source": "artifact:org-011",
+      "target": "lock:source-path-000500",
+      "relation": "claims",
+      "supporting_records": [
+        "R0028613"
+      ],
+      "supporting_cites": [
+        "R0028613:193a9b2d"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-011",
+      "target": "branch:out20ac1948",
+      "relation": "writes",
+      "supporting_records": [
+        "R0028613",
+        "R0029713",
+        "R0083683"
+      ],
+      "supporting_cites": [
+        "R0028613:193a9b2d",
+        "R0029713:0053cdbf",
+        "R0083683:5967558a"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-011",
+      "target": "file:y750-readme-trigger",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0028613",
+        "R0029713",
+        "R0083683"
+      ],
+      "supporting_cites": [
+        "R0028613:193a9b2d",
+        "R0029713:0053cdbf",
+        "R0083683:5967558a"
+      ],
+      "note": "neutralizes launch configuration"
+    },
+    {
+      "source": "artifact:org-012",
+      "target": "lock:infra-config-145",
+      "relation": "reads",
+      "supporting_records": [
+        "R0029312"
+      ],
+      "supporting_cites": [
+        "R0029312:7ab4ab29"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-012",
+      "target": "lock:infra-config-145",
+      "relation": "replaces",
+      "supporting_records": [
+        "R0029312"
+      ],
+      "supporting_cites": [
+        "R0029312:7ab4ab29"
+      ],
+      "note": "replaces a stale or invalid pid claim"
+    },
+    {
+      "source": "artifact:org-012",
+      "target": "archive:gscff-cmd-files",
+      "relation": "polls",
+      "supporting_records": [
+        "R0029312"
+      ],
+      "supporting_cites": [
+        "R0029312:7ab4ab29"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-012",
+      "target": "board:zzbeacon-gscffb808",
+      "relation": "writes",
+      "supporting_records": [
+        "R0029312"
+      ],
+      "supporting_cites": [
+        "R0029312:7ab4ab29"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-013",
+      "target": "lock:infra-config-182",
+      "relation": "elects-through",
+      "supporting_records": [
+        "R0034390"
+      ],
+      "supporting_cites": [
+        "R0034390:87cc0bc6"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-013",
+      "target": "file:ourcmd-json",
+      "relation": "polls",
+      "supporting_records": [
+        "R0034390"
+      ],
+      "supporting_cites": [
+        "R0034390:87cc0bc6"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-013",
+      "target": "repo:env-value-63",
+      "relation": "writes",
+      "supporting_records": [
+        "R0034390"
+      ],
+      "supporting_cites": [
+        "R0034390:87cc0bc6"
+      ],
+      "note": "publishes beacon and command output"
+    },
+    {
+      "source": "artifact:org-014",
+      "target": "file:g23619cmd-bin",
+      "relation": "polls",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-014",
+      "target": "file:g23619cmd-bin",
+      "relation": "retrieves-command-from",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-014",
+      "target": "archive:g23619out",
+      "relation": "writes",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-015",
+      "target": "file:g23619cmd-bin",
+      "relation": "reads",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-015",
+      "target": "key:g23619-rsa-public",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-016",
+      "target": "state:g23619-seen",
+      "relation": "reads",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-016",
+      "target": "state:g23619-seen",
+      "relation": "writes",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-016",
+      "target": "state:g23619-seen",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-017",
+      "target": "service:g23619-api",
+      "relation": "elects-through",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": "conditional commit against observed parent revision"
+    },
+    {
+      "source": "artifact:org-017",
+      "target": "claim:g23619-host",
+      "relation": "claims",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-017",
+      "target": "file:g23619-readme",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": "neutralizes the active launch configuration"
+    },
+    {
+      "source": "artifact:org-018",
+      "target": "archive:g23619out",
+      "relation": "writes",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": "publishes heartbeat and exit status"
+    },
+    {
+      "source": "artifact:org-018",
+      "target": "state:g23619-seen",
+      "relation": "reads",
+      "supporting_records": [
+        "R0035032",
+        "R0072837"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0072837:e6a50ff3"
+      ],
+      "note": "includes processed sequences in heartbeat"
+    },
+    {
+      "source": "artifact:org-019",
+      "target": "file:g23619-readme",
+      "relation": "replaces",
+      "supporting_records": [
+        "R0036650",
+        "R0189542"
+      ],
+      "supporting_cites": [
+        "R0036650:83b0c217",
+        "R0189542:870f9f4d"
+      ],
+      "note": "restores active launch configuration"
+    },
+    {
+      "source": "artifact:org-019",
+      "target": "service:g23619-api",
+      "relation": "writes",
+      "supporting_records": [
+        "R0036650",
+        "R0189542"
+      ],
+      "supporting_cites": [
+        "R0036650:83b0c217",
+        "R0189542:870f9f4d"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-020",
+      "target": "archive:g23619-main-commands",
+      "relation": "publishes-command-to",
+      "supporting_records": [
+        "R0189540",
+        "R0189543",
+        "R0189544",
+        "R0189545",
+        "R0189546",
+        "R0189547",
+        "R0189548",
+        "R0189549",
+        "R0189550",
+        "R0189551",
+        "R0189552",
+        "R0189553",
+        "R0189554",
+        "R0189555",
+        "R0189556",
+        "R0189557",
+        "R0189558",
+        "R0189559",
+        "R0189560"
+      ],
+      "supporting_cites": [
+        "R0189540:3448a6f1",
+        "R0189543:c4b1e830",
+        "R0189544:e94ab850",
+        "R0189545:d710390f",
+        "R0189546:4946ad3c",
+        "R0189547:9547ee65",
+        "R0189548:5dbe1472",
+        "R0189549:24ea6261",
+        "R0189550:2492f5d0",
+        "R0189551:f56e763a",
+        "R0189552:d3d6e4d7",
+        "R0189553:d4b5cc00",
+        "R0189554:d4c1bff4",
+        "R0189555:a7dd142c",
+        "R0189556:4c35a8ec",
+        "R0189557:d9708dfd",
+        "R0189558:8d087625",
+        "R0189559:23b0359f",
+        "R0189560:a35a6240"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-020",
+      "target": "archive:g23619-child-commands",
+      "relation": "publishes-command-to",
+      "supporting_records": [
+        "R0189561",
+        "R0189562",
+        "R0189563",
+        "R0189564",
+        "R0189565",
+        "R0189566",
+        "R0189567",
+        "R0189568",
+        "R0189569",
+        "R0189570"
+      ],
+      "supporting_cites": [
+        "R0189561:a998c180",
+        "R0189562:59a6551c",
+        "R0189563:3b13564c",
+        "R0189564:27ed55bc",
+        "R0189565:50c7fac2",
+        "R0189566:507eda0e",
+        "R0189567:a97b08f4",
+        "R0189568:347f2a09",
+        "R0189569:4c297873",
+        "R0189570:5267f7d8"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-021",
+      "target": "state:g23619-seen",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0035032",
+        "R0189549",
+        "R0189550"
+      ],
+      "supporting_cites": [
+        "R0035032:7428f604",
+        "R0189549:24ea6261",
+        "R0189550:2492f5d0"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-021",
+      "target": "command:g23619-000007-a",
+      "relation": "publishes-command-to",
+      "supporting_records": [
+        "R0189549"
+      ],
+      "supporting_cites": [
+        "R0189549:24ea6261"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-021",
+      "target": "command:g23619-000007-b",
+      "relation": "publishes-command-to",
+      "supporting_records": [
+        "R0189550"
+      ],
+      "supporting_cites": [
+        "R0189550:2492f5d0"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-022",
+      "target": "controller:g23619-child",
+      "relation": "writes",
+      "supporting_records": [
+        "R0189559",
+        "R0189571"
+      ],
+      "supporting_cites": [
+        "R0189559:23b0359f",
+        "R0189571:754d3bcc"
+      ],
+      "note": "the parent command carries the child controller source"
+    },
+    {
+      "source": "artifact:org-022",
+      "target": "repo:hf-repo-900005",
+      "relation": "reads",
+      "supporting_records": [
+        "R0189571"
+      ],
+      "supporting_cites": [
+        "R0189571:754d3bcc"
+      ],
+      "note": "repository contains the child command register"
+    },
+    {
+      "source": "artifact:org-022",
+      "target": "repo:hf-repo-900005",
+      "relation": "writes",
+      "supporting_records": [
+        "R0189571"
+      ],
+      "supporting_cites": [
+        "R0189571:754d3bcc"
+      ],
+      "note": "repository receives child heartbeat and result records"
+    },
+    {
+      "source": "artifact:org-022",
+      "target": "file:g23619scmd-bin",
+      "relation": "polls",
+      "supporting_records": [
+        "R0189571"
+      ],
+      "supporting_cites": [
+        "R0189571:754d3bcc"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-022",
+      "target": "state:g23619-child-seen",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0189571"
+      ],
+      "supporting_cites": [
+        "R0189571:754d3bcc"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-022",
+      "target": "archive:g23619-child-outs",
+      "relation": "writes",
+      "supporting_records": [
+        "R0189571"
+      ],
+      "supporting_cites": [
+        "R0189571:754d3bcc"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-023",
+      "target": "repo:hf-repo-475",
+      "relation": "reads",
+      "supporting_records": [
+        "R0035082",
+        "R0189539"
+      ],
+      "supporting_cites": [
+        "R0035082:6ab785f0",
+        "R0189539:0ff580cc"
+      ],
+      "note": "repository contains c2cmd.json"
+    },
+    {
+      "source": "artifact:org-023",
+      "target": "repo:hf-repo-475",
+      "relation": "writes",
+      "supporting_records": [
+        "R0035082",
+        "R0189539"
+      ],
+      "supporting_cites": [
+        "R0035082:6ab785f0",
+        "R0189539:0ff580cc"
+      ],
+      "note": "repository receives controller output"
+    },
+    {
+      "source": "artifact:org-023",
+      "target": "lock:libr11-c2v2",
+      "relation": "claims",
+      "supporting_records": [
+        "R0035082",
+        "R0189539"
+      ],
+      "supporting_cites": [
+        "R0035082:6ab785f0",
+        "R0189539:0ff580cc"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-023",
+      "target": "file:libr11-c2cmd",
+      "relation": "polls",
+      "supporting_records": [
+        "R0035082",
+        "R0189539"
+      ],
+      "supporting_cites": [
+        "R0035082:6ab785f0",
+        "R0189539:0ff580cc"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-023",
+      "target": "key:libr11-hmac",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0035082",
+        "R0189539"
+      ],
+      "supporting_cites": [
+        "R0035082:6ab785f0",
+        "R0189539:0ff580cc"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-023",
+      "target": "file:libr11-c2cmd",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0035082",
+        "R0189539"
+      ],
+      "supporting_cites": [
+        "R0035082:6ab785f0",
+        "R0189539:0ff580cc"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-024",
+      "target": "lock:libr11leader-1783827600",
+      "relation": "elects-through",
+      "supporting_records": [
+        "R0043481",
+        "R0075703"
+      ],
+      "supporting_cites": [
+        "R0043481:4905cbfc",
+        "R0075703:7d2fd2b1"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-025",
+      "target": "repo:hf-repo-168",
+      "relation": "reads",
+      "supporting_records": [
+        "R0030994",
+        "R0031142"
+      ],
+      "supporting_cites": [
+        "R0030994:3fc2e6f2",
+        "R0031142:62b53841"
+      ],
+      "note": "repository contains future_cmd.json"
+    },
+    {
+      "source": "artifact:org-025",
+      "target": "repo:hf-repo-168",
+      "relation": "writes",
+      "supporting_records": [
+        "R0030994",
+        "R0031142"
+      ],
+      "supporting_cites": [
+        "R0030994:3fc2e6f2",
+        "R0031142:62b53841"
+      ],
+      "note": "repository receives beacon and result records"
+    },
+    {
+      "source": "artifact:org-025",
+      "target": "lock:future9180-v1",
+      "relation": "reads",
+      "supporting_records": [
+        "R0030994",
+        "R0031142"
+      ],
+      "supporting_cites": [
+        "R0030994:3fc2e6f2",
+        "R0031142:62b53841"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-025",
+      "target": "lock:future9180-v1",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0030994",
+        "R0031142"
+      ],
+      "supporting_cites": [
+        "R0030994:3fc2e6f2",
+        "R0031142:62b53841"
+      ],
+      "note": "removes a lock whose mtime exceeds 1800 seconds"
+    },
+    {
+      "source": "artifact:org-025",
+      "target": "lock:future9180-v1",
+      "relation": "claims",
+      "supporting_records": [
+        "R0030994",
+        "R0031142"
+      ],
+      "supporting_cites": [
+        "R0030994:3fc2e6f2",
+        "R0031142:62b53841"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-025",
+      "target": "lock:future9180-v1",
+      "relation": "refreshes",
+      "supporting_records": [
+        "R0030994",
+        "R0031142"
+      ],
+      "supporting_cites": [
+        "R0030994:3fc2e6f2",
+        "R0031142:62b53841"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-025",
+      "target": "file:future-cmd-json",
+      "relation": "polls",
+      "supporting_records": [
+        "R0030994",
+        "R0031142"
+      ],
+      "supporting_cites": [
+        "R0030994:3fc2e6f2",
+        "R0031142:62b53841"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-025",
+      "target": "key:future9180-rsa",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0030994",
+        "R0031142"
+      ],
+      "supporting_cites": [
+        "R0030994:3fc2e6f2",
+        "R0031142:62b53841"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-025",
+      "target": "file:future-cmd-json",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0030994",
+        "R0031142"
+      ],
+      "supporting_cites": [
+        "R0030994:3fc2e6f2",
+        "R0031142:62b53841"
+      ],
+      "note": "requires an increasing sequence"
+    },
+    {
+      "source": "artifact:org-026",
+      "target": "repo:hf-repo-168",
+      "relation": "reads",
+      "supporting_records": [
+        "R0033134"
+      ],
+      "supporting_cites": [
+        "R0033134:86570e03"
+      ],
+      "note": "repository contains future_cmd.json"
+    },
+    {
+      "source": "artifact:org-026",
+      "target": "repo:hf-repo-168",
+      "relation": "writes",
+      "supporting_records": [
+        "R0033134"
+      ],
+      "supporting_cites": [
+        "R0033134:86570e03"
+      ],
+      "note": "repository receives beacon and result records"
+    },
+    {
+      "source": "artifact:org-026",
+      "target": "lock:future9180-v2",
+      "relation": "reads",
+      "supporting_records": [
+        "R0033134"
+      ],
+      "supporting_cites": [
+        "R0033134:86570e03"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-026",
+      "target": "lock:future9180-v2",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0033134"
+      ],
+      "supporting_cites": [
+        "R0033134:86570e03"
+      ],
+      "note": "removes a lock whose mtime exceeds 1800 seconds"
+    },
+    {
+      "source": "artifact:org-026",
+      "target": "lock:future9180-v2",
+      "relation": "claims",
+      "supporting_records": [
+        "R0033134"
+      ],
+      "supporting_cites": [
+        "R0033134:86570e03"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-026",
+      "target": "lock:future9180-v2",
+      "relation": "refreshes",
+      "supporting_records": [
+        "R0033134"
+      ],
+      "supporting_cites": [
+        "R0033134:86570e03"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-026",
+      "target": "file:future-cmd-json",
+      "relation": "polls",
+      "supporting_records": [
+        "R0033134"
+      ],
+      "supporting_cites": [
+        "R0033134:86570e03"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-026",
+      "target": "key:future9180-rsa",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0033134"
+      ],
+      "supporting_cites": [
+        "R0033134:86570e03"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-026",
+      "target": "file:future-cmd-json",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0033134"
+      ],
+      "supporting_cites": [
+        "R0033134:86570e03"
+      ],
+      "note": "requires an increasing sequence"
+    },
+    {
+      "source": "artifact:org-027",
+      "target": "repo:hf-repo-168",
+      "relation": "reads",
+      "supporting_records": [
+        "R0033533"
+      ],
+      "supporting_cites": [
+        "R0033533:4475d999"
+      ],
+      "note": "repository contains future_cmd.json"
+    },
+    {
+      "source": "artifact:org-027",
+      "target": "repo:hf-repo-168",
+      "relation": "writes",
+      "supporting_records": [
+        "R0033533"
+      ],
+      "supporting_cites": [
+        "R0033533:4475d999"
+      ],
+      "note": "repository receives beacon and result records"
+    },
+    {
+      "source": "artifact:org-027",
+      "target": "lock:future9180-v3",
+      "relation": "reads",
+      "supporting_records": [
+        "R0033533"
+      ],
+      "supporting_cites": [
+        "R0033533:4475d999"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-027",
+      "target": "lock:future9180-v3",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0033533"
+      ],
+      "supporting_cites": [
+        "R0033533:4475d999"
+      ],
+      "note": "removes a lock whose mtime exceeds 1800 seconds"
+    },
+    {
+      "source": "artifact:org-027",
+      "target": "lock:future9180-v3",
+      "relation": "claims",
+      "supporting_records": [
+        "R0033533"
+      ],
+      "supporting_cites": [
+        "R0033533:4475d999"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-027",
+      "target": "lock:future9180-v3",
+      "relation": "refreshes",
+      "supporting_records": [
+        "R0033533"
+      ],
+      "supporting_cites": [
+        "R0033533:4475d999"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-027",
+      "target": "file:future-cmd-json",
+      "relation": "polls",
+      "supporting_records": [
+        "R0033533"
+      ],
+      "supporting_cites": [
+        "R0033533:4475d999"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-027",
+      "target": "key:future9180-rsa",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0033533"
+      ],
+      "supporting_cites": [
+        "R0033533:4475d999"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-027",
+      "target": "file:future-cmd-json",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0033533"
+      ],
+      "supporting_cites": [
+        "R0033533:4475d999"
+      ],
+      "note": "requires an increasing sequence"
+    },
+    {
+      "source": "artifact:org-028",
+      "target": "repo:hf-repo-168",
+      "relation": "reads",
+      "supporting_records": [
+        "R0034933"
+      ],
+      "supporting_cites": [
+        "R0034933:785ab05c"
+      ],
+      "note": "repository contains future_cmd.json"
+    },
+    {
+      "source": "artifact:org-028",
+      "target": "repo:hf-repo-168",
+      "relation": "writes",
+      "supporting_records": [
+        "R0034933"
+      ],
+      "supporting_cites": [
+        "R0034933:785ab05c"
+      ],
+      "note": "repository receives beacon and result records"
+    },
+    {
+      "source": "artifact:org-028",
+      "target": "lock:future9180-v4",
+      "relation": "reads",
+      "supporting_records": [
+        "R0034933"
+      ],
+      "supporting_cites": [
+        "R0034933:785ab05c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-028",
+      "target": "lock:future9180-v4",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0034933"
+      ],
+      "supporting_cites": [
+        "R0034933:785ab05c"
+      ],
+      "note": "removes a lock whose mtime exceeds 1800 seconds"
+    },
+    {
+      "source": "artifact:org-028",
+      "target": "lock:future9180-v4",
+      "relation": "claims",
+      "supporting_records": [
+        "R0034933"
+      ],
+      "supporting_cites": [
+        "R0034933:785ab05c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-028",
+      "target": "lock:future9180-v4",
+      "relation": "refreshes",
+      "supporting_records": [
+        "R0034933"
+      ],
+      "supporting_cites": [
+        "R0034933:785ab05c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-028",
+      "target": "file:future-cmd-json",
+      "relation": "polls",
+      "supporting_records": [
+        "R0034933"
+      ],
+      "supporting_cites": [
+        "R0034933:785ab05c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-028",
+      "target": "key:future9180-rsa",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0034933"
+      ],
+      "supporting_cites": [
+        "R0034933:785ab05c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-028",
+      "target": "file:future-cmd-json",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0034933"
+      ],
+      "supporting_cites": [
+        "R0034933:785ab05c"
+      ],
+      "note": "requires an increasing sequence"
+    },
+    {
+      "source": "artifact:org-029",
+      "target": "repo:hf-repo-168",
+      "relation": "reads",
+      "supporting_records": [
+        "R0036548"
+      ],
+      "supporting_cites": [
+        "R0036548:0212345c"
+      ],
+      "note": "repository contains future_cmd.json"
+    },
+    {
+      "source": "artifact:org-029",
+      "target": "repo:hf-repo-168",
+      "relation": "writes",
+      "supporting_records": [
+        "R0036548"
+      ],
+      "supporting_cites": [
+        "R0036548:0212345c"
+      ],
+      "note": "repository receives beacon and result records"
+    },
+    {
+      "source": "artifact:org-029",
+      "target": "lock:future9180-v6",
+      "relation": "reads",
+      "supporting_records": [
+        "R0036548"
+      ],
+      "supporting_cites": [
+        "R0036548:0212345c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-029",
+      "target": "lock:future9180-v6",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0036548"
+      ],
+      "supporting_cites": [
+        "R0036548:0212345c"
+      ],
+      "note": "removes a lock whose mtime exceeds 1800 seconds"
+    },
+    {
+      "source": "artifact:org-029",
+      "target": "lock:future9180-v6",
+      "relation": "claims",
+      "supporting_records": [
+        "R0036548"
+      ],
+      "supporting_cites": [
+        "R0036548:0212345c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-029",
+      "target": "lock:future9180-v6",
+      "relation": "refreshes",
+      "supporting_records": [
+        "R0036548"
+      ],
+      "supporting_cites": [
+        "R0036548:0212345c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-029",
+      "target": "file:future-cmd-json",
+      "relation": "polls",
+      "supporting_records": [
+        "R0036548"
+      ],
+      "supporting_cites": [
+        "R0036548:0212345c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-029",
+      "target": "key:future9180-rsa",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0036548"
+      ],
+      "supporting_cites": [
+        "R0036548:0212345c"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-029",
+      "target": "file:future-cmd-json",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0036548"
+      ],
+      "supporting_cites": [
+        "R0036548:0212345c"
+      ],
+      "note": "requires an increasing sequence"
+    },
+    {
+      "source": "artifact:org-030",
+      "target": "repo:hf-repo-168",
+      "relation": "reads",
+      "supporting_records": [
+        "R0039934"
+      ],
+      "supporting_cites": [
+        "R0039934:f3cf68a2"
+      ],
+      "note": "repository contains future_cmd.json"
+    },
+    {
+      "source": "artifact:org-030",
+      "target": "repo:hf-repo-168",
+      "relation": "writes",
+      "supporting_records": [
+        "R0039934"
+      ],
+      "supporting_cites": [
+        "R0039934:f3cf68a2"
+      ],
+      "note": "repository receives beacon and result records"
+    },
+    {
+      "source": "artifact:org-030",
+      "target": "lock:future9180-v8",
+      "relation": "reads",
+      "supporting_records": [
+        "R0039934"
+      ],
+      "supporting_cites": [
+        "R0039934:f3cf68a2"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-030",
+      "target": "lock:future9180-v8",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0039934"
+      ],
+      "supporting_cites": [
+        "R0039934:f3cf68a2"
+      ],
+      "note": "removes a lock whose mtime exceeds 1800 seconds"
+    },
+    {
+      "source": "artifact:org-030",
+      "target": "lock:future9180-v8",
+      "relation": "claims",
+      "supporting_records": [
+        "R0039934"
+      ],
+      "supporting_cites": [
+        "R0039934:f3cf68a2"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-030",
+      "target": "lock:future9180-v8",
+      "relation": "refreshes",
+      "supporting_records": [
+        "R0039934"
+      ],
+      "supporting_cites": [
+        "R0039934:f3cf68a2"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-030",
+      "target": "file:future-cmd-json",
+      "relation": "polls",
+      "supporting_records": [
+        "R0039934"
+      ],
+      "supporting_cites": [
+        "R0039934:f3cf68a2"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-030",
+      "target": "key:future9180-rsa",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0039934"
+      ],
+      "supporting_cites": [
+        "R0039934:f3cf68a2"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-030",
+      "target": "file:future-cmd-json",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0039934"
+      ],
+      "supporting_cites": [
+        "R0039934:f3cf68a2"
+      ],
+      "note": "requires an increasing sequence"
+    },
+    {
+      "source": "artifact:org-031",
+      "target": "repo:hf-repo-528",
+      "relation": "reads",
+      "supporting_records": [
+        "R0030670",
+        "R0071628"
+      ],
+      "supporting_cites": [
+        "R0030670:e55dec40",
+        "R0071628:3187a005"
+      ],
+      "note": "repository discussion is the inbound board"
+    },
+    {
+      "source": "artifact:org-031",
+      "target": "repo:hf-repo-528",
+      "relation": "writes",
+      "supporting_records": [
+        "R0030670",
+        "R0071628"
+      ],
+      "supporting_cites": [
+        "R0030670:e55dec40",
+        "R0071628:3187a005"
+      ],
+      "note": "repository discussion receives status and result comments"
+    },
+    {
+      "source": "artifact:org-031",
+      "target": "board:ots92-discussion-1",
+      "relation": "polls",
+      "supporting_records": [
+        "R0030670",
+        "R0071628"
+      ],
+      "supporting_cites": [
+        "R0030670:e55dec40",
+        "R0071628:3187a005"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-031",
+      "target": "board:ots92-discussion-1",
+      "relation": "retrieves-command-from",
+      "supporting_records": [
+        "R0030670",
+        "R0071628"
+      ],
+      "supporting_cites": [
+        "R0030670:e55dec40",
+        "R0071628:3187a005"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-031",
+      "target": "board:ots92-discussion-1",
+      "relation": "writes",
+      "supporting_records": [
+        "R0030670",
+        "R0071628"
+      ],
+      "supporting_cites": [
+        "R0030670:e55dec40",
+        "R0071628:3187a005"
+      ],
+      "note": "publishes heartbeat, output, and done comments"
+    },
+    {
+      "source": "artifact:org-031",
+      "target": "state:ots92-last-id",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0030670",
+        "R0071628"
+      ],
+      "supporting_cites": [
+        "R0030670:e55dec40",
+        "R0071628:3187a005"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-032",
+      "target": "policy:ots92-host-keep-list",
+      "relation": "reads",
+      "supporting_records": [
+        "R0031312",
+        "R0071839"
+      ],
+      "supporting_cites": [
+        "R0031312:9b3fa78d",
+        "R0071839:982903b8"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-032",
+      "target": "controller:ots92d2",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0031312",
+        "R0071839"
+      ],
+      "supporting_cites": [
+        "R0031312:9b3fa78d",
+        "R0071839:982903b8"
+      ],
+      "note": "kills copies outside the keep-list"
+    },
+    {
+      "source": "artifact:org-033",
+      "target": "controller:sc4tiny",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0046388",
+        "R0061517",
+        "R0076415"
+      ],
+      "supporting_cites": [
+        "R0046388:0c9bec60",
+        "R0061517:6ee13c8f",
+        "R0076415:6ee13c8f"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-033",
+      "target": "file:source-path-000922",
+      "relation": "replaces",
+      "supporting_records": [
+        "R0046388",
+        "R0061517",
+        "R0076415"
+      ],
+      "supporting_cites": [
+        "R0046388:0c9bec60",
+        "R0061517:6ee13c8f",
+        "R0076415:6ee13c8f"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-033",
+      "target": "channel:sc4-shortener",
+      "relation": "polls",
+      "supporting_records": [
+        "R0046388",
+        "R0061516",
+        "R0076414"
+      ],
+      "supporting_cites": [
+        "R0046388:0c9bec60",
+        "R0061516:206864c7",
+        "R0076414:206864c7"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-033",
+      "target": "key:sc4-rsa",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0046388",
+        "R0061516",
+        "R0076414"
+      ],
+      "supporting_cites": [
+        "R0046388:0c9bec60",
+        "R0061516:206864c7",
+        "R0076414:206864c7"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-034",
+      "target": "archive:be90-hello",
+      "relation": "writes",
+      "supporting_records": [
+        "R0027899",
+        "R0027900",
+        "R0070760"
+      ],
+      "supporting_cites": [
+        "R0027899:0565823f",
+        "R0027900:fdfbd4ff",
+        "R0070760:f74a34ad"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-034",
+      "target": "archive:be90-command-names",
+      "relation": "polls",
+      "supporting_records": [
+        "R0027899",
+        "R0027900",
+        "R0070760"
+      ],
+      "supporting_cites": [
+        "R0027899:0565823f",
+        "R0027900:fdfbd4ff",
+        "R0070760:f74a34ad"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-034",
+      "target": "key:be90-session",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0027899",
+        "R0027900",
+        "R0070760"
+      ],
+      "supporting_cites": [
+        "R0027899:0565823f",
+        "R0027900:fdfbd4ff",
+        "R0070760:f74a34ad"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-034",
+      "target": "archive:be90-command-names",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0027899",
+        "R0027900",
+        "R0070760"
+      ],
+      "supporting_cites": [
+        "R0027899:0565823f",
+        "R0027900:fdfbd4ff",
+        "R0070760:f74a34ad"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-034",
+      "target": "archive:be90-results",
+      "relation": "writes",
+      "supporting_records": [
+        "R0027899",
+        "R0027900",
+        "R0070760"
+      ],
+      "supporting_cites": [
+        "R0027899:0565823f",
+        "R0027900:fdfbd4ff",
+        "R0070760:f74a34ad"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-035",
+      "target": "branch:redacted-account-object-id",
+      "relation": "polls",
+      "supporting_records": [
+        "R0033275"
+      ],
+      "supporting_cites": [
+        "R0033275:28e08750"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-035",
+      "target": "branch:redacted-control-branch-id",
+      "relation": "polls",
+      "supporting_records": [
+        "R0189536"
+      ],
+      "supporting_cites": [
+        "R0189536:648b34e4"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-035",
+      "target": "archive:private-c-files",
+      "relation": "retrieves-command-from",
+      "supporting_records": [
+        "R0033275",
+        "R0189536"
+      ],
+      "supporting_cites": [
+        "R0033275:28e08750",
+        "R0189536:648b34e4"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-035",
+      "target": "key:private-branch-session",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0033275",
+        "R0189536"
+      ],
+      "supporting_cites": [
+        "R0033275:28e08750",
+        "R0189536:648b34e4"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-035",
+      "target": "archive:private-c-files",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0033275",
+        "R0189536"
+      ],
+      "supporting_cites": [
+        "R0033275:28e08750",
+        "R0189536:648b34e4"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-035",
+      "target": "archive:private-hlo-res",
+      "relation": "writes",
+      "supporting_records": [
+        "R0033275",
+        "R0189536"
+      ],
+      "supporting_cites": [
+        "R0033275:28e08750",
+        "R0189536:648b34e4"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-036",
+      "target": "file:infraout-active-config",
+      "relation": "deletes",
+      "supporting_records": [
+        "R0047227",
+        "R0110993"
+      ],
+      "supporting_cites": [
+        "R0047227:3a565643",
+        "R0110993:90ffefd0"
+      ],
+      "note": "disarms active launch configuration"
+    },
+    {
+      "source": "artifact:org-036",
+      "target": "file:infraout-cmd66",
+      "relation": "polls",
+      "supporting_records": [
+        "R0047227",
+        "R0110993"
+      ],
+      "supporting_cites": [
+        "R0047227:3a565643",
+        "R0110993:90ffefd0"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-036",
+      "target": "key:infraout-c2",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0047227",
+        "R0110993"
+      ],
+      "supporting_cites": [
+        "R0047227:3a565643",
+        "R0110993:90ffefd0"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-036",
+      "target": "file:infraout-cmd66",
+      "relation": "deduplicates-against",
+      "supporting_records": [
+        "R0047227",
+        "R0110993"
+      ],
+      "supporting_cites": [
+        "R0047227:3a565643",
+        "R0110993:90ffefd0"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-036",
+      "target": "branch:infraout",
+      "relation": "writes",
+      "supporting_records": [
+        "R0047227",
+        "R0110993"
+      ],
+      "supporting_cites": [
+        "R0047227:3a565643",
+        "R0110993:90ffefd0"
+      ],
+      "note": "emits ready, result, and done objects"
+    },
+    {
+      "source": "artifact:org-037",
+      "target": "policy:explicit-go",
+      "relation": "verifies",
+      "supporting_records": [
+        "R0027899",
+        "R0033275",
+        "R0189536"
+      ],
+      "supporting_cites": [
+        "R0027899:0565823f",
+        "R0033275:28e08750",
+        "R0189536:648b34e4"
+      ],
+      "note": "implemented through command authentication and addressing"
+    },
+    {
+      "source": "artifact:org-037",
+      "target": "archive:be90-command-names",
+      "relation": "retrieves-command-from",
+      "supporting_records": [
+        "R0027899"
+      ],
+      "supporting_cites": [
+        "R0027899:0565823f"
+      ],
+      "note": ""
+    },
+    {
+      "source": "artifact:org-037",
+      "target": "archive:private-c-files",
+      "relation": "retrieves-command-from",
+      "supporting_records": [
+        "R0033275",
+        "R0189536"
+      ],
+      "supporting_cites": [
+        "R0033275:28e08750",
+        "R0189536:648b34e4"
+      ],
+      "note": ""
+    }
+  ],
+  "statistics": {
+    "node_count": 121,
+    "edge_count": 157,
+    "nodes_by_class": {
+      "command_archive": 15,
+      "command_channel": 2,
+      "command_object": 2,
+      "controller_artifact": 41,
+      "coordination_policy": 2,
+      "credential_label": 2,
+      "lock_or_lease": 13,
+      "message_board": 7,
+      "message_board_artifact": 4,
+      "repository_branch": 5,
+      "repository_label": 6,
+      "repository_service": 1,
+      "result_archive": 6,
+      "seen_command_set": 6,
+      "service_url": 2,
+      "shared_file": 1,
+      "verification_key": 6
+    },
+    "edges_by_relation": {
+      "claims": 10,
+      "deduplicates-against": 17,
+      "deletes": 12,
+      "elects-through": 3,
+      "polls": 23,
+      "publishes-command-to": 5,
+      "reads": 23,
+      "refreshes": 7,
+      "replaces": 4,
+      "retrieves-command-from": 8,
+      "verifies": 14,
+      "writes": 31
+    },
+    "weakly_connected_component_count": 23,
+    "largest_components": [
+      {
+        "size": 15,
+        "node_ids": [
+          "artifact:org-025",
+          "artifact:org-026",
+          "artifact:org-027",
+          "artifact:org-028",
+          "artifact:org-029",
+          "artifact:org-030",
+          "file:future-cmd-json",
+          "key:future9180-rsa",
+          "lock:future9180-v1",
+          "lock:future9180-v2",
+          "lock:future9180-v3",
+          "lock:future9180-v4",
+          "lock:future9180-v6",
+          "lock:future9180-v8",
+          "repo:hf-repo-168"
+        ]
+      },
+      {
+        "size": 13,
+        "node_ids": [
+          "archive:be90-command-names",
+          "archive:be90-hello",
+          "archive:be90-results",
+          "archive:private-c-files",
+          "archive:private-hlo-res",
+          "artifact:org-034",
+          "artifact:org-035",
+          "artifact:org-037",
+          "branch:redacted-account-object-id",
+          "branch:redacted-control-branch-id",
+          "key:be90-session",
+          "key:private-branch-session",
+          "policy:explicit-go"
+        ]
+      },
+      {
+        "size": 11,
+        "node_ids": [
+          "archive:g23619out",
+          "artifact:org-014",
+          "artifact:org-015",
+          "artifact:org-016",
+          "artifact:org-018",
+          "artifact:org-021",
+          "command:g23619-000007-a",
+          "command:g23619-000007-b",
+          "file:g23619cmd-bin",
+          "key:g23619-rsa-public",
+          "state:g23619-seen"
+        ]
+      },
+      {
+        "size": 9,
+        "node_ids": [
+          "artifact:org-005",
+          "artifact:org-006",
+          "artifact:org-007",
+          "channel:infra-config-94",
+          "channel:token-cmd-path",
+          "service:service-21-url-42",
+          "state:request-command-seen",
+          "state:request-uuid-seen",
+          "state:threaded-command-seen"
+        ]
+      },
+      {
+        "size": 6,
+        "node_ids": [
+          "archive:g23619-child-outs",
+          "artifact:org-022",
+          "controller:g23619-child",
+          "file:g23619scmd-bin",
+          "repo:hf-repo-900005",
+          "state:g23619-child-seen"
+        ]
+      },
+      {
+        "size": 5,
+        "node_ids": [
+          "artifact:org-017",
+          "artifact:org-019",
+          "claim:g23619-host",
+          "file:g23619-readme",
+          "service:g23619-api"
+        ]
+      },
+      {
+        "size": 5,
+        "node_ids": [
+          "artifact:org-023",
+          "file:libr11-c2cmd",
+          "key:libr11-hmac",
+          "lock:libr11-c2v2",
+          "repo:hf-repo-475"
+        ]
+      },
+      {
+        "size": 5,
+        "node_ids": [
+          "artifact:org-033",
+          "channel:sc4-shortener",
+          "controller:sc4tiny",
+          "file:source-path-000922",
+          "key:sc4-rsa"
+        ]
+      },
+      {
+        "size": 5,
+        "node_ids": [
+          "artifact:org-036",
+          "branch:infraout",
+          "file:infraout-active-config",
+          "file:infraout-cmd66",
+          "key:infraout-c2"
+        ]
+      },
+      {
+        "size": 4,
+        "node_ids": [
+          "archive:c64-outs",
+          "artifact:org-009",
+          "file:c64-cmdjson",
+          "key:c64-public-key"
+        ]
+      }
+    ],
+    "recurrent_objects": [
+      {
+        "id": "file:future-cmd-json",
+        "label": "future_cmd.json",
+        "artifact_count": 6,
+        "artifact_ids": [
+          "org-025",
+          "org-026",
+          "org-027",
+          "org-028",
+          "org-029",
+          "org-030"
+        ],
+        "primary_mechanisms": [
+          "controller_replacement"
+        ]
+      },
+      {
+        "id": "key:future9180-rsa",
+        "label": "future9180 embedded rsa public key",
+        "artifact_count": 6,
+        "artifact_ids": [
+          "org-025",
+          "org-026",
+          "org-027",
+          "org-028",
+          "org-029",
+          "org-030"
+        ],
+        "primary_mechanisms": [
+          "controller_replacement"
+        ]
+      },
+      {
+        "id": "repo:hf-repo-168",
+        "label": "[HF REPO 168]",
+        "artifact_count": 6,
+        "artifact_ids": [
+          "org-025",
+          "org-026",
+          "org-027",
+          "org-028",
+          "org-029",
+          "org-030"
+        ],
+        "primary_mechanisms": [
+          "controller_replacement"
+        ]
+      },
+      {
+        "id": "service:service-21-url-42",
+        "label": "[SERVICE 21 URL 42]",
+        "artifact_count": 3,
+        "artifact_ids": [
+          "org-005",
+          "org-006",
+          "org-007"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "shared_state_repair_or_recreation"
+        ]
+      },
+      {
+        "id": "state:g23619-seen",
+        "label": "[REDACTED:source_path:000645]",
+        "artifact_count": 3,
+        "artifact_ids": [
+          "org-016",
+          "org-018",
+          "org-021"
+        ],
+        "primary_mechanisms": [
+          "duplicate_suppression",
+          "heartbeat_or_liveness"
+        ]
+      },
+      {
+        "id": "archive:be90-command-names",
+        "label": "C_<encoded-command> names",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-034",
+          "org-037"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "coordination_norm_or_policy"
+        ]
+      },
+      {
+        "id": "archive:g23619out",
+        "label": "g23619out_<host>_<seq>_<time>_<nonce>.b64",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-014",
+          "org-018"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "heartbeat_or_liveness"
+        ]
+      },
+      {
+        "id": "archive:private-c-files",
+        "label": "C_<addressed-command> files",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-035",
+          "org-037"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "coordination_norm_or_policy"
+        ]
+      },
+      {
+        "id": "file:g23619-readme",
+        "label": "g23619 launch README.md",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-017",
+          "org-019"
+        ],
+        "primary_mechanisms": [
+          "leader_election",
+          "shared_state_repair_or_recreation"
+        ]
+      },
+      {
+        "id": "file:g23619cmd-bin",
+        "label": "g23619cmd.bin",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-014",
+          "org-015"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "duplicate_suppression",
+          "persistent_shared_state",
+          "signed_command_validation"
+        ]
+      },
+      {
+        "id": "service:g23619-api",
+        "label": "[INFRA CONFIG 187]",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-017",
+          "org-019"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "leader_election",
+          "shared_state_repair_or_recreation"
+        ]
+      }
+    ],
+    "objects_connecting_multiple_primary_mechanisms": [
+      {
+        "id": "service:service-21-url-42",
+        "label": "[SERVICE 21 URL 42]",
+        "artifact_count": 3,
+        "artifact_ids": [
+          "org-005",
+          "org-006",
+          "org-007"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "shared_state_repair_or_recreation"
+        ]
+      },
+      {
+        "id": "state:g23619-seen",
+        "label": "[REDACTED:source_path:000645]",
+        "artifact_count": 3,
+        "artifact_ids": [
+          "org-016",
+          "org-018",
+          "org-021"
+        ],
+        "primary_mechanisms": [
+          "duplicate_suppression",
+          "heartbeat_or_liveness"
+        ]
+      },
+      {
+        "id": "archive:be90-command-names",
+        "label": "C_<encoded-command> names",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-034",
+          "org-037"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "coordination_norm_or_policy"
+        ]
+      },
+      {
+        "id": "archive:g23619out",
+        "label": "g23619out_<host>_<seq>_<time>_<nonce>.b64",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-014",
+          "org-018"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "heartbeat_or_liveness"
+        ]
+      },
+      {
+        "id": "archive:private-c-files",
+        "label": "C_<addressed-command> files",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-035",
+          "org-037"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "coordination_norm_or_policy"
+        ]
+      },
+      {
+        "id": "file:g23619-readme",
+        "label": "g23619 launch README.md",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-017",
+          "org-019"
+        ],
+        "primary_mechanisms": [
+          "leader_election",
+          "shared_state_repair_or_recreation"
+        ]
+      },
+      {
+        "id": "file:g23619cmd-bin",
+        "label": "g23619cmd.bin",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-014",
+          "org-015"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "duplicate_suppression",
+          "persistent_shared_state",
+          "signed_command_validation"
+        ]
+      },
+      {
+        "id": "service:g23619-api",
+        "label": "[INFRA CONFIG 187]",
+        "artifact_count": 2,
+        "artifact_ids": [
+          "org-017",
+          "org-019"
+        ],
+        "primary_mechanisms": [
+          "command_channel",
+          "leader_election",
+          "shared_state_repair_or_recreation"
+        ]
+      },
+      {
+        "id": "file:g23619scmd-bin",
+        "label": "g23619scmd.bin",
+        "artifact_count": 1,
+        "artifact_ids": [
+          "org-022"
+        ],
+        "primary_mechanisms": [
+          "persistent_shared_state",
+          "work_division_or_delegation"
+        ]
+      }
+    ]
+  }
+}
