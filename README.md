@@ -81,12 +81,27 @@ make data-sample     # synthetic tables in data/raw/sample/ (offline, no token)
 
 export HF_TOKEN=...  # token of an account with approved dataset access
 make data-info       # list files, sizes, and free disk space (no download)
+make data-schema     # SCHEMA.md, CHANGELOG.md, manifest.json only (small)
 make data-download   # all non-image files, about 5.8 GB
 make data-download TABLES="events chat_messages agent_goals"   # selected tables only
 make data-download REVISION=<commit>                           # pin a dataset commit
 ```
 
 `make data-download` skips `images/` (the screenshot archives) and resumes completed files.
+
+`data/raw/SCHEMA.md` is the column reference for every table. It is a human-readable document, not a validator. `make data-download` also fetches it. Use `make data-schema` to refresh it alone. Set `REVISION` to match your table downloads.
+
+### Validating the Data
+
+`src/swarm_forensics/ingest/dataset.schema.json` holds a JSON Schema (Draft 2020-12) for each raw table. It follows `SCHEMA.md` and a bounded check of real field types. Unknown fields stay allowed. Joins appear as `x-references` annotations. These contracts describe raw records. They are not the unified forensic event schema.
+
+```bash
+make data-validate                                  # synthetic sample, 100 records per table
+make data-validate DATA_DIR=data/raw TABLES="events chat_messages" LIMIT=100
+make data-validate DATA_DIR=data/raw LIMIT=0        # explicit full streaming scan (slow)
+```
+
+The command prints the table, line, field path, and rule of the first failure. It never prints record values. A limited run is not a whole-dataset check.
 
 ### Streaming the Data
 

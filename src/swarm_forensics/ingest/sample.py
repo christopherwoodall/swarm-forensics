@@ -56,7 +56,13 @@ def build_tables(rows: int) -> dict[str, list[dict]]:
     for n in range(rows):
         agent_index = n % len(agent_ids)
         action = ACTION_TYPES[n % len(ACTION_TYPES)]
-        data = {"actionType": action, "agentId": agent_ids[agent_index]}
+        data = {"actionType": action}
+        if action == "AGENT_TALK":
+            data["speakerId"] = agent_ids[agent_index]
+        elif action == "USER_TALK":
+            data["speakerName"] = "Synthetic viewer"
+        else:
+            data["agentId"] = agent_ids[agent_index]
         if action in ("AGENT_TALK", "USER_TALK"):
             message_id = _id("message", n)
             content = f"Synthetic message {n}."
