@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SWARM-FORENSICS // stratified pipeline mock v1</title>
+<style>
+  html, body { height: 100%; }
+  body { margin: 0; overflow: hidden; background: #f2f4f6;
+         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+         color: #1a2433; }
+  #scene { position: fixed; inset: 0; }
+  .panel { position: fixed; background: rgba(255,255,255,.82);
+           border: 1px solid #d4dbe3; border-radius: 6px;
+           backdrop-filter: blur(6px); padding: 10px 12px; }
+  .micro { font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+           color: #6b7686; }
+  #title { top: 14px; left: 14px; max-width: 340px; }
+  #title h1 { font-size: 13px; margin: 0 0 4px; letter-spacing: .08em; }
+  #title p { font-size: 11px; margin: 0; color: #5a6472; line-height: 1.5; }
+  #legend { top: 14px; right: 14px; }
+  #legend .row { display: flex; align-items: center; gap: 8px;
+                 font-size: 11px; margin-top: 6px; }
+  #legend .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  #feed { right: 14px; top: 148px; width: 300px; max-height: 46vh;
+          overflow-y: auto; }
+  #feed .ev { font-size: 11px; line-height: 1.45; padding: 7px 0;
+              border-top: 1px dashed #d4dbe3; }
+  #feed .ev:first-of-type { border-top: none; }
+  #feed .ev .d { color: #8a94a3; }
+  #feed .ev.latest { background: #eef4ff; margin: 0 -12px; padding: 7px 12px;
+                     border-top: 1px solid #c9d8f5; }
+  #info { left: 14px; top: 148px; width: 280px; display: none; }
+  #info h2 { font-size: 12px; margin: 0 0 6px; letter-spacing: .06em; }
+  #info .kv { font-size: 11px; margin: 3px 0; color: #3c4655; }
+  #info .kv b { color: #1a2433; }
+  #info .edge { font-size: 11px; margin: 4px 0; padding-left: 8px;
+                border-left: 3px solid #c3ccd6; }
+  #timeline { left: 50%; transform: translateX(-50%); bottom: 14px;
+              display: flex; align-items: center; gap: 10px;
+              padding: 10px 14px; white-space: nowrap; }
+  #timeline input[type=range] { width: 260px; accent-color: #3b5bdb; }
+  #timeline button { font: inherit; font-size: 11px; letter-spacing: .1em;
+                     background: #fff; border: 1px solid #c3ccd6; border-radius: 4px;
+                     padding: 6px 10px; cursor: pointer; color: #1a2433; }
+  #timeline button:hover { border-color: #3b5bdb; color: #3b5bdb; }
+  #timeline button.on { background: #3b5bdb; border-color: #3b5bdb; color: #fff; }
+  #dayread { font-size: 12px; min-width: 86px; text-align: center; }
+  #stat { font-size: 10px; color: #6b7686; letter-spacing: .06em; }
+  #tip { position: fixed; pointer-events: none; display: none;
+         background: #1a2433; color: #eef1f5; font-size: 11px;
+         padding: 5px 9px; border-radius: 4px; z-index: 10; }
+  @media (max-width: 900px) {
+    #feed { display: none; } #info { width: 220px; }
+    #timeline input[type=range] { width: 140px; }
+  }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="scene"></div>
+
+<div class="panel" id="title">
+  <div class="micro">swarm-forensics // viz mock v1</div>
+  <h1>STRATIFIED PIPELINE — ORIGIN → EGRESS → ARTIFACT → TARGET</h1>
+  <p>Representative mock of the swarmtraces distributed-systems shape:
+  ephemeral controllers coupled through durable shared artifacts.
+  Edges appear, disappear, reverse and change type over time.
+  Drag to orbit · scroll to zoom · right-drag to pan · click a node or tier.
+  Idle nodes gray out as days change; during playback the camera follows each day's events.</p>
+</div>
+
+<div class="panel" id="legend">
+  <div class="micro">edge semantics</div>
+  <div class="row"><span class="dot" style="background:#3b5bdb"></span>command — authenticated control channel</div>
+  <div class="row"><span class="dot" style="background:#0d9488"></span>heartbeat — lease / liveness</div>
+  <div class="row"><span class="dot" style="background:#be123c"></span>exfil — results / data out</div>
+  <div class="row"><span class="dot" style="background:#7c3aed"></span>dead-drop — stigmergic trace</div>
+</div>
+
+<div class="panel" id="feed">
+  <div class="micro">event feed</div>
+  <div id="feedlist"></div>
+</div>
+
+<div class="panel" id="info">
+  <div class="micro">node</div>
+  <h2 id="infoname"></h2>
+  <div class="kv" id="infotier"></div>
+  <div class="kv" id="inforole"></div>
+  <div class="micro" style="margin-top:8px">incident edges</div>
+  <div id="infoedges"></div>
+</div>
+
+<div class="panel" id="timeline">
+  <button id="play">▶ PLAY</button>
+  <input type="range" id="scrub" min="1" max="14" step="1" value="1">
+  <span id="dayread">DAY 01 / 14</span>
+  <span id="stat"></span>
+  <button data-tier="0">01</button><button data-tier="1">02</button><button data-tier="2">03</button><button data-tier="3">04</button>
+  <button id="reset">RESET</button>
+</div>
+
+<div id="tip"></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ================= DATA — representative mock pipeline ================= */
+const TYPE_COLORS = { command:0x3b5bdb, heartbeat:0x0d9488, exfil:0xbe123c, 'dead-drop':0x7c3aed };
+const TYPE_HEX = { command:'#3b5bdb', heartbeat:'#0d9488', exfil:'#be123c', 'dead-drop':'#7c3aed' };
+
+const TIERS = [
+  { id:'origin',   n:'01', label:'ORIGIN',         y:0,   color:0x3b5bdb },
+  { id:'egress',   n:'02', label:'EGRESS',         y:-16, color:0x0d9488 },
+  { id:'artifact', n:'03', label:'SHARED ARTIFACT',y:-32, color:0xb45309 },
+  { id:'target',   n:'04', label:'TARGET',         y:-48, color:0xbe123c },
+];
+
+// angleDeg measured in XZ plane; r = radius from tier center
+const NODES = [
+  { id:'loai-origin', tier:'origin', a:140, r:4.2, role:'launcher', note:'issues signed commands; numbered, deduped by seen-set' },
+  { id:'oai-origin',  tier:'origin', a:40,  r:4.2, role:'launcher', note:'issues signed commands; numbered, deduped by seen-set' },
+  { id:'egress-a', tier:'egress', a:150, r:4.6, role:'controller', note:'cmd.json inbox · seen-set · heartbeat · RSA-gated' },
+  { id:'egress-b', tier:'egress', a:30,  r:4.6, role:'controller', note:'cmd.json inbox · seen-set · heartbeat · RSA-gated' },
+  { id:'egress-c', tier:'egress', a:270, r:4.6, role:'standby controller', note:'lease watcher — replaces stale lock holders (>30m)' },
+  { id:'shared-artifact', tier:'artifact', a:90, r:3.0, role:'durable shared state', note:'lock files · seen sets · result archives — outlives any process' },
+  { id:'target-x', tier:'target', a:160, r:4.0, role:'target system', note:'endpoint of exfil path A' },
+  { id:'target-y', tier:'target', a:20,  r:4.0, role:'target system', note:'endpoint of exfil path B' },
+  { id:'target-z', tier:'target', a:270, r:4.0, role:'target system', note:'endpoint of exfil path C' },
+];
+
+// dir: 1 = a→b, -1 = b→a, 0 = bidirectional
+const EDGES = [
+  { id:'e1', a:'loai-origin', b:'egress-a', type:'command',   dir:1, initial:true  },
+  { id:'e2', a:'oai-origin',  b:'egress-b', type:'command',   dir:1, initial:true  },
+  { id:'e3', a:'egress-a', b:'target-x', type:'exfil',     dir:1, initial:true  },
+  { id:'e4', a:'egress-b', b:'target-y', type:'exfil',     dir:1, initial:true  },
+  { id:'e5', a:'egress-a', b:'egress-b', type:'heartbeat', dir:0, initial:true  },
+  { id:'e6', a:'egress-b', b:'shared-artifact', type:'dead-drop', dir:1, initial:true },
+  { id:'e7', a:'shared-artifact', b:'egress-c', type:'dead-drop', dir:1, initial:true },
+  { id:'e8', a:'egress-c', b:'target-z', type:'exfil',     dir:1, initial:true  },
+  { id:'e9', a:'loai-origin', b:'egress-b', type:'command', dir:1, initial:false },
+  { id:'e10', a:'egress-c', b:'shared-artifact', type:'heartbeat', dir:1, initial:false },
+];
+
+const TIMELINE = [
+  { day:3,  edge:'e3', op:'hide',    note:'target-x burned — exfil edge withdrawn' },
+  { day:4,  edge:'e5', op:'retype', to:'command', note:'egress-a ↔ egress-b escalate: heartbeat → command channel' },
+  { day:5,  edge:'e9', op:'show',    note:'loai-origin cross-tasks egress-b (new command edge appears)' },
+  { day:6,  edge:'e2', op:'reverse', note:'results flow upward — edge reverses' },
+  { day:6,  edge:'e2', op:'retype', to:'exfil',   note:'oai-origin link retyped: command → exfil' },
+  { day:7,  edge:null, op:'annotate', note:'duplicate signed command id 000007 seen — dedup collision, second body skipped' },
+  { day:8,  node:'egress-a', op:'replace', note:'stale lease (>30m) — egress-a replaced by egress-a′. The role persists; the process does not.' },
+  { day:9,  edge:'e7', op:'hide',    note:'channel crowded — artifact → egress-c rotated out' },
+  { day:10, edge:'e6', op:'retype', to:'command', note:'shared artifact promoted: dead-drop → command channel' },
+  { day:11, edge:'e10', op:'show',   note:'egress-c heartbeats into the artifact (feed direction flips)' },
+  { day:12, edge:'e8', op:'retype', to:'dead-drop', note:'egress-c → target-z goes quiet: exfil → dead-drop' },
+];
+const MAX_DAY = 14;
+
+/* ================= SCENE ================= */
+const container = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+container.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xf2f4f6);
+scene.fog = new THREE.Fog(0xf2f4f6, 110, 240);
+
+const camera = new THREE.PerspectiveCamera(46, innerWidth/innerHeight, 0.1, 600);
+const CAM_HOME = new THREE.Vector3(38, 4, 52);
+const TGT_HOME = new THREE.Vector3(0, -24, 0);
+camera.position.copy(CAM_HOME);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.copy(TGT_HOME);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance = 8;
+controls.maxDistance = 160;
+
+/* ---------- canvas label helpers ---------- */
+function textSprite(text, { size=40, color='#1a2433', pad=18, scale=1, weight=600, ls=2 } = {}) {
+  const cv = document.createElement('canvas');
+  const cx = cv.getContext('2d');
+  cx.font = `${weight} ${size}px ui-monospace, Menlo, Consolas, monospace`;
+  const w = Math.ceil(cx.measureText(text).width) + pad*2 + ls*text.length;
+  const h = size + pad*2;
+  cv.width = w; cv.height = h;
+  const c2 = cv.getContext('2d');
+  c2.font = `${weight} ${size}px ui-monospace, Menlo, Consolas, monospace`;
+  c2.fillStyle = color; c2.textBaseline = 'middle';
+  // letterspacing via manual draw
+  let x = pad;
+  for (const ch of text) { c2.fillText(ch, x, h/2); x += c2.measureText(ch).width + ls; }
+  const tex = new THREE.CanvasTexture(cv);
+  tex.anisotropy = 4;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map:tex, transparent:true, depthWrite:false }));
+  sp.scale.set(w/h * 1.05 * scale, 1.05 * scale, 1);
+  sp.userData.redraw = (t2, color2) => {
+    const c = cv.getContext('2d');
+    c.clearRect(0,0,cv.width,cv.height);
+    c.font = `${weight} ${size}px ui-monospace, Menlo, Consolas, monospace`;
+    c.fillStyle = color2 || color; c.textBaseline = 'middle';
+    let xx = pad;
+    for (const ch of t2) { c.fillText(ch, xx, h/2); xx += c.measureText(ch).width + ls; }
+    tex.needsUpdate = true;
+  };
+  return sp;
+}
+function circleLine(radius, color, opacity, y) {
+  const pts = [];
+  for (let i=0; i<=96; i++) {
+    const t = i/96 * Math.PI*2;
+    pts.push(new THREE.Vector3(Math.cos(t)*radius, y, Math.sin(t)*radius));
+  }
+  const g = new THREE.BufferGeometry().setFromPoints(pts);
+  return new THREE.Line(g, new THREE.LineBasicMaterial({ color, transparent:true, opacity }));
+}
+
+/* ---------- build tiers ---------- */
+const tierOf = Object.fromEntries(TIERS.map(t => [t.id, t]));
+const nodeMap = {};
+const nodeMeshes = [];
+const tierHitDiscs = [];
+const scanRings = [];
+
+for (const t of TIERS) {
+  // concentric boundaries
+  for (const [r, op] of [[5.5, .55],[8.5,.38],[11.5,.25]])
+    scene.add(circleLine(r, 0x9aa5b3, op, t.y));
+  // accent ring
+  const accent = circleLine(11.5, t.color, .8, t.y + 0.02);
+  scene.add(accent); scanRings.push(accent);
+
+  // dense particle cluster
+  const N = 150, pos = new Float32Array(N*3);
+  for (let i=0; i<N; i++) {
+    const rr = 2 + Math.pow(Math.random(), .6) * 9.2, th = Math.random()*Math.PI*2;
+    pos[i*3] = Math.cos(th)*rr; pos[i*3+1] = t.y + (Math.random()-.5)*1.1; pos[i*3+2] = Math.sin(th)*rr;
+  }
+  const pg = new THREE.BufferGeometry();
+  pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  scene.add(new THREE.Points(pg, new THREE.PointsMaterial({
+    color:t.color, size:.22, transparent:true, opacity:.32, sizeAttenuation:true })));
+
+  // tier label, right side
+  const lab = textSprite(`${t.n} · ${t.label}`, { size:44, color:'#3c4655', scale:1.5 });
+  lab.position.set(15.5, t.y + 0.6, 0);
+  lab.userData.tier = t.id;
+  scene.add(lab); tierHitDiscs.push(lab);
+
+  // invisible hit disc for click-to-focus
+  const disc = new THREE.Mesh(new THREE.CircleGeometry(12.6, 40),
+    new THREE.MeshBasicMaterial({ visible:false }));
+  disc.rotation.x = -Math.PI/2; disc.position.y = t.y;
+  disc.userData.tier = t.id;
+  scene.add(disc); tierHitDiscs.push(disc);
+}
+
+/* ---------- build nodes ---------- */
+const nodeGeo = new THREE.SphereGeometry(0.62, 24, 18);
+for (const n of NODES) {
+  const t = tierOf[n.tier];
+  const th = n.a * Math.PI/180;
+  const p = new THREE.Vector3(Math.cos(th)*n.r, t.y, Math.sin(th)*n.r);
+  const mesh = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color:t.color }));
+  mesh.position.copy(p);
+  mesh.userData.nodeId = n.id;
+  scene.add(mesh);
+  const halo = new THREE.Mesh(new THREE.SphereGeometry(0.95, 16, 12),
+    new THREE.MeshBasicMaterial({ color:t.color, transparent:true, opacity:.14 }));
+  halo.position.copy(p); scene.add(halo);
+  const label = textSprite(n.id, { size:36, color:'#2b3542', scale:.95 });
+  label.position.set(p.x, p.y + 1.9, p.z);
+  label.userData.nodeId = n.id;
+  scene.add(label);
+  nodeMap[n.id] = { ...n, mesh, halo, label, pos:p, labelText:n.id,
+    tgtColor:new THREE.Color(t.color), tgtHalo:.14, curHalo:.14, tgtLabOp:1, curLabOp:1 };
+  nodeMeshes.push(mesh, label);
+}
+
+/* ================= EDGES ================= */
+function edgeCurve(pa, pb) {
+  const sameTier = Math.abs(pa.y - pb.y) < 1;
+  const mid = pa.clone().add(pb).multiplyScalar(0.5);
+  if (sameTier) {
+    // arc within the tier plane
+    const dir = pb.clone().sub(pa).normalize();
+    const side = new THREE.Vector3(-dir.z, 0, dir.x);
+    const c1 = pa.clone().add(side.multiplyScalar(3.2)); c1.y += 2.2;
+    const c2 = pb.clone().add(side.clone().multiplyScalar(3.2)); c2.y += 2.2;
+    return new THREE.CubicBezierCurve3(pa, c1, c2, pb);
+  }
+  // bow outward for inter-tier runs
+  const out = mid.clone().setY(0).normalize().multiplyScalar(4.5);
+  const c1 = pa.clone().lerp(pb, .3).add(out);
+  const c2 = pa.clone().lerp(pb, .7).add(out);
+  return new THREE.CubicBezierCurve3(pa, c1, c2, pb);
+}
+
+// shared pulse texture
+const pulseCv = document.createElement('canvas');
+pulseCv.width = pulseCv.height = 64;
+{
+  const c = pulseCv.getContext('2d');
+  const g = c.createRadialGradient(32,32,2,32,32,30);
+  g.addColorStop(0,'rgba(255,255,255,1)'); g.addColorStop(.35,'rgba(255,255,255,.85)');
+  g.addColorStop(1,'rgba(255,255,255,0)');
+  c.fillStyle = g; c.fillRect(0,0,64,64);
+}
+const pulseTex = new THREE.CanvasTexture(pulseCv);
+
+const edges = [];
+for (const e of EDGES) {
+  const A = nodeMap[e.a], B = nodeMap[e.b];
+  const curve = edgeCurve(A.pos, B.pos);
+  const geo = new THREE.TubeGeometry(curve, 40, 0.075, 6, false);
+  const mat = new THREE.MeshBasicMaterial({
+    color: TYPE_COLORS[e.type], transparent:true, opacity: e.initial ? .9 : 0 });
+  const tube = new THREE.Mesh(geo, mat);
+  tube.visible = e.initial;
+  scene.add(tube);
+  const pulses = [];
+  for (let k=0; k<2; k++) {
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({
+      map:pulseTex, color:TYPE_COLORS[e.type], transparent:true,
+      opacity: e.initial ? .95 : 0, blending:THREE.AdditiveBlending, depthWrite:false }));
+    sp.scale.set(1.5,1.5,1);
+    sp.visible = e.initial;
+    scene.add(sp);
+    pulses.push({ sp, t: k * .5 });
+  }
+  edges.push({ ...e, curve, tube, mat, pulses,
+    cur:{ opacity: e.initial ? .9 : 0, color:new THREE.Color(TYPE_COLORS[e.type]) },
+    tgt:{ opacity: e.initial ? .9 : 0, color:new THREE.Color(TYPE_COLORS[e.type]) } });
+}
+const edgeMap = Object.fromEntries(edges.map(e => [e.id, e]));
+
+/* decorative lineage filaments between adjacent tiers */
+{
+  const filMat = new THREE.LineBasicMaterial({ color:0x9aa5b3, transparent:true, opacity:.16 });
+  for (let i=0; i<TIERS.length-1; i++) {
+    const y0 = TIERS[i].y, y1 = TIERS[i+1].y;
+    for (let k=0; k<16; k++) {
+      const a = Math.random()*Math.PI*2, r0 = 3+Math.random()*7, r1 = 3+Math.random()*7;
+      const p0 = new THREE.Vector3(Math.cos(a)*r0, y0-.3, Math.sin(a)*r0);
+      const p1 = new THREE.Vector3(Math.cos(a+.35)*r1, y1+.3, Math.sin(a+.35)*r1);
+      const mid = p0.clone().lerp(p1,.5); mid.x += (Math.random()-.5)*3; mid.z += (Math.random()-.5)*3;
+      const curve = new THREE.QuadraticBezierCurve3(p0, mid, p1);
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(24)), filMat));
+    }
+  }
+}
+
+/* ================= TIMELINE ================= */
+let day = 1, playing = false, playAcc = 0;
+const scrub = document.getElementById('scrub');
+const dayread = document.getElementById('dayread');
+const feedlist = document.getElementById('feedlist');
+const stat = document.getElementById('stat');
+
+function stateAt(e, d) {
+  const s = { visible:e.initial, dir:e.dir, type:e.type };
+  for (const ev of TIMELINE) {
+    if (ev.day > d || ev.edge !== e.id) continue;
+    if (ev.op === 'show') s.visible = true;
+    else if (ev.op === 'hide') s.visible = false;
+    else if (ev.op === 'reverse') s.dir = s.dir === 0 ? 0 : -s.dir;
+    else if (ev.op === 'retype') s.type = ev.to;
+  }
+  return s;
+}
+function nodeLabelAt(id, d) {
+  return (id === 'egress-a' && d >= 8) ? 'egress-a′' : id;
+}
+
+function applyDay(d, first=false) {
+  day = d;
+  scrub.value = d;
+  dayread.textContent = `DAY ${String(d).padStart(2,'0')} / ${MAX_DAY}`;
+  for (const e of edges) {
+    const s = stateAt(e, d);
+    e.tgt.opacity = s.visible ? .9 : 0;
+    e.tgt.color.set(TYPE_COLORS[s.type]);
+    e.curDir = s.dir; e.curType = s.type; e.curVisible = s.visible;
+    for (const p of e.pulses) p.sp.material.color.set(TYPE_COLORS[s.type]);
+    e.mat.color.set(TYPE_COLORS[s.type]);
+  }
+  for (const id in nodeMap) {
+    const nm = nodeMap[id], want = nodeLabelAt(id, d);
+    if (nm.labelText !== want) { nm.labelText = want; nm.label.userData.redraw(want); }
+  }
+  refreshNodeTargets();
+  // feed
+  const evs = TIMELINE.filter(ev => ev.day <= d).slice().reverse();
+  feedlist.innerHTML = evs.map((ev,i) =>
+    `<div class="ev${i===0?' latest':''}"><span class="d">D${String(ev.day).padStart(2,'0')}</span> — ${ev.note}</div>`
+  ).join('') || '<div class="ev"><span class="d">D01</span> — initial pipeline state</div>';
+  // stat
+  const counts = {};
+  for (const e of edges) if (e.curVisible) counts[e.curType] = (counts[e.curType]||0)+1;
+  const n = Object.values(counts).reduce((a,b)=>a+b,0);
+  stat.textContent = `${n} ACTIVE · ` + Object.entries(counts)
+    .map(([k,v]) => `${k} ${v}`).join(' · ');
+  if (selected) showInfo(selected);
+}
+
+/* node activity gray-out + camera follow during playback */
+function refreshNodeTargets() {
+  const activeSet = new Set();
+  for (const e of edges) if (e.curVisible) { activeSet.add(e.a); activeSet.add(e.b); }
+  for (const id in nodeMap) {
+    const nm = nodeMap[id];
+    const active = activeSet.has(id);
+    const dim = !active && selected !== id;
+    nm.tgtColor.set(dim ? 0xb9c1cb : tierOf[nm.tier].color);
+    nm.tgtHalo = selected === id ? .4 : (active ? .14 : .05);
+    nm.tgtLabOp = dim ? .3 : 1;
+  }
+}
+function eventTiers(d) {
+  const s = new Set();
+  for (const ev of TIMELINE) {
+    if (ev.day !== d) continue;
+    if (ev.edge) { const e = edgeMap[ev.edge]; s.add(nodeMap[e.a].tier); s.add(nodeMap[e.b].tier); }
+    if (ev.node) s.add(nodeMap[ev.node].tier);
+  }
+  return [...s];
+}
+function autoFocus(d) {
+  const tiers = eventTiers(d);
+  if (!tiers.length) return;
+  const yc = tiers.reduce((a,t) => a + tierOf[t].y, 0) / tiers.length;
+  flyTo(new THREE.Vector3(24, yc + 7, 30), new THREE.Vector3(0, yc, 0));
+}
+
+/* ================= SELECTION ================= */
+const ray = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const tip = document.getElementById('tip');
+const infoPanel = document.getElementById('info');
+let selected = null, hovered = null;
+
+function castAt(cx, cy, targets) {
+  mouse.set((cx/innerWidth)*2-1, -(cy/innerHeight)*2+1);
+  ray.setFromCamera(mouse, camera);
+  const hits = ray.intersectObjects(targets, false);
+  return hits.length ? hits[0].object : null;
+}
+function dirArrow(e) {
+  if (e.curDir === 0) return '↔';
+  const fwd = e.curDir === 1;
+  return fwd ? `${e.a} → ${e.b}` : `${e.b} → ${e.a}`;
+}
+function showInfo(id) {
+  const nm = nodeMap[id], t = tierOf[nm.tier];
+  document.getElementById('infoname').textContent = nm.labelText;
+  document.getElementById('infotier').innerHTML = `<b>tier</b> ${t.n} · ${t.label}`;
+  document.getElementById('inforole').innerHTML = `<b>role</b> ${nm.role}<br><span style="color:#6b7686">${nm.note}</span>`;
+  const inc = edges.filter(e => (e.a === id || e.b === id) && e.curVisible);
+  document.getElementById('infoedges').innerHTML = inc.length
+    ? inc.map(e => `<div class="edge" style="border-color:${TYPE_HEX[e.curType]}">${dirArrow(e)}<br><span style="color:#6b7686">${e.curType}</span></div>`).join('')
+    : '<div class="edge">no active edges on this day</div>';
+  infoPanel.style.display = 'block';
+}
+function select(id) {
+  selected = id;
+  for (const eid in nodeMap)
+    nodeMap[eid].mesh.scale.setScalar(eid === id ? 1.5 : 1);
+  refreshNodeTargets();
+  for (const e of edges) {
+    const hit = id && (e.a === id || e.b === id);
+    e.dimmed = id && !hit;
+  }
+  if (id) showInfo(id); else infoPanel.style.display = 'none';
+}
+
+/* camera tween */
+let tween = null;
+function flyTo(pos, tgt) {
+  tween = { t:0, dur:1.1, p0:camera.position.clone(), p1:pos,
+            t0:controls.target.clone(), t1:tgt };
+}
+function focusTier(i) {
+  const t = TIERS[i];
+  const off = new THREE.Vector3(24, 7, 30);
+  flyTo(new THREE.Vector3(0, t.y, 0).add(off), new THREE.Vector3(0, t.y, 0));
+}
+
+renderer.domElement.addEventListener('pointermove', ev => {
+  const hit = castAt(ev.clientX, ev.clientY, nodeMeshes);
+  const id = hit ? hit.userData.nodeId : null;
+  if (id !== hovered) {
+    hovered = id;
+    renderer.domElement.style.cursor = id ? 'pointer' : 'grab';
+    if (id) { tip.style.display = 'block'; tip.textContent = nodeMap[id].labelText; }
+    else tip.style.display = 'none';
+  }
+  if (id) { tip.style.left = (ev.clientX+14)+'px'; tip.style.top = (ev.clientY+10)+'px'; }
+});
+renderer.domElement.addEventListener('click', ev => {
+  const hitN = castAt(ev.clientX, ev.clientY, nodeMeshes);
+  if (hitN) { select(hitN.userData.nodeId); return; }
+  const hitT = castAt(ev.clientX, ev.clientY, tierHitDiscs);
+  if (hitT) {
+    const i = TIERS.findIndex(t => t.id === hitT.userData.tier);
+    if (i >= 0) focusTier(i);
+    return;
+  }
+  select(null);
+});
+
+/* ---------- HUD wiring ---------- */
+const playBtn = document.getElementById('play');
+playBtn.onclick = () => {
+  playing = !playing;
+  playBtn.textContent = playing ? '⏸ PAUSE' : '▶ PLAY';
+  playBtn.classList.toggle('on', playing);
+};
+scrub.oninput = () => { playing = false; playBtn.textContent = '▶ PLAY'; playBtn.classList.remove('on'); applyDay(+scrub.value); };
+document.getElementById('reset').onclick = () => {
+  playing = false; playBtn.textContent = '▶ PLAY'; playBtn.classList.remove('on');
+  select(null); applyDay(1); flyTo(CAM_HOME, TGT_HOME);
+};
+document.querySelectorAll('#timeline [data-tier]').forEach(b =>
+  b.onclick = () => focusTier(+b.dataset.tier));
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+/* ================= LOOP ================= */
+const clock = new THREE.Clock();
+function ease(t) { return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; }
+
+function animate() {
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), .1);
+  const k = 1 - Math.exp(-dt * 5);
+
+  if (playing) {
+    playAcc += dt;
+    if (playAcc > 1.4) { playAcc = 0; const nd = day >= MAX_DAY ? 1 : day + 1; applyDay(nd); autoFocus(nd); }
+  }
+  if (tween) {
+    tween.t += dt / tween.dur;
+    const e = ease(Math.min(tween.t, 1));
+    camera.position.lerpVectors(tween.p0, tween.p1, e);
+    controls.target.lerpVectors(tween.t0, tween.t1, e);
+    if (tween.t >= 1) tween = null;
+  }
+  for (const r of scanRings) r.rotation.y += dt * .05;
+
+  for (const e of edges) {
+    e.cur.opacity += (e.tgt.opacity - e.cur.opacity) * k;
+    e.cur.color.lerp(e.tgt.color, k);
+    const dim = e.dimmed ? .12 : 1;
+    const op = e.cur.opacity * dim;
+    e.mat.opacity = op;
+    e.tube.visible = op > .02;
+    for (const p of e.pulses) {
+      p.t = (p.t + dt * .22 * (e.curDir === -1 ? -1 : 1)) % 1;
+      const tt = p.t < 0 ? p.t + 1 : p.t;
+      // bidirectional: second pulse counter-flows
+      const useT = (e.curDir === 0 && p === e.pulses[1]) ? 1 - tt : (e.curDir === -1 ? 1 - tt : tt);
+      p.sp.position.copy(e.curve.getPoint(useT));
+      p.sp.material.opacity = op;
+      p.sp.visible = op > .02;
+    }
+  }
+  for (const id in nodeMap) {
+    const nm = nodeMap[id];
+    nm.mesh.material.color.lerp(nm.tgtColor, k);
+    nm.curHalo += (nm.tgtHalo - nm.curHalo) * k;
+    nm.halo.material.opacity = nm.curHalo;
+    nm.curLabOp += (nm.tgtLabOp - nm.curLabOp) * k;
+    nm.label.material.opacity = nm.curLabOp;
+  }
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+applyDay(1, true);
+animate();
+</script>
+</body>
+</html>
