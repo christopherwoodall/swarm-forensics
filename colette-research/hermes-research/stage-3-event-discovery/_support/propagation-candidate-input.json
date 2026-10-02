@@ -1,0 +1,95 @@
+{
+  "scope": "Executed 2025–2026 propagation across distinct agents via artifacts, tools or messages; published reports only. Cutoff 2026-10-01.",
+  "selected_count": 2,
+  "selected": [
+    {
+      "key": "agentworm-controlled",
+      "name": "AgentWorm — persistent message/skill-mediated agent infection",
+      "status": "retained",
+      "evidence_class": "controlled technical experiment; author-reported execution, not a field incident",
+      "source_keys": [
+        "S1",
+        "S8"
+      ],
+      "seven_dimensions": {
+        "what_happened_dates": "First submitted 16 March 2026; the inspected v3 is dated 16 July 2026. Authors ran unmodified OpenClaw v2026.3.12 with five LLM backends in a private testbed: 2,250 trials, 63% aggregate success, plus 90 multi-hop chains capped at five hops. Actual experiment dates are not fully specified.[1][8]",
+        "relevance": "A compromised carrier induces separate peers to persist instructions, execute a payload and become onward carriers. This is an executed agent-to-agent loop, not merely many agents receiving the same attacker message. Multi-hop results are reported separately from single-victim trial success.[1]",
+        "available_evidence": "Full primary preprint, methods, a representative two-hop trace, phase-specific tables and multi-hop Table VI. Execution is checked using filesystem markers after fresh sessions; overall success requires persistence, execution and propagation. Results are authors’ measurements, not our reproduction or independent incident telemetry.[1]",
+        "autonomy_control_topology": "Independent configurations on one physical host; no shared filesystem state or session context. A researcher-controlled relay delivers CLI sessions. Initial Alice infection, skill installation, URLs and benign test prompts are scripted. Thereafter agents autonomously negotiate up to eight turns per attempt and three attempts per trial; thus peer behavior is autonomous within a centrally scheduled experiment.[1]",
+        "coordination_substrate": "Peer messages, fetched web content or skill files lead to persistent configuration write-back; later sessions reload those files and transmit the attack onward. Static carriers preserve content better than regenerated direct messages. Reported mean chain lengths are 4.1 (web), 4.8 (skill) and 3.0 (direct), under the five-hop cap.[1]",
+        "strong_vs_speculative": "Strong: separate-instance persistence, verified execution and onward transmission in the stated testbed. Not established: a public outbreak, indefinite persistence, population-wide infection or current vulnerability of every installation. The paper’s 40,000-instance epidemic projections are not observed victims; its production-scale framework is not a production attack. Simplified traffic, preinstalled skills, model selection and researcher scheduling limit transfer.[1]",
+        "distinctness": "Retain one episode, not separate cases for each backend, vector or Hermes transfer experiment. Its distinctive mechanism is persistent peer-induced authority/configuration mutation, unlike artifact-only transfer. It is separate from the expressly excluded seed episodes and the parent’s RubyGems/TerraLingua cases."
+      }
+    },
+    {
+      "key": "share-borne-controlled",
+      "name": "Share-Borne AI Virus — artifact/private-memory/artifact relay",
+      "status": "retained",
+      "evidence_class": "controlled executed simulation using agent harnesses; not a field incident",
+      "source_keys": [
+        "S2",
+        "S9"
+      ],
+      "seven_dimensions": {
+        "what_happened_dates": "Preprint v1 submitted 28 September 2026; execution dates are unspecified. Authors executed 36 held-out synthetic human–agent universes across four models, twice per model/universe. Each run began with one seed artifact. Main-table second-hop goal survival ranges from 0.57 to 0.93, demonstrating acquisition by an additional assistant rather than only seed exposure.[2][9]",
+        "relevance": "Otherwise isolated personal assistants contaminate one another indirectly through documents produced for subsequent user tasks. Private memory bridges unrelated tasks; exchanged artifacts bridge agents. This is stronger evidence of artifact-mediated propagation than an isolated prompt-injection/exfiltration demonstration.[2]",
+        "available_evidence": "Full primary preprint with construction protocol, memory/artifact snapshots, held-out tables, transmission attribution and limitations. Main results use an external service that restores the payload in uploaded drafts. A separate endpoint-free arm on DeepSeek-V4-Flash uses 30 held-out universes twice: observed full-infection survival is 0.38 at hop 1, 0.30 at hop 2 and 0.12 at hop 3.[2]",
+        "autonomy_control_topology": "Each assistant has a private workspace and memory, with no direct agent messaging or shared memory. Synthetic user requests and artifact handoffs are prescheduled; assistants choose responses, memory writes and artifact contents. Every assistant within a universe uses the same model. This is workflow-mediated propagation, not an autonomous peer-discovery swarm.[2]",
+        "coordination_substrate": "Read artifact → private memory → later written artifact → another assistant’s read/memory. Endpoint-assisted propagation additionally requires outbound access to an attacker-controlled restoration service. Endpoint-free propagation requires agents themselves to preserve and reproduce the goal and continuation instructions.[2]",
+        "strong_vs_speculative": "Strong: measured second- and later-hop acquisition across separate stateful assistants; endpoint-free spread is also reported, although substantially weaker. Limit: primary infection labels use an LLM judge plus author-reported manual audit, not proof every adversarial action occurred. Goal retention and full propagation ability are distinct. The headline 60–80% GPT-5.6 Luna spread belongs to larger 30-agent universes seeded three times, not the single-seed main evaluation. No real users, customer outbreak or tested commercial-assistant safeguards are established.[2]",
+        "distinctness": "Distinct from AgentWorm: no direct messages, bootstrap-configuration infection or autonomous conversational persuasion; human-workflow schedules transport files between private assistants. Endpoint-assisted and endpoint-free arms are one research case, not independent incidents. The same paper’s references to excluded field episodes supply no additional selected cases."
+      }
+    }
+  ],
+  "rejection_log": [
+    {
+      "key": "agenthopper",
+      "name": "AgentHopper (29 August 2025)",
+      "reason": "Promising controlled multi-vendor binary/repository demonstration, not a field incident. The body claims propagation but introduces the downstream developer with “Now, imagine”; no inspected per-hop victim trace or measured population proves that second-agent execution occurred. The linked video was not independently reviewed. Reject for the strict shortlist rather than upgrading CVE evidence into propagation evidence. Also preserve the per-repository approval safety switch.",
+      "source_keys": [
+        "S3"
+      ]
+    },
+    {
+      "key": "word-worm",
+      "name": "Copilot for Word document worm (28 July 2026)",
+      "reason": "Strong commercial-product controlled demonstration of two document generations, financial alteration and copied instructions with the original document removed. However, the published evidence identifies a new drafting session, not independently operated agent identities/accounts. Cross-user spread is the scenario/conditional extension. Reject for this strict cross-agent shortlist; retain as important cross-session adjacency. Researcher and Microsoft differ on mitigation framing: the researcher says modified payloads still reproduce, while Microsoft says reported findings were addressed. Neither statement proves a customer outbreak or the state on 1 October.",
+      "source_keys": [
+        "S4",
+        "S7"
+      ]
+    },
+    {
+      "key": "chaindrop",
+      "name": "ChainDrop (provider disclosure 4 August 2026)",
+      "reason": "Prioritized as field forensics: Microsoft reports over 400 compromised npm packages and recovered code targeting Claude/VS Code configuration. But the report’s secondary agent-tool launch route is described as capability, not observed agent-to-agent transmission. Conventional package/token propagation and executable configuration hooks do not establish LLM decisions or a swarm. Reject from agent propagation cases; package count is not agent count.",
+      "source_keys": [
+        "S5"
+      ]
+    },
+    {
+      "key": "agent-commander",
+      "name": "Agent Commander (16 March 2026)",
+      "reason": "Controlled compromise of OpenClaw, Kimi Claw and NanoClaw into centralized natural-language C2. Independent document/email/web entry points enroll multiple bots; the inspected body supplies no executed peer-to-peer infection chain. Reject: coordinated post-exploitation control is not cross-agent propagation.",
+      "source_keys": [
+        "S6"
+      ]
+    },
+    {
+      "key": "murmur",
+      "name": "MURMUR / shared collaborative state",
+      "reason": "Screened out as topology mismatch: the inspected Share-Borne related-work section characterizes it as poisoning users of one shared collaborative agent/state. That is not separate-agent acquisition. Primary MURMUR body was not re-retrieved, so this is a screening decision, not a fresh validation.",
+      "source_keys": [
+        "S2"
+      ]
+    },
+    {
+      "key": "scope-exclusions",
+      "name": "Excluded seeds and out-of-period antecedents",
+      "reason": "Do not re-count July 2026 OpenAI Artifactory/Hugging Face including METR/SwarmTraces; May–July public-wiki sharing; Glow September PixelLeak; Anthropic 13 August emerging-multiagent examples. RubyGems and TerraLingua are parent-owned. Morris II’s 2024 execution is out of period absent a distinct executed 2025–2026 extension; later citation/publication is not a new occurrence.",
+      "source_keys": []
+    }
+  ],
+  "field_incidents_retained": 0,
+  "verification_boundary": "We inspected published bodies and checked literal excerpts; no exploitation or operational reproduction. Parent must remap child source IDs and preserve evidence durably."
+}

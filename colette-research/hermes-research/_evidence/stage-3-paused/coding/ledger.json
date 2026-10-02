@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://www.anthropic.com/engineering/building-c-compiler",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 2,
+      "url": "https://cursor.com/blog/scaling-agents",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 3,
+      "url": "https://arxiv.org/html/2606.27416v1",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 4,
+      "url": "https://arxiv.org/html/2607.28430v1",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 5,
+      "url": "https://arxiv.org/html/2603.21489",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 6,
+      "url": "https://cursor.com/blog/multi-agent-kernels",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 7,
+      "url": "https://devin.ai/customers/nubank",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 8,
+      "url": "https://cognition.ai/blog/devin-annual-performance-review-2025",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 9,
+      "url": "https://fortune.com/2026/01/23/cursor-built-web-browser-with-swarm-ai-agents-powered-openai",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 10,
+      "url": "https://simonwillison.net/2026/Jan/19/scaling-long-running-autonomous-coding",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 11,
+      "url": "https://cognition.ai/blog/multi-agents-working",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 12,
+      "url": "https://aclanthology.org/2026.bea-1.65.pdf",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 13,
+      "url": "https://arxiv.org/abs/2603.21489",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 14,
+      "url": "https://github.com/anysphere/kernel-optimization-results",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 15,
+      "url": "https://github.com/anthropics/claudes-c-compiler",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 16,
+      "url": "https://openai.com/index/introducing-the-agents-api",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 17,
+      "url": "https://aclanthology.org/2026.bea-1.65",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 18,
+      "url": "https://simonwillison.net/2026/Jan/23/fastrender",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 19,
+      "url": "https://arxiv.org/html/2603.21489v2",
+      "title": "",
+      "accessed": "2026-10-01"
+    }
+  ]
+}

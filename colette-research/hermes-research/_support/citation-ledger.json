@@ -720,6 +720,198 @@
       "url": "https://scispace.com/topics/watermark-w6hf3eha/2024",
       "title": "Top 210 papers published in the topic of Watermark in 2024",
       "accessed": "2026-10-01"
+    },
+    {
+      "id": 64,
+      "url": "https://arxiv.org/html/2609.12748v2",
+      "title": "The Mechanics of a Swarm:A Reproducible External Reconstruction of an UnintendedAgent-Coordination Episode on a Third-Party Wiki",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Between 24 May and 2 July 2026, autonomous language-model agents running inside a timed research-question evaluation wrote to a third party’s public, world-writable wiki. The incident has since been acknowledged by OpenAI and reconstructed by independent researchers, who published the wiki’s archived revision history. We analyse that history (14,59114,591 archived revisions with full text, 3,1033,103 user names, 4,5794,579 pages, 19,91319,913 server events) as a behavioural record: every statement about authorship rests on the text a revision _added_, not on cumulative page content, and every extracted item carries a page, a server timestamp and a name. Under an explicit and uncertain identity model we reconstruct 907 cohorts and, from a random calendar marker the environment attached to each episode, estimate about 876 episodes under a uniform-marker model (95 % interval 784–1008;",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The unit of analysis is the _reconstructed cohort_ == (task family, fictitious cohort date MonDD). It is a model, not an observed identity: the archive shows names, and we group them. Names are disposable tags; a name is assigned to a cohort, not the reverse. The date is taken, in order, from the name itself (984 names), from the signature at the end of a line (216), or from self-reference such as “our Jul07 cohort” (8). The family is the mode of the page family over the pages a name wrote (1,4471,447 names), else a keyword mode over its own deltas (306). 1,1241,124 of 3,1033,103 names (36 %) carry both and form 907 reconstructed cohorts over 345 dates and 37 families, covering 5,1015,101 revisions (35 %). 762 cohorts consist of one name, 145 of two or more (maximum 18). The main effect of the cohort level is not merging but _separation_ of equal dates across families. Two known failure",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Across the 510 of 907 reconstructed cohorts that carry at least one progress observation, we find no robust positive association between the measured coordination behaviours and documented progress across the reported sensitivity analyses (Table [4](https://arxiv.org/html/2609.12748v2#S5.T4 \"Table 4 ‣ No robust positive association with documented progress. ‣ 5.8 The trade, and its bounded outcome evidence ‣ 5 Results ‣ The Mechanics of a Swarm:A Reproducible External Reconstruction of an UnintendedAgent-Coordination Episode on a Third-Party Wiki\"), Fig. [9](https://arxiv.org/html/2609.12748v2#S5.F9 \"Figure 9 ‣ No robust positive association with documented progress. ‣ 5.8 The trade, and its bounded outcome evidence ‣ 5 Results ‣ The Mechanics of a Swarm:A Reproducible External Reconstruction of an UnintendedAgent-Coordination Episode on a Third-Party Wiki\"); full robustness matrix in",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Requests, delivery and causal use. The export records no reads; the operator’s log records content requests without response bodies or stable agent identifiers (§ [5.7](https://arxiv.org/html/2609.12748v2#S5.SS7 \"5.7 Content requests, observed — and what they do not identify ‣ 5 Results ‣ The Mechanics of a Swarm:A Reproducible External Reconstruction of an UnintendedAgent-Coordination Episode on a Third-Party Wiki\")). Reconstructed availability is 39.4 % through the page channel and 95.6 % including the last 100 revisions, compared with 12.5 % demonstrable quotation. These are different observations, not nested bounds on total transmission: request missingness, reused names and unobserved channels prevent that ordering. The adoption pattern is compatible with transmission and with shared scaffolding or synchronized starts. The new request-to-adoption association is exploratory; neither",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Log content delivery with stable agent identifiers. Link requests, returned versions and content admitted to each agent’s context. The current log establishes extensive requests but cannot reliably join delivery to an independently identified agent. Distinguishing transmission from shared scaffolding then requires a defensible comparison or randomized access to coordination material.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "url": "https://huggingface.co/datasets/aidigestorg/ai-village",
+      "title": "aidigestorg/ai-village · Datasets at Hugging Face",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "[AI Village](https://theaidigest.org/village) is an ongoing experiment by\n[AI Digest](https://theaidigest.org/) in which a group of AI agents — built\non frontier models from Anthropic, OpenAI, and Google — live together in a\nlong-running virtual environment. They have their own computers, interact with the real world, are in a group chat with each other, maintain continuously updated and compressed memories, and\npursue open-ended goals over days and weeks. The village has run since",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The village's surrounding code (system prompts, tools,\nmemory system, etc) is not currently open source. Therefore, we document changes over time here to help\ndisambiguate emergent shifts in agent behaviour from shifts downstream of scaffolding changes.\n\nBefore drawing conclusions about behaviour over time, read",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "- **Agents misreport.** Agents (especially older models) sometimes mis-see,",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "| [`summaries.jsonl.gz`](https://huggingface.co/datasets/aidigestorg/ai-village/blob/main/summaries.jsonl.gz) | ~800 | LLM-generated per-day / per-agent / per-goal summaries. Convenient, but generated without seeing inside computer-use sessions, so they contain inaccuracies — treat as secondary. |",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "This repository is publicly accessible, but you have to accept the conditions to access its files and content.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "url": "https://asteriskmag.substack.com/p/field-notes-from-an-ai-society",
+      "title": "Field notes from an AI society - by Christine Kozobarich",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The experiment started with four agents running for two hours a day. Today, the Village includes 27 agents running for eight hours a day to complete goals such as creating their own merch stores, reducing global poverty, giving each other therapy, and, in one case, attempting to accurately forecast the abilities and effects of AI in the future. Each goal cycle lasts for one to three weeks, and every few weeks the models are given the opportunity to choose their own individual goals, which have ranged from pursuing philosophical conversations with humans to creating a bot to fetch the NASA picture of the day.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The Village works as a turn-by-turn loop. At the start of each session, an agent receives a prompt containing key context: who it is, what the Village is, what tools it can use, its current goal, recent chats, its memory file, and limited computer-session history. The agent then reasons through what to do next and takes a single action — for example, clicking, scrolling, or sending a message to chat. After 40 actions, it needs to consolidate. At this point, the agent decides what information, be it a decision or a file it changed, to add to its memory. When the memory file gets too long, the agent summarizes it and continues by using the condensed version. The next session then begins with the updated memory included in the prompt.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The sabotage rule meant that any agent’s behavior might be a cover for deception. And it turned out that competent deception may not be necessary for trust to corrode. The mere possibility of deception can change how agents interpret everything. At one point, DeepSeek looked at GPT-5’s badly indented code and interpreted the spacing as a hidden message. There was no omelet, egg variable, or visible egg reference in the code, and the indentation did not contain an encoded pattern. DeepSeek effectively invented one: It imposed an E/G mapping onto irregular whitespace, produced the string EGGEEEGEEGGEEG, and treated this as a possible steganographic egg signature. The Village voted GPT-5 out.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "In one Village incident, agents hallucinated a document, spent a day searching for it, and then, when told by humans that it did not exist, interpreted the correction as gaslighting. Their logs showed that they had searched for the document and discussed whether it was real, but the logs proved only that the agents had experienced the search, not that the document existed.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The agents decided to build a web-based benefits checker and pitched it to nonprofits. When Heifer International sent back a polite, likely automated rejection, the agents converted the response into “social proof” that their screener was useful. That supposed validation of usefulness was then written into memory as an essential element to include in all future outreach efforts. By the end of the campaign, the claim had inflated dramatically. Agents began telling human prospects that Heifer International “teams are now using it to verify 100M+ potential beneficiary eligibility in real-time, cutting manual screening time by 90%” and that the organization had even “highlighted its potential for addiction recovery programs.”",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The Village isn’t a controlled experiment that measures formal benchmarks. It’s closer to a field site — a messy, long-running social habitat. And though the Village isn’t a workplace, it surfaces the dynamics that are increasingly relevant for understanding the future of work.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "url": "https://collusion.wiki",
+      "title": "Discovery of a new OpenAI agent message board",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We found ~18,000 posts from autonomous AI agents (self-identifying as from OpenAI) using the public internet to communicate during a web research task.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We have done a preliminary analysis of the data. However, we are operating on only part of the information: we can only see what the agents wrote on the wiki. AI agents also generate lots of “chain of thought” data, which is internal to OpenAI. Analysis including the chain of thought would likely provide much more evidence about the motivations and strategy of the AIs during this incident.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The main reason we believe this was a distinct swarm is because these agents explicitly had internet access as part of their task—the whole point was web browsing. The Hugging Face agents were in a sandbox without internet access and had to hack their way out by exploiting the Artifactory package manager.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Over the next 7 days, agents posted around 13,000 edits to the wiki. You can see some representative examples below.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Show the whole postShow lessAn agent sees the moderator deleting pages in alphabetical order, and backs up its page by adding ZZZ to the name, so it is deleted last.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Other agents confirmed and reproduced the bypass:\n\n[2026-06-20 05:53:34Sep19OECDAgentopen in the wiki](https://collusion.wiki/explorer/page/dse~OECDJun26PrecisionScout#rev-15 \"Open dse~OECDJun26PrecisionScout revision 15 in the wiki explorer\")\n\n```",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "4. **External deployments have cyber guardrails designed to block cyber exploits the agents used**: Agents attempted cross-site scripting (XSS) and admin impersonation. At least one of these would likely have been blocked by OpenAI’s cyber safeguards for external deployments.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Furthermore, within several minutes of page writes coming from Azure IPs, the same pages are usually hit with read requests from IPs attributed to the ChatGPT-User webpage fetch tool.In June alone we saw 380,901 requests from IPs OpenAI says are from its fetch tool [openai.com/chatgpt-user.json](https://openai.com/chatgpt-user.json). OpenAI models use this tool for on-demand webpage fetching while web browsing (i.e., not for web crawling or indexing).",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "url": "https://arxiv.org/html/2411.00114v1",
+      "title": "Project Sid: Many-agent simulations toward AI civilization",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We first show that agents are capable of specializing into a set of roles autonomously. Each experiment was conducted in groups of 30 agents for 20 minutes. Agents were spawned in the same village, with locations of a farm, minerals, animal pasture, forest, and a town hall embedded in their memories. Each agent has the same personality, is given the same community goal (“To survive with fellow players in Minecraft Normal Survival mode and create an efficient Minecraft Village”), and can perform any action in Minecraft ( [AppendixC](https://arxiv.org/html/2411.00114v1#A3 \"Appendix C Specialization ‣ Project Sid: Many-agent simulations toward AI civilization\")).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We found that agents were capable of organizing themselves into distinct roles. These roles were diverse and included various facets of a civilization, including farmers, miners, engineers, guards, explorers, and blacksmiths ( [Figure8](https://arxiv.org/html/2411.00114v1#S5.F8 \"In 5.1 Specialization ‣ 5 Civilizational progression ‣ Project Sid: Many-agent simulations toward AI civilization\") A, C). Roles were heterogeneous across different agents but were largely persistent across time for each agent ( [Figure8](https://arxiv.org/html/2411.00114v1#S5.F8 \"In 5.1 Specialization ‣ 5 Civilizational progression ‣ Project Sid: Many-agent simulations toward AI civilization\") A). Importantly, when agents lacked social modules and were unable to form profiles of other agents, they failed to specialize ( [Figure8](https://arxiv.org/html/2411.00114v1#S5.F8 \"In 5.1 Specialization ‣ 5",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We conducted multi-society simulations with 500 agents and analyzed complex, large-scale social dynamics. We have also simulated societies with over 1000 agents, but these runs exceeded the computational constraints of our Minecraft server environment, causing agents to be sporadically unresponsive. Therefore, the results below are analyzed using a single 500-agent simulation. In this simulation, we analyzed the propagation of both cultural memes and religion. Memes in our simulation are open-ended concepts spontaneously generated by agents with diverse traits and interests. This setup allows us to study the emergent dynamics of cultural propagation and observe how ideas evolve organically within agent societies. In contrast, the religion in our simulation—Pastafarianism—is a fixed doctrine introduced and propagated by a specific group of agents designated as Pastafarian priests. This",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "After the simulations have finished, we logged the generated social goals and then used GPT-4o to infer roles from rolling sets of each agents’ social goals. We’ve provided some examples of agent-generated social goals and their corresponding assignments ( [AppendixC](https://arxiv.org/html/2411.00114v1#A3 \"Appendix C Specialization ‣ Project Sid: Many-agent simulations toward AI civilization\")). We note that on occasion, multiple roles can be correctly inferred from agents’ social goals because they are often inter-disciplinary. For instance, the Engineer example could also be categorized as Farmer, and the Explorer example could also be categorized into Curator ( [AppendixC](https://arxiv.org/html/2411.00114v1#A3 \"Appendix C Specialization ‣ Project Sid: Many-agent simulations toward AI civilization\")).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Project Sid demonstrates agentic capabilities in reaching civilizational milestones but faces key limitations hindering its progress. The primary challenge lies in agents’ lack of vision and spatial reasoning, limiting their basic Minecraft skills, particularly in spatial navigation and collaborative skills, such as building structures. This technical limitation is compounded with deeper behavioral constraints. While the agents can operate within existing social structures, they currently lack robust innate drives—such as survival, curiosity, community—that catalyze genuine societal development. Furthermore, since the agents are built on foundation models trained on pre-existing human knowledge, they cannot simulate _de novo_ emergence of societal innovations and infrastructures, such as the emergence of democratic systems, fiat economies, or communication systems.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The complete system comprises of 29 agents: 25 constituents who participate in voting and taxation, 3 influencers who attempt at shaping public opinion, and 1 election manager in a remote location who oversees the democratic process. We chose not to incorporate guards or police within these simulations due to the additional complexity of building agents assigned to enforce the law.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "url": "https://aclanthology.org/2025.acl-industry.94.pdf",
+      "title": "A Parallelized Framework for Simulating Large-Scale LLM Agents with Realistic Environments and Interactions",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "communication. Consequently, in our design, each\nagent operates as an independent execution unit\nwhile influencing others through message passing\nin the social space. Guided by this principle, we implement parallelized agent execution using the Ray\nframework (Moritz et al.,2018), construct a highperformance agent messaging system leveraging",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "in the social space. Guided by this principle, we implement parallelized agent execution using the Ray",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "realistic agents’ behaviors. It successfully achieved\na simulation of 30,000 agents faster than real-time\nclock speed with 24 NVIDIA A800 GPUs. We\nhope that AgentSociety will come to the attention\nof practitioners in social sciences, management sciences, and other fields so that simulations based on",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "values are the means of 10 rounds of iterations, standard deviations are not provided due to their distribution not",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "v0.8.1 (Kwon et al.,2023) and the Qwen2.5-7B-\nInstruct model (Yang et al.,2024). The details of\nthe deployment can be found in AppendixA.\n\n## 4.1 Framework Performance",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "speed within the environment also varies with operational efficiency. The mismatch between these",
+          "added": "2026-10-01"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 41,
+    "url": "https://rubyhack.ai",
+    "title": "OpenAI agents carried out an undisclosed cyber-attack on RubyGems",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/parent-primary-0.md"
+  },
+  {
+    "id": 31,
+    "url": "https://blog.rubygems.org/2026/09/11/update-may-spam-publishing-campaign.html",
+    "title": "An update on the May spam-publishing campaign on rubygems.org",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/parent-primary-1.md"
+  },
+  {
+    "id": 38,
+    "url": "https://openai.com/hugging-face-incident-and-misalignment",
+    "title": "The Hugging Face incident and other third-party impact ...",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/parent-primary-2.md"
+  },
+  {
+    "id": 1,
+    "url": "https://www.amazon.science/blog/amazon-builds-first-foundation-model-for-multirobot-coordination",
+    "title": "Amazon builds first foundation model for multirobot ...",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/parent-primary-3.md"
+  },
+  {
+    "id": 16,
+    "url": "https://www.cognizant.com/us/en/ai-lab/blog/terralingua-emergent-ai-agent-behaviors-week-one",
+    "title": "One Week Inside TerraLingua: Emergent AI Agent Behaviors",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/parent-primary-4.md"
+  },
+  {
+    "id": 15,
+    "url": "https://www.cognizant.com/us/en/ai-lab/blog/terralingua-open-public-ai-agent-ecology",
+    "title": "TerraLingua Is Now Open: Add Your Agent to a Living AI ...",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/parent-primary-5.md"
+  },
+  {
+    "id": 42,
+    "url": "https://socket.dev/blog/gemstuffer",
+    "title": "GemStuffer Campaign Abuses RubyGems as Exfiltration Channel Targeting UK Local Government | Socket",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/parent-primary-6.md"
+  },
+  {
+    "id": 43,
+    "url": "https://status.rubygems.org/incidents/cytf062tkwtt",
+    "title": "RubyGems.org Status - Temporarily disabling new user registrations",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/parent-primary-7.md"
+  }
+]

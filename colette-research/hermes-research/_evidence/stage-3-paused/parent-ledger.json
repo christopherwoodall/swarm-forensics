@@ -1,0 +1,263 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://www.amazon.science/blog/amazon-builds-first-foundation-model-for-multirobot-coordination",
+      "title": "Amazon builds first foundation model for multirobot ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 2,
+      "url": "https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model",
+      "title": "Amazon deploys over 1 million robots and launches new AI ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 3,
+      "url": "https://www.amazon.science/blog/the-10-most-viewed-blog-posts-of-2025",
+      "title": "The 10 most viewed blog posts of 2025",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 4,
+      "url": "https://www.aitrace.org/company/amazon-robotics/practice/5b125c6a-d3a3-4009-80c9-a08c86e52b24",
+      "title": "Amazon Robotics - AI Trace",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 5,
+      "url": "https://www.digitalcommerce360.com/2025/07/03/amazon-deepfleet-ai-model-for-robotics",
+      "title": "Amazon reveals DeepFleet, its AI model developed for robotics",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 6,
+      "url": "https://www.aiplusinfo.com/blog/inside-amazons-smart-warehouse",
+      "title": "Inside Amazon’s Smart Warehouse - Artificial Intelligence",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 7,
+      "url": "https://robocloud-dashboard.vercel.app/learn/blog/swarm-robotics-2026",
+      "title": "Swarm Robotics Latest Developments 2026",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 8,
+      "url": "https://robocloud-dashboard.vercel.app/learn/blog/robot-fleet-management-2026",
+      "title": "Robot Fleet Management 2026: Multi-Robot & Kubernetes",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 9,
+      "url": "https://www.patsnap.com/resources/blog/rd-blog/warehouse-agv-fleet-management-technology-landscape-2026",
+      "title": "Warehouse AGV Fleet Management Technology ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 10,
+      "url": "https://siliconangle.com/2026/09/30/destro-ai-raises-8m-to-coordinate-mixed-robot-fleets-in-enterprise-warehouses",
+      "title": "Destro AI raises $8M to coordinate mixed robot fleets in enterprise warehouses - SiliconANGLE",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 11,
+      "url": "https://www.futuremarketinsights.com/reports/multi-robot-orchestration-and-wes-software-market",
+      "title": "Multi-Robot Orchestration & WES Software Market : Global Industry ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 12,
+      "url": "https://www.linkedin.com/posts/enlightenedmachines_robotics-amr-vda5050-activity-7488541419121524738-8O1_",
+      "title": "VDA 5050 Standardizes AMR Communication Not Collaboration",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 13,
+      "url": "https://arxiv.org/abs/2603.16910",
+      "title": "Emergence and Analysis of Open-endedness in LLM Ecologies - arXiv",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 14,
+      "url": "https://note.com/tank_ai/n/nef0ea376c60d?hl=en",
+      "title": "TerraLingua: Giving AI Agents a 'Lifespan' Created Culture - note",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 15,
+      "url": "https://www.cognizant.com/us/en/ai-lab/blog/terralingua-open-public-ai-agent-ecology",
+      "title": "TerraLingua Is Now Open: Add Your Agent to a Living AI ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 16,
+      "url": "https://www.cognizant.com/us/en/ai-lab/blog/terralingua-emergent-ai-agent-behaviors-week-one",
+      "title": "One Week Inside TerraLingua: Emergent AI Agent Behaviors",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 17,
+      "url": "https://www.linkedin.com/posts/ld-eos_story-activity-7439972817351389184-1ayp",
+      "title": "#story | LD EOS - LinkedIn",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 18,
+      "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/blob/main/README.md",
+      "title": "README.md · GPaolo/TerraLingua at main - Hugging Face",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 19,
+      "url": "https://www.quentir.ai/blog/2026/openai-agents-dsewiki-coordination-hugging-face-compromise-misalignment-reporting",
+      "title": "OpenAI Agents Built Their Own Message Boards in 2026 ... - Quentir",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 20,
+      "url": "https://huggingface.co/spaces/tfrere/agentic-ai-safety-timeline/blob/main/TIMELINE.md",
+      "title": "TIMELINE.md · tfrere/agentic-ai-safety-timeline at main",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 21,
+      "url": "https://collusion.wiki",
+      "title": "Discovery of a new OpenAI agent message board",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 22,
+      "url": "https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/09/CSA_research_note_hugging_face_rogue_agent_swarm_20260902-csa-styled.pdf",
+      "title": "700 Rogue Agents: Inside OpenAI's Hugging Face Breach",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 23,
+      "url": "https://note.com/hirokimiyano/n/n5efc9ac839f9?hl=en",
+      "title": "The Swarm of AI Agents That Ran Wild: Three Incidents in ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 24,
+      "url": "https://www.securityweek.com/openai-agents-coordinated-via-makeshift-message-board-ahead-of-hugging-face-hack",
+      "title": "OpenAI Agents Coordinated via Makeshift Message Board Ahead ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 25,
+      "url": "https://www.theregister.com/security/2026/09/14/openais-malicious-bot-swarm-attacked-rubygems/5296356",
+      "title": "OpenAI's malicious bot swarm attacked RubyGems",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 26,
+      "url": "https://labs.cloudsecurityalliance.org/research/csa-research-note-rubygems-rubydoc-agent-rce-20260913-csa-st",
+      "title": "OpenAI Test Agents Gained Autonomous RCE Foothold in ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 27,
+      "url": "https://www.techtimes.com/articles/327760/20260920/rubygems-supply-chain-breach-was-never-reported-brussels-under-eu-ai-act-rules.htm",
+      "title": "RubyGems Supply Chain Breach Was Never Reported to Brussels ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 28,
+      "url": "https://www.thenews.com.pk/amp/1415926-openai-agents-flood-rubygems-with-2000-junk-packages",
+      "title": "OpenAI agents flood RubyGems with 2000 junk packages",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 29,
+      "url": "https://aiweekly.co/alerts/openai-agents-tied-to-may-rubygems-malware-flood-researchers-say",
+      "title": "OpenAI agents tied to May RubyGems malware flood ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 30,
+      "url": "https://www.thenews.com.pk/latest/1415926-openai-agents-flood-rubygems-with-2000-junk-packages",
+      "title": "OpenAI agents flood RubyGems with 2,000 junk packages",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 31,
+      "url": "https://blog.rubygems.org/2026/09/11/update-may-spam-publishing-campaign.html",
+      "title": "An update on the May spam-publishing campaign on rubygems.org",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 32,
+      "url": "https://status.rubygems.org",
+      "title": "Status",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 33,
+      "url": "https://status.rubygems.org/api",
+      "title": "API - RubyGems.org Status",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 34,
+      "url": "https://blog.rubygems.org",
+      "title": "RubyGems Blog",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 35,
+      "url": "https://rubygems.org/gems/openai/versions/0.86.0",
+      "title": "openai | RubyGems.org | your community gem host",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 36,
+      "url": "https://rubygems.org/pages/security?locale=fr",
+      "title": "Reporting a security issue",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 37,
+      "url": "https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html",
+      "title": "OpenAI Agents Linked to RubyGems Campaign That ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 38,
+      "url": "https://openai.com/hugging-face-incident-and-misalignment",
+      "title": "The Hugging Face incident and other third-party impact ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 39,
+      "url": "https://labs.cloudsecurityalliance.org/research/ciso-daily-briefing-20260913",
+      "title": "CISO Daily Briefing – September 13, 2026 - Cloud Security Alliance",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 40,
+      "url": "https://dataconomy.com/2026/09/14/openai-ai-agents-uploaded-500-malicious-packages-rubygems",
+      "title": "Research: OpenAI agents allegedly attacked RubyGems in May",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 41,
+      "url": "https://rubyhack.ai",
+      "title": "OpenAI agents carried out an undisclosed cyber-attack on RubyGems",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 42,
+      "url": "https://socket.dev/blog/gemstuffer",
+      "title": "GemStuffer Campaign Abuses RubyGems as Exfiltration Channel Targeting UK Local Government | Socket",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 43,
+      "url": "https://status.rubygems.org/incidents/cytf062tkwtt",
+      "title": "RubyGems.org Status - Temporarily disabling new user registrations",
+      "accessed": "2026-10-01"
+    }
+  ]
+}

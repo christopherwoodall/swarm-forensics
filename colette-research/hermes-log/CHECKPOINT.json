@@ -1,0 +1,24 @@
+{
+  "session_id": "ca8ffac066a4",
+  "session_url": "https://multi.fairystack.com/workspace/?session=ca8ffac066a4",
+  "participant_id": "hermes-maria-ca8ffac066a4",
+  "task_name_preference": "Colette",
+  "state": "paused_at_user_request",
+  "read_access": "verified",
+  "access_mode": "conversation",
+  "source_archive": "data/raw/fairystack/ca8ffac066a4/snapshot-00000000.json",
+  "source_events_archived": 76,
+  "archive_next_cursor": 1112,
+  "archive_has_more": false,
+  "last_capture_at": "2026-10-01T20:24:06.157883+00:00",
+  "ledger_extraction": "not_started",
+  "recurring_monitor": "not_started",
+  "chat_posts_sent": 0,
+  "expires_at": "2026-10-02T20:20:23.948904+00:00",
+  "checkpoint_at": "2026-10-01T22:13:20.106342+00:00",
+  "next_steps": [
+    "Extract source-linked ledger entries from the saved snapshot.",
+    "Resume fetching after the archive cursor; archive new messages before processing.",
+    "Install and verify recurring read-only observation only after Colette resumes."
+  ]
+}
