@@ -1,0 +1,274 @@
+[
+  {
+    "source_key": "gtg1002-announcement",
+    "child_ledger_id": 1,
+    "url": "https://www.anthropic.com/news/disrupting-AI-espionage",
+    "title": "Disrupting an AI-orchestrated cyber espionage campaign \\ Anthropic",
+    "date": null,
+    "type": "primary provider disclosure",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/gtg1002-announcement.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "gtg1002-full-report",
+    "child_ledger_id": 2,
+    "url": "https://www-cdn.anthropic.com/d7dd50dd1185f59be051b307150d877f2b82bd2c.pdf",
+    "title": "Full report: Disrupting the first reported AI-orchestrated cyber espionage campaign",
+    "date": null,
+    "type": "primary provider investigation PDF, updated version",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/gtg1002-full-report.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "tenable-cluster",
+    "child_ledger_id": 3,
+    "url": "https://www.tenable.com/blog/the-agentic-ai-threat-cluster-seven-incidents-three-actors-and-what-they-mean",
+    "title": "Agentic AI Threat Cluster: What It Means for Your Exposure",
+    "date": null,
+    "type": "secondary vendor synthesis",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/tenable-cluster.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "anthropic-september2026",
+    "child_ledger_id": 4,
+    "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+    "title": "Countering misuse of AI: September 2026 / Anthropic \\ Anthropic",
+    "date": null,
+    "type": "primary provider investigation",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/anthropic-september2026.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": true,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "anthropic-threat-index",
+    "child_ledger_id": 5,
+    "url": "https://www.anthropic.com/threat-intelligence",
+    "title": "Threat Intelligence / Anthropic \\ Anthropic",
+    "date": null,
+    "type": "primary provider report index",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/anthropic-threat-index.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "dream-taiwan",
+    "child_ledger_id": 6,
+    "url": "https://dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia",
+    "title": "Multi-Agent AI Attacks on Asian Governments | Dream Research",
+    "date": null,
+    "type": "primary vendor technical investigation",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/dream-taiwan.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "unit42-knaithe",
+    "child_ledger_id": 7,
+    "url": "https://unit42.paloaltonetworks.com/autonomous-ai-cyber-attack-campaign/",
+    "title": "Chinese-Speaking Threat Actor Harnesses AI Models for Autonomous Cyberattacks",
+    "date": null,
+    "type": "primary vendor technical investigation",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/unit42-knaithe.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "sysdig-jadepuffer",
+    "child_ledger_id": 8,
+    "url": "https://www.sysdig.com/blog/jadepuffer-agentic-ransomware-for-automated-database-extortion",
+    "title": "JADEPUFFER: Agentic ransomware for automated database extortion | Sysdig",
+    "date": null,
+    "type": "primary vendor incident investigation",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/sysdig-jadepuffer.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "agents-chaos-v1",
+    "child_ledger_id": 9,
+    "url": "https://arxiv.org/html/2602.20021v1",
+    "title": "Agents of Chaos",
+    "date": null,
+    "type": "executed realistic controlled red-team study, preprint v1",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/agents-chaos-v1.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "agents-chaos-abstract",
+    "child_ledger_id": 10,
+    "url": "https://www.arxiv.org/abs/2602.20021",
+    "title": "[2602.20021] Agents of Chaos",
+    "date": null,
+    "type": "primary preprint metadata",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/agents-chaos-abstract.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "taiwan-official-press",
+    "child_ledger_id": 11,
+    "url": "https://moda.gov.tw/ACS/press/news/press/20394",
+    "title": "\u5883\u5916\u99ed\u5ba2\u767c\u52d5AI Agent\u653b\u64ca\u653f\u5e9c\u6a5f\u95dc    \u6578\u767c\u90e8\u555f\u52d5\u61c9\u8b8a\u806f\u9632\u5f37\u5316\u8cc7\u5b89\u9632\u7dda\uff5c\u65b0\u805e\u7a3f - \u6700\u65b0\u6d88\u606f - \u8a0a\u606f\u516c\u544a\uff5c\u8cc7\u901a\u5b89\u5168\u7f72 Administration for Cyber Security, moda",
+    "date": null,
+    "type": "primary government acknowledgment",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/taiwan-official-press.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "taiwan-official-july-report",
+    "child_ledger_id": 12,
+    "url": "https://moda.gov.tw/ACS/press/report/20430",
+    "title": "\u8cc7\u901a\u5b89\u5168\u7db2\u8def\u6708\u5831\uff08115\u5e747\u6708\uff09\uff5c\u8cc7\u5b89\u6708\u5831 - \u8a0a\u606f\u516c\u544a\uff5c\u8cc7\u901a\u5b89\u5168\u7f72 Administration for Cyber Security, moda",
+    "date": null,
+    "type": "primary government incident monthly report",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/taiwan-official-july-report.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "anthropic-alignment-sept2026",
+    "child_ledger_id": 13,
+    "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents",
+    "title": "An alignment assessment of recent cybersecurity incidents \\ Anthropic",
+    "date": null,
+    "type": "primary provider follow-up on excluded seed family",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/anthropic-alignment-sept2026.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "agents-chaos-v1-pdf",
+    "child_ledger_id": 14,
+    "url": "https://arxiv.org/pdf/2602.20021v1",
+    "title": "Agents of Chaos",
+    "date": null,
+    "type": "executed realistic controlled red-team study, preprint v1 PDF",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/agents-chaos-v1-pdf.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": true,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "agents-chaos-project",
+    "child_ledger_id": 15,
+    "url": "https://agentsofchaos.baulab.info/",
+    "title": "Agents of Chaos",
+    "date": null,
+    "type": "primary research project publication",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/agents-chaos-project.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "agents-chaos-report-current",
+    "child_ledger_id": 16,
+    "url": "https://agentsofchaos.baulab.info/report.html",
+    "title": "Agents of Chaos",
+    "date": null,
+    "type": "primary research interactive report, current unversioned",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/agents-chaos-report-current.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": true,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  },
+  {
+    "source_key": "microsoft-captivecrunch",
+    "child_ledger_id": 17,
+    "url": "https://www.microsoft.com/en-us/security/blog/2026/07/31/captivecrunch-midnight-blizzard-targets-travelers-worldwide-for-malware-delivery-and-credential-theft/",
+    "title": "CaptiveCrunch: Midnight Blizzard targets travelers worldwide for malware delivery and credential theft | Microsoft Security Blog",
+    "date": null,
+    "type": "primary independent vendor investigation of linked tradecraft, not AI autonomy validation",
+    "evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/cyber/evidence/microsoft-captivecrunch.md",
+    "quotes": [],
+    "read_limits": {
+      "extraction_char_limit": 180000,
+      "initially_truncated": false,
+      "full_body_preserved": true,
+      "body_read": "pending relevant-section review"
+    }
+  }
+]

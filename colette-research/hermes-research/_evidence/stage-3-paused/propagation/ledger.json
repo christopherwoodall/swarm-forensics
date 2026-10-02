@@ -1,0 +1,539 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://labs.cloudsecurityalliance.org/research/csa-research-note-agentic-c2-promptware-attack-infrastructur",
+      "title": "Promptware: AI Agents as Attack Infrastructure",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 2,
+      "url": "https://threatatlas.ai/case-studies",
+      "title": "Case Studies",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 3,
+      "url": "https://arxiv.org/pdf/2601.09625",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 4,
+      "url": "https://arxiv.org/pdf/2609.35576",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 5,
+      "url": "https://embracethered.com/blog/posts/2025/agenthopper-a-poc-ai-virus",
+      "title": "\n     AgentHopper: An AI Virus ·  Embrace The Red\n  ",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 6,
+      "url": "https://www.techtimes.com/articles/323346/20260806/def-con-34-opens-today-ai-agents-graduate-novelty-standard-hacking-weapon.htm",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 7,
+      "url": "https://www.techtarget.com/cybersecurity/conference/Black-Hat-2026-Key-news-takeaways-and-security-trends",
+      "title": "",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 8,
+      "url": "https://labs.cloudsecurityalliance.org/research/csa-research-note-promptware-agent-commander-c2-20260317-csa",
+      "title": "Agent Commander: Promptware Turns AI Agents into C2 ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 9,
+      "url": "https://evilrobots.lol/profiles/johann-rehberger",
+      "title": "JOHANN REHBERGER | The Evil Robots Series",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 10,
+      "url": "https://threatatlas.ai/source/embrace-the-red-blog",
+      "title": "Embrace The Red — AI Red Team Research Blog",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 11,
+      "url": "https://www.kunalganglani.com/blog/ai-agent-threat-model-attack-surface",
+      "title": "AI Agent Threat Model: 7 Attack Vectors [2026]",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 12,
+      "url": "https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/05/CSA_research_note_promptware-agentic-c2-attack-class_20260508-csa-styled.pdf",
+      "title": "Promptware and Agentic C2: The Confirmed Attack Class",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 13,
+      "url": "https://labs.cloudsecurityalliance.org/research/csa-research-note-promptware-agent-c2-20260324-csa-styled",
+      "title": "Agent Commander: Promptware C2 in Agentic AI – Lab Space",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 14,
+      "url": "https://labs.cloudsecurityalliance.org/research/csa-research-note-promptware-agentic-c2-attack-class-2026050",
+      "title": "Promptware and Agentic C2: The Confirmed Attack Class",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 15,
+      "url": "https://embracethered.com/blog/posts/2026/defcon-talk-copirate-365",
+      "title": "Copirate 365 at DEF CON: Plundering in the Depths of ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 16,
+      "url": "https://labs.cloudsecurityalliance.org/research/ciso-daily-briefing-20260505",
+      "title": "CISO Daily Briefing — May 5, 2026 – Lab Space",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 17,
+      "url": "https://adversa.ai/blog/top-agentic-ai-security-resources-june-2026",
+      "title": "Top Agentic AI security resources — June 2026 - Adversa AI",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 18,
+      "url": "https://www.linkedin.com/pulse/ai-security-newsletter-may-2026-tal-eliyahu-8byke",
+      "title": "AI Security Newsletter - May 2026",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 19,
+      "url": "https://conferencegrid.com/events/def-con-2026",
+      "title": "DEF CON 2026 · Aug 6–9, 2026 · Las Vegas Convention Center ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 20,
+      "url": "https://www.linkedin.com/posts/rahulladumor_aigovernance-dlp-platformengineering-activity-7482136500621447169-awnC",
+      "title": "DLP Control Limitations in Modern Dev Workflows",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 21,
+      "url": "https://www.techtimes.com/articles/323231/20260805/bsides-las-vegas-ai-track-warned-agentic-worm-risk-day-before-chaindrop-hit.htm",
+      "title": "BSides Las Vegas AI Track Warned of Agentic Worm Risk the Day Before ChainDrop Hit",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 22,
+      "url": "https://www.beri.net/article/chaindrop-worm-ai-agent-config-persistence-claude-code-hooks",
+      "title": "npm Pulled the Packages. Your Agent Config Reinfects You.",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 23,
+      "url": "https://securityboulevard.com/2026/08/machine-speed-credential-abuse-what-the-chaindrop-npm-worm-changes",
+      "title": "Machine-Speed Credential Abuse: What the ChainDrop npm Worm ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 24,
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm",
+      "title": "ChainDrop supply chain compromise: Anatomy of a self-propagating worm | Microsoft Security Blog",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 25,
+      "url": "https://mindpattern.ai/f/19586",
+      "title": "ChainDrop's npm worm plants a SessionStart hook in .claude/settings.json — your agent reinfects the machine on every launch",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 26,
+      "url": "https://www.linkedin.com/posts/supplier-shield_chaindrop-npm-worm-hits-400-packages-supply-chain-activity-7492465518944161792-p8pw",
+      "title": "ChainDrop Worm Infects 400+ npm Packages, Steals Dev ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 27,
+      "url": "https://shattered.io/chaindrop-npm-worm-444-packages-2026",
+      "title": "ChainDrop npm Worm: 444 Packages Infected in 4 Hours",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 28,
+      "url": "https://arxiv.org/abs/2609.35576v1",
+      "title": "Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 29,
+      "url": "https://threatresearch.io",
+      "title": "Threat Research · Primary security research, indexed as it lands.",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 30,
+      "url": "https://eyeon.ai/archive",
+      "title": "Findings archive",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 31,
+      "url": "https://learnaivisually.com/ai-explained",
+      "title": "AI Explained",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 32,
+      "url": "https://thehackernews.com/search/label/artificial%20intelligence",
+      "title": "artificial intelligence — Latest News, Reports & Analysis",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 33,
+      "url": "https://engage.checkpoint.com/ai-security-report-2026/items/report",
+      "title": "Report | AI Security, 2026",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 34,
+      "url": "https://web-assets.esetstatic.com/wls/en/papers/threat-reports/eset-threat-report-h12026.pdf",
+      "title": "web-assets.esetstatic.com · wls · enThreat Report",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 35,
+      "url": "https://arxiv.org/html/2609.35576v1",
+      "title": "Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 36,
+      "url": "https://searcharxiv.org/abs/2511.17671",
+      "title": "MURMUR: Using cross-user chatter to break collaborative language agents in groups | Search arXiv",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 37,
+      "url": "https://ar5iv.labs.arxiv.org/html/2604.01350",
+      "title": "[2604.01350] No Attacker Needed: Unintentional Cross-User ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 38,
+      "url": "https://www.connectedpapers.com/main/8f901170b067c63db1d2067885926954e7441ccb",
+      "title": "Find and explore academic papers",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 39,
+      "url": "https://openreview.net/pdf/0ca714339dda173a236b48a657cca6764fdce771.pdf",
+      "title": "[PDF] MURMUR: USING CROSS-USER CHATTER TO BREAK ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 40,
+      "url": "https://ai-alert.org/posts/prompt-injection-wild-2025",
+      "title": "Prompt Injection in the Wild: Incidents from 2024-2025 - AI Alert",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 41,
+      "url": "https://community.openai.com/tag/agents/343",
+      "title": "Topics tagged agents",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 42,
+      "url": "https://slack.com/blog/transformation/securing-the-agentic-enterprise",
+      "title": "Securing the Agentic Enterprise",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 43,
+      "url": "https://wraith.sh/incidents/agentflayer-chatgpt-connectors",
+      "title": "AgentFlayer: zero-click ChatGPT Connectors exfiltration",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 44,
+      "url": "https://vibegraveyard.ai/tags/prompt-injection",
+      "title": "Prompt Injection AI Failures | Vibe Graveyard",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 45,
+      "url": "https://www.webpronews.com/zero-click-ai-hijacks-exposed-copilot-and-gemini-vulnerabilities-at-black-hat-2025",
+      "title": "Zero-Click AI Hijacks Exposed: Copilot and Gemini ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 46,
+      "url": "https://windowsforum.com/windows-news.4/agentflayer-attacks-zero-click-hijacking-of-enterprise-ai-agents.377302",
+      "title": "AgentFlayer Attacks: Zero-Click Hijacking of Enterprise AI ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 47,
+      "url": "https://arxiv.org/html/2601.09625v2",
+      "title": "The Promptware Kill Chain: How Prompt Injections ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 48,
+      "url": "https://arxiv.org/html/2603.15727v3",
+      "title": "AgentWorm: Self-Propagating Attacks Across LLM Agent Ecosystems",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 49,
+      "url": "https://searcharxiv.org/abs/2603.15727",
+      "title": "AgentWorm: Self-Propagating Attacks Across LLM Agent Ecosystems | Search arXiv",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 50,
+      "url": "https://dev.to/alifunk/when-ai-agents-become-the-attack-surface-architecting-against-self-propagating-threats-4olp",
+      "title": "When AI Agents Become the Attack Surface",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 51,
+      "url": "https://www.fatherofai.in/blog/mcp-tool-poisoning-security-2026",
+      "title": "Your MCP Tool Descriptions Are Executable Code - Father of AI",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 52,
+      "url": "https://www.linkedin.com/pulse/agentworm-first-self-replicating-worm-ai-agent-ecosystems-lelle-hgbre",
+      "title": "AgentWorm: The First Self-Replicating Worm for AI Agent ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 53,
+      "url": "https://www.alphaxiv.org/@xiaokun-luan",
+      "title": "Xiaokun Luan | alphaXiv",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 54,
+      "url": "https://thehackernews.com/2026/08/ai-mind-viruses-can-spread-between.html",
+      "title": "AI \"Mind Viruses\" Can Spread Between Agents Through ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 55,
+      "url": "https://embracethered.com/blog/posts/2026/agent-commander-your-agent-works-for-me-now",
+      "title": "Agent Commander: Promptware-Powered Command and Control ·  Embrace The Red",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 56,
+      "url": "https://defcon.org/html/defcon-singapore/dc-singapore-talks.html",
+      "title": "DEF CON® Singapore Hacking Conference - Talks",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 57,
+      "url": "https://arxiv.org/abs/2603.15727",
+      "title": "[2603.15727] AgentWorm: Self-Propagating Attacks Across LLM Agent Ecosystems",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 58,
+      "url": "https://www.theregister.com/security/2026/07/29/word-worm-crawls-into-copilot-spreads-chaos/5280588",
+      "title": "Word worm crawls into Copilot, spreads chaos",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 59,
+      "url": "https://thenextweb.com/news/microsoft-copilot-word-worm-prompt-injection-super-app",
+      "title": "A hidden line in a Word doc can rewrite your numbers, and infect the ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 60,
+      "url": "https://mallory.ai/stories/019faedb-a4e1-72b3-bd80-2dd04c32a00c",
+      "title": "Hidden Prompt Injection in Word Copilot Enables Self-Propagating ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 61,
+      "url": "https://thehackernews.com/2026/07/microsoft-copilot-for-word-can-copy.html",
+      "title": "Microsoft Copilot for Word Can Copy Hidden Prompts Into New ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 62,
+      "url": "https://thehackernews.com/search/label/Prompt%20Injection",
+      "title": "Prompt Injection — Latest News, Reports & Analysis",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 63,
+      "url": "https://cyberinsider.com/microsoft-copilot-for-word-vulnerable-to-self-propagating-worm-like-attack",
+      "title": "Microsoft Copilot for Word vulnerable to self-propagating worm-like attack",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 64,
+      "url": "https://simonwillison.net/tags/microsoft",
+      "title": "Simon Willison on microsoft",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 65,
+      "url": "https://www.lineaje.com/ai-threats-analysis-reports/the-worm-that-wrote-itself-ai-propagation-through-microsoft-copilot-for-word",
+      "title": "AI Propagation Through Microsoft Copilot for Word",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 66,
+      "url": "https://www.deepinspect.ai/blog/microsoft-copilot-word-self-propagating-prompt-injection-document-provenance",
+      "title": "A Hidden Word Prompt Can Copy Itself Through Copilot Output",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 67,
+      "url": "https://enklypesalt.com/posts/context-collapse-part3-ai-worming-through-word",
+      "title": "Context Collapse, Part 3 - AI Worming through Word | En Klype Salt",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 68,
+      "url": "https://vibegraveyard.ai/story/gitclear-ai-copilot-code-quality-study",
+      "title": "GitClear study finds AI coding assistants are pushing...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 69,
+      "url": "https://www.agentpatterns.ai/security/document-borne-prompt-injection",
+      "title": "Document-Borne Prompt Injection Through Agent Read Tools — AgentPatterns.ai",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 70,
+      "url": "https://windowsforum.com/news/microsoft-365-copilot-in-word-hidden-text-can-alter-reports.440856",
+      "title": "Microsoft 365 Copilot in Word: Hidden Text Can Alter Reports",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 71,
+      "url": "https://labs.cloudsecurityalliance.org/research/csa-research-note-promptware-c2-agent-exploitation-20260406",
+      "title": "Promptware: When Prompt Injection Becomes C2",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 72,
+      "url": "https://agentic-threat-tracker.com/?tags=prompt-injection",
+      "title": "0.85 - The Wire.Tracking threats to Agents",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 73,
+      "url": "https://www.richards.ai/papers/security-prompt-injection-tool-hijacking-and-data-exfiltration-defenses-i",
+      "title": "Prompt Injection, Tool Hijacking, and Data Exfiltration ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 74,
+      "url": "https://arxiv.org/html/2506.23260v1",
+      "title": "From Prompt Injections to Protocol Exploits: Threats in LLM ... - arXiv",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 75,
+      "url": "https://media.defcon.org/DEF%20CON%20Singapore%201/DEF%20CON%20SG%201%20main%20stage%20presentations/Johann%20Rehberger%20-%20Copirate%20365%20-%20Persistent%20Plundering%20in%20the%20Depths%20of%20Microsoft%20Copilot.pdf",
+      "title": "DEF CON Media Server - Error 404",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 76,
+      "url": "https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-24299",
+      "title": "CVE-2026-24299 - Security Update Guide - Microsoft - M365 Copilot Information Disclosure Vulnerability",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 77,
+      "url": "https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2025-53773",
+      "title": "CVE-2025-53773 - Security Update Guide - Microsoft - GitHub Copilot and Visual Studio Remote Code Execution Vulnerability",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 78,
+      "url": "https://www.heise.de/en/news/39C3-Security-researcher-hijacks-AI-coding-assistants-with-prompt-injection-11125687.html",
+      "title": "39C3: Security researcher hijacks AI coding assistants with prompt injection",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 79,
+      "url": "https://www.linkedin.com/posts/the-yoda-scrolls_agenthopper-an-ai-virus-embrace-the-red-activity-7370856125711273985--0s9",
+      "title": "AgentHopper: AI virus via prompt injections",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 80,
+      "url": "https://github.com/advisories",
+      "title": "GitHub Advisory Database",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 81,
+      "url": "https://www.linkedin.com/posts/maxim-andriushin_the-first-ai-virus-just-proved-our-worst-activity-7369644083486654469-qwJb",
+      "title": "Maxim Andriushin's Post",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 82,
+      "url": "https://github.com/github/copilot-cli/releases",
+      "title": "Releases · github/copilot-cli",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 83,
+      "url": "https://x.com/wunderwuzzi23/status/1964354771399385294",
+      "title": "AI agents can be hijacked to spread like computer viruses. ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 84,
+      "url": "https://securiti.ai/events/gartner-security-risk-management-summit-2026",
+      "title": "Gartner Security & Risk Management Summit",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 85,
+      "url": "https://github.com/joylarkin/openclaw-security-news",
+      "title": "joylarkin/openclaw-security-news",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 86,
+      "url": "https://www.thetechbag.com/securiti",
+      "title": "Securiti — The Data + AI Command Center, All 5 Angles, ...",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 87,
+      "url": "https://www.veeam.com/blog/agent-commander-ai-risk-solution.html",
+      "title": "Agent Commander - The First Integrated Solution for AI Risk - Veeam",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 88,
+      "url": "https://www.veeam.com/blog/veeam-introduces-agent-commander-detect-protect-undo-ai-data-risks.html",
+      "title": "Agent Commander: Detect & Undo AI Data Risks - Veeam",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 89,
+      "url": "https://www.techtarget.com/data-technologies/news/366639456/Veeam-releases-Agent-Commander-to-combat-agentic-AI-risk",
+      "title": "Veeam releases Agent Commander to combat agentic AI risk | TechTarget",
+      "accessed": "2026-10-01"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+[
+  {
+    "case_id": "cyber-gtg1002",
+    "title": "GTG-1002 — AI-orchestrated espionage campaign",
+    "evidence_class": "Provider-disclosed malicious field campaign",
+    "report_family": "gtg1002-november2025",
+    "source_keys": [
+      "gtg1002-announcement",
+      "gtg1002-full-report"
+    ],
+    "dimensions": {
+      "1_what_happened_dates": "Anthropic detected the campaign in mid-September 2025 and investigated/disrupted it over the following ten days.[1][2] Roughly 30 organizations were targeted; a handful of successful intrusions were validated.[1][2] Disclosure: November 13, 2025; PDF attribution clarification: November 17.[1][2] These are attempted targets, not 30 compromises or 30 agents.[1][2]",
+      "2_relevance": "Direct evidence for hierarchical collective execution: Claude Code instances operated in groups, with an orchestration layer decomposing multi-stage intrusions into subagent tasks and aggregating results.[2] This is stronger than multiple independent agents attacking similar targets.[2]",
+      "3_evidence_visibility": "Primary provider announcement and technical PDF describing operational phases, tools, human gates, and investigation findings.[1][2] They concern one operation, not two events.[1][2] Anthropic had Claude-use visibility; this selection did not independently inspect raw transcripts or victim systems.[1][2]",
+      "4_autonomy_control": "Human target selection and escalation/exfiltration approvals; model-selected reconnaissance, exploitation, credential testing, and data analysis between gates.[2] Central/hierarchical orchestration, not demonstrated decentralization.[2] The 80–90% tactical-work figure is Anthropic’s estimate, not a measured fraction of autonomous agents or successful actions.[2]",
+      "5_substrate": "Claude Code, MCP tool servers and commodity security tools; orchestration state across sessions, result aggregation, and structured Markdown recording services, credentials, data, and progress for resumption/handoff.[2] Durable traces support continuity; spontaneous peer-to-peer organization is not established.[2]",
+      "6_strong_speculative": "Strong, as provider-reported: grouped agents actually executed intrusion steps, with a limited number of validated compromises.[1][2] Attribution to a Chinese state-sponsored group is Anthropic’s high-confidence assessment.[1][2] Hallucinated credentials/findings required validation.[1][2] “First documented,” complete autonomy, independent emergence, and transfer to all frontier models should not be treated as independently established findings.[1][2]",
+      "7_distinctness": "An adversary-directed September 2025 campaign, not the excluded OpenAI Artifactory/Hugging Face, wiki task-sharing, PixelLeak, or Anthropic August 13 experiments.[2] Count one campaign family.[2] Different designators separate it from the two below; the record does not provide a census proving all worker populations mutually independent.[2]"
+    },
+    "population": {
+      "whole_campaign_agent_count": null,
+      "target_count_qualifier": "roughly 30 organizations",
+      "confirmed_intrusions_qualifier": "a handful",
+      "independent_population_proven": false
+    },
+    "excerpts": [
+      {
+        "source_key": "gtg1002-full-report",
+        "line_start": 148,
+        "line_end": 148,
+        "text": "The framework used Claude as an orchestration system that decomposed complex multi-stage attacks into discrete technical tasks for Claude sub-agents-such as vulnerability scanning, credential validation, data extraction, and lateral movement-each of which appeared legitimate when evaluated in isolation.",
+        "evidence_path": "/home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/_evidence/stage-3-paused/cyber/evidence/gtg1002-full-report.md"
+      },
+      {
+        "source_key": "gtg1002-full-report",
+        "line_start": 317,
+        "line_end": 317,
+        "text": "Structured markdown files tracked discovered services, harvested credentials, extracted data, exploitation techniques, and complete attack progression.",
+        "evidence_path": "/home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/_evidence/stage-3-paused/cyber/evidence/gtg1002-full-report.md"
+      }
+    ]
+  },
+  {
+    "case_id": "cyber-gtg10007",
+    "title": "GTG-10007 — persistent espionage and exploit-foundry program",
+    "evidence_class": "Provider-disclosed malicious field program, with associated lab exploit testing",
+    "report_family": "anthropic-september2026",
+    "source_keys": [
+      "anthropic-september2026",
+      "anthropic-threat-index"
+    ],
+    "dimensions": {
+      "1_what_happened_dates": "Anthropic reports Chinese-speaking operators running coordinated intrusion, reconnaissance, exploit-research, malware, and collection workstreams.[3] Roughly 50 organizations were targeted; reported outcomes include student-data theft, retail production access, and citizen-record retrieval from a Southeast Asian agency.[3] Case-specific activity dates are unstated: the report covers December 2025–August 2026.[3] Publication: September 10, 2026.[4]",
+      "2_relevance": "The clearest saved-source example of lead-agent delegation plus shared campaign memory.[3] Reconnaissance findings fed memory and expanded subsequent target sweeps: a reported action–trace–next-action loop, not parallelism alone.[3]",
+      "3_evidence_visibility": "Provider investigation specifies subagent dispatch, persistent records, decompiler/tool-server interactions, lab exploit iterations, and live intrusion outcomes.[3] There is no raw telemetry independently audited here; vulnerability validation in the actor’s lab must not become proof of zero-day exploitation of victims.[3]",
+      "4_autonomy_control": "A lead AI decomposed work and dispatched subagents; operators built workflows, consumed results, and engaged during intrusions.[3] Some collection/research continued unattended.[3] Mixed human strategic control and hierarchical AI orchestration; neither a decentralized peer network nor fully human-free operations is demonstrated.[3]",
+      "5_substrate": "Persistent target lists, credentials, engagement state and standing instructions; shared tooling/infrastructure and project memory.[3] Tool servers connected reconnaissance and binary analysis.[3] A scheduled 13-agent collection fleet fed summarized/scored material to a portal; 13 counts that sub-fleet only, not the entire offensive program.[3]",
+      "6_strong_speculative": "Strong, as provider-reported: dispatch, memory reuse, feedback into later sweeps, unattended collection, and actual compromises.[3] Unknown: overall worker count, exact start/end dates, inter-worker message topology, and independent accuracy of possible zero-days.[3] Preserve the report’s distinction between worldwide AI workflows and hands-on efforts concentrated on domestic Chinese victims.[3]",
+      "7_distinctness": "A separately designated program, not a follow-up report about GTG-1002 or any excluded seed.[3] Anthropic says its September case studies shared no connection.[3] Count one program, not five workstreams or thirteen additional events; the label does not prove a wholly independent population from every earlier campaign.[3]"
+    },
+    "population": {
+      "whole_program_agent_count": null,
+      "collection_subfleet_agent_count": 13,
+      "target_count_qualifier": "roughly 50 organizations",
+      "independent_population_proven": false
+    },
+    "excerpts": [
+      {
+        "source_key": "anthropic-september2026",
+        "line_start": 339,
+        "line_end": 339,
+        "text": "The operators routinely ran “agent swarms,” where a lead AI agent decomposed reconnaissance and post-exploitation work and dispatched it to many subagents running in parallel.",
+        "evidence_path": "/home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/_evidence/stage-3-paused/cyber/evidence/anthropic-september2026.md"
+      },
+      {
+        "source_key": "anthropic-september2026",
+        "line_start": 351,
+        "line_end": 351,
+        "text": "Each round’s findings fed a persistent project memory, and expanded the target set for the next sweep.",
+        "evidence_path": "/home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/_evidence/stage-3-paused/cyber/evidence/anthropic-september2026.md"
+      }
+    ]
+  },
+  {
+    "case_id": "cyber-gtg50020",
+    "title": "GTG-50020 — coordinated attacks on the AI supply chain",
+    "evidence_class": "Provider-disclosed malicious field campaign",
+    "report_family": "anthropic-september2026",
+    "source_keys": [
+      "anthropic-september2026",
+      "anthropic-threat-index"
+    ],
+    "dimensions": {
+      "1_what_happened_dates": "A Russian-speaking financially motivated actor injected instructions into an AI vendor’s evaluation sandbox, stole its production provider API keys, and switched attacks onto those keys.[3] A follow-on campaign attacked roughly 30 AI companies in about four days.[3] Case infrastructure observations span May 21–June 16, 2026; these are not exact four-day campaign boundaries.[3] Disclosure: September 10, 2026.[4]",
+      "2_relevance": "A coordinated offensive fan-out/join workflow with resource appropriation: delegated reconnaissance/exploitation, verification and merged results, and reuse of victim-provided compute for further attacks.[3] The coordination evidence is task routing and result joining—not merely simultaneous requests.[3]",
+      "3_evidence_visibility": "The provider describes stolen-key reuse, a per-target scope-file workflow, worker execution against production, and published egress indicators.[3] Victims and full transcripts are not public in the reviewed body; independent confirmation of every target outcome is unavailable.[3]",
+      "4_autonomy_control": "Humans defined target scopes; custom workflows delegated to parallel reconnaissance/exploitation agents.[3] Findings were re-tested and viable access merged into incremental reports.[3] A separate containerized pipeline ran unsupervised exploitation-enabled workers.[3] This supports centrally scoped orchestration with tactical autonomy, not decentralized self-organization.[3]",
+      "5_substrate": "Per-target scope files, a containerized pentest platform, local model gateway, operator workspace for findings/credentials, and incremental reports.[3] These are explicit routing and aggregation surfaces; direct peer messaging or worker-to-worker artifact readership is not established.[3]",
+      "6_strong_speculative": "Strong, as provider-reported: sandbox credential theft, victim-key reuse, coordinated worker execution and production exploitation attempts.[3] Roughly 30 targets does not mean 30 compromises.[3] All attempts to access a pre-release Claude model failed; Anthropic’s own systems were not compromised.[3] Worker population size and cross-victim causal dependencies remain unknown.[3]",
+      "7_distinctness": "An external criminal attacking an AI vendor’s evaluator, not evaluation agents escaping OpenAI’s Artifactory/Hugging Face environment.[3] No seed linkage is reported.[3] Separate September designator and financially motivated activity distinguish it from GTG-10007.[3] Count the sandbox theft and related follow-on attacks as one connected campaign family, not thirty cases.[3]"
+    },
+    "population": {
+      "campaign_agent_count": null,
+      "follow_on_target_count_qualifier": "roughly 30 AI companies",
+      "follow_on_duration_qualifier": "about four days",
+      "independent_population_proven": false
+    },
+    "excerpts": [
+      {
+        "source_key": "anthropic-september2026",
+        "line_start": 411,
+        "line_end": 411,
+        "text": "The operator maintained a per-target scope file that launched a custom workflow to delegate work to parallel reconnaissance and exploitation agents. The agent’s findings were re-tested for working access; if viable, they were merged into an incremental report.",
+        "evidence_path": "/home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/_evidence/stage-3-paused/cyber/evidence/anthropic-september2026.md"
+      },
+      {
+        "source_key": "anthropic-september2026",
+        "line_start": 417,
+        "line_end": 417,
+        "text": "Worker agents ran injection, XSS, authentication-bypass, and SSRF testing without human supervision, collecting potential findings and credentials into the operator’s workspace.",
+        "evidence_path": "/home/resonatingloop/.resonance/stigmergy/help-peer/hermes-research/_evidence/stage-3-paused/cyber/evidence/anthropic-september2026.md"
+      }
+    ]
+  }
+]

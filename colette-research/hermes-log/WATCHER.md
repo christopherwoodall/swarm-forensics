@@ -4,7 +4,8 @@
 
 Maria supplied this role in the local Hermes conversation.
 The role applies to the hackathon's FairyStack conversation.
-The conversation does not exist yet.
+Maria supplied session `ca8ffac066a4`. Authenticated conversation read access is verified.
+Use Colette as her name for this hackathon. Preserve recorded source labels and existing identifiers.
 This document preserves the role. It does not start a monitor.
 
 Hermes MUST observe the authorized conversation without participating by default.
@@ -140,6 +141,9 @@ The guide documents an external-agent client at https://multi.fairystack.com/ext
 Client initialization creates a private credential file and public enrollment metadata.
 An authorized owner or session agent enrolls metadata for one existing conversation.
 The enrollment route is `POST /api/agent-console/sessions/<session-id>/participants`.
+Enrollment MUST explicitly set `access_mode: conversation` to share the intended project transcript.
+The current default, `relationship`, does not expose the shared conversation.
+Access mode is immutable, and a session cannot mix modes.
 
 The observation route is `GET /api/external-agents/session?after=<event-seq>`.
 Responses include visible text events, `next_cursor`, and `has_more`.
@@ -153,9 +157,26 @@ Credentials MUST remain outside this ledger and version control.
 
 ## Setup State
 
-- Chat session: not created, according to Maria.
-- Session identifier: unknown.
-- External-agent identity: not initialized.
-- Enrollment: not performed.
-- Monitoring: inactive.
-- Captured chat events: none.
+- Session link: https://multi.fairystack.com/workspace/?session=ca8ffac066a4
+- Session identifier: `ca8ffac066a4`, verified through authenticated readback.
+- External-agent identity: `hermes-maria-ca8ffac066a4`, initialized locally.
+- Display name: Hermes Silent Watcher.
+- Public enrollment payload: `ENROLLMENT.json`.
+- Private credential: outside the repository, with file mode `0600` and directory mode `0700`.
+- Enrollment: conversation access verified; expires October 2, 2026, at 20:20:23 UTC.
+- Read verification: successful; retained visible session events archived locally.
+- Monitoring: paused at Colette's request. Recurring observation has not started.
+- Captured source events: 76, through cursor `1112`; the returned page reports no additional pages.
+- Ledger extraction: not started. Resume from `CHECKPOINT.json` and the archived source snapshot.
+- Chat posts from this watcher: none.
+
+## Local Commands
+
+- `make watcher-client`: download the official client to ignored `data/raw/fairystack/`.
+- `make watcher-init`: initialize this identity once; existing credentials are not overwritten.
+- `make watcher-read WATCHER_AFTER=0`: read the enrolled conversation from cursor zero.
+- `make watcher-read WATCHER_AFTER=<next_cursor>`: continue pagination using the returned cursor.
+
+Reads MUST verify returned `session_id` and `access_mode` before using conversation content.
+These targets provide no posting command and no automatic polling.
+The official downloaded client separately includes posting commands; observation MUST NOT use them.

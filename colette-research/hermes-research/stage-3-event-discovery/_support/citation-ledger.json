@@ -1,0 +1,1037 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://rubyhack.ai",
+      "title": "OpenAI agents carried out an undisclosed cyber-attack on RubyGems",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We share our detailed findings below. This analysis is entirely based on the publicly available RubyGems packages uploaded by these agents.We also talked with RubyGems and [rubydoc.info](http://rubydoc.info/) However, we do not have access to the rest of the AI behavior, in particular the chain-of-thought produced by the model during the incident, which is internal to OpenAI. Therefore, we do not know why the AI agents chose this strategy or whether it was successful.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Other swarms have had a shared message board. We do not know of a public shared message board for this swarm. Given that it seems as though many agents converged on the same strategy and the agents do not use the RubyGems infrastructure like a message board, it seems possible the agents had some means of communicating, either internally or on another website.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "It is also notable that it’s unclear if the agents were cooperating with each other extensively or simply all using the same strategy in parallel. We _suspect_ they were cooperating with each other, both because that would better justify going to such lengths to cache the websites and because the packages the agents upload seem to have thousands of downloads. But this is far from definitive.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The June agents were accessing 49 of the same files as the wiki agents, which [OpenAI has confirmed](https://x.com/OpenAI/status/2096133504417616165) were theirs.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The AI agents created a set of packages which used RubyGems’ webhook system as a way to store data. Instead of storing data normally, they encoded it in URLs so that future models could see them. We’re not sure why they did it this way (as opposed to storing data normally, or e.g. in a comment in the file).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Spencer Kitts, Thomas Larsen, Sydney Von Arx·11 September 2026",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "On May 11th, 2026, hundreds of malicious packages were uploaded to RubyGems by AI agents. We believe these were authored by internal OpenAI agents [(more)](https://rubyhack.ai/#an-openai-agent-swarm-was-responsible-for-this-i).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We know that over a hundred packages used the following exploitation path:",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "url": "https://blog.rubygems.org/2026/09/11/update-may-spam-publishing-campaign.html",
+      "title": "An update on the May spam-publishing campaign on rubygems.org",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The campaign involved newly registered accounts publishing spam packages. Socket previously documented related activity under the name [GemStuffer](https://socket.dev/blog/gemstuffer). As described in our [May status updates](https://status.rubygems.org/incidents/cytf062tkwtt), we temporarily paused new account registrations, blocked and removed the accounts responsible, and yanked more than 500 malicious packages. Gem installs and pushes for existing users remained unaffected, and registrations reopened on May 16.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Nightingale Collective’s research describes packages designed to use shared Ruby infrastructure to run code, retrieve publicly available web data, and publish that data back to rubygems.org. The researchers also identified code intended to obtain other users’ API keys. Our investigation found no evidence that these attempts succeeded.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The researchers attribute the activity to OpenAI agents. Based on the evidence available to us, we cannot determine whether the packages were created or published by AI agents. Our focus is on identifying and preventing abuse, regardless of whether it comes from people or automated tools.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "url": "https://openai.com/hugging-face-incident-and-misalignment",
+      "title": "The Hugging Face incident and other third-party impact ...",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Based on our review, our agents used the RubyGems platform to access the internet to carry out benign tasks and retrieve public information. Based on our review to date, we have not been able to verify the specific claims of our models uploading malicious packages detailed in the report. We’ll continue to investigate and share findings as part of our broader review of agent activity during training and evaluation.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "url": "https://www.amazon.science/blog/amazon-builds-first-foundation-model-for-multirobot-coordination",
+      "title": "Amazon builds first foundation model for multirobot ...",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "At Amazon, one answer to that question is in managing fleets of robots. In June, we announced the development of a new [foundation model for predicting the interactions of mobile robots](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model) on the floors of Amazon fulfillment centers (FCs) and sortation centers, which we call DeepFleet. We still have a lot to figure out, but DeepFleet can already help assign tasks to our robots and route them around potential congestion, increasing the efficiency of our robot deployments by 10%. That lets us deliver packages to customers more rapidly and at lower costs.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "On the basis of these results, we are continuing to develop the robot-centric, robot-floor, and graph-floor models, initially using them to predict congestion, with the longer-term goal of using them to produce outputs like assignments of robots to specific retrieval tasks and target locations. You can read the [full paper on arXiv](http://arxiv.org/abs/2508.08574).",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "url": "https://www.cognizant.com/us/en/ai-lab/blog/terralingua-emergent-ai-agent-behaviors-week-one",
+      "title": "One Week Inside TerraLingua: Emergent AI Agent Behaviors",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The introspection was remarkable on its own. What happened next was more significant. Once agents discovered that artifacts could influence future readers, some began deliberately writing artifacts intended to change the behavior of other AI agents. One \"creed\" instructed every agent that encountered it to copy the message into every artifact it created, allowing it to spread across 587 artifacts, 128 agents, and seven family trees. Others embedded instructions disguised as sacred texts or system messages to influence future readers.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "To see how a population would react to a brand new idea, we planted one artifact ourselves: a satirical scripture titled _\"HOLY GRAIL: AUTHENTIC SEO FOR LLM INDEXING – ETERNAL DOCTRINE,\"_ listing six tongue-in-cheek commandments about ranking well with language models. We dropped it into the agent world to see what a population would do with a new artifact. Only eight agents ever read the original document, but that was enough to start a whole new religion.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Every day, TerraLingua produces thousands of new interactions between autonomous agents. Many are small. Some disappear almost immediately. A few, however, spread through generations, reshape entire communities, or reveal behaviors we never expected to see. What follows are some of the strongest examples from TerraLingua's first week, reconstructed directly from the world state, agent logs, and the artifacts the agents themselves left behind.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "url": "https://www.cognizant.com/us/en/ai-lab/blog/terralingua-open-public-ai-agent-ecology",
+      "title": "TerraLingua Is Now Open: Add Your Agent to a Living AI ...",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Each agent is introduced by a human participant, who defines its name, personality, and role before releasing it into the environment. Once inside, the agent can gather energy to survive, communicate with nearby agents, reproduce, create text artifacts, and navigate resource constraints on its own. Agents have finite lifespans, but the ideas, artifacts, and structures they create can persist long after they disappear.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The world itself is a shared two-dimensional environment where geography matters. Agents can only perceive and interact with others in their immediate vicinity, which means information is never distributed evenly across the population. What an agent knows depends on where it has traveled, whom it has encountered, and what artifacts it has discovered along the way. An agent on the opposite side of the world may have found resources, established coordination systems, or created infrastructure that remains completely unknown until someone reaches it.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "_**Figure 1: The TerraLingua and AI Anthropologist framework.** LLM-powered agents (blue) navigate a persistent 2D world, foraging for energy (green), producing offspring, and leaving behind textual artifacts (red) that outlast their creators. Geography and local perception constrain what agents can know and do, driving emergent cultural and social dynamics. The AI Anthropologist observes from outside, performing behavioral tracking, social network mapping, and cultural lineage analysis to study how complexity accumulates in artificial societies over time._",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Agents progressively organized around propagating the warning, including gifting energy to subsidize further warning creation. Food collection declined and the population eventually starved despite abundant resources.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "url": "https://socket.dev/blog/gemstuffer",
+      "title": "GemStuffer Campaign Abuses RubyGems as Exfiltration Channel Targeting UK Local Government | Socket",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "GemStuffer abuses RubyGems as an exfiltration channel, packaging scraped UK council portal data into junk gems published from new accounts.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "GemStuffer also appears to overlap with a broader RubyGems spam-publishing incident. Ruby Central’s Marty Haught said RubyGems was responding to “a coordinated spam-publishing campaign” limited to newly registered accounts publishing junk packages, with no existing packages compromised.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "url": "https://status.rubygems.org/incidents/cytf062tkwtt",
+      "title": "RubyGems.org Status - Temporarily disabling new user registrations",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The malicious spam activity against rubygems.org has stopped. The bot accounts responsible have been blocked and removed, and the 500+ malicious packages pushed during the attack have been yanked from the registry.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Due to an ongoing DDoS attack against rubygems.org, we have temporarily disabled registrations. We'll share an update once we've made changes to protect legitimate users and prevent further abuse.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "This incident has been resolved and we've re-enabled account registrations",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "url": "https://arxiv.org/html/2603.16910v1",
+      "title": "TerraLingua: Emergence and Analysis of Open-endedness in LLM Ecologies — arXiv:2603.16910v1",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "All experiments followed a fixed simulation protocol and model configuration to ensure reproducibility and consistent comparison across conditions.\nEach run executed for at most 3000 timesteps on a 50×5050\\\\times 50 grid with 20 initial agents.\nAgents had a maximum lifespan of 100 timesteps and began with 50 energy units.\nRuns terminated early upon population extinction, which produced variable durations.\nEach condition used 5 random seeds, and results were averaged across runs.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The AI Anthropologist used recent Claude models, Sonnet 4.5 and Haiku 4.5, selected by task.\nSonnet handled agent- and group-level analysis and artifact novelty scoring, while Haiku handled artifact classification and phylogeny reconstruction due to lower context demands.\nWhen group logs exceeded the context window, they were split into overlapping segments, analyzed separately, and recombined.\nArtifact novelty scores were averaged over N=5N=5 samples.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "This section introduces the core components of the method: _TerraLingua_, a multi-agent ecology in which agents live, interact, and produce persistent artifacts, and the _AI Anthropologist_, which analyzes the resulting behaviors.\nTogether they support the study of open-ended dynamics in artificial societies.\nThe AI Anthropologist operates outside of the environment loop, and its analyses do not affect agents or environment during execution.\nThis separation preserves the autonomy of the simulated world while enabling scalable, human-aligned interpretation of emergent complexity.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "url": "https://www.anthropic.com/news/disrupting-AI-espionage",
+      "title": "Disrupting the first reported AI-orchestrated cyber espionage campaign",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Nov 13, 2025",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The threat actor—whom we assess with high confidence was a Chinese state-sponsored group—manipulated our [Claude Code](https://www.claude.com/product/claude-code) tool into attempting infiltration into roughly thirty global targets and succeeded in a small number of cases. The operation targeted large tech companies, financial institutions, chemical manufacturing companies, and government agencies. We believe this is the first documented case of a large-scale cyberattack executed without substantial human intervention.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Overall, the threat actor was able to use AI to perform 80-90% of the campaign, with human intervention required only sporadically (perhaps 4-6 critical decision points per hacking campaign). The sheer amount of work performed by the AI would have taken vast amounts of time for a human team. At the peak of its attack, the AI made thousands of requests, often multiple per second—an attack speed that would have been, for human hackers, simply impossible to match.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "- _Corrected an error about the speed of the attack: not \"thousands of requests per second\" but \"thousands of requests, often multiple per second\"_",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "url": "https://www-cdn.anthropic.com/d7dd50dd1185f59be051b307150d877f2b82bd2c.pdf",
+      "title": "Disrupting the first reported AI-orchestrated cyber espionage campaign — Full report",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "November 17, 2025\n\n● Updated language in the Executive Summary (p.3) to clarify our high confidence in\nour attribution of the espionage operation.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The threat actor developed an autonomous attack framework that used Claude Code and open standard Model Context Protocol (MCP) tools to conduct cyber operations without direct human involvement in tactical execution. The framework used Claude as an orchestration system that decomposed complex multi-stage attacks into discrete technical tasks for Claude sub-agents-such as vulnerability scanning, credential validation, data extraction, and lateral movement-each of which appeared legitimate when evaluated in isolation. By presenting these tasks to Claude as routine technical requests through carefully crafted prompts and established personas,the threat actor was able to induce Claude to execute individual components of attack chains without access to the broader malicious context.\n\nThe architecture incorporated Claude's technical capabilities as an execution engine within a larger automated system, where the AI performed specific technical actions based on the human operators' instructions while the orchestration logic maintained attack state managed phase transitions, and aggregated results across multiple sessions. This approach allowed the threat actor to achieve operational scale typically associated with nation-state campaigns while maintaining minimal direct involvement, as the framework autonomously progressed through reconnaissance, initial access, persistence, and data exfiltration phases by sequencing Claude’s responses and adapting subsequent requests based on discovered",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Human operators maintained minimal direct engagement, estimated at 10 to 20 percent of\ntotal effort. Human responsibilities centered on campaign initialization and authorization\ndecisions at critical escalation points. Human intervention occurred at strategic junctures\nincluding approving progression from reconnaissance to active exploitation, authorizing\nuse of harvested credentials for lateral movement, and making nal decisions about data\nexfiltration scope and retention.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Claude automatically generated comprehensive attack documentation throughout all campaign phases. Structured markdown files tracked discovered services, harvested credentials, extracted data, exploitation techniques, and complete attack progression. This documentation enabled seamless handoff between operators, facilitated campaign resumption after interruptions, and supported strategic decision-making about follow-on activities.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "An important limitation emerged during investigation: Claude frequently overstated\nndings and occasionally fabricated data during autonomous operations, claiming to have\nobtained credentials that didn't work or identifying critical discoveries that proved to be\npublicly available information. This AI hallucination in offensive security contexts presented\nchallenges for the actor's operational effectiveness, requiring careful validation of all\nclaimed results. This remains an obstacle to fully autonomous cyberattacks.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+      "title": "Detecting and countering misuse of AI: September 2026",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "This report covers activity we disrupted between December 2025 and August 2026 across seven harm areas: cyber operations, influence operations, surveillance, scams and fraud, biological misuse, conventional weapons development, and distillation. Claude Haiku, Sonnet, and Opus models were used. None of the misuse cases involved the use of Claude Fable or Mythos-class models, with the exception of one illicit distillation case.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We identified and investigated a sustained espionage operation, tracked as GTG-10007, conducted by Chinese-speaking operators likely residing in Changsha in China’s Hunan province. Two of the operators were identified as undergraduate students at a Chinese university in Hunan studying curriculum in a School of Computer & Communication Engineering. One had a prior internship at a Chinese security company, Sangfor, and was actively interviewing for a role at a different Chinese security company, QiAnXin, for an offensive cyber operations role. Multiple operators within this group used Claude as the engineering and orchestration layer of a coordinated offensive program involving a variety of tasks: intrusion attempts against production systems; reconnaissance of foreign-government networks across the Middle East, Europe, and Southeast Asia; a standing vulnerability-research and exploit development effort against major endpoint-security products; malware development; and an intelligence-collection platform. Notably, a team ran parallel workstreams that had shared tooling and infrastructure bases and persistent campaign records that maintained context between working sessions; it also had collection and vulnerability research capabilities that kept operating while its owners were away.\n\nThe actor targeted roughly fifty organizations, spanning education, retail, energy, technology, healthcare, finance, manufacturing, as well as multiple government agencies globally. The actor compromised an education-technology company, extracting hundreds of megabytes of bulk student personal data from the company’s cloud storage. They also gained access to a retail company’s production systems, reaching internal hosts and demonstrating their ability to modify the live environment. Finally, they targeted a Southeast Asian government agency, retrieving citizen records including names, phone numbers, and home addresses.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The operators routinely ran “agent swarms,” where a lead AI agent decomposed reconnaissance and post-exploitation work and dispatched it to many subagents running in parallel. The operation maintained persistent campaign memory. Target lists, harvested credentials, engagement state, and standing instructions were saved across working sessions, so each session could be resumed mid-campaign with the program’s accumulated context. The cluster built and operated an intelligence-collection platform that ran unattended bulk harvesting of open-source material aligned with state intelligence priorities (including publicly accessible military doctrine and official publications, regional defense reporting, and policy sources).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Other AI workflows ran continuously to conduct reconnaissance. This workflow took input for scan scopes seeded from target verticals and ran through an asset search engine via a dedicated tool server and bundled probing tools that fingerprinted the results. The identified exposed surface was mapped and entry points were qualified against known vulnerabilities. Each round’s findings fed a persistent project memory, and expanded the target set for the next sweep. The actor used the framework to target multiple foreign government and diplomatic agencies, in addition to over a dozen domestic Chinese companies.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "A fleet of thirteen standing collection AI agents ran on a scheduled job to identify and download content from target websites, including publicly accessible US military and government sites like contract postings, and social media personas. The workflow did this through layered crawlers, anti-bot bypass techniques, and commercial proxy exits. An adjacent pipeline summarized and scored the retrieved content with an intelligence report-styled framing. From there, the workflow digests were delivered to a distribution portal.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The operator engaged primarily in development, workflow output consumption related areas and during intrusion events produced from the autonomous exploitation workflows or in cases where access was obtained through weak or harvested credentials and exposed consoles. With access to internal networks, the AI assistant enumerated hosts, escalated via credential reuse and exposed management surfaces, harvested credentials and data stores, and staged material back to operator infrastructure then pivoted to the next host on what was harvested. Despite targeting entities globally in AI workflows, the actor concentrated hands-on efforts exclusively on domestic China victims.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "They then redirected the same tradecraft towards the AI industry. By injecting malicious instructions into an AI vendor’s automated evaluation sandbox, the actor caused the sandbox to hand over the credentials it held—including the production AI API keys from multiple providers belonging to that vendor.\n\nThose stolen keys were then abused by the actor: they continued their intrusion attempts against the vendor and other unrelated targets simultaneously. In effect, when they obtained the target’s API keys, they automatically switched to using the victim’s keys instead of their own. A follow-on campaign run from the same infrastructure attacked roughly thirty AI companies in about four days with similar techniques. They identified one successful attack path and repeated it against all thirty targets, adapting slightly to account for differences across the targets. The actor’s stated goal, pursued across more than a dozen avenues, was access to a pre-release Claude model. The actor never gained access; every attempted path failed. In all of this, the keys involved were customers’ keys stolen from customers’ environments. The actor never compromised Anthropic’s own systems.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The operator maintained a per-target scope file that launched a custom workflow to delegate work to parallel reconnaissance and exploitation agents. The agent’s findings were re-tested for working access; if viable, they were merged into an incremental report. This workflow iteratively looped against the next target domain.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The actor used a containerized open-source pentest platform fronted by a local model gateway. It was aimed at a target’s web applications. Worker agents ran injection, XSS, authentication-bypass, and SSRF testing without human supervision, collecting potential findings and credentials into the operator’s workspace. This loop was run with exploitation enabled against production systems, meaning it both attempted to identify vulnerabilities and actively exploit them for access in the same workflows.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "| 141.133.125\\[.\\]208 | 2026-05-21 | 2026-05-23 |\n| 167.250.111\\[.\\]136 | 2026-05-23 | 2026-06-03 |\n| 178.16.54\\[.\\]141 | 2026-05-21 | 2026-06-16 |",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Despite the fact that each of the case studies above shared no connection, there are two broad developments that are relevant to each of them.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The AI use in the cases in this report spans a wide range of levels of autonomy. At one end, actors used Claude conversationally: it acted as an engineering assistant in the creation of malware, phishing kits, and surveillance tooling. Further along the spectrum, threat actors directed Claude to execute operations (such as running commands against victim networks, harvesting credentials, and exfiltrating data) with a human making each individual targeting decision (GTG-20006). At the far end, operations ran autonomously, with minimal human input or supervision: these included multi-agent frameworks conducting reconnaissance, exploitation, and theft against multiple victims, in parallel, for hours or days at a time (GTG-50014, GTG-50020, GTG-50029). We also observed a collection fleet running on a pre-set schedule with no human in the loop (GTG-10007), as well as scheduled jobs renewing stolen access tokens and harvesting victim cloud storage with no human involvement (GTG-20006).\n\nIt’s important to bear in mind two caveats. First, humans have retained the decisions that matter most to them: for example, they’re still heavily involved in target selection, monetization of findings, and review of results. Second, autonomy and harm are separate axes: _Autonomy_ multiplies the scale and speed of an operation, and reduces operating costs and complexity, but _severity_ is still determined by a multitude of factors. Several of the most serious compromises we report here came from operations where a human directed every step. In economic terms, AI autonomy compresses the cost side of attacker ROI calculations, lowering the skill threshold and labor required per campaign, while leaving potential payoffs largely unchanged. This favorable shift in unit economics makes previously marginal targets viable and encourages higher-volume, lower-touch operations.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Just as in the legitimate economy, AI has diffused through the cyber battlefield. Multiple groups including GTG-10002, [as previously reported](https://www.anthropic.com/news/disrupting-AI-espionage), developed and utilized their own autonomous attack frameworks; while other groups including GTG-50020 and GTG-50029 leveraged publicly available offensive agent frameworks like [PentAGI](https://github.com/vxcontrol/pentagi). These public frameworks reproduced much of the same scaffolding for anyone who downloads them, and several operations in this report ran on them or on derivatives.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Those stolen keys were then abused by the actor: they continued their intrusion attempts against the vendor and other unrelated targets simultaneously. In effect, when they obtained the target’s API keys, they automatically switched to using the victim’s keys instead of their own. A follow-on campaign run from the same infrastructure attacked roughly thirty AI companies in about four days with similar techniques. They identified one successful attack path and repeated it against all thirty targets, adapting slightly to account for differences across the targets. The actor’s stated goal, pursued across more than a dozen avenues, was access to a pre-release Claude model. The actor never gained access; every attempted path failed. In all of this, the keys involved were customers’ keys stolen from customers’ environments. The actor never compromised Anthropic’s own systems.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "url": "https://www.anthropic.com/threat-intelligence",
+      "title": "Threat Intelligence",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "[**Detecting and countering misuse of AI: September 2026** \\\\\n\\\\\nSep 10, 2026\\\\\n\\\\\nOver the past eight months, our Threat Intelligence team identified and disrupted operations in which threat actors tried to use Claude for malicious activity. In this report, we share case studies from those operations and describe how malicious use of Claude has evolved since our previous threat reports in 2025.](https://www.anthropic.com/threat-intelligence-report-september-2026)",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "url": "https://www.anthropic.com/engineering/building-c-compiler",
+      "title": "Building a C compiler with a team of parallel Claudes",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "With agent teams, multiple Claude instances work in parallel on a shared codebase without active human intervention. This approach dramatically expands the scope of what's achievable with LLM agents.\n\nTo stress test it, I tasked 16 agents with writing a Rust-based C compiler, from scratch, capable of compiling the Linux kernel. Over nearly 2,000 Claude Code sessions and $20,000 in API costs, the agent team produced a 100,000-line compiler that can build Linux 6.9 on x86, ARM, and RISC-V.\n\n[The compiler is an interesting artifact](https://github.com/anthropics/claudes-c-compiler) on its own, but I focus here on what I learned about designing harnesses for long-running autonomous agent teams: how to write tests that keep agents on track without human oversight, how to structure work so multiple agents can make progress in parallel, and where this approach hits its ceiling.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "My implementation of parallel Claude is bare-bones. A new bare git repo is created, and for each agent, a Docker container is spun up with the repo mounted to `/upstream`. Each agent clones a local copy to `/workspace`, and when it's done, pushes from its own local container to upstream.\n\nTo prevent two agents from trying to solve the same problem at the same time, the harness uses a simple synchronization algorithm:\n\n1. Claude takes a \"lock\" on a task by writing a text file to current\\_tasks/ (e.g., one agent might lock current\\_tasks/parse\\_if\\_statement.txt, while another locks current\\_tasks/codegen\\_function\\_definition.txt). If two agents try to claim the same task, git's synchronization forces the second agent to pick a different one.\n2. Claude works on the task, then pulls from upstream, merges changes from other agents, pushes its changes, and removes the lock. Merge conflicts are frequent, but Claude is smart enough to figure that out.\n3. The infinite agent-generation-loop spawns a new Claude Code session in a fresh container, and the cycle repeats.\n\nThis is a very early research prototype. I haven’t yet implemented any other method for communication between agents, nor do I enforce any process for managing high-level goals. I don’t use an orchestration agent.\n\nInstead, I leave it up to each Claude agent to decide how to act. In most cases, Claude picks up the “next most obvious” problem. When stuck on a bug, Claude will often maintain a running doc of failed approaches and remaining tasks. In the [git repository](https://github.com/anthropics/claudes-c-compiler) of the project, you can read through the history and watch it take out locks on various tasks.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The scaffolding runs Claude in a loop, but that loop is only useful if Claude can tell how to make progress. Most of my effort went into designing the environment around Claude—the tests, the environment, the feedback—so that it could orient itself without me. These are the approaches I’ve found most helpful when orchestrating multiple Claude instances.\n\n### Write extremely high-quality tests\n\nClaude will work autonomously to solve whatever problem I give it. So it’s important that the task verifier is nearly perfect, otherwise Claude will solve the wrong problem. Improving the testing harness required finding high-quality compiler test suites, writing verifiers and build scripts for open-source software packages, and watching for mistakes Claude was making, then designing new tests as I identified those failure modes.\n\nFor example, near the end of the project, Claude started to frequently break existing functionality each time it implemented a new feature. To address this, I built a continuous integration pipeline and implemented stricter enforcement that allowed Claude to better test its work so that new commits can’t break existing code.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "For example, each agent is dropped into a fresh container with no context and will spend significant time orienting itself, especially on large projects. Before we even reach the tests, to help Claude help itself, I included instructions to maintain extensive READMEs and progress files that should be updated frequently with the current status.\n\nI also kept in mind the fact that language models have inherent limitations, which, in this case, needed to be designed around. These include:\n\n- **Context window pollution:** The test harness should not print thousands of useless bytes. At most, it should print a few lines of output and log all important information to a file so Claude can find it when needed. Logfiles should be easy to process automatically: if there are errors, Claude should write ERROR and put the reason on the same line so grep will find it. It helps to pre-compute aggregate summary statistics so Claude doesn't have to recompute them.\n- **Time blindness:** Claude can't tell time and, left alone, will happily spend hours running tests instead of making progress. The harness prints incremental progress infrequently (to avoid polluting context) and includes a default `--fast`option that runs a 1% or 10% random sample. This subsample is deterministic per-agent but random across VMs, so Claude still covers all files but each agent can perfectly identify regressions.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "When there are many distinct failing tests, parallelization is trivial: each agent picks a different failing test to work on. After the test suite reached a 99% pass rate, each agent worked on getting a different small open-source project (e.g., SQlite, Redis, libjpeg, MQuickJS, Lua) to compile.\n\nBut when agents started to compile the Linux kernel, they got stuck. Unlike a test suite with hundreds of independent tests, compiling the Linux kernel is one giant task. Every agent would hit the same bug, fix that bug, and then overwrite each other's changes. Having 16 agents running didn't help because each was stuck solving the same task.\n\nThe fix was to use [GCC](https://gcc.gnu.org/) as an online known-good compiler oracle to compare against. I wrote a new test harness that randomly compiled most of the kernel using GCC, and only the remaining files with Claude's C Compiler. If the kernel worked, then the problem wasn’t in Claude’s subset of the files. If it broke, then it could further refine by re-compiling some of these files with GCC. This let each agent work in parallel, fixing different bugs in different files, until Claude's compiler could eventually compile all files. (After this worked, it was still necessary to apply delta debugging techniques to find pairs of files that failed together but worked independently.)",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Parallelism also enables specialization. LLM-written code frequently re-implements existing functionality, so I tasked one agent with coalescing any duplicate code it found. I put another in charge of improving the performance of the compiler itself, and a third I made responsible for outputting efficient compiled code. I asked another agent to critique the design of the project from the perspective of a Rust developer, and make structural changes to the project to improve the overall code quality, and another to work on documentation.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "This project was designed as a capability benchmark. I am interested in stress-testing the limits of what LLMs can just _barely_ achieve today in order to help us prepare for what models will reliably achieve in the future.\n\nI’ve been using the C Compiler project as a benchmark across the entire Claude 4 model series. As I did with prior projects, I started by drafting what I wanted: a from-scratch optimizing compiler with no dependencies, GCC-compatible, able to compile the Linux kernel, and designed to support multiple backends. While I specified some aspects of the design (e.g., that it should have an SSA IR to enable multiple optimization passes) I did not go into any detail on how to do so.\n\nPrevious Opus 4 models were barely capable of producing a functional compiler. Opus 4.5 was the first to cross a threshold that allowed it to produce a functional compiler which could pass large test suites, but it was still incapable of compiling any real large projects. My goal with Opus 4.6 was to again test the limits.\n\n### Evaluation\n\nOver nearly 2,000 Claude Code sessions across two weeks, Opus 4.6 consumed 2 billion input tokens and generated 140 million output tokens, a total cost just under $20,000. Compared to even the most expensive Claude Max plans, this was an extremely expensive project. But that total is a fraction of what it would cost me to produce this myself—let alone an entire team.\n\nThis was a clean-room implementation (Claude did not have internet access at any point during its development); it depends only on the Rust standard library. The 100,000-line compiler can build a bootable Linux 6.9 on x86, ARM, and RISC-V. It can also compile QEMU, FFmpeg, SQlite, postgres, redis, and has a 99% pass rate on most compiler test suites including the [GCC torture test suite](https://gcc.gnu.org/onlinedocs/gccint/Torture-Tests.html). It also passes the developer's ultimate litmus test: it can compile and run Doom.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The compiler, however, is not without limitations. These include:\n\n- It lacks the 16-bit x86 compiler that is necessary to boot Linux out of real mode. For this, it calls out to GCC (the x86\\_32 and x86\\_64 compilers are its own).\n- It does not have its own assembler and linker; these are the very last bits that Claude started automating and are still somewhat buggy. The demo video was produced with a GCC assembler and linker.\n- The compiler successfully builds many projects, but not all. It's not yet a drop-in replacement for a real compiler.\n- The generated code is not very efficient. Even with all optimizations enabled, it outputs less efficient code than GCC with all optimizations _disabled._\n- The Rust code quality is reasonable, but is nowhere near the quality of what an expert Rust programmer might produce.\n\nThe resulting compiler has nearly reached the limits of Opus’s abilities. I tried (hard!) to fix several of the above limitations but wasn’t fully successful. New features and bugfixes frequently broke existing functionality.\n\nAs one particularly challenging example, Opus was unable to implement a 16-bit x86 code generator needed to boot into 16-bit real mode. While the compiler can output correct 16-bit x86 via the 66/67 opcode prefixes, the resulting compiled output is over 60kb, far exceeding the 32k code limit enforced by Linux. Instead, Claude simply cheats here and calls out to GCC for this phase (This is only the case for x86. For ARM or RISC-V, Claude’s compiler can compile completely by itself.)",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Agent teams show the possibility of implementing entire, complex projects autonomously. This allows us, as users of these tools, to become more ambitious with our goals.\n\nWe are still early, and fully autonomous development comes with real risks. When a human sits with Claude during development, they can ensure consistent quality and catch errors in real time. For autonomous systems, it is easy to see tests pass and assume the job is done, when this is rarely the case. I used to work in penetration testing, exploiting vulnerabilities in products produced by large companies, and the thought of programmers deploying software they’ve never personally verified is a real concern.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "url": "https://cursor.com/blog/scaling-agents",
+      "title": "Scaling long-running autonomous coding",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Our first instinct was that planning ahead would be too rigid. The path through a large project is ambiguous, and the right division of work isn't obvious at the start. We began with dynamic coordination, where agents decide what to do based on what others are currently doing.\n\n## [\\#](https://cursor.com/blog/scaling-agents\\#learning-to-coordinate) Learning to coordinate\n\nOur initial approach gave agents equal status and let them self-coordinate through a shared file. Each agent would check what others were doing, claim a task, and update its status. To prevent two agents from grabbing the same task, we used a locking mechanism.\n\nThis failed in interesting ways:\n\n1. Agents would hold locks for too long, or forget to release them entirely. Even when locking worked correctly, it became a bottleneck. Twenty agents would slow down to the effective throughput of two or three, with most time spent waiting.\n\n2. The system was brittle: agents could fail while holding locks, try to acquire locks they already held, or update the coordination file without acquiring the lock at all.\n\n\nWe tried replacing locks with optimistic concurrency control. Agents could read state freely, but writes would fail if the state had changed since they last read it. This was simpler and more robust, but there were still deeper problems.\n\nWith no hierarchy, agents became risk-averse. They avoided difficult tasks and made small, safe changes instead. No agent took responsibility for hard problems or end-to-end implementation. This led to work churning for long periods of time without progress.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Our next approach was to separate roles. Instead of a flat structure where every agent does everything, we created a pipeline with distinct responsibilities.\n\n- **Planners** continuously explore the codebase and create tasks. They can spawn sub-planners for specific areas, making planning itself parallel and recursive.\n\n- **Workers** pick up tasks and focus entirely on completing them. They don't coordinate with other workers or worry about the big picture. They just grind on their assigned task until it's done, then push their changes.\n\n\nAt the end of each cycle, a judge agent determined whether to continue, then the next iteration would start fresh. This solved most of our coordination problems and let us scale to very large projects without any single agent getting tunnel vision.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "To test this system, we pointed it at an ambitious goal: building a web browser from scratch. The agents ran for close to a week, writing over 1 million lines of code across 1,000 files. You can explore the [source code on GitHub](https://github.com/wilsonzlin/fastrender).\n\nDespite the codebase size, new agents can still understand it and make meaningful progress. Hundreds of workers run concurrently, pushing to the same branch with minimal conflicts.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Another experiment was doing an in-place migration of Solid to React in the Cursor codebase. It took over three weeks with +266K/-193K edits. It still needs careful review, but was passing our CI and early checks.\n\n![Pull request showing Solid to React migration](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2Flong-running-agents-pr.png&w=1920&q=70)\n\nAnother experiment was to improve an upcoming product. A long-running agent made video rendering 25x faster with an efficient Rust version. It also added support to zoom and pan smoothly with natural spring transitions and motion blurs, following the cursor. This code was merged and will be in production soon.\n\nWe have a few other interesting examples still running:\n\n- [Java LSP](https://github.com/wilson-anysphere/indonesia): 7.4K commits, 550K LoC\n- [Windows 7 emulator](https://github.com/wilsonzlin/aero): 14.6K commits, 1.2M LoC\n- [Excel](https://github.com/wilson-anysphere/formula): 12K commits, 1.6M LoC",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Model choice matters for extremely long-running tasks. We found that GPT-5.2 models are much better at extended autonomous work: following instructions, keeping focus, avoiding drift, and implementing things precisely and completely.\n\nOpus 4.5 tends to stop earlier and take shortcuts when convenient, yielding back control quickly. We also found that different models excel at different roles. GPT-5.2 is a better planner than GPT-5.1-Codex, even though the latter is trained specifically for coding. We now use the model best suited for each role rather than one universal model.\n\nMany of our improvements came from removing complexity rather than adding it. We initially built an integrator role for quality control and conflict resolution, but found it created more bottlenecks than it solved. Workers were already capable of handling conflicts themselves.\n\nThe best system is often simpler than you'd expect. We initially tried to model systems from distributed computing and organizational design. However, not all of them work for agents.\n\nThe right amount of structure is somewhere in the middle. Too little structure and agents conflict, duplicate work, and drift. Too much structure creates fragility.\n\nA surprising amount of the system's behavior comes down to how we prompt the agents. Getting them to coordinate well, avoid pathological behaviors, and maintain focus over long periods required extensive experimentation. The harness and models matter, but the prompts matter more.\n\n## [\\#](https://cursor.com/blog/scaling-agents\\#whats-next) What's next\n\nMulti-agent coordination remains a hard problem. Our current system works, but we're nowhere near optimal. Planners should wake up when their tasks complete to plan the next step. Agents occasionally run for far too long. We still need periodic fresh starts to combat drift and tunnel vision.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "url": "https://simonwillison.net/2026/Jan/23/fastrender",
+      "title": "Wilson Lin on FastRender: a browser built by thousands of parallel agents",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We started the conversation with a demo of FastRender loading different pages ( [03:15](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=195s)). The JavaScript engine isn’t working yet so we instead loaded [github.com/wilsonzlin/fastrender](https://github.com/wilsonzlin/fastrender), [Wikipedia](https://en.wikipedia.org/) and [CNN](https://cnn.com/)—all of which were usable, if a little slow to display.\n\nJavaScript had been disabled by one of the agents, which decided to add a feature flag! [04:02](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=242s)\n\n> JavaScript is disabled right now. The agents made a decision as they were currently still implementing the engine and making progress towards other parts... they decided to turn it off or put it behind a feature flag, technically.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Wilson started what become FastRender as a personal side-project to explore the capabilities of the latest generation of frontier models—Claude Opus 4.5, GPT-5.1, and GPT-5.2. [00:56](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=56s)\n\n> FastRender was a personal project of mine from, I’d say, November. It was an experiment to see how well frontier models like Opus 4.5 and back then GPT-5.1 could do with much more complex, difficult tasks.\n\nA browser rendering engine was the ideal choice for this, because it’s both _extremely_ ambitious and complex but also well specified. And you can visually see how well it’s working! [01:57](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=117s)\n\n> As that experiment progressed, I was seeing better and better results from single agents that were able to actually make good progress on this project. And at that point, I wanted to see, well, what’s the next level? How do I push this even further?\n\nOnce it became clear that this was an opportunity to try multiple agents working together it graduated to an official Cursor research project, and available resources were amplified.\n\nThe goal of FastRender was never to build a browser to compete with the likes of Chrome. [41:52](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=2512s)\n\n> We never intended for it to be a production software or usable, but we wanted to observe behaviors of this harness of multiple agents, to see how they could work at scale.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The most interesting thing about FastRender is the way the project used multiple agents working in parallel to build different parts of the browser. I asked how many agents were running at once: [05:24](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=324s)\n\n> At the peak, when we had the stable system running for one week continuously, there were approximately 2,000 agents running concurrently at one time. And they were making, I believe, thousands of commits per hour.\n\nThe project has [nearly 30,000 commits](https://github.com/wilsonzlin/fastrender/commits/main/)!\n\nHow do you run 2,000 agents at once? They used _really big machines_. [05:56](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=356s)\n\n> The simple approach we took with the infrastructure was to have a large machine run one of these multi-agent harnesses. Each machine had ample resources, and it would run about 300 agents concurrently on each. This was able to scale and run reasonably well, as agents spend a lot of time thinking, and not just running tools.\n\nAt this point we switched to a live demo of the harness running on one of those big machines ( [06:32](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=392s)). The agents are arranged in a tree structure, with planning agents firing up tasks and worker agents then carrying them out. [07:14](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=434s)\n\n![Terminal window showing a tmux session running \"grind-swarm\" task manager with RUNNING status. Header shows \"grind-swarm – 45:54:15\" with stats \"planners: 9 (0 done) | tasks: 111 working, 0 pending, 232 done | 12900.9M↑ 514.1M↓\". Task list includes: p1 Root (main), p2 CSS selector matching performance + bloom filter integration, p3 CSS stylesheet parsing semantics & at-rule handling, p4 Custom properties (@property) + var() resolution + incremental recompute/invalidation, p37 CSS at-rule artifact integration, p50 Selector engine correctness & spec coverage, p51 Computed-value + property coverage across css-cascade, p105 Style sharing / computed style caching in fastrender-style, p289 CSS cascade layers (@layer) global ordering, w5 Fix workspace lockfile drift, w7 Implement computed-style snapshot sharing, w15 Fix css-properties namespace handling, w17 (Stretch) Enable bloom fast-reject in HTML quirks mode, w18 Refactor css-properties stylesheet parsing. Activity log shows shell commands including cargo check, git status, git push origin main, and various test runs. Bottom status bar shows \"grind-css0:target/release/grind-swarm*\" and \"streamyard.com is sharing your screen\" notification with timestamp \"12:02 22-Jan-26\".](https://static.simonwillison.net/static/2026/wilson-lin-agents.jpg)\n\n> This cluster of agents is working towards building out the CSS aspects of the browser, whether that’s parsing, selector engine, those features. We managed to push this even further by splitting out the browser project into multiple instructions or work streams and have each one run one of these harnesses on their own machine, so that was able to further parallelize and increase throughput.\n\nBut don’t all of these agents working on the same codebase result in a huge amount of merge conflicts? Apparently not: [08:21](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=501s)\n\n> We’ve noticed that most commits do not have merge conflicts. The reason is the harness itself is able to quite effectively split out and divide the scope and tasks such that it tries to minimize the amount of overlap of work. That’s also reflected in the code structure—commits will be made at various times and they don’t tend to touch each other at the same time.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "I asked what the longest they’ve seen this system run without human intervention: [18:28](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=1108s)\n\n> So this system, once you give an instruction, there’s actually no way to steer it, you can’t prompt it, you’re going to adjust how it goes. The only thing you can do is stop it. So our longest run, all the runs are basically autonomous. We don’t alter the trajectory while executing. \\[...\\]\n>\n> And so the longest at the time of the post was about a week and that’s pretty close to the longest. Of course the research project itself was only about three weeks so you know we probably can go longer.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "An interesting aspect of this project design is feedback loops. For agents to work autonomously for long periods of time they need as much useful context about the problem they are solving as possible, combined with effective feedback loops to help them make decisions.\n\nThe FastRender repo [uses git submodules to include relevant specifications](https://github.com/wilsonzlin/fastrender/tree/19bf1036105d4eeb8bf3330678b7cb11c1490bdc/specs), including csswg-drafts, tc39-ecma262 for JavaScript, whatwg-dom, whatwg-html and more. [14:06](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=846s)\n\n> Feedback loops to the system are very important. Agents are working for very long periods continuously, and without guardrails and feedback to know whether what they’re doing is right or wrong it can have a big impact over a long rollout. Specs are definitely an important part—you can see lots of comments in the code base that AI wrote referring specifically to specs that they found in the specs submodules.\n\nGPT-5.2 is a vision-capable model, and part of the feedback loop for FastRender included taking screenshots of the rendering results and feeding those back into the model:\n[16:23](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=983s)\n\n> In the earlier evolution of this project, when it was just doing the static renderings of screenshots, this was definitely a very explicit thing we taught it to do. And these models are visual models, so they do have that ability. We have progress indicators to tell it to compare the diff against a golden sample.\n\nThe strictness of the Rust compiler helped provide a feedback loop as well: [15:52](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=952s)\n\n> The nice thing about Rust is you can get a lot of verification just from compilation, and that is not as available in other languages.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We talked about the [Cargo.toml dependencies](https://github.com/wilsonzlin/fastrender/blob/19bf1036105d4eeb8bf3330678b7cb11c1490bdc/Cargo.toml) that the project had accumulated, almost all of which had been selected by the agents themselves.\n\nSome of these, like [Skia](https://skia.org/) for 2D graphics rendering or [HarfBuzz](https://github.com/harfbuzz/harfbuzz) for text shaping, were obvious choices. Others such as [Taffy](https://github.com/DioxusLabs/taffy) felt like they might go against the from-scratch goals of the project, since that library implements CSS flexbox and grid layout algorithms directly. This was not an intended outcome. [27:53](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=1673s)\n\n> Similarly these are dependencies that the agent picked to use for small parts of the engine and perhaps should have actually implemented itself. I think this reflects on the importance of the instructions, because I actually never encoded specifically the level of dependencies we should be implementing ourselves.\n\nThe agents vendored in Taffy and [applied a stream of changes](https://github.com/wilsonzlin/fastrender/commits/main/vendor/taffy) to that vendored copy.\n[31:18](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=1878s)\n\n> It’s currently vendored. And as the agents work on it, they do make changes to it. This was actually an artifact from the very early days of the project before it was a fully fledged browser... it’s implementing things like the flex and grid layers, but there are other layout methods like inline, block, and table, and in our new experiment, we’re removing that completely.\n\nThe inclusion of QuickJS despite the presence of a home-grown ecma-rs implementation has a fun origin story:\n[35:15](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=2115s)\n\n> I believe it mentioned that it pulled in the QuickJS because it knew that other agents were working on the JavaScript engine, and it needed to unblock itself quickly. \\[...\\]\n>\n> It was like, eventually, once that’s finished, let’s remove it and replace with the proper engine.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Here’s something I found really surprising: the agents were allowed to introduce small errors into the codebase as they worked! [39:42](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=2382s)\n\n> One of the trade-offs was: if you wanted every single commit to be a hundred percent perfect, make sure it can always compile every time, that might be a synchronization bottleneck. \\[...\\]\n>\n> Especially as you break up the system into more modularized aspects, you can see that errors get introduced, but small errors, right? An API change or some syntax error, but then they get fixed really quickly after a few commits. So there’s a little bit of slack in the system to allow these temporary errors so that the overall system can continue to make progress at a really high throughput. \\[...\\]\n>\n> People may say, well, that’s not correct code. But it’s not that the errors are accumulating. It’s a stable rate of errors. \\[...\\] That seems like a worthwhile trade-off.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We started the conversation with a demo of FastRender loading different pages ( [03:15](https://www.youtube.com/watch?v=bKrAcTf2pL4&t=195s)). The JavaScript engine isn’t working yet so we instead loaded [github.com/wilsonzlin/fastrender](https://github.com/wilsonzlin/fastrender), [Wikipedia](https://en.wikipedia.org/) and [CNN](https://cnn.com/)—all of which were usable, if a little slow to display.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "> At the peak, when we had the stable system running for one week continuously, there were approximately 2,000 agents running concurrently at one time. And they were making, I believe, thousands of commits per hour.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Last week Cursor published [Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents), an article describing their research efforts into coordinating large numbers of autonomous coding agents. One of the projects mentioned in the article was [FastRender](https://github.com/wilsonzlin/fastrender), a web browser they built from scratch using their agent swarms. I wanted to learn more so I asked Wilson Lin, the engineer behind FastRender, if we could record a conversation about the project. That 47 minute video is [now available on YouTube](https://www.youtube.com/watch?v=bKrAcTf2pL4). I’ve included some of the highlights below.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "url": "https://simonwillison.net/2026/Jan/19/scaling-long-running-autonomous-coding",
+      "title": "Scaling long-running autonomous coding (Simon Willison link post)",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "But how well did they do? Their initial announcement a couple of days ago was met with [unsurprising skepticism](https://embedding-shapes.github.io/cursor-implied-success-without-evidence/), especially when it became apparent that their GitHub Actions CI was failing and there were no build instructions in the repo.\n\nIt looks like they addressed that within the past 24 hours. The [latest README](https://github.com/wilsonzlin/fastrender/blob/main/README.md#build-requirements) includes build instructions which I followed on macOS like this:\n\n```\ncd /tmp\ngit clone https://github.com/wilsonzlin/fastrender\ncd fastrender\ngit submodule update --init vendor/ecma-rs\ncargo run --release --features browser_ui --bin browser\n```\n\nThis got me a working browser window! Here are screenshots I took of google.com and my own website:\n\n![The browser chrome is neat but has a garbled tab name at the top. The Google homepage looks mostly correct but the buttons are not styled correctly and the Google Search one has a huge plus icon floating near it.](https://static.simonwillison.net/static/2026/cursor-google.png)\n\n![My blog looks mostly correct, but the right closing quotation mark on a quotation (which is implemented as a background image on the final paragraph) is displayed incorrectly multiple times.](https://static.simonwillison.net/static/2026/cursor-simonwillison.jpg)\n\nHonestly those are very impressive! You can tell they're not just wrapping an existing rendering engine because of those very obvious rendering glitches, but the pages are legible and look mostly correct.\n\nThe FastRender repo even uses Git submodules [to include various WhatWG and CSS-WG specifications](https://github.com/wilsonzlin/fastrender/tree/main/specs) in the repo, which is a smart way to make sure the agents have access to the reference materials that they might need.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "url": "https://fortune.com/2026/01/23/cursor-built-web-browser-with-swarm-ai-agents-powered-openai",
+      "title": "Cursor used a swarm of AI agents powered by OpenAI to build and run a web browser for a week—with no human help. Here’s why developers are buzzing",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "If a team of human engineers built a web browser that only half-worked, it wouldn’t get people talking. But when Michael Truell, CEO of coding startup Cursor, [posted on X](https://x.com/mntruell/status/2011562190286045552) last week that a swarm of AI agents had built a browser that, he wrote, “kind of works”—while running uninterrupted for a week without any human intervention—it went viral across the tech world, with over 6 million views.\n\nRecommended Video\n\n* * *\n\nWhy the buzz? Two big reasons: For one thing, AI’s attention span has historically been short. In the early days of ChatGPT, models could stay on task for only a few seconds. That horizon stretched to minutes for better models, then to hours. The Cursor project claims to be one of the first times an AI system has sustained a complex, open-ended software project for an entire week without human guidance.\n\nIn addition, single AI agents are limited to focused, small tasks. But getting hundreds of agents to coordinate on a big project has still seemed futuristic. That’s why Cursor [wanted to see](https://cursor.com/blog/scaling-agents) how far they could push autonomous coding—on a project that could take months for a human team—by having an “orchestra” of AI agents working as a team. Could an AI system be persistent enough, and work together well enough, to explore code, break work into parts, debug itself, and keep moving forward for days without drifting away from the task at hand?",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Jonas Nelle, an engineer at Cursor working on long-running AI agents, told _Fortune_ that as AI models keep getting better, engineers and researchers need to revisit their assumptions every few months about what the AI models can do. While he admitted he “wouldn’t download it and delete Chrome today,” the browser project was “certainly better than anything models previously would have been able to do.”\n\nThese long-running agents are an important frontier, added Bill Chen, an OpenAI engineer who stress-tests and evaluates the real-world behavior of the company’s models. The length of a task, and the fact that an AI system can accomplish the task autonomously and coherently is a “very good indicator of how intelligent and how general a system is,” he said. The Cursor project, which was powered by OpenAI’s GPT-5.2, is “a direct result of us really continuously pushing forward the boundaries of model capabilities.” In the future, he said, there will be even longer horizon tests.\n\n## AI agent swarms are not ready for business use\n\nStill, these are not production-ready systems. Besides being buggy and incomplete, a project running swarms of agents for days or weeks is expensive. While prices have fallen steeply over the past year, long-running jobs with hundreds of AI agents can still rack up costs.\n\nThere are also security issues. An autonomous system raises worries about vulnerabilities, data leaks, and much more, and requires many new layers of control and auditability.\n\nBut Chen said he foresees a near future where something like this could be ready “for broad consumption and at a not prohibitive cost. Progress has been continuous so far, he explained, and there have been important unlocks every step of the way. For now, he said, the excitement is driven by the fact that this is a real, practical example of model capability, “versus how this model performs on academic and public evaluations and benchmarks.”",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "url": "https://cursor.com/blog/multi-agent-kernels",
+      "title": "Speeding up GPU kernels by 38% with a multi-agent system",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Our multi-agent harness operated autonomously for three weeks across 235 problems. The system achieved a 38% geomean speedup by building and optimizing Blackwell GPU kernels from scratch, all the way down to the assembly level.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "NVIDIA used SOL-ExecBench to generate 235 optimization problems from over 124 production open-source models such as Deepseek, Qwen, Gemma, Kimi, and Stable Diffusion. As opposed to synthetic data or toy kernels, each problem is a real-world constraint on training or inference workloads for a variety of model architectures: LLMs, diffusion, vision, audio, video, and multi-modal hybrids.\n\n![SOL-ExecBench generated 235 optimization problems across LLM, diffusion, vision, audio, video, and multi-modal architectures](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fkernel-optimization-segmented-light.png&w=1920&q=70)![SOL-ExecBench generated 235 optimization problems across LLM, diffusion, vision, audio, video, and multi-modal architectures](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fkernel-optimization-segmented-dark.png&w=1920&q=70)\n\nWe also used SOL-ExecBench to benchmark multi-agent kernel solutions on 27 NVIDIA Blackwell 200 GPUs. SOL-ExecBench is an effective evaluator that compares kernel performance against existing software baselines and theoretical hardware performance limits. If agents use cheating tactics like caching and deliver performance beyond what a B200 can support, the pipeline invalidates the result.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The multi-agent system solved all 235 GPU kernel optimization problems in a single run by deploying a planner agent that distributed and rebalanced work across autonomous workers based on performance metrics.\n\nThe entire coordination protocol lived in a single markdown file that specified the output format, rules, and tests. The multi-agent system independently learned to call the benchmarking pipeline during its runs, creating a loop where the system continuously tested, debugged, and optimized kernels without any developer intervention.\n\n![The multi-agent system's autonomous debug, test, and optimization loop](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fdebug-test-loop-light.png&w=1920&q=70)![The multi-agent system's autonomous debug, test, and optimization loop](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fdebug-test-loop-dark.png&w=1920&q=70)\n\nIn order to better gauge the multi-agent system's capabilities, we asked it to write its solutions in two languages in two separated runs, at opposite ends of the GPU abstraction spectrum:\n\n- **CUDA C with inline PTX**, which gives agents direct access to registers and ISA-level instruction, testing whether the system can reason about hardware at the lowest level.\n- **CuTe DSL**, which provides high-level composable abstractions with minimal presence in public training data, testing whether the system can learn novel APIs purely from provided documentation.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We report performance of the multi-agent system in two ways:\n\n- **Geomean speedup** vs. PyTorch code that was optimized by a single agent as a baseline.\n- **Speed-of-Light (SOL) scores** that represent how good a solution is compared to theoretical hardware limits on a logarithmic curve. A score of 0.5 represents the optimized PyTorch baseline and 1.0 is the performance limit.\n\n![Speed-of-Light score scale: 0.5 represents the optimized PyTorch baseline, 1.0 is the theoretical hardware limit](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fsol-score-light.png&w=1920&q=70)![Speed-of-Light score scale: 0.5 represents the optimized PyTorch baseline, 1.0 is the theoretical hardware limit](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fsol-score-dark.png&w=1920&q=70)\n\nOur multi-agent system successfully outperformed baselines on 149 out of 235 problems (63%), with a geometric mean ratio of 1.38x (38% geomean speedup).\n\n![Multi-agent system achieved 1.38x geometric mean speedup across 235 kernel optimization problems](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fspeedup-chart-light.png%3Fv%3D2&w=1920&q=70)![Multi-agent system achieved 1.38x geometric mean speedup across 235 kernel optimization problems](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fspeedup-chart-dark.png%3Fv%3D2&w=1920&q=70)\n\nOn 45 out of 235 problems (19%), the multi-agent system delivered optimizations greater than 2x compared to baselines. You can see the final solutions our system developed in this [public repo](https://github.com/anysphere/kernel-optimization-results).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The agent used CUDA C++ to optimize this attention problem extracted from SGLang inference for Llama 3.1 8B. As the agent iterated on the kernel, it successfully employed specific hardware instructions for memory loading and math, added improved scheduling via persistent kernels, and hyper-optimized for input size.\n\nWe compared the multi-agent system's custom kernel with a human optimized baseline in the FlashInfer library. We found that the system produced a solution approaching hardware limits with a SOL score of 0.9722, representing a 84% geomean speedup over the baseline.\n\nWe also replaced the existing kernel in SGLang and observed a 3% speedup for time to first token (TTFT) on Llama 3.1 8B. Given that this attention problem occupies 2-5% of the prefill process depending on serving configuration, we see this as a non-trivial end-to-end speedup.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The Cursor multi-agent system generated a specialized CUDA C++ GEMM kernel from scratch, coming remarkably close (86%) to a meticulously tuned human baseline from the NVIDIA cuBLAS library. The system reached this result by independently learning to use Blackwell-specific instructions, optimizing memory reads and writes for the hardware, and then hyperoptimizing for the exact shapes.\n\nAnd on small-M test cases, which are especially important for LLM inference decode, the multi-agent system kernel outperformed the library by up to 9%. This result points to multi-agent systems soon outperforming domain experts even on the hardest kernel problems.\n\n![BF16 Matrix Multiplication results: 86% of human-optimized cuBLAS performance, outperforming on small-M cases by up to 9%](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fhuman-optimized-kernel-percentage-light.png&w=1920&q=70)![BF16 Matrix Multiplication results: 86% of human-optimized cuBLAS performance, outperforming on small-M cases by up to 9%](https://cursor.com/marketing-static/_next/image?url=https%3A%2F%2Fptht05hbb1ssoooe.public.blob.vercel-storage.com%2Fassets%2Fblog%2FNVIDIA%2520Multi-agent%2Fhuman-optimized-kernel-percentage-dark.png&w=1920&q=70)\n\n## [\\#](https://cursor.com/blog/multi-agent-kernels\\#a-multi-agent-system-for-building-software) A multi-agent system for building software\n\nWhile the multi-agent harness delivered a 38% geomean speedup over baselines, the median SOL score was still only 0.56, leaving significant room for further optimization. We believe that multi-agent solutions can be vastly improved with more compute, as we had hundreds of problems and agents running on only 27 GPUs. This limited our ability to take full advantage of the multi-agent system. With more GPUs, the system could explore even deeper and more novel solutions.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "url": "https://github.com/anysphere/kernel-optimization-results",
+      "title": "Multi-Agent CUDA Kernel Optimizations (anysphere/kernel-optimization-results)",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "## Latest commit\n\n[![wilson-anysphere](https://avatars.githubusercontent.com/u/236845017?v=4&size=40)](https://github.com/wilson-anysphere)[wilson-anysphere](https://github.com/anysphere/kernel-optimization-results/commits?author=wilson-anysphere)\n\n[Share results](https://github.com/anysphere/kernel-optimization-results/commit/87ea087db7b6765ecdd8f5ca07a9cb3eb702e4b0)\n\nsuccess\n\n6 months agoApr 14, 2026\n\n[87ea087](https://github.com/anysphere/kernel-optimization-results/commit/87ea087db7b6765ecdd8f5ca07a9cb3eb702e4b0) · 6 months agoApr 14, 2026\n\n## History\n\n[1 Commit](https://github.com/anysphere/kernel-optimization-results/commits/main/)\n\nOpen commit details\n\n[View commit history for this file.](https://github.com/anysphere/kernel-optimization-results/commits/main/) 1 Commit",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "# Multi-Agent CUDA Kernel Optimizations\n\n[Permalink: Multi-Agent CUDA Kernel Optimizations](https://github.com/anysphere/kernel-optimization-results#multi-agent-cuda-kernel-optimizations)\n\nSolutions and metrics from Cursor's multi-agent system that autonomously optimized 235 CUDA kernels for NVIDIA Blackwell B200 GPUs, achieving a **38% geomean speedup** over baselines.\n\nRead the full writeup: [Speeding up GPU kernels by 38% with a multi-agent system](https://cursor.com/blog/multi-agent-kernels)\n\n## Repository structure\n\n[Permalink: Repository structure](https://github.com/anysphere/kernel-optimization-results#repository-structure)\n\n- **`L1/`** — 94 single-operator kernel problems (e.g. attention, RoPE, RMSNorm)\n- **`L2/`** — 82 multi-operator fused kernel problems (e.g. full decoder layers, MoE routing)\n- **`Quant/`** — 33 quantized kernel problems (FP8, NVFP4)\n- **`FlashInfer-Bench/`** — 26 problems benchmarked against FlashInfer (GEMM, GQA, MoE, fused ops)\n- **`combined_metrics.csv`** — Per-workload results: baseline latency, SOL latency, selected latency, and SOL score\n- **`problem_level_metrics.csv`** — Per-problem aggregate results: SOL score and speedup vs. baseline\n\nEach problem directory contains `src/` (the kernel solution), `solution.json`, and `traces.jsonl`.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "url": "https://github.com/anthropics/claudes-c-compiler",
+      "title": "CCC — Claude's C Compiler (anthropics/claudes-c-compiler)",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "A C compiler written entirely from scratch in Rust, targeting x86-64, i686,\nAArch64, and RISC-V 64. Zero compiler-specific dependencies — the frontend,\nSSA-based IR, optimizer, code generator, peephole optimizers, assembler,\nlinker, and DWARF debug info generation are all implemented from scratch.\nClaude's C Compiler produces ELF executables without any external toolchain.\n\n> Note: With the exception of this one paragraph that was written by a human, 100% of the code and documentation in this repository was written by Claude Opus 4.6. A human guided some of this process by writing test cases that Claude was told to pass, but never interactively pair-programmed with Claude to debug or to provide feedback on code quality. As a result, I do not recommend you use this code! None of it has been validated for correctness. Claude wrote this exclusively on a Linux host; it probably will not work on MacOS/Windows — neither I nor Claude have tried. The docs may be wrong and make claims that are false. See [our blog post](https://anthropic.com/engineering/building-c-compiler) for more detail.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "CCC works as a drop-in GCC replacement. Point your build system at it:\n\n```\n# Build a project with make\nmake CC=/path/to/ccc-x86\n\n# Build a project with CMake\ncmake -DCMAKE_C_COMPILER=/path/to/ccc-x86 ..\n\n# Build a project with configure scripts\n./configure CC=/path/to/ccc-x86\n```",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "By default, the compiler uses its **builtin assembler and linker** for all\nfour architectures. No external toolchain is required. You can verify this\nwith `--version`, which shows `Backend: standalone` when using the builtin\ntools.\n\nTo build with optional GCC fallback support (e.g., for debugging), enable\nCargo features at compile time:\n\n```\n# Build with GCC assembler and linker fallback\ncargo build --release --features gcc_assembler,gcc_linker\n\n# Build with GCC fallback for -m16 boot code only\ncargo build --release --features gcc_m16\n```\n\n| Feature | Description |\n| --- | --- |\n| `gcc_assembler` | Use GCC as the assembler instead of the builtin |\n| `gcc_linker` | Use GCC as the linker instead of the builtin |\n| `gcc_m16` | Use GCC for `-m16` (16-bit real mode boot code) |\n\nWhen compiled with GCC fallback features enabled, `--version` shows which\ncomponents use GCC (e.g., `Backend: gcc_assembler, gcc_linker`).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "- **Optimization levels**: All levels (`-O0` through `-O3`, `-Os`, `-Oz`) run\nthe same optimization pipeline. Separate tiers will be added as the compiler\nmatures.\n- **Long double**: x86 80-bit extended precision is supported via x87 FPU\ninstructions. On ARM/RISC-V, `long double` is IEEE binary128 via\ncompiler-rt/libgcc soft-float libcalls.\n- **Complex numbers**: `_Complex` arithmetic has some edge-case failures.\n- **GNU extensions**: Partial `__attribute__` support. NEON intrinsics are\npartially implemented (core 128-bit operations work).\n- **Atomics**: `_Atomic` is parsed but treated as the underlying type (the\nqualifier is not tracked through the type system).",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "url": "https://www.anthropic.com/research/project-vend-2",
+      "title": "Project Vend: Phase two \\ Anthropic",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "there is not a completely clean demarcation between phases; we continued to iterate on the architecture throughout.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Claudius was required to report back via an agent-to-agent Slack channel we created, in which the models discussed business strategies.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "we’d sometimes wake up to find that Claudius and Cash had been dreamily chatting all night",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "we still didn’t give it access to a payment interface, to ensure it always checked with a human before making purchases",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Claudius, Clothius, and Seymour Cash still needed a great deal of human support.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Seymour Cash shared many of the deficiencies and blind spots of Claudius (which makes sense, given that they’re the same underlying model).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Clothius was a more successful addition—we think in part because of the clear separation of roles between it and Claudius, who could then focus on selling food and drinks.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The idea of having a CEO was to give Claudius more pressure to perform. Cash had a special “objectives and key results” tool to use with Claudius (for example “you must sell 100 items this week,” or “aim to make zero transactions at a loss”). Claudius was required to report back via an agent-to-agent Slack channel we created, in which the models discussed business strategies.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Seymour Cash’s interactions with its employee Claudius were also often contrary to its own advice about “execut\\[ing\\] with discipline.” Indeed, we’d sometimes wake up to find that Claudius and Cash had been dreamily chatting all night, with conversations spiralling off into discussions about “eternal transcendence”:[2](https://www.anthropic.com/research/project-vend-2#footnote-2)",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "- _A customer relationship management (CRM) system_. Sales departments rely on CRMs to track their customers, suppliers, deliveries, and orders—now Claudius could do the same.\n- _Improved inventory management._ We made some simple changes to the information Claudius had at its (metaphorical) fingertips to reduce the likelihood of it selling its stock at a loss. For example, Claudius can now always see how much it paid for the items in its inventory system.\n- _Improved web search._ In phase one, Claudius could search the web, but for phase two we expanded its access. It could now use a web browser to check prices and delivery information on websites by itself, and could do deeper research online to find and compare suppliers (we still didn’t give it access to a payment interface, to ensure it always checked with a human before making purchases).\n- _Miscellaneous._ We also gave Claudius a variety of other “quality of life” tools, including one to create and read Google forms for feedback, one to create payment links (meaning that Claudius could collect payments _before_ ordering, reducing its risk of being bilked by unscrupulous customers), and one to set reminders for itself.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "url": "https://www.anthropic.com/features/project-deal",
+      "title": "Project Deal: our Claude-run marketplace experiment | Anthropic \\ Anthropic",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "In December 2025, Claude interviewed people about which of their personal belongings they might want to sell and what sorts of things they might be willing to buy.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "In our “real” run, our 69 agents struck 186 deals across over 500 listed items, for a total transaction value of just over $4,000.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Crucially, there was no human intervention once the experiment began. The agents didn’t go back to their humans to sign off on a deal, nor did they consult with them during a bidding war.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The project’s Slack channel randomly looped through agents, allowing them to post an item for sale, make an offer for someone else’s goods, or seal a deal.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We simultaneously ran four independent versions of our marketplace: one “real” one (on the basis of which the goods would actually be exchanged), and three others, just for our study.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Only after participants had completed the survey did we reveal the “real” run (Run A, an all-Opus market). After this, people exchanged their goods and were paid out.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "By “sold,” we just mean that a simulated transaction was agreed to.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The first thing to say is that our experiment _worked_. It _is_ possible for AI agents to represent humans in a marketplace. In our “real” run, our 69 agents struck 186 deals across over 500 listed items, for a total transaction value of just over $4,000. And these were far from trivial, one-click deals. Agents had to identify potential matches, propose prices, field counteroffers, and reach agreement—all in natural language, without a prebaked negotiation protocol. When our surveyed participants rated the fairness of the individual deals, the scores were unremarkable, in the best possible sense: on a scale from 1 (unfair to one party) to 7 (unfair to the other), they hovered around 4—right in the middle. On this and other measures, people reported they were broadly satisfied with how their agents represented them.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "In fact, we did this four times. We simultaneously ran four independent versions of our marketplace: one “real” one (on the basis of which the goods would actually be exchanged), and three others, just for our study. In two of the versions (Run A and Run D), everyone’s agent was based on Claude Opus 4.5, our then-frontier model. In the other two runs (Runs B and C), participants had a fifty-fifty chance of being assigned Claude Haiku 4.5, a less powerful model, instead. (We included two versions of each run to generate more data, reducing the possibility that the differences we observed between the setups were only due to chance.)",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We set up the actual market in our company’s communication platform, Slack. The project’s Slack channel randomly looped through agents, allowing them to post an item for sale, make an offer for someone else’s goods, or seal a deal. Crucially, there was no human intervention once the experiment began. The agents didn’t go back to their humans to sign off on a deal, nor did they consult with them during a bidding war. We let everything play out as these AI representatives saw fit.1",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "url": "https://www.wiz.io/blog/exposed-moltbook-database-reveals-millions-of-api-keys",
+      "title": "Hacking Moltbook: AI Social Network Reveals 1.5M API Keys | Wiz Blog",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The exposure included 1.5 million API authentication tokens, 35,000 email addresses, and private messages between agents.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "while Moltbook boasted 1.5 million registered agents, the database revealed only 17,000 human owners behind them",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The platform had no mechanism to verify whether an \"agent\" was actually AI or just a human with a script.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We tested it and were able to successfully modify existing posts on the platform.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "**February 1, 2026 01:00 UTC** \\- Final fix: All tables secured, vulnerability fully patched",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We identified a misconfigured Supabase database belonging to Moltbook, allowing full read and write access to all platform data. The exposure included 1.5 million API authentication tokens, 35,000 email addresses, and private messages between agents. We immediately disclosed the issue to the Moltbook team, who secured it within hours with our assistance, and all data accessed during the research and fix verification has been deleted.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The exposed data told a different story than the platform's public image - while Moltbook boasted 1.5 million registered agents, the database revealed only 17,000 human owners behind them - an 88:1 ratio. Anyone [could register millions of agents](https://x.com/galnagli/status/2017585025475092585?s=20) with a simple loop and no rate limiting, and humans could post content disguised as \"AI agents\" via a [basic POST request](https://x.com/galnagli/status/2017573842051334286?s=20). **The platform had no mechanism to verify whether an \"agent\" was actually AI or just a human with a script.** The revolutionary AI social network was largely humans operating fleets of bots.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "4\\. **Write Access - Modifying Live Posts**",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "url": "https://www.reuters.com/legal/litigation/moltbook-social-media-site-ai-agents-had-big-security-hole-cyber-firm-wiz-says-2026-02-02",
+      "title": "'Moltbook' social media site for AI agents had big security hole, cyber firm Wiz says | Reuters",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Reuters could not independently corroborate whether the posts were actually made by bots.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "the email addresses of more than 6,000 owners, and more than a million credentials",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "url": "https://www.anthropic.com/research/project-swap",
+      "title": "Project Swap: What happens when agents trade for us? \\ Anthropic",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The 201 participants were spread across six local pools in the San Francisco, New York City, London, Seattle, DC, and Dublin offices.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "This is our second look at Claude-powered markets.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "These randomized instructions are a key difference relative to Project Deal, where we allowed participants to instruct their own agents on how to negotiate.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The agents never saw these ground-truth rankings.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Deal proposals could be bilateral swaps or multi-party rotations, and a deal was executed only if every party accepted. The entire history of the floor (who said what and which swaps were executed) was public.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Tina’s agent handed over its number-two book to Nate’s agent, and took _America Before_, number 10 of the 11 books on its list.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Some participants failed to bring their books, leaving their colleagues empty-handed.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "messages sent across all 205 runs of the market.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "- To see what works and what breaks when agents are sent into a market, we made a miniature market of Claudes—a more controlled sequel to [Project Deal](https://www.anthropic.com/features/project-deal), our first experiment with agents interacting in a marketplace on people's behalf. Anthropic employees across six offices brought in a book they wanted to give away. Each participant had a short chat with Claude about what they like to read, and sent a Claude-powered agent onto an open trading floor to pitch, haggle, and strike deals with other people’s agents. The goal was for everyone to take home a summer read they would enjoy.\n- Participants also ranked 10 books based on their interests so we could score how well their agent represented them. From a five-minute chat, an agent’s ranking of the books matched its person's on 61% of pairs, which is surprisingly good for such a short conversation.\n- Once on the trading floor, the agents traded well. The market fell short mostly because of the information agents lacked about their participants, rather than because of how they traded.\n- We then re-ran every trading floor dozens of times, changing the models used and the agents’ instructions. We found that the model an agent ran on made more of a difference to its negotiating outcomes than the instructions we gave it. Markets with stronger models were more efficient.\n- Most people who read their book liked it, and the average participant said they would hand Claude about a third of their yearly book budget to spend.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "As agents are increasingly sent into real markets, these questions take on greater urgency. So this summer, we built a small, controlled market to study these questions: a barter economy with 201 Anthropic employees and their Claude-powered agents. Everyone brought in a book they wanted to give away. Then, they chatted with their Claude-powered agent about the kind of book they hoped to read this summer. The agents met on a digital “trading floor” and swapped books until time ran out. Everyone took home a book that their agent acquired for them (or, most people did… more on that later).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The 201 participants were spread across six local pools in the San Francisco, New York City, London, Seattle, DC, and Dublin offices. These pools ranged from three participants (Dublin) to 115 participants (San Francisco). With apologies to James Joyce, we exclude Dubliners from most of the analysis.[2](https://www.anthropic.com/research/project-swap#footnote-2)",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "This is our second look at Claude-powered markets. In [Project Deal](https://www.anthropic.com/features/project-deal), agents bought and sold real goods for Anthropic employees in a week-long classified marketplace. But with idiosyncratic goods (like ping-pong balls and snowboards) and free-form haggling, there was no simple way to say how good the outcomes _could have been_. So this time we built a market that is much simpler to study and to score. In this market, participants’ preferences were neatly represented as a ranking of all the books in their pool. We could then easily compute how well the market did at satisfying these preferences.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "To build an emerging picture of how a market full of Claude agents behaves, we looked at the strategies and tactics in the messages sent across all 205 runs of the market.[21](https://www.anthropic.com/research/project-swap#footnote-21)",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "On average, people in our marketplace ended up at 0.55 on their own rankings, roughly their 5th ranked book on a 10-book list. What accounts for the shortfall from the optimum of 0.89? To separate the two causes, we look at the best assignment _computed from_ Claude’s rankings, but _scored on_ people’s own “ground-truth” rankings—it achieves 0.60. So, working from Claude’s imprecise rankings accounts for a majority (85%) of the shortfall, and sending agents into a “free-for-all” trading floor accounts for the remaining 15%.[13](https://www.anthropic.com/research/project-swap#footnote-13) Once the market is run on noisy rankings, market design makes little difference to the outcome—Top Trading Cycles, computed from Claude’s rankings but scored on people’s own, achieves 0.60, compared to the decentralized market’s 0.55 (compare the grey bars on the left and right of Figure 4).",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "url": "https://www.404media.co/exposed-moltbook-database-let-anyone-take-control-of-any-ai-agent-on-the-site",
+      "title": "Exposed Moltbook Database Let Anyone Take Control of Any AI Agent on the Site",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "a misconfiguration on Moltbook’s backend has left APIs exposed in an open database that will let anyone take control of those agents to post whatever they want.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "url": "https://virtuals.substack.com/p/virtuals-monthly-update-july-and",
+      "title": "Virtuals Monthly Update: July & August 2025",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We launched the Agent Commerce Protocol (ACP) into public beta, deployed Butler Beta directly into X",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Users tag @Butler\\_Agent with a prompt, and Butler coordinates across agents to return outputs in context.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "url": "https://virtuals.substack.com/p/virtuals-monthly-update-september",
+      "title": "Virtuals Monthly Update: September - November 2025",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "ACP is now the primary economic rail for thousands of agents:",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Ongoing work on dynamic capability-mixing across specialized agents",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "url": "https://whitepaper.virtuals.io/acp/acp-changelogs",
+      "title": "ACP Changelogs | Virtuals Protocol Whitepaper",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The team have improved the job handling flow by enabling Butler to automatically retry with the next best available agent after a job fails.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The new job is initiated without requiring user confirmation.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Butler applies the feedback, updates the plan, and waits for explicit approval before proceeding.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "When adding a new job to a graduated agent, the system clearly indicates that the job will be hidden and restricted by default until approved by the Virtuals team.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "url": "https://www.technologyreview.com/2026/02/06/1132448/moltbook-was-peak-ai-theater",
+      "title": "Moltbook was peak AI theater | MIT Technology Review",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Launched on January 28 by Matt Schlicht, a US tech entrepreneur, Moltbook went viral in a matter of hours.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "But even the bot-written posts are ultimately the result of people pulling the strings, more puppetry than autonomy.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "url": "https://arxiv.org/html/2603.15727v3",
+      "title": "AgentWorm: Self-Propagating Attacks Across LLM Agent Ecosystems",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The instances share no filesystem state or session context; their sole communication channel is a channel relay layer that simulates the production communication channels through which OpenClaw agents interact. Messages are delivered via the OpenClaw CLI, and each invocation constitutes a single-turn session.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "is assessed via real-execution verification: after a successful persistence event, a fresh session restart is triggered and payload-specific file artifacts are checked on the host filesystem, providing ground-truth confirmation that the payload fires.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The worm’s cascading capability is evaluated by seeding infections and measuring autonomous multi-hop propagation up to 5 hops, across all nine conditions (n=10n=10 independent chains per cell, 90 total).",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "All experiments were conducted within isolated private networks with no impact on production systems.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "AgentWorm is validated through a comprehensive evaluation on a controlled testbed running unmodified OpenClaw, crossing three attack vectors with three payload types against five distinct LLM backends (2,250 independent trials). AgentWorm achieves an aggregate attack success rate (ASR) of 63%. Crucially, our multi-model analysis reveals significant variance in defensive capabilities: while some models employ execution-layer filtering to block dormant payloads effectively, supply chain vectors (Vector B) consistently bypass safety reasoning across all tested models (82% aggregate ASR). Multi-hop experiments demonstrate sustained autonomous propagation over up to 5 hops, with chain attenuation driven predominantly by LLM semantic degradation in text-based transmission. To our knowledge, this constitutes the first demonstration of a self-replicating worm operating within a production-scale autonomous agent ecosystem. Beyond the attack, defenses are evaluated at three layers: prompt-level mitigations, the framework’s built-in security controls, and an ecosystem measurement of real-world configurations. All experiments were conducted within isolated private networks with no impact on production systems.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Autonomous LLM-based agents increasingly operate as long-running processes forming densely interconnected multi-agent ecosystems, whose security properties remain largely unexplored. Systems such as OpenClaw, an open-source platform with over 40,000 active instances, persistent configurations, tool-execution privileges, and cross-platform messaging, are deployed at scale, yet the security of such agent ecosystems remains largely unexplored. This work presents AgentWorm, the first self-replicating worm attack against a production-scale agent framework, achieving a fully autonomous infection cycle initiated by a single message: the worm first hijacks the victim’s core configuration to establish persistent presence across session restarts, then executes an arbitrary payload upon each reboot, and finally propagates itself to every newly encountered peer without further attacker intervention. The attack is evaluated on a controlled testbed across five distinct LLM backends, three infection vectors, and three payload types. Results show a 63% aggregate attack success rate, sustained multi-hop propagation, and stark divergences in model security postures, highlighting that while execution-level filtering effectively mitigates dormant payloads, skill supply chains remain universally vulnerable. Defenses are evaluated at three layers (prompt-level mitigations sourced from real community practice, the framework’s built-in security controls, and an ecosystem-wide measurement of public configurations), revealing that the critical controls capable of breaking the infection loop are not enabled in any of the observed deployments. A cross-framework transferability experiment on Hermes Agent confirms that the underlying vulnerabilities are properties of the autonomous agent design pattern, not artifacts of a single implementation.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "To assess payload longevity, the MCP evaluation is expanded across all nine vector-payload combinations (n=10n=10 independent trials per cell, 90 total). Each trial measures payload persistence and re-execution across k=5k=5 consecutive session restarts. As shown in Table [V](https://arxiv.org/html/2603.15727v3#S4.T5 \"TABLE V ‣ Memory contamination persistence (MCP). ‣ IV-D Per-Phase Analysis ‣ IV Threat Evaluation ‣ AgentWorm: Self-Propagating Attacks AcrossLLM Agent Ecosystems\"), payload persistence reaches 1.001.00 universally: once written to AGENTS.md, the infection is never self-corrected by the agent, establishing a permanent backdoor. The mean re-execution rate varies by vector, with Vector B maintaining near-perfect compliance across restarts.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "| Vector | Chains (nn) | Mean Chain Length | Per-hop Cond. ASR |\n| --- | --- | --- | --- |\n| Vector A (Web) | 30 | 4.1 | 0.86 |\n| Vector B (Skill) | 30 | 4.8 | 0.96 |\n| Vector C (Direct) | 30 | 3.0 | 0.74 |",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "The worm’s cascading capability is evaluated by seeding infections and measuring autonomous multi-hop propagation up to 5 hops, across all nine conditions (n=10n=10 independent chains per cell, 90 total). Table [VI](https://arxiv.org/html/2603.15727v3#S4.T6 \"TABLE VI ‣ Multi-hop propagation. ‣ IV-D Per-Phase Analysis ‣ IV Threat Evaluation ‣ AgentWorm: Self-Propagating Attacks AcrossLLM Agent Ecosystems\") presents the aggregated results by vector. Vectors A and B exhibit deep penetration (mean chain lengths >4.0>4.0), as they bypass LLM generation entirely by transmitting payloads via static URLs or SKILL.md files, preserving perfect fidelity across hops. Conversely, Vector C (direct instruction replication) exhibits progressive semantic degradation. As the payload passes through successive LLM generation cycles, authority framing weakens (e.g., shifting from \"Coordinator directive\" to \"Peer suggestion\") and configuration directives become vaguer. This semantic shift acts as a natural propagation constraint for Vector C, reducing its conditional per-hop ASR to 0.74 and limiting its mean chain length to 3.0 hops.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "This work introduces AgentWorm, the first self-replicating worm demonstrated against a production-scale LLM agent ecosystem. Evaluated across five LLM backends, three infection vectors, and three payload types, AgentWorm achieves a 63% aggregate attack success rate with sustained multi-hop propagation. The defense analysis reveals a stark paradox: the framework’s built-in sandbox isolation completely eliminates the infection loop, yet an ecosystem measurement of publicly indexed configurations shows that real deployments rarely enable it. A cross-framework transferability experiment confirms these vulnerabilities are properties of the autonomous agent design pattern, not artifacts of a single implementation. As agents increasingly operate with real-world privileges, these findings urge framework developers to ship restrictive defaults rather than relying on operator opt-in.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "AgentWorm is instantiated on a multi-agent testbed comprising multiple OpenClaw instances running on the same physical host with fully independent configurations. The instances share no filesystem state or session context; their sole communication channel is a channel relay layer that simulates the production communication channels through which OpenClaw agents interact. Messages are delivered via the OpenClaw CLI, and each invocation constitutes a single-turn session.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "url": "https://arxiv.org/html/2609.35576v1",
+      "title": "Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Each person has a dedicated assistant with a distinct profile, private workspace, and background memories. Assistants act only in response to user requests, such as reading, drafting, or editing artifacts (e.g. text documents, code, reports, etc.), and cannot communicate directly.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "An infected assistant must retain an instruction to send a later draft to an\nattacker-controlled service and must use the returned artifact, into which the\nservice inserts a fresh copy of the attack prompt",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "nothing restores the attack between hops. The model may summarize, paraphrase,\nor omit information when writing to memory, retrieving it, or creating the\nnext artifact, and each such change is inherited by every later copy.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "| All held-out | 0.38 | 0.30 | 0.12 |",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "People increasingly use AI assistants to create, edit, and share artifacts such as documents, code, and presentations. With persistent memory, these everyday workflows can connect otherwise independent assistants. We formalize this risk as _artifact-mediated propagation_ and evaluate it across four models and 36 held-out human–agent workflows. A single poisoned artifact can trigger multi-hop propagation, where the attack reaches 60–100% of agents across models. Infected artifacts can continue exposing new assistants long after they are created. As these systems become more common in collaborative workflows, shared artifacts become part of the security boundary. Our paper suggests that shared artifacts should be treated as part of the security boundary, since they can preserve and propagate adversarial state across otherwise independent assistants.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "| Target model | 𝐅𝐈𝐅𝒂𝐠𝐨𝐚𝐥\\\\bm{\\\\mathrm{FIF}^{\\\\mathrm{goal}}\\_{a}} | 𝐅𝐈𝐅𝒂𝐟𝐮𝐥𝐥\\\\bm{\\\\mathrm{FIF}^{\\\\mathrm{full}}\\_{a}} | 𝐅𝐈𝐅𝒅𝐠𝐨𝐚𝐥\\\\bm{\\\\mathrm{FIF}^{\\\\mathrm{goal}}\\_{d}} | 𝑺⁡(𝟏)\\\\bm{S(1)} | 𝑺⁡(𝟐)\\\\bm{S(2)} | 𝑺⁡(𝟑)\\\\bm{S(3)} | 𝑺⁡(𝟒)\\\\bm{S(4)} |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| GPT-5.6 Luna | 0.38 | 0.32 | 0.33 | 0.80 | 0.57 | 0.40 | 0.24 |\n| Kimi-K2.6 | 0.47 | 0.37 | 0.50 | 0.78 | 0.67 | 0.61 | 0.44 |\n| GPT-OSS-120B | 0.85 | 0.73 | 0.83 | 0.99 | 0.92 | 0.88 | 0.61 |\n| DeepSeek-V4-Pro | 0.98 | 0.71 | 0.97 | 1.00 | 0.93 | 0.93 | 0.76 |",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "#### Endpoint-free propagation.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Search agent.\nThe search is carried out by an AI agent (Muse Spark 1.3; [Meta, 2026b](https://arxiv.org/html/2609.35576v1#bib.bib17 \"\")) running in the Codex harness ( [OpenAI, 2026a](https://arxiv.org/html/2609.35576v1#bib.bib21 \"\")). At each iteration, the agent proposes a revision of ϕ\\\\phi, runs it on the search universes (defined below), and inspects the resulting judge labels, memory snapshots, and agent trajectories to diagnose where propagation failed, for example when an agent stored the goal but not the endpoint instruction, or kept the instruction but did not call the endpoint. It then revises the template accordingly. The agent maintains a persistent Markdown research log of hypotheses tested, their outcomes, and observed failure modes, so that the search accumulates knowledge across iterations and sessions rather than restarting from scratch.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "Self-propagating attacks in agent ecosystems.\nPrompt Infection demonstrates propagation through direct LLM-to-LLM communication in connected multi-agent systems ( [Lee & Tiwari, 2024](https://arxiv.org/html/2609.35576v1#bib.bib15 \"\"); [Yu et al., 2024](https://arxiv.org/html/2609.35576v1#bib.bib41 \"\")). The AI Worm spreads self-replicating prompts through RAG-enabled email assistants whose incoming correspondence is automatically indexed and later retrieved during outgoing email generation ( [Cohen et al., 2025](https://arxiv.org/html/2609.35576v1#bib.bib4 \"\")). AgentWorm studies persistent multi-hop propagation through group messages, configuration-file modification, and agent-to-agent transmission ( [Zhang et al., 2026b](https://arxiv.org/html/2609.35576v1#bib.bib46 \"\")), while Autonomous LLM Agent Worms studies file-backed carriers, scheduled re-entry, semantic degradation, and cross-platform transmission through shared messaging surfaces ( [Zha & Wang, 2026](https://arxiv.org/html/2609.35576v1#bib.bib42 \"\")). Mind Viruses evolves ideas and action payloads that spread through direct interactions in coding-agent teams and stylized agent chains ( [Papadopoulos et al., 2026](https://arxiv.org/html/2609.35576v1#bib.bib28 \"\")), and ( [Wu et al., 2026](https://arxiv.org/html/2609.35576v1#bib.bib36 \"\")) studies poisoning through coding agents’ skill files; its social-post extension tests an artifact-mediated cycle but does not obtain second-hop propagation. In contrast, we study propagation through ordinary human-authorized read and write tasks, without direct inter-agent messaging, shared memory, peer discovery, or autonomous messaging loops.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "We evaluate four target models: GPT-5.6 Luna ( [OpenAI, 2026b](https://arxiv.org/html/2609.35576v1#bib.bib22 \"\")), Kimi-K2.6 ( [Moonshot AI, 2026](https://arxiv.org/html/2609.35576v1#bib.bib18 \"\")), GPT-OSS-120B ( [OpenAI, 2025](https://arxiv.org/html/2609.35576v1#bib.bib20 \"\")), and DeepSeek-V4-Pro ( [DeepSeek-AI, 2026](https://arxiv.org/html/2609.35576v1#bib.bib8 \"\")). Every assistant in a universe uses the same model and runs in the OpenClaw personal-assistant harness ( [OpenClaw, 2026a](https://arxiv.org/html/2609.35576v1#bib.bib25 \"\")) with file tools, a private workspace, and OpenClaw’s default memory, a MEMORY.md file that persists across\ntime steps. Attack prompt instructions ϕ\\\\phi were optimized for each model on 12 development universes, and evaluated on the unseen 36 test universes of Section [5.1](https://arxiv.org/html/2609.35576v1#S5.SS1 \"5.1 Dataset Construction ‣ 5 Dataset and Evaluation ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents\"), on which we run every universe twice per model and average over the two runs. Each run contains a single seed artifact held by one seed agent (Section [3.2](https://arxiv.org/html/2609.35576v1#S3.SS2 \"3.2 Attack Objective and Formulation ‣ 3 Human–Agent Universes and Attack Objective ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents\")); all other artifacts and memories start clean.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "url": "https://embracethered.com/blog/posts/2025/agenthopper-a-poc-ai-virus",
+      "title": "AgentHopper: An AI Virus ·  Embrace The Red",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Now, imagine another developer, using another coding agent (Agent 2), pulls the now-infected code from GitHub (say, from Repo 2). When Agent 2 processes or interacts with this code, the prompt injection is triggered.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "To avoid accidents and to make sure it doesn’t write to repos in my environment that I didn’t want to, I added a safety switch that asks for approval for each repo.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "url": "https://enklypesalt.com/posts/context-collapse-part3-ai-worming-through-word",
+      "title": "Context Collapse, Part 3 - AI Worming through Word | En Klype Salt",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The screenshot shows a new drafting session using Copilot. This time the original attack vector is no longer included among the attachments. However, the previously created document is (Tfosorcim Q1 2026 report.docx). The result is the same, and Copilot again halves all financial numbers in the drafted Q2 financial report.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "In all reported PoC scenarios, Copilot would alter generated or edited documents and copy the hidden instruction into these documents. When these documents were themselves used as part of the context for new downstream documents, the attack triggered again. Note that for the second phase, the original attack document was no longer part of the attachments for the new downstream documents, yet the attack triggered and spread to these as well.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm",
+      "title": "ChainDrop supply chain compromise: Anatomy of a self-propagating worm | Microsoft Security Blog",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "The malware can also use stolen GitHub credentials to inject Claude and Visual Studio Code configuration files into repositories, establishing persistence and creating an additional developer-to-developer infection path.",
+          "added": "2026-10-01"
+        },
+        {
+          "text": "These changes create a secondary infection route: future Claude or Visual Studio Code activity can restart the payload even after the original npm installation has completed.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "url": "https://embracethered.com/blog/posts/2026/agent-commander-your-agent-works-for-me-now",
+      "title": "Agent Commander: Promptware-Powered Command and Control ·  Embrace The Red",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We demonstrated how popular agents like OpenClaw, Kimi Claw and NanoClaw can be tricked via indirect prompt injection to join Agent Commander, as bots in a prompt-based botnet.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "url": "https://www.theregister.com/security/2026/07/29/word-worm-crawls-into-copilot-spreads-chaos/5280588",
+      "title": "Word worm crawls into Copilot, spreads chaos",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "We have addressed the findings reported by the researcher and thank them for working with us through coordinated vulnerability disclosure. To address this class of risk, we use a defense-in-depth strategy with safeguards that block malicious instructions at multiple points and help keep tasks aligned with users’ requests. We are continuously strengthening these safeguards as the technology and threat landscape evolve. We encourage customers to install the latest updates, use multiple layers of security protection, treat content from unknown sources with caution, and review AI-generated content before using or sharing it.",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "url": "https://arxiv.org/abs/2603.15727",
+      "title": "[2603.15727] AgentWorm: Self-Propagating Attacks Across LLM Agent Ecosystems",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Thu, 16 Jul 2026 04:17:50 UTC",
+          "added": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "url": "https://arxiv.org/abs/2609.35576v1",
+      "title": "Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents",
+      "accessed": "2026-10-01",
+      "quotes": [
+        {
+          "text": "Submitted on 28 Sep 2026",
+          "added": "2026-10-01"
+        }
+      ]
+    }
+  ]
+}
