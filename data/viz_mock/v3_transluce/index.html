@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<!--
+AI VILLAGE // pivot graph replay (Transluce us-canada-gov hunt)
+===============================================================
+Data: ./data/graph.json, checked by `make pivot-check`. It holds aggregate counts from
+another investigation (silent-locus). It has no event ids. Nothing here re-derives it.
+
+Tiers (top to bottom): SOURCE tasks -> LAUNCHER indicators -> PIVOT relays -> TARGETS.
+Node size   = log of the node weight in graph.json. The weight means linked events (source),
+              annotated events (launcher), co-occurrence hits (pivot), or Arquivo.pt captures (target).
+Source      = the task that may have driven an incident. Its badge says how sure the data is:
+              CONFIRMED (solid), CANDIDATE (light), HYPOTHESIS (hollow, not observed in bytes),
+              HONEST GAP (grey, no source known). Source edges carry the same confidence:
+              solid = confirmed, dashed = candidate, sparse dashes = hypothesized.
+Node lit    = the node has a count above zero on the selected day.
+              L:a000_zzend has no daily counts. It follows L:zz_label (documented in the data).
+Edge lit    = both end nodes are lit that day. This does not prove the pair co-occurred that day.
+Grey target = "honest negative": zero Arquivo.pt captures. It is shown, not hidden.
+Notes       = text from the source investigation. This page does not verify it.
+
+Playback unit = one day. Camera: fixed during playback. Drag to orbit, scroll to zoom,
+right-drag to pan, "VIEW" resets it. Text from the data is written with textContent only.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI VILLAGE // pivot graph replay</title>
+<style>
+  html, body { height: 100%; }
+  body { margin: 0; overflow: hidden; background: #f2f4f6;
+         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+         color: #1a2433; }
+  #scene { position: fixed; inset: 0; }
+  .panel { position: fixed; background: rgba(255,255,255,.88);
+           border: 1px solid #d4dbe3; border-radius: 6px;
+           backdrop-filter: blur(6px); padding: 10px 12px; box-sizing: border-box; }
+  .micro { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #6b7686; }
+  h1 { font-size: 13px; margin: 4px 0; letter-spacing: .06em; }
+  p, .note { font-size: 11px; line-height: 1.5; color: #4a5565; margin: 4px 0; }
+  details { font-size: 11px; margin-top: 6px; color: #3c4655; }
+  details summary { cursor: pointer; color: #3b5bdb; }
+  details pre { white-space: pre-wrap; word-break: break-word; margin: 4px 0 0;
+                font: inherit; max-height: 140px; overflow: auto; }
+  #left { position: fixed; top: 14px; left: 14px; bottom: 84px; width: 320px; display: flex;
+          flex-direction: column; gap: 10px; }
+  #left .panel { position: static; }
+  #title { flex: none; max-height: 52vh; overflow-y: auto; }
+  .badge { display: inline-block; font-size: 10px; letter-spacing: .08em; padding: 2px 6px;
+           border-radius: 3px; border: 1px solid #c3ccd6; background: #fff; margin: 0 4px 4px 0; }
+  .badge.lead { border-color: #ca8a04; color: #854d0e; }
+  .badge.neg { border-color: #7a8696; color: #566170; }
+  .badge.s { border-color: #7c3aed; color: #5b21b6; }
+  .badge.c-conf { border-color: #7c3aed; background: #ede9fe; color: #5b21b6; }
+  .badge.c-cand { border-color: #a78bfa; color: #6d28d9; }
+  .badge.c-hyp { border-style: dashed; border-color: #7c3aed; color: #5b21b6; }
+  .badge.c-gap { border-color: #7a8696; background: #eef1f5; color: #566170; }
+  .badge.l { border-color: #d97706; color: #92400e; }
+  .badge.p { border-color: #0d9488; color: #0f766e; }
+  .badge.t { border-color: #be123c; color: #be123c; }
+  #legend { margin-top: 8px; }
+  #legend .row { display: flex; align-items: center; gap: 8px; font-size: 11px; margin-top: 4px; }
+  #legend .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  #days { flex: 1; min-height: 120px; overflow-y: auto; padding: 6px; }
+  .day { display: grid; grid-template-columns: 26px 1fr; gap: 2px 6px; font-size: 11px;
+         padding: 5px 6px; border-radius: 4px; cursor: pointer; border: 1px solid transparent;
+         line-height: 1.35; }
+  .day:hover { background: #f3f6fb; }
+  .day.cur { background: #eef4ff; border-color: #c9d8f5; }
+  .day.future { opacity: .55; }
+  .day .n { color: #8a94a3; text-align: right; }
+  .day .m { grid-column: 2; font-size: 10px; color: #6b7686; }
+  .pip { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
+  #evidence { right: 14px; top: 14px; bottom: 84px; width: 380px; overflow-y: auto; }
+  #evidence h2 { font-size: 12px; margin: 4px 0 6px; letter-spacing: .06em; }
+  #evidence .kv { font-size: 11px; margin: 3px 0; color: #3c4655; word-break: break-word; }
+  #evidence .kv b { color: #1a2433; font-weight: 600; }
+  #evidence .sec { margin-top: 10px; }
+  #evidence .quote { white-space: pre-wrap; word-break: break-word; margin: 4px 0 0; padding: 6px 8px;
+                     font-size: 11px; background: #f6f8fa; border: 1px solid #e0e5eb; border-radius: 4px; }
+  #evidence .line { font-size: 11px; margin: 4px 0; padding-left: 8px; border-left: 3px solid #c3ccd6;
+                    word-break: break-word; }
+  #evidence .line.s { border-left-color: #7c3aed; }
+  #evidence .line.dashed { border-left-style: dashed; }
+  #evidence .warn { margin: 6px 0; padding: 6px 8px; font-size: 11px; background: #fff7ed;
+                    border: 1px solid #fdba74; border-radius: 4px; color: #7c2d12; }
+  #evidence .line.l { border-left-color: #d97706; }
+  #evidence .line.p { border-left-color: #0d9488; }
+  #evidence .line.t { border-left-color: #be123c; }
+  #evidence .line.on { background: #f3f8f6; }
+  #evidence button.link { font: inherit; font-size: 11px; background: none; border: 0; padding: 0;
+                          color: #3b5bdb; cursor: pointer; text-decoration: underline; }
+  #controls { left: 50%; transform: translateX(-50%); bottom: 14px; display: flex;
+              align-items: center; gap: 8px; white-space: nowrap; }
+  #controls button, #controls select { font: inherit; font-size: 11px; letter-spacing: .08em;
+        background: #fff; border: 1px solid #c3ccd6; border-radius: 4px; padding: 6px 10px;
+        cursor: pointer; color: #1a2433; }
+  #controls button:hover { border-color: #3b5bdb; color: #3b5bdb; }
+  #controls button.on { background: #3b5bdb; border-color: #3b5bdb; color: #fff; }
+  #controls input[type=range] { width: 260px; accent-color: #3b5bdb; }
+  #read { font-size: 12px; min-width: 150px; text-align: center; }
+  .tiertag { position: fixed; left: 346px; pointer-events: none; font-size: 11px; letter-spacing: .12em;
+             color: #3c4655; transform: translateY(-50%); white-space: nowrap; }
+  .tiertag i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+  #labels { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .nl { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 11px; font-weight: 600;
+        line-height: 1; padding: 3px 5px; border-radius: 3px; color: #111a26;
+        background: rgba(255,255,255,.9); border: 1px solid #d4dbe3; visibility: hidden; }
+  .nl.dim { color: #4a5565; }
+  .nl.quiet { font-weight: 500; background: rgba(255,255,255,.7); border-color: transparent; }
+  .nl.sel { border-color: #3b5bdb; }
+  #tip { position: fixed; pointer-events: none; display: none; z-index: 10; background: #1a2433;
+         color: #eef1f5; font-size: 11px; padding: 5px 9px; border-radius: 4px; max-width: 320px; }
+  #loaderr { top: 50%; left: 50%; transform: translate(-50%,-50%); max-width: 440px;
+             text-align: center; font-size: 12px; line-height: 1.6; }
+  #loaderr.err { border-color: #be123c; color: #7f1d1d; }
+  .hidden { display: none; }
+  body.nocursor, body.nocursor * { cursor: none !important; }
+  body.dark { background: #0b0f14; color: #dbe4ee; }
+  body.dark .panel { background: rgba(10,15,22,.88); border-color: #1f2a3a; }
+  body.dark .micro { color: #8696ab; }
+  body.dark p, body.dark .note, body.dark details, body.dark .tiertag { color: #b4c0cf; }
+  body.dark details summary, body.dark #evidence button.link { color: #8fb0ff; }
+  body.dark .badge { background: #131b27; border-color: #33465f; color: #dbe4ee; }
+  body.dark .badge.lead { color: #fcd34d; }
+  body.dark .badge.s, body.dark .badge.c-hyp, body.dark .badge.c-cand { color: #c4b5fd; }
+  body.dark .badge.c-conf { background: #2e1f5e; color: #ddd6fe; }
+  body.dark .badge.c-gap, body.dark .badge.neg { background: #1a2331; color: #aab6c6; }
+  body.dark .badge.l { color: #fbbf24; }
+  body.dark .badge.p { color: #5eead4; }
+  body.dark .badge.t { color: #fb7185; }
+  body.dark .day:hover { background: #131b27; }
+  body.dark .day.cur { background: #172338; border-color: #2b3f63; }
+  body.dark .day .n, body.dark .day .m { color: #7d8ba0; }
+  body.dark #evidence .kv { color: #b4c0cf; }
+  body.dark #evidence .kv b { color: #f1f5f9; }
+  body.dark #evidence .quote { background: #0f1620; border-color: #1f2a3a; }
+  body.dark #evidence .line { border-left-color: #33465f; }
+  body.dark #evidence .line.on { background: #0f2220; }
+  body.dark #evidence .warn { background: #2a1a0c; border-color: #92400e; color: #fdba74; }
+  body.dark #controls button, body.dark #controls select { background: #131b27; border-color: #33465f; color: #dbe4ee; }
+  body.dark #controls button:hover { border-color: #8fb0ff; color: #8fb0ff; }
+  body.dark #controls button.on { background: #3b5bdb; border-color: #3b5bdb; color: #fff; }
+  body.dark .nl { color: #f1f5f9; background: rgba(10,15,22,.9); border-color: #2b3a50; }
+  body.dark .nl.dim { color: #9aa7b8; }
+  body.dark .nl.quiet { background: rgba(10,15,22,.7); border-color: transparent; }
+  body.dark .nl.sel { border-color: #8fb0ff; }
+  body.dark #tip { background: #e6ebf2; color: #111a26; }
+  @media (max-width: 1100px) { #left { display: none; } #evidence { width: 320px; } .tiertag { left: 14px; } }
+  @media (max-width: 760px) { #evidence { display: none; } #controls input[type=range] { width: 120px; } }
+</style>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.js" } }
+</script>
+</head>
+<body>
+<div id="scene"></div>
+
+<div id="left">
+  <div class="panel" id="title">
+    <div class="micro">transluce us-canada-gov hunt // pivot graph replay</div>
+    <h1>SOURCE &rarr; LAUNCHER &rarr; PIVOT &rarr; TARGET</h1>
+    <p id="case-note"></p>
+    <details id="prov-box"><summary>Source and method (from the data file)</summary><pre id="prov"></pre></details>
+    <div id="legend">
+      <div class="micro">how to read</div>
+      <div class="row"><span class="dot" style="background:#7c3aed"></span>source task, confirmed</div>
+      <div class="row"><span class="dot" style="background:#a78bfa"></span>source task, candidate</div>
+      <div class="row"><span class="dot" style="background:transparent;border:2px solid #7c3aed;box-sizing:border-box"></span>source, hypothesis (not observed)</div>
+      <div class="row"><span class="dot" style="background:#7a8696"></span>source, honest gap (task unknown)</div>
+      <div class="row"><span class="dot" style="background:#d97706"></span>launcher indicator</div>
+      <div class="row"><span class="dot" style="background:#0d9488"></span>pivot relay</div>
+      <div class="row"><span class="dot" style="background:#be123c"></span>target with captures</div>
+      <div class="row"><span class="dot" style="background:#7a8696"></span>target, zero captures (honest negative)</div>
+      <div class="row"><span class="dot" style="background:#ca8a04;border-radius:0"></span>new lead (source label)</div>
+      <p>A bright node has a count that day. A faded node has none, but it stays visible so every tier shows.
+      A line is lit when both ends are bright. That does not prove the two ends occurred together that day.
+      Source lines: solid = confirmed, dashed = candidate, sparse dashes = hypothesized.</p>
+    </div>
+  </div>
+  <div class="panel" id="days" aria-label="Day list"></div>
+</div>
+<div class="panel" id="evidence" aria-live="polite"></div>
+
+<div class="panel" id="controls">
+  <button id="btn-prev" aria-label="Previous day">&#9664;</button>
+  <button id="btn-play" aria-label="Play or pause">PLAY</button>
+  <button id="btn-next" aria-label="Next day">&#9654;</button>
+  <input type="range" id="scrub" min="1" max="1" step="1" value="1" aria-label="Day">
+  <span id="read">DAY -</span>
+  <select id="speed" aria-label="Speed">
+    <option value="0.5">0.5x</option><option value="1" selected>1x</option>
+    <option value="2">2x</option><option value="4">4x</option>
+  </select>
+  <button id="btn-reset" aria-label="Reset to day 1">RESET</button>
+  <button id="btn-view" aria-label="Reset the camera">VIEW</button>
+  <button id="btn-theme" aria-label="Switch between light and dark">DARK</button>
+</div>
+
+<div class="panel" id="loaderr"><span class="micro">loading</span><br>fetching graph.json</div>
+<div id="tags"></div>
+<div id="labels"></div>
+<div id="tip"></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from './vendor/OrbitControls.js';
+
+const DAY_SECONDS = 0.55;   // one day at 1x speed
+const LABEL_MAX = 22;
+const LAYERS = {
+  source:   { y: 34,  radius: 12,   color: 0x7c3aed, css: '#7c3aed', cls: 's', name: 'SOURCE',   unit: 'linked events (see note)' },
+  launcher: { y: 17,  radius: 13,    color: 0xd97706, css: '#d97706', cls: 'l', name: 'LAUNCHER', unit: 'annotated events' },
+  pivot:    { y: 0,   radius: 18,   color: 0x0d9488, css: '#0d9488', cls: 'p', name: 'PIVOT',    unit: 'co-occurrence hits' },
+  target:   { y: -17, radius: 22,   color: 0xbe123c, css: '#be123c', cls: 't', name: 'TARGET',   unit: 'Arquivo.pt captures' },
+};
+const DIM = { color: 0x7a8696, css: '#7a8696' };
+const SOURCE_STYLE = {   // how a source node looks for each badge in the data
+  'CONFIRMED':  { color: 0x7c3aed, cls: 'c-conf', wire: false },
+  'CANDIDATE':  { color: 0xa78bfa, cls: 'c-cand', wire: false },
+  'HYPOTHESIS': { color: 0x7c3aed, cls: 'c-hyp',  wire: true,  warn: 'Working hypothesis. It was not observed in the bytes. Do not cite it as fact.' },
+  'HONEST GAP': { color: 0x7a8696, cls: 'c-gap',  wire: false, warn: 'Honest gap. The driving task is unknown. This node marks what is missing.' },
+};
+// opacity factor for a lit source edge, quiet edge opacity, and dash pattern [dash, gap] (null = solid)
+const EDGE_CONF = {
+  confirmed:    { lit: 1,    dash: null },
+  candidate:    { lit: 0.75, dash: [1.4, 0.9] },
+  hypothesized: { lit: 0.5,  dash: [0.5, 1.1] },
+};
+const GOLD = 0xca8a04;
+const QUIET_OPACITY = 0.55;   // a node with no count that day stays clearly visible, so no tier seems missing
+const PROXY = { id: 'L:a000_zzend', follows: 'L:zz_label' };   // no daily counts in the data
+
+/* ---------- DOM helpers: data text only ever goes through textContent ---------- */
+const $ = (id) => document.getElementById(id);
+function el(tag, cls, text) {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  if (text !== undefined && text !== null) node.textContent = String(text);
+  return node;
+}
+function kv(label, value) {
+  const row = el('div', 'kv');
+  row.appendChild(el('b', null, label + ': '));
+  row.appendChild(document.createTextNode(String(value)));
+  return row;
+}
+const clip = (text, max) => (String(text).length > max ? String(text).slice(0, max - 1) + '\u2026' : String(text));
+const fmt = (n) => n.toLocaleString('en-US');
+function fail(message) {
+  const box = $('loaderr');
+  box.classList.add('err');
+  box.classList.remove('hidden');
+  box.replaceChildren(el('span', 'micro', 'cannot load'), el('br'), document.createTextNode(message));
+}
+
+/* ---------- load and check the data ---------- */
+function checkGraph(g) {
+  const need = (cond, msg) => { if (!cond) throw new Error(msg); };
+  need(g && typeof g === 'object', 'graph.json is not an object');
+  need(g.meta && Array.isArray(g.nodes) && g.nodes.length && Array.isArray(g.edges) && Array.isArray(g.days) && g.days.length,
+    'graph.json is missing nodes, edges, or days');
+  const ids = new Set();
+  for (const n of g.nodes) {
+    need(LAYERS[n.layer], 'a node has an unknown layer');
+    need(typeof n.id === 'string' && !ids.has(n.id), 'a node id is missing or repeated');
+    ids.add(n.id);
+  }
+  for (const e of g.edges) {
+    need(ids.has(e.a) && ids.has(e.b), 'an edge refers to an unknown node');
+    need(e.conf === undefined || Object.hasOwn(EDGE_CONF, e.conf), 'an edge has an unknown confidence');
+  }
+  for (const d of g.days) need(d.n && typeof d.n === 'object' && Array.isArray(d.digest), 'a day is incomplete');
+}
+
+let DATA = null;
+try {
+  const res = await fetch('./data/graph.json');
+  if (!res.ok) throw new Error(`graph.json returned HTTP ${res.status}.`);
+  DATA = await res.json();
+  checkGraph(DATA);
+  $('loaderr').classList.add('hidden');
+} catch (err) {
+  fail(err && err.message ? err.message : 'unreadable graph file');
+  throw err;
+}
+const DAYS = DATA.days;
+const N = DAYS.length;
+const nodeById = new Map(DATA.nodes.map((n) => [n.id, n]));
+
+/* ---------- facts derived from the file ---------- */
+function countOn(day, id) {
+  return day.n[id === PROXY.id ? PROXY.follows : id] || 0;
+}
+const activeDays = new Map(DATA.nodes.map((n) => [n.id, []]));
+DAYS.forEach((d, i) => { for (const n of DATA.nodes) if (countOn(d, n.id) > 0) activeDays.get(n.id).push(i + 1); });
+const edgesOf = new Map(DATA.nodes.map((n) => [n.id, []]));
+for (const e of DATA.edges) { edgesOf.get(e.a).push(e); edgesOf.get(e.b).push(e); }
+const liveAt = (i) => new Set(DATA.nodes.filter((n) => countOn(DAYS[i - 1], n.id) > 0).map((n) => n.id));
+
+/* ---------- scene ---------- */
+let renderer = null;
+try {
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+} catch (err) {
+  $('scene').appendChild(el('p', null, 'WebGL is unavailable. The day list and evidence panel still work.'));
+}
+const scene = new THREE.Scene();
+const THEMES = { light: { bg: 0xf2f4f6, edge: 1 }, dark: { bg: 0x0b0f14, edge: 1.8 } };
+let theme = 'light';
+try { if (localStorage.getItem('pivot-theme') === 'dark') theme = 'dark'; } catch (err) { /* storage can be blocked */ }
+scene.background = new THREE.Color(THEMES[theme].bg);
+const camera = new THREE.PerspectiveCamera(46, innerWidth / innerHeight, 0.1, 600);
+const CAM_HOME = new THREE.Vector3(0, 26, 112);
+const TGT_HOME = new THREE.Vector3(0, 8.5, 0);
+camera.position.copy(CAM_HOME);
+let controls = null;
+if (renderer) {
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  $('scene').appendChild(renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.copy(TGT_HOME);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.minDistance = 12;
+  controls.maxDistance = 200;
+}
+
+function ring(radius, color, opacity, y) {
+  const pts = [];
+  for (let i = 0; i <= 96; i++) {
+    const t = (i / 96) * Math.PI * 2;
+    pts.push(new THREE.Vector3(Math.cos(t) * radius, y, Math.sin(t) * radius));
+  }
+  return new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),
+    new THREE.LineBasicMaterial({ color, transparent: true, opacity }));
+}
+
+const byLayer = { source: [], launcher: [], pivot: [], target: [] };
+for (const n of DATA.nodes) byLayer[n.layer].push(n);
+const pickables = [];
+const haloGeo = new THREE.SphereGeometry(1, 16, 12);
+for (const [layer, L] of Object.entries(LAYERS)) {
+  const members = byLayer[layer];
+  scene.add(ring(L.radius, L.color, 0.45, L.y));
+  const tag = el('div', 'tiertag');
+  const dot = el('i');
+  dot.style.background = L.css;
+  tag.append(dot, document.createTextNode(L.name));
+  $('tags').appendChild(tag);
+  L.tag = tag;
+  const maxSize = Math.max(1, ...members.map((n) => n.size));
+  members.forEach((n, k) => {
+    const a = (k / members.length) * Math.PI * 2 + ({ source: 0.42, pivot: 0.28, target: 0.14 }[layer] || 0);
+    n.pos = new THREE.Vector3(Math.cos(a) * L.radius, L.y, Math.sin(a) * L.radius);
+    n.rad = 0.45 + 1.25 * (Math.log10(n.size + 1) / Math.log10(maxSize + 1));
+    const style = layer === 'source' ? SOURCE_STYLE[n.badge] : null;
+    const base = n.dim ? DIM.color : style ? style.color : L.color;
+    n.mat = new THREE.MeshBasicMaterial({ color: base, transparent: true, opacity: QUIET_OPACITY, wireframe: !!(style && style.wire) });
+    n.mesh = new THREE.Mesh(new THREE.SphereGeometry(n.rad, 24, 18), n.mat);
+    n.mesh.position.copy(n.pos);
+    n.mesh.userData.nodeId = n.id;
+    n.halo = new THREE.Mesh(haloGeo, new THREE.MeshBasicMaterial({ color: base, transparent: true, opacity: 0.0, depthWrite: false }));
+    n.halo.position.copy(n.pos);
+    n.halo.scale.setScalar(n.rad * 1.5);
+    const caption = style ? `${clip(n.label, LABEL_MAX)} [${n.badge.toLowerCase()}]` : clip(n.label, LABEL_MAX);
+    n.tag = el('div', n.dim ? 'nl dim' : 'nl', caption);
+    $('labels').appendChild(n.tag);
+    scene.add(n.mesh, n.halo);
+    pickables.push(n.mesh);
+    if (n.badge === 'new lead') {
+      const lead = new THREE.Mesh(new THREE.TorusGeometry(n.rad + 0.55, 0.09, 10, 40), new THREE.MeshBasicMaterial({ color: GOLD }));
+      lead.position.copy(n.pos);
+      lead.rotation.x = Math.PI / 2.4;
+      scene.add(lead);
+    }
+    n.cur = { op: QUIET_OPACITY, halo: 0, s: 1 };
+  });
+}
+
+const maxW = Math.max(...DATA.edges.map((e) => e.w));
+const logMax = Math.log10(maxW + 1);
+for (const e of DATA.edges) {
+  const a = nodeById.get(e.a), b = nodeById.get(e.b);
+  const ca = new THREE.Color(LAYERS[a.layer].color), cb = new THREE.Color(LAYERS[b.layer].color);
+  const geo = new THREE.BufferGeometry().setFromPoints([a.pos, b.pos]);
+  geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array([ca.r, ca.g, ca.b, cb.r, cb.g, cb.b]), 3));
+  const conf = e.conf ? EDGE_CONF[e.conf] : null;
+  const opts = { vertexColors: true, transparent: true, opacity: 0.06 };
+  e.mat = conf && conf.dash
+    ? new THREE.LineDashedMaterial({ ...opts, dashSize: conf.dash[0], gapSize: conf.dash[1] })
+    : new THREE.LineBasicMaterial(opts);
+  e.rel = Math.log10(e.w + 1) / logMax;
+  e.litScale = conf ? conf.lit : 1;
+  e.cur = 0.06;
+  const line = new THREE.Line(geo, e.mat);
+  if (conf && conf.dash) line.computeLineDistances();
+  scene.add(line);
+}
+
+/* ---------- state and views ---------- */
+let idx = 1;               // 1-based current day
+let playing = false;
+let acc = 0;
+let selected = null;       // node id or null
+let hovered = null;        // node id under the pointer or null
+const dayList = $('days');
+
+function buildHeader() {
+  const meta = DATA.meta;
+  $('case-note').textContent = `Aggregate counts from another investigation. ${DATA.nodes.length} nodes, ${DATA.edges.length} edges, `
+    + `${N} days (${DAYS[0].d} to ${DAYS[N - 1].d}). No event ids. Not verified here.`;
+  $('prov').textContent = [`Source: ${meta.source}`, '', meta.note || ''].join('\n');
+}
+
+function buildDayList() {
+  DAYS.forEach((d, i) => {
+    const row = el('div', 'day');
+    row.dataset.i = i + 1;
+    row.appendChild(el('div', 'n', i + 1));
+    const text = el('div');
+    const pip = el('span', 'pip');
+    pip.style.background = d.digest.length ? '#3b5bdb' : '#c3ccd6';
+    text.append(pip, document.createTextNode(d.d));
+    row.appendChild(text);
+    row.appendChild(el('div', 'm', `${liveAt(i + 1).size} nodes live, ${d.digest.length} digest lines`));
+    row.addEventListener('click', () => { setPlaying(false); go(i + 1); });
+    dayList.appendChild(row);
+  });
+}
+
+function section(title) {
+  const box = el('div', 'sec');
+  box.appendChild(el('div', 'micro', title));
+  return box;
+}
+
+function nodeLine(n, count) {
+  const row = el('div', `line ${LAYERS[n.layer].cls}${count > 0 ? ' on' : ''}`);
+  const link = el('button', 'link', n.label);
+  link.addEventListener('click', () => { selected = n.id; applyDay(); });
+  row.appendChild(link);
+  row.appendChild(document.createTextNode(`  ${count > 0 ? fmt(count) : 'no count'}`
+    + (n.id === PROXY.id && count > 0 ? ' (follows zz labels)' : '')));
+  return row;
+}
+
+function renderEvidence() {
+  const day = DAYS[idx - 1];
+  const live = liveAt(idx);
+  const frag = document.createDocumentFragment();
+  frag.appendChild(el('div', 'micro', 'evidence // recorded day'));
+  frag.appendChild(el('h2', null, `Day ${idx} of ${N}: ${day.d}`));
+  const badges = el('div');
+  badges.appendChild(el('span', 'badge', `${live.size} of ${DATA.nodes.length} nodes live`));
+  frag.appendChild(badges);
+
+  const dig = section('day digest (from the data file)');
+  if (day.digest.length) for (const line of day.digest) dig.appendChild(el('div', 'line', line));
+  else dig.appendChild(el('p', null, 'No digest lines on this day.'));
+  frag.appendChild(dig);
+
+  const act = section('nodes with a count today');
+  for (const layer of Object.keys(LAYERS)) {
+    for (const n of byLayer[layer]) if (live.has(n.id)) act.appendChild(nodeLine(n, countOn(day, n.id)));
+  }
+  if (!live.size) act.appendChild(el('p', null, 'No node has a count on this day.'));
+  frag.appendChild(act);
+
+  if (selected) {
+    const n = nodeById.get(selected);
+    const L = LAYERS[n.layer];
+    const box = section('selected node');
+    const head = el('div');
+    head.appendChild(el('span', `badge ${L.cls}`, L.name));
+    const style = n.layer === 'source' ? SOURCE_STYLE[n.badge] : null;
+    if (style) head.appendChild(el('span', `badge ${style.cls}`, n.badge));
+    if (n.dim) head.appendChild(el('span', 'badge neg', 'HONEST NEGATIVE'));
+    if (n.badge === 'new lead') head.appendChild(el('span', 'badge lead', 'NEW LEAD (source label)'));
+    box.appendChild(head);
+    if (style && style.warn) box.appendChild(el('div', 'warn', style.warn));
+    box.appendChild(el('h2', null, n.label));
+    box.appendChild(kv('Weight', `${fmt(n.size)} ${L.unit}`));
+    const days = activeDays.get(n.id);
+    box.appendChild(kv('Days with a count', days.length
+      ? `${days.length} of ${N} (first ${DAYS[days[0] - 1].d}, last ${DAYS[days[days.length - 1] - 1].d})` : 'none'));
+    box.appendChild(el('div', 'micro', 'note from the source investigation (not verified here)'));
+    box.appendChild(el('div', 'quote', n.note));
+    box.appendChild(el('div', 'micro', 'connected edges (weight, then label)'));
+    const edges = [...edgesOf.get(n.id)].sort((x, y) => y.w - x.w);
+    for (const e of edges) {
+      const other = nodeById.get(e.a === n.id ? e.b : e.a);
+      const both = live.has(e.a) && live.has(e.b);
+      const row = el('div', `line ${LAYERS[other.layer].cls}${both ? ' on' : ''}${e.conf && e.conf !== 'confirmed' ? ' dashed' : ''}`);
+      const link = el('button', 'link', other.label);
+      link.addEventListener('click', () => { selected = other.id; applyDay(); });
+      row.appendChild(link);
+      row.appendChild(document.createTextNode(`  ${fmt(e.w)}: ${e.label}${both ? ' (both ends lit today)' : ''}`));
+      box.appendChild(row);
+    }
+    const clear = el('button', 'link', 'Clear selection');
+    clear.addEventListener('click', () => { selected = null; applyDay(); });
+    box.appendChild(clear);
+    frag.appendChild(box);
+  } else {
+    frag.appendChild(el('p', null, 'Click a node in the scene to see its weight, note, and edges.'));
+  }
+  const box = $('evidence');
+  box.replaceChildren(frag);
+}
+
+/* ---------- apply a day to the scene ---------- */
+function applyDay() {
+  const live = liveAt(idx);
+  const near = new Set();
+  if (selected) for (const e of edgesOf.get(selected)) { near.add(e); }
+  for (const n of DATA.nodes) {
+    const on = live.has(n.id), pick = selected === n.id;
+    n.t = { op: on || pick ? 1 : QUIET_OPACITY, halo: on ? 0.28 : pick ? 0.2 : 0, s: pick ? 1.25 : 1 };
+  }
+  for (const e of DATA.edges) {
+    const on = live.has(e.a) && live.has(e.b);
+    e.t = on ? (0.3 + 0.6 * e.rel) * e.litScale : near.has(e) ? 0.22 : 0.07;
+  }
+  renderEvidence();
+  dayList.querySelectorAll('.day').forEach((row) => {
+    const i = Number(row.dataset.i);
+    row.classList.toggle('cur', i === idx);
+    row.classList.toggle('future', i > idx);
+  });
+  const cur = dayList.querySelector('.day.cur');
+  if (cur) cur.scrollIntoView({ block: 'nearest' });
+  $('scrub').value = idx;
+  $('read').textContent = `DAY ${idx} / ${N}  ${DAYS[idx - 1].d}`;
+}
+function go(i) {
+  idx = Math.min(N, Math.max(1, i));
+  acc = 0;
+  applyDay();
+}
+function setPlaying(on) {
+  playing = on;
+  const b = $('btn-play');
+  b.textContent = on ? 'PAUSE' : 'PLAY';
+  b.classList.toggle('on', on);
+}
+
+/* ---------- controls ---------- */
+$('scrub').max = N;
+$('btn-play').addEventListener('click', () => {
+  if (!playing && idx >= N) go(1);
+  setPlaying(!playing);
+});
+$('btn-prev').addEventListener('click', () => { setPlaying(false); go(idx - 1); });
+$('btn-next').addEventListener('click', () => { setPlaying(false); go(idx + 1); });
+$('btn-reset').addEventListener('click', () => { setPlaying(false); selected = null; go(1); });
+function setTheme(next) {
+  theme = next;
+  document.body.classList.toggle('dark', theme === 'dark');
+  scene.background.set(THEMES[theme].bg);
+  $('btn-theme').textContent = theme === 'dark' ? 'LIGHT' : 'DARK';
+  try { localStorage.setItem('pivot-theme', theme); } catch (err) { /* storage can be blocked */ }
+}
+$('btn-theme').addEventListener('click', () => setTheme(theme === 'dark' ? 'light' : 'dark'));
+$('btn-view').addEventListener('click', () => {
+  camera.position.copy(CAM_HOME);
+  if (controls) { controls.target.copy(TGT_HOME); controls.update(); }
+});
+$('scrub').addEventListener('input', (ev) => { setPlaying(false); go(Number(ev.target.value)); });
+addEventListener('keydown', (ev) => {
+  if (ev.ctrlKey && !ev.metaKey && !ev.altKey && ev.key.toLowerCase() === 'y') {
+    ev.preventDefault();
+    document.body.classList.toggle('nocursor');
+    return;
+  }
+  if (ev.target && ['SELECT', 'INPUT', 'BUTTON'].includes(ev.target.tagName) && ev.key !== ' ' && !ev.key.startsWith('Arrow')) return;
+  if (ev.key === ' ') { ev.preventDefault(); $('btn-play').click(); }
+  else if (ev.key === 'ArrowRight') $('btn-next').click();
+  else if (ev.key === 'ArrowLeft') $('btn-prev').click();
+});
+
+/* ---------- node picking ---------- */
+const ray = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const tip = $('tip');
+function pick(ev) {
+  if (!renderer) return null;
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.set(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(mouse, camera);
+  const hits = ray.intersectObjects(pickables, false);
+  return hits.length ? nodeById.get(hits[0].object.userData.nodeId) : null;
+}
+if (renderer) {
+  let down = null;
+  renderer.domElement.addEventListener('pointerdown', (ev) => { down = [ev.clientX, ev.clientY]; });
+  renderer.domElement.addEventListener('pointerup', (ev) => {
+    if (!down || Math.hypot(ev.clientX - down[0], ev.clientY - down[1]) > 4) return;
+    const n = pick(ev);
+    selected = n ? n.id : null;
+    applyDay();
+  });
+  renderer.domElement.addEventListener('pointermove', (ev) => {
+    const n = pick(ev);
+    hovered = n ? n.id : null;
+    if (!n) { tip.style.display = 'none'; return; }
+    const days = activeDays.get(n.id).length;
+    tip.textContent = `${n.label} | weight ${fmt(n.size)} | ${days} active day${days === 1 ? '' : 's'}`
+      + (n.badge ? ` | ${n.badge.toLowerCase()}` : '');
+    tip.style.left = ev.clientX + 12 + 'px';
+    tip.style.top = ev.clientY + 12 + 'px';
+    tip.style.display = 'block';
+  });
+  renderer.domElement.addEventListener('pointerleave', () => { hovered = null; tip.style.display = 'none'; });
+}
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  if (renderer) renderer.setSize(innerWidth, innerHeight);
+});
+
+/* Labels are DOM text, so they stay sharp. Lit, selected and hovered nodes go first.
+   A quiet node keeps its label only where it does not cover one already placed. */
+const _v = new THREE.Vector3();
+function placeLabels() {
+  const live = liveAt(idx);
+  const w = innerWidth, h = innerHeight;
+  const items = [];
+  for (const n of DATA.nodes) {
+    _v.copy(n.pos).project(camera);
+    const vis = _v.z < 1;
+    n.tag.style.visibility = 'hidden';
+    if (!vis) continue;
+    const pri = n.id === selected || n.id === hovered ? 0 : live.has(n.id) ? 1 : 2;
+    items.push({ n, x: (_v.x + 1) / 2 * w, y: (1 - _v.y) / 2 * h, pri });
+  }
+  items.sort((a, b) => a.pri - b.pri || b.n.size - a.n.size);
+  const placed = [];
+  for (const it of items) {
+    const t = it.n.tag;
+    if (!t._w) { t._w = t.offsetWidth; t._h = t.offsetHeight; }
+    const r = Math.max(6, it.n.rad * 3.2);
+    const hit = (b) => placed.some((p) => b.l < p.r && b.r > p.l && b.t < p.b && b.b > p.t);
+    const slots = [-(r + t._h + 2), -(r + 2 * t._h + 5), -(r + 3 * t._h + 8), r + 2];
+    let box = null;
+    for (const dy of slots) {
+      const c = { l: it.x - t._w / 2, t: it.y + dy, r: it.x + t._w / 2, b: it.y + dy + t._h };
+      if (!hit(c)) { box = c; break; }
+    }
+    if (!box && it.pri === 0) box = { l: it.x - t._w / 2, t: it.y + slots[0], r: it.x + t._w / 2, b: it.y + slots[0] + t._h };
+    if (!box) continue;
+    placed.push(box);
+    t.style.transform = `translate(${box.l}px, ${box.t}px)`;
+    t.classList.toggle('quiet', it.pri === 2);
+    t.classList.toggle('sel', it.n.id === selected);
+    t.style.visibility = 'visible';
+  }
+}
+
+/* ---------- animation loop (never moves the camera) ---------- */
+const clock = new THREE.Clock();
+const lerp = (a, b, k) => a + (b - a) * k;
+function frame() {
+  const dt = Math.min(clock.getDelta(), 0.1);
+  const speed = Number($('speed').value) || 1;
+  if (playing) {
+    acc += dt * speed;
+    if (acc >= DAY_SECONDS) {
+      if (idx >= N) setPlaying(false); else go(idx + 1);
+    }
+  }
+  const k = 1 - Math.pow(0.0006, dt);
+  for (const n of DATA.nodes) {
+    if (!n.t) continue;
+    n.cur.op = lerp(n.cur.op, n.t.op, k);
+    n.cur.halo = lerp(n.cur.halo, n.t.halo, k);
+    n.cur.s = lerp(n.cur.s, n.t.s, k);
+    n.mat.opacity = n.cur.op;
+    n.halo.material.opacity = n.cur.halo;
+    n.mesh.scale.setScalar(n.cur.s);
+  }
+  for (const e of DATA.edges) {
+    if (e.t === undefined) continue;
+    e.cur = lerp(e.cur, e.t, k);
+    e.mat.opacity = Math.min(1, e.cur * THEMES[theme].edge);
+  }
+  if (renderer) {
+    controls.update();
+    renderer.render(scene, camera);
+    placeLabels();
+    const h = innerHeight;
+    for (const L of Object.values(LAYERS)) {
+      const v = new THREE.Vector3(0, L.y, 0).project(camera);
+      L.tag.style.top = ((1 - v.y) / 2) * h + 'px';
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+setTheme(theme);
+buildHeader();
+buildDayList();
+applyDay();
+frame();
+</script>
+</body>
+</html>

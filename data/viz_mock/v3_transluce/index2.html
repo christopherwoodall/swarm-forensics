@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pivot graph v1 — launcher / pivot / target</title>
+<!--
+================================================================================
+PIVOT-VIZ v1 — tripartite launcher/pivot/target graph of the Transluce
+us-canada-gov hunt (silent-locus, 2026-10-01 lanes).
+
+MAPPING (how every visual element maps to data):
+- TOP layer (y=+32) SOURCE: 4 nodes = the task origin driving the launcher
+  layer. dsqa_250 (CONFIRMED: DoE CRDC benchmark question, gold answer North
+  Carolina, Jun 16-17 burst, 250,822 captures) / dsqa_260 (CANDIDATE: FBI+NSC
+  1990-2020 robbery question, hedged, May 30-31 DOJ days) / shared eval harness
+  (HYPOTHESIS: inferred common launcher, not observed in bytes) / unidentified
+  task origin (HONEST GAP: 9,545 launcher events on 54 days with no mapped
+  question). Node size = incident event volume; live on days the mapped
+  incident fires.
+- SECOND layer (y=+16) LAUNCHER: 6 nodes = launcher indicators from the
+  oai-tag-sweep (96,353 annotated events in events.jsonl). Node size =
+  log-scaled annotated event count (a000_zzend uses relay-census line count;
+  its per-day activity mirrors zz_label days — documented approximation).
+  oai tags / zz labels / epoch nonces / ?uniqN nonces / go-import canaries /
+  A000+ZZEND dead-drop markers.
+- THIRD layer (y=0) PIVOT: 11 nodes = relay/fetch infrastructure. Node size =
+  log-scaled co-occurrence hits in events.jsonl evidence text, EXCEPT
+  arquivo.pt whose size = total collected capture volume (~560k).
+- BOTTOM layer (y=-16) TARGET: 15 nodes = government targets. Node size =
+  log-scaled Arquivo.pt capture count; dimmed (gray) nodes = HONEST NEGATIVES
+  (zero Arquivo.pt captures: OJJDP/DOJ, SEC, CDC WONDER, Texas DSHS, census.gov)
+  sized from evidence mentions instead — they are NOT hidden.
+- EDGES source->launcher: weight = incident-scoped event counts; styled by
+  confidence — CONFIRMED (dsqa_250) solid, CANDIDATE (dsqa_260) and
+  HYPOTHESIZED (eval harness, unidentified origin) thin and low-opacity.
+  Every source-edge label states its confidence.
+- EDGES launcher->pivot: weight = events where the indicator co-occurs with the
+  relay string in the same annotated event's evidence (plus 3 documented
+  arquivo.pt edges: zz=fillNNNN / 19-digit nonces / 10k oai tags on DoE captures).
+- EDGES pivot->target: weight = Arquivo.pt capture counts (arquivo.pt) or
+  evidence co-occurrence counts (other relays).
+- PLAYBACK: 91 days, 2026-04-19 -> 2026-07-18. A node lights up when it has
+  activity that day (captures / annotated events). An edge lights up only when
+  BOTH endpoints are active. Day digest lists the day's firings.
+- NEW LEAD badge (gold ring): DoE Jun-16 precursor day, NYSED May-18 follow-on.
+- SOURCE badges: CONFIRMED / CANDIDATE / HYPOTHESIS / HONEST GAP (text pills).
+- CAMERA: fixed. Drag rotates; zoom and pan are disabled; no camera follow.
+- DATA: embedded JSON (see <script id="pivot-data">); three.js r160 inlined as
+  base64 data: URLs in the import map. Zero external URLs — double-click to open.
+================================================================================
+-->
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#0b0f14;color:#dbe4ee;
+    font-family:ui-monospace,Menlo,Consolas,monospace}
+  #scene{position:fixed;inset:0}
+  .panel{position:fixed;background:rgba(10,15,22,.86);border:1px solid #1f2a3a;
+    border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.5;z-index:5}
+  #title{top:12px;left:12px;max-width:430px}
+  #title h1{margin:0 0 4px;font-size:14px;letter-spacing:1px;color:#fff}
+  .micro{font-size:10px;letter-spacing:2px;color:#7d8ea3;text-transform:uppercase}
+  #legend{top:12px;right:12px}
+  .row{display:flex;align-items:center;gap:8px;margin:3px 0}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  #timeline{bottom:12px;left:50%;transform:translateX(-50%);display:flex;
+    align-items:center;gap:10px;min-width:520px}
+  #timeline button{background:#1c2940;color:#dbe4ee;border:1px solid #33465f;
+    border-radius:6px;padding:6px 12px;font:inherit;cursor:pointer}
+  #timeline button:hover{background:#27395a}
+  #scrub{flex:1;accent-color:#22d3ee}
+  #dayread{color:#fff;font-weight:700;white-space:nowrap}
+  #feed{bottom:76px;left:12px;width:340px;max-height:220px;overflow:auto}
+  #feedlist div{margin:2px 0;color:#a9bcd2}
+  #info{top:12px;left:50%;transform:translateX(-50%);width:460px;max-height:300px;
+    overflow:auto;display:none}
+  #info h2{margin:0 0 4px;font-size:14px;color:#fff}
+  #info .kv{color:#8fa3ba;font-size:11px}
+  #info p{margin:6px 0;color:#c6d4e4}
+  #info .edge{color:#8fa3ba;font-size:11px;margin:2px 0}
+  .badge{display:inline-block;background:#8a6d1a;color:#ffe9a8;border-radius:4px;
+    padding:1px 7px;font-size:10px;letter-spacing:1px;margin-left:8px}
+  #tip{position:fixed;pointer-events:none;background:rgba(10,15,22,.92);
+    border:1px solid #33465f;border-radius:6px;padding:6px 9px;font-size:11px;
+    display:none;z-index:9;max-width:300px}
+  #loaderr{top:50%;left:50%;transform:translate(-50%,-50%);display:none}
+  #loaderr.err{display:block;border-color:#7f1d2d}
+</style>
+</head>
+<body>
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js",
+    "three/addons/": "./vendor/",
+    "three-orbitcontrols": "./vendor/OrbitControls.js"
+  }
+}
+</script>
+<div id="scene"></div>
+<div class="panel" id="title">
+  <div class="micro">transluce us-canada-gov hunt // pivot graph v1</div>
+  <h1>SOURCE &rarr; LAUNCHER &rarr; PIVOT &rarr; TARGET</h1>
+  <div>Top: task origin &middot; launcher indicators &middot; relay pivots &middot; gov targets.
+  Press play — the Apr 19 &rarr; Jul 18 timeline lights up. Click a node for what happened there.
+  Drag rotates; zoom/pan off.</div>
+</div>
+<div class="panel" id="legend">
+  <div class="micro">layers</div>
+  <div class="row"><span class="dot" style="background:#8b5cf6"></span>task origin (source)</div>
+  <div class="row"><span class="dot" style="background:#f59e0b"></span>launcher indicators</div>
+  <div class="row"><span class="dot" style="background:#22d3ee"></span>pivot relays</div>
+  <div class="row"><span class="dot" style="background:#f43f5e"></span>targets (confirmed)</div>
+  <div class="row"><span class="dot" style="background:#64748b"></span>targets (honest negative)</div>
+  <div class="row"><span class="dot" style="background:#eab308;border-radius:0"></span>&#9733; new lead</div>
+</div>
+<div class="panel" id="info">
+  <div class="micro" id="infolayer"></div>
+  <h2 id="infoname"></h2>
+  <div class="kv" id="infosize"></div>
+  <p id="infonote"></p>
+  <div class="micro">connected edges</div>
+  <div id="infoedges"></div>
+</div>
+<div class="panel" id="feed">
+  <div class="micro">day digest</div>
+  <div id="feedlist"></div>
+</div>
+<div class="panel" id="timeline">
+  <button id="play">&#9654; PLAY</button>
+  <input type="range" id="scrub" min="0" max="90" step="1" value="0">
+  <span id="dayread">—</span>
+  <span id="stat"></span>
+</div>
+<div id="tip"></div>
+<div class="panel" id="loaderr"><span class="micro">data error</span><br>embedded data missing or invalid.</div>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three-orbitcontrols';
+
+/* ================= DATA ================= */
+const loadPanel = document.getElementById('loaderr');
+let DATA = null;
+try {
+  const res = await fetch('./data/graph.json');
+  DATA = await res.json();
+} catch (e) { DATA = null; }
+if (!DATA || !DATA.nodes) {
+  loadPanel.classList.add('err');
+  throw new Error('no data');
+}
+
+const LAYERS = {
+  source:   { y: 32,  color: 0x8b5cf6, css: '#8b5cf6', name: 'SOURCE' },
+  launcher: { y: 16,  color: 0xf59e0b, css: '#f59e0b', name: 'LAUNCHER' },
+  pivot:    { y: 0,   color: 0x22d3ee, css: '#22d3ee', name: 'PIVOT' },
+  target:   { y: -16, color: 0xf43f5e, css: '#f43f5e', name: 'TARGET' },
+};
+const DIM_COLOR = 0x64748b;
+const DAYS = DATA.days;
+const NDAYS = DAYS.length;
+
+/* ================= SCENE (fixed camera, no zoom/pan) ================= */
+const container = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+container.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0b0f14);
+scene.fog = new THREE.Fog(0x0b0f14, 110, 240);
+const camera = new THREE.PerspectiveCamera(46, innerWidth / innerHeight, 0.1, 600);
+camera.position.set(0, 18, 80);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 8, 0);
+controls.enableZoom = false;   // spec: no zoom
+controls.enablePan = false;    // spec: no pan
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+const key = new THREE.DirectionalLight(0xffffff, 1.1);
+key.position.set(20, 30, 25);
+scene.add(key);
+
+/* ---------- canvas label helper (from pipeline-real-v4, proven) ---------- */
+function textSprite(text, { size = 40, color = '#dbe4ee', pad = 16, scale = 1, weight = 600 } = {}) {
+  const cv = document.createElement('canvas');
+  let cx = cv.getContext('2d');
+  cx.font = `${weight} ${size}px ui-monospace, Menlo, Consolas, monospace`;
+  const w = Math.ceil(cx.measureText(text).width) + pad * 2;
+  const h = size + pad * 2;
+  cv.width = w; cv.height = h;
+  cx = cv.getContext('2d');
+  cx.font = `${weight} ${size}px ui-monospace, Menlo, Consolas, monospace`;
+  cx.fillStyle = color; cx.textBaseline = 'middle';
+  cx.fillText(text, pad, h / 2);
+  const tex = new THREE.CanvasTexture(cv);
+  tex.anisotropy = 4;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
+  sp.scale.set(w / h * 1.0 * scale, 1.0 * scale, 1);
+  return sp;
+}
+
+/* ================= LAYOUT ================= */
+const byLayer = { source: [], launcher: [], pivot: [], target: [] };
+for (const n of DATA.nodes) byLayer[n.layer].push(n);
+const nodePos = {}, nodeMesh = {}, nodeHalo = {};
+const maxSize = {};
+for (const L of Object.keys(byLayer))
+  maxSize[L] = Math.max(...byLayer[L].map(n => n.size));
+const RADIUS = { source: 7.5, launcher: 7.5, pivot: 11, target: 13.5 };
+
+for (const L of Object.keys(byLayer)) {
+  const arr = byLayer[L], y = LAYERS[L].y;
+  arr.forEach((n, i) => {
+    const a = (i / arr.length) * Math.PI * 2 + (L === 'pivot' ? 0.28 : L === 'target' ? 0.14 : L === 'source' ? 0.42 : 0);
+    const r = RADIUS[L];
+    const pos = new THREE.Vector3(Math.cos(a) * r, y, Math.sin(a) * r);
+    nodePos[n.id] = pos;
+    const rad = 0.55 + 1.9 * (Math.log10(n.size + 1) / Math.log10(maxSize[L] + 1));
+    const baseColor = n.dim ? DIM_COLOR : LAYERS[L].color;
+    const mat = new THREE.MeshStandardMaterial({
+      color: baseColor, emissive: baseColor, emissiveIntensity: 0.12,
+      roughness: 0.35, metalness: 0.25 });
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(rad, 28, 20), mat);
+    mesh.position.copy(pos);
+    mesh.userData.nodeId = n.id;
+    scene.add(mesh);
+    nodeMesh[n.id] = mesh;
+    // halo
+    const halo = new THREE.Sprite(new THREE.SpriteMaterial({
+      color: baseColor, transparent: true, opacity: 0.0, depthWrite: false }));
+    halo.scale.set(rad * 4.2, rad * 4.2, 1);
+    halo.position.copy(pos);
+    scene.add(halo);
+    nodeHalo[n.id] = halo;
+    // label
+    const lab = textSprite(n.label, { size: 34, scale: 0.055 * (0.8 + rad * 0.25),
+      color: n.dim ? '#8fa3ba' : '#e6edf5' });
+    lab.position.set(pos.x, pos.y + rad + 1.15, pos.z);
+    scene.add(lab);
+    // new-lead ring
+    if (n.badge === 'new lead') {
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(rad + 0.55, 0.09, 10, 40),
+        new THREE.MeshBasicMaterial({ color: 0xeab308 }));
+      ring.position.copy(pos);
+      ring.rotation.x = Math.PI / 2.4;
+      scene.add(ring);
+    }
+  });
+  // tier label
+  const tl = textSprite(LAYERS[L].name, { size: 44, scale: 0.075, color: LAYERS[L].css, weight: 700 });
+  tl.position.set(-RADIUS[L] - 7.5, y, 0);
+  scene.add(tl);
+  // faint ring guide
+  const pts = [];
+  for (let i = 0; i <= 72; i++) {
+    const a = (i / 72) * Math.PI * 2;
+    pts.push(new THREE.Vector3(Math.cos(a) * RADIUS[L], y, Math.sin(a) * RADIUS[L]));
+  }
+  scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),
+    new THREE.LineBasicMaterial({ color: LAYERS[L].color, transparent: true, opacity: 0.14 })));
+}
+
+/* ================= EDGES ================= */
+const edgeObjs = [];
+const maxW = Math.max(...DATA.edges.map(e => e.w));
+const logMax = Math.log10(maxW + 1);
+for (const e of DATA.edges) {
+  const a = nodePos[e.a], b = nodePos[e.b];
+  if (!a || !b) continue;
+  const ca = new THREE.Color(e.a.startsWith('S:') ? LAYERS.source.color : e.a.startsWith('L:') ? LAYERS.launcher.color : LAYERS.pivot.color);
+  const cb = new THREE.Color(e.b.startsWith('P:') ? LAYERS.pivot.color : e.b.startsWith('L:') ? LAYERS.launcher.color : LAYERS.target.color);
+  const g = new THREE.BufferGeometry().setFromPoints([a, b]);
+  g.setAttribute('color', new THREE.BufferAttribute(
+    new Float32Array([ca.r, ca.g, ca.b, cb.r, cb.g, cb.b]), 3));
+  const line = new THREE.Line(g, new THREE.LineBasicMaterial({
+    vertexColors: true, transparent: true, opacity: 0.07 }));
+  line.userData = { a: e.a, b: e.b, w: e.w, label: e.label, conf: e.conf || 'confirmed' };
+  scene.add(line);
+  edgeObjs.push(line);
+}
+// count labels on the heaviest edges
+const heavy = [...edgeObjs].sort((x, y) => y.userData.w - x.userData.w).slice(0, 24);
+for (const line of heavy) {
+  const { a, b, w } = line.userData;
+  const mid = nodePos[a].clone().add(nodePos[b]).multiplyScalar(0.5);
+  const txt = w >= 1000 ? (w / 1000).toFixed(w >= 10000 ? 0 : 1) + 'k' : String(w);
+  const sp = textSprite(txt, { size: 30, scale: 0.038, color: '#9fb2c8', weight: 500 });
+  sp.position.copy(mid);
+  sp.material.opacity = 0.85;
+  scene.add(sp);
+  line.userData.countLabel = sp;
+}
+
+/* ================= PLAYBACK ================= */
+const scrub = document.getElementById('scrub');
+const dayread = document.getElementById('dayread');
+const stat = document.getElementById('stat');
+const feedlist = document.getElementById('feedlist');
+const tip = document.getElementById('tip');
+scrub.max = NDAYS - 1;
+let curDay = 0, playing = false, playTimer = null;
+const nodeById = Object.fromEntries(DATA.nodes.map(n => [n.id, n]));
+
+function fmt(n) { return n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1) + 'k' : String(n); }
+
+function applyDay(di) {
+  curDay = di;
+  const act = DAYS[di].n;
+  const lit = {};
+  for (const n of DATA.nodes) {
+    let v = act[n.id] || 0;
+    if (n.id === 'L:a000_zzend') v = act['L:zz_label'] || 0; // documented approximation
+    const on = v > 0;
+    lit[n.id] = on;
+    const mesh = nodeMesh[n.id];
+    const base = n.dim ? DIM_COLOR : LAYERS[n.layer].color;
+    const quiet = new THREE.Color(base).multiplyScalar(0.42).getHex();
+    mesh.material.emissive.setHex(base);
+    mesh.material.emissiveIntensity = on ? 0.95 : 0.38;
+    mesh.material.color.setHex(on ? base : quiet);
+    nodeHalo[n.id].material.opacity = on ? 0.5 : 0.0;
+    nodeHalo[n.id].material.color.setHex(base);
+  }
+  for (const line of edgeObjs) {
+    const on = lit[line.userData.a] && lit[line.userData.b];
+    const w = Math.log10(line.userData.w + 1) / logMax;
+    const cf = line.userData.conf || 'confirmed';
+    const cbase = cf === 'confirmed' ? 0.25 : cf === 'candidate' ? 0.10 : 0.06;
+    const camp = cf === 'confirmed' ? 0.65 : cf === 'candidate' ? 0.35 : 0.25;
+    line.material.opacity = on ? cbase + camp * w : 0.05;
+    if (line.userData.countLabel)
+      line.userData.countLabel.material.opacity = on ? 0.95 : 0.25;
+  }
+  dayread.textContent = DAYS[di].d;
+  const nActive = Object.values(lit).filter(Boolean).length;
+  stat.textContent = `${nActive}/${DATA.nodes.length} nodes live`;
+  feedlist.innerHTML = DAYS[di].digest.length
+    ? DAYS[di].digest.map(x => `<div>&#9656; ${x}</div>`).join('')
+    : '<div style="color:#5b6b80">quiet day — no incident firings</div>';
+  scrub.value = di;
+}
+
+/* ================= INTERACTION ================= */
+const ray = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const infoPanel = document.getElementById('info');
+function onClick(ev) {
+  mouse.x = (ev.clientX / innerWidth) * 2 - 1;
+  mouse.y = -(ev.clientY / innerHeight) * 2 + 1;
+  ray.setFromCamera(mouse, camera);
+  const hits = ray.intersectObjects(Object.values(nodeMesh));
+  if (!hits.length) { infoPanel.style.display = 'none'; return; }
+  const n = nodeById[hits[0].object.userData.nodeId];
+  document.getElementById('infolayer').textContent = LAYERS[n.layer].name;
+  document.getElementById('infoname').innerHTML =
+    n.label + (n.badge ? `<span class="badge">${n.badge === 'new lead' ? '&#9733; NEW LEAD' : n.badge}</span>` : '');
+  document.getElementById('infosize').textContent =
+    (n.dim ? 'honest negative — ' : '') + 'weight ' + fmt(n.size) +
+    (n.layer === 'source' ? ' incident events' : n.layer === 'launcher' ? ' annotated events' : n.layer === 'pivot' ? ' co-occurrence hits' : ' captures');
+  document.getElementById('infonote').textContent = n.note;
+  const conns = edgeObjs.filter(l => l.userData.a === n.id || l.userData.b === n.id)
+    .sort((x, y) => y.userData.w - x.userData.w);
+  document.getElementById('infoedges').innerHTML = conns.map(l => {
+    const other = l.userData.a === n.id ? l.userData.b : l.userData.a;
+    const on = nodeById[other];
+    return `<div class="edge"><b style="color:${LAYERS[on.layer].css}">${on.label}</b> — ${l.userData.label}</div>`;
+  }).join('');
+  infoPanel.style.display = 'block';
+}
+renderer.domElement.addEventListener('click', onClick);
+renderer.domElement.addEventListener('mousemove', ev => {
+  mouse.x = (ev.clientX / innerWidth) * 2 - 1;
+  mouse.y = -(ev.clientY / innerHeight) * 2 + 1;
+  ray.setFromCamera(mouse, camera);
+  const hits = ray.intersectObjects(Object.values(nodeMesh));
+  if (hits.length) {
+    const n = nodeById[hits[0].object.userData.nodeId];
+    tip.style.display = 'block';
+    tip.style.left = (ev.clientX + 14) + 'px';
+    tip.style.top = (ev.clientY + 10) + 'px';
+    tip.textContent = n.label + (n.badge === 'new lead' ? '  ★ NEW LEAD' : '');
+    renderer.domElement.style.cursor = 'pointer';
+  } else {
+    tip.style.display = 'none';
+    renderer.domElement.style.cursor = 'default';
+  }
+});
+
+/* ================= CONTROLS ================= */
+const playBtn = document.getElementById('play');
+function setPlaying(p) {
+  playing = p;
+  playBtn.innerHTML = p ? '&#10074;&#10074; PAUSE' : '&#9654; PLAY';
+  if (p) playTimer = setInterval(() => applyDay((curDay + 1) % NDAYS), 550);
+  else clearInterval(playTimer);
+}
+playBtn.addEventListener('click', () => setPlaying(!playing));
+scrub.addEventListener('input', () => { setPlaying(false); applyDay(+scrub.value); });
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+/* ================= GO ================= */
+applyDay(0);
+(function animate() {
+  requestAnimationFrame(animate);
+  controls.update();          // rotate only — zoom & pan disabled, no camera tweens
+  renderer.render(scene, camera);
+})();
+</script>
+</body>
+</html>

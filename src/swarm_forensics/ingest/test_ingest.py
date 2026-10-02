@@ -19,6 +19,8 @@ FILES = {
     ".gitattributes": 10,
     "README.md": 100,
     "SCHEMA.md": 200,
+    "CHANGELOG.md": 300,
+    "manifest.json": 20,
     "events.jsonl.gz": 1000,
     "chat_messages.jsonl.gz": 500,
     "agent_goals.jsonl.gz": 50,
@@ -48,6 +50,8 @@ class SelectionTests(unittest.TestCase):
             {
                 "README.md",
                 "SCHEMA.md",
+                "CHANGELOG.md",
+                "manifest.json",
                 "events.jsonl.gz",
                 "chat_messages.jsonl.gz",
                 "agent_goals.jsonl.gz",
@@ -58,6 +62,15 @@ class SelectionTests(unittest.TestCase):
     def test_table_selection_returns_only_named_tables(self):
         selected = download.select_files(FILES, ["events", "agent_goals"])
         self.assertEqual(set(selected), {"events.jsonl.gz", "agent_goals.jsonl.gz"})
+
+    def test_schema_only_selection_returns_reference_files(self):
+        selected = download.select_files(FILES, schema_only=True)
+        self.assertEqual(selected, {"CHANGELOG.md": 300, "SCHEMA.md": 200, "manifest.json": 20})
+
+    def test_schema_only_selection_rejects_missing_file(self):
+        files = {path: size for path, size in FILES.items() if path != "manifest.json"}
+        with self.assertRaisesRegex(download.DownloadError, "Reference file not found"):
+            download.select_files(files, schema_only=True)
 
     def test_unknown_table_is_rejected(self):
         with self.assertRaisesRegex(download.DownloadError, "Unknown table: nope"):
@@ -148,6 +161,35 @@ class RunTests(unittest.TestCase):
             )
         self.assertEqual(code, 0)
         self.assertEqual([call.args[1] for call in fetch.call_args_list], ["events.jsonl.gz"])
+
+    def test_schema_only_downloads_reference_files_at_one_commit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            code, _, _, fetch = self.run_command(
+                ["download", "--dest", directory, "--schema-only", "--revision", "main"]
+            )
+        self.assertEqual(code, 0)
+        self.assertEqual(
+            sorted(call.args[1] for call in fetch.call_args_list),
+            ["CHANGELOG.md", "SCHEMA.md", "manifest.json"],
+        )
+        for call in fetch.call_args_list:
+            self.assertEqual(call.kwargs["revision"], "abc123")
+
+    def test_schema_only_info_downloads_nothing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            code, output, _, fetch = self.run_command(["info", "--dest", directory, "--schema-only"])
+        self.assertEqual(code, 0)
+        self.assertIn("Selected: 3 files", output)
+        fetch.assert_not_called()
+
+    def test_schema_only_with_tables_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            code, _, errors, fetch = self.run_command(
+                ["download", "--dest", directory, "--schema-only", "--tables", "events"]
+            )
+        self.assertEqual(code, 1)
+        self.assertIn("not both", errors)
+        fetch.assert_not_called()
 
     def test_unknown_table_downloads_nothing(self):
         with tempfile.TemporaryDirectory() as directory:
