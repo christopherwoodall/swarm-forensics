@@ -1,0 +1,23 @@
+[project]
+name = "trajectory-mining"
+version = "0.2.0"
+description = "Trajectory catalog and 3D goal graph for the AI Village dataset (research prototype)."
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["vendor"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"test_*.py" = ["E501"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6",
+]

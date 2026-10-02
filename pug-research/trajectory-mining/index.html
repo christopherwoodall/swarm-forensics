@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trajectory goal graph</title>
+<style>
+  :root {
+    --bg: #0d1117; --panel: rgba(22,27,34,.94); --border: #30363d; --text: #e6edf3;
+    --muted: #9aa4af; --accent: #58a6ff; --field: rgba(110,118,129,.14);
+    --recorded: #58a6ff; --rule: #e3b341; --inferred: #c297ff;
+    --agent: #79c0ff; --action: #d2a8ff; --artifact: #ffa657; --goal: #7ee787;
+  }
+  body.light {
+    --bg: #f6f8fa; --panel: rgba(255,255,255,.96); --border: #d0d7de; --text: #1f2328;
+    --muted: #57606a; --accent: #0969da; --field: rgba(110,118,129,.12);
+    --recorded: #0969da; --rule: #9a6700; --inferred: #8250df;
+    --agent: #0550ae; --action: #8250df; --artifact: #bc4c00; --goal: #1a7f37;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); overflow: hidden; width: 100vw; height: 100vh;
+         font: 12px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  body.hide-cursor, body.hide-cursor * { cursor: none !important; }
+  #stage { position: absolute; inset: 0; }
+  #labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .lbl { position: absolute; white-space: nowrap; font-size: 11px; font-weight: 600; color: var(--text);
+         transform: translate(-50%, -140%); text-shadow: 0 0 2px var(--bg), 0 0 2px var(--bg); }
+  .lbl.agent { color: var(--agent); } .lbl.goal { color: var(--goal); }
+  .lbl.action { color: var(--action); } .lbl.artifact { color: var(--artifact); }
+  .lbl.sel { outline: 1px solid var(--accent); background: var(--panel); padding: 0 3px; }
+  .panel { position: absolute; background: var(--panel); border: 1px solid var(--border);
+           border-radius: 6px; padding: 10px; z-index: 5; }
+  #left { top: 12px; left: 12px; width: 340px; max-height: calc(100vh - 24px); overflow-y: auto; }
+  #right { top: 12px; right: 12px; width: 340px; max-height: calc(100vh - 24px); overflow-y: auto; }
+  #bottom { left: 364px; right: 364px; bottom: 12px; display: flex; gap: 14px; align-items: center;
+            flex-wrap: wrap; padding: 6px 10px; }
+  h1 { font-size: 13px; margin-bottom: 6px; }
+  h2 { font-size: 12px; margin: 10px 0 4px; border-bottom: 1px solid var(--border); padding-bottom: 3px; }
+  label.row, .row { display: flex; gap: 6px; align-items: center; margin: 4px 0; }
+  .row > * { flex: 1; min-width: 0; }
+  .row > label { flex: 0 0 62px; color: var(--muted); }
+  select, input, button { background: var(--field); border: 1px solid var(--border); color: var(--text);
+                          padding: 4px 6px; border-radius: 4px; font: inherit; }
+  button { cursor: pointer; } button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  input[type=checkbox] { flex: 0 0 auto; width: auto; }
+  select[multiple] { height: 86px; }
+  #results { max-height: 220px; overflow-y: auto; border: 1px solid var(--border); border-radius: 4px; }
+  .tr { display: flex; gap: 6px; padding: 3px 5px; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .tr:last-child { border-bottom: 0; } .tr .t { flex: 1; min-width: 0; }
+  .tr .m { color: var(--muted); font-size: 11px; }
+  .badge { display: inline-block; padding: 0 6px; border-radius: 9px; font-size: 10px; font-weight: 700;
+           border: 1px solid currentColor; text-transform: uppercase; }
+  .recorded { color: var(--recorded); } .rule_derived { color: var(--rule); } .inferred { color: var(--inferred); }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 4px; }
+  .muted { color: var(--muted); }
+  pre { background: var(--field); padding: 6px; border-radius: 4px; white-space: pre-wrap;
+        word-break: break-word; max-height: 190px; overflow-y: auto; font: 11px ui-monospace, Consolas, monospace; }
+  .notice { border-left: 3px solid var(--rule); padding: 3px 7px; margin: 5px 0; background: var(--field); }
+  .notice.warn { border-color: var(--inferred); }
+  ul.plain { list-style: none; } ul.plain li { margin: 2px 0; }
+  a.lnk { color: var(--accent); cursor: pointer; text-decoration: underline; }
+  #play { display: none; } #play.on { display: block; }
+  input[type=range] { padding: 0; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.js" } }
+</script>
+</head>
+<body>
+<div id="stage"></div>
+<div id="labels"></div>
+
+<div id="left" class="panel">
+  <h1>Trajectory goal graph</h1>
+  <div id="idx" class="muted">Loading index...</div>
+  <h2>Find traces</h2>
+  <div class="row"><label>Types</label>
+    <span id="types"></span></div>
+  <div class="row"><label for="agents">Agents</label><select id="agents" multiple></select></div>
+  <div class="row"><label for="goal">Goal</label><select id="goal"><option value="">any goal context</option></select></div>
+  <div class="row"><label for="from">From</label><input id="from" type="date"></div>
+  <div class="row"><label for="to">To</label><input id="to" type="date"></div>
+  <div class="row"><label for="q">Text</label><input id="q" type="search" placeholder="stated goal or room"></div>
+  <div class="row"><button id="search" class="primary">Search</button><button id="clear">Clear</button></div>
+  <div id="count" class="muted"></div>
+  <div id="results"></div>
+  <div class="row"><button id="more">More results</button><button id="load" class="primary">Load selected</button></div>
+  <div class="row"><label for="maxn">Max nodes</label><input id="maxn" type="range" min="50" max="1500" step="50" value="400"><span id="maxv">400</span></div>
+  <div id="play" class="on">
+    <h2>Single-trace playback</h2>
+    <div class="row"><label for="ptrace">Trace</label><select id="ptrace"></select></div>
+    <div class="row"><button id="pplay">Play</button><button id="pstep">Step</button><button id="preset">Reset</button>
+      <select id="pspeed"><option value="900">slow</option><option value="400" selected>normal</option><option value="120">fast</option></select></div>
+    <input id="pslider" type="range" min="0" max="0" value="0" style="width:100%">
+    <div id="pinfo" class="muted"></div>
+  </div>
+  <h2>Display</h2>
+  <div class="row"><button id="theme">Light / dark</button><button id="reset">Reset view</button></div>
+  <div class="row"><label><input type="checkbox" id="alllabels"> all labels</label>
+    <label><input type="checkbox" id="showrec" checked> recorded</label></div>
+  <div class="row"><label><input type="checkbox" id="showrule" checked> rule-derived</label>
+    <label><input type="checkbox" id="showinf" checked> inferred</label></div>
+  <div class="muted">Ctrl+Y hides the cursor.</div>
+</div>
+
+<div id="right" class="panel">
+  <h1 id="rtitle">Evidence inspector</h1>
+  <div id="rbody" class="muted">Search, select traces, and load them. Click a node or an edge to inspect the recorded evidence. The bottom tier shows stated goals. It does not show that a goal was met.</div>
+</div>
+
+<div id="bottom" class="panel">
+  <span><span class="dot" style="background:var(--agent)"></span>1 Agents</span>
+  <span><span class="dot" style="background:var(--action)"></span>2 Actions / episodes</span>
+  <span><span class="dot" style="background:var(--artifact)"></span>3 Artifacts / messages</span>
+  <span><span class="dot" style="background:var(--goal)"></span>4 Stated goals (intention only)</span>
+  <span><span class="badge recorded">recorded</span> <span class="badge rule_derived">rule</span> <span class="badge inferred">inferred</span></span>
+  <span id="status" class="muted"></span>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from './vendor/OrbitControls.js';
+
+const TIER_Y = { agent: 150, action: 50, artifact: -50, goal: -150 };
+const SIZE = { agent: 7, action: 4.5, artifact: 3.2, goal: 6 };
+const TRACE_TYPES = [['computer_use', 'computer use'], ['claude_code', 'Claude Code'], ['chat', 'chat']];
+const state = { graph: null, nodes: new Map(), meshes: new Map(), edgeObjs: {}, labelEls: new Map(),
+  selected: null, offset: 0, total: 0, picked: new Map(), steps: [], stepIdx: -1, timer: null, hover: null };
+
+// ---------- DOM helpers (dataset text only ever goes through textContent) ----------
+const $ = id => document.getElementById(id);
+function el(tag, props = {}, kids = []) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === 'text') e.textContent = v; else if (k === 'class') e.className = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v);
+  }
+  for (const c of [].concat(kids)) if (c != null) e.append(c);
+  return e;
+}
+const clip = (s, n) => (s == null ? '' : String(s).length > n ? String(s).slice(0, n - 1) + '\u2026' : String(s));
+function setStatus(t) { $('status').textContent = t; }
+async function api(path) {
+  const res = await fetch(path);
+  let body = null; try { body = await res.json(); } catch (_) { /* ignore */ }
+  if (!res.ok) throw new Error((body && (body.hint || body.reason || body.error)) || ('HTTP ' + res.status));
+  return body;
+}
+function cssColor(name) { return getComputedStyle(document.body).getPropertyValue(name).trim(); }
+
+// ---------- scene ----------
+const stage = $('stage');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 1, 5000);
+const HOME = new THREE.Vector3(0, 40, 520);
+camera.position.copy(HOME);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(devicePixelRatio); renderer.setSize(innerWidth, innerHeight);
+stage.appendChild(renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.06;
+scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+const sun = new THREE.DirectionalLight(0xffffff, 0.5); sun.position.set(120, 200, 160); scene.add(sun);
+const ray = new THREE.Raycaster(); ray.params.Line.threshold = 2.2;
+const root = new THREE.Group(); scene.add(root);
+
+function tierColor(tier) { return new THREE.Color(cssColor('--' + tier)); }
+function classColor(c) { return new THREE.Color(cssColor(c === 'recorded' ? '--recorded' : c === 'inferred' ? '--inferred' : '--rule')); }
+
+// ---------- layout ----------
+function layout(g) {
+  const traceIds = g.meta.traces.filter(t => g.nodes.some(n => n.id === t));
+  const tx = new Map(traceIds.map((t, i) => [t, (i - (traceIds.length - 1) / 2) * 150]));
+  const adj = new Map();
+  for (const e of g.edges) {
+    (adj.get(e.source) || adj.set(e.source, []).get(e.source)).push(e.target);
+    (adj.get(e.target) || adj.set(e.target, []).get(e.target)).push(e.source);
+  }
+  const traceOf = n => n.metadata && n.metadata.trace_id;
+  const pos = new Map();
+  const ringCount = new Map();
+  const centroid = (ids) => {
+    const xs = ids.map(i => tx.get(i)).filter(v => v !== undefined);
+    return xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0;
+  };
+  for (const n of g.nodes) {
+    const y = TIER_Y[n.tier]; let x = 0, z = 0;
+    if (tx.has(n.id)) { x = tx.get(n.id); }
+    else if (n.tier === 'agent') { x = centroid(adj.get(n.id) || []); z = -35; }
+    else {
+      const links = (adj.get(n.id) || []).filter(i => tx.has(i));
+      const home = traceOf(n);
+      const owner = (n.tier === 'goal' && !home) || links.length > 1 ? links : [home || links[0]];
+      x = centroid(owner.filter(Boolean));
+      const key = n.tier + '|' + x;
+      const k = ringCount.get(key) || 0; ringCount.set(key, k + 1);
+      const r = 16 + 7 * Math.sqrt(k), a = k * 2.399963;
+      x += Math.cos(a) * r; z = Math.sin(a) * r;
+      if (n.tier === 'action') { const q = n.metadata.seq ?? n.metadata.first_seq ?? k; z = (q % 40) * 4 - 80; x = tx.get(home) + 14 + Math.floor(q / 40) * 10; }
+    }
+    pos.set(n.id, new THREE.Vector3(x, y, z));
+  }
+  return pos;
+}
+
+// ---------- rendering ----------
+function clearScene() {
+  while (root.children.length) { const o = root.children.pop(); o.geometry && o.geometry.dispose(); }
+  state.meshes.clear(); state.edgeObjs = {};
+  $('labels').replaceChildren(); state.labelEls.clear();
+}
+function renderGraph(g) {
+  clearScene(); state.graph = g; state.nodes = new Map(g.nodes.map(n => [n.id, n]));
+  const pos = layout(g); state.pos = pos;
+  for (const n of g.nodes) {
+    const m = new THREE.Mesh(new THREE.SphereGeometry(SIZE[n.tier] || 4, 14, 14),
+      new THREE.MeshStandardMaterial({ color: tierColor(n.tier), roughness: .35, metalness: .1, transparent: true }));
+    m.position.copy(pos.get(n.id)); m.userData = { node: n }; root.add(m); state.meshes.set(n.id, m);
+    const l = el('div', { class: 'lbl ' + n.tier, text: clip(n.label, 38) });
+    $('labels').append(l); state.labelEls.set(n.id, l);
+  }
+  const byClass = { recorded: [], rule_derived: [], inferred: [] };
+  g.edges.forEach((e, i) => { if (byClass[e.evidence_class]) byClass[e.evidence_class].push(i); });
+  for (const [cls, idxs] of Object.entries(byClass)) {
+    const pts = []; idxs.forEach(i => { const e = g.edges[i]; pts.push(pos.get(e.source), pos.get(e.target)); });
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    const mat = cls === 'inferred'
+      ? new THREE.LineDashedMaterial({ color: classColor(cls), dashSize: 4, gapSize: 3, transparent: true, opacity: .85 })
+      : new THREE.LineBasicMaterial({ color: classColor(cls), transparent: true, opacity: cls === 'recorded' ? .55 : .7 });
+    const line = new THREE.LineSegments(geo, mat); if (cls === 'inferred') line.computeLineDistances();
+    line.userData = { cls, idxs }; root.add(line); state.edgeObjs[cls] = line;
+  }
+  applyEdgeToggles(); applyPlaybackVisibility(); renderSummary(g);
+}
+function applyEdgeToggles() {
+  const on = { recorded: $('showrec').checked, rule_derived: $('showrule').checked, inferred: $('showinf').checked };
+  for (const [c, o] of Object.entries(state.edgeObjs)) o.visible = on[c];
+}
+function recolor() {
+  for (const [id, m] of state.meshes) m.material.color.copy(tierColor(state.nodes.get(id).tier));
+  for (const [c, o] of Object.entries(state.edgeObjs)) o.material.color.copy(classColor(c));
+}
+function updateLabels() {
+  const all = $('alllabels').checked; const w = innerWidth, h = innerHeight; const v = new THREE.Vector3();
+  const near = [];
+  for (const [id, m] of state.meshes) {
+    const n = state.nodes.get(id); const l = state.labelEls.get(id);
+    const major = n.tier === 'agent' || n.tier === 'goal' || id.startsWith('session:') || id.startsWith('episode:');
+    const show = major || all || id === state.selected || id === state.hover;
+    if (!show || !m.visible) { l.style.display = 'none'; continue; }
+    v.copy(m.position).project(camera);
+    if (v.z > 1) { l.style.display = 'none'; continue; }
+    const d = camera.position.distanceTo(m.position);
+    near.push([d, l, v.x, v.y, id, major]);
+  }
+  near.sort((a, b) => a[0] - b[0]);
+  near.forEach(([, l, x, y, id, major], i) => {
+    const hide = !major && id !== state.selected && i > 160;
+    l.style.display = hide ? 'none' : 'block';
+    l.style.left = ((x + 1) / 2 * w) + 'px'; l.style.top = ((1 - y) / 2 * h) + 'px';
+    l.classList.toggle('sel', id === state.selected);
+  });
+}
+function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, camera); updateLabels(); }
+
+// ---------- picking ----------
+renderer.domElement.addEventListener('pointerdown', ev => { state.down = [ev.clientX, ev.clientY]; });
+renderer.domElement.addEventListener('pointerup', ev => {
+  if (!state.down || Math.hypot(ev.clientX - state.down[0], ev.clientY - state.down[1]) > 4) return;
+  const p = new THREE.Vector2(ev.clientX / innerWidth * 2 - 1, -(ev.clientY / innerHeight) * 2 + 1);
+  ray.setFromCamera(p, camera);
+  const nodeHits = ray.intersectObjects([...state.meshes.values()].filter(m => m.visible));
+  if (nodeHits.length) { selectNode(nodeHits[0].object.userData.node.id); return; }
+  const edgeHits = ray.intersectObjects(Object.values(state.edgeObjs).filter(o => o.visible));
+  if (edgeHits.length) {
+    const h = edgeHits[0]; const i = h.object.userData.idxs[Math.floor(h.index / 2)];
+    selectEdge(i);
+  }
+});
+
+// ---------- inspector ----------
+function badge(cls) { return el('span', { class: 'badge ' + cls, text: cls.replace('_', '-') }); }
+function kv(k, v) { return el('div', {}, [el('span', { class: 'muted', text: k + ': ' }), el('span', { text: String(v) })]); }
+function nodeLink(id) {
+  const n = state.nodes.get(id);
+  return el('a', { class: 'lnk', text: clip(n ? n.label : id, 40), onclick: () => selectNode(id) });
+}
+function claimsBlock(claims) {
+  if (!claims || !claims.length) return el('div', { class: 'muted', text: 'No excerpt recorded for this item.' });
+  return el('div', {}, claims.map(c => el('div', {}, [
+    el('div', { class: 'muted', text: c.field_path }), el('pre', { text: c.text }) ])));
+}
+function selectNode(id) {
+  state.selected = id; const n = state.nodes.get(id); if (!n) return;
+  $('rtitle').textContent = 'Node: ' + n.tier;
+  const edges = state.graph.edges.map((e, i) => [e, i]).filter(([e]) => e.source === id || e.target === id);
+  const body = el('div', {}, [
+    kv('Label', n.label), kv('Id', n.id), kv('Source', n.source_ref.table + ' / ' + n.source_ref.row_id),
+    n.metadata && n.metadata.note ? el('div', { class: 'notice', text: n.metadata.note }) : null,
+    el('h2', { text: 'Excerpts (field path, text)' }), claimsBlock(n.claims),
+    el('h2', { text: 'Details' }),
+    el('pre', { text: JSON.stringify(Object.fromEntries(Object.entries(n.metadata || {}).filter(([k]) => k !== 'note')), null, 1) }),
+    el('h2', { text: 'Edges (' + edges.length + ')' }),
+    el('ul', { class: 'plain' }, edges.slice(0, 40).map(([e, i]) => el('li', {}, [
+      badge(e.evidence_class), ' ', el('a', { class: 'lnk', text: e.label || e.rule, onclick: () => selectEdge(i) }),
+      el('span', { class: 'muted', text: ' \u2192 ' }), nodeLink(e.source === id ? e.target : e.source) ]))),
+  ]);
+  $('rbody').replaceChildren(body); $('rbody').className = '';
+}
+function selectEdge(i) {
+  const e = state.graph.edges[i]; state.selected = null; $('rtitle').textContent = 'Edge';
+  const body = el('div', {}, [
+    el('div', {}, [badge(e.evidence_class), ' ', el('b', { text: e.label || '(no label)' })]),
+    kv('Rule', e.rule), kv('Score', e.score), kv('Source', e.source_ref.table + ' / ' + e.source_ref.row_id),
+    el('div', {}, [el('span', { class: 'muted', text: 'From: ' }), nodeLink(e.source)]),
+    el('div', {}, [el('span', { class: 'muted', text: 'To: ' }), nodeLink(e.target)]),
+    e.note ? el('div', { class: 'notice', text: e.note }) : null,
+    el('div', { class: 'notice' + (e.evidence_class === 'inferred' ? ' warn' : ''), text:
+      e.evidence_class === 'recorded' ? 'A field in the data states this relation.'
+      : e.evidence_class === 'rule_derived' ? 'A documented local rule found this relation. The data does not state it.'
+      : 'A model suggested this relation. Treat it as a hypothesis.' }),
+    el('h2', { text: 'Excerpts (field path, text)' }), claimsBlock(e.claims),
+  ]);
+  $('rbody').replaceChildren(body); $('rbody').className = '';
+}
+function renderSummary(g) {
+  const m = g.meta; $('rtitle').textContent = 'Slice summary';
+  const body = el('div', {}, [
+    kv('Nodes / edges', m.nodes_count + ' / ' + m.edges_count + ' (cap ' + m.max_nodes + ')'),
+    el('div', {}, Object.entries(m.evidence_classes).map(([c, n]) => el('span', {}, [badge(c), ' ' + n + '  ']))),
+    el('div', { class: 'notice', text: m.statement }),
+    ...m.aggregation.map(a => el('div', { class: 'notice warn', text:
+      (a.trace_id) + ': ' + a.items + ' items drawn as ' + a.nodes + ' nodes. ' + a.hides })),
+    ...m.hidden.map(h => el('div', { class: 'notice warn', text:
+      'Hidden: ' + h.hidden + ' (' + h.reason + ')' + (h.trace_id ? ' in ' + h.trace_id : '') })),
+    el('h2', { text: 'Gaps in the record' }),
+    el('ul', { class: 'plain' }, summarizeGaps(m.gaps)),
+  ]);
+  $('rbody').replaceChildren(body); $('rbody').className = '';
+  setStatus(m.nodes_count + ' nodes, ' + m.edges_count + ' edges' + (m.is_bounded ? ' (bounded)' : ''));
+}
+function summarizeGaps(gaps) {
+  if (!gaps.length) return [el('li', { class: 'muted', text: 'None reported for these traces.' })];
+  const c = {}; gaps.forEach(g => { c[g.kind] = (c[g.kind] || 0) + 1; });
+  return Object.entries(c).map(([k, n]) => el('li', { text: k.replace(/_/g, ' ') + ': ' + n }));
+}
+
+// ---------- catalog ----------
+function filters() {
+  const p = new URLSearchParams();
+  [...$('types').querySelectorAll('input:checked')].forEach(i => p.append('type', i.value));
+  [...$('agents').selectedOptions].forEach(o => p.append('agent', o.value));
+  if ($('goal').value) p.set('goal', $('goal').value);
+  if ($('from').value) p.set('from', $('from').value);
+  if ($('to').value) p.set('to', $('to').value);
+  if ($('q').value.trim()) p.set('q', $('q').value.trim());
+  return p;
+}
+function traceRow(t) {
+  const cb = el('input', { type: 'checkbox' }); cb.checked = state.picked.has(t.trace_id);
+  cb.addEventListener('change', () => {
+    if (cb.checked) { if (state.picked.size >= 12) { cb.checked = false; setStatus('Up to 12 traces at once.'); return; } state.picked.set(t.trace_id, t); }
+    else state.picked.delete(t.trace_id);
+    setStatus(state.picked.size + ' selected');
+  });
+  const who = t.agent_names.length ? t.agent_names.slice(0, 3).join(', ') : 'no agent row';
+  return el('div', { class: 'tr' }, [cb, el('div', { class: 't' }, [
+    el('div', { text: clip(t.label, 70) }),
+    el('div', { class: 'm', text: t.type.replace('_', ' ') + ' | ' + who + ' | ' + (t.started_at || '').slice(0, 16) + ' | ' + t.items + ' items' + (t.type !== 'chat' && !t.has_goal ? ' | no stated goal' : '') }) ])]);
+}
+async function search(append = false) {
+  if (!append) { state.offset = 0; $('results').replaceChildren(); }
+  const p = filters(); p.set('limit', 30); p.set('offset', state.offset);
+  try {
+    const r = await api('/api/traces?' + p);
+    state.total = r.total; state.offset += r.traces.length;
+    r.traces.forEach(t => $('results').append(traceRow(t)));
+    $('count').textContent = 'Showing ' + state.offset + ' of ' + r.total + ' traces';
+    return r;
+  } catch (err) { $('count').textContent = 'Search failed: ' + err.message; }
+}
+async function loadGraph() {
+  const ids = [...state.picked.keys()]; if (!ids.length) { setStatus('Select at least one trace.'); return; }
+  const p = new URLSearchParams(); ids.forEach(i => p.append('trace', i)); p.set('max_nodes', $('maxn').value);
+  try {
+    setStatus('Loading...'); const g = await api('/api/graph?' + p);
+    stopPlay(); renderGraph(g); fillPlayback(g);
+  } catch (err) { setStatus('Graph failed: ' + err.message); }
+}
+
+// ---------- playback ----------
+function fillPlayback(g) {
+  const sel = $('ptrace'); sel.replaceChildren();
+  g.meta.traces.forEach(t => { const n = state.nodes.get(t); sel.append(el('option', { value: t, text: clip(n ? n.label : t, 40) })); });
+  resetPlayback();
+}
+async function resetPlayback() {
+  stopPlay(); state.steps = []; state.stepIdx = -1; $('pslider').max = 0; $('pslider').value = 0;
+  const t = $('ptrace').value; if (!t || !state.graph) return;
+  try {
+    const per = state.graph.meta.actions_per_trace; let off = 0, total = 1, all = [];
+    while (off < total && all.length < 2000) {
+      const r = await api('/api/steps?trace=' + encodeURIComponent(t) + '&offset=' + off + '&limit=200&per_trace=' + per);
+      total = r.total; all = all.concat(r.steps); off += r.steps.length; if (!r.steps.length) break;
+    }
+    state.steps = all; $('pslider').max = Math.max(0, all.length - 1);
+    $('pinfo').textContent = all.length + ' recorded steps' + (total > all.length ? ' (first ' + all.length + ' of ' + total + ')' : '') + '. Press Play or Step.';
+  } catch (err) { $('pinfo').textContent = 'Playback unavailable: ' + err.message; }
+  applyPlaybackVisibility();
+}
+function showStep(i) {
+  if (!state.steps.length) return;
+  state.stepIdx = Math.max(0, Math.min(i, state.steps.length - 1)); $('pslider').value = state.stepIdx;
+  const s = state.steps[state.stepIdx];
+  $('pinfo').textContent = 'Step ' + (s.seq + 1) + ' of ' + state.steps.length + ' | ' + (s.created_at || '').slice(0, 19);
+  state.selected = state.meshes.has(s.node_id) ? s.node_id : null;
+  $('rtitle').textContent = 'Playback step ' + (s.seq + 1);
+  $('rbody').replaceChildren(el('div', {}, [
+    kv('Action', s.action), kv('Source', s.source_ref.table + ' / ' + s.source_ref.row_id),
+    kv('Graph node', state.meshes.has(s.node_id) ? s.node_id : 'not drawn (node budget)'),
+    s.has_error ? el('div', { class: 'notice', text: 'Text was stored in the error field. This does not prove failure.' }) : null,
+    el('h2', { text: s.detail_path || 'detail' }), el('pre', { text: s.detail || '(no text recorded)' }),
+    s.output ? el('div', {}, [el('h2', { text: 'output' }), el('pre', { text: s.output })]) : null,
+    s.narration ? el('div', {}, [el('h2', { text: 'agent narration (claim)' }), el('pre', { text: s.narration })]) : null,
+  ])); $('rbody').className = '';
+  applyPlaybackVisibility();
+}
+function applyPlaybackVisibility() {
+  const t = $('ptrace').value; const playing = state.stepIdx >= 0 && state.steps.length;
+  const now = playing ? state.steps[state.stepIdx].created_at : null;
+  for (const [id, m] of state.meshes) {
+    const n = state.nodes.get(id); let op = 1;
+    if (playing && n.metadata && n.metadata.trace_id === t && n.metadata.at && n.tier !== 'goal' && n.id !== t) op = n.metadata.at <= now ? 1 : 0.07;
+    if (id === state.selected) m.scale.setScalar(1.7); else m.scale.setScalar(1);
+    m.material.opacity = op;
+  }
+}
+function stopPlay() { if (state.timer) { clearInterval(state.timer); state.timer = null; } $('pplay').textContent = 'Play'; }
+function togglePlay() {
+  if (state.timer) { stopPlay(); return; }
+  if (!state.steps.length) return;
+  $('pplay').textContent = 'Pause';
+  state.timer = setInterval(() => {
+    if (state.stepIdx >= state.steps.length - 1) { stopPlay(); return; }
+    showStep(state.stepIdx + 1);
+  }, Number($('pspeed').value));
+}
+
+// ---------- wiring ----------
+async function init() {
+  $('types').replaceChildren(...TRACE_TYPES.map(([v, t]) => {
+    const cb = el('input', { type: 'checkbox', value: v }); cb.checked = true;
+    return el('label', {}, [cb, ' ' + t + '  ']);
+  }));
+  try {
+    const ov = await api('/api/overview');
+    ov.agents.forEach(a => $('agents').append(el('option', { value: a.id, text: a.name + ' (' + (a.computer_use + a.claude_code) + ')' })));
+    ov.goals.forEach(g => $('goal').append(el('option', { value: g.id, text: clip(g.label, 50) + ' [' + g.traces + ']' })));
+    if (ov.date_range[0]) { $('from').min = $('to').min = ov.date_range[0]; $('from').max = $('to').max = ov.date_range[1]; }
+    const tt = ov.trace_types; const idx = ov.index;
+    $('idx').replaceChildren(
+      el('div', { text: tt.computer_use + ' computer-use sessions, ' + tt.claude_code + ' Claude Code sessions, ' + tt.chat + ' chat episodes' }),
+      idx.sample_limit ? el('div', { class: 'notice warn', text: 'Sample index: at most ' + idx.sample_limit + ' rows per table. Joins across tables are incomplete.' }) : null);
+    const r = await search();
+    if (r && r.traces.length) { const first = $('results').querySelector('input'); first.checked = true; first.dispatchEvent(new Event('change')); await loadGraph(); }
+  } catch (err) {
+    $('idx').textContent = 'Index not available: ' + err.message;
+  }
+}
+$('search').onclick = () => search(false);
+$('more').onclick = () => search(true);
+$('clear').onclick = () => { state.picked.clear(); $('results').querySelectorAll('input').forEach(i => { i.checked = false; }); setStatus('0 selected'); };
+$('load').onclick = loadGraph;
+$('maxn').oninput = () => { $('maxv').textContent = $('maxn').value; };
+$('theme').onclick = () => { document.body.classList.toggle('light'); localStorage.setItem('tm-theme', document.body.classList.contains('light') ? 'light' : 'dark'); recolor(); };
+$('reset').onclick = () => { camera.position.copy(HOME); controls.target.set(0, 0, 0); controls.update(); };
+['showrec', 'showrule', 'showinf'].forEach(i => { $(i).onchange = applyEdgeToggles; });
+$('pplay').onclick = togglePlay; $('pstep').onclick = () => { stopPlay(); showStep(state.stepIdx + 1); };
+$('preset').onclick = () => { stopPlay(); state.stepIdx = -1; state.selected = null; $('pslider').value = 0; applyPlaybackVisibility(); if (state.graph) renderSummary(state.graph); };
+$('pslider').oninput = () => { stopPlay(); showStep(Number($('pslider').value)); };
+$('ptrace').onchange = resetPlayback;
+addEventListener('keydown', e => { if (e.ctrlKey && e.key.toLowerCase() === 'y') { e.preventDefault(); document.body.classList.toggle('hide-cursor'); } });
+addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+if (localStorage.getItem('tm-theme') === 'light') document.body.classList.add('light');
+loop(); init();
+</script>
+</body>
+</html>

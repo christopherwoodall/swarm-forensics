@@ -1,0 +1,4 @@
+index.db*
+serve.log
+.serve.pid
+__pycache__/
