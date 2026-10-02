@@ -81,41 +81,38 @@ class TraceCatalog:
     # ---- catalog -------------------------------------------------------------------------
     def overview(self) -> dict[str, Any]:
         c = self.conn
+        per_agent: dict[tuple[str | None, str], int] = {
+            (r[0], r[1]): r[2]
+            for r in c.execute("SELECT agent_id, kind, COUNT(*) FROM sessions GROUP BY agent_id, kind")
+        }
         agents = [
-            dict(r) for r in c.execute(
-                "SELECT a.id, a.name, a.model, "
-                "(SELECT COUNT(*) FROM sessions s WHERE s.agent_id = a.id "
-                " AND s.kind = 'computer_use') AS computer_use, "
-                "(SELECT COUNT(*) FROM sessions s WHERE s.agent_id = a.id "
-                " AND s.kind = 'claude_code') AS claude_code "
-                "FROM agents a ORDER BY a.name COLLATE NOCASE, a.id"
-            )
-        ]  # fmt: skip
+            {
+                **dict(r),
+                "computer_use": per_agent.get((r["id"], "computer_use"), 0),
+                "claude_code": per_agent.get((r["id"], "claude_code"), 0),
+            }
+            for r in c.execute("SELECT id, name, model FROM agents ORDER BY name COLLATE NOCASE, id")
+        ]
+        per_goal = {r[0]: r[1] for r in c.execute("SELECT goal_id, COUNT(*) FROM goal_links GROUP BY goal_id")}
         goals = [
-            dict(r) for r in c.execute(
-                "SELECT g.id, g.scope, g.agent_id, g.label, g.starts_at, g.effective_end, "
-                "(SELECT COUNT(*) FROM goal_links l WHERE l.goal_id = g.id) AS traces "
-                "FROM goals g ORDER BY g.starts_at, g.id"
+            {**dict(r), "traces": per_goal.get(r["id"], 0)}
+            for r in c.execute(
+                "SELECT id, scope, agent_id, label, starts_at, effective_end FROM goals "
+                "ORDER BY starts_at, id"
             )
-        ]  # fmt: skip
+        ]
         goals.append(
             {
                 "id": UNKNOWN_GOAL, "scope": "none", "agent_id": None,
                 "label": "unknown goal (no goal window)", "starts_at": None, "effective_end": None,
-                "traces": c.execute(
-                    "SELECT COUNT(*) FROM goal_links WHERE goal_id = ?", (UNKNOWN_GOAL,)
-                ).fetchone()[0],
+                "traces": per_goal.get(UNKNOWN_GOAL, 0),
             }
         )  # fmt: skip
         lo, hi = c.execute("SELECT MIN(started_at), MAX(started_at) FROM sessions").fetchone()
         meta = {r["key"]: r["value"] for r in c.execute("SELECT key, value FROM meta")}
         counts = {
-            "computer_use": c.execute(
-                "SELECT COUNT(*) FROM sessions WHERE kind = 'computer_use'"
-            ).fetchone()[0],
-            "claude_code": c.execute(
-                "SELECT COUNT(*) FROM sessions WHERE kind = 'claude_code'"
-            ).fetchone()[0],
+            "computer_use": sum(n for (_, k), n in per_agent.items() if k == "computer_use"),
+            "claude_code": sum(n for (_, k), n in per_agent.items() if k == "claude_code"),
             "chat": c.execute("SELECT COUNT(*) FROM episodes").fetchone()[0],
         }
         return {
@@ -168,11 +165,8 @@ class TraceCatalog:
                 where.append("(s.goal_text LIKE ? OR s.short_goal LIKE ?)")
                 p += [f"%{q}%"] * 2
             parts.append(
-                "SELECT 'session:' || s.id AS trace_id, s.kind AS type, s.agent_id AS agent_id, "
-                "s.started_at AS started_at, COALESCE(s.window_end, s.started_at) AS ended_at, "
-                "s.item_count AS items, COALESCE(s.short_goal, s.goal_text) AS label, "
-                "(s.goal_text IS NOT NULL) AS has_goal FROM sessions s WHERE "
-                + " AND ".join(where)
+                "SELECT 'S' AS src, s.id AS key, s.started_at AS started_at "
+                "FROM sessions s WHERE " + " AND ".join(where)
             )
             params += p
         if "chat" in types:
@@ -199,23 +193,43 @@ class TraceCatalog:
                 where.append("e.room_name LIKE ?")
                 p.append(f"%{q}%")
             parts.append(
-                "SELECT 'episode:' || e.id AS trace_id, 'chat' AS type, NULL AS agent_id, "
-                "e.started_at AS started_at, e.ended_at AS ended_at, "
-                "e.message_count AS items, COALESCE(e.room_name, e.room_id) AS label, "
-                "0 AS has_goal FROM episodes e WHERE "
-                + " AND ".join(where)
+                "SELECT 'E' AS src, e.id AS key, e.started_at AS started_at "
+                "FROM episodes e WHERE " + " AND ".join(where)
             )
             params += p
+        # Rank on index-only columns first. Fetch wide rows (goal text) for one page only.
         union = " UNION ALL ".join(parts)
-        total = self.conn.execute(f"SELECT COUNT(*) FROM ({union})", params).fetchone()[0]
-        rows = self.conn.execute(
-            f"SELECT * FROM ({union}) ORDER BY started_at DESC, trace_id LIMIT ? OFFSET ?",
-            params + [limit, offset],
-        ).fetchall()
+        # One scan: a text filter reads wide rows, so count and page from the same result.
+        ranked = sorted(
+            self.conn.execute(union, params).fetchall(),
+            key=lambda r: (r["started_at"] or "", r["src"], r["key"]),
+        )
+        ranked.sort(key=lambda r: r["started_at"] or "", reverse=True)
+        total = len(ranked)
+        page = [(r["src"], r["key"]) for r in ranked[offset : offset + limit]]
+        wide: dict[tuple[str, str], dict[str, Any]] = {}
+        for src, sql in (
+            ("S", "SELECT 'session:' || s.id AS trace_id, s.id AS key, s.kind AS type, "
+                  "s.agent_id AS agent_id, s.started_at AS started_at, "
+                  "COALESCE(s.window_end, s.started_at) AS ended_at, s.item_count AS items, "
+                  "COALESCE(s.short_goal, s.goal_text) AS label, "
+                  "(s.goal_text IS NOT NULL) AS has_goal FROM sessions s WHERE s.id IN ({})"),
+            ("E", "SELECT 'episode:' || e.id AS trace_id, e.id AS key, 'chat' AS type, "
+                  "NULL AS agent_id, e.started_at AS started_at, e.ended_at AS ended_at, "
+                  "e.message_count AS items, COALESCE(e.room_name, e.room_id) AS label, "
+                  "0 AS has_goal FROM episodes e WHERE e.id IN ({})"),
+        ):  # fmt: skip
+            keys = [k for s, k in page if s == src]
+            if keys:
+                for r in self.conn.execute(sql.format(_marks(keys)), keys):
+                    wide[(src, r["key"])] = dict(r)
         names = {r[0]: r[1] for r in self.conn.execute("SELECT id, name FROM agents")}
         traces = []
-        for r in rows:
-            item = dict(r)
+        for src, key in page:
+            item = wide.get((src, key))
+            if item is None:
+                continue
+            item.pop("key", None)
             if item["type"] == "chat":
                 eid = item["trace_id"].split(":", 1)[1]
                 members = [

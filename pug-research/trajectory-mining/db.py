@@ -217,6 +217,7 @@ INDEXES_DDL = {
         CREATE INDEX IF NOT EXISTS idx_sessions_agent ON sessions (agent_id, started_at);
         CREATE INDEX IF NOT EXISTS idx_sessions_time ON sessions (started_at, window_end);
         CREATE INDEX IF NOT EXISTS idx_sessions_sdk ON sessions (sdk_session_id);
+        CREATE INDEX IF NOT EXISTS idx_sessions_list ON sessions (kind, agent_id, started_at, id);
     """,
     "messages": """
         CREATE INDEX IF NOT EXISTS idx_messages_session ON messages (session_id, created_at);

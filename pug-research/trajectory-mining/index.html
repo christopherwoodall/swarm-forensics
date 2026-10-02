@@ -10,8 +10,10 @@
     --muted: #9aa4af; --accent: #58a6ff; --field: rgba(110,118,129,.14);
     --recorded: #58a6ff; --rule: #e3b341; --inferred: #c297ff;
     --agent: #79c0ff; --action: #d2a8ff; --artifact: #ffa657; --goal: #7ee787;
+    color-scheme: dark;
   }
   body.light {
+    color-scheme: light;
     --bg: #f6f8fa; --panel: rgba(255,255,255,.96); --border: #d0d7de; --text: #1f2328;
     --muted: #57606a; --accent: #0969da; --field: rgba(110,118,129,.12);
     --recorded: #0969da; --rule: #9a6700; --inferred: #8250df;
@@ -39,6 +41,7 @@
   label.row, .row { display: flex; gap: 6px; align-items: center; margin: 4px 0; }
   .row > * { flex: 1; min-width: 0; }
   .row > label { flex: 0 0 62px; color: var(--muted); }
+  select option, select optgroup { background: var(--bg); color: var(--text); }
   select, input, button { background: var(--field); border: 1px solid var(--border); color: var(--text);
                           padding: 4px 6px; border-radius: 4px; font: inherit; }
   button { cursor: pointer; } button:hover { border-color: var(--accent); }
@@ -73,7 +76,7 @@
 
 <div id="left" class="panel">
   <h1>Trajectory goal graph</h1>
-  <div id="idx" class="muted">Loading index...</div>
+  <div id="idx" class="muted">Loading index. The first read of a large index file can take a few seconds...</div>
   <h2>Find traces</h2>
   <div class="row"><label>Types</label>
     <span id="types"></span></div>
@@ -96,7 +99,8 @@
     <div id="pinfo" class="muted"></div>
   </div>
   <h2>Display</h2>
-  <div class="row"><button id="theme">Light / dark</button><button id="reset">Reset view</button></div>
+  <div class="row"><button id="clearscreen" title="Remove the graph, selection, playback, and inspector (Esc)">Clear screen</button><button id="reset">Reset view</button></div>
+  <div class="row"><button id="theme">Light / dark</button></div>
   <div class="row"><label><input type="checkbox" id="alllabels"> all labels</label>
     <label><input type="checkbox" id="showrec" checked> recorded</label></div>
   <div class="row"><label><input type="checkbox" id="showrule" checked> rule-derived</label>
@@ -126,7 +130,7 @@ const TIER_Y = { agent: 150, action: 50, artifact: -50, goal: -150 };
 const SIZE = { agent: 7, action: 4.5, artifact: 3.2, goal: 6 };
 const TRACE_TYPES = [['computer_use', 'computer use'], ['claude_code', 'Claude Code'], ['chat', 'chat']];
 const state = { graph: null, nodes: new Map(), meshes: new Map(), edgeObjs: {}, labelEls: new Map(),
-  selected: null, offset: 0, total: 0, picked: new Map(), steps: [], stepIdx: -1, timer: null, hover: null };
+  gen: 0, selected: null, offset: 0, total: 0, picked: new Map(), steps: [], stepIdx: -1, timer: null, hover: null };
 
 // ---------- DOM helpers (dataset text only ever goes through textContent) ----------
 const $ = id => document.getElementById(id);
@@ -383,10 +387,24 @@ async function search(append = false) {
 async function loadGraph() {
   const ids = [...state.picked.keys()]; if (!ids.length) { setStatus('Select at least one trace.'); return; }
   const p = new URLSearchParams(); ids.forEach(i => p.append('trace', i)); p.set('max_nodes', $('maxn').value);
+  const gen = ++state.gen;
   try {
     setStatus('Loading...'); const g = await api('/api/graph?' + p);
+    if (gen !== state.gen) return;
     stopPlay(); renderGraph(g); fillPlayback(g);
-  } catch (err) { setStatus('Graph failed: ' + err.message); }
+  } catch (err) { if (gen === state.gen) setStatus('Graph failed: ' + err.message); }
+}
+const INSPECTOR_HINT = $('rbody').textContent;
+function clearScreen() {
+  state.gen++;
+  stopPlay(); clearScene();
+  state.graph = null; state.nodes = new Map(); state.pos = null; state.selected = null; state.hover = null;
+  state.steps = []; state.stepIdx = -1; state.picked.clear();
+  $('results').querySelectorAll('input').forEach(i => { i.checked = false; });
+  $('ptrace').replaceChildren(); $('pslider').max = 0; $('pslider').value = 0; $('pinfo').textContent = '';
+  $('rtitle').textContent = 'Evidence inspector'; $('rbody').textContent = INSPECTOR_HINT; $('rbody').className = 'muted';
+  camera.position.copy(HOME); controls.target.set(0, 0, 0); controls.update();
+  setStatus('Screen cleared. Select traces and press Load selected.');
 }
 
 // ---------- playback ----------
@@ -404,6 +422,7 @@ async function resetPlayback() {
       const r = await api('/api/steps?trace=' + encodeURIComponent(t) + '&offset=' + off + '&limit=200&per_trace=' + per);
       total = r.total; all = all.concat(r.steps); off += r.steps.length; if (!r.steps.length) break;
     }
+    if (!state.graph) return;
     state.steps = all; $('pslider').max = Math.max(0, all.length - 1);
     $('pinfo').textContent = all.length + ' recorded steps' + (total > all.length ? ' (first ' + all.length + ' of ' + total + ')' : '') + '. Press Play or Step.';
   } catch (err) { $('pinfo').textContent = 'Playback unavailable: ' + err.message; }
@@ -459,9 +478,10 @@ async function init() {
     ov.goals.forEach(g => $('goal').append(el('option', { value: g.id, text: clip(g.label, 50) + ' [' + g.traces + ']' })));
     if (ov.date_range[0]) { $('from').min = $('to').min = ov.date_range[0]; $('from').max = $('to').max = ov.date_range[1]; }
     const tt = ov.trace_types; const idx = ov.index;
-    $('idx').replaceChildren(
+    $('idx').replaceChildren(...[
       el('div', { text: tt.computer_use + ' computer-use sessions, ' + tt.claude_code + ' Claude Code sessions, ' + tt.chat + ' chat episodes' }),
-      idx.sample_limit ? el('div', { class: 'notice warn', text: 'Sample index: at most ' + idx.sample_limit + ' rows per table. Joins across tables are incomplete.' }) : null);
+      idx.sample_limit ? el('div', { class: 'notice warn', text: 'Sample index: at most ' + idx.sample_limit + ' rows per table. Joins across tables are incomplete.' }) : null,
+    ].filter(Boolean));
     const r = await search();
     if (r && r.traces.length) { const first = $('results').querySelector('input'); first.checked = true; first.dispatchEvent(new Event('change')); await loadGraph(); }
   } catch (err) {
@@ -474,12 +494,16 @@ $('clear').onclick = () => { state.picked.clear(); $('results').querySelectorAll
 $('load').onclick = loadGraph;
 $('maxn').oninput = () => { $('maxv').textContent = $('maxn').value; };
 $('theme').onclick = () => { document.body.classList.toggle('light'); localStorage.setItem('tm-theme', document.body.classList.contains('light') ? 'light' : 'dark'); recolor(); };
+$('clearscreen').onclick = clearScreen;
 $('reset').onclick = () => { camera.position.copy(HOME); controls.target.set(0, 0, 0); controls.update(); };
 ['showrec', 'showrule', 'showinf'].forEach(i => { $(i).onchange = applyEdgeToggles; });
 $('pplay').onclick = togglePlay; $('pstep').onclick = () => { stopPlay(); showStep(state.stepIdx + 1); };
 $('preset').onclick = () => { stopPlay(); state.stepIdx = -1; state.selected = null; $('pslider').value = 0; applyPlaybackVisibility(); if (state.graph) renderSummary(state.graph); };
 $('pslider').oninput = () => { stopPlay(); showStep(Number($('pslider').value)); };
 $('ptrace').onchange = resetPlayback;
+addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)) clearScreen();
+});
 addEventListener('keydown', e => { if (e.ctrlKey && e.key.toLowerCase() === 'y') { e.preventDefault(); document.body.classList.toggle('hide-cursor'); } });
 addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
 if (localStorage.getItem('tm-theme') === 'light') document.body.classList.add('light');

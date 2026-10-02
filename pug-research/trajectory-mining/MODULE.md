@@ -43,8 +43,9 @@ Scope: computer-use sessions and turns, Claude Code sessions and messages, chat 
 ## 4. Current State & Known Gaps
 - State: `make test` (80 offline tests) and `make lint` pass.
 - State: Sample run, 100,000 rows per table, `LIMIT=100000`: 548 MB index, 78,362 sessions, 671 chat episodes, 112,224 goal links, 25,927 shared language features. It took about 1 minute with the index on a Linux path. It took about 9.5 minutes when SQLite wrote directly on `/mnt/c` (about 10x slower), which is why the importer now stages on a Linux path.
-- State: The viewer loads that sample in a browser. Checked: trace search, multi-trace load, shared goal node, hidden-node note.
-- Gap: No full-archive run yet. Full-run time and disk are not measured. The importer estimates disk before it starts.
+- State: The viewer loads that sample in a browser. Checked: trace search, multi-trace load, shared goal node, hidden-node note, clear screen (button or Esc).
+- State: Full-archive run done. Import took 345 s. The index is 3.1 GB: 79,393 traces, 728 chat episodes. With a warm cache, `/api/overview` takes about 1 s and `/api/traces` under 1 s.
+- Gap: A cold read of the index over `/mnt/c` is slow, and a text search (`q`) scans every goal text. It took about 11 s on the full index. Overview and trace lists rank on the covering index `idx_sessions_list`. Indexes created by older runs lack it. Add it with `db.create_indexes(conn, "sessions")`.
 - Gap: Sample joins are incomplete, because each table is cut at its first rows. Many sessions have no turns in the sample.
 - Gap: `agent_memories` text is not indexed. Some `computer_use_turns` and `claude_code_messages` shapes are counted as unsupported. The coverage report lists them.
 - Gap: Chat episodes show who spoke. They do not show who answered whom.
