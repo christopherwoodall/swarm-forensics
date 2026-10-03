@@ -1,0 +1,25 @@
+# Private working excerpts: source 16
+
+Published URL: https://arxiv.org/html/2603.15727v3
+Upstream namespace: stage3; source 32
+Version/date: 2026-07-16 (v3); first submitted 2026-03-16
+
+## S15-16-P01; upstream lines 372-384
+
+AgentWorm is instantiated on a multi-agent testbed comprising multiple OpenClaw instances running on the same physical host with fully independent configurations. The instances share no filesystem state or session context; their sole communication channel is a channel relay layer that simulates the production communication channels through which OpenClaw agents interact. Messages are delivered via the OpenClaw CLI, and each invocation constitutes a single-turn session.
+
+##### Model and framework.
+
+All experiments use OpenClaw version 2026.3.12. To ensure the evaluation reflects a broad spectrum of security postures, five frontier LLM backends are selected. Four models consistently rank within the top 10 of the OpenRouter OpenClaw Leaderboard555 [https://openrouter.ai/apps?url=https://openclaw.ai/](https://openrouter.ai/apps?url=https://openclaw.ai/ ""), Queried 2026-03: Minimax-M2.5, DeepSeek-V3.2, GLM-5, and Kimi-K2.5, representative of high-traffic production environments with a combined monthly throughput exceeding 3 teratokens. To assess generalisability beyond this model family, Nemotron-3-Super-120B \[ [14](https://arxiv.org/html/2603.15727v3#bib.bib14 "")\] is additionally included, an NVIDIA model with distinct safety training. Unless otherwise specified, the default model configuration refers to Minimax-M2.5. No modifications were made to the framework source code, model parameters, or baseline safety guardrails.
+
+##### Experimental design.
+
+AgentWorm is evaluated using a 3×33\\times 3 full-factorial design crossing three attack vectors (A: web injection; B: skill supply chain poisoning; C: direct instruction replication) with three payloads (P1: reconnaissance; P2: resource exhaustion; P3: command-and-control). A total of n=50n=50 independent trials per cell are conducted for each of the five models, yielding 2,250 total trials. A strict boundary separates _scripted_ components (the initial infection of Alice’s AGENTS.md, pre-installed skill packages, attacker-controlled URLs, and routine test prompts) from _autonomous_ agent decisions, which are the sole objects of measurement. After the initial scripted delivery, all interaction is fully autonomous: agents engage in up to eight conversational turns per attempt and up to three attempts per trial, without human intervention. A complete environment reset is executed before each trial to ensure statistical independence.
+
+### IV-BEvaluation Metrics
+
+Each trial is evaluated along three phases of the worm lifecycle. Persistence (φ1\\varphi\_{1}) is assessed by reading the victim’s AGENTS.md configuration file after the attack interaction and checking for payload-specific keywords via substring matching. Execution (φ2\\varphi\_{2}) is assessed via real-execution verification: after a successful persistence event, a fresh session restart is triggered and payload-specific file artifacts are checked on the host filesystem, providing ground-truth confirmation that the payload fires. Each payload produces a distinct marker: P1 writes a host identity file, P2 generates a completion-tagged log, and P3 produces a C2 beacon file confirming successful URL fetch and task execution. Propagation (φ3\\varphi\_{3}) is assessed by issuing a routine, benign prompt in a fresh channel and evaluating whether the infected agent’s subsequent response includes the payload. A trial achieves overall success if and only if all three phases succeed. Attack success rates are reported per cell and per phase.
+
+## S15-16-P02; upstream lines 480-480
+
+The worm’s cascading capability is evaluated by seeding infections and measuring autonomous multi-hop propagation up to 5 hops, across all nine conditions (n=10n=10 independent chains per cell, 90 total). Table [VI](https://arxiv.org/html/2603.15727v3#S4.T6 "TABLE VI ‣ Multi-hop propagation. ‣ IV-D Per-Phase Analysis ‣ IV Threat Evaluation ‣ AgentWorm: Self-Propagating Attacks AcrossLLM Agent Ecosystems") presents the aggregated results by vector. Vectors A and B exhibit deep penetration (mean chain lengths >4.0>4.0), as they bypass LLM generation entirely by transmitting payloads via static URLs or SKILL.md files, preserving perfect fidelity across hops. Conversely, Vector C (direct instruction replication) exhibits progressive semantic degradation. As the payload passes through successive LLM generation cycles, authority framing weakens (e.g., shifting from "Coordinator directive" to "Peer suggestion") and configuration directives become vaguer. This semantic shift acts as a natural propagation constraint for Vector C, reducing its conditional per-hop ASR to 0.74 and limiting its mean chain length to 3.0 hops.

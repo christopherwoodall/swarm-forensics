@@ -42,6 +42,7 @@ def build_summary(events_path: Path, edges_path: Path) -> dict[str, Any]:
     actions: dict[str, Counter] = {}
     hints: dict[str, Counter] = {}
     families: Counter = Counter()
+    task_families: Counter = Counter()
     daily: dict[str, Counter] = {}
     bounds: dict[str, dict[str, str]] = {}
     top_targets: dict[str, Counter] = {}
@@ -54,6 +55,7 @@ def build_summary(events_path: Path, edges_path: Path) -> dict[str, Any]:
         actions.setdefault(dataset, Counter())[row["action"]] += 1
         hints.setdefault(dataset, Counter())[row["actor_hint"]] += 1
         families[row["technique_family"]] += 1
+        task_families[row.get("task_family") or "unlabeled"] += 1
 
         time = row["time"]
         if time and DATE_PREFIX.match(time):
@@ -88,6 +90,7 @@ def build_summary(events_path: Path, edges_path: Path) -> dict[str, Any]:
         "actions": {d: dict(sorted(c.items())) for d, c in sorted(actions.items())},
         "hints": {d: dict(sorted(c.items())) for d, c in sorted(hints.items())},
         "families": sorted(families.items(), key=lambda kv: (-kv[1], kv[0])),
+        "task_families": sorted(task_families.items(), key=lambda kv: (-kv[1], kv[0])),
         "daily": {
             day: dict(sorted(c.items())) for day, c in sorted(daily.items())
         },

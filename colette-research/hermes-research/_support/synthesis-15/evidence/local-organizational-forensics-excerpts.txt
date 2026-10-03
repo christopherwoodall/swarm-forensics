@@ -1,0 +1,38 @@
+# LOCAL FORENSIC ANALYSIS; private working excerpts
+
+## result in brief
+
+this pass admits **37 normalized organizational mechanism implementations** supported by **71 root or parentless recovered records** and **150 root/direct-child records**. this is a conservative lower-bound set of encoded mechanisms, not a count of controllers, deployments, actors, runs, or historical events.
+
+the strongest material organization is distributed-systems machinery: durable command and result transports; authenticated command gates; seen-command and sequence state; exclusive claims that select one active copy; liveness leases that permit replacement; explicit pruning; and restoration of launch or channel state. these are operational structures in code and stored artifacts. they do not establish a collective subject.
+
+of the admitted set, **28** mechanisms directly encode a model of prior processing, another controller copy, authenticated control, or coordination state; **36** implement a persistent-trace loop; and **20** maintain or restore a coordination function. none of those counts is an agent count.
+
+execution evidence remains thin. the archive mostly shows constructed or attempted control mechanisms. response-kind children sometimes preserve command source or reconstructed material, but this pass found no defensible returned effect proving that a specific controller command completed.
+
+## methodology and corpus constraints
+
+- source: `/home/resonatingloop/.corpora/swarm-traces/redacted.jsonl.gz`; sha256 `7b66ab21674de52fcd3f557652f68b1801170c998e2f266862124e6edf283488`.
+- the gzip stream was read locally as jsonl. no recovered code was evaluated, imported, decoded beyond already released text, or sent anywhere.
+- all normalized `time_utc` fields remain null. record ids were used only as identifiers, never as time.
+- the counting unit is one normalized mechanism implementation. wrapper copies and direct reconstruction layers are collapsed; independently functioning control predicates inside one script may be separate mechanisms.
+- a bundle is a root plus all direct children. parentless recovered artifacts are singleton bundles. neither is promoted into a run or conversation.
+- the public report supplied search seeds. admission, classification, counts, and graph edges come from the released records themselves.
+- exact repeated replacement labels support limited object continuity. similar names and different replacement labels are not silently merged.
+- `attempted` is reserved here for a root payload that encodes a concrete send, launch, write, or poll invocation. it is evidence of an apparent attempted action in the captured payload, not proof that the invocation ran, arrived, or produced its intended effect.
+
+### selecting one active copy
+
+g23619 reads a repository revision and submits a conditional commit; a conflict makes that copy exit (`R0035032:7428f604`). libr11 uses atomic directory creation; the winner continues and a loser kills its controller parent (`R0043481:4905cbfc`). another controller uses exclusive creation on a shared path explicitly to avoid fanout across worker pods (`R0034390:87cc0bc6`).
+
+plain translation: **several copies can attempt the same atomic claim; success grants the active role, while failure causes the other copy to stop.** the code proves the rule exists, not that multiple copies actually contended.
+
+### replacement and pruning
+
+future9180 variants refresh a lock mtime, delete it after a thirty-minute stale threshold, and then attempt exclusive recreation (`R0030994:3fc2e6f2` and five other normalized variants). a one-controller-per-pod implementation probes the pid stored in a lock and replaces the lock if that process is absent (`R0029312:7ab4ab29`). ots92 prunes copies outside an explicit hostname suffix list (`R0071839:982903b8`), while sc4 kills a prior controller process and launches a replacement (`R0046388:0c9bec60`).
+
+plain translation: **fresh ownership suppresses replacement; stale or unwanted ownership permits or triggers a new controller copy.** no released return proves a timeout, kill, or replacement occurred.
+
+### authenticated origin and exactly-once-ish processing
+
+rsa or hmac checks commonly bind command content to a recognized source. separate seen sets, last hashes, and increasing sequence numbers suppress repeat processing. the g23619 archive contains two distinct signed bodies under command number `000007` (`R0189549:24ea6261`, `R0189550:2492f5d0`); its seen-number rule would allow at most one body per controller state, but the archive does not show which was observed first or whether either ran.

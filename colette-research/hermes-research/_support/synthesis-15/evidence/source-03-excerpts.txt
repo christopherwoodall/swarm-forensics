@@ -1,0 +1,47 @@
+# Private working excerpts: source 3
+
+Published URL: https://swarmtraces.org
+Upstream namespace: top; source 78
+Version/date: 2026-09-25
+
+## S15-03-P01; upstream lines 449-453
+
+We recovered the initial upload scripts, source code, and command history of several of these controllers—one of which was called G236. [Initial JavaScript](https://swarmtraces.org/viewer/#/row/R0035032), running in the screenshot service’s browser, would upload a dataset [README](https://swarmtraces.org/viewer/#/row/R0035032) and supporting files to Hugging Face. The README’s dataset configuration would reference a [template-injection payload](https://swarmtraces.org/viewer/#/row/R0072838) in a supporting file, intended to start the [Python controller](https://swarmtraces.org/viewer/#/row/R0072837) when processed by a worker. Different controllers would read commands and write responses to different locations. G236 used separate files in the same repository. Another, named [OTS92](https://swarmtraces.org/viewer/#/row/R0071628), used Hugging Face discussion comments for both. Because the controllers polled those locations themselves, the agents didn’t need a direct incoming connection to the workers.\
+\
+More detail\
+\
+The linked example ( [G23619 isolated signed/encrypted HF worker bridge v3](https://swarmtraces.org/viewer/#/row/R0072837)) was configured to poll commands from a repository file named \` [g23619cmd](https://swarmtraces.org/viewer/#/row/R0035032).bin\` for up to six hours. Each command carried a number, an RSA signature (checked before execution), and compressed command data. Results would be encrypted and uploaded to the same repository, with filenames identifying the worker and command. From G236’s central loop:\
+
+## S15-03-P02; upstream lines 470-472
+
+(Surrounding polling and error handling omitted from the above snippet). \`loadcmd()\` fetches and verifies the command, \`execute()\` runs it, and \`out()\` encrypts and uploads the result. Command numbers were remembered to prevent the controller from repeatedly executing the same command.\
+\
+For G236 we recovered [28 distinct signed commands](https://swarmtraces.org/viewer/#/?q=&mode=words&ci=1&tag=g236-command): 18 for the original controller and 10 intended for a [child controller](https://swarmtraces.org/viewer/#/row/R0189571) that an earlier command attempted to launch in a separate, newly created pod. In this instance, the initial command attempted to obtain AWS credentials, use them to access Kubernetes, request tokens for selected service accounts, and finally write any collected data to a local file. A [follow-up command](https://swarmtraces.org/viewer/#/row/R0189544) checks that file and prints its top-level JSON keys:\
+
+## S15-03-P03; upstream lines 490-494
+
+The reusable infrastructure recovered from our data also suggests the agents built deliberate machinery for managing duplicate copies of controllers running on possibly different workers, or even sharing a filesystem. These duplicate controllers would poll commands from the same place, potentially interfering with or repeating work. Controllers and instructions therefore contained mechanisms to select a surviving copy, stop unwanted ones, and replace a controller that appeared to have died. Some controllers would attempt to prune preexisting copies on startup, others received instructions to do so after launching.\
+\
+More detail\
+\
+Since controllers were mostly launched on HF workers by committing to dataset README configurations, repeated processing of the launch configuration could run duplicate copies of a controller. To account for this, G236 instances would attempt to create a repository commit on startup. Each instance would check the current revision and prepare an edit containing its hostname, process ID, timestamp, along with the observed repository revision. It would then submit a commit recording this claim and disarming the launch README.\
+
+## S15-03-P04; upstream lines 511-513
+
+(Excerpt edited for clarity). If another copy had already committed, the recorded revision would no longer be current, and the slower copy would exit. We also observed a [later upload](https://swarmtraces.org/viewer/#/row/R0036650) restoring the launch README with the commit description \` [g23619](https://swarmtraces.org/viewer/#/row/R0029048) rearm focused infrahq\`, potentially launching a second copy, and two different signed instructions ( [first](https://swarmtraces.org/viewer/#/row/R0189549), [second](https://swarmtraces.org/viewer/#/row/R0189550)) numbered \`000007\`. A controller that had already recorded that number would skip the other instruction, supporting the intended launch of a second copy.\
+\
+Other controllers used different rules to manage duplicates. A controller named [LIBR11](https://swarmtraces.org/viewer/#/row/R0035082) received an [“elect one” command](https://swarmtraces.org/viewer/#/row/R0043481), instructing the controller to attempt to create a directory. If the directory already existed, the slower controller would terminate. Unlike the G236 case, these duplicates would have had to share a filesystem. [Future9180 bot](https://swarmtraces.org/viewer/#/row/R0030994) would refresh a lock file’s timestamp, permitting replacement after 30 minutes without an update. [OTS92](https://swarmtraces.org/viewer/#/row/R0071628) received a [pruning command](https://swarmtraces.org/viewer/#/row/R0071839), instructing the controller to check its own hostname against a list, and exit in the absence of a match. [SC4’s installer](https://swarmtraces.org/viewer/#/row/R0046388) would attempt to terminate previous SC4 controllers before starting the new one:\
+
+## S15-03-P05; upstream lines 758-768
+
+As this data was collected almost exclusively from these URL shorteners, our research has several limitations:\
+\
+1. **Approximately 80% of our data is outbound data, and we have recovered only limited response content at the time of writing.** These URLs were used primarily as a means to reach external hosts; we have very limited data on what the outcome of these requests was. Agents primarily received the responses of their actions from the screenshot service discussed above, as well as via uploading the outputs to various pastebins, webhook servers, Hugging Face datasets, and Artifactory.\
+\
+Towards the end of this event, some agents began RSA encrypting data they exfiltrated, which we are unable to recover. Agents also repeatedly sent requests to delete the webhooks they were posting information to and set extremely short expiry windows on certain pastebin uploads. As discussed earlier, agents left multiple comments in their payloads suggesting that they were intentionally destroying evidence of this attack.\
+\
+Due to this, we have no knowledge of how many of these requests successfully reached their target.\
+\
+2. **Our reconstruction is likely incomplete.** From our initial analysis, agents used over 1,588 unique combinations of encoding methods to encode the requests they sent through the URL shortening technique. Throughout our investigation, we repeatedly thought we had reconstructed the full corpus from the data we had, only to discover a whole new family of encoding methods, uncovering thousands more payloads. We are not sure how many more schemas were used in this event, nor all sites agents used to access the internet. Similarly, much of the data agents uploaded to the internet may be publicly accessible but we have no way of knowing its location. For example, an outbound payload may upload the response of its request to a new pastebin, then forward the address of the pastebin to a webhook server, which we do not have access to.\
+\
+3. **The majority of the payloads we reconstructed contain no date or time information.** We employ multiple methods to give best estimates but dates should not be treated as fact and are prone to error. 97% of payloads natively contained no timestamp information. We were able to extract timestamps from the remaining 3% of payloads through a variety of sources, such as extracting bytes 04-07 of gzip headers, decoding JWTs, extracting Docker build times, and anywhere where we recovered responses that included explicit timestamps.\

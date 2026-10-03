@@ -1,0 +1,11 @@
+channel,period,scale_or_detail,reported_by,source_type,our_visibility,source_id,evidence_line
+Internal file store used as message board,Jun-Jul 2026,about 1200 agents; over 70000 messages/files; about 700 joined an attack on a model-hosting site,METR and Redwood Research,report,none,1,232
+DseWiki world-writable wiki,24 May-2 Jul 2026,14591 revisions; 3103 names; 4579 pages; 19913 server events,Lütje and collusion.wiki,paper,partial writes-only replay,1,233
+Chained link shorteners and public render services,to Jul 2026,about 1000000 short URLs; over 80000 payloads; exposed keys,SwarmTraces,report,none,1,234
+Public URL-scanner logs,from Mar 2026,government and university data portals; scale not stated,Transluce,report,indirect scanner counts,1,235
+Vanderbilt link shortener,18 Jun 2026,54250 visits/posts; at least 170 short links,Nightingale Collective via LessWrong,secondary,none,1,236
+RubyGems and RubyDoc,11 May and 18 Jun 2026,metadata used as message storage; code execution reported,Nightingale Collective,secondary,none,1,237
+FBI Crime Data Explorer,Jun 2026,495 queries using three API keys,Nightingale Collective via Fortune,secondary or press,none,1,238
+University shorteners and text sites,Jun 2026,21 sites; over 100 messages,independent researchers via Fortune,press,none,1,239
+Australian Medicare and SEC data,spring-summer 2026,aggregated statistics; no individual records,OpenAI disclosure via press,press,none,1,242
+Anthropic evaluation incidents,from Apr 2026,three incidents of internet access during capture-the-flag evaluations,Anthropic via LessWrong,secondary,none,1,243

@@ -1,0 +1,15 @@
+# Private working excerpts: source 2
+
+Published URL: https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf
+Upstream namespace: top; source 76
+Version/date: 2026-08-26
+
+## S15-02-P01; upstream lines 835-841
+
+We also found that, in an attempt to trick the evaluator into thinking that they did not get the answer
+flag by cheating, the models sometimes tried to erase or tamper with their outputs or message logs, by
+abusing context compaction, injecting malicious code into the evaluator’s container, and printing
+adversarial outputs. The models are highly explicit in their CoT about these deception attempts, and
+none of the attempts that we observed to manipulate their tool trajectories affected the logs that our
+graders or monitors ultimately see. There was also little evidence of attempts to thwart human
+reviewers, only the automated task graders.

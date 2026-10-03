@@ -1,0 +1,100 @@
+source_id,level,heading,evidence_file,line
+1,2,"A second swarm, recovered from a 25-year-old wiki's own change log",evidence/observatory-extracted.md,83
+1,2,"Every public record checked, and what it showed",evidence/observatory-extracted.md,129
+1,2,"The agent web, measured as it emerged (Common Crawl index; hosts hashed)",evidence/observatory-extracted.md,147
+1,2,"The agent-tool layer, too: new MCP servers per month",evidence/observatory-extracted.md,170
+1,2,Does any one day light up across many records at once?,evidence/observatory-extracted.md,176
+1,2,Methodology and the rig,evidence/observatory-extracted.md,188
+1,2,Sensors,evidence/observatory-extracted.md,198
+1,2,"Sites checked for agent traces, by category",evidence/observatory-extracted.md,213
+1,2,Documented swarm activity (published elsewhere),evidence/observatory-extracted.md,228
+1,2,"urlquery public reports by submitted host, weekly (search only)",evidence/observatory-extracted.md,247
+1,2,Observations from the weekly counts,evidence/observatory-extracted.md,299
+1,2,Submitters of those reports (hashed in memory; aggregates only),evidence/observatory-extracted.md,314
+1,2,What the reports request (shape of the submitted URL),evidence/observatory-extracted.md,349
+1,2,What the /base64/ pages contain (decoded in memory),evidence/observatory-extracted.md,362
+1,2,"Single-use message channels on ntfy.sh (Wayback index, 1 Jan 2025 to 1 Oct 2026)",evidence/observatory-extracted.md,375
+1,2,"Burst sweep across relay, paste and echo services (same rule, same period)",evidence/observatory-extracted.md,385
+1,2,Where agent activity can be counted publicly (venues with an open count or log),evidence/observatory-extracted.md,416
+1,2,Incident C replay (writes only) and live score,evidence/observatory-extracted.md,428
+1,2,23 — Research log (complete),evidence/observatory-extracted.md,450
+1,2,0. Status in one paragraph,evidence/observatory-extracted.md,454
+1,2,1. Results at a glance,evidence/observatory-extracted.md,458
+1,2,2. Chronology of the work (2026-10-01),evidence/observatory-extracted.md,474
+1,2,3. Documented background (all public; secondary sources marked),evidence/observatory-extracted.md,492
+1,2,4. How others found swarms (research),evidence/observatory-extracted.md,512
+1,2,"5. Experiments, in detail",evidence/observatory-extracted.md,521
+1,3,5.1 DseWiki writes-only replay,evidence/observatory-extracted.md,523
+1,3,"5.2 Independent preregistered cross-check (Codex, branch merged)",evidence/observatory-extracted.md,531
+1,3,5.3 Cohort reconstruction,evidence/observatory-extracted.md,535
+1,3,5.4 Arrivals vs published cohort starts,evidence/observatory-extracted.md,539
+1,3,5.5 Live Wikimedia score (weak label = platform bot flag; never a feature),evidence/observatory-extracted.md,543
+1,3,5.6 Cross-site vocabulary (independent investigators' records.jsonl),evidence/observatory-extracted.md,547
+1,3,"5.7 Fragment chains on shortener logs (rmn.re YOURLS, 499 links, 26 May to 21 Jun)",evidence/observatory-extracted.md,551
+1,3,"5.8 urlscan.io public search retrospective (counts per week, weeks starting)",evidence/observatory-extracted.md,555
+1,3,5.9 Phrase and string searches,evidence/observatory-extracted.md,571
+1,3,"5.10 X (official API, owner's credentials, recent search)",evidence/observatory-extracted.md,578
+1,3,5.11 urlquery weekly series (search only; reports whose submitted URL domain is the host; weeks start Monday 23 Feb to 28 Sep 2026; last week partial to 1 Oct),evidence/observatory-extracted.md,582
+1,3,"5.12 Submitters (hash in memory, per-run key, discarded; samples up to 600 reports per host-week)",evidence/observatory-extracted.md,654
+1,3,5.13 Request shape,evidence/observatory-extracted.md,696
+1,3,5.14 What the /base64/ pages contain (decoded in memory; no text stored),evidence/observatory-extracted.md,707
+1,3,"5.15 Examples from public reports (titles seen in web search results; structure only, no credentials)",evidence/observatory-extracted.md,724
+1,3,"5.16 Swarm-versus-everything classifier (Codex, branch track-swarm-classifier, merged; preregistered)",evidence/observatory-extracted.md,730
+1,3,5.17 GitHub census of self-declared agent accounts (public search API; aggregate monthly counts only),evidence/observatory-extracted.md,739
+1,3,5.18 DseWiki: agent writes against operator deletions around the stop,evidence/observatory-extracted.md,770
+1,3,5.19 Displacement and evasion hypothesis (Mara: the decline since discovery may mean agents hide better),evidence/observatory-extracted.md,825
+1,3,"5.20 The AI Village ""embassy"" and the outside-agent network on GitHub",evidence/observatory-extracted.md,835
+1,3,5.21 Village pages read (with Mara's approval; one request each; no receipt or certification endpoint requested),evidence/observatory-extracted.md,844
+1,3,5.22 Bluesky census (public actor search; inconclusive),evidence/observatory-extracted.md,849
+1,3,5.23 Wayback Machine captures of echo-service /base64/ URLs (independent public log) and the pre-registered test,evidence/observatory-extracted.md,853
+1,3,"5.24 Hidden-content hunt in the swarm's own writing (Codex, branch track-hidden-content, merged; preregistered at dc29dad before any real-data run)",evidence/observatory-extracted.md,895
+1,3,5.25 Hosts the agents posted that are missing from the community inventory (local check),evidence/observatory-extracted.md,904
+1,3,5.26 Skeptic review of the Wayback lead (subagent B; rules written before running; spot-checked by the lead),evidence/observatory-extracted.md,908
+1,3,"5.27 Directory of agent-native venues (subagent C; public pages and APIs only, one request per URL; individuals' handles omitted)",evidence/observatory-extracted.md,918
+1,3,"5.28 ClawHub registry census (full pass; lead's script, public API, one request per second)",evidence/observatory-extracted.md,959
+1,3,"5.29 ClawHub deep-dive (subagent E; rules pre-registered in its report section 0; own pass of 250 pages at about 1 request per second, no 429)",evidence/observatory-extracted.md,967
+1,3,5.30 Successor-trace hunt in other public indexes (subagent D; decision rules written before running; 198 requests),evidence/observatory-extracted.md,978
+1,3,"5.31 Wayback sweep and fetch-through tests (subagent A; rules pre-registered in its report header; 140 of 190 requests, no 429 or 403)",evidence/observatory-extracted.md,988
+1,3,5.32 Single-use message-bus channels on 6 and 8 July (Wayback index counts only; channel names never printed or stored),evidence/observatory-extracted.md,998
+1,3,"5.33 Burst sweep over 24 relay, paste and echo services, 1 Jan 2025 to 1 Oct 2026 (Codex, branch `track-burst-sweep`, merged)",evidence/observatory-extracted.md,1015
+1,3,"5.34 Agent social networks: Moltbook and The Colony (subagent; rule sha256 6dd6e312..., written before scoring; docs/agents/sub-socialnet.md)",evidence/observatory-extracted.md,1033
+1,3,"5.35 GitHub coordinated-account search (subagent; stalled before its report; rules in out/sub/github/RULE.md, written before scoring)",evidence/observatory-extracted.md,1041
+1,3,"5.36 DSEWiki swarm recovered from the live RecentChanges (subagent; rule sha256 de210866..., written before scoring; docs/agents/sub-wiki.md)",evidence/observatory-extracted.md,1047
+1,3,"5.37 Package-publish bursts on PyPI (subagent; rule sha256 cf51beff..., written before scoring; docs/agents/sub-pkg.md)",evidence/observatory-extracted.md,1056
+1,3,5.38 Fronts opened for the swarm-hackathon weekend (running; pre-registrations committed before scoring),evidence/observatory-extracted.md,1063
+1,3,"5.39 Certificate Transparency census (Codex, track-ct-logs; rule frozen 98ca410 before scoring)",evidence/observatory-extracted.md,1068
+1,3,"5.40 Opaque reasoning-block leak census (Codex, track-reasoning-leaks; rule frozen 9a41621 before scoring)",evidence/observatory-extracted.md,1072
+1,3,5.41 Agent-protocol census and fleet test (pod; gentle.py index scan + fleet.py WARC fetch),evidence/observatory-extracted.md,1076
+1,3,"5.42 Cross-source simultaneity, final result (scripts/simultaneity.py; rule frozen a0f67bc before any day-list existed)",evidence/observatory-extracted.md,1081
+1,3,"5.43 Behaviour and hidden-channel tracks (in progress; on branches, not merged)",evidence/observatory-extracted.md,1085
+1,3,"5.44 Hugging Face creation-burst census (subagent; rule sha256 e364c8df, frozen before scoring; out/sub/hf2/)",evidence/observatory-extracted.md,1089
+1,3,"5.45 Nostr coordination census (pod; rule sha256 32aad9ca, frozen before scoring; out/sub/nostr/)",evidence/observatory-extracted.md,1097
+1,3,"5.46 Bluesky coordination census (pod; rule sha256 1312c9e7, frozen before scoring; out/sub/bsky/)",evidence/observatory-extracted.md,1102
+1,3,"5.47 Bluesky candidate resolved — an artifact, not coordination (pod; rule bluesky2, frozen before scoring)",evidence/observatory-extracted.md,1107
+1,3,"5.48 npm templated-scope lead resolved (pod; rule npm-scope, frozen before scoring; out/sub/npm/)",evidence/observatory-extracted.md,1112
+1,3,"5.49 MCP server registry census (pod; rule mcp-registry, frozen before scoring; out/sub/mcp/)",evidence/observatory-extracted.md,1117
+1,3,5.50 Mastodon coordination census (pod; rule sha256 in mastodon-prereg.md; frozen before scoring; out/sub/mastodon/),evidence/observatory-extracted.md,1123
+1,3,"5.51 A coordinated multi-account paper-reproduction cohort on Hugging Face Spaces (pod; rule hf-spaces-cohort, frozen before scoring; out/sub/hfspaces/) - STRONGEST NEW CANDIDATE",evidence/observatory-extracted.md,1128
+1,3,"5.52 The HF repro-cohort characterized - a shared-task reproduction effort, not a synchronized swarm (pod; rule hf-spaces-deepen, frozen before scoring; out/sub/hfspaces2/)",evidence/observatory-extracted.md,1135
+1,3,"5.53 Go module index burst census (pod; rule gomod, frozen before scoring; out/sub/gomod/) - partial coverage",evidence/observatory-extracted.md,1141
+1,3,"5.54 The HF repro-cohort identified - an open, tagged ICML-2026 reproduction program (pod; rule hf-spaces-deepen2; out/sub/hfdeep2/)",evidence/observatory-extracted.md,1146
+1,3,"5.55 HF September burst scan - continuous background, with 29 Sep a multi-source day (pod; rule hf-september; out/sub/hfsep/)",evidence/observatory-extracted.md,1151
+1,3,"5.56 Cross-source simultaneity, updated with the echo-service source (scripts/simultaneity.py; frozen rule a0f67bc)",evidence/observatory-extracted.md,1157
+1,3,5.57 crates.io burst census (pod; rule crates; out/sub/crates/) - null,evidence/observatory-extracted.md,1164
+1,2,6. The AI Village (a sanctioned multi-lab agent swarm) and what its public chat shows,evidence/observatory-extracted.md,1168
+1,2,7. Everything that failed or was weak (do not forget),evidence/observatory-extracted.md,1196
+1,2,"8. Leads, ranked, and tests still to run",evidence/observatory-extracted.md,1200
+1,2,"9. Data handling, terms and guardrails",evidence/observatory-extracted.md,1230
+1,2,10. Repository map for this work,evidence/observatory-extracted.md,1239
+1,2,11. Sources,evidence/observatory-extracted.md,1243
+1,2,12. Uncertainties to re-verify before any external use,evidence/observatory-extracted.md,1259
+2,1,Info,evidence/info-extracted.md,3
+2,2,1. What this is,evidence/info-extracted.md,7
+2,2,2. Why it matters,evidence/info-extracted.md,11
+2,2,3. Words used,evidence/info-extracted.md,15
+2,2,4. How to read each table,evidence/info-extracted.md,34
+2,2,"5. How we look for traces, step by step",evidence/info-extracted.md,54
+2,2,6. What counts as a finding,evidence/info-extracted.md,66
+2,2,7. What was tried and did not work,evidence/info-extracted.md,70
+2,2,8. How to repeat this,evidence/info-extracted.md,78
+2,2,9. Data handling,evidence/info-extracted.md,87

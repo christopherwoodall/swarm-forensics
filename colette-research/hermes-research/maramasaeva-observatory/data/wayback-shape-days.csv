@@ -1,0 +1,10 @@
+day,host,captures,decoded,swarm_style_share,tester_style_share,verdict,source_id,evidence_line
+20260518,httpbin.org,20,18,0.50,0.39,too few pages,1,881
+20260528,httpbin.org,39,31,0.65,0.16,SWARM-LIKE,1,882
+20260602,httpbin.org,14,11,0.18,0.45,too few pages,1,883
+20260706,httpbin.org,66,59,0.93,0.03,SWARM-LIKE,1,884
+20260909,httpbin.org,39,39,0.00,0.00,MIXED,1,885
+20260929,httpbin.org,23,23,0.83,0.09,SWARM-LIKE,1,886
+20260930,httpbin.org,11,11,0.55,0.00,too few pages,1,887
+20260604,pie.dev,214,214,0.00,1.00,TESTER-LIKE,1,888
+20260602,pie.dev,18,18,0.06,0.94,too few pages,1,889

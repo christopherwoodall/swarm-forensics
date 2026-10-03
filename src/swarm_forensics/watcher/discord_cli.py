@@ -19,7 +19,7 @@ def main(argv=None, *, token=None, fetch=None, now=time.time):
     parser = argparse.ArgumentParser(description="Read-only Discord channel source archive")
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
     commands = parser.add_subparsers(dest="command", required=True)
-    for name in ("poll", "pending", "ack", "status", "monitor"):
+    for name in ("poll", "pending", "ack", "status", "monitor", "audit"):
         command = commands.add_parser(name)
         if name in ("poll", "monitor"):
             command.add_argument("--max-pages", type=int, default=20)
@@ -30,6 +30,8 @@ def main(argv=None, *, token=None, fetch=None, now=time.time):
             command.add_argument("--limit", type=int, default=50)
         if name == "ack":
             command.add_argument("--cursor", type=int, required=True)
+        if name == "audit":
+            command.add_argument("--events", type=Path)
     args = parser.parse_args(argv)
     try:
         with Archive(args.db) as archive:
@@ -62,6 +64,8 @@ def main(argv=None, *, token=None, fetch=None, now=time.time):
                 value = archive.pending(args.limit)
             elif args.command == "ack":
                 value = archive.ack(args.cursor)
+            elif args.command == "audit":
+                value = archive.audit(args.events or args.db.parent / "EVENTS.jsonl")
             else:
                 value = archive.status()
         print(json.dumps(value, ensure_ascii=False, sort_keys=True))

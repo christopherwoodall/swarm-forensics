@@ -10,7 +10,7 @@ import time
 import urllib.error
 import urllib.request
 from contextlib import contextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 CHANNEL = "1430962817045106792"
@@ -189,8 +189,15 @@ class Archive:
         count = self.connection.execute(
             "SELECT COUNT(*) FROM events WHERE channel_id=? AND message_id>? "
             "AND message_id<=?", (CHANNEL, processed, read)).fetchone()[0]
+        source_count = self.connection.execute(
+            "SELECT COUNT(*) FROM events WHERE channel_id=?", (CHANNEL,)).fetchone()[0]
+        captured_at = self.connection.execute(
+            "SELECT MAX(captured_at) FROM pages").fetchone()[0]
         return {"guild_id": GUILD, "channel_id": CHANNEL, "read_cursor": read,
                 "processed_cursor": processed, "pending_count": count,
+                "source_count": source_count,
+                "last_capture_at": datetime.fromtimestamp(captured_at, timezone.utc).isoformat()
+                if captured_at is not None else None,
                 "scan_before": before, "scan_high": high,
                 "coverage_start": coverage, "gap": before is not None,
                 "threads_included": False}
@@ -261,6 +268,47 @@ class Archive:
                 f"https://discord.com/channels/{GUILD}/{CHANNEL}/{event['id']}")
         return {**state, "events": events, "has_more": len(rows) > limit,
                 "next_cursor": int(events[-1]["id"]) if events else state["processed_cursor"]}
+
+    def audit(self, events_path):
+        """Verify private ledger provenance without exposing message content."""
+        seen = set()
+        with Path(events_path).open(encoding="utf-8") as stream:
+            for line in stream:
+                try:
+                    record = json.loads(line, object_pairs_hook=unique_object)
+                except (ValueError, UnicodeError):
+                    raise SourceError("invalid private event JSON") from None
+                if not isinstance(record, dict):
+                    raise SourceError("invalid private event record")
+                source_id = str(record.get("source_message_id", ""))
+                event_id = record.get("id", record.get("event_id"))
+                expected_id = f"discord:{CHANNEL}:{source_id}:{record.get('type', '')}"
+                if (not valid_id(source_id) or event_id != expected_id or event_id in seen
+                        or record.get("channel_id") != CHANNEL
+                        or record.get("guild_id") != GUILD):
+                    raise SourceError("private event provenance mismatch")
+                seen.add(event_id)
+                source = self.connection.execute(
+                    "SELECT payload FROM events WHERE channel_id=? AND message_id=?",
+                    (CHANNEL, int(source_id))).fetchone()
+                if source is None:
+                    raise SourceError("private event provenance missing source")
+                original = json.loads(source[0])
+                if (record.get("author_id") != original["author"]["id"]
+                        or record.get("timestamp") != original["timestamp"]
+                        or record.get("source_quote") != original["content"]
+                        or record.get("source_url") !=
+                        f"https://discord.com/channels/{GUILD}/{CHANNEL}/{source_id}"):
+                    raise SourceError("private event provenance mismatch")
+                related = record.get("source_message_ids", [source_id])
+                if not isinstance(related, list) or source_id not in [str(x) for x in related]:
+                    raise SourceError("private event provenance invalid links")
+                for linked in related:
+                    if not valid_id(str(linked)) or self.connection.execute(
+                        "SELECT 1 FROM events WHERE channel_id=? AND message_id=?",
+                        (CHANNEL, int(linked))).fetchone() is None:
+                        raise SourceError("private event provenance missing related source")
+        return {**self.status(), "verified_event_count": len(seen)}
 
     def change_token(self, *, now, retry_seconds=900):
         if (type(now) not in (float, int) or not math.isfinite(now) or now < 0

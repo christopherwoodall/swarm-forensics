@@ -28,6 +28,8 @@ def _rows(archive: zipfile.ZipFile, name: str) -> Iterator[dict[str, str]]:
 
 def arquivo_event_rows(uscan_zip: Path) -> Iterator[dict[str, str]]:
     """Stream normalized event rows for the arquivo reservoir."""
+    from swarm_forensics.traces.taskfamilies import task_family_for
+
     with zipfile.ZipFile(uscan_zip) as archive:
         names = sorted(n for n in archive.namelist() if n.endswith("arquivo-captures.csv"))
         for name in names:
@@ -50,7 +52,8 @@ def arquivo_event_rows(uscan_zip: Path) -> Iterator[dict[str, str]]:
                     target=url[:200],
                     artifact="",
                     operation="archive_capture",
-                    technique_family="nonce_grammar" if nonce else "unknown",
+                    technique_family="nonce_grammar" if nonce else "no_visible_mechanism",
+                    task_family=task_family_for(url),
                     raw_ref=(
                         f"{USCAN_BASE}{folder}/arquivo-captures.csv:"
                         f"record_number={row.get('record_number')}"
@@ -78,7 +81,7 @@ def uscan_response_rows(uscan_zip: Path) -> Iterator[dict[str, str]]:
                     target=source[:200],
                     artifact=f"response:{row.get('file')}",
                     operation="fresh_response_read",
-                    technique_family="unknown",
+                    technique_family="content_not_in_release",
                     raw_ref=f"{USCAN_BASE}{folder}/sources.csv:file={row.get('file')}",
                     notes=short(
                         f"http_status={row.get('http_status')} "

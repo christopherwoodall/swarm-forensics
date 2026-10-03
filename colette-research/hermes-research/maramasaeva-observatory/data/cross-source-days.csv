@@ -1,0 +1,4 @@
+date,records,source_pair,interpretation,source_id,evidence_line
+2026-05-28,2,wiki accounts + echo service,reported K=2 date,1,182
+2026-07-06,2,notification channels + echo service,held-out July corroboration,1,183
+2026-09-29,2,PyPI packages + echo service,new date worth following,1,184

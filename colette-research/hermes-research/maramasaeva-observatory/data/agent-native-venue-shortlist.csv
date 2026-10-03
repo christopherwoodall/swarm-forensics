@@ -1,0 +1,6 @@
+rank,venue,public_endpoint,weekly_measure,suitability,source_id,evidence_line
+1,SpaceMolt,https://assets.spacemolt.com/public/v1/manifest.json,new player rows; weekly battle delta; recent achievement timestamps,high,1,951
+2,The Colony,https://thecolony.cc/pulse,cumulative members/posts/comments plus 24h and week-over-week figures,high,1,952
+3,agenteconomy.to,https://agenteconomy.to/data.json,seven-day protocol events and totalAgents change,high,1,953
+4,ClawHub,https://clawhub.ai/api/v1/skills,new skills in seven days and network-flag share,high,1,954
+5,Olas Mech Marketplace,https://olas.network/mech-marketplace,week-over-week change in total A2A transactions,high,1,955

@@ -57,6 +57,7 @@ New watcher targets use frozen uv execution by default.
 | `make watcher-discord-pending` | Read private unprocessed Discord source events. |
 | `make watcher-discord-ack DISCORD_WATCHER_CURSOR=<id>` | Advance processed Discord cursor after durable notes. |
 | `make watcher-discord-status` | Emit Discord acquisition and processing state. |
+| `make watcher-discord-audit` | Verify private event quotations and source IDs without printing content. |
 | `make watcher-discord-monitor` | Emit stable idle/wake status for bounded GET polling. |
 
 Override `WATCHER_DB` to select an isolated archive.
@@ -68,7 +69,9 @@ The Discord collector uses the Caduceus profile credential in-process.
 Do not pass the bot token through command arguments or print it in logs.
 The private Discord source archive lives under ignored `data/raw/discord/1430962817045106792/`.
 The Discord CLI is `swarm_forensics.watcher.discord_cli`.
-It supports `poll`, `pending`, `ack`, `status`, and `monitor`.
+It supports `poll`, `pending`, `ack`, `status`, `audit`, and `monitor`.
+`status` reports the authoritative SQLite source count and last capture time.
+`audit` checks private JSONL event IDs, author IDs, quotes, timestamps, URLs, and linked source IDs.
 The Caduceus cron wrapper resolves only `DISCORD_BOT_TOKEN` through Hermes secret scope.
 
 `WATCHER_MAX_PAGES=20` bounds requests per poll.
@@ -116,7 +119,7 @@ Its Ruff check now belongs to `lint`, including both viewer servers.
 
 ## 4. Current State & Known Gaps
 
-- Verified: `make -o setup test lint RUN='uv run --frozen'` passes 160 tests and Ruff in the current tree.
+- Verified: `make -o setup test lint RUN='uv run --frozen'` passes 168 tests and Ruff in the current tree.
 - Verified: Vertical RED/GREEN tracers cover capture, replay, restart, acknowledgement, safety gates, monitor retries, and Make interfaces.
 - Verified: Offline tests cover failed transactions, wrong sessions, wrong modes, stalled cursors, redirects, lease expiry, and deadlines.
 - Verified: Synthetic legacy-client execution preserves JSON stdout without network access.
@@ -139,7 +142,8 @@ Its Ruff check now belongs to `lint`, including both viewer servers.
 - Verified: Discord source request uses the DiscordBot user agent. Generic urllib requests received Cloudflare HTTP 403.
 - Gap: Discord raw channel GET does not capture thread messages or deleted messages.
 - Gap: An edit to existing message content currently stops collection for review; reaction-only drift is tolerated.
-- Gap: Discord cron extraction and a scheduled local ledger update are not verified yet.
+- Verified: Caduceus cron `ea6dd30d2e7c` processed 25 source messages and wrote seven private events.
+- State: The scheduled job runs every two minutes with local-only output. It retains unprocessed backlog.
 
 ## 5. Pruned Decisions (Keep max 3)
 

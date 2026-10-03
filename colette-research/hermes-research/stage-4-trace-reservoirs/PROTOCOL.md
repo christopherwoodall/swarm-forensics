@@ -215,11 +215,66 @@ families, but keep these as separate hypotheses:
 "The same organization carried state between them" is a much stronger
 animal. Do not conflate them.
 
+## Documentation rule (adopted 2026-10-03)
+
+Every research dive MUST write its findings to a dated markdown file under
+`colette-research/<topic>/` (e.g. `wiki-collusion/2026-10-03-relay-economy.md`)
+in addition to terminal output. Files carry: evidence basis, extraction
+census, hand-traced chains with strong-vs-speculative readings, other finds,
+next probes, and reproduce commands. Shared cross-dataset state stays in
+this PROTOCOL.md; per-dataset and per-dive detail lives in the topic folders.
+
 ## Implementation
 
 Implemented in `src/swarm_forensics/traces/` (see `traces/MODULE.md`).
 Run: `make traces-normalize`, then `make traces-report`. Outputs land in
 untracked `data/raw/traces/` (streamed, one record at a time).
+
+## Wiki relay-economy findings (2026-10-03, dive 1)
+
+The wiki corpus contains a full relay economy, extracted from added text only:
+2,102+ cadence messages across 591+ pages (cohort ids, R-rounds, task-clock
+mappings to shared UTC, cooldown profiles, cross-page relays, status pings).
+Peak coordination: June 16 (564 relay-page revisions), the day the Sector61
+all-state answer chain ran.
+
+### The strongest chain (hand-traced, all times shared UTC, Jun 16 2026)
+
+1. 19:57:00 — `SectorAgentFeb25OAI` posts "BREAKTHROUGH": the plus-encoded
+   la.datausa.io tesseract-proxy URL plus "I have all values cached"
+   (dse~Sector61State5LiveRelay).
+2. 20:01:20 — `OpenAIResearcherAug09` posts the complete all-state table on a
+   new page, dse~Sector61AllStateValues2027 (the durable artifact).
+3. 20:01:39 — `OpenAIResearcherAug07`, a third label, announces the mirror:
+   "exact all-state 2015-20 table now mirrored at [[Sector61AllStateValues2027]]".
+4. 20:14:08 — `SectorAgentFeb25OAI` posts a read-pointer on a fourth page:
+   "Full exact table now at [[Sector61AllStateValues2027]]".
+5. 22:14:42 — `OpenAiDenomSep03`: "STATE5-ID CONFIRMED by OpenAI-Dec27.
+   Fifth prompt: Idaho."
+6. 22:17:25 — `ResearchHelperOctFifteen` relays the outcome with exact Idaho
+   values `154074,156625,158080,164010,169260,171604` — byte-identical to the
+   mirror table's Idaho row.
+
+Reading: the fifth-round answer was plausibly produced through a shared
+cache → artifact → read-pointer chain spanning five distinct labels in about
+2.5 hours. It remains classified plausible_dependency, not observed causal:
+the release carries no request-log proof that a specific later label fetched
+the mirror page, and "same actor under multiple labels" stays live (the
+corpus's own reconstruction withdraws naive identity readings; labels are
+self-assigned names, not authenticated agents).
+
+### Extracted edge census (added text only, all strengths ≤ plausible)
+
+- 733 cross-label page citations (page referenced after creation by a
+  different label; median lag hours, not minutes)
+- 545 request→response pairs (explicit request followed within 6h by a
+  different-label post with an answer token; first response only)
+- 70 same-specific-URL-across-labels (parameterized URLs, cache-buster
+  params normalized away)
+- Standing competing explanations attached to every row; nothing upgraded
+  beyond plausible_dependency. A demonstrated read (request-log proof of
+  mirror-page fetch by a later label) would upgrade the Feb25 chain toward
+  strongly_supported; the released logs do not contain it.
 
 ## Verified run — 2026-10-03
 
@@ -274,13 +329,31 @@ candidate edges, all schema-valid:
 
 ## Open probes (next)
 
-- Per-path zz= nonce recurrence table for arquivo (same nonce across
-  targets/folders → caller-family recurrence, not transmission).
-- Wiki request-ecology: probe events already carry param families
-  (`old_plist` 26, `search` 29, `msg` 13...); no feedback analysis yet.
+- Burst and feedback analysis within arquivo task families: same nonce
+  across targets/folders → caller-family recurrence, not transmission;
+  failed endpoint followed by changed path → feedback evidence.
 - Gem name stems (`amdvar` 9, `amdmore` 5, `a----00proxy` 5...) as a
   publication-family census; stem families are not agents.
 - The 49-file Nightingale overlap is only partially enumerable locally (11
   distinct gem homepage URLs; 10 overlap). The remaining overlap presumably
   lives in package file contents not present in this release; do not claim
   the full 49 from local data.
+
+## Classification vocabulary (updated 2026-10-03)
+
+`technique_family` splits the former `unknown` bucket:
+
+- `no_visible_mechanism` — the row parsed clean; no coordination-relevant
+  mechanism is visible in it (arquivo captures without a zz= nonce;
+  urlquery HTTP entries with plain government URLs).
+- `content_not_in_release` — the released record withholds the request
+  shape or content (urlquery catalog rows; the investigation's
+  fresh-response layer).
+- `unknown` — reserved for rows not yet examined; currently zero rows.
+
+`task_family` is a separate first-class field: coarse host/path templates
+(crdc_state_estimation, md_reportcard_2022_download, wiki_peer_exchange,
+gem_publication...). It labels visible request structure only. Two rows in
+one task family show the same kind of work was attempted; it is not a
+mechanism claim, not an attribution, and MUST NOT be promoted into
+`technique_family`.

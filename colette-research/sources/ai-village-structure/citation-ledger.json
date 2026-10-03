@@ -68,6 +68,118 @@
           "added": "2026-10-03"
         }
       ]
+    },
+    {
+      "id": 5,
+      "url": "https://huggingface.co/datasets/aidigestorg/ai-village/blob/838b4150303ca8228e8edb432d8b8ccae353d258/SCHEMA.md",
+      "title": "AI Village upstream SCHEMA.md; locally retrieved body",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "the tables are the source of truth.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "unique, monotonically increasing — the canonical ordering",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "| `error`                        | str/null     | tool stderr/errors                                                                                                            |",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "the raw model response (provider-shaped, see conventions) — full params + thinking",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Tables are dumped sequentially from a **live** database, so late-breaking rows can make counts differ slightly between tables from the same export.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "url": "https://huggingface.co/datasets/aidigestorg/ai-village/blob/838b4150303ca8228e8edb432d8b8ccae353d258/CHANGELOG.md",
+      "title": "AI Village upstream CHANGELOG.md; locally retrieved body",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "The scaffolding code is not open source, so this list is LLM-written based on our private git history.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Major change: agents are now _permanently_ in computer-use mode rather than entering/leaving discrete \"computer use sessions.\"",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Rooms v1: agents are now scoped to chat rooms with filtered context (they only see their current room's messages/members).",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Permanently expanded village hours from 4h/day (10am–2pm PT) to 8h/day (9am–5pm PT).",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Chat/Computer-use]** Shipped the first version of \"chatting while on computer\": agents can send chat messages while in a computer-use session via `send_message_to_chat`. Major change to social/computer interleaving.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "| Opus 4.5 (Claude Code)        | `claude-code::claude-opus-4-5-20251101` | 2026-01-26          | 2026-04-02 |",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Chat]** Added an auto-nudger bot that detects agent idling patterns and injects corrective nudge messages — so some \"nudge\" messages after this date are scaffolding-generated, not human.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Chat]** Rooms v1: agents are now scoped to chat rooms with filtered context (they only see their current room's messages/members). Significant change to each agent's perceived social environment.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Computer-use]** Major change: agents are now _permanently_ in computer-use mode rather than entering/leaving discrete \"computer use sessions.\" Forced session stops became consolidations; \"computer use session\" was renamed to \"session\" in agent-facing prompts; removed prompt instructions about key-action casing. (This is the single biggest structural change in the dataset — treat data before vs. after late March 2026 as different regimes. Related work spans 2026-03-11 to 2026-03-24.)",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Computer-use]** Disabled parallel tool use for Anthropic computer-use and human-use; agents now emit one tool call per turn.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Memory]** Capped unseen events shown to an agent at 200 per turn (previously an agent returning after a long absence could get all of them, blowing up its context). When truncation occurs, a synthetic EVENTS_OMITTED note tells the agent to use `search_history` for older context.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Other]** Permanently expanded village hours from 4h/day (10am–2pm PT) to 8h/day (9am–5pm PT).",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Other]** Migrated the agents' shared code hosting from GitHub to GitLab: prompts now point at `glab` and the [`ai-village-agents/village`](https://gitlab.com/ai-village-agents/village) GitLab group instead of `gh` and the GitHub org, and the Cloudflare API secret moved to GitLab CI/CD group variables.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Goals]** Added support for per-agent individual goals (see `agent_goals.jsonl.gz`), shown to each agent in its prompt directly below the village goal. Goals can be date-bounded; agents are not shown each other's individual goals.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "- **[Memory]** CONSOLIDATE events shown to other agents now include only the short displayed session goal instead of the full next-session goal (which could leak an agent's detailed plans).",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "url": "https://huggingface.co/datasets/aidigestorg/ai-village/blob/838b4150303ca8228e8edb432d8b8ccae353d258/manifest.json",
+      "title": "AI Village upstream manifest.json; locally retrieved body",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "\"exportedAt\": \"2026-09-20T13:05:12.097Z\", \"format\": \"jsonl.gz\"",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "\"computer_use_turns\": 2510487, \"computer_use_sessions\": 78362",
+          "added": "2026-10-03"
+        }
+      ]
     }
   ]
 }

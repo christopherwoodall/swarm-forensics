@@ -26,6 +26,7 @@ from swarm_forensics.traces.reservoirs import (
 )
 from swarm_forensics.traces.schema import validate_edge, validate_event
 from swarm_forensics.traces.wiki import wiki_event_rows
+from swarm_forensics.traces.wiki_exchange import all_exchange_edges, exchange_event_rows
 
 SOURCES = Path("colette-research/sources")
 WIKI_ZIP = SOURCES / "rubygems-wiki-collusion/full-wiki-logs.zip"
@@ -44,6 +45,7 @@ def iter_all_events() -> Iterator[dict[str, str]]:
     yield from uscan_response_rows(USCAN_ZIP)
     yield from gem_event_rows(RECORDS_GZ)
     yield from wiki_event_rows(WIKI_ZIP)
+    yield from exchange_event_rows(WIKI_ZIP)
 
 
 def iter_all_edges() -> Iterator[dict[str, str]]:
@@ -51,6 +53,7 @@ def iter_all_edges() -> Iterator[dict[str, str]]:
     yield from gem_wiki_overlap_edges(RECORDS_GZ, LINKS_GZ)
     yield from urlquery_citation_edges(WIKI_ZIP, UQ_ZIP)
     yield from shared_relay_edges(RECORDS_GZ, LINKS_GZ)
+    yield from all_exchange_edges(WIKI_ZIP)
 
 
 def run(out_dir: Path = OUT_DIR) -> dict[str, int]:

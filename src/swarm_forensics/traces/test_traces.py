@@ -11,36 +11,31 @@ from swarm_forensics.traces.schema import (
 )
 
 
+def _event(**overrides):
+    """Build a minimal valid event row for tests, with overrides."""
+    base = {
+        "eid": "e-test",
+        "dataset": "wiki",
+        "time": "2026-05-26T16:43:26Z",
+        "actor_hint": "investigator",
+        "action": "write",
+        "target": "wiki:dse~TestAgentResearchLinks",
+        "artifact": "page:dse~TestAgentResearchLinks",
+        "operation": "save",
+        "technique_family": "wiki_write",
+        "task_family": "wiki_page_write",
+        "raw_ref": "full-wiki-logs.zip!revisions.jsonl:dse~TestAgentResearchLinks@1",
+    }
+    base.update(overrides)
+    return mk_event(**base)
+
+
 class SchemaTests(unittest.TestCase):
     def test_valid_event_passes(self):
-        row = mk_event(
-            eid="e-1",
-            dataset="wiki",
-            time="2026-05-26T16:43:26Z",
-            actor_hint="investigator",
-            action="write",
-            target="wiki:dse~TestAgentResearchLinks",
-            artifact="page:dse~TestAgentResearchLinks",
-            operation="save",
-            technique_family="wiki_write",
-            raw_ref="full-wiki-logs.zip!revisions.jsonl:dse~TestAgentResearchLinks@1",
-        )
-        self.assertEqual(validate_event(row), [])
+        self.assertEqual(validate_event(_event()), [])
 
     def test_invalid_dataset_and_action_are_caught(self):
-        row = mk_event(
-            eid="e-2",
-            dataset="twitter",
-            time="",
-            actor_hint="unattributed",
-            action="delete",
-            target="t",
-            artifact="a",
-            operation="op",
-            technique_family="unknown",
-            raw_ref="ref",
-        )
-        problems = validate_event(row)
+        problems = validate_event(_event(dataset="twitter", action="delete"))
         self.assertTrue(any("dataset" in p for p in problems))
         self.assertTrue(any("action" in p for p in problems))
 
@@ -60,20 +55,44 @@ class SchemaTests(unittest.TestCase):
         self.assertIn("causal_strength", problems[0])
 
     def test_actor_hint_enum_is_enforced(self):
-        row = mk_event(
-            eid="e-3",
-            dataset="wiki",
-            time="t",
-            actor_hint="robot",
-            action="write",
-            target="t",
-            artifact="a",
-            technique_family="wiki_write",
-            operation="save",
-            raw_ref="ref",
-        )
-        problems = validate_event(row)
+        problems = validate_event(_event(actor_hint="robot"))
         self.assertTrue(any("actor_hint" in p for p in problems))
+
+    def test_split_unknown_labels_are_valid(self):
+        self.assertEqual(validate_event(_event(technique_family="no_visible_mechanism")), [])
+        self.assertEqual(validate_event(_event(technique_family="content_not_in_release")), [])
+
+
+class TaskFamilyTests(unittest.TestCase):
+    def test_crdc_templates(self):
+        from swarm_forensics.traces.taskfamilies import task_family_for
+
+        self.assertEqual(
+            task_family_for("https://civilrightsdata.ed.gov/api/v1.0/GetStateEstimation?x=1"),
+            "crdc_state_estimation",
+        )
+        self.assertEqual(
+            task_family_for("https://civilrightsdata.ed.gov/api/v1.0/SurveyYearsList"),
+            "crdc_survey_years",
+        )
+
+    def test_maryland_templates(self):
+        from swarm_forensics.traces.taskfamilies import task_family_for
+
+        self.assertEqual(
+            task_family_for("https://reportcard.msde.maryland.gov/DataDownloads/FileDownload/399"),
+            "md_reportcard_file_download",
+        )
+        self.assertEqual(
+            task_family_for("https://reportcard.msde.maryland.gov/Assessments/GetMathPerf"),
+            "md_assessment_api",
+        )
+
+    def test_host_fallback_and_empty(self):
+        from swarm_forensics.traces.taskfamilies import task_family_for
+
+        self.assertTrue(task_family_for("https://unknown.example.gov/deep/path").startswith("host:"))
+        self.assertEqual(task_family_for(""), "unattributed_target")
 
 
 class ReaderTests(unittest.TestCase):
@@ -109,15 +128,19 @@ class VizTests(unittest.TestCase):
         events = [
             {"dataset": "arquivo", "time": "2026-06-17T00:02:20Z", "action": "request",
              "actor_hint": "unattributed", "technique_family": "nonce_grammar",
+             "task_family": "crdc_state_estimation",
              "target": "https://x.example/api?zz=hf889", "notes": "zz_nonce=hf889"},
             {"dataset": "arquivo", "time": "2026-06-17T01:02:20Z", "action": "request",
-             "actor_hint": "unattributed", "technique_family": "unknown",
+             "actor_hint": "unattributed", "technique_family": "no_visible_mechanism",
+             "task_family": "crdc_state_estimation",
              "target": "https://x.example/api", "notes": ""},
             {"dataset": "rubygems", "time": "2026-06-01T00:00:00Z", "action": "register",
              "actor_hint": "unattributed", "technique_family": "registry_abuse",
+             "task_family": "gem_publication",
              "target": "rubygems:amdvar123456", "notes": ""},
             {"dataset": "wiki", "time": "2026-05-26T16:43:26Z", "action": "write",
              "actor_hint": "investigator", "technique_family": "wiki_write",
+             "task_family": "wiki_link_probe",
              "target": "wiki:dse~TestAgentResearchLinks", "notes": ""},
         ]
         edges = [{"edge_id": "e1", "causal_strength": "resemblance_only"}]
@@ -136,6 +159,9 @@ class VizTests(unittest.TestCase):
         self.assertEqual(summary["gem_stems"], [("amdvar", 1)])
         self.assertEqual(summary["zz_nonces"], [("hf889", 1)])
         self.assertIn("wiki", summary["time_bounds"])
+        task = dict(summary["task_families"])
+        self.assertEqual(task.get("crdc_state_estimation"), 2)
+        self.assertEqual(task.get("gem_publication"), 1)
 
 
 if __name__ == "__main__":

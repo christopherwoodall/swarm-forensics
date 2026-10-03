@@ -2,6 +2,18 @@
 
 Research cutoff: **2026-10-01**. Status: first-pass review and Stage 3 event discovery completed; Stage 2's named-seed integration remains deferred. Published-source research, not a live-network investigation or an accepted implementation plan.
 
+## Mechanism synthesis — chapter 15
+
+Read [Swarm dynamics: coupling, memory, governance, and adaptation](15-autonomous-swarm-mechanisms-and-detection.md).
+Compare control organization with information lineage across the existing cases.
+Use its hackathon perusal section for bounded reading and research questions.
+
+Chapter 15 uses a separate citation namespace and [evidence map](_support/synthesis-15/source-evidence-map.json).
+Its [verification report](_support/synthesis-15/verification.json) audits the chapter independently.
+The earlier collection audits below do not cover this addition.
+No new trace-reservoir findings are incorporated in this baseline synthesis.
+Earlier stage labels describe this imported snapshot, not the newer original authoring collection.
+
 ## Current entry point — Stage 3
 
 Read [Stage 3: event discovery by analogy](stage-3-event-discovery/README.md) for the additional 2025–2026 case shortlist: 14 seven-dimension cards, comprising eight primary event matches, three qualified/boundary comparators and three explicit simulation/testbed exceptions. These are not fourteen independently verified swarms.

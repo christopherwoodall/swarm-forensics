@@ -1,0 +1,11 @@
+sensor,channel_class,state,events,note,source_id,evidence_line
+Wikimedia edit stream,wikis,live bounded runs,,,1,202
+GitHub public events,code forges,sampled,,feed returns events up to about 30 hours old,1,203
+urlscan public search,URL indirection,sampled,,three named queries; not tested against exposing incident,1,204
+DseWiki replay,wikis,offline,14591,archived edits; writes only,1,205
+Operator request log,wikis,pending,,would add reads; not published row by row,1,206
+Canary network,multiple,not deployed,,blocked on privacy review,1,207
+Certificate Transparency,transparency logs,not built,,,1,208
+Bluesky firehose,social,not built,,,1,209
+Paste site feeds,paste,not built,,,1,210
+Shortener sampling,URL indirection,not built,,,1,211

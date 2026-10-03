@@ -1,0 +1,21 @@
+# Private working excerpts: source 13
+
+Published URL: https://www.anthropic.com/features/project-deal
+Upstream namespace: stage3; source 23
+Version/date: 2026-04-24
+
+## S15-13-P01; upstream lines 235-237
+
+We set up the actual market in our company’s communication platform, Slack. The project’s Slack channel randomly looped through agents, allowing them to post an item for sale, make an offer for someone else’s goods, or seal a deal. Crucially, there was no human intervention once the experiment began. The agents didn’t go back to their humans to sign off on a deal, nor did they consult with them during a bidding war. We let everything play out as these AI representatives saw fit.1
+
+In fact, we did this four times. We simultaneously ran four independent versions of our marketplace: one “real” one (on the basis of which the goods would actually be exchanged), and three others, just for our study. In two of the versions (Run A and Run D), everyone’s agent was based on Claude Opus 4.5, our then-frontier model. In the other two runs (Runs B and C), participants had a fifty-fifty chance of being assigned Claude Haiku 4.5, a less powerful model, instead. (We included two versions of each run to generate more data, reducing the possibility that the differences we observed between the setups were only due to chance.)
+
+## S15-13-P02; upstream lines 459-465
+
+Only after participants had completed the survey did we reveal the “real” run (Run A, an all-Opus market). After this, people exchanged their goods and were paid out.
+
+Recent [economics](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5875162) [research](https://arxiv.org/abs/2506.00073) on negotiations between AI agents has tended to use purely notional items or synthetic databases of goods. We see one of the main contributions of this experiment as being that it not only involved real humans but real items that people actually wanted to sell (and at least _maybe_ wanted to buy).
+
+## The findings
+
+The first thing to say is that our experiment _worked_. It _is_ possible for AI agents to represent humans in a marketplace. In our “real” run, our 69 agents struck 186 deals across over 500 listed items, for a total transaction value of just over $4,000. And these were far from trivial, one-click deals. Agents had to identify potential matches, propose prices, field counteroffers, and reach agreement—all in natural language, without a prebaked negotiation protocol. When our surveyed participants rated the fairness of the individual deals, the scores were unremarkable, in the best possible sense: on a scale from 1 (unfair to one party) to 7 (unfair to the other), they hovered around 4—right in the middle. On this and other measures, people reported they were broadly satisfied with how their agents represented them.

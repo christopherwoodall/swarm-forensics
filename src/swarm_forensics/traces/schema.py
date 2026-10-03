@@ -23,6 +23,7 @@ EVENT_FIELDS: tuple[str, ...] = (
     "observed_read",
     "behavior_change",
     "technique_family",
+    "task_family",
     "raw_ref",
     "confidence",
     "notes",
@@ -76,7 +77,9 @@ TECHNIQUE_FAMILIES: tuple[str, ...] = (
     "nonce_grammar",          # zz= nonces, epoch-nonce names, marker values
     "shared_relay",           # same relay URL used across datasets
     "registry_abuse",         # package registry as storage/exfil channel
-    "unknown",
+    "no_visible_mechanism",   # row parsed clean; no coordination-relevant mechanism visible
+    "content_not_in_release", # the released record withholds request shape/content
+    "unknown",                # not yet examined; reserved for future passes
 )
 
 VALID_ACTOR_HINTS: tuple[str, ...] = (

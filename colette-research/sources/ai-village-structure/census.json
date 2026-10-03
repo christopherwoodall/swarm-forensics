@@ -1,7 +1,7 @@
 {
   "dataset": "aidigestorg/ai-village",
   "observed_on": "2026-10-03",
-  "scope": "Public dataset card, public Hub metadata, and existing local record contract. No raw records inspected.",
+  "scope": "Public card and Hub metadata plus user-retrieved upstream SCHEMA.md, CHANGELOG.md, and manifest.json. No raw table records inspected.",
   "summary": {
     "revision": "838b4150303ca8228e8edb432d8b8ccae353d258",
     "last_modified": "2026-09-20T13:54:41.000Z",
@@ -23,7 +23,11 @@
     "table_bytes": 5441682570,
     "nonimage_bytes": 5803978687,
     "image_bytes": 171061391125,
-    "hub_used_storage_bytes": 392608511991
+    "hub_used_storage_bytes": 392608511991,
+    "exported_at": "2026-09-20T13:05:12.097Z",
+    "manifest_declared_table_rows": 3646304,
+    "manifest_table_count": 13,
+    "changelog_roster_entries": 46
   },
   "checks": {
     "hub_metadata_tree_file_sizes_match": true,
@@ -34,10 +38,14 @@
     "raw_dataset_records_inspected": 0,
     "screenshots_downloaded": 0,
     "dataset_tables_downloaded": 0,
-    "upstream_schema_and_changelog_body_access": "blocked by manual access gate",
-    "make_data_info": "failed: HF_TOKEN is unset",
-    "make_test": "passed: 130 tests",
-    "make_lint": "passed"
+    "upstream_schema_and_changelog_body_access": "inspected from user-downloaded files; bound to observed revision",
+    "make_data_info": "agent-side acquisition blocked because Hermes scrubs HF_TOKEN as a provider credential",
+    "make_test": "passed: 164 tests in the latest run; concurrent implementation changes preserved",
+    "make_lint": "passed",
+    "user_supplied_reference_files": true,
+    "reference_file_revision_git_blob_and_size_match": true,
+    "manifest_table_names_match_configs": true,
+    "manifest_counts_independently_recounted": false
   },
   "sources": {
     "hub_metadata": {
@@ -55,6 +63,18 @@
     "local_contract": {
       "citation_id": 4,
       "path": "../../../src/swarm_forensics/ingest/dataset.schema.json"
+    },
+    "upstream_schema": {
+      "citation_id": 5,
+      "raw_evidence": "../../../data/raw/SCHEMA.md"
+    },
+    "upstream_changelog": {
+      "citation_id": 6,
+      "raw_evidence": "../../../data/raw/CHANGELOG.md"
+    },
+    "upstream_manifest": {
+      "citation_id": 7,
+      "raw_evidence": "../../../data/raw/manifest.json"
     }
   },
   "tables": [
@@ -63,91 +83,104 @@
       "bytes": 3973,
       "row_count_as_stated_by_card": null,
       "row_count_verified": false,
-      "role": "Individual goal definitions and optional time bounds"
+      "role": "Individual goal definitions and optional time bounds",
+      "row_count_as_declared_by_manifest": 33
     },
     {
       "name": "agent_memories",
       "bytes": 2438234633,
       "row_count_as_stated_by_card": "~165k",
       "row_count_verified": false,
-      "role": "Agent-authored consolidation memories"
+      "role": "Agent-authored consolidation memories",
+      "row_count_as_declared_by_manifest": 246151
     },
     {
       "name": "agents",
       "bytes": 5280,
       "row_count_as_stated_by_card": "31",
       "row_count_verified": false,
-      "role": "Agent identity, model, state, and token usage"
+      "role": "Agent identity, model, state, and token usage",
+      "row_count_as_declared_by_manifest": 46
     },
     {
       "name": "chat_messages",
       "bytes": 52543996,
       "row_count_as_stated_by_card": "~123k",
       "row_count_verified": false,
-      "role": "Agent and human messages"
+      "role": "Agent and human messages",
+      "row_count_as_declared_by_manifest": 183485
     },
     {
       "name": "chat_rooms",
       "bytes": 1711,
       "row_count_as_stated_by_card": "5",
       "row_count_verified": false,
-      "role": "Room definitions and routing metadata"
+      "role": "Room definitions and routing metadata",
+      "row_count_as_declared_by_manifest": 16
     },
     {
       "name": "claude_code_messages",
       "bytes": 104002877,
       "row_count_as_stated_by_card": "~245k",
       "row_count_verified": false,
-      "role": "Claude Code SDK message stream"
+      "role": "Claude Code SDK message stream",
+      "row_count_as_declared_by_manifest": 244820
     },
     {
       "name": "claude_code_sessions",
       "bytes": 12662,
       "row_count_as_stated_by_card": "~300",
       "row_count_verified": false,
-      "role": "Claude Code SDK session records"
+      "role": "Claude Code SDK session records",
+      "row_count_as_declared_by_manifest": 303
     },
     {
       "name": "computer_use_sessions",
       "bytes": 40080397,
       "row_count_as_stated_by_card": "~37k",
       "row_count_verified": false,
-      "role": "Computer task sessions and goals"
+      "role": "Computer task sessions and goals",
+      "row_count_as_declared_by_manifest": 78362
     },
     {
       "name": "computer_use_turns",
       "bytes": 2475319119,
       "row_count_as_stated_by_card": "~1.14M",
       "row_count_verified": false,
-      "role": "Actions, provider messages, and tool outputs"
+      "role": "Actions, provider messages, and tool outputs",
+      "row_count_as_declared_by_manifest": 2510487
     },
     {
       "name": "events",
       "bytes": 328621853,
       "row_count_as_stated_by_card": "~233k",
       "row_count_verified": false,
-      "role": "Ordered village activity timeline"
+      "role": "Ordered village activity timeline",
+      "row_count_as_declared_by_manifest": 381610
     },
     {
       "name": "summaries",
       "bytes": 2851293,
       "row_count_as_stated_by_card": "~800",
       "row_count_verified": false,
-      "role": "Generated daily, agent, and goal summaries"
+      "role": "Generated daily, agent, and goal summaries",
+      "row_count_as_declared_by_manifest": 939
     },
     {
       "name": "village_goals",
       "bytes": 4449,
       "row_count_as_stated_by_card": "~45",
       "row_count_verified": false,
-      "role": "Village-wide goal intervals"
+      "role": "Village-wide goal intervals",
+      "row_count_as_declared_by_manifest": 51
     },
     {
       "name": "villages",
       "bytes": 327,
       "row_count_as_stated_by_card": "1",
       "row_count_verified": false,
-      "role": "Village metadata and current state"
+      "role": "Village metadata and current state",
+      "row_count_as_declared_by_manifest": 1
     }
   ],
   "screenshot_archives_by_month": {
@@ -2808,5 +2841,157 @@
       "bytes": 327,
       "kind": "table"
     }
-  ]
+  ],
+  "reference_files": {
+    "SCHEMA.md": {
+      "revision": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "git_blob": "46dfda953a54b71bfb1c500df251dff99d63884a",
+      "sha256": "50f27bda7b862723b8d47d7f7652a6b1c0e0ce9d7c5db572252da4d886bd9903",
+      "bytes": 18647,
+      "citation_id": 5
+    },
+    "CHANGELOG.md": {
+      "revision": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "git_blob": "d1ffdbd3be6a3767b78df4be7c28ff9aa884a3b3",
+      "sha256": "65cac86a5ace6442879331ca7aadc7a46d4c77f7dd59979865cce708661e63d5",
+      "bytes": 21965,
+      "citation_id": 6
+    },
+    "manifest.json": {
+      "revision": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "git_blob": "257f0e3b78b84ac9d3ea1aeb937a4e646661590d",
+      "sha256": "28383809e34d38f00037dd31d830fa9b826b59fd91c0460e03efcbed6ee9e332",
+      "bytes": 706,
+      "citation_id": 7
+    }
+  },
+  "manifest_metadata": {
+    "villageId": "00ebc425-074c-466f-ab2d-5aa2efa445aa",
+    "exportedAt": "2026-09-20T13:05:12.097Z",
+    "format": "jsonl.gz",
+    "smokeTestLimitPerTable": null,
+    "droppedColumns": {
+      "computer_use_turns": [
+        "base64_image",
+        "redaction_reason"
+      ],
+      "agents": [
+        "computer_use_url",
+        "runner_url"
+      ]
+    },
+    "rowCounts": {
+      "villages": 1,
+      "village_goals": 51,
+      "agents": 46,
+      "agent_goals": 33,
+      "chat_rooms": 16,
+      "events": 381610,
+      "chat_messages": 183485,
+      "computer_use_turns": 2510487,
+      "computer_use_sessions": 78362,
+      "agent_memories": 246151,
+      "summaries": 939,
+      "claude_code_messages": 244820,
+      "claude_code_sessions": 303
+    }
+  },
+  "scaffolding_regimes": [
+    {
+      "start": "2025-05-02",
+      "change": "Chat during computer use",
+      "analysis_boundary": "Social and computer actions can interleave",
+      "evidence": "- **[Chat/Computer-use]** Shipped the first version of \"chatting while on computer\": agents can send chat messages while in a computer-use session via `send_message_to_chat`. Major change to social/computer interleaving.",
+      "citation_id": 6
+    },
+    {
+      "start": "2026-01-26",
+      "end": "2026-04-02",
+      "change": "Claude Code agent participation",
+      "analysis_boundary": "Separate SDK execution path",
+      "evidence": "| Opus 4.5 (Claude Code)        | `claude-code::claude-opus-4-5-20251101` | 2026-01-26          | 2026-04-02 |",
+      "citation_id": 6
+    },
+    {
+      "start": "2026-02-10",
+      "change": "Automatic idle nudger",
+      "analysis_boundary": "Corrective messages can be scaffolding-generated",
+      "evidence": "- **[Chat]** Added an auto-nudger bot that detects agent idling patterns and injects corrective nudge messages — so some \"nudge\" messages after this date are scaffolding-generated, not human.",
+      "citation_id": 6
+    },
+    {
+      "start": "2026-02-25",
+      "change": "Room-filtered context",
+      "analysis_boundary": "Archive-wide visibility does not imply agent-wide visibility",
+      "evidence": "- **[Chat]** Rooms v1: agents are now scoped to chat rooms with filtered context (they only see their current room's messages/members). Significant change to each agent's perceived social environment.",
+      "citation_id": 6
+    },
+    {
+      "start": "2026-03-11",
+      "end": "2026-03-24",
+      "change": "Permanent computer use rollout",
+      "analysis_boundary": "Sessions can become consolidation/context-reset units",
+      "evidence": "- **[Computer-use]** Major change: agents are now _permanently_ in computer-use mode rather than entering/leaving discrete \"computer use sessions.\" Forced session stops became consolidations; \"computer use session\" was renamed to \"session\" in agent-facing prompts; removed prompt instructions about key-action casing. (This is the single biggest structural change in the dataset — treat data before vs. after late March 2026 as different regimes. Related work spans 2026-03-11 to 2026-03-24.)",
+      "citation_id": 6
+    },
+    {
+      "start": "2026-06-03",
+      "change": "Parallel Anthropic tool use disabled",
+      "analysis_boundary": "Turn/action correspondence changes",
+      "evidence": "- **[Computer-use]** Disabled parallel tool use for Anthropic computer-use and human-use; agents now emit one tool call per turn.",
+      "citation_id": 6
+    },
+    {
+      "start": "2026-06-11",
+      "change": "Unseen-event context capped at 200",
+      "analysis_boundary": "Retained history can exceed visible context",
+      "evidence": "- **[Memory]** Capped unseen events shown to an agent at 200 per turn (previously an agent returning after a long absence could get all of them, blowing up its context). When truncation occurs, a synthetic EVENTS_OMITTED note tells the agent to use `search_history` for older context.",
+      "citation_id": 6
+    },
+    {
+      "start": "2026-06-29",
+      "change": "Longer daily operation and GitLab migration",
+      "analysis_boundary": "Exposure time and shared-artifact locations change",
+      "evidence": [
+        "- **[Other]** Permanently expanded village hours from 4h/day (10am–2pm PT) to 8h/day (9am–5pm PT).",
+        "- **[Other]** Migrated the agents' shared code hosting from GitHub to GitLab: prompts now point at `glab` and the [`ai-village-agents/village`](https://gitlab.com/ai-village-agents/village) GitLab group instead of `gh` and the GitHub org, and the Cloudflare API secret moved to GitLab CI/CD group variables."
+      ],
+      "citation_id": 6
+    },
+    {
+      "start": "2026-07-03",
+      "change": "Private individual goals and reduced consolidation-goal disclosure",
+      "analysis_boundary": "Public events expose less goal context",
+      "evidence": [
+        "- **[Goals]** Added support for per-agent individual goals (see `agent_goals.jsonl.gz`), shown to each agent in its prompt directly below the village goal. Goals can be date-bounded; agents are not shown each other's individual goals.",
+        "- **[Memory]** CONSOLIDATE events shown to other agents now include only the short displayed session goal instead of the full next-session goal (which could leak an agent's detailed plans)."
+      ],
+      "citation_id": 6
+    }
+  ],
+  "upstream_schema_notes": {
+    "citation_id": 5,
+    "timestamps": "UTC strings, microsecond precision, without timezone suffix",
+    "transcript_root_fields": [
+      "village",
+      "dateRange",
+      "days"
+    ],
+    "transcript_day_fields": [
+      "day",
+      "date",
+      "events"
+    ],
+    "error_field": "tool stderr/errors",
+    "provider_payloads": "Provider-specific response objects or item lists in agent_messages and events.data.output",
+    "live_export_consistency": "Sequential live-database dumps; parent tables follow referencing tables. Publisher claims foreign keys resolve; not independently tested.",
+    "stale_prose_counts": true,
+    "extensions_absent_from_upstream_reference": [
+      "chat_rooms.blacklisted_agent_names",
+      "chat_rooms.whitelisted_agent_names",
+      "villages.is_chat_open",
+      "villages.schedule",
+      "claude_code_messages.message_uuid"
+    ]
+  }
 }

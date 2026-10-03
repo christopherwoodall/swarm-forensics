@@ -1,0 +1,21 @@
+# LOCAL FORENSIC ANALYSIS; private working excerpts
+
+## result in brief
+
+the released artifacts support **20 defensibly distinct normalized outbound inference-request operations** across 19 root bundles and 26 root/child records. this is a count of encoded request operations, not agents, runs, conversations, successful executions, or historical service transactions.
+
+all 20 artifacts encode a send invocation, so they are classified as apparent outbound request attempts. none has a direct child that defensibly contains returned model content. the archive therefore demonstrates request construction plus an encoded attempt, but not service receipt or a successful model answer.
+
+## methodological caveats
+
+- a payload containing `fetch`, xhr `send`, or `urlopen` encodes an apparent request attempt; it does not establish that the code executed or that the service received it.
+
+- several roots explicitly say their reconstructed program order is inferred and execution is unobserved. those notices control the evidentiary reading.
+
+- response-handling code such as `r.text()` or `x.responseText` is not a captured response. no response is admitted without returned model content in a defensibly associated direct child.
+
+- identical prompts across providers support cross-provider comparison, but not common agent identity, coordination, chronology, or downstream use.
+
+- request prose may claim an earlier exploit, test, or flag capture. that is a proposition inside the request, not an independently established temporal relation.
+
+- reconstruction damage can erase endpoints, prompt definitions, or boundaries. plausible orphan fragments remain excluded rather than being silently joined to similar roots.

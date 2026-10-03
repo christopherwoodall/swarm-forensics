@@ -2,8 +2,13 @@
 
 > For Hermes: Use subagent-driven-development skill to implement this plan task-by-task.
 
-**Status:** ACCEPTED for local research writing. Colette approved after adding hackathon perusal topics.
-**Execution state:** Chapter drafting has not started.
+**Status:** COMPLETED within the accepted local-writing scope.
+Colette approved the scope after adding hackathon perusal topics.
+**Execution state:** Drafting, parent review, independent artifact checks, and research-index integration are complete.
+The baseline excludes late trace-reservoir findings.
+**Artifact:** [Synthesis chapter](../../hermes-research/15-autonomous-swarm-mechanisms-and-detection.md).
+**Proof:** [Chapter verification](../../hermes-research/_support/synthesis-15/verification.json).
+Parent repository validation passed 168 tests and lint without setup or dependency synchronization.
 
 **Goal:** Explain how agent interactions form, preserve, change, and disrupt collective organization.
 
@@ -11,7 +16,7 @@
 
 **Tech Stack:** Markdown, existing citation tooling, preserved source evidence, and repository Make targets.
 
-**Research adaptation:** Keep synthesis authorship with this agent. Use other agents only for bounded evidence extraction or review.
+**Research adaptation:** Delegate chapter drafting at Colette's request. Keep integration, final evidence review, and completion with the parent agent.
 
 ---
 
@@ -287,8 +292,8 @@ Report setup side effects, skipped checks, and concurrent-work limitations.
 Do not restore or edit another agent's changes.
 
 No code or MODULE.md change belongs to this scope.
-The current scoping turn skips tests and lint because it changes no executable behavior.
-Tests also invoke setup; planning does not authorize that mutation.
+The scoping turns skipped tests and lint because they changed no executable behavior.
+Parent delivery validation bypassed setup and used the existing environment without dependency synchronization.
 
 ## 12. Change-shape matrix
 

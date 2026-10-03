@@ -41,9 +41,10 @@ def mk_event(
     behavior_change: str = "none_observed",
     confidence: str = "high",
     time_grade: str = "service_timestamp",
+    task_family: str = "",
 ) -> dict[str, str]:
     """Build one normalized event row."""
-    row = {
+    return {
         "event_id": eid,
         "dataset": dataset,
         "time": time,
@@ -57,11 +58,11 @@ def mk_event(
         "observed_read": observed_read,
         "behavior_change": behavior_change,
         "technique_family": technique_family,
+        "task_family": task_family,
         "raw_ref": raw_ref,
         "confidence": confidence,
         "notes": notes,
     }
-    return row
 
 
 def mk_edge(

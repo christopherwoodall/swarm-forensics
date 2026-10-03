@@ -37,8 +37,17 @@ taxonomy.
 - Depends on: stdlib only (`csv`, `gzip`, `json`, `re`, `zipfile`,
   `hashlib`). No new external dependencies.
 - `schema.py`: `EVENT_FIELDS`, `EDGE_FIELDS`, `EVENT_ACTIONS`,
-  `EDGE_STRENGTHS`, `DATASETS`, `TECHNIQUE_FAMILIES`, `VALID_ACTOR_HINTS`,
-  `validate_event(row)`, `validate_edge(row)`.
+  `EDGE_STRENGTHS`, `DATASETS`, `TECHNIQUE_FAMILIES`,
+  `VALID_ACTOR_HINTS`, `validate_event(row)`, `validate_edge(row)`.
+  `task_family` is a first-class event field; `TECHNIQUE_FAMILIES` splits
+  the former `unknown` into `no_visible_mechanism` (row parsed, no
+  coordination-relevant mechanism visible) and `content_not_in_release`
+  (released record withholds request shape), reserving `unknown` for
+  unexamined rows.
+- `taskfamilies.py`: `task_family_for(target_url)` — coarse host/path
+  template labels for arquivo and urlquery-http targets (visible request
+  structure, not a mechanism claim). Host-only fallback keeps coverage
+  honest.
 - `rows.py`: `mk_event(...)`, `mk_edge(...)`, `added_text(rev)`,
   `actor_hint_for_label(label)`, `short(text)`, `hash_prefix(text)`.
 - `readers.py`: `iter_wiki_revisions`, `iter_wiki_events`,
@@ -57,6 +66,10 @@ taxonomy.
   homepage sha256 against wiki link sha256 (the "radioactive marble" probe);
   `urlquery_citation_edges` — wiki added-text citations of urlquery reports;
   `shared_relay_edges` — relay hosts named in both populations.
+- `wiki_exchange.py`: relay-exchange extraction — `extract_messages`,
+  `exchange_event_rows`, `all_exchange_edges` (citation edges,
+  request→response edges, URL-recurrence edges). Grammar-based; added text
+  only; every edge carries standing competing explanations.
 - `cli.py`: `run(out_dir)`, `main(argv)`. Writes `events.jsonl`,
   `edges.jsonl`.
 - `report.py`: prints per-dataset counts, actor hints, technique families,
@@ -84,18 +97,38 @@ taxonomy.
 ## 4. Current State & Known Gaps
 
 - State: normalization and bridge probes run over the full real archives:
-  643,199 events (arquivo 561,298; urlquery 47,316; wiki 34,504; rubygems 81)
-  and 21 candidate edges. All rows pass schema validation.
+  646,982 events (arquivo 561,298; urlquery 47,316; wiki 38,287; rubygems 81)
+  and 1,369 candidate edges. All rows pass schema validation.
+- State: wiki relay-exchange extraction adds 3,783 board_relay events
+  (cadence messages: cohort ids, R-rounds, task clocks, UTC mappings) and
+  1,348 wiki edges: 733 cross-label page citations, 545 request→response
+  pairs, 70 same-URL-across-labels. All classified plausible_dependency or
+  weaker, with standing competing explanations (labels are not identities).
+- State: hand-traced strongest chain (in PROTOCOL.md): Feb25 BREAKTHROUGH
+  proxy URL (19:57) → AllStateValues2027 mirror table (20:01) → cross-label
+  pointer by a third label (20:01:39) → STATE5-ID confirmed by Dec27 (22:14)
+  → exact Idaho values relayed by a fifth label (22:17).
+- State: technique families now split the former `unknown` bucket:
+  `no_visible_mechanism` 517,438; `content_not_in_release` 37,718 (urlquery
+  catalog rows plus the investigation's fresh-response layer). No row remains
+  `unknown`.
+- State: `task_family` labels cover 643,130 of 643,199 events (91 families;
+  only the 69 arquivo investigator read rows are unlabeled). Top families:
+  crdc_state_estimation 213,638; md_reportcard_2022_download 147,759;
+  urlquery_report_catalog 37,649; kansas_memory 36,579.
 - State: ten exact-URL overlaps between gem homepages and wiki link rows
   (resemblance_only; transmission not established). One wiki→urlquery
   citation (temporal_structural_association_only; investigator provenance is
   a live competing explanation).
+- Gap: task-family templates are derived from the us-canada package's own
+  target set; hosts outside it fall back to `host:<name>` labels (448+ rows
+  under googletagmanager etc. are page-asset noise, correctly isolated in
+  their own host bucket).
 - Gap: the unresolved ledger is folded into `edges.jsonl` by strength class;
   a separate ledger file is not yet written.
-- Gap: technique-family classification is name-based for relays and
-  shorteners; arquivo targets without zz= are `unknown` (555,156 events).
-- Gap: no burst or feedback analysis on arquivo rows yet (the request-ecology
-  probe from the protocol). No per-path nonce-recurrence table is emitted.
+- Gap: no burst or feedback analysis within arquivo task families yet (the
+  remaining request-ecology probe). No per-path nonce-recurrence table is
+  emitted.
 - Gap: no observed_read/behavior_change values beyond the defaults; response
   bodies are absent from all three packages, so read evidence stays
   unobserved by construction.
@@ -103,6 +136,6 @@ taxonomy.
 
 ## 5. Pruned Decisions (Keep max 3)
 
-- [2026-10-03 Hermes]: The /api/events endpoint must stream the complete events file. A bounded prefix scan silently misses datasets stored later in the file; correctness requires the full pass with substring prefilters.
+- [2026-10-03 Hermes]: Split `unknown` into `no_visible_mechanism` vs `content_not_in_release`, and carry `task_family` separately from `technique_family`. A coarse request template is visible structure, not a mechanism claim; conflating them would re-inflate the unknowns dishonestly.
 - [2026-10-03 Hermes]: Keep gem↔wiki URL overlap at resemblance_only; identical relay URLs establish shared task material at most, and transmission requires a demonstrated read that no released record provides.
 - [2026-10-03 Hermes]: Wiki attribution discipline: count only added-text citations (inherited page copy manufactures propagation), and map investigator-provenance labels to actor_hint=investigator rather than dropping them (dropping would silently re-weight the agent-label population).

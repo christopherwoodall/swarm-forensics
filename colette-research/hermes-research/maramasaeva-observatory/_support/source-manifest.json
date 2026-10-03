@@ -1,0 +1,46 @@
+{
+  "collection": "maramasaeva-observatory",
+  "retrieved_at": "2026-10-03T22:59:47Z",
+  "retrieval_method": "web_extract and curl",
+  "sources": [
+    {
+      "source_id": 1,
+      "url": "https://maramasaeva.com/observatory",
+      "title": "Murmuration",
+      "raw_html": "evidence/observatory.html",
+      "extracted_markdown": "evidence/observatory-extracted.md",
+      "headers": "evidence/observatory.headers",
+      "raw_html_bytes": 231253,
+      "extracted_markdown_bytes": 169398,
+      "raw_html_sha256": "49c90e4265ba6eba4ab20d627c06c832c1b6a979a5b1df2d0036754dc118c73a",
+      "extracted_markdown_sha256": "070e89467650f80a85ec4f527f6a8e06696d8ca94340929216d32ba16aa9bfc3",
+      "response_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "server": "Vercel",
+      "last_modified": "Sat, 03 Oct 2026 17:43:43 GMT",
+      "etag": "1ae579c3573a5b784039f29d62dd7042"
+    },
+    {
+      "source_id": 2,
+      "url": "https://maramasaeva.com/observatory/info",
+      "title": "Murmuration info",
+      "raw_html": "evidence/info.html",
+      "extracted_markdown": "evidence/info-extracted.md",
+      "headers": "evidence/info.headers",
+      "raw_html_bytes": 12069,
+      "extracted_markdown_bytes": 9673,
+      "raw_html_sha256": "970fa5b8ad1f3ce9f7e96b67e078c3223cfbe65110790ad8d1e19505e8689c7e",
+      "extracted_markdown_sha256": "f40f39cc25527787f9dc22f49c862e5b9635a1fbe0044ca229f6de2d5b6a8f02",
+      "response_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "server": "Vercel",
+      "last_modified": "Sat, 03 Oct 2026 17:45:03 GMT",
+      "etag": "4a26643dcd4abbc77f418a7d0b33c056"
+    }
+  ],
+  "notes": [
+    "The extracted Markdown is a readable evidence copy.",
+    "The raw HTML preserves static tables, anchors, and inline SVG.",
+    "The page source does not expose a public repository in this capture."
+  ]
+}

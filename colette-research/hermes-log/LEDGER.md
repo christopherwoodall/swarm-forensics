@@ -275,8 +275,10 @@ She directed Discord source messages and derived notes to git-ignored local stor
 The authorized source is `#general` in server `1430962816315031654`.
 Its channel ID is `1430962817045106792`.
 The private path is `data/raw/discord/1430962817045106792/` relative to the repository root.
-No Discord source extraction is recorded in this tracked ledger.
-Discord monitoring MUST NOT be claimed active until a real unaddressed message is captured and processed.
+No Discord source quotations or derived events are recorded in this tracked ledger.
+The Discord watcher runs under Caduceus cron job `ea6dd30d2e7c` every two minutes.
+Its first scheduled run processed a private batch and verified its seven new events against source messages.
+The local source archive retains a backlog. This tracked file remains only a pointer to private notes.
 Keep Discord-specific quotations and event records out of this tracked file.
 
 ## Local Setup Amendments — Historical

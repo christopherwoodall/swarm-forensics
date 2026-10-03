@@ -1,0 +1,22 @@
+HTTP/2 200 
+accept-ranges: bytes
+access-control-allow-origin: *
+age: 18853
+cache-control: public, max-age=0, must-revalidate
+content-disposition: inline; filename="info.html"
+content-type: text/html; charset=utf-8
+date: Sat, 03 Oct 2026 22:59:17 GMT
+etag: "4a26643dcd4abbc77f418a7d0b33c056"
+last-modified: Sat, 03 Oct 2026 17:45:03 GMT
+permissions-policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+referrer-policy: strict-origin-when-cross-origin
+server: Vercel
+strict-transport-security: max-age=63072000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-matched-path: /observatory/info.html
+x-nextjs-rewritten-path: /observatory/info.html
+x-vercel-cache: HIT
+x-vercel-id: sfo1::wz8v9-1791068357299-9310727fed7c
+content-length: 12069
+

@@ -148,6 +148,12 @@ footer p { margin-bottom: 4px; }
   </section>
 
   <section class="panel span12">
+    <h2>Task families <span class="count" id="task-family-count">—</span></h2>
+    <p style="color:var(--muted);font-size:11px;margin-bottom:8px">Visible request structure (destination + coarse path template), not a mechanism or attribution claim.</p>
+    <div id="task-families" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:4px 18px"></div>
+  </section>
+
+  <section class="panel span12">
     <h2>Candidate edges <span class="count" id="total-edges">—</span></h2>
     <table class="compact">
       <thead><tr>
@@ -232,17 +238,35 @@ async function boot() {
     totalsBox.append(cell);
   }
 
-  // families bars
+  // families bars (split labels get a dimmer bar; mechanism families stay iris)
   const famBox = document.getElementById("families");
   const famMax = data.families.length ? data.families[0][1] : 1;
   for (const [name, count] of data.families.slice(0, 10)) {
-    const row = el("div", "hbar " + (name === "unknown" ? "" : "iris"));
+    const isSplit = name === "no_visible_mechanism" || name === "content_not_in_release";
+    const row = el("div", "hbar " + (isSplit ? "" : "iris"));
     const bar = el("i");
     bar.style.width = Math.max(2, (count / famMax) * 100) + "%";
     const label = el("span");
     label.append(el("b", null, name), el("em", null, count.toLocaleString()));
     row.append(bar, label);
     famBox.append(row);
+  }
+
+  // task families (two-column list of small bars)
+  const taskBox = document.getElementById("task-families");
+  const taskCount = document.getElementById("task-family-count");
+  const taskList = data.task_families || [];
+  taskCount.textContent = taskList.length + " families";
+  const taskMax = taskList.length ? taskList[0][1] : 1;
+  for (const [name, count] of taskList.slice(0, 40)) {
+    const row = el("div", "hbar iris");
+    row.style.margin = "2px 0 5px";
+    const bar = el("i");
+    bar.style.width = Math.max(2, (count / taskMax) * 100) + "%";
+    const label = el("span");
+    label.append(el("b", null, name), el("em", null, count.toLocaleString()));
+    row.append(bar, label);
+    taskBox.append(row);
   }
 
   // timeline (stacked bars per day, log-scaled to survive arquivo's mass)
@@ -397,7 +421,7 @@ async function boot() {
       const tdAction = el("td", "wrap");
       tdAction.append(el("span", "badge b-" + row.actor_hint, row.actor_hint), row.action);
       const tdTarget = el("td", "wrap");
-      tdTarget.append(el("div", "evt-target", row.target || ""), el("div", "evt-notes", (row.notes || "").slice(0, 160)));
+      tdTarget.append(el("div", "evt-target", row.target || ""), el("div", "evt-notes", (row.notes || "").slice(0, 160) + (row.task_family ? " · " + row.task_family : "")));
       tr.append(tdTime, tdDs, tdAction, tdTarget);
       rowsBody.append(tr);
     }

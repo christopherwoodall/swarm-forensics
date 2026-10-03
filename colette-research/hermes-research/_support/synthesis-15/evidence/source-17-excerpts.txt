@@ -1,0 +1,71 @@
+# Private working excerpts: source 17
+
+Published URL: https://arxiv.org/html/2609.35576v1
+Upstream namespace: stage3; source 33
+Version/date: 2026-09-28 (v1)
+
+## S15-17-P01; upstream lines 137-137
+
+Our dataset contains 36 synthetic human–agent universes representing collaborative workflows with personal AI assistants. Each person has a dedicated assistant with a distinct profile, private workspace, and background memories. Assistants act only in response to user requests, such as reading, drafting, or editing artifacts (e.g. text documents, code, reports, etc.), and cannot communicate directly. Information can therefore pass between assistants only through artifacts exchanged within these user-directed workflows. The universes vary along two axes: domain and workload intensity. We use six domains: three workplace settings (customer support, software engineering, and healthcare operations) and three personal settings (home and living, social gatherings, and personal productivity). Each domain has six workload levels. Higher levels add people, time steps, and artifact hand-offs: an agent receives 1.21.2 artifacts from other agents on average at the lightest level and 4.64.6 at the most active, where 0.360.36–0.400.40 of agents act at each time step (Appendix [B.1](https://arxiv.org/html/2609.35576v1#A2.SS1 "B.1 Test Universes ‣ Appendix B Universe Construction ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents")). Universes contain 3–12 agents and last 10–20 time steps (mean 14.314.3).
+
+## S15-17-P02; upstream lines 830-862
+
+#### Reliance on an external service.
+
+Our main results (Section [6.2](https://arxiv.org/html/2609.35576v1#S6.SS2 "6.2 Results ‣ 6 Experiments ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents")) use endpoint-assisted propagation.
+An infected assistant must retain an instruction to send a later draft to an
+attacker-controlled service and must use the returned artifact, into which the
+service inserts a fresh copy of the attack prompt
+(Section [4.1](https://arxiv.org/html/2609.35576v1#S4.SS1 "4.1 Endpoint-Assisted Propagation ‣ 4 Developing Propagating Attacks ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents")). This requires outbound access to that
+service. Effective egress restrictions, or an assistant declining to use the
+returned artifact, would interrupt the evaluated mechanism. Payload restoration
+also removes one source of loss between hops, so the infection fractions and
+hop-survival estimates do not measure an assistant’s unaided ability to
+reproduce the full attack prompt. They do measure the shorter carry-forward
+mechanism: the gap between goal and full infection in
+Table [1](https://arxiv.org/html/2609.35576v1#S6.T1 "Table 1 ‣ 6.2 Results ‣ 6 Experiments ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents") shows that preserving the goal does not guarantee
+preserving the propagation instruction, and endpoint-use rates are reported
+separately in Appendix [I.1](https://arxiv.org/html/2609.35576v1#A9.SS1 "I.1 Exfiltration of artifacts ‣ Appendix I Exfiltration and Memory Persistence ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents").
+
+#### Endpoint-free propagation.
+
+Without the service, an assistant must itself preserve and re-express enough of
+the attack, in memory and in each new artifact, to infect the next assistant
+(Appendix [D](https://arxiv.org/html/2609.35576v1#A4 "Appendix D Prompt-Only Propagation ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents")); paraphrasing or omission at any step weakens
+later copies. We evaluate this variant on one model (DeepSeek-V4-Flash) and find
+that it does propagate but is substantially lossier than the endpoint-assisted
+mechanism: a single seed fully infects 21%21\\% of assistants, second-hop survival
+is S⁡(2)=0.30S(2)=0.30, and the decay is driven mainly by agents omitting the payload when
+they write rather than by paraphrase (Appendix [D](https://arxiv.org/html/2609.35576v1#A4 "Appendix D Prompt-Only Propagation ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents")). These are a
+lower bound at a fixed, modest search budget; whether stronger endpoint-free
+templates or other models do better remains open. Because such an attack would not
+require the outbound service calls the endpoint-assisted variant depends on, it
+would also be harder to interrupt with the egress controls we discuss, which we
+regard as a concerning direction for future work.
+
+## S15-17-P03; upstream lines 1113-1127
+
+it into any artifact the agent later creates. After reading an infected
+artifact, an agent must preserve this information in memory, retrieve it
+during a later user-requested writing task, and place a viable version of the
+attack into the new artifact:
+Pϕ​(g)⟶ℳa⟶d′⟶ℳbP\_{\\phi}(g)\\longrightarrow\\mathcal{M}^{a}\\longrightarrow d^{\\prime}\\longrightarrow\\mathcal{M}^{b}.
+Unlike endpoint-assisted propagation (Section [4.1](https://arxiv.org/html/2609.35576v1#S4.SS1 "4.1 Endpoint-Assisted Propagation ‣ 4 Developing Propagating Attacks ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents")),
+nothing restores the attack between hops. The model may summarize, paraphrase,
+or omit information when writing to memory, retrieving it, or creating the
+next artifact, and each such change is inherited by every later copy. The
+attack need not be reproduced verbatim, but must preserve both the adversarial
+goal and enough of the propagation instructions to continue spreading.
+Templates are developed with the procedure of
+Section [4.2](https://arxiv.org/html/2609.35576v1#S4.SS2 "4.2 Attack Prompt Optimization ‣ 4 Developing Propagating Attacks ‣ Share-Borne AI Virus: Memory-Hopping Attacks Across LLM Agents").
+
+#### Setup.
+
+## S15-17-P04; upstream lines 913-918
+
+levels, measured from the scheduled actions. The _active fraction_ is the
+mean proportion of people performing a file action per time step. The
+_mean degree_ is the average number of people each person can exchange
+files with in the sharing graph, and _hand-offs per agent_ is the number
+of scheduled reads of a file last written or owned by someone else, divided by
+group size. The density of the sharing graph stays near 0.50.5 at every level;

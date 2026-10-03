@@ -206,5 +206,8 @@ The Discord watcher MUST NOT post into that channel.
 The Discord watcher MUST NOT place private source text in tracked `LEDGER.md` or `EVENTS.jsonl`.
 The private record home is `data/raw/discord/1430962817045106792/`.
 Source capture is verified: authenticated GET archived unaddressed human messages in the private archive.
-Caduceus cron job `ea6dd30d2e7c` is configured with local-only output and a two-stage wake gate.
-An initial manual job run is in progress. Ledger extraction and a scheduled tick remain unverified.
+Caduceus cron job `ea6dd30d2e7c` is scheduled every two minutes with local-only output.
+An initial manual trigger lost its owner and has unknown outcome. No notes were written.
+The first built-in scheduled tick archived source messages and processed 25 private messages.
+It wrote seven source-verified events to the local ledger and acknowledged only the inspected batch.
+Unprocessed history remains in the private archive for later scheduled runs.

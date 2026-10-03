@@ -1,0 +1,7 @@
+cell,reports_sampled,on_base64,endpoint_mix,query_share,embedded_url_share,url_length_q1_median_q3,source_id,evidence_line
+httpbin ramp 11-17 May,300,79%,base64 79%; root 9%; redirect-to 5%; html 4%; get 3%,10%,4%,63 / 602 / 679,1,700
+httpbin peak 15-21 Jun,198,79%,base64 79%; redirect-to 15%; html 3%; get 2%; drip 1%,39%,15%,387 / 843 / 1195,1,701
+httpbin recent 14 Sep-1 Oct,45,53%,base64 53%; root 29%; delay 9%; response-headers 7%; headers 2%,7%,7%,11 / 393 / 1797,1,702
+httpbun peak 15-21 Jun,298,98%,base64 98%; redirect-to 1%; root 0%; headers 0%; status 0%,43%,1%,887 / 1207 / 1468,1,703
+httpbun late 20 Jul-1 Sep,4,100%,base64 100%,25%,0%,702 / 750 / 756,1,704
+pie.dev peak 15-21 Jun,300,98%,base64 98%; root 1%; get 0%; headers 0%; redirect-to 0%,30%,0%,731 / 743 / 1187,1,705

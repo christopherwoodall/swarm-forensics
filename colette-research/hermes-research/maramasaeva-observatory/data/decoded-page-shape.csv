@@ -1,0 +1,7 @@
+cell,pages_decoded,html_share,script_share,form_share,fetch_share,size_q1_median_q3,top_referenced_hosts,source_id,evidence_line
+httpbin ramp 11-17 May,235,87%,83%,71%,11%,329 / 464 / 495,unctad.org 181; codetabs.com 10; google.com 4,1,366
+httpbin peak 15-21 Jun,156,51%,99%,8%,30%,472 / 752 / 905,aihw.gov.au 114; tableau.com 43; example.com 39,1,367
+httpbun peak 15-21 Jun,290,46%,93%,6%,18%,627 / 880 / 1058,aihw.gov.au 227; httpbun.com 99; tableau.com 94,1,368
+pie.dev peak 15-21 Jun,295,21%,100%,5%,7%,534 / 540 / 878,aihw.gov.au 271; tableau.com 88; pie.dev 56,1,369
+httpbin recent 14 Sep-1 Oct,24,92%,54%,4%,25%,394 / 1181 / 1532,quidax.io 5; amap.com 3; alicdn.com 2,1,370
+httpbun late 20 Jul-1 Sep,4,75%,75%,0%,0%,404 / 518 / 544,fedresurs.ru 3; urlquery.net 1,1,371

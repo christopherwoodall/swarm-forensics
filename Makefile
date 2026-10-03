@@ -3,6 +3,7 @@
 .PHONY: help setup data-info data-schema data-download data-sample data-validate replay-mock replay-export replay-serve pivot-check pivot-serve test lint
 .PHONY: watcher-poll watcher-pending watcher-ack watcher-status watcher-monitor
 .PHONY: watcher-discord-poll watcher-discord-pending watcher-discord-ack watcher-discord-status watcher-discord-monitor
+.PHONY: watcher-discord-audit
 
 # The repository can sit on a different filesystem than the uv cache.
 export UV_LINK_MODE := copy
@@ -144,6 +145,9 @@ watcher-discord-ack: ## Acknowledge durable Discord analysis (DISCORD_WATCHER_CU
 
 watcher-discord-status: ## Inspect private Discord source and processing cursors
 	@$(DISCORD_WATCHER_CMD) status
+
+watcher-discord-audit: ## Verify private Discord event provenance and actual source totals
+	@$(DISCORD_WATCHER_CMD) audit
 
 watcher-discord-monitor: ## Poll Discord and emit deterministic backlog wake token
 	@$(DISCORD_WATCHER_CMD) monitor --max-pages "$(DISCORD_WATCHER_MAX_PAGES)" --total-seconds "$(DISCORD_WATCHER_TOTAL_SECONDS)" --retry-seconds "$(DISCORD_WATCHER_RETRY_SECONDS)"

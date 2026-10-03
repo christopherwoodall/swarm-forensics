@@ -1,0 +1,610 @@
+{
+  "artifact": "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/15-autonomous-swarm-mechanisms-and-detection.md",
+  "chapter_sha256": "043a4840697f5125f53c76b2cf7d76fb305525776dd85e44c403cc451bd7e54e",
+  "status": "pass",
+  "checks": {
+    "grounded_citations": {
+      "command": [
+        "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/.venv/bin/python3",
+        "/home/resonatingloop/.hermes/skills/research/grounded-citations/scripts/sources.py",
+        "--ledger",
+        "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/citation-ledger.json",
+        "verify",
+        "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/15-autonomous-swarm-mechanisms-and-detection.md",
+        "--strict",
+        "--evidence"
+      ],
+      "exit_code": 0,
+      "stdout": "info: stats: 334 prose sentence(s), 142 with declared provenance (43%) — 142 cited, 0 marked [unverified] (a sentence may be both); 18 distinct source(s) cited, 18 in ledger (18 with evidence quotes)\ncitations OK\n",
+      "stderr": ""
+    },
+    "word_count": {
+      "actual": 3871,
+      "range": [
+        3000,
+        4500
+      ],
+      "method": "Markdown labels retained; link targets, citations, markup, and Sources excluded. Headings and table included."
+    },
+    "sentence_lengths": {
+      "checked_prose_units": 368,
+      "maximum_words": 18,
+      "units_at_or_above_20": [],
+      "method": "One source sentence per line; punctuation splitting; table cells checked separately."
+    },
+    "local_links": [
+      {
+        "label": "source and evidence map",
+        "target": "_support/synthesis-15/source-evidence-map.json",
+        "exists": true
+      },
+      {
+        "label": "entailment review",
+        "target": "_support/synthesis-15/entailment-review.md",
+        "exists": true
+      },
+      {
+        "label": "organizational analysis",
+        "target": "../notes/organizational-forensics.md",
+        "exists": true
+      },
+      {
+        "label": "external-model analysis",
+        "target": "../notes/external-model-forensics.md",
+        "exists": true
+      },
+      {
+        "label": "AI Village",
+        "target": "14-autonomous-societies-and-open-world-agents.md",
+        "exists": true
+      },
+      {
+        "label": "METR's dossier handoff",
+        "target": "10-huggingface-and-metr-2026.md",
+        "exists": true
+      },
+      {
+        "label": "compiler and FastRender comparison",
+        "target": "stage-3-event-discovery/02-long-running-coding-teams.md",
+        "exists": true
+      },
+      {
+        "label": "migration tournaments",
+        "target": "13-anthropic-multiagent-behavior-2026.md",
+        "exists": true
+      },
+      {
+        "label": "Deal, Swap, and Vend",
+        "target": "stage-3-event-discovery/04-real-goods-and-agent-bargaining.md",
+        "exists": true
+      },
+      {
+        "label": "wiki reconstruction",
+        "target": "11-wiki-collusion-and-external-memory-2026.md",
+        "exists": true
+      },
+      {
+        "label": "reservoir handoff contract",
+        "target": "stage-4-trace-reservoirs/PROTOCOL.md",
+        "exists": true
+      },
+      {
+        "label": "controlled propagation comparison",
+        "target": "stage-3-event-discovery/05-controlled-cross-agent-propagation.md",
+        "exists": true
+      }
+    ],
+    "source_evidence": {
+      "source_records": 18,
+      "mapped_source_records": 18,
+      "unique_urls": 18,
+      "published_passage_checks": [
+        {
+          "id": "S15-01-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P04",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P05",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P06",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P07",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P08",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P09",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P10",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-01-P11",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-02-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-03-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-03-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-03-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-03-P04",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-03-P05",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-04-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-04-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-04-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-05-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-05-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-05-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-05-P04",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-06-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-06-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-06-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-06-P04",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-06-P05",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-06-P06",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-07-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-07-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-07-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-08-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-08-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-08-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-08-P04",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-09-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-09-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-09-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-09-P04",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-09-P05",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-09-P06",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-10-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-10-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-10-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-10-P04",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-11-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-11-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-12-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-12-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-13-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-13-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-14-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-14-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-14-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-15-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-15-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-15-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-15-P04",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-16-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-16-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-17-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-17-P02",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-17-P03",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-17-P04",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        },
+        {
+          "id": "S15-18-P01",
+          "exact_upstream_and_pack_match": true,
+          "ledger_quote_match": true
+        }
+      ],
+      "local_analysis_checks": [
+        {
+          "name": "organizational-forensics",
+          "exact_match": true,
+          "passage_count": 2
+        },
+        {
+          "name": "external-model-forensics",
+          "exact_match": true,
+          "passage_count": 2
+        }
+      ],
+      "scope": "Exact text and identity checks, not independent incident verification."
+    },
+    "coverage": {
+      "Formation and coupling": true,
+      "Allocation, topology, and changing roles": true,
+      "Memory and transmission": true,
+      "Governance and principal conflicts": true,
+      "Amplification, adaptation, and repair": true,
+      "Observability and discriminating tests": true,
+      "Topics for further perusal at the hackathon": true,
+      "Control organization": true,
+      "Information lineage": true,
+      "process persistence": true,
+      "role persistence": true,
+      "information persistence": true,
+      "ORIGINAL SYNTHESIS": true,
+      "Immediately inspectable material": true,
+      "Experiments requiring further authorization": true,
+      "proposed discriminating-question checklist": true
+    },
+    "perusal_topics": [
+      "Memory becoming authority",
+      "Role succession without identity inflation",
+      "Common blockers and useful decomposition",
+      "Negotiated institutions and principal welfare",
+      "Transmission chains and observation surfaces",
+      "Diversity versus evidence pooling",
+      "Repairing operation versus repairing belief"
+    ],
+    "placeholders": [],
+    "normative_keywords": [],
+    "declared_units_review": [
+      {
+        "literal": "30 agents over 20 minutes",
+        "passage": "S15-07-P01",
+        "unit_boundary": "Participants and duration in specialization experiment",
+        "literal_present": true
+      },
+      {
+        "literal": "All sixteen compiler agents",
+        "passage": "S15-10-P03",
+        "unit_boundary": "Operator-disclosed parallel team, not sessions",
+        "literal_present": true
+      },
+      {
+        "literal": "four discussants",
+        "passage": "S15-06-P04",
+        "unit_boundary": "Autonomous hidden-profile participants",
+        "literal_present": true
+      },
+      {
+        "literal": "four scripted information sources",
+        "passage": "S15-06-P04",
+        "unit_boundary": "Scripted scouts, not autonomous peers",
+        "literal_present": true
+      },
+      {
+        "literal": "266 vulnerabilities using 27 million tokens",
+        "passage": "S15-06-P01",
+        "unit_boundary": "Coordinated search condition",
+        "literal_present": true
+      },
+      {
+        "literal": "21 using 6.5 million tokens",
+        "passage": "S15-06-P01",
+        "unit_boundary": "Independent restricted search condition",
+        "literal_present": true
+      },
+      {
+        "literal": "Only 12 findings overlapped",
+        "passage": "S15-06-P01",
+        "unit_boundary": "Overlapping findings, not independent incidents",
+        "literal_present": true
+      },
+      {
+        "literal": "2.4 million requests and only 117 accepted jobs",
+        "passage": "S15-06-P03",
+        "unit_boundary": "One finite-queue run; units differ",
+        "literal_present": true
+      },
+      {
+        "literal": "510 reconstructed cohorts",
+        "passage": "S15-05-P02",
+        "unit_boundary": "Cohorts with trace outcomes, not authenticated agents",
+        "literal_present": true
+      },
+      {
+        "literal": "37 normalized encoded mechanism implementations",
+        "passage": "local-organizational-forensics",
+        "unit_boundary": "LOCAL FORENSIC ANALYSIS counting unit",
+        "literal_present": true
+      },
+      {
+        "literal": "20 encoded inference-request operations",
+        "passage": "local-external-model-forensics",
+        "unit_boundary": "Encoded operations without captured model returns",
+        "literal_present": true
+      }
+    ],
+    "entailment_review": {
+      "path": "entailment-review.md",
+      "present": true,
+      "status": "Separate claim-family review; structural verification does not prove semantic entailment."
+    }
+  },
+  "errors": [],
+  "deferred": [
+    "Late trace-reservoir findings are not incorporated in this baseline.",
+    "Source 5 metadata/body version drift remains explicitly qualified."
+  ],
+  "parent_review": {
+    "chapter_read_in_full": true,
+    "selected_primary_claims_checked": [
+      "METR coupling, dossier uptake, mailbox copying, takeover, signing, and imagined scorer",
+      "Wiki delta attribution, bounded progress outcome, uptake limits, and version drift",
+      "Anthropic pricing, search baselines, integration, information pooling, and negotiated migration rules",
+      "Swap secondary group objective, preference-ranking boundary, concession, and delivery limits"
+    ],
+    "version_uncertainty_visible_in_chapter": true,
+    "research_index_integrated": true,
+    "repository_validation": {
+      "command": "make --assume-old=setup test lint RUN='uv run --frozen --offline --no-sync'",
+      "exit_code": 0,
+      "tests_run": 168,
+      "test_result": "OK",
+      "lint_result": "All checks passed!",
+      "scope": "Current shared working tree; passing checks do not establish authorship of unrelated changes.",
+      "setup_and_dependency_sync_skipped": true
+    },
+    "limits": "Source and artifact review, not independent incident or experimental replication."
+  },
+  "changed_files": [
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/15-autonomous-swarm-mechanisms-and-detection.md",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/citation-ledger.json",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/entailment-review.md",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/local-external-model-forensics-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/local-organizational-forensics-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-01-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-02-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-03-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-04-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-05-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-06-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-07-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-08-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-09-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-10-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-11-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-12-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-13-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-14-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-15-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-16-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-17-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/evidence/source-18-excerpts.txt",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/prepare_evidence.py",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/source-evidence-map.json",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/verification.json",
+    "/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/_support/synthesis-15/verify_artifact.py"
+  ]
+}

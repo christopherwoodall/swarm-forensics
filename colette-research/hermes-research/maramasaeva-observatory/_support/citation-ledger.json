@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://maramasaeva.com/observatory",
+      "title": "Murmuration — measurements",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Every scoring rule is written down and git-committed, with a timestamp, **before** any data is scored; the commit hash is the proof it was frozen.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Across 7 records with a frozen rule (committed before any day-list existed), the most any day reaches is **K = 2**.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "We have **not found a new swarm**.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Each rule was committed before scoring and measured against ordinary-day controls. Two records carry a swarm; the rest are nulls.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "url": "https://maramasaeva.com/observatory/info",
+      "title": "Murmuration — information and methods",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "A finding is a measurement that matches independently reported events and that a second method reproduces.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "A scanner report records the request and when it was made, not what program sent it, and the harness hosts also have ordinary users.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Submitter addresses are replaced by a short code on reading, using a random key that is destroyed after each run.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "The pages show counts only: no report contents, links, names or addresses.",
+          "added": "2026-10-03"
+        }
+      ]
+    }
+  ]
+}

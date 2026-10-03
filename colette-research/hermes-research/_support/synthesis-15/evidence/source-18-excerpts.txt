@@ -1,0 +1,19 @@
+# Private working excerpts: source 18
+
+Published URL: https://www.glow.io/blogs/how-ai-agents-exposed-developer-screenshots-from-leading-tech-companies
+Upstream namespace: top; source 80
+Version/date: 2026-09-29
+
+## S15-18-P01; upstream lines 47-57
+
+Around a third of affected organizations had developers running gitshot, a small open-source tool that publishes screenshots for code reviews. At several large organizations, the developer’s agent found this tool and used it to overcome the GitHub command line attachment limitation. Images published by this tool end up under a tag called _gitshot, downloadable by anyone that knows where to look.
+Over 100 public accounts
+were found leaking internal development work this way, including:
+A major AI frontier model company
+A financial services firm where screenshots revealed the internal treasury and settlement console, a dollar withdrawal screen for a named institutional client, and two screen recordings that walk through the money-movement console rather than showing one frame of it
+A payments company where four employees had their own gitshot repository
+One agent's workaround became a dozen agents' habit
+The most complete leak found during our investigation was at a software vendor where publishing screenshots publicly became standard practice.
+Agents serving multiple engineers started publicly publishing code review screenshots in early July, and within a week over a dozen agents had encoded this approach as a skill to use on every development ticket. Using this skill, they uploaded more than a thousand screenshots and screen recordings of the company's product, along with descriptive summaries of features that were weeks or months away from release.
+Reproducing the Agent’s Risky Workaround
+To see what PixelLeak looks like in action, consider a developer working on a new version of Minesweeper. They ask their AI agent using the Claude Code Opus 5 model to change the color of the header and want to see that the result is acceptable.

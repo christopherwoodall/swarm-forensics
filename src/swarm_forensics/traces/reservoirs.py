@@ -58,6 +58,7 @@ def gem_event_rows(records_gz: Path) -> Iterator[dict[str, str]]:
                     artifact=f"package:{name}",
                     operation="registry_metadata",
                     technique_family="registry_abuse",
+                    task_family="gem_publication",
                     raw_ref=f"records.jsonl.gz!{record['id']}",
                     notes=short(notes, 280),
                     time_grade="registry_metadata_date",
@@ -73,6 +74,7 @@ def gem_event_rows(records_gz: Path) -> Iterator[dict[str, str]]:
                     artifact=f"package_member:{hash_id(record['id'])}",
                     operation="package_member",
                     technique_family="registry_abuse",
+                    task_family="gem_publication",
                     raw_ref=f"records.jsonl.gz!{record['id']}",
                     notes=short(text, 200),
                     time_grade="unknown_date",
@@ -80,7 +82,12 @@ def gem_event_rows(records_gz: Path) -> Iterator[dict[str, str]]:
 
 
 def urlquery_event_rows(uq_zip: Path) -> Iterator[dict[str, str]]:
-    """Stream normalized request events from the urlquery catalog."""
+    """Stream normalized request events from the urlquery catalog.
+
+    The catalog carries report links and metadata only: no request bodies.
+    Technique stays content_not_in_release; the collector's broad_class
+    remains in notes and is deliberately not promoted to a technique.
+    """
     with zipfile.ZipFile(uq_zip) as archive:
         for row in _csv_rows(archive, f"{UQ_BASE}all-reports.csv"):
             disposition = row.get("disposition") or ""
@@ -95,7 +102,8 @@ def urlquery_event_rows(uq_zip: Path) -> Iterator[dict[str, str]]:
                 target=f"report:{row['report_id']}",
                 artifact="",
                 operation="browser_session_report",
-                technique_family="unknown",
+                technique_family="content_not_in_release",
+                task_family="urlquery_report_catalog",
                 raw_ref=f"urlquery-agent-activity-2026-09-22-v5/all-reports.csv:report_id={row['report_id']}",
                 notes=short(
                     f"confidence={row.get('confidence')} broad_class={row.get('broad_class')} "
@@ -109,6 +117,8 @@ def urlquery_http_rows(uscan_zip: Path) -> Iterator[dict[str, str]]:
     """Stream request events from the report-level HTTP exports."""
     import zipfile as zf
 
+    from swarm_forensics.traces.taskfamilies import task_family_for
+
     base = "us-canada-government-evidence-2026-09-30-v3/"
     with zf.ZipFile(uscan_zip) as archive:
         names = sorted(n for n in archive.namelist() if n.endswith("urlquery-http.csv"))
@@ -117,6 +127,8 @@ def urlquery_http_rows(uscan_zip: Path) -> Iterator[dict[str, str]]:
             with archive.open(name) as handle:
                 for row in csv.DictReader(io.TextIOWrapper(handle, "utf-8")):
                     url = row.get("url") or ""
+                    family = _family(url)
+                    technique = family if family != "unknown" else "no_visible_mechanism"
                     yield mk_event(
                         eid=(
                             f"uq-http-{folder}-{row['report_id'][:8]}-"
@@ -129,7 +141,8 @@ def urlquery_http_rows(uscan_zip: Path) -> Iterator[dict[str, str]]:
                         target=url[:200],
                         artifact="",
                         operation="http_entry",
-                        technique_family=_family(url),
+                        technique_family=technique,
+                        task_family=task_family_for(url),
                         raw_ref=(
                             f"{base}{folder}/urlquery-http.csv:"
                             f"report_id={row.get('report_id')} entry={row.get('http_entry_index')}"

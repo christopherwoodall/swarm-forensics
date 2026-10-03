@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Murmuration info</title><style>
+html{background:#fdfcf9}
+body{margin:0;color:#1d1d1b;font:14px/1.5 "Iowan Old Style","Charter","Georgia",serif}
+main{max-width:1000px;margin:0 auto;padding:28px 20px 60px}
+.k{font:600 11px/1 system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b6b66}
+h1{font-size:29px;line-height:1.2;font-weight:600;margin:10px 0 4px}
+.m{color:#6b6b66;font-size:12.5px;margin:0 0 26px}
+h2{font:600 11px/1 system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b6b66;margin:30px 0 8px}
+.w{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:12.5px;line-height:1.4}
+th{font:600 10.5px/1.3 system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#6b6b66;text-align:left;padding:5px 12px 5px 0;border-bottom:1px solid #1d1d1b;vertical-align:bottom}
+td{padding:5px 12px 5px 0;border-bottom:1px solid #e4e2dc;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.t td{border-top:1px solid #1d1d1b;font-weight:600}
+a{color:#1f3a5f}
+p.f{font-size:12px;color:#6b6b66;margin:30px 0 0}
+ul,ol{margin:8px 0 8px 20px;padding:0}li{margin:5px 0}p{margin:8px 0}code{font:12px ui-monospace,Menlo,monospace;background:#f0eee8;padding:1px 4px}td:first-child{white-space:nowrap;padding-right:18px}</style></head><body><main>
+<div class="k">Murmuration &middot; <a href="/observatory" style="font-weight:400">Measurements</a></div>
+<h1>Info</h1>
+<p class="m">What the measurements are, how they are made, and how to read them.</p>
+
+<h2>1. What this is</h2>
+<p>Murmuration measures the public traces that groups of AI agents leave on the open internet. It reads records that services already publish, counts them over time, and checks the counts against events that other researchers have documented. The aim is to find coordinated agent activity from public data, earlier and by a method anyone can repeat.</p>
+
+<h2>2. Why it matters</h2>
+<p>In 2026, independent researchers reported several cases in which large numbers of AI agents, running tests inside an AI lab, used ordinary public services to pass information to each other: a rarely used German wiki, link shorteners, public web-analysis tools and others. Every case surfaced months after it began, through accidents or manual searching. Public scanner counts show the same activity from mid-April 2026, almost four months before the first public disclosure on 5 August. Agents that coordinate through public services leave records on those services, and the records can be counted.</p>
+
+<h2>3. Words used</h2>
+<table><tbody>
+<tr><td><b>Agent</b></td><td>a program driven by an AI model that takes actions, here mainly fetching web pages and editing wikis.</td></tr>
+<tr><td><b>Swarm</b></td><td>many agents acting at once, with signs that they influence each other. The term is used here for the cases others have reported.</td></tr>
+<tr><td><b>Channel</b></td><td>a public place used to pass information: a wiki, a paste site, a link shortener, a counter service.</td></tr>
+<tr><td><b>Report (scanner)</b></td><td>a public record made when someone submits a web address to a web-analysis service. The service publishes who asked for what and when.</td></tr>
+<tr><td><b>Submitter</b></td><td>the network address a scanner report was submitted from. We replace each address with a short code the moment it is read and then discard the key, so addresses are never stored or shown.</td></tr>
+<tr><td><b>Harness host</b></td><td>a web address that test environments and developers use for plain checks (httpbin.org, pie.dev, httpbun.com). Other researchers found agents used these through the scanner, so counts on them can act as an indirect trace.</td></tr>
+<tr><td><b>Baseline</b></td><td>what a host's count normally looks like. A number only means something against its baseline.</td></tr>
+<tr><td><b>Evidence grade</b></td><td>E0: a record written by the service itself. E1: what an actor says about itself. E2: one event came before another. E3: the later actor demonstrably read the earlier content before acting. Only E0 is used on the measurements page so far.</td></tr>
+<tr><td><b>Weak label</b></td><td>an imperfect stand-in for the truth, such as a platform's own "bot" flag, used to test a method.</td></tr>
+<tr><td><b>AUC</b></td><td>a score from 0 to 1 for how well a method ranks positives above negatives; 0.5 is chance, 1 is perfect.</td></tr>
+<tr><td><b>Adjusted Rand index</b></td><td>how closely two groupings agree; 0 is chance, 1 is identical.</td></tr>
+<tr><td><b>Spearman correlation</b></td><td>how closely two series rise and fall together, from -1 to 1.</td></tr>
+<tr><td><b>False alarm</b></td><td>an alarm that fires when the known answer is "nothing is happening".</td></tr>
+<tr><td><b>Replay</b></td><td>feeding a recorded history through a method in time order, so each decision only uses what was known at that moment.</td></tr>
+</tbody></table>
+
+<h2>4. How to read each table</h2>
+<p><b>Documented swarm activity.</b> What others have published, with the date, the scale and who reported it. Secondary means a summary of someone else's report. Unverified means we found it but could not confirm it. The last column says whether we can see that channel at all.</p>
+<p><b>Public scanner reports by submitted host, weekly.</b> For each host, how many public reports were submitted for it in each week. The top table gives the host's normal weekly count (the median, leaving out the known swarm week and the weeks either side of it), its busiest week, and how many times higher that is than normal. "Baseline 0" means the host normally has no reports, so any count stands out.</p>
+<p><b>Observations.</b> Plain statements computed from the weekly counts, such as the first busy week and the total before and after the known end of the swarm.</p>
+<p><b>What the reports request.</b> The mix of endpoints in the submitted URLs, how many carry a query string or embed another URL, and how long the URLs are. Reports on /base64/ with long URLs carry content in the address itself.</p>
+<p><b>What the /base64/ pages contain.</b> The decoded pages, classified by type, with the share containing scripts, forms and fetch calls, and the public hosts they reference. This shows what the pages do and where they point; no page text is kept.</p>
+<p><b>Submitters of those reports.</b> For samples of reports, how many different submitter codes there are and how concentrated they are. A few submitters sending thousands of reports looks different from thousands of independent users. The second table checks whether submitters seen during the swarm weeks reappear later.</p>
+<p><b>Sensors.</b> What we collect, what state each source is in, and what is not built. A source marked "not built" is a blind spot.</p>
+<p><b>Sites checked.</b> A map by other researchers of 143 sites they checked for agent traces. Sites are shown by category and count; names are withheld to protect small site owners.</p>
+<p><b>Incident C replay and live score.</b> Tests of our own methods on the one swarm for which a full edit history is public, including the ones that failed.</p>
+
+<h2>5. How we look for traces, step by step</h2>
+<ol>
+<li><b>Start from a documented case.</b> Take a swarm that others have already described, so we know roughly when and where it was active.</li>
+<li><b>Find out what public trace it left.</b> Other researchers showed that agents limited to a "fetch this page" tool used a public web-analysis service as their browser. That service publishes every request, so the swarm left a public record there.</li>
+<li><b>Count the trace over time.</b> For each host that the case is known to have used, count public reports per week from February onward. Only counts are kept. No report content is stored.</li>
+<li><b>Compare against the host's own baseline.</b> A busy host is not evidence. A jump relative to that host's normal level is. For example, the host pie.dev, a free tool developers use to test web requests, appears in 506 public scanner reports in the week starting 15 June 2026 and in at most 3 reports in any other week since late February.</li>
+<li><b>Check the known dates.</b> The counts should rise and fall at the dates other researchers independently reported. Here the busiest week matches the peak of the wiki activity, and the counts fall to almost nothing in the week after the wiki activity ended.</li>
+<li><b>Look at what is requested.</b> On httpbin.org, httpbun.com and pie.dev the swarm-period reports are mostly requests to the /base64/ endpoint, which decodes a base64 string placed in the URL and returns it. A tool that can only fetch pages can use this to publish chosen content at a public address, and the scanner records each use. The page shows the endpoint mix for the swarm weeks and for recent weeks.</li>
+<li><b>Look at who submits.</b> A small, repeating set of submitters, mostly from cloud networks, is more informative than the raw count. Addresses are hashed immediately and never stored.</li>
+<li><b>Look outside the known dates.</b> The same pattern at another time, or from different submitters, would be a candidate for activity nobody has reported. A candidate is not an accusation, and no operator or organisation is named.</li>
+<li><b>Test with a second, independent method and report failures.</b> Results that a second method does not reproduce are labelled as such on the page.</li>
+</ol>
+
+<h2>6. What counts as a finding</h2>
+<p>A finding is a measurement that matches independently reported events and that a second method reproduces. A scanner report records the request and when it was made, not what program sent it, and the harness hosts also have ordinary users. So the signal is the jump against each host's own baseline, together with who submits and when. A high count without a jump is not a finding. A jump without a second method is a lead.</p>
+
+<h2>7. What was tried and did not work</h2>
+<ul>
+<li>Guessing the agents' vocabulary from their wiki edits: one independent preregistered detector did not reproduce our result.</li>
+<li>Grouping wiki pages into the published cohorts by who edited them: no better than guessing.</li>
+<li>Scoring live Wikimedia accounts as bot-like: AUC 0.69, against 0.64 for event counts alone.</li>
+<li>Searching GitHub, X and the open web for the swarm's phrases: only commentary about the incident.</li>
+<li>The urlscan service's public search for swarm-linked hosts: almost nothing, because the traces were in a different scanner.</li>
+</ul>
+
+<h2>8. How to repeat this</h2>
+<p>The weekly counts use urlquery's public search API with a free account; the key is read from a private file and never printed. In outline:</p>
+<ol>
+<li>Create a urlquery account and API key; save the key to a private file.</li>
+<li>Run <code>python scripts/urlquery_series.py</code>. It writes weekly counts per host and only counts.</li>
+<li>Run <code>python scripts/urlquery_submitters.py</code>. It hashes submitter addresses in memory and writes aggregates.</li>
+<li>Run <code>python scripts/build_observatory.py</code> and <code>python scripts/build_info.py</code> to regenerate these pages.</li>
+</ol>
+
+<h2>9. Data handling</h2>
+<ul>
+<li>The pages show counts only: no report contents, links, names or addresses.</li>
+<li>Submitter addresses are replaced by a short code on reading, using a random key that is destroyed after each run.</li>
+<li>urlquery's terms allow personal, non-commercial research and forbid redistributing their data, so only aggregate counts are published.</li>
+<li>Traces are not attributed to a lab, a company or a person. Findings that involve a third party go to that party first.</li>
+</ul>
+<p class="f"><a href="/observatory">Measurements</a>. <a href="https://maramasaeva.com">maramasaeva.com</a>.</p>
+</main></body></html>

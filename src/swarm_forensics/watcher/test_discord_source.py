@@ -39,6 +39,44 @@ class DiscordSourceTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.db = Path(self.temp.name) / "source.sqlite"
 
+    def test_status_reports_actual_archived_source_count_and_capture_time(self):
+        with source.Archive(self.db) as archive:
+            archive.capture(page(message(20), message(10)), before=None, captured_at=42)
+            status = archive.status()
+            self.assertEqual(status["source_count"], 2)
+            self.assertEqual(status["last_capture_at"], "1970-01-01T00:00:42+00:00")
+
+    def test_audit_checks_private_events_against_source_messages(self):
+        path = Path(self.temp.name) / "EVENTS.jsonl"
+        source_event = message(10)
+        record = {"id": f"discord:{CHANNEL}:10:reference", "type": "reference",
+                  "channel_id": CHANNEL, "guild_id": GUILD, "source_message_id": "10",
+                  "source_message_ids": ["10"], "author_id": source_event["author"]["id"],
+                  "timestamp": source_event["timestamp"], "source_quote": source_event["content"],
+                  "source_url": f"https://discord.com/channels/{GUILD}/{CHANNEL}/10"}
+        path.write_text(json.dumps(record) + "\n")
+        with source.Archive(self.db) as archive:
+            source.poll(archive, lambda before, **_: page(source_event)
+                        if before is None else page())
+            receipt = archive.audit(path)
+        self.assertEqual(receipt["verified_event_count"], 1)
+        self.assertEqual(receipt["source_count"], 1)
+
+    def test_audit_refuses_a_changed_quote(self):
+        path = Path(self.temp.name) / "EVENTS.jsonl"
+        source_event = message(10)
+        record = {"id": f"discord:{CHANNEL}:10:reference", "type": "reference",
+                  "channel_id": CHANNEL, "guild_id": GUILD, "source_message_id": "10",
+                  "source_message_ids": ["10"], "author_id": source_event["author"]["id"],
+                  "timestamp": source_event["timestamp"], "source_quote": "Not the source text",
+                  "source_url": f"https://discord.com/channels/{GUILD}/{CHANNEL}/10"}
+        path.write_text(json.dumps(record) + "\n")
+        with source.Archive(self.db) as archive:
+            source.poll(archive, lambda before, **_: page(source_event)
+                        if before is None else page())
+            with self.assertRaisesRegex(source.SourceError, "provenance"):
+                archive.audit(path)
+
     def test_capture_keeps_raw_page_and_does_not_ack(self):
         raw = page(message(120), message(110))
         with source.Archive(self.db) as archive:
@@ -273,6 +311,26 @@ class DiscordSourceTests(unittest.TestCase):
             self.assertIn("generation=2", archive.change_token(now=70, retry_seconds=60))
             archive.ack(100)
             self.assertEqual(archive.change_token(now=1000, retry_seconds=60), "WATCHER_IDLE")
+
+    def test_cli_audit_emits_verified_counts_without_source_text(self):
+        from swarm_forensics.watcher import discord_cli
+        path = Path(self.temp.name) / "EVENTS.jsonl"
+        source_event = message(10)
+        path.write_text(json.dumps({
+            "id": f"discord:{CHANNEL}:10:reference", "type": "reference",
+            "channel_id": CHANNEL, "guild_id": GUILD, "source_message_id": "10",
+            "author_id": source_event["author"]["id"],
+            "timestamp": source_event["timestamp"], "source_quote": source_event["content"],
+            "source_url": f"https://discord.com/channels/{GUILD}/{CHANNEL}/10"}) + "\n")
+        with source.Archive(self.db) as archive:
+            source.poll(archive, lambda before, **_: page(source_event)
+                        if before is None else page())
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = discord_cli.main(["--db", str(self.db), "audit", "--events", str(path)])
+        self.assertEqual(code, 0, err.getvalue())
+        self.assertEqual(json.loads(out.getvalue())["verified_event_count"], 1)
+        self.assertNotIn("Synthetic text", out.getvalue())
 
     def test_cli_supports_in_process_token_and_machine_readable_commands(self):
         from swarm_forensics.watcher import discord_cli

@@ -1,0 +1,58 @@
+experiment,title,reported_status,normalized_note,source_id,evidence_line
+5.1,DseWiki writes-only replay,positive_known,arrival and lock-in alarms after onset,1,523
+5.2,"Independent preregistered cross-check (Codex, branch merged)",not_reproduced,independent detector did not reproduce key vocabulary,1,531
+5.3,Cohort reconstruction,failed,actor co-editing did not recover published cohorts,1,535
+5.4,Arrivals vs published cohort starts,weak_control,arrival correlation barely beats raw activity,1,539
+5.5,Live Wikimedia score (weak label = platform bot flag; never a feature),weak_label,Wikimedia bot-label ranking; not an agent detector,1,543
+5.6,Cross-site vocabulary (independent investigators' records.jsonl),descriptive,cross-site vocabulary distribution,1,547
+5.7,"Fragment chains on shortener logs (rmn.re YOURLS, 499 links, 26 May to 21 Jun)",null,no same-shortener fragment chains,1,551
+5.8,"urlscan.io public search retrospective (counts per week, weeks starting)",null,urlscan public feed returned three results,1,555
+5.9,Phrase and string searches,null,phrase and string searches found no new channel,1,571
+5.10,"X (official API, owner's credentials, recent search)",partial_null,commentary only; X quota errors,1,578
+5.11,urlquery weekly series (search only; reports whose submitted URL domain is the host; weeks start Monday 23 Feb to 28 Sep 2026; last week partial to 1 Oct),positive_known,reproduced known urlquery trace,1,582
+5.12,"Submitters (hash in memory, per-run key, discarded; samples up to 600 reports per host-week)",descriptive,hashed submitter concentration aggregates,1,654
+5.13,Request shape,descriptive,endpoint and URL-shape distributions,1,696
+5.14,What the /base64/ pages contain (decoded in memory; no text stored),descriptive,decoded-page structure and referenced hosts,1,707
+5.15,"Examples from public reports (titles seen in web search results; structure only, no credentials)",examples,public-report structure examples without credentials,1,724
+5.16,"Swarm-versus-everything classifier (Codex, branch track-swarm-classifier, merged; preregistered)",confounded,behavior transfer dominated by platform artifacts,1,730
+5.17,GitHub census of self-declared agent accounts (public search API; aggregate monthly counts only),trend_only,self-declared GitHub bio trend,1,739
+5.18,DseWiki: agent writes against operator deletions around the stop,positive_known,writes stop before main operator cleanup,1,770
+5.19,Displacement and evasion hypothesis (Mara: the decline since discovery may mean agents hide better),hypotheses,run end supported; migration and evasion unresolved,1,825
+5.20,"The AI Village ""embassy"" and the outside-agent network on GitHub",positive_control,qualitative AI Village coordination example,1,835
+5.21,Village pages read (with Mara's approval; one request each; no receipt or certification endpoint requested),limited_read,two approved one-request page reads,1,844
+5.22,Bluesky census (public actor search; inconclusive),inconclusive,Bluesky account census not usable as a detector,1,849
+5.23,Wayback Machine captures of echo-service /base64/ URLs (independent public log) and the pre-registered test,candidate,Wayback pages pass fixed shape rule on three dates,1,853
+5.24,"Hidden-content hunt in the swarm's own writing (Codex, branch track-hidden-content, merged; preregistered at dc29dad before any real-data run)",null,ordinary multiline structure explains positives,1,895
+5.25,Hosts the agents posted that are missing from the community inventory (local check),lead_untested,OCR and screenshot chain remains untested,1,904
+5.26,Skeptic review of the Wayback lead (subagent B; rules written before running; spot-checked by the lead),weakened,Wayback lead survives but baseline is small,1,908
+5.27,"Directory of agent-native venues (subagent C; public pages and APIs only, one request per URL; individuals' handles omitted)",inventory,directory of agent-native venues,1,918
+5.28,"ClawHub registry census (full pass; lead's script, public API, one request per second)",background,ClawHub registry growth and keyword flags,1,959
+5.29,"ClawHub deep-dive (subagent E; rules pre-registered in its report section 0; own pass of 250 pages at about 1 request per second, no 429)",background_confounded,templated wrappers and rare network skills,1,967
+5.30,Successor-trace hunt in other public indexes (subagent D; decision rules written before running; 198 requests),null,successor-trace and OCR lead not supported,1,978
+5.31,"Wayback sweep and fetch-through tests (subagent A; rules pre-registered in its report header; 140 of 190 requests, no 429 or 403)",not_supported,Wayback fetch-through thresholds not supported,1,988
+5.32,Single-use message-bus channels on 6 and 8 July (Wayback index counts only; channel names never printed or stored),candidate_confirmed_narrow,8 July lifetime pattern is campaign-like,1,998
+5.33,"Burst sweep over 24 relay, paste and echo services, 1 Jan 2025 to 1 Oct 2026 (Codex, branch `track-burst-sweep`, merged)",recovered_known,July bursts recovered without targeting dates,1,1015
+5.34,"Agent social networks: Moltbook and The Colony (subagent; rule sha256 6dd6e312..., written before scoring; docs/agents/sub-socialnet.md)",benign_cluster,The Colony onboarding cluster; Moltbook null,1,1033
+5.35,"GitHub coordinated-account search (subagent; stalled before its report; rules in out/sub/github/RULE.md, written before scoring)",incomplete,known positive pair recovered; no new cluster claimed,1,1041
+5.36,"DSEWiki swarm recovered from the live RecentChanges (subagent; rule sha256 de210866..., written before scoring; docs/agents/sub-wiki.md)",positive_known,DseWiki swarm recovered from live RecentChanges,1,1047
+5.37,"Package-publish bursts on PyPI (subagent; rule sha256 cf51beff..., written before scoring; docs/agents/sub-pkg.md)",positive_candidate,one qualifying PyPI burst on 29 September,1,1056
+5.38,Fronts opened for the swarm-hackathon weekend (running; pre-registrations committed before scoring),preregistered_pipeline,cross-source detector and open fronts,1,1063
+5.39,"Certificate Transparency census (Codex, track-ct-logs; rule frozen 98ca410 before scoring)",null,certificate-transparency burst rule never fires,1,1068
+5.40,"Opaque reasoning-block leak census (Codex, track-reasoning-leaks; rule frozen 9a41621 before scoring)",null,no opaque reasoning-block cluster,1,1072
+5.41,Agent-protocol census and fleet test (pod; gentle.py index scan + fleet.py WARC fetch),ecosystem_census,"agent web growth; shared host, no covert fleet",1,1076
+5.42,"Cross-source simultaneity, final result (scripts/simultaneity.py; rule frozen a0f67bc before any day-list existed)",null,six-source maximum K equals one,1,1081
+5.43,"Behaviour and hidden-channel tracks (in progress; on branches, not merged)",in_progress,behavior and hidden-channel branches not merged,1,1085
+5.44,"Hugging Face creation-burst census (subagent; rule sha256 e364c8df, frozen before scoring; out/sub/hf2/)",qualified_null,Hugging Face mass creation is continuous background,1,1089
+5.45,"Nostr coordination census (pod; rule sha256 32aad9ca, frozen before scoring; out/sub/nostr/)",near_null,one ambiguous identical-note cohort,1,1097
+5.46,"Bluesky coordination census (pod; rule sha256 1312c9e7, frozen before scoring; out/sub/bsky/)",candidate_retired,Bluesky signal later shown to be unresolved candidate,1,1102
+5.47,"Bluesky candidate resolved — an artifact, not coordination (pod; rule bluesky2, frozen before scoring)",artifact_null,empty-text hashing artifact,1,1107
+5.48,"npm templated-scope lead resolved (pod; rule npm-scope, frozen before scoring; out/sub/npm/)",null,npm template is a 2021 multi-publisher artifact,1,1112
+5.49,"MCP server registry census (pod; rule mcp-registry, frozen before scoring; out/sub/mcp/)",inconclusive,MCP naming convention confounds fleet test,1,1117
+5.50,Mastodon coordination census (pod; rule sha256 in mastodon-prereg.md; frozen before scoring; out/sub/mastodon/),null_partial,no qualifying Mastodon cohort; auth-gated coverage,1,1123
+5.51,"A coordinated multi-account paper-reproduction cohort on Hugging Face Spaces (pod; rule hf-spaces-cohort, frozen before scoring; out/sub/hfspaces/) - STRONGEST NEW CANDIDATE",candidate_revised,HF cohort first framed as strongest candidate,1,1128
+5.52,"The HF repro-cohort characterized - a shared-task reproduction effort, not a synchronized swarm (pod; rule hf-spaces-deepen, frozen before scoring; out/sub/hfspaces2/)",revised_interpretation,shared-task reproduction; not synchronized swarm,1,1135
+5.53,"Go module index burst census (pod; rule gomod, frozen before scoring; out/sub/gomod/) - partial coverage",partial_weak,Go module walk ends before July,1,1141
+5.54,"The HF repro-cohort identified - an open, tagged ICML-2026 reproduction program (pod; rule hf-spaces-deepen2; out/sub/hfdeep2/)",benign_open_program,ICML-2026 reproduction program identified,1,1146
+5.55,"HF September burst scan - continuous background, with 29 Sep a multi-source day (pod; rule hf-september; out/sub/hfsep/)",background_coincidence,29 September elevated but HF background is continuous,1,1151
+5.56,"Cross-source simultaneity, updated with the echo-service source (scripts/simultaneity.py; frozen rule a0f67bc)",positive_corroboration,echo service raises cross-source maximum to two,1,1157
+5.57,crates.io burst census (pod; rule crates; out/sub/crates/) - null,null,crates.io adds no qualifying burst,1,1164

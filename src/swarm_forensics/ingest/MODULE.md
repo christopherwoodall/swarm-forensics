@@ -30,20 +30,23 @@ Acquire raw AI Village data under `data/raw/`. Provide a downloader for the Hugg
 
 ## 4. Current State & Known Gaps
 - Historical: Earlier work reported a completed bulk download and bounded real-data validation. This session did not reproduce those results.
-- State: This checkout lacks the root raw tables and upstream reference bodies. Synthetic samples remain available.
+- State: This checkout lacks the root raw tables. Synthetic samples remain available.
+- State: The user downloaded `SCHEMA.md`, `CHANGELOG.md`, and `manifest.json`. Their sizes and Git blob hashes match the observed revision.
 - State: Public metadata confirms 13 table configurations at revision `838b4150303ca8228e8edb432d8b8ccae353d258`.
 - State: All 13 tables have a contract. Its recorded revision matches current public metadata. No full scan has run.
 - State: Read the [structure report](../../../colette-research/notes/ai-village-dataset-structure.md) for the file census and evidence limits.
-- Gap: `HF_TOKEN` is unset in this session. Gated records, schema text, and changelog text were not inspected.
+- State: Upstream reference bodies were inspected. The manifest declares 3,646,304 rows across 13 tables. No raw recount ran.
+- Gap: Card and schema row estimates are stale. Use revision-bound manifest counts, labelled as declared counts.
+- Gap: Hermes filters protected `HF_TOKEN` credentials from tool processes. Agent-side authenticated acquisition remains unavailable.
 - State: `--schema-only` selection covers three reference files.
 - Gap: Contracts use `SCHEMA.md` plus bounded field-type inspection. `SCHEMA.md` omits `chat_rooms` name lists, `villages.is_chat_open`, `villages.schedule`, and `claude_code_messages.message_uuid`.
 - Gap: Event payloads are typed per field only. No per-action required fields exist. `startDay` and `endDay` are untyped.
 - Gap: Foreign keys, event ordering, and the village transcript are not validated.
 - Gap: The sample covers three tables only.
 - Gap: Screenshot download is not supported.
-- Gap: Downloaded files are not checked against a checksum.
+- Gap: The downloader does not enforce checksum verification. This inspection manually verified the three reference Git blob hashes.
 
 ## 5. Pruned Decisions (Keep max 3)
-- [2026-10-03 Hermes]: Separate public file metadata from raw-record evidence. Preserve earlier validation reports as historical claims.
+- [2026-10-03 Hermes]: Bind references to revisions. Prefer manifest counts over stale prose estimates. Separate scaffolding regimes from behavioral evidence.
 - [2026-10-01 Droid]: Add JSON Schema contracts and streaming validation before parsers. Contracts allow unknown fields and keep required fields minimal.
 - [2026-10-01 Droid]: User approved all non-image files. This replaces the three-table limit in `AGENTS.md`.
