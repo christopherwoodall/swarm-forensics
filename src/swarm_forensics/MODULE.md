@@ -17,6 +17,8 @@ Read [PROJECT_BRIEF.md](../../PROJECT_BRIEF.md) for the proposed direction and d
 - Planned interfaces: forensic schema, event stream parsers, and graph builder. These are not exported yet.
 - Commands: run through the root `Makefile` (`make help`).
 - Watcher setup: `make watcher-client`, `make watcher-init`, and `make watcher-read [WATCHER_AFTER=<cursor>]`.
+- Watcher collector: `watcher/`. See [watcher/MODULE.md](watcher/MODULE.md) for acquisition and acknowledgement contracts.
+- Watcher commands: `make watcher-poll`, `watcher-pending`, `watcher-ack`, `watcher-status`, and `watcher-monitor`.
 - Watcher dependency: official FairyStack peer client downloaded to ignored `data/raw/fairystack/`.
 - Watcher credential: private user configuration outside the repository; public metadata lives in `colette-research/hermes-log/ENROLLMENT.json`.
 - `replay.py`: `export_session(session_id, dir)`, `build_mock_case()`, `validate_case(case)`, `ReplayError`. CLI: `--mock | --session UUID`. Contract: `schema_version` 1, one JSON file per session, written under `data/raw/replay/`.
@@ -39,11 +41,14 @@ Read [PROJECT_BRIEF.md](../../PROJECT_BRIEF.md) for the proposed direction and d
 - Gap: Hermes plugins and FairyStack integration remain proposals or externally reported experiments.
 - State: The local silent-watcher identity was initialized. Private file and directory permissions were verified.
 - State: Conversation enrollment and authenticated reads are verified. The retained source history is archived under `data/raw/fairystack/`.
-- Gap: Watcher commands do not provide automatic polling or ledger extraction.
-- State: Watcher setup is paused at Colette's request. Resume from `colette-research/hermes-log/CHECKPOINT.json`.
+- State: The GET-only watcher collector passes live polling, archive reconciliation, 130 tests, and Ruff.
+- State: The ledger records 46 meaningful events from 120 retained source events through cursor 2217.
+- State: Cron job `698c454d0a09` runs every two minutes with a deterministic idle gate and local-only output.
+- Verified: The autonomous worker completed a live read and validated all 46 ledger records against archived sources.
+- Gap: No new source batch arrived during the worker test. Retain pending sources if later extraction fails.
+- State: Resume from `colette-research/hermes-log/CHECKPOINT.json`. Enrollment expires October 2 at 20:20:23 UTC.
 
 ## 5. Pruned Decisions (Keep max 3)
-- [2026-10-01 Hermes]: Use a session-specific external identity for observation. Keep credentials outside version control.
+- [2026-10-01 Hermes]: Separate source acquisition from acknowledged ledger extraction. Retain raw provenance and pending work after interruption.
 - [2026-10-01 Droid]: Check the pivot graph file by shape only. The counts have no source rows in this repo, so the viewer labels them as unverified.
 - [2026-10-01 Droid]: Name status `stderr_recorded`, not "error". The dataset `error` field holds stderr, and `git push` writes its normal progress text there.
-- [2026-10-01 Hermes]: Separate discussion proposals from verified acquisition tooling. Correct the documentation's unimplemented export claims.

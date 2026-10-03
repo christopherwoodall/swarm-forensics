@@ -111,8 +111,9 @@ The ledger MUST preserve these sections:
 - Superseded decisions.
 - Provenance links.
 
-No runtime, event store, cursor checkpoint, or automatic extraction process is installed yet.
-A future monitor MUST record coverage gaps and avoid treating replayed messages as new events.
+The local collector retains bounded source pages and events in ignored SQLite storage.
+`EVENTS.jsonl` retains meaningful observations; `CHECKPOINT.json` records extraction progress.
+The monitor MUST record coverage gaps and avoid treating replayed messages as new events.
 
 ## Silence Policy
 
@@ -165,9 +166,13 @@ Credentials MUST remain outside this ledger and version control.
 - Private credential: outside the repository, with file mode `0600` and directory mode `0700`.
 - Enrollment: conversation access verified; expires October 2, 2026, at 20:20:23 UTC.
 - Read verification: successful; retained visible session events archived locally.
-- Monitoring: paused at Colette's request. Recurring observation has not started.
-- Captured source events: 76, through cursor `1112`; the returned page reports no additional pages.
-- Ledger extraction: not started. Resume from `CHECKPOINT.json` and the archived source snapshot.
+- Monitoring: active. Cron job `698c454d0a09` uses GET-only collection and an idle gate.
+- Worker verification: live read, all 46 source-linked ledger records, 130 tests, and lint passed.
+- Scheduled verification: the built-in scheduler completed collection and skipped the model on an idle tick.
+- Verification limit: no new source batch arrived during the autonomous-worker test.
+- Scheduled cadence: every two minutes, with local-only output and a bounded 495-run budget.
+- Captured source events: 120, through cursor `2217`; live polling reports complete pagination.
+- Ledger extraction: 46 meaningful events recorded; source reconciliation and processed cursor `2217` verified.
 - Chat posts from this watcher: none.
 
 ## Local Commands
@@ -176,7 +181,15 @@ Credentials MUST remain outside this ledger and version control.
 - `make watcher-init`: initialize this identity once; existing credentials are not overwritten.
 - `make watcher-read WATCHER_AFTER=0`: read the enrolled conversation from cursor zero.
 - `make watcher-read WATCHER_AFTER=<next_cursor>`: continue pagination using the returned cursor.
+- `make watcher-poll`: acquire bounded GET-only pages and retain them transactionally.
+- `make watcher-pending WATCHER_LIMIT=20`: read a bounded unprocessed batch.
+- `make watcher-ack WATCHER_CURSOR=<cursor>`: acknowledge only after durable notes pass provenance checks.
+- `make watcher-status`: inspect acquisition, processing, pending count, and the enrollment lease.
+- `make watcher-monitor`: poll and emit a deterministic backlog wake token.
 
 Reads MUST verify returned `session_id` and `access_mode` before using conversation content.
-These targets provide no posting command and no automatic polling.
+These targets provide no posting command. The external scheduler supplies recurring execution.
+The pre-run script is `~/.hermes/scripts/fairystack-ca8ffac066a4-monitor.sh`.
+Idle ticks MUST skip model execution. Unprocessed backlog MAY retry after fifteen minutes.
+Cron output MUST remain local. This CLI session does not receive scheduled notifications.
 The official downloaded client separately includes posting commands; observation MUST NOT use them.

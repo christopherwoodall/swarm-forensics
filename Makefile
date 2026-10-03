@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 .PHONY: help setup data-info data-download data-sample test lint watcher-client watcher-init watcher-read
 .PHONY: help setup data-info data-schema data-download data-sample data-validate replay-mock replay-export replay-serve pivot-check pivot-serve test lint
+.PHONY: watcher-poll watcher-pending watcher-ack watcher-status watcher-monitor
 
 # The repository can sit on a different filesystem than the uv cache.
 export UV_LINK_MODE := copy
@@ -14,6 +15,13 @@ WATCHER_CLIENT := $(RAW_DIR)/fairystack/external-agent-client.py
 WATCHER_PRIVATE_DIR := $(HOME)/.config/fairystack-watcher
 WATCHER_CONFIG := $(WATCHER_PRIVATE_DIR)/ca8ffac066a4.json
 WATCHER_AFTER ?= 0
+WATCHER_DB ?= $(RAW_DIR)/fairystack/ca8ffac066a4/source.sqlite
+WATCHER_LIMIT ?= 50
+WATCHER_MAX_PAGES ?= 20
+WATCHER_TOTAL_SECONDS ?= 30
+WATCHER_RETRY_SECONDS ?= 900
+WATCHER_RUN = $(RUN) $(if $(findstring --frozen,$(RUN)),,--frozen)
+WATCHER_CMD = $(WATCHER_RUN) python -m swarm_forensics.watcher --db "$(WATCHER_DB)" --config "$(WATCHER_CONFIG)"
 
 # Optional: TABLES="events chat_messages" and REVISION=<commit>.
 DATA_DIR ?= $(RAW_DIR)/sample
@@ -70,18 +78,33 @@ test: setup ## Run the offline unit tests
 	$(RUN) python -m unittest discover -s src -t src -p "test_*.py"
 
 lint: setup ## Check code style with ruff
-	$(RUN) ruff check src
+	$(RUN) ruff check src data/viz_mock/v2/serve.py data/viz_mock/v3_transluce/serve.py
 
 watcher-client: $(WATCHER_CLIENT) ## Download the official FairyStack external-agent client
 
 $(WATCHER_CLIENT):
 	@mkdir -p "$(dir $(WATCHER_CLIENT))"
-	curl --fail --silent --show-error --location --proto '=https' --max-time 30 --output "$@" https://multi.fairystack.com/external-agent-client.py
+	@curl --fail --silent --show-error --location --proto '=https' --max-time 30 --output "$@" https://multi.fairystack.com/external-agent-client.py
 
 watcher-init: watcher-client ## Create a private watcher credential and print public enrollment metadata
 	@install -d -m 700 "$(WATCHER_PRIVATE_DIR)"
 	$(RUN) python "$(WATCHER_CLIENT)" --config "$(WATCHER_CONFIG)" init --origin https://multi.fairystack.com --id hermes-maria-ca8ffac066a4 --name "Hermes Silent Watcher"
 
 watcher-read: watcher-client ## Read the enrolled conversation with WATCHER_AFTER as its cursor
-	$(RUN) python "$(WATCHER_CLIENT)" --config "$(WATCHER_CONFIG)" read --after "$(WATCHER_AFTER)"
-	$(RUN) ruff check src data/viz_mock/v2/serve.py data/viz_mock/v3_transluce/serve.py
+	@$(RUN) python "$(WATCHER_CLIENT)" --config "$(WATCHER_CONFIG)" read --after "$(WATCHER_AFTER)"
+
+watcher-poll: ## Archive fresh source pages with bounded GET requests
+	@$(WATCHER_CMD) poll --max-pages "$(WATCHER_MAX_PAGES)" --total-seconds "$(WATCHER_TOTAL_SECONDS)"
+
+watcher-pending: ## Emit unprocessed source events as JSON (WATCHER_LIMIT=50)
+	@$(WATCHER_CMD) pending --limit "$(WATCHER_LIMIT)"
+
+watcher-ack: ## Acknowledge durable analysis (WATCHER_CURSOR required)
+	@test -n "$(WATCHER_CURSOR)" || { printf '%s\n' 'Set WATCHER_CURSOR=<cursor>.' >&2; exit 1; }
+	@$(WATCHER_CMD) ack --cursor "$(WATCHER_CURSOR)"
+
+watcher-status: ## Emit archive cursors and pending count as JSON
+	@$(WATCHER_CMD) status
+
+watcher-monitor: ## Poll and emit WATCHER_IDLE or a backlog wake generation
+	@$(WATCHER_CMD) monitor --max-pages "$(WATCHER_MAX_PAGES)" --total-seconds "$(WATCHER_TOTAL_SECONDS)" --retry-seconds "$(WATCHER_RETRY_SECONDS)"
