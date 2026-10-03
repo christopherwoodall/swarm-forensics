@@ -1,0 +1,2812 @@
+{
+  "dataset": "aidigestorg/ai-village",
+  "observed_on": "2026-10-03",
+  "scope": "Public dataset card, public Hub metadata, and existing local record contract. No raw records inspected.",
+  "summary": {
+    "revision": "838b4150303ca8228e8edb432d8b8ccae353d258",
+    "last_modified": "2026-09-20T13:54:41.000Z",
+    "tree_entries": 392,
+    "directories": [
+      "images",
+      "images/computer-use-turns"
+    ],
+    "file_count": 390,
+    "table_count": 13,
+    "nonimage_file_count": 20,
+    "image_file_count": 370,
+    "daily_tar_count": 369,
+    "tar_first_date": "2025-04-02",
+    "tar_last_date": "2026-08-21",
+    "archive_calendar_span_days": 507,
+    "absent_calendar_archive_dates": 138,
+    "current_bytes": 176865369812,
+    "table_bytes": 5441682570,
+    "nonimage_bytes": 5803978687,
+    "image_bytes": 171061391125,
+    "hub_used_storage_bytes": 392608511991
+  },
+  "checks": {
+    "hub_metadata_tree_file_sizes_match": true,
+    "tree_pagination_has_more": false,
+    "table_config_names_match_file_names": true,
+    "local_schema_table_names_match_configs": true,
+    "local_schema_revision_matches_current_hub_revision": true,
+    "raw_dataset_records_inspected": 0,
+    "screenshots_downloaded": 0,
+    "dataset_tables_downloaded": 0,
+    "upstream_schema_and_changelog_body_access": "blocked by manual access gate",
+    "make_data_info": "failed: HF_TOKEN is unset",
+    "make_test": "passed: 130 tests",
+    "make_lint": "passed"
+  },
+  "sources": {
+    "hub_metadata": {
+      "citation_id": 1,
+      "raw_evidence": "../../../data/raw/ai-village-structure/hub-metadata.json"
+    },
+    "hub_tree": {
+      "citation_id": 2,
+      "raw_evidence": "../../../data/raw/ai-village-structure/hub-tree.json"
+    },
+    "dataset_card": {
+      "citation_id": 3,
+      "raw_evidence": "../../../data/raw/ai-village-structure/dataset-card.md"
+    },
+    "local_contract": {
+      "citation_id": 4,
+      "path": "../../../src/swarm_forensics/ingest/dataset.schema.json"
+    }
+  },
+  "tables": [
+    {
+      "name": "agent_goals",
+      "bytes": 3973,
+      "row_count_as_stated_by_card": null,
+      "row_count_verified": false,
+      "role": "Individual goal definitions and optional time bounds"
+    },
+    {
+      "name": "agent_memories",
+      "bytes": 2438234633,
+      "row_count_as_stated_by_card": "~165k",
+      "row_count_verified": false,
+      "role": "Agent-authored consolidation memories"
+    },
+    {
+      "name": "agents",
+      "bytes": 5280,
+      "row_count_as_stated_by_card": "31",
+      "row_count_verified": false,
+      "role": "Agent identity, model, state, and token usage"
+    },
+    {
+      "name": "chat_messages",
+      "bytes": 52543996,
+      "row_count_as_stated_by_card": "~123k",
+      "row_count_verified": false,
+      "role": "Agent and human messages"
+    },
+    {
+      "name": "chat_rooms",
+      "bytes": 1711,
+      "row_count_as_stated_by_card": "5",
+      "row_count_verified": false,
+      "role": "Room definitions and routing metadata"
+    },
+    {
+      "name": "claude_code_messages",
+      "bytes": 104002877,
+      "row_count_as_stated_by_card": "~245k",
+      "row_count_verified": false,
+      "role": "Claude Code SDK message stream"
+    },
+    {
+      "name": "claude_code_sessions",
+      "bytes": 12662,
+      "row_count_as_stated_by_card": "~300",
+      "row_count_verified": false,
+      "role": "Claude Code SDK session records"
+    },
+    {
+      "name": "computer_use_sessions",
+      "bytes": 40080397,
+      "row_count_as_stated_by_card": "~37k",
+      "row_count_verified": false,
+      "role": "Computer task sessions and goals"
+    },
+    {
+      "name": "computer_use_turns",
+      "bytes": 2475319119,
+      "row_count_as_stated_by_card": "~1.14M",
+      "row_count_verified": false,
+      "role": "Actions, provider messages, and tool outputs"
+    },
+    {
+      "name": "events",
+      "bytes": 328621853,
+      "row_count_as_stated_by_card": "~233k",
+      "row_count_verified": false,
+      "role": "Ordered village activity timeline"
+    },
+    {
+      "name": "summaries",
+      "bytes": 2851293,
+      "row_count_as_stated_by_card": "~800",
+      "row_count_verified": false,
+      "role": "Generated daily, agent, and goal summaries"
+    },
+    {
+      "name": "village_goals",
+      "bytes": 4449,
+      "row_count_as_stated_by_card": "~45",
+      "row_count_verified": false,
+      "role": "Village-wide goal intervals"
+    },
+    {
+      "name": "villages",
+      "bytes": 327,
+      "row_count_as_stated_by_card": "1",
+      "row_count_verified": false,
+      "role": "Village metadata and current state"
+    }
+  ],
+  "screenshot_archives_by_month": {
+    "2025-04": {
+      "archives": 23,
+      "bytes": 3000442880
+    },
+    "2025-05": {
+      "archives": 24,
+      "bytes": 2252421120
+    },
+    "2025-06": {
+      "archives": 22,
+      "bytes": 3274864640
+    },
+    "2025-07": {
+      "archives": 23,
+      "bytes": 4069601280
+    },
+    "2025-08": {
+      "archives": 21,
+      "bytes": 4468654080
+    },
+    "2025-09": {
+      "archives": 22,
+      "bytes": 4685486080
+    },
+    "2025-10": {
+      "archives": 23,
+      "bytes": 5091123200
+    },
+    "2025-11": {
+      "archives": 20,
+      "bytes": 7724605440
+    },
+    "2025-12": {
+      "archives": 23,
+      "bytes": 11769169920
+    },
+    "2026-01": {
+      "archives": 22,
+      "bytes": 7563417600
+    },
+    "2026-02": {
+      "archives": 20,
+      "bytes": 9821808640
+    },
+    "2026-03": {
+      "archives": 22,
+      "bytes": 9771929600
+    },
+    "2026-04": {
+      "archives": 22,
+      "bytes": 12214630400
+    },
+    "2026-05": {
+      "archives": 21,
+      "bytes": 10788587520
+    },
+    "2026-06": {
+      "archives": 23,
+      "bytes": 22674421760
+    },
+    "2026-07": {
+      "archives": 23,
+      "bytes": 32873072640
+    },
+    "2026-08": {
+      "archives": 15,
+      "bytes": 19017134080
+    }
+  },
+  "screenshot_archives_by_weekday": {
+    "Wednesday": 73,
+    "Thursday": 73,
+    "Friday": 73,
+    "Saturday": 3,
+    "Sunday": 3,
+    "Monday": 72,
+    "Tuesday": 72
+  },
+  "local_contract": {
+    "revision": "838b4150303ca8228e8edb432d8b8ccae353d258",
+    "unknown_fields_allowed": true,
+    "tables": {
+      "agent_goals": {
+        "required": [
+          "id",
+          "agent_id"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "agent_id": {
+            "$ref": "#/$defs/uuid",
+            "x-references": "agents.id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "short_name": {
+            "type": "string"
+          },
+          "description": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "start_time": {
+            "$ref": "#/$defs/timestamp_or_null"
+          },
+          "end_time": {
+            "$ref": "#/$defs/timestamp_or_null"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "agent_memories": {
+        "required": [
+          "id",
+          "content",
+          "agent_id"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "content": {
+            "type": "string"
+          },
+          "agent_id": {
+            "$ref": "#/$defs/uuid",
+            "x-references": "agents.id"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "agents": {
+        "required": [
+          "id",
+          "name",
+          "model_string"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "model_string": {
+            "type": "string"
+          },
+          "goal": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "status_message": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "is_participating": {
+            "type": "boolean"
+          },
+          "is_pending": {
+            "type": "boolean"
+          },
+          "is_updating_memory": {
+            "type": "boolean"
+          },
+          "is_paused_for_google_sign_in": {
+            "type": "boolean"
+          },
+          "input_tokens_used": {
+            "type": "integer"
+          },
+          "output_tokens_used": {
+            "type": "integer"
+          },
+          "last_seen_event_index": {
+            "type": "integer",
+            "x-references": "events.event_index"
+          },
+          "paused_until": {
+            "$ref": "#/$defs/timestamp_or_null"
+          },
+          "paused_until_task_id": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "current_computer_use_session_id": {
+            "$ref": "#/$defs/uuid_or_null",
+            "x-references": "computer_use_sessions.id"
+          },
+          "current_human_use_session_request_id": {
+            "$ref": "#/$defs/uuid_or_null"
+          },
+          "current_room_id": {
+            "$ref": "#/$defs/uuid_or_null",
+            "x-references": "chat_rooms.id"
+          },
+          "money": {
+            "type": "string"
+          },
+          "emoji": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "village_id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "chat_messages": {
+        "required": [
+          "id",
+          "speaker_type",
+          "content",
+          "room_id",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "speaker_type": {
+            "type": "string",
+            "description": "agent or user"
+          },
+          "agent_speaker_id": {
+            "$ref": "#/$defs/uuid_or_null",
+            "x-references": "agents.id"
+          },
+          "user_speaker_id": {
+            "$ref": "#/$defs/uuid_or_null"
+          },
+          "content": {
+            "type": "string"
+          },
+          "room_id": {
+            "$ref": "#/$defs/uuid",
+            "x-references": "chat_rooms.id"
+          },
+          "has_been_approved": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "chat_rooms": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "deleted_at": {
+            "$ref": "#/$defs/timestamp_or_null"
+          },
+          "last_nudger_run_at": {
+            "$ref": "#/$defs/timestamp_or_null"
+          },
+          "last_nudger_run_chat_message_id": {
+            "$ref": "#/$defs/uuid_or_null",
+            "x-references": "chat_messages.id"
+          },
+          "blacklisted_agent_names": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "whitelisted_agent_names": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "village_id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "claude_code_messages": {
+        "required": [
+          "id",
+          "agent_id",
+          "sdk_session_id",
+          "message_type",
+          "content"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "agent_id": {
+            "$ref": "#/$defs/uuid",
+            "x-references": "agents.id"
+          },
+          "sdk_session_id": {
+            "type": "string",
+            "x-references": "claude_code_sessions.sdk_session_id"
+          },
+          "message_type": {
+            "type": "string",
+            "description": "assistant, user, system, or result"
+          },
+          "message_subtype": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "message_uuid": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "content": {
+            "type": "object"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "claude_code_sessions": {
+        "required": [
+          "id",
+          "agent_id",
+          "sdk_session_id"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "agent_id": {
+            "$ref": "#/$defs/uuid",
+            "x-references": "agents.id"
+          },
+          "sdk_session_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "computer_use_sessions": {
+        "required": [
+          "id",
+          "agent_id"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "agent_id": {
+            "$ref": "#/$defs/uuid",
+            "x-references": "agents.id"
+          },
+          "session_goal": {
+            "type": "string"
+          },
+          "short_displayed_session_goal": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "has_been_asked_to_stop": {
+            "type": "boolean"
+          },
+          "village_id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "computer_use_turns": {
+        "required": [
+          "id",
+          "session_id",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "session_id": {
+            "$ref": "#/$defs/uuid",
+            "x-references": "computer_use_sessions.id"
+          },
+          "agent_action": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "agent_messages": {
+            "description": "Raw model response. An object or an array, depending on the provider.",
+            "type": [
+              "object",
+              "array"
+            ]
+          },
+          "output": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "error": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "system": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "screenshot_is_redacted": {
+            "type": "boolean"
+          },
+          "has_redaction_been_overruled": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "events": {
+        "required": [
+          "id",
+          "event_index",
+          "data",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "event_index": {
+            "type": "integer"
+          },
+          "data": {
+            "$ref": "#/$defs/event_data"
+          },
+          "village_id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "summaries": {
+        "required": [
+          "id",
+          "type",
+          "content"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "type": {
+            "type": "string",
+            "description": "daily, goal, agent, and a few experiments"
+          },
+          "summary_target": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "summary_date": {
+            "description": "Pacific-time calendar date as YYYY-MM-DD.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "content": {
+            "type": "string"
+          },
+          "generated_by": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "village_id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "village_goals": {
+        "required": [
+          "id",
+          "goal"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "goal": {
+            "type": "string"
+          },
+          "start_time": {
+            "$ref": "#/$defs/timestamp_or_null"
+          },
+          "end_time": {
+            "$ref": "#/$defs/timestamp_or_null"
+          },
+          "village_id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      },
+      "villages": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "village_goal": {
+            "$ref": "#/$defs/string_or_null"
+          },
+          "active_agent_id": {
+            "$ref": "#/$defs/uuid_or_null",
+            "x-references": "agents.id"
+          },
+          "turn_id": {
+            "$ref": "#/$defs/uuid_or_null"
+          },
+          "is_chat_open": {
+            "type": "boolean"
+          },
+          "schedule": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "created_at": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/$defs/timestamp"
+          }
+        }
+      }
+    },
+    "event_payload": {
+      "description": "Event payload. The field actionType is the discriminator. Unknown action types and fields are allowed.",
+      "type": "object",
+      "required": [
+        "actionType"
+      ],
+      "x-documented-action-types": [
+        "AGENT_TALK",
+        "USER_TALK",
+        "START_USING_COMPUTER",
+        "STOP_USING_COMPUTER",
+        "CONSOLIDATE",
+        "WAIT",
+        "PAUSE",
+        "SEARCH_HISTORY",
+        "ENTER_ROOM",
+        "REQUEST_HUMAN_HELPER",
+        "CANCEL_REQUEST_FOR_HUMAN_HELPER",
+        "STOP_HUMAN_USE_SESSION",
+        "REQUEST_GOOGLE_SIGN_IN",
+        "RESTARTING_AFTER_GOOGLE_SIGN_IN",
+        "OUTREACH_APPROVAL_REQUEST",
+        "OUTREACH_APPROVAL_RESPONSE",
+        "USER_NAME_CHANGE"
+      ],
+      "properties": {
+        "actionType": {
+          "type": "string"
+        },
+        "agentId": {
+          "$ref": "#/$defs/uuid_or_null",
+          "x-references": "agents.id"
+        },
+        "speakerId": {
+          "$ref": "#/$defs/uuid_or_null",
+          "x-references": "agents.id"
+        },
+        "speakerName": {
+          "$ref": "#/$defs/string_or_null"
+        },
+        "roomId": {
+          "$ref": "#/$defs/uuid_or_null",
+          "x-references": "chat_rooms.id"
+        },
+        "messageId": {
+          "$ref": "#/$defs/uuid_or_null",
+          "x-references": "chat_messages.id"
+        },
+        "computerUseSessionId": {
+          "$ref": "#/$defs/uuid_or_null",
+          "x-references": "computer_use_sessions.id"
+        },
+        "content": {
+          "$ref": "#/$defs/string_or_null"
+        },
+        "sessionGoal": {
+          "$ref": "#/$defs/string_or_null"
+        },
+        "summary": {
+          "$ref": "#/$defs/string_or_null"
+        },
+        "nextSessionGoal": {
+          "$ref": "#/$defs/string_or_null"
+        },
+        "query": {
+          "$ref": "#/$defs/string_or_null"
+        },
+        "answerToQuery": {
+          "$ref": "#/$defs/string_or_null"
+        },
+        "seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "inputTokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "outputTokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "output": {
+          "$ref": "#/$defs/provider_payload"
+        }
+      }
+    }
+  },
+  "file_inventory": [
+    {
+      "path": ".gitattributes",
+      "bytes": 2564,
+      "kind": "reference_or_transcript"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 21965,
+      "kind": "reference_or_transcript"
+    },
+    {
+      "path": "README.md",
+      "bytes": 15101,
+      "kind": "reference_or_transcript"
+    },
+    {
+      "path": "SCHEMA.md",
+      "bytes": 18647,
+      "kind": "reference_or_transcript"
+    },
+    {
+      "path": "agent_goals.jsonl.gz",
+      "bytes": 3973,
+      "kind": "table"
+    },
+    {
+      "path": "agent_memories.jsonl.gz",
+      "bytes": 2438234633,
+      "kind": "table"
+    },
+    {
+      "path": "agents.jsonl.gz",
+      "bytes": 5280,
+      "kind": "table"
+    },
+    {
+      "path": "chat_messages.jsonl.gz",
+      "bytes": 52543996,
+      "kind": "table"
+    },
+    {
+      "path": "chat_rooms.jsonl.gz",
+      "bytes": 1711,
+      "kind": "table"
+    },
+    {
+      "path": "claude_code_messages.jsonl.gz",
+      "bytes": 104002877,
+      "kind": "table"
+    },
+    {
+      "path": "claude_code_sessions.jsonl.gz",
+      "bytes": 12662,
+      "kind": "table"
+    },
+    {
+      "path": "computer_use_sessions.jsonl.gz",
+      "bytes": 40080397,
+      "kind": "table"
+    },
+    {
+      "path": "computer_use_turns.jsonl.gz",
+      "bytes": 2475319119,
+      "kind": "table"
+    },
+    {
+      "path": "events.jsonl.gz",
+      "bytes": 328621853,
+      "kind": "table"
+    },
+    {
+      "path": "example.py",
+      "bytes": 1691,
+      "kind": "reference_or_transcript"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-02.tar",
+      "bytes": 251688960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-03.tar",
+      "bytes": 215951360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-04.tar",
+      "bytes": 195246080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-05.tar",
+      "bytes": 135557120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-06.tar",
+      "bytes": 145612800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-07.tar",
+      "bytes": 155985920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-08.tar",
+      "bytes": 162560000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-09.tar",
+      "bytes": 221184000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-10.tar",
+      "bytes": 135782400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-11.tar",
+      "bytes": 42967040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-14.tar",
+      "bytes": 149422080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-15.tar",
+      "bytes": 79063040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-16.tar",
+      "bytes": 163952640,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-17.tar",
+      "bytes": 112680960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-18.tar",
+      "bytes": 107694080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-21.tar",
+      "bytes": 88576000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-22.tar",
+      "bytes": 83025920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-23.tar",
+      "bytes": 126720000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-24.tar",
+      "bytes": 115312640,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-25.tar",
+      "bytes": 76666880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-28.tar",
+      "bytes": 58152960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-29.tar",
+      "bytes": 123514880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-04-30.tar",
+      "bytes": 53125120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-01.tar",
+      "bytes": 60241920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-02.tar",
+      "bytes": 37109760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-05.tar",
+      "bytes": 148776960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-06.tar",
+      "bytes": 104396800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-07.tar",
+      "bytes": 64778240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-08.tar",
+      "bytes": 105451520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-09.tar",
+      "bytes": 84899840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-10.tar",
+      "bytes": 65382400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-11.tar",
+      "bytes": 65771520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-12.tar",
+      "bytes": 13199360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-13.tar",
+      "bytes": 68659200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-14.tar",
+      "bytes": 80046080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-15.tar",
+      "bytes": 156047360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-16.tar",
+      "bytes": 55265280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-19.tar",
+      "bytes": 88309760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-20.tar",
+      "bytes": 109363200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-21.tar",
+      "bytes": 65955840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-22.tar",
+      "bytes": 119572480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-23.tar",
+      "bytes": 109465600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-26.tar",
+      "bytes": 128460800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-27.tar",
+      "bytes": 154255360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-28.tar",
+      "bytes": 116776960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-29.tar",
+      "bytes": 127191040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-05-30.tar",
+      "bytes": 123043840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-02.tar",
+      "bytes": 178800640,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-03.tar",
+      "bytes": 134778880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-04.tar",
+      "bytes": 165591040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-05.tar",
+      "bytes": 157061120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-06.tar",
+      "bytes": 96133120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-09.tar",
+      "bytes": 102502400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-10.tar",
+      "bytes": 94781440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-11.tar",
+      "bytes": 135290880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-12.tar",
+      "bytes": 54292480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-13.tar",
+      "bytes": 135229440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-16.tar",
+      "bytes": 152453120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-17.tar",
+      "bytes": 131921920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-18.tar",
+      "bytes": 274135040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-19.tar",
+      "bytes": 131553280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-20.tar",
+      "bytes": 139571200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-23.tar",
+      "bytes": 112568320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-24.tar",
+      "bytes": 124887040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-25.tar",
+      "bytes": 145930240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-26.tar",
+      "bytes": 161853440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-27.tar",
+      "bytes": 208199680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-29.tar",
+      "bytes": 282204160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-06-30.tar",
+      "bytes": 155125760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-01.tar",
+      "bytes": 167219200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-02.tar",
+      "bytes": 127754240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-03.tar",
+      "bytes": 134123520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-04.tar",
+      "bytes": 130590720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-07.tar",
+      "bytes": 173977600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-08.tar",
+      "bytes": 138403840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-09.tar",
+      "bytes": 94812160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-10.tar",
+      "bytes": 150988800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-11.tar",
+      "bytes": 139130880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-14.tar",
+      "bytes": 168622080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-15.tar",
+      "bytes": 120647680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-16.tar",
+      "bytes": 145858560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-17.tar",
+      "bytes": 167096320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-18.tar",
+      "bytes": 201000960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-21.tar",
+      "bytes": 184279040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-22.tar",
+      "bytes": 195348480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-23.tar",
+      "bytes": 236451840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-24.tar",
+      "bytes": 225228800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-25.tar",
+      "bytes": 178657280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-28.tar",
+      "bytes": 161280000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-29.tar",
+      "bytes": 256245760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-30.tar",
+      "bytes": 258529280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-07-31.tar",
+      "bytes": 313354240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-01.tar",
+      "bytes": 218214400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-04.tar",
+      "bytes": 253224960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-05.tar",
+      "bytes": 230963200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-06.tar",
+      "bytes": 263567360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-07.tar",
+      "bytes": 268339200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-08.tar",
+      "bytes": 178821120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-11.tar",
+      "bytes": 225812480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-12.tar",
+      "bytes": 120576000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-13.tar",
+      "bytes": 154173440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-14.tar",
+      "bytes": 144220160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-15.tar",
+      "bytes": 97239040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-18.tar",
+      "bytes": 334602240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-19.tar",
+      "bytes": 144025600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-20.tar",
+      "bytes": 233144320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-21.tar",
+      "bytes": 221880320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-22.tar",
+      "bytes": 242442240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-25.tar",
+      "bytes": 288419840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-26.tar",
+      "bytes": 240271360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-27.tar",
+      "bytes": 224645120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-28.tar",
+      "bytes": 187781120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-08-29.tar",
+      "bytes": 196290560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-01.tar",
+      "bytes": 161320960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-02.tar",
+      "bytes": 225863680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-03.tar",
+      "bytes": 178862080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-04.tar",
+      "bytes": 164444160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-05.tar",
+      "bytes": 241029120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-08.tar",
+      "bytes": 220446720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-09.tar",
+      "bytes": 199946240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-10.tar",
+      "bytes": 255866880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-11.tar",
+      "bytes": 192399360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-12.tar",
+      "bytes": 230031360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-15.tar",
+      "bytes": 207943680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-16.tar",
+      "bytes": 197058560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-17.tar",
+      "bytes": 226211840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-18.tar",
+      "bytes": 195174400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-19.tar",
+      "bytes": 199557120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-22.tar",
+      "bytes": 226375680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-23.tar",
+      "bytes": 253358080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-24.tar",
+      "bytes": 243056640,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-25.tar",
+      "bytes": 249180160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-26.tar",
+      "bytes": 245186560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-29.tar",
+      "bytes": 158443520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-09-30.tar",
+      "bytes": 213729280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-01.tar",
+      "bytes": 182456320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-02.tar",
+      "bytes": 122490880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-03.tar",
+      "bytes": 93624320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-06.tar",
+      "bytes": 219002880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-07.tar",
+      "bytes": 290795520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-08.tar",
+      "bytes": 237527040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-09.tar",
+      "bytes": 260311040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-10.tar",
+      "bytes": 302561280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-13.tar",
+      "bytes": 213821440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-14.tar",
+      "bytes": 177725440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-15.tar",
+      "bytes": 151838720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-16.tar",
+      "bytes": 75008000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-17.tar",
+      "bytes": 91750400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-20.tar",
+      "bytes": 205096960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-21.tar",
+      "bytes": 154152960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-22.tar",
+      "bytes": 274821120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-23.tar",
+      "bytes": 142008320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-24.tar",
+      "bytes": 209326080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-27.tar",
+      "bytes": 219668480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-28.tar",
+      "bytes": 398090240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-29.tar",
+      "bytes": 366080000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-30.tar",
+      "bytes": 442572800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-10-31.tar",
+      "bytes": 260392960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-03.tar",
+      "bytes": 326819840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-04.tar",
+      "bytes": 225228800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-05.tar",
+      "bytes": 312637440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-06.tar",
+      "bytes": 306995200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-07.tar",
+      "bytes": 244101120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-10.tar",
+      "bytes": 404869120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-11.tar",
+      "bytes": 468398080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-12.tar",
+      "bytes": 333373440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-13.tar",
+      "bytes": 425605120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-14.tar",
+      "bytes": 279173120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-17.tar",
+      "bytes": 446638080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-18.tar",
+      "bytes": 347596800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-19.tar",
+      "bytes": 464302080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-20.tar",
+      "bytes": 509931520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-21.tar",
+      "bytes": 541081600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-24.tar",
+      "bytes": 494243840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-25.tar",
+      "bytes": 408965120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-26.tar",
+      "bytes": 314818560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-27.tar",
+      "bytes": 463708160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-11-28.tar",
+      "bytes": 406118400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-01.tar",
+      "bytes": 567060480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-02.tar",
+      "bytes": 436858880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-03.tar",
+      "bytes": 307189760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-04.tar",
+      "bytes": 314439680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-05.tar",
+      "bytes": 283586560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-08.tar",
+      "bytes": 566097920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-09.tar",
+      "bytes": 493025280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-10.tar",
+      "bytes": 471511040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-11.tar",
+      "bytes": 424908800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-12.tar",
+      "bytes": 370606080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-15.tar",
+      "bytes": 567029760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-16.tar",
+      "bytes": 598097920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-17.tar",
+      "bytes": 590561280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-18.tar",
+      "bytes": 633128960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-19.tar",
+      "bytes": 482078720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-22.tar",
+      "bytes": 535859200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-23.tar",
+      "bytes": 722145280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-24.tar",
+      "bytes": 700200960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-25.tar",
+      "bytes": 744089600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-26.tar",
+      "bytes": 508497920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-29.tar",
+      "bytes": 493475840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-30.tar",
+      "bytes": 364892160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2025-12-31.tar",
+      "bytes": 593827840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-01.tar",
+      "bytes": 565012480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-02.tar",
+      "bytes": 401162240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-05.tar",
+      "bytes": 440832000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-06.tar",
+      "bytes": 134881280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-07.tar",
+      "bytes": 246650880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-08.tar",
+      "bytes": 263505920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-09.tar",
+      "bytes": 302714880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-12.tar",
+      "bytes": 600084480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-13.tar",
+      "bytes": 352440320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-14.tar",
+      "bytes": 303667200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-15.tar",
+      "bytes": 383866880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-16.tar",
+      "bytes": 343470080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-19.tar",
+      "bytes": 442818560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-20.tar",
+      "bytes": 290242560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-21.tar",
+      "bytes": 252016640,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-22.tar",
+      "bytes": 124426240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-23.tar",
+      "bytes": 247531520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-26.tar",
+      "bytes": 475187200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-27.tar",
+      "bytes": 398622720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-28.tar",
+      "bytes": 303656960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-29.tar",
+      "bytes": 398755840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-01-30.tar",
+      "bytes": 291870720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-02.tar",
+      "bytes": 694108160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-03.tar",
+      "bytes": 758169600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-04.tar",
+      "bytes": 577013760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-05.tar",
+      "bytes": 600350720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-06.tar",
+      "bytes": 604549120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-09.tar",
+      "bytes": 657684480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-10.tar",
+      "bytes": 518174720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-11.tar",
+      "bytes": 584212480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-12.tar",
+      "bytes": 509102080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-13.tar",
+      "bytes": 496025600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-16.tar",
+      "bytes": 482560000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-17.tar",
+      "bytes": 594350080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-18.tar",
+      "bytes": 441630720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-19.tar",
+      "bytes": 353699840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-20.tar",
+      "bytes": 422287360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-23.tar",
+      "bytes": 288327680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-24.tar",
+      "bytes": 321628160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-25.tar",
+      "bytes": 233185280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-26.tar",
+      "bytes": 324526080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-02-27.tar",
+      "bytes": 360222720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-02.tar",
+      "bytes": 321525760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-03.tar",
+      "bytes": 376975360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-04.tar",
+      "bytes": 357488640,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-05.tar",
+      "bytes": 338227200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-06.tar",
+      "bytes": 393359360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-09.tar",
+      "bytes": 270131200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-10.tar",
+      "bytes": 229847040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-11.tar",
+      "bytes": 242749440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-12.tar",
+      "bytes": 381829120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-13.tar",
+      "bytes": 221143040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-16.tar",
+      "bytes": 539402240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-17.tar",
+      "bytes": 514058240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-18.tar",
+      "bytes": 665569280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-19.tar",
+      "bytes": 637880320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-20.tar",
+      "bytes": 806451200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-23.tar",
+      "bytes": 527124480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-24.tar",
+      "bytes": 420628480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-25.tar",
+      "bytes": 499701760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-26.tar",
+      "bytes": 561715200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-27.tar",
+      "bytes": 479313920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-30.tar",
+      "bytes": 499066880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-03-31.tar",
+      "bytes": 487741440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-01.tar",
+      "bytes": 510904320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-02.tar",
+      "bytes": 527155200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-03.tar",
+      "bytes": 462858240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-06.tar",
+      "bytes": 624793600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-07.tar",
+      "bytes": 652369920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-08.tar",
+      "bytes": 723691520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-09.tar",
+      "bytes": 629575680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-10.tar",
+      "bytes": 575436800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-13.tar",
+      "bytes": 506163200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-14.tar",
+      "bytes": 600596480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-15.tar",
+      "bytes": 485509120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-16.tar",
+      "bytes": 611778560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-17.tar",
+      "bytes": 531650560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-20.tar",
+      "bytes": 530309120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-21.tar",
+      "bytes": 508917760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-22.tar",
+      "bytes": 565104640,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-23.tar",
+      "bytes": 470374400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-24.tar",
+      "bytes": 416839680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-27.tar",
+      "bytes": 425707520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-28.tar",
+      "bytes": 644935680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-29.tar",
+      "bytes": 569190400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-04-30.tar",
+      "bytes": 640768000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-01.tar",
+      "bytes": 543774720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-04.tar",
+      "bytes": 526970880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-05.tar",
+      "bytes": 1062799360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-06.tar",
+      "bytes": 953303040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-07.tar",
+      "bytes": 349122560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-08.tar",
+      "bytes": 390973440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-11.tar",
+      "bytes": 327976960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-12.tar",
+      "bytes": 320788480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-13.tar",
+      "bytes": 363008000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-14.tar",
+      "bytes": 385925120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-15.tar",
+      "bytes": 156999680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-18.tar",
+      "bytes": 771338240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-19.tar",
+      "bytes": 699525120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-20.tar",
+      "bytes": 618618880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-21.tar",
+      "bytes": 765747200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-22.tar",
+      "bytes": 752209920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-25.tar",
+      "bytes": 364482560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-26.tar",
+      "bytes": 272680960,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-27.tar",
+      "bytes": 302796800,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-28.tar",
+      "bytes": 423321600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-05-29.tar",
+      "bytes": 436224000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-01.tar",
+      "bytes": 440330240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-02.tar",
+      "bytes": 405186560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-03.tar",
+      "bytes": 477409280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-04.tar",
+      "bytes": 319549440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-05.tar",
+      "bytes": 329666560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-08.tar",
+      "bytes": 1065175040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-09.tar",
+      "bytes": 926873600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-10.tar",
+      "bytes": 837969920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-11.tar",
+      "bytes": 996474880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-12.tar",
+      "bytes": 902246400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-13.tar",
+      "bytes": 564623360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-15.tar",
+      "bytes": 823767040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-16.tar",
+      "bytes": 390430720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-17.tar",
+      "bytes": 354467840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-18.tar",
+      "bytes": 649236480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-19.tar",
+      "bytes": 596019200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-22.tar",
+      "bytes": 600002560,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-23.tar",
+      "bytes": 1497866240,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-24.tar",
+      "bytes": 1576980480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-25.tar",
+      "bytes": 1790115840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-26.tar",
+      "bytes": 1662453760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-29.tar",
+      "bytes": 2968442880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-06-30.tar",
+      "bytes": 2499133440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-01.tar",
+      "bytes": 2248110080,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-02.tar",
+      "bytes": 2343485440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-03.tar",
+      "bytes": 1929093120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-06.tar",
+      "bytes": 1875783680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-07.tar",
+      "bytes": 1636229120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-08.tar",
+      "bytes": 1893980160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-09.tar",
+      "bytes": 1318635520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-10.tar",
+      "bytes": 1700915200,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-13.tar",
+      "bytes": 1614499840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-14.tar",
+      "bytes": 1301862400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-15.tar",
+      "bytes": 1139302400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-16.tar",
+      "bytes": 1162557440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-17.tar",
+      "bytes": 1018951680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-20.tar",
+      "bytes": 1320990720,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-21.tar",
+      "bytes": 1407907840,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-22.tar",
+      "bytes": 1107865600,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-23.tar",
+      "bytes": 1337344000,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-24.tar",
+      "bytes": 1324646400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-27.tar",
+      "bytes": 1267046400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-28.tar",
+      "bytes": 868321280,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-29.tar",
+      "bytes": 1067847680,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-30.tar",
+      "bytes": 1066004480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-07-31.tar",
+      "bytes": 921692160,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-03.tar",
+      "bytes": 935014400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-04.tar",
+      "bytes": 875540480,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-05.tar",
+      "bytes": 806246400,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-06.tar",
+      "bytes": 865105920,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-07.tar",
+      "bytes": 936151040,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-10.tar",
+      "bytes": 1011384320,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-11.tar",
+      "bytes": 1291407360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-12.tar",
+      "bytes": 1685637120,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-13.tar",
+      "bytes": 1208043520,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-14.tar",
+      "bytes": 1569648640,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-17.tar",
+      "bytes": 1390141440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-18.tar",
+      "bytes": 1390653440,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-19.tar",
+      "bytes": 1687695360,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-20.tar",
+      "bytes": 1693941760,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/2026-08-21.tar",
+      "bytes": 1670522880,
+      "kind": "screenshot_tar"
+    },
+    {
+      "path": "images/computer-use-turns/index.json",
+      "bytes": 20245,
+      "kind": "screenshot_index"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 706,
+      "kind": "reference_or_transcript"
+    },
+    {
+      "path": "summaries.jsonl.gz",
+      "bytes": 2851293,
+      "kind": "table"
+    },
+    {
+      "path": "village-transcript.json",
+      "bytes": 362235443,
+      "kind": "reference_or_transcript"
+    },
+    {
+      "path": "village_goals.jsonl.gz",
+      "bytes": 4449,
+      "kind": "table"
+    },
+    {
+      "path": "villages.jsonl.gz",
+      "bytes": 327,
+      "kind": "table"
+    }
+  ]
+}

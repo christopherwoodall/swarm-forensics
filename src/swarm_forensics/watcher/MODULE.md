@@ -3,7 +3,8 @@
 ## 1. Intent & Scope
 
 Collect raw pages from the authorized FairyStack conversation.
-Implement a read-only source archive and cron change detector.
+Collect Discord channel history through a separate read-only, fixed-channel client.
+Implement source archives and cron change detectors without posting to either chat.
 Keep source capture separate from forensic normalization and ledger extraction.
 Repeat the authorized watcher role from `colette-research/hermes-log/WATCHER.md`.
 Do not introduce global policy.
@@ -30,6 +31,13 @@ Do not introduce global policy.
 - Polling MUST stop before further requests when the stored participant lease expires.
 - Volatile participant or task metadata MUST NOT trigger model wakeups.
 - Tests MUST use synthetic source events and injected network boundaries.
+- Discord source MUST be limited to guild `1430962816315031654`, channel `1430962817045106792`.
+- Discord source MUST use only fixed-route GET requests with a bot credential held in-process.
+- Discord source and derived notes MUST stay under ignored `data/raw/discord/1430962817045106792/`.
+- Discord cursor advancement MUST await complete backwards pagination and durable archive writes.
+- Discord source state MUST separate acquisition from acknowledged processing.
+- Discord pages MUST preserve original authors, message IDs, timestamps, and raw response bytes.
+- Discord source MUST NOT claim thread, DM, deletion, edit, or pre-capture coverage without evidence.
 
 ## 3. Interfaces & Dependencies
 
@@ -45,12 +53,23 @@ New watcher targets use frozen uv execution by default.
 | `make watcher-ack WATCHER_CURSOR=N` | Advance the processed cursor after ledger persistence. |
 | `make watcher-status` | Emit session, read cursor, processed cursor, pending count, and lease. |
 | `make watcher-monitor` | Poll and emit one stable idle token or backlog wake generation. |
+| `make watcher-discord-poll` | Poll the fixed Discord channel when a scoped bot token is available. |
+| `make watcher-discord-pending` | Read private unprocessed Discord source events. |
+| `make watcher-discord-ack DISCORD_WATCHER_CURSOR=<id>` | Advance processed Discord cursor after durable notes. |
+| `make watcher-discord-status` | Emit Discord acquisition and processing state. |
+| `make watcher-discord-monitor` | Emit stable idle/wake status for bounded GET polling. |
 
 Override `WATCHER_DB` to select an isolated archive.
 Override `WATCHER_CONFIG` to select an existing private peer configuration.
 The default archive is ignored `data/raw/fairystack/ca8ffac066a4/source.sqlite`.
 The default configuration is `~/.config/fairystack-watcher/ca8ffac066a4.json`.
 The collector does not create or enroll credentials.
+The Discord collector uses the Caduceus profile credential in-process.
+Do not pass the bot token through command arguments or print it in logs.
+The private Discord source archive lives under ignored `data/raw/discord/1430962817045106792/`.
+The Discord CLI is `swarm_forensics.watcher.discord_cli`.
+It supports `poll`, `pending`, `ack`, `status`, and `monitor`.
+The Caduceus cron wrapper resolves only `DISCORD_BOT_TOKEN` through Hermes secret scope.
 
 `WATCHER_MAX_PAGES=20` bounds requests per poll.
 `WATCHER_TOTAL_SECONDS=30` sets the total network deadline.
@@ -97,7 +116,7 @@ Its Ruff check now belongs to `lint`, including both viewer servers.
 
 ## 4. Current State & Known Gaps
 
-- Verified: `make -o setup test lint RUN='uv run --frozen'` passes 130 tests and Ruff.
+- Verified: `make -o setup test lint RUN='uv run --frozen'` passes 160 tests and Ruff in the current tree.
 - Verified: Vertical RED/GREEN tracers cover capture, replay, restart, acknowledgement, safety gates, monitor retries, and Make interfaces.
 - Verified: Offline tests cover failed transactions, wrong sessions, wrong modes, stalled cursors, redirects, lease expiry, and deadlines.
 - Verified: Synthetic legacy-client execution preserves JSON stdout without network access.
@@ -106,7 +125,7 @@ Its Ruff check now belongs to `lint`, including both viewer servers.
 - Verified: Live GET polling retained 120 events through cursor 2217, matching both historical snapshots.
 - Verified: Acknowledgement through 2217 followed durable ledger extraction and exact source reconciliation.
 - Verified: The installed cron shell wrapper emits `wakeAgent: false` on a live idle read.
-- State: Cron job `698c454d0a09` runs every two minutes with the installed pre-run gate and local-only output.
+- State: FairyStack job `698c454d0a09` is paused after its enrollment expired.
 - Verified: The autonomous worker completed live polling and validated all 46 existing ledger records against SQLite sources.
 - Verified: A built-in scheduled tick completed collection and skipped the model through `wakeAgent: false`.
 - Gap: No fresh source batch arrived during worker verification. New-batch extraction remains unexercised in cron.
@@ -116,6 +135,11 @@ Its Ruff check now belongs to `lint`, including both viewer servers.
 - Gap: Raw page retention has no rotation policy.
 - Gap: Polling requires POSIX timers and the main thread. Windows polling is unsupported.
 - Gap: A persisted expired lease blocks polling. Lease renewal requires separate authorization and local reconciliation.
+- Verified: Discord source GET archived 331 channel messages over five pages and retained a real unmentioned human message.
+- Verified: Discord source request uses the DiscordBot user agent. Generic urllib requests received Cloudflare HTTP 403.
+- Gap: Discord raw channel GET does not capture thread messages or deleted messages.
+- Gap: An edit to existing message content currently stops collection for review; reaction-only drift is tolerated.
+- Gap: Discord cron extraction and a scheduled local ledger update are not verified yet.
 
 ## 5. Pruned Decisions (Keep max 3)
 

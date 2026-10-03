@@ -29,8 +29,13 @@ Acquire raw AI Village data under `data/raw/`. Provide a downloader for the Hugg
 - Output: gzipped JSON Lines files, one per dataset table, plus reference files (`README.md`, `SCHEMA.md`, `CHANGELOG.md`, `manifest.json`, `village-transcript.json`, `example.py`).
 
 ## 4. Current State & Known Gaps
-- State: Bulk download complete in `data/raw/`. `--schema-only` selection covers three reference files.
-- State: All 13 tables have a contract. Bounded validation (100 records per large table) passes on the real download. No full scan has run.
+- Historical: Earlier work reported a completed bulk download and bounded real-data validation. This session did not reproduce those results.
+- State: This checkout lacks the root raw tables and upstream reference bodies. Synthetic samples remain available.
+- State: Public metadata confirms 13 table configurations at revision `838b4150303ca8228e8edb432d8b8ccae353d258`.
+- State: All 13 tables have a contract. Its recorded revision matches current public metadata. No full scan has run.
+- State: Read the [structure report](../../../colette-research/notes/ai-village-dataset-structure.md) for the file census and evidence limits.
+- Gap: `HF_TOKEN` is unset in this session. Gated records, schema text, and changelog text were not inspected.
+- State: `--schema-only` selection covers three reference files.
 - Gap: Contracts use `SCHEMA.md` plus bounded field-type inspection. `SCHEMA.md` omits `chat_rooms` name lists, `villages.is_chat_open`, `villages.schedule`, and `claude_code_messages.message_uuid`.
 - Gap: Event payloads are typed per field only. No per-action required fields exist. `startDay` and `endDay` are untyped.
 - Gap: Foreign keys, event ordering, and the village transcript are not validated.
@@ -39,6 +44,6 @@ Acquire raw AI Village data under `data/raw/`. Provide a downloader for the Hugg
 - Gap: Downloaded files are not checked against a checksum.
 
 ## 5. Pruned Decisions (Keep max 3)
+- [2026-10-03 Hermes]: Separate public file metadata from raw-record evidence. Preserve earlier validation reports as historical claims.
 - [2026-10-01 Droid]: Add JSON Schema contracts and streaming validation before parsers. Contracts allow unknown fields and keep required fields minimal.
-- [2026-10-01 Droid]: Store upstream `SCHEMA.md` as the schema source. Add `make data-schema` for a small refresh. Full download behavior is unchanged.
 - [2026-10-01 Droid]: User approved all non-image files. This replaces the three-table limit in `AGENTS.md`.

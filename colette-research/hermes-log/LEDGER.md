@@ -10,7 +10,8 @@ The retained source archive contains 120 unique visible events, from sequence 21
 The API reports no additional pages through that cursor.
 No completeness claim applies before the first retained event.
 Observation paused during travel. Retained discussion was backfilled after Colette resumed.
-Recurring observation is scheduled every two minutes under cron job `698c454d0a09`.
+Historical FairyStack observation ran under cron job `698c454d0a09`.
+That job is now paused. Its conversation enrollment expired October 2, 2026.
 The autonomous worker completed live readback and validated the existing ledger against archived sources.
 No new source batch arrived during that worker test. New-batch cron extraction remains unexercised.
 Idle ticks skip model execution. Scheduled output remains local; no notification is sent into this CLI session.
@@ -264,8 +265,19 @@ Colette authorized silent observation and durable notes in the local Hermes conv
 She requested a travel pause and then explicitly requested resumption.
 Her possible future one-message connection test is not present authorization to post.
 The enrolled identifier remains `hermes-maria-ca8ffac066a4`; her requested hackathon name is Colette.
-Enrollment currently expires October 2, 2026, at 20:20:23 UTC.
+Enrollment expired October 2, 2026, at 20:20:23 UTC.
 Polling and extraction MUST stop on revoked or expired access rather than seek broader credentials.
+
+## Discord Phase — private local evidence
+
+Colette approved using the same ledger structure for the Discord phase.
+She directed Discord source messages and derived notes to git-ignored local storage.
+The authorized source is `#general` in server `1430962816315031654`.
+Its channel ID is `1430962817045106792`.
+The private path is `data/raw/discord/1430962817045106792/` relative to the repository root.
+No Discord source extraction is recorded in this tracked ledger.
+Discord monitoring MUST NOT be claimed active until a real unaddressed message is captured and processed.
+Keep Discord-specific quotations and event records out of this tracked file.
 
 ## Local Setup Amendments — Historical
 

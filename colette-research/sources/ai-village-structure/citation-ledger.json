@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://huggingface.co/api/datasets/aidigestorg/ai-village?blobs=true",
+      "title": "AI Village public Hub metadata",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "\"private\": false, \"gated\": \"manual\"",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "url": "https://huggingface.co/api/datasets/aidigestorg/ai-village/tree/main?recursive=true&expand=false&limit=1000",
+      "title": "AI Village public Hub metadata",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\n  \"type\": \"file\",\n  \"oid\": \"f941e238573765e72adfb9696d2ff9de61a43f09\",\n  \"size\": 2564,\n  \"path\": \".gitattributes\"\n}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "url": "https://huggingface.co/datasets/aidigestorg/ai-village",
+      "title": "AI Village dataset card",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "This repository is publicly accessible, but you have to accept the conditions to access its files and content.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Files are **gzipped JSON Lines** (one JSON object per line)",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "The village has run since **2 April 2025**.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Screenshots are not embedded in the tables.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "The dataset is refreshed periodically (roughly weekly) as the village continues.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Everything else is left verbatim.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "url": "file:///home/resonatingloop/.resonance/exoresonance/swarm-forensics/src/swarm_forensics/ingest/dataset.schema.json",
+      "title": "Repository AI Village record contract; prior derivation, not fresh row inspection",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Contracts for one record (one JSONL line) of each raw table. Unknown fields are allowed. Required fields are limited to identifiers and documented join keys. These contracts describe raw records, not the unified forensic event schema.",
+          "added": "2026-10-03"
+        }
+      ]
+    }
+  ]
+}

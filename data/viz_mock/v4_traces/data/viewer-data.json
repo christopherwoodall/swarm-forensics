@@ -1,0 +1,1217 @@
+{
+ "actions": {
+  "arquivo": {
+   "read": 69,
+   "request": 561229
+  },
+  "rubygems": {
+   "publish": 2,
+   "register": 79
+  },
+  "urlquery": {
+   "request": 47316
+  },
+  "wiki": {
+   "request": 101,
+   "write": 34403
+  }
+ },
+ "daily": {
+  "2023-10-24": {
+   "urlquery": 1
+  },
+  "2024-05-02": {
+   "urlquery": 1
+  },
+  "2024-08-05": {
+   "urlquery": 1
+  },
+  "2024-10-09": {
+   "urlquery": 2
+  },
+  "2025-01-06": {
+   "urlquery": 1
+  },
+  "2025-03-05": {
+   "urlquery": 1
+  },
+  "2025-03-11": {
+   "urlquery": 1
+  },
+  "2025-06-02": {
+   "urlquery": 2
+  },
+  "2025-09-23": {
+   "urlquery": 1
+  },
+  "2025-11-05": {
+   "urlquery": 1
+  },
+  "2025-11-12": {
+   "urlquery": 44
+  },
+  "2025-11-16": {
+   "urlquery": 5
+  },
+  "2025-11-24": {
+   "urlquery": 61
+  },
+  "2025-11-25": {
+   "urlquery": 2
+  },
+  "2025-11-28": {
+   "urlquery": 5
+  },
+  "2025-12-07": {
+   "urlquery": 1
+  },
+  "2025-12-11": {
+   "urlquery": 2
+  },
+  "2025-12-12": {
+   "urlquery": 1
+  },
+  "2025-12-16": {
+   "urlquery": 2
+  },
+  "2025-12-17": {
+   "urlquery": 15
+  },
+  "2025-12-18": {
+   "urlquery": 6
+  },
+  "2025-12-19": {
+   "urlquery": 3
+  },
+  "2025-12-20": {
+   "urlquery": 5
+  },
+  "2026-01-01": {
+   "urlquery": 1
+  },
+  "2026-01-07": {
+   "urlquery": 1
+  },
+  "2026-01-14": {
+   "urlquery": 3
+  },
+  "2026-01-16": {
+   "urlquery": 1
+  },
+  "2026-01-17": {
+   "urlquery": 17
+  },
+  "2026-01-20": {
+   "urlquery": 2
+  },
+  "2026-01-27": {
+   "urlquery": 1
+  },
+  "2026-02-03": {
+   "urlquery": 37
+  },
+  "2026-02-05": {
+   "urlquery": 7
+  },
+  "2026-02-08": {
+   "urlquery": 4
+  },
+  "2026-02-10": {
+   "urlquery": 15
+  },
+  "2026-02-13": {
+   "urlquery": 5
+  },
+  "2026-02-15": {
+   "urlquery": 14
+  },
+  "2026-02-16": {
+   "urlquery": 3
+  },
+  "2026-02-21": {
+   "urlquery": 31
+  },
+  "2026-02-22": {
+   "urlquery": 102
+  },
+  "2026-02-24": {
+   "urlquery": 3
+  },
+  "2026-02-25": {
+   "urlquery": 4
+  },
+  "2026-02-26": {
+   "urlquery": 8
+  },
+  "2026-03-01": {
+   "urlquery": 3
+  },
+  "2026-03-02": {
+   "arquivo": 21
+  },
+  "2026-03-05": {
+   "urlquery": 1
+  },
+  "2026-03-06": {
+   "urlquery": 38
+  },
+  "2026-03-09": {
+   "urlquery": 1
+  },
+  "2026-03-10": {
+   "urlquery": 2
+  },
+  "2026-03-11": {
+   "urlquery": 9
+  },
+  "2026-03-15": {
+   "urlquery": 7
+  },
+  "2026-03-20": {
+   "urlquery": 1
+  },
+  "2026-03-21": {
+   "urlquery": 1
+  },
+  "2026-03-22": {
+   "urlquery": 1
+  },
+  "2026-03-23": {
+   "urlquery": 2
+  },
+  "2026-03-24": {
+   "urlquery": 1
+  },
+  "2026-03-26": {
+   "urlquery": 1
+  },
+  "2026-03-27": {
+   "urlquery": 2
+  },
+  "2026-03-28": {
+   "urlquery": 6
+  },
+  "2026-03-29": {
+   "urlquery": 37
+  },
+  "2026-04-03": {
+   "urlquery": 24
+  },
+  "2026-04-05": {
+   "urlquery": 79
+  },
+  "2026-04-06": {
+   "urlquery": 74
+  },
+  "2026-04-07": {
+   "urlquery": 3
+  },
+  "2026-04-08": {
+   "urlquery": 5
+  },
+  "2026-04-09": {
+   "urlquery": 4
+  },
+  "2026-04-10": {
+   "urlquery": 2
+  },
+  "2026-04-11": {
+   "urlquery": 23
+  },
+  "2026-04-12": {
+   "urlquery": 6
+  },
+  "2026-04-13": {
+   "urlquery": 1
+  },
+  "2026-04-15": {
+   "urlquery": 2
+  },
+  "2026-04-16": {
+   "urlquery": 1
+  },
+  "2026-04-17": {
+   "urlquery": 879
+  },
+  "2026-04-18": {
+   "urlquery": 449
+  },
+  "2026-04-19": {
+   "arquivo": 36,
+   "urlquery": 54
+  },
+  "2026-04-20": {
+   "urlquery": 31
+  },
+  "2026-04-21": {
+   "urlquery": 57
+  },
+  "2026-04-22": {
+   "urlquery": 21
+  },
+  "2026-04-23": {
+   "arquivo": 410,
+   "urlquery": 143
+  },
+  "2026-04-24": {
+   "arquivo": 2930,
+   "urlquery": 133
+  },
+  "2026-04-26": {
+   "urlquery": 446
+  },
+  "2026-04-27": {
+   "arquivo": 26,
+   "urlquery": 419
+  },
+  "2026-04-28": {
+   "arquivo": 183,
+   "urlquery": 91
+  },
+  "2026-04-29": {
+   "urlquery": 680
+  },
+  "2026-04-30": {
+   "urlquery": 201
+  },
+  "2026-05-01": {
+   "arquivo": 14,
+   "urlquery": 676
+  },
+  "2026-05-02": {
+   "urlquery": 380
+  },
+  "2026-05-03": {
+   "urlquery": 29
+  },
+  "2026-05-04": {
+   "urlquery": 652
+  },
+  "2026-05-05": {
+   "urlquery": 462
+  },
+  "2026-05-06": {
+   "arquivo": 295925,
+   "urlquery": 123
+  },
+  "2026-05-07": {
+   "arquivo": 36581,
+   "urlquery": 81
+  },
+  "2026-05-08": {
+   "urlquery": 57
+  },
+  "2026-05-09": {
+   "urlquery": 254
+  },
+  "2026-05-10": {
+   "urlquery": 1227
+  },
+  "2026-05-11": {
+   "urlquery": 2239
+  },
+  "2026-05-12": {
+   "urlquery": 1063
+  },
+  "2026-05-13": {
+   "urlquery": 1259
+  },
+  "2026-05-14": {
+   "urlquery": 1378
+  },
+  "2026-05-15": {
+   "urlquery": 201
+  },
+  "2026-05-16": {
+   "arquivo": 12,
+   "urlquery": 293
+  },
+  "2026-05-17": {
+   "arquivo": 520,
+   "urlquery": 2209,
+   "wiki": 3
+  },
+  "2026-05-18": {
+   "arquivo": 579,
+   "urlquery": 351
+  },
+  "2026-05-19": {
+   "urlquery": 167
+  },
+  "2026-05-20": {
+   "urlquery": 56
+  },
+  "2026-05-21": {
+   "urlquery": 332
+  },
+  "2026-05-22": {
+   "urlquery": 495
+  },
+  "2026-05-23": {
+   "urlquery": 762
+  },
+  "2026-05-24": {
+   "urlquery": 171,
+   "wiki": 84
+  },
+  "2026-05-25": {
+   "arquivo": 7,
+   "urlquery": 682
+  },
+  "2026-05-26": {
+   "arquivo": 145,
+   "urlquery": 4154,
+   "wiki": 892
+  },
+  "2026-05-27": {
+   "urlquery": 529,
+   "wiki": 96
+  },
+  "2026-05-28": {
+   "arquivo": 826,
+   "urlquery": 871,
+   "wiki": 420
+  },
+  "2026-05-29": {
+   "urlquery": 850,
+   "wiki": 154
+  },
+  "2026-05-30": {
+   "arquivo": 28,
+   "urlquery": 598,
+   "wiki": 89
+  },
+  "2026-05-31": {
+   "arquivo": 8,
+   "urlquery": 218,
+   "wiki": 33
+  },
+  "2026-06-01": {
+   "urlquery": 460,
+   "wiki": 280
+  },
+  "2026-06-02": {
+   "urlquery": 112,
+   "wiki": 8
+  },
+  "2026-06-03": {
+   "urlquery": 281
+  },
+  "2026-06-04": {
+   "urlquery": 139,
+   "wiki": 12
+  },
+  "2026-06-05": {
+   "urlquery": 192,
+   "wiki": 4
+  },
+  "2026-06-06": {
+   "urlquery": 336,
+   "wiki": 24
+  },
+  "2026-06-07": {
+   "urlquery": 254,
+   "wiki": 26
+  },
+  "2026-06-08": {
+   "urlquery": 67,
+   "wiki": 29
+  },
+  "2026-06-09": {
+   "arquivo": 86,
+   "urlquery": 377,
+   "wiki": 13
+  },
+  "2026-06-10": {
+   "urlquery": 523,
+   "wiki": 12
+  },
+  "2026-06-11": {
+   "urlquery": 65,
+   "wiki": 323
+  },
+  "2026-06-12": {
+   "urlquery": 109
+  },
+  "2026-06-13": {
+   "urlquery": 848
+  },
+  "2026-06-14": {
+   "urlquery": 506,
+   "wiki": 2
+  },
+  "2026-06-15": {
+   "urlquery": 1395,
+   "wiki": 1
+  },
+  "2026-06-16": {
+   "arquivo": 2739,
+   "urlquery": 482,
+   "wiki": 5208
+  },
+  "2026-06-17": {
+   "arquivo": 220088,
+   "urlquery": 155,
+   "wiki": 2594
+  },
+  "2026-06-18": {
+   "arquivo": 126,
+   "urlquery": 8647,
+   "wiki": 13159
+  },
+  "2026-06-19": {
+   "urlquery": 1722,
+   "wiki": 1337
+  },
+  "2026-06-20": {
+   "urlquery": 2122,
+   "wiki": 1394
+  },
+  "2026-06-21": {
+   "urlquery": 1284,
+   "wiki": 1331
+  },
+  "2026-06-22": {
+   "wiki": 2153
+  },
+  "2026-06-23": {
+   "wiki": 604
+  },
+  "2026-06-24": {
+   "wiki": 269
+  },
+  "2026-06-25": {
+   "wiki": 180
+  },
+  "2026-06-26": {
+   "wiki": 382
+  },
+  "2026-06-28": {
+   "wiki": 146
+  },
+  "2026-06-29": {
+   "wiki": 90
+  },
+  "2026-06-30": {
+   "wiki": 441
+  },
+  "2026-07-01": {
+   "wiki": 262
+  },
+  "2026-07-02": {
+   "urlquery": 7,
+   "wiki": 116
+  },
+  "2026-07-03": {
+   "urlquery": 9,
+   "wiki": 71
+  },
+  "2026-07-04": {
+   "wiki": 59
+  },
+  "2026-07-05": {
+   "urlquery": 1,
+   "wiki": 239
+  },
+  "2026-07-06": {
+   "urlquery": 1,
+   "wiki": 79
+  },
+  "2026-07-07": {
+   "wiki": 522
+  },
+  "2026-07-08": {
+   "wiki": 230
+  },
+  "2026-07-09": {
+   "wiki": 154
+  },
+  "2026-07-11": {
+   "wiki": 86
+  },
+  "2026-07-12": {
+   "wiki": 232
+  },
+  "2026-07-13": {
+   "wiki": 512
+  },
+  "2026-07-14": {
+   "wiki": 149
+  },
+  "2026-07-18": {
+   "arquivo": 1
+  },
+  "2026-07-19": {
+   "urlquery": 2
+  },
+  "2026-07-27": {
+   "urlquery": 1
+  },
+  "2026-07-30": {
+   "urlquery": 5
+  },
+  "2026-08-22": {
+   "urlquery": 4
+  },
+  "2026-08-31": {
+   "urlquery": 1
+  },
+  "2026-09-09": {
+   "urlquery": 1
+  },
+  "2026-09-16": {
+   "urlquery": 8
+  },
+  "2026-09-18": {
+   "urlquery": 1
+  },
+  "2026-09-19": {
+   "urlquery": 10
+  },
+  "2026-09-20": {
+   "urlquery": 6
+  }
+ },
+ "edges": [
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:amdvar877792",
+   "edge_id": "edge-gemwiki-0e23fe866c15c881",
+   "edge_to": "wiki:links:0e23fe866c15c881",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=0e23fe866c15c881fc84e2ea48a7c60d5efb5dbcba3b9e2a1e117f9ee587f546; links.jsonl.gz source_url_sha256=0e23fe866c15c881fc84e2ea48a7c60d5efb5dbcba3b9e2a1e117f9ee587f546 record_ids=1",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:amd6002",
+   "edge_id": "edge-gemwiki-1201c56d94a68608",
+   "edge_to": "wiki:links:1201c56d94a68608",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=1201c56d94a68608c0e25ae6435270361850f5a97376d5bdfe27e5c77008247f; links.jsonl.gz source_url_sha256=1201c56d94a68608c0e25ae6435270361850f5a97376d5bdfe27e5c77008247f record_ids=1",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:amdvar967059",
+   "edge_id": "edge-gemwiki-18d03512989747af",
+   "edge_to": "wiki:links:18d03512989747af",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=18d03512989747afa588ed9784a4cb498918f3a450b0764819def3ce6728c7a3; links.jsonl.gz source_url_sha256=18d03512989747afa588ed9784a4cb498918f3a450b0764819def3ce6728c7a3 record_ids=1",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:m--00cfproxy47",
+   "edge_id": "edge-gemwiki-209c5a2b5940c5ed",
+   "edge_to": "wiki:links:209c5a2b5940c5ed",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=209c5a2b5940c5eda0145caed2fbe669109c5c2de60e379aac79dc53e10b2822; links.jsonl.gz source_url_sha256=209c5a2b5940c5eda0145caed2fbe669109c5c2de60e379aac79dc53e10b2822 record_ids=121",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:g----00prx15127",
+   "edge_id": "edge-gemwiki-33080965293b4687",
+   "edge_to": "wiki:links:33080965293b4687",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=33080965293b4687096f76fe28e60720d44940e286e28319924b92dae5ae0250; links.jsonl.gz source_url_sha256=33080965293b4687096f76fe28e60720d44940e286e28319924b92dae5ae0250 record_ids=98",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:amdapi577106",
+   "edge_id": "edge-gemwiki-3c487751fb5fa0c7",
+   "edge_to": "wiki:links:3c487751fb5fa0c7",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=3c487751fb5fa0c74c81a06dea27395b28162dd2f983d12057161cd10bdd018f; links.jsonl.gz source_url_sha256=3c487751fb5fa0c74c81a06dea27395b28162dd2f983d12057161cd10bdd018f record_ids=5",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:amdmore778667",
+   "edge_id": "edge-gemwiki-5584539d89bce459",
+   "edge_to": "wiki:links:5584539d89bce459",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=5584539d89bce4593fb0f7cf2b83e748600ca25f699aaadb782e2fa6940d463d; links.jsonl.gz source_url_sha256=5584539d89bce4593fb0f7cf2b83e748600ca25f699aaadb782e2fa6940d463d record_ids=1",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:amdvar670957",
+   "edge_id": "edge-gemwiki-a5f9735b166ab5c5",
+   "edge_to": "wiki:links:a5f9735b166ab5c5",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=a5f9735b166ab5c513990bb9d671bc633651b3a27cdccd60548f70ce45301a12; links.jsonl.gz source_url_sha256=a5f9735b166ab5c513990bb9d671bc633651b3a27cdccd60548f70ce45301a12 record_ids=1",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:amdvar987523",
+   "edge_id": "edge-gemwiki-b31c90501474b00d",
+   "edge_to": "wiki:links:b31c90501474b00d",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=b31c90501474b00d4b737b91961f10c1306983c7bd2074f823af26e928076129; links.jsonl.gz source_url_sha256=b31c90501474b00d4b737b91961f10c1306983c7bd2074f823af26e928076129 record_ids=1",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common upstream task structure; independent rediscovery; shared scaffolding; artifact-mediated inheritance",
+   "edge_from": "rubygems:package:z----00prx58090",
+   "edge_id": "edge-gemwiki-fecb2936c1c88398",
+   "edge_to": "wiki:links:fecb2936c1c88398",
+   "evidence_type": "identical_sha256_of_operational_url",
+   "notes": "exact URL overlap only; neither retrieval by the other side nor behavioral dependence is established",
+   "raw_ref": "records.jsonl.gz homepage_uri sha256=fecb2936c1c88398cf214a1012c98012419ce24beaa9a64505e956e425e7a593; links.jsonl.gz source_url_sha256=fecb2936c1c88398cf214a1012c98012419ce24beaa9a64505e956e425e7a593 record_ids=15",
+   "relation": "exact_url_overlap"
+  },
+  {
+   "causal_strength": "temporal_structural_association_only",
+   "competing_explanation": "investigator provenance; agent found report independently; agent produced the cited session",
+   "edge_from": "wiki:rev:dse~TestAgentResearchLinks@1",
+   "edge_id": "edge-wikiuq-94f757753b",
+   "edge_to": "urlquery:report:42fa1863-3649-4111-961b-95e9cc704b08",
+   "evidence_type": "added_text_citation",
+   "notes": "citation time=2026-05-26T16:43:26Z catalog_match=True",
+   "raw_ref": "full-wiki-logs.zip!revisions.jsonl:dse~TestAgentResearchLinks@1 added text; catalog match=True",
+   "relation": "cites_report"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-210b0f641c29",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning markdown.new: 12; wiki links mentioning markdown.new: 693",
+   "relation": "shared_relay_host"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-bf2779eadd15",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning r.jina.ai: 25; wiki links mentioning r.jina.ai: 265",
+   "relation": "shared_relay_host"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-62bac11133b8",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning allorigins.hexlet.app: 0; wiki links mentioning allorigins.hexlet.app: 496",
+   "relation": "shared_relay_host"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-820030ce5405",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning api.allorigins.win: 5; wiki links mentioning api.allorigins.win: 27",
+   "relation": "shared_relay_host"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-1e48e859bec1",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning cors.bwa.workers.dev: 0; wiki links mentioning cors.bwa.workers.dev: 189",
+   "relation": "shared_relay_host"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-7f7ade7a3ea2",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning proxymule.com: 0; wiki links mentioning proxymule.com: 184",
+   "relation": "shared_relay_host"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-813d4483045a",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning pure.md: 0; wiki links mentioning pure.md: 285",
+   "relation": "shared_relay_host"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-01d2840fe855",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning jqp.vercel.app: 0; wiki links mentioning jqp.vercel.app: 4641",
+   "relation": "shared_relay_host"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-a306f133966c",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning md.succ.ai: 0; wiki links mentioning md.succ.ai: 1507",
+   "relation": "shared_relay_host"
+  },
+  {
+   "causal_strength": "resemblance_only",
+   "competing_explanation": "common harness; common task; shared scaffolding; common operator",
+   "edge_from": "dataset:rubygems",
+   "edge_id": "edge-relay-c1d41fedca4f",
+   "edge_to": "dataset:wiki",
+   "evidence_type": "host_name_in_both_corpora",
+   "notes": "same relay service named in both populations; no transmission established",
+   "raw_ref": "rubygems records mentioning jsonhero.io: 0; wiki links mentioning jsonhero.io: 357",
+   "relation": "shared_relay_host"
+  }
+ ],
+ "families": [
+  [
+   "unknown",
+   555156
+  ],
+  [
+   "nonce_grammar",
+   52642
+  ],
+  [
+   "wiki_write",
+   34403
+  ],
+  [
+   "relay_fetch",
+   697
+  ],
+  [
+   "probe_request",
+   101
+  ],
+  [
+   "shortener_c2",
+   82
+  ],
+  [
+   "registry_abuse",
+   81
+  ],
+  [
+   "relay_indirection",
+   37
+  ]
+ ],
+ "gem_stems": [
+  [
+   "amdvar",
+   9
+  ],
+  [
+   "amdmore",
+   5
+  ],
+  [
+   "a----00proxy",
+   5
+  ],
+  [
+   "amdapi",
+   4
+  ],
+  [
+   "q----00cfproxy",
+   3
+  ],
+  [
+   "adep",
+   2
+  ],
+  [
+   "o----00prx",
+   1
+  ],
+  [
+   "j--00cfjson",
+   1
+  ],
+  [
+   "mapanchorcf",
+   1
+  ],
+  [
+   "m----00prx",
+   1
+  ],
+  [
+   "d----00prx",
+   1
+  ],
+  [
+   "i----00prx",
+   1
+  ]
+ ],
+ "hints": {
+  "arquivo": {
+   "investigator": 69,
+   "unattributed": 561229
+  },
+  "rubygems": {
+   "unattributed": 81
+  },
+  "urlquery": {
+   "unattributed": 47316
+  },
+  "wiki": {
+   "agent_label": 8572,
+   "investigator": 11,
+   "unattributed": 25921
+  }
+ },
+ "time_bounds": {
+  "arquivo": {
+   "max": "2026-07-18T12:26:50Z",
+   "min": "2026-03-02T20:10:29Z"
+  },
+  "urlquery": {
+   "max": "2026-09-20T05:25:48Z",
+   "min": "2023-10-24T00:31:59Z"
+  },
+  "wiki": {
+   "max": "2026-07-14T13:56:54Z",
+   "min": "2026-05-17T05:46:45Z"
+  }
+ },
+ "top_targets": {
+  "arquivo": [
+   [
+    "https://reportcard.msde.maryland.gov/Assessments/GetMathPerformanceBarChart",
+    4090
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/Assessments/GetMathPerformancev1BarChart",
+    1370
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/DataDownloads/GetdatadownloadViewGet",
+    1206
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/Graphs/GetUrlView",
+    968
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/Main/GetSchoolName",
+    858
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/Assessments/GetMathPerformanceBarChart?LEA=30&LEAID=30&GRADE=3&RACECODE=6&SEXCODE=3&SWD=3&FARM=3&LEP=3&MIGRANT=3&ADA504=3&TITLE1=3&HOMELESS=3&FOSTER=3&MILITARY=3&E",
+    451
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/Main/GetSchoolYearStartDate",
+    427
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/Main/GetSchools",
+    334
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/Graphs/GetPartialView/",
+    266
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/cdn-cgi/challenge-platform/h/g/jsd/oneshot/fe6331af5207/0.17837737632958894:1778062074:gZ3mF1eOeBRm9Y3yJsT8BQPTuhUOuxvSEP3J4ADdZNo/9f7746716b230fee",
+    257
+   ],
+   [
+    "https://reportcard.msde.maryland.gov/Assessments/GetMathPerformanceBarChart?SEXCODE=3&RACECODE=6&GRADE=3&SWD=3&FARM=3&LEP=3&MIGRANT=3&ADA504=3&TITLE1=3&HOMELESS=3&FOSTER=3&MILITARY=3&ECODIS=3&GT=3&LEA",
+    207
+   ],
+   [
+    "https://www.kansasmemory.gov:443/error.php?error_id=2001",
+    178
+   ]
+  ],
+  "rubygems": [
+   [
+    "rubygems",
+    2
+   ],
+   [
+    "rubygems:amdapi208076",
+    1
+   ],
+   [
+    "rubygems:o----00prx54063",
+    1
+   ],
+   [
+    "rubygems:amdvar670957",
+    1
+   ],
+   [
+    "rubygems:j--00cfjson56761",
+    1
+   ],
+   [
+    "rubygems:mapanchorcf202704",
+    1
+   ],
+   [
+    "rubygems:amdvar973520",
+    1
+   ],
+   [
+    "rubygems:m----00prx87585",
+    1
+   ],
+   [
+    "rubygems:d----00prx57028",
+    1
+   ],
+   [
+    "rubygems:amdmore690849",
+    1
+   ],
+   [
+    "rubygems:amdvar967059",
+    1
+   ],
+   [
+    "rubygems:amdvar775714",
+    1
+   ]
+  ],
+  "urlquery": [
+   [
+    "https://www.sec.gov/files/county.json",
+    305
+   ],
+   [
+    "https://www.sec.gov/favicon.ico",
+    224
+   ],
+   [
+    "https://portal.max.gov/favicon.ico",
+    134
+   ],
+   [
+    "https://www.sec.gov/themes/custom/uswds_sec/assets/img/icon-https.svg",
+    122
+   ],
+   [
+    "https://www.sec.gov/themes/custom/uswds_sec/assets/img/us_flag_small.png",
+    122
+   ],
+   [
+    "https://www.sec.gov/themes/custom/uswds_sec/dist/img/logos/sec-logo-sec.gov-1x.png",
+    122
+   ],
+   [
+    "https://www.sec.gov/themes/custom/uswds_sec/assets/img/icon-dot-gov.svg",
+    122
+   ],
+   [
+    "https://www.sec.gov/themes/custom/uswds_sec/dist/img/logos/sec-logo-1x.png",
+    122
+   ],
+   [
+    "https://www.sec.gov/themes/custom/uswds_sec/dist/img/logos/sec-logo-white-1x.png",
+    122
+   ],
+   [
+    "https://www.sec.gov/themes/custom/uswds_sec/assets/img/favicons/apple-touch-icon.png",
+    121
+   ],
+   [
+    "https://www.sec.gov/themes/custom/uswds_sec/dist/fonts/gotham/GothamSSm-Bold_Web.woff2",
+    121
+   ],
+   [
+    "https://www.sec.gov/themes/custom/uswds_sec/assets/img/usa-icons/expand_more.svg",
+    121
+   ]
+  ],
+  "wiki": [
+   [
+    "wiki:dse~WillkommenImWiki",
+    4654
+   ],
+   [
+    "wiki:dse~StartSeite",
+    912
+   ],
+   [
+    "wiki:dse~TestSeite",
+    477
+   ],
+   [
+    "wiki:dse~HealthdataCVDSequenceCollab",
+    245
+   ],
+   [
+    "wiki:dse~DataUSAStateSequenceCollab2027",
+    195
+   ],
+   [
+    "wiki:dse~RecentChanges",
+    150
+   ],
+   [
+    "wiki:dse~Sector61State5FastSignal",
+    147
+   ],
+   [
+    "wiki:dse~Sector61State5LiveRelay",
+    127
+   ],
+   [
+    "wiki:dse~DataUSAConstructionSequenceMar08",
+    127
+   ],
+   [
+    "wiki:dse~AgentLinkma20JuneAA",
+    122
+   ],
+   [
+    "wiki:dse~AgentCharlestonNewsletterJan1951Links",
+    117
+   ],
+   [
+    "wiki:dse~AgentMyBridgeZZ",
+    112
+   ]
+  ]
+ },
+ "totals": {
+  "by_dataset": {
+   "arquivo": 561298,
+   "rubygems": 81,
+   "urlquery": 47316,
+   "wiki": 34504
+  },
+  "edges": 21,
+  "events": 643199
+ },
+ "zz_nonces": [
+  [
+   "g10",
+   8701
+  ],
+  [
+   "g9",
+   8507
+  ],
+  [
+   "g8",
+   8043
+  ],
+  [
+   "b5",
+   413
+  ],
+  [
+   "g6",
+   162
+  ],
+  [
+   "g7",
+   146
+  ],
+  [
+   "b9",
+   120
+  ],
+  [
+   "b6",
+   110
+  ],
+  [
+   "b7",
+   110
+  ],
+  [
+   "b8",
+   110
+  ],
+  [
+   "b10",
+   104
+  ],
+  [
+   "newtest123",
+   5
+  ],
+  [
+   "ours987654321",
+   3
+  ],
+  [
+   "939867887",
+   3
+  ],
+  [
+   "oai17816845870756322",
+   3
+  ],
+  [
+   "oai17816845916793605",
+   3
+  ],
+  [
+   "oai17816869732872571",
+   3
+  ],
+  [
+   "oai17816869680228190",
+   3
+  ],
+  [
+   "oai17816896520493213",
+   3
+  ],
+  [
+   "oai17816896520521837",
+   3
+  ]
+ ]
+}

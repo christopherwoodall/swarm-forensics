@@ -166,7 +166,7 @@ Credentials MUST remain outside this ledger and version control.
 - Private credential: outside the repository, with file mode `0600` and directory mode `0700`.
 - Enrollment: conversation access verified; expires October 2, 2026, at 20:20:23 UTC.
 - Read verification: successful; retained visible session events archived locally.
-- Monitoring: active. Cron job `698c454d0a09` uses GET-only collection and an idle gate.
+- Monitoring: paused. The enrollment expired. Cron job `698c454d0a09` is paused.
 - Worker verification: live read, all 46 source-linked ledger records, 130 tests, and lint passed.
 - Scheduled verification: the built-in scheduler completed collection and skipped the model on an idle tick.
 - Verification limit: no new source batch arrived during the autonomous-worker test.
@@ -193,3 +193,18 @@ The pre-run script is `~/.hermes/scripts/fairystack-ca8ffac066a4-monitor.sh`.
 Idle ticks MUST skip model execution. Unprocessed backlog MAY retry after fifteen minutes.
 Cron output MUST remain local. This CLI session does not receive scheduled notifications.
 The official downloaded client separately includes posting commands; observation MUST NOT use them.
+
+## Discord Phase Boundary
+
+Colette moved the hackathon conversation to Discord server `1430962816315031654`.
+The authorized target is channel `1430962817045106792`.
+She requested the same provenance-preserving ledger structure with local, git-ignored Discord notes.
+The FairyStack credential and cursor MUST NOT be reused for Discord observation.
+The speaking Caduceus bot MUST respond only when mentioned in that team channel.
+A separate read-only collector MUST acquire messages independently of the bot's admitted conversation sessions.
+The Discord watcher MUST NOT post into that channel.
+The Discord watcher MUST NOT place private source text in tracked `LEDGER.md` or `EVENTS.jsonl`.
+The private record home is `data/raw/discord/1430962817045106792/`.
+Source capture is verified: authenticated GET archived unaddressed human messages in the private archive.
+Caduceus cron job `ea6dd30d2e7c` is configured with local-only output and a two-stage wake gate.
+An initial manual job run is in progress. Ledger extraction and a scheduled tick remain unverified.

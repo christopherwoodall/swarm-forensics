@@ -2,6 +2,7 @@
 .PHONY: help setup data-info data-download data-sample test lint watcher-client watcher-init watcher-read
 .PHONY: help setup data-info data-schema data-download data-sample data-validate replay-mock replay-export replay-serve pivot-check pivot-serve test lint
 .PHONY: watcher-poll watcher-pending watcher-ack watcher-status watcher-monitor
+.PHONY: watcher-discord-poll watcher-discord-pending watcher-discord-ack watcher-discord-status watcher-discord-monitor
 
 # The repository can sit on a different filesystem than the uv cache.
 export UV_LINK_MODE := copy
@@ -22,10 +23,20 @@ WATCHER_TOTAL_SECONDS ?= 30
 WATCHER_RETRY_SECONDS ?= 900
 WATCHER_RUN = $(RUN) $(if $(findstring --frozen,$(RUN)),,--frozen)
 WATCHER_CMD = $(WATCHER_RUN) python -m swarm_forensics.watcher --db "$(WATCHER_DB)" --config "$(WATCHER_CONFIG)"
+DISCORD_WATCHER_DB ?= $(RAW_DIR)/discord/1430962817045106792/source.sqlite
+DISCORD_WATCHER_LIMIT ?= 50
+DISCORD_WATCHER_MAX_PAGES ?= 20
+DISCORD_WATCHER_TOTAL_SECONDS ?= 30
+DISCORD_WATCHER_RETRY_SECONDS ?= 900
+DISCORD_WATCHER_CMD = $(WATCHER_RUN) python -m swarm_forensics.watcher.discord_cli --db "$(DISCORD_WATCHER_DB)"
 
 # Optional: TABLES="events chat_messages" and REVISION=<commit>.
 DATA_DIR ?= $(RAW_DIR)/sample
 LIMIT ?= 100
+
+## Variables
+
+TRACES_PORT ?= 8002
 
 # Replay viewer defaults. The case file stays under data/raw/.
 CASE ?= $(RAW_DIR)/replay/sample-case.json
@@ -68,6 +79,18 @@ replay-export: setup ## Export one real session as a replay case (SESSION=<uuid>
 replay-serve: setup ## Serve the 3D viz on 127.0.0.1 (CASE=<json>, PORT=8000)
 	$(RUN) python data/viz_mock/v2/serve.py --case $(CASE) --port $(PORT)
 
+traces-normalize: setup ## Normalize the three trace reservoirs into data/raw/traces/ (streams sources in colette-research/sources/)
+	$(RUN) python -m swarm_forensics.traces.cli
+
+traces-report: setup ## Print cross-dataset counts and bridge-candidate summaries from data/raw/traces/
+	$(RUN) python -m swarm_forensics.traces.report
+
+traces-viz-build: setup ## Aggregate events/edges into data/viz_mock/v4_traces/data/viewer-data.json
+	$(RUN) python -m swarm_forensics.traces.viz
+
+traces-viz-serve: setup ## Serve the trace viewer on 127.0.0.1 (TRACES_PORT=<port>, default 8002)
+	$(RUN) python data/viz_mock/v4_traces/serve.py --port $(TRACES_PORT)
+
 pivot-check: setup ## Check the pivot graph file shape (PIVOT_FILE=<json>)
 	$(RUN) python -m swarm_forensics.pivot --file $(PIVOT_FILE)
 
@@ -78,7 +101,7 @@ test: setup ## Run the offline unit tests
 	$(RUN) python -m unittest discover -s src -t src -p "test_*.py"
 
 lint: setup ## Check code style with ruff
-	$(RUN) ruff check src data/viz_mock/v2/serve.py data/viz_mock/v3_transluce/serve.py
+	$(RUN) ruff check src data/viz_mock/v2/serve.py data/viz_mock/v3_transluce/serve.py data/viz_mock/v4_traces/serve.py
 
 watcher-client: $(WATCHER_CLIENT) ## Download the official FairyStack external-agent client
 
@@ -108,3 +131,19 @@ watcher-status: ## Emit archive cursors and pending count as JSON
 
 watcher-monitor: ## Poll and emit WATCHER_IDLE or a backlog wake generation
 	@$(WATCHER_CMD) monitor --max-pages "$(WATCHER_MAX_PAGES)" --total-seconds "$(WATCHER_TOTAL_SECONDS)" --retry-seconds "$(WATCHER_RETRY_SECONDS)"
+
+watcher-discord-poll: ## Archive Discord #general via GET (requires scoped DISCORD_BOT_TOKEN)
+	@$(DISCORD_WATCHER_CMD) poll --max-pages "$(DISCORD_WATCHER_MAX_PAGES)" --total-seconds "$(DISCORD_WATCHER_TOTAL_SECONDS)"
+
+watcher-discord-pending: ## Read bounded private Discord events as JSON
+	@$(DISCORD_WATCHER_CMD) pending --limit "$(DISCORD_WATCHER_LIMIT)"
+
+watcher-discord-ack: ## Acknowledge durable Discord analysis (DISCORD_WATCHER_CURSOR required)
+	@test -n "$(DISCORD_WATCHER_CURSOR)" || { printf '%s\n' 'Set DISCORD_WATCHER_CURSOR=<id>.' >&2; exit 1; }
+	@$(DISCORD_WATCHER_CMD) ack --cursor "$(DISCORD_WATCHER_CURSOR)"
+
+watcher-discord-status: ## Inspect private Discord source and processing cursors
+	@$(DISCORD_WATCHER_CMD) status
+
+watcher-discord-monitor: ## Poll Discord and emit deterministic backlog wake token
+	@$(DISCORD_WATCHER_CMD) monitor --max-pages "$(DISCORD_WATCHER_MAX_PAGES)" --total-seconds "$(DISCORD_WATCHER_TOTAL_SECONDS)" --retry-seconds "$(DISCORD_WATCHER_RETRY_SECONDS)"

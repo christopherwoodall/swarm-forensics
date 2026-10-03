@@ -3,7 +3,7 @@
   "session_url": "https://multi.fairystack.com/workspace/?session=ca8ffac066a4",
   "participant_id": "hermes-maria-ca8ffac066a4",
   "task_name_preference": "Colette",
-  "state": "recurring_read_only_active",
+  "state": "paused_expired_enrollment",
   "read_access": "verified",
   "access_mode": "conversation",
   "source_archive": "data/raw/fairystack/ca8ffac066a4/snapshot-00000000.json",
@@ -19,14 +19,13 @@
   "ledger_processed_cursor": 2217,
   "meaningful_events_recorded": 46,
   "event_ledger": "colette-research/hermes-log/EVENTS.jsonl",
-  "recurring_monitor": "active_verified_scheduled_tick",
+  "recurring_monitor": "paused",
   "chat_posts_sent": 0,
   "expires_at": "2026-10-02T20:20:23.948904+00:00",
   "checkpoint_at": "2026-10-02T04:09:00.470901+00:00",
   "next_steps": [
-    "Continue silent GET-only acquisition and source-linked ledger extraction.",
-    "Review the ledger only when an authorized workflow requests it.",
-    "Stop authenticated reads at enrollment expiry; renewal requires separate owner authorization."
+    "Keep the expired FairyStack job paused until re-enrollment is explicitly authorized.",
+    "Keep Discord observations in the separate, local git-ignored ledger."
   ],
   "source_database": "data/raw/fairystack/ca8ffac066a4/source.sqlite",
   "pending_source_events": 0,

@@ -1,0 +1,108 @@
+# Module: Traces
+
+## 1. Intent & Scope
+
+Normalize the three external trace reservoirs in `colette-research/sources/`
+(URLQuery, Arquivo.pt via the us-canada evidence package, and the
+RubyGems/wiki-collusion corpus) into one cross-dataset event table and
+candidate edge table under `data/raw/traces/`.
+
+The subsystem is governed by the shared forensic protocol at
+`colette-research/hermes-research/stage-4-trace-reservoirs/PROTOCOL.md`.
+That protocol, not this module, defines the ten coordination-capacity
+questions, the eight-way evidence distinctions, and the five-level edge
+taxonomy.
+
+## 2. Active Invariants
+
+- Readers MUST stream archives one record at a time. A reader MUST NOT load a
+  complete archive into memory.
+- Every event row MUST carry a raw reference that identifies the exact source
+  record (file, record id, or row number).
+- A row MUST NOT assert an agent identity, a successful remote effect, or a
+  causal transfer. Identity is `actor_hint`, never `actor_id`.
+- Optional-text fields (`parent_event`, `notes`, `artifact`) MAY be empty.
+  Enum fields MUST use their declared vocabulary.
+- Wiki evidence MUST use added-text reconstruction, never cumulative page
+  copies. Citation counting MUST count only citations in added text.
+- Edges MUST carry `causal_strength` plus `competing_explanation`. Ambiguous
+  cases go to the unresolved ledger (`edges.jsonl` rows with
+  `causal_strength=temporal_structural_association_only` or weaker), not the
+  graph.
+- Bridge probes MUST keep identity linkage, common harness, common task,
+  common operator, and direct transfer as separate competing hypotheses.
+
+## 3. Interfaces & Dependencies
+
+- Depends on: stdlib only (`csv`, `gzip`, `json`, `re`, `zipfile`,
+  `hashlib`). No new external dependencies.
+- `schema.py`: `EVENT_FIELDS`, `EDGE_FIELDS`, `EVENT_ACTIONS`,
+  `EDGE_STRENGTHS`, `DATASETS`, `TECHNIQUE_FAMILIES`, `VALID_ACTOR_HINTS`,
+  `validate_event(row)`, `validate_edge(row)`.
+- `rows.py`: `mk_event(...)`, `mk_edge(...)`, `added_text(rev)`,
+  `actor_hint_for_label(label)`, `short(text)`, `hash_prefix(text)`.
+- `readers.py`: `iter_wiki_revisions`, `iter_wiki_events`,
+  `iter_gem_records`, `technique_family_for(url)`.
+- `wiki.py`: `wiki_event_rows(zip_path)` — revisions and events, added-text
+  reconstruction, investigator labels mapped to `actor_hint=investigator`.
+- `arquivo.py`: `arquivo_event_rows(uscan_zip)` — capture rows with zz=
+  nonce preservation; `uscan_response_rows(uscan_zip)` — the investigation's
+  fresh-response layer, actor_hint=investigator.
+- `reservoirs.py`: `gem_event_rows(records_gz)` — registry_metadata as
+  register events, package_member as publish events;
+  `urlquery_event_rows(uq_zip)` — catalog request events;
+  `urlquery_http_rows(uscan_zip)` — report-level HTTP exports inside the
+  us-canada package.
+- `bridges.py`: `gem_wiki_overlap_edges` — exact URL overlap via gem
+  homepage sha256 against wiki link sha256 (the "radioactive marble" probe);
+  `urlquery_citation_edges` — wiki added-text citations of urlquery reports;
+  `shared_relay_edges` — relay hosts named in both populations.
+- `cli.py`: `run(out_dir)`, `main(argv)`. Writes `events.jsonl`,
+  `edges.jsonl`.
+- `report.py`: prints per-dataset counts, actor hints, technique families,
+  and every edge with competing explanation.
+- `viz.py`: `build_summary(events_path, edges_path)`, `main(argv)`.
+  Streams both tables and writes the compact viewer aggregate
+  `data/viz_mock/v4_traces/data/viewer-data.json` (totals, daily stacked
+  counts, families, hints, time bounds, top targets, zz-nonce recurrence,
+  gem stems, verbatim edges). Never loads a complete table into memory.
+- Viewer (not a package): `data/viz_mock/v4_traces/` — `index.html`
+  (self-contained, no remote dependencies) and `serve.py` (loopback,
+  serves the viewer directory plus one `GET /api/events` endpoint that
+  streams bounded queries against `data/raw/traces/events.jsonl` with
+  substring prefilters; matches capped at 200 rows).
+- Commands (run through `make`):
+  - `make traces-normalize` — write `data/raw/traces/events.jsonl` and
+    `edges.jsonl` from the real archives.
+  - `make traces-report` — print cross-dataset summaries and edges.
+  - `make traces-viz-build [TRACES_PORT]` — write the viewer aggregate.
+  - `make traces-viz-serve` — serve the viewer on 127.0.0.1:8002.
+- Tests: `test_traces.py` — schema validation, URL classification, label
+  mapping, added-text reconstruction, viz aggregation. Offline; no raw
+  archives, no network.
+
+## 4. Current State & Known Gaps
+
+- State: normalization and bridge probes run over the full real archives:
+  643,199 events (arquivo 561,298; urlquery 47,316; wiki 34,504; rubygems 81)
+  and 21 candidate edges. All rows pass schema validation.
+- State: ten exact-URL overlaps between gem homepages and wiki link rows
+  (resemblance_only; transmission not established). One wiki→urlquery
+  citation (temporal_structural_association_only; investigator provenance is
+  a live competing explanation).
+- Gap: the unresolved ledger is folded into `edges.jsonl` by strength class;
+  a separate ledger file is not yet written.
+- Gap: technique-family classification is name-based for relays and
+  shorteners; arquivo targets without zz= are `unknown` (555,156 events).
+- Gap: no burst or feedback analysis on arquivo rows yet (the request-ecology
+  probe from the protocol). No per-path nonce-recurrence table is emitted.
+- Gap: no observed_read/behavior_change values beyond the defaults; response
+  bodies are absent from all three packages, so read evidence stays
+  unobserved by construction.
+- Gap: no cross-dataset family analysis beyond the three implemented probes.
+
+## 5. Pruned Decisions (Keep max 3)
+
+- [2026-10-03 Hermes]: The /api/events endpoint must stream the complete events file. A bounded prefix scan silently misses datasets stored later in the file; correctness requires the full pass with substring prefilters.
+- [2026-10-03 Hermes]: Keep gem↔wiki URL overlap at resemblance_only; identical relay URLs establish shared task material at most, and transmission requires a demonstrated read that no released record provides.
+- [2026-10-03 Hermes]: Wiki attribution discipline: count only added-text citations (inherited page copy manufactures propagation), and map investigator-provenance labels to actor_hint=investigator rather than dropping them (dropping would silently re-weight the agent-label population).

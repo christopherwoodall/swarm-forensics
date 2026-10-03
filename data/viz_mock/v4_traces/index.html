@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage-4 Trace Reservoirs — Forensic Viewer</title>
+<style>
+:root {
+  --bg: #060a12;
+  --panel: #0b111e;
+  --panel-2: #0e1626;
+  --line: #1b2a44;
+  --ink: #e8e4d8;
+  --muted: #8a94a6;
+  --ember: #ff9e3d;
+  --iris: #7dd3fc;
+  --iris-dim: #2c4a6e;
+  --danger: #f2748a;
+  --ok: #7dd3a8;
+  --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--sans); }
+body { font-size: 14px; line-height: 1.45; padding: 20px 24px 60px; max-width: 1280px; margin: 0 auto; }
+
+header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
+h1 { font-size: 17px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+h1 .glyph { color: var(--ember); margin-right: 6px; }
+.subtitle { color: var(--muted); font-size: 12px; }
+.subtitle a { color: var(--iris); text-decoration: none; border-bottom: 1px dotted var(--iris-dim); }
+.warn { color: var(--ember); font-size: 12px; margin: 6px 0 18px; font-family: var(--mono); }
+.warn::before { content: "▲ "; }
+
+/* layout grid */
+.grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; }
+.panel h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 10px; font-weight: 600; }
+.panel h2 .count { color: var(--ink); float: right; font-family: var(--mono); font-size: 11px; }
+.span3 { grid-column: span 3; } .span4 { grid-column: span 4; }
+.span6 { grid-column: span 6; } .span8 { grid-column: span 8; }
+.span12 { grid-column: span 12; }
+
+/* totals strip */
+.totals { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.total { background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; }
+.total .num { font-family: var(--mono); font-size: 22px; font-weight: 600; }
+.total .lab { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+.total.uq .num { color: var(--iris); }
+.total.arq .num { color: #b8a8e8; }
+.total.wiki .num { color: var(--ok); }
+.total.gem .num { color: var(--ember); }
+
+/* dataset colors */
+.c-uq { color: var(--iris); } .c-arq { color: #b8a8e8; }
+.c-wiki { color: var(--ok); } .c-gem { color: var(--ember); }
+
+/* timeline chart */
+#timeline { width: 100%; height: 150px; display: block; }
+.legend { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+.legend span { font-size: 11px; color: var(--muted); }
+.legend i { display: inline-block; width: 9px; height: 9px; border-radius: 1px; margin-right: 5px; vertical-align: -1px; }
+.legend .sw-uq { background: var(--iris); } .legend .sw-arq { background: #b8a8e8; }
+.legend .sw-wiki { background: var(--ok); } .legend .sw-gem { background: var(--ember); }
+
+/* tables */
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+th { text-align: left; color: var(--muted); font-weight: 500; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; padding: 5px 8px; border-bottom: 1px solid var(--line); }
+td { padding: 5px 8px; border-bottom: 1px solid #141d30; vertical-align: top; font-family: var(--mono); font-size: 12px; }
+td.wrap, th.wrap { font-family: var(--sans); }
+tr:hover td { background: #101a2c; }
+.num { text-align: right; }
+tr.dim td { color: var(--muted); }
+
+/* edge ledger */
+.strength { display: inline-block; font-size: 10px; font-family: var(--mono); padding: 1px 6px; border-radius: 3px; border: 1px solid var(--line); white-space: nowrap; }
+.st-resemblance_only { color: var(--muted); border-color: #26344f; }
+.st-temporal_structural_association_only { color: var(--iris); border-color: var(--iris-dim); }
+.st-plausible_dependency { color: var(--ember); border-color: #6e4a1e; }
+.st-strongly_supported_dependency, .st-observed_causal_dependency { color: #060a12; background: var(--ember); border-color: var(--ember); font-weight: 700; }
+.edge-from { color: var(--ok); } .edge-to { color: var(--iris); }
+.compact small { color: var(--muted); font-size: 11px; font-family: var(--sans); }
+
+/* bars */
+.hbar { position: relative; background: var(--panel-2); border: 1px solid var(--line); border-radius: 3px; height: 18px; overflow: hidden; margin: 3px 0 9px; }
+.hbar i { position: absolute; inset: 0 auto 0 0; background: var(--iris-dim); }
+.hbar span { position: relative; z-index: 1; display: flex; justify-content: space-between; padding: 1px 7px; font-size: 11px; font-family: var(--mono); color: var(--ink); }
+.hbar.ember i { background: #6e4a1e; }
+.hbar.iris i { background: var(--iris-dim); }
+
+/* explorer */
+.explorer-controls { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.explorer-controls input, .explorer-controls select, .explorer-controls button {
+  background: var(--panel-2); color: var(--ink); border: 1px solid var(--line);
+  border-radius: 3px; padding: 6px 10px; font-size: 12.5px; font-family: var(--mono);
+}
+.explorer-controls input { flex: 1; min-width: 220px; }
+.explorer-controls input:focus, .explorer-controls select:focus, .explorer-controls button:focus {
+  outline: 1px solid var(--iris); outline-offset: 0;
+}
+.explorer-controls button { cursor: pointer; }
+.explorer-controls button:hover { border-color: var(--iris); }
+.scan-note { color: var(--muted); font-size: 11px; font-family: var(--mono); margin-top: 6px; }
+#rows td { font-size: 11.5px; word-break: break-all; }
+#rows .evt-id { color: var(--iris); }
+#rows .evt-target { color: var(--ink); }
+#rows .evt-notes { color: var(--muted); }
+.badge { display: inline-block; font-size: 9.5px; padding: 0 5px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); margin-right: 4px; }
+.badge.b-investigator { color: var(--ember); border-color: #6e4a1e; }
+.badge.b-agent_label { color: var(--ok); border-color: #2c5e46; }
+
+footer { margin-top: 26px; color: var(--muted); font-size: 11px; font-family: var(--mono); border-top: 1px solid var(--line); padding-top: 10px; }
+footer p { margin-bottom: 4px; }
+
+@media (max-width: 900px) {
+  .span3, .span4, .span6, .span8 { grid-column: span 12; }
+  .totals { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="glyph">◈</span> Stage-4 Trace Reservoirs</h1>
+  <span class="subtitle">forensic viewer · urlquery / arquivo / rubygems+wiki · governed by <a href="../../../../colette-research/hermes-research/stage-4-trace-reservoirs/PROTOCOL.md">PROTOCOL.md</a></span>
+</header>
+<p class="warn">Rows are observables, not agents. No row asserts identity, successful execution, or causal transfer. Edges carry competing explanations; none is upgraded without a demonstrated read.</p>
+
+<div class="grid">
+  <section class="panel span12">
+    <h2>Normalized events <span class="count" id="total-events">—</span></h2>
+    <div class="totals" id="totals"></div>
+  </section>
+
+  <section class="panel span8">
+    <h2>Events per day by dataset</h2>
+    <canvas id="timeline" width="1200" height="150"></canvas>
+    <div class="legend">
+      <span><i class="sw-uq"></i>urlquery</span>
+      <span><i class="sw-arq"></i>arquivo</span>
+      <span><i class="sw-wiki"></i>wiki</span>
+      <span><i class="sw-gem"></i>rubygems</span>
+    </div>
+  </section>
+
+  <section class="panel span4">
+    <h2>Technique families</h2>
+    <div id="families"></div>
+  </section>
+
+  <section class="panel span12">
+    <h2>Candidate edges <span class="count" id="total-edges">—</span></h2>
+    <table class="compact">
+      <thead><tr>
+        <th>strength</th><th class="wrap">from → to</th>
+        <th class="wrap">competing explanations (all live unless refuted)</th><th class="wrap">raw ref</th>
+      </tr></thead>
+      <tbody id="edges"></tbody>
+    </table>
+  </section>
+
+  <section class="panel span6">
+    <h2>Actor hints by dataset</h2>
+    <table><tbody id="hints"></tbody></table>
+  </section>
+
+  <section class="panel span6">
+    <h2>Time bounds by dataset</h2>
+    <table><tbody id="bounds"></tbody></table>
+  </section>
+
+  <section class="panel span6">
+    <h2>Arquivo zz= nonce recurrence (top 20)</h2>
+    <table><tbody id="zz"></tbody></table>
+  </section>
+
+  <section class="panel span6">
+    <h2>Gem name stems (publication families, not agents)</h2>
+    <div id="stems"></div>
+  </section>
+
+  <section class="panel span12">
+    <h2>Event explorer <span class="count">bounded server query · first 200k rows scanned</span></h2>
+    <div class="explorer-controls">
+      <input id="q" type="text" placeholder="substring search across all fields (case-insensitive)…" aria-label="search">
+      <select id="dataset" aria-label="dataset filter">
+        <option value="">all datasets</option>
+        <option>urlquery</option><option>arquivo</option>
+        <option>wiki</option><option>rubygems</option>
+      </select>
+      <button id="go">Query</button>
+    </div>
+    <table>
+      <thead><tr><th>time</th><th>dataset</th><th class="wrap">action</th><th class="wrap">target / notes</th></tr></thead>
+      <tbody id="rows"><tr><td colspan="4" style="color:var(--muted)">press Query to load rows</td></tr></tbody>
+    </table>
+    <p class="scan-note" id="scan-note"></p>
+  </section>
+</div>
+
+<footer>
+  <p>counts are of observable rows, not agents or runs. technique families classify visible structure only.</p>
+  <p>edge taxonomy: observed_causal_dependency &gt; strongly_supported_dependency &gt; plausible_dependency &gt; temporal_structural_association_only &gt; resemblance_only.</p>
+  <p>generated by <code>make traces-viz-build</code> · serve with <code>make traces-viz-serve</code> · loopback only</p>
+</footer>
+
+<script>
+"use strict";
+const DATA_URL = "data/viewer-data.json";
+const DS_COLOR = { urlquery: "#7dd3fc", arquivo: "#b8a8e8", wiki: "#7dd3a8", rubygems: "#ff9e3d" };
+const DS_ORDER = ["urlquery", "arquivo", "wiki", "rubygems"];
+
+function el(tag, cls, text) {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+
+async function boot() {
+  const res = await fetch(DATA_URL);
+  const data = await res.json();
+
+  // totals
+  document.getElementById("total-events").textContent = data.totals.events.toLocaleString();
+  document.getElementById("total-edges").textContent = data.totals.edges.toLocaleString() + " edges";
+  const totalsBox = document.getElementById("totals");
+  const cls = { urlquery: "uq", arquivo: "arq", wiki: "wiki", rubygems: "gem" };
+  for (const ds of DS_ORDER) {
+    const n = data.totals.by_dataset[ds] || 0;
+    const cell = el("div", "total " + (cls[ds] || ""));
+    cell.append(el("div", "num", n.toLocaleString()), el("div", "lab", ds));
+    totalsBox.append(cell);
+  }
+
+  // families bars
+  const famBox = document.getElementById("families");
+  const famMax = data.families.length ? data.families[0][1] : 1;
+  for (const [name, count] of data.families.slice(0, 10)) {
+    const row = el("div", "hbar " + (name === "unknown" ? "" : "iris"));
+    const bar = el("i");
+    bar.style.width = Math.max(2, (count / famMax) * 100) + "%";
+    const label = el("span");
+    label.append(el("b", null, name), el("em", null, count.toLocaleString()));
+    row.append(bar, label);
+    famBox.append(row);
+  }
+
+  // timeline (stacked bars per day, log-scaled to survive arquivo's mass)
+  const canvas = document.getElementById("timeline");
+  const ctx = canvas.getContext("2d");
+  const days = Object.keys(data.daily).sort();
+  const W = canvas.width, H = canvas.height, padB = 18, padL = 34;
+  ctx.fillStyle = "#0b111e"; ctx.fillRect(0, 0, W, H);
+  ctx.font = "10px ui-monospace, monospace"; ctx.fillStyle = "#8a94a6";
+  const innerW = W - padL - 8, innerH = H - padB - 6;
+  const totalPerDay = days.map(d => DS_ORDER.reduce((s, ds) => s + (data.daily[d][ds] || 0), 0));
+  const maxTotal = Math.max(1, ...totalPerDay);
+  // log scale bands
+  const yOf = v => {
+    const t = Math.log10(v + 1) / Math.log10(maxTotal + 1);
+    return (H - padB) - t * innerH;
+  };
+  // gridlines at decades
+  for (let p = 1; p <= Math.pow(10, Math.floor(Math.log10(maxTotal))); p *= 10) {
+    const y = yOf(p);
+    ctx.strokeStyle = "#1b2a44"; ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - 8, y); ctx.stroke();
+    ctx.fillStyle = "#55607a"; ctx.fillText(p >= 1000 ? (p/1000) + "k" : String(p), 4, y + 3);
+  }
+  const barW = Math.max(1, innerW / days.length - 0.5);
+  days.forEach((day, i) => {
+    let acc = 0;
+    const x = padL + (i * innerW) / days.length;
+    for (const ds of DS_ORDER) {
+      const v = data.daily[day][ds] || 0;
+      if (!v) continue;
+      const yTop = yOf(acc + v), yBot = yOf(acc);
+      ctx.fillStyle = DS_COLOR[ds];
+      ctx.fillRect(x, yTop, barW, Math.max(1, yBot - yTop));
+      acc += v;
+    }
+  });
+  // month ticks (skip labels that would collide)
+  ctx.fillStyle = "#55607a";
+  let lastMonth = "";
+  let lastLabelX = -100;
+  days.forEach((day, i) => {
+    const month = day.slice(0, 7);
+    if (month !== lastMonth) {
+      lastMonth = month;
+      const x = padL + (i * innerW) / days.length;
+      ctx.strokeStyle = "#141d30"; ctx.beginPath(); ctx.moveTo(x, 6); ctx.lineTo(x, H - padB); ctx.stroke();
+      if (x - lastLabelX > 34 && x < W - 44) {
+        ctx.fillText(month, x, H - 5);
+        lastLabelX = x;
+      }
+    }
+  });
+  // interaction: hover tooltip via title
+  canvas.addEventListener("mousemove", ev => {
+    const rect = canvas.getBoundingClientRect();
+    const x = (ev.clientX - rect.left) * (W / rect.width);
+    const idx = Math.floor(((x - padL) / innerW) * days.length);
+    if (idx >= 0 && idx < days.length) {
+      const day = days[idx];
+      const parts = DS_ORDER.map(ds => `${ds}:${(data.daily[day][ds] || 0).toLocaleString()}`).join("  ");
+      canvas.title = `${day} — ${parts}`;
+    }
+  });
+
+  // edges ledger
+  const edgesBody = document.getElementById("edges");
+  for (const edge of data.edges) {
+    const tr = document.createElement("tr");
+    const tdStrength = el("td");
+    tdStrength.append(el("span", "strength st-" + edge.causal_strength, edge.causal_strength));
+    const tdFrom = el("td", "wrap");
+    const from = el("span", "edge-from", edge.edge_from);
+    const to = el("span", "edge-to", " → " + edge.edge_to);
+    tdFrom.append(from, to, el("div"), el("small", null, edge.relation));
+    const tdComp = el("td", "wrap", edge.competing_explanation);
+    const tdRaw = el("td", "wrap", edge.raw_ref);
+    tr.append(tdStrength, tdFrom, tdComp, tdRaw);
+    edgesBody.append(tr);
+  }
+
+  // actor hints
+  const hintsBody = document.getElementById("hints");
+  for (const ds of DS_ORDER) {
+    const tr = document.createElement("tr");
+    tr.append(el("td", null, ds));
+    const td = el("td");
+    for (const [hint, n] of Object.entries(data.hints[ds] || {})) {
+      td.append(el("span", "badge b-" + hint, hint + " " + n));
+    }
+    tr.append(td);
+    hintsBody.append(tr);
+  }
+
+  // time bounds
+  const boundsBody = document.getElementById("bounds");
+  for (const ds of DS_ORDER) {
+    const b = data.time_bounds[ds];
+    const tr = document.createElement("tr");
+    tr.append(el("td", null, ds), el("td", null, b ? b.min : "—"), el("td", null, b ? b.max : "—"));
+    boundsBody.append(tr);
+  }
+
+  // zz nonces
+  const zzBody = document.getElementById("zz");
+  const zzMax = data.zz_nonces.length ? data.zz_nonces[0][1] : 1;
+  for (const [nonce, n] of data.zz_nonces) {
+    const tr = document.createElement("tr");
+    const td = el("td");
+    const bar = el("div", "hbar ember");
+    const fill = el("i"); fill.style.width = Math.max(3, (n / zzMax) * 100) + "%";
+    const label = el("span");
+    label.append(el("b", null, nonce), el("em", null, String(n)));
+    bar.append(fill, label);
+    td.colSpan = 2; td.append(bar);
+    tr.append(td);
+    zzBody.append(tr);
+  }
+  if (!data.zz_nonces.length) zzBody.append(el("tr", null, el("td", null, "none recorded")));
+
+  // gem stems
+  const stemsBox = document.getElementById("stems");
+  const stemMax = data.gem_stems.length ? data.gem_stems[0][1] : 1;
+  for (const [stem, n] of data.gem_stems) {
+    const row = el("div", "hbar ember");
+    const bar = el("i"); bar.style.width = Math.max(3, (n / stemMax) * 100) + "%";
+    const label = el("span");
+    label.append(el("b", null, stem), el("em", null, String(n)));
+    row.append(bar, label);
+    stemsBox.append(row);
+  }
+
+  // explorer
+  const rowsBody = document.getElementById("rows");
+  const scanNote = document.getElementById("scan-note");
+  async function runQuery() {
+    const q = document.getElementById("q").value.trim();
+    const ds = document.getElementById("dataset").value;
+    const url = `/api/events?dataset=${encodeURIComponent(ds)}&q=${encodeURIComponent(q)}&limit=60`;
+    const r = await fetch(url);
+    const payload = await r.json();
+    rowsBody.textContent = "";
+    if (!payload.rows.length) {
+      const tr = document.createElement("tr");
+      tr.append(el("td", null, "no matching rows in the scanned window"));
+      tr.firstChild.colSpan = 4;
+      rowsBody.append(tr);
+    }
+    for (const row of payload.rows) {
+      const tr = document.createElement("tr");
+      const tdTime = el("td", null, row.time || "—");
+      const tdDs = el("td", "c-" + (row.dataset === "rubygems" ? "gem" : row.dataset), row.dataset);
+      const tdAction = el("td", "wrap");
+      tdAction.append(el("span", "badge b-" + row.actor_hint, row.actor_hint), row.action);
+      const tdTarget = el("td", "wrap");
+      tdTarget.append(el("div", "evt-target", row.target || ""), el("div", "evt-notes", (row.notes || "").slice(0, 160)));
+      tr.append(tdTime, tdDs, tdAction, tdTarget);
+      rowsBody.append(tr);
+    }
+    scanNote.textContent = `scanned ${payload.scanned.toLocaleString()} rows of 643,199 (full stream, matches capped at 60) — a bounded probe, not a census of relations`;
+  }
+  document.getElementById("go").addEventListener("click", runQuery);
+  document.getElementById("q").addEventListener("keydown", ev => { if (ev.key === "Enter") runQuery(); });
+}
+boot().catch(err => {
+  document.body.insertAdjacentHTML("afterbegin",
+    `<p class="warn">viewer data missing — run <code>make traces-normalize</code> then <code>make traces-viz-build</code></p>`);
+  console.error(err);
+});
+</script>
+</body>
+</html>
