@@ -73,12 +73,14 @@ class Env:
         self.settings = Settings(self.db)
         self.ledger = Ledger(self.db)
         self.graph = Graph(self.db)
+        from swarm_forensics_plugin.registry import Registry
+        self.registry = Registry(self.db, self.ledger)
         self.iocs = IocStore(self.db, self.settings)
         self.iocs.seed()
         self.hermes = FakeHermes()
         kwargs = {"getter": getter} if getter else {}
         self.parts = Parts(self.settings, self.ledger, self.graph, self.iocs,
-                           self.hermes, **kwargs)
+                           self.hermes, registry=self.registry, **kwargs)
         self.hunts = HuntService(self.db, self.parts)
         self.settings.update({
             "hunt.sources": ["web"], "hunt.cycle_pause_seconds": 5,
