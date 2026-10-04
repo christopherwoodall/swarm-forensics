@@ -167,12 +167,15 @@ watcher-monitor: ## Poll and emit WATCHER_IDLE or a backlog wake generation
 	@$(WATCHER_CMD) monitor --max-pages "$(WATCHER_MAX_PAGES)" --total-seconds "$(WATCHER_TOTAL_SECONDS)" --retry-seconds "$(WATCHER_RETRY_SECONDS)"
 
 JESSE_DIR := experiments/jesse/discord-bot-swarm
-.PHONY: jesse-sync jesse-setup jesse-check jesse-build jesse-test jesse-lint jesse-browser-test
+.PHONY: jesse-auto-sync jesse-sync jesse-setup jesse-check jesse-build jesse-test jesse-lint jesse-browser-test
 
 $(JESSE_DIR)/node_modules/.package-lock.json: $(JESSE_DIR)/package-lock.json $(JESSE_DIR)/package.json
 	cd $(JESSE_DIR) && npm ci --no-audit --no-fund
 
 jesse-setup: $(JESSE_DIR)/node_modules/.package-lock.json ## Install locked Discord Swarm dependencies
+
+jesse-auto-sync: ## Check, test, publish, and merge the Jesse snapshot (SYNC_CONFIG is a private credential file)
+	node experiments/jesse/auto-sync.mjs "$(SYNC_CONFIG)"
 
 jesse-sync: ## Import a committed Discord Swarm snapshot (SOURCE_REPO and SOURCE_REV are required)
 	node experiments/jesse/sync-source.mjs "$(SOURCE_REPO)" "$(SOURCE_REV)"
@@ -185,13 +188,15 @@ jesse-build: jesse-setup ## Build Discord Swarm browser assets
 
 jesse-test: jesse-setup jesse-check ## Run offline Discord Swarm unit tests
 	$(MAKE) -C $(JESSE_DIR) test
-	node --test experiments/jesse/sync-source.test.mjs
+	node --test experiments/jesse/sync-source.test.mjs experiments/jesse/auto-sync.test.mjs
 
 jesse-lint: jesse-setup jesse-check ## Check Discord Swarm JavaScript syntax
 	$(MAKE) -C $(JESSE_DIR) lint
 	node --check experiments/jesse/check-source.mjs
 	node --check experiments/jesse/sync-source.mjs
 	node --check experiments/jesse/sync-source.test.mjs
+	node --check experiments/jesse/auto-sync.mjs
+	node --check experiments/jesse/auto-sync.test.mjs
 	sh -n $(JESSE_DIR)/deploy/postgres/init.sh
 
 jesse-browser-test: jesse-setup ## Test Discord Swarm onboarding with synthetic fixtures

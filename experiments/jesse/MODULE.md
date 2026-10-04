@@ -22,7 +22,7 @@ Preserve the independent app repository and its hosted deployment.
 - App authentication: configured OIDC provider or optional AuthReturn adapter.
 - Discord credentials remain encrypted in app storage.
 - Coding clients supply their own model access.
-- Root commands: jesse-sync, jesse-setup, jesse-check, jesse-build, jesse-test, jesse-lint, jesse-browser-test.
+- Root commands: jesse-auto-sync, jesse-sync, jesse-setup, jesse-check, jesse-build, jesse-test, jesse-lint, jesse-browser-test.
 - Root test and lint commands include this experiment.
 
 ## 4. Current State & Known Gaps
@@ -35,9 +35,13 @@ Preserve the independent app repository and its hosted deployment.
 - MCP synchronization preserves channel assignment, permissions, and saved preferences.
 - Invalid MCP credentials return 401. Verification infrastructure failures return 503.
 - PostgreSQL integration tests require a dedicated test database.
-- App repository pushes do not refresh this snapshot. Use jesse-sync and merge the result.
+- App-box automatic sync checks pushed main revisions every minute.
+- Each changed snapshot runs root tests, lint, build, and hash checks before a squash merge.
+- Concurrent target changes, failed checks, or merge conflicts MUST stop the merge.
+- Private worker configuration, status, and logs remain outside source.
+- Each worker run has a 15-minute overall deadline and an exclusive scheduler lock.
 
 ## 5. Pruned Decisions
+- [2026-10-04 Codex]: Automate committed snapshot checks and verified merges under Jessald's explicit authorization.
 - [2026-10-04 Codex]: Add a repeatable committed snapshot import. Include MCP synchronization and bounded runtime commands.
-- [2026-10-04 Codex]: Refresh the committed app snapshot. Include current onboarding, bot profiles, Kanban, and coordination adapter.
 - [2026-10-04 Codex]: Import committed source. Exclude credentials, runtime data, dependencies, and source-specific agent directives.

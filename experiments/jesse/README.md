@@ -35,6 +35,13 @@ make test
 make lint
 ```
 
-Pushing the app repository does not update this snapshot.
-Snapshot updates MUST pass tests and merge into this repository.
+The app-box scheduler checks pushed app commits every minute.
+It imports committed source, runs root tests, lint, build, and hash checks, then squash-merges a pull request.
+Failed checks, conflicts, or concurrent target changes stop the merge.
+Private status and logs remain under `~/.local/state/jesse-auto-sync/`.
+Uncommitted files are never imported. Agent changes MUST be committed and pushed first.
+
+A worker run uses `make jesse-auto-sync SYNC_CONFIG=/private/config.json`.
+Private configuration contains `token` and an absolute `stateDir`.
+The configuration MUST be mode 0600. The state directory MUST be mode 0700.
 See [MODULE.md](MODULE.md) for interfaces and constraints.
