@@ -48,6 +48,10 @@ def computer_action_name(d):
     if a is None:
         return "none"
     if isinstance(a, dict):
+        if "command" in a:
+            return "shell"
+        if a.get("restart"):
+            return "restart"
         act = a.get("action") or "unknown"
         # Distinguish key presses by key text; coordinates dropped (instance noise).
         if act == "key":

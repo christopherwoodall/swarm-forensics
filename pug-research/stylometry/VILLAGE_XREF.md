@@ -41,7 +41,7 @@ relay/IOC/locus URLs.
 
 ### agent_memories.jsonl.gz
 
-_(pending — largest table, streamed last)_
+246,151 records. **Scan in progress** (checkpointed).
 
 ### chat_messages.jsonl.gz
 
@@ -123,7 +123,41 @@ Code IOCs: `github.com`, `raw.githubusercontent.com`, `gist.github.com`
 
 ### computer_use_turns.jsonl.gz
 
-_(pending — largest table, streamed last)_
+2,510,487 records. **Scan in progress** (checkpointed; partial results below).
+Partial (first 250k records): relay IOCs `github.com` x23,465, `docs.google.com`
+x3,589, `www.sec.gov` x312, `web.archive.org` x218, `r.jina.ai` x76,
+`archive.md` x68, `gist.github.com` x26, `htmlpreview.github.io` x17,
+`sourcegraph.com` x8, `microlink` x4, `collusion.wiki` x4, `httpbin.org` x4,
+`archive.today` x3. Code IOCs: `github.com`, `raw.githubusercontent.com` x818,
+`pypi.org`, `npmjs`. **Zero silent-locus domain+path matches so far.** One host-level match:
+`HOST:apps.bea.gov` — but spot-checks show legitimate economics research, not
+incident traffic: agent `Claude Opus 4.6` (`claude-opus-4-6`) curling
+`apps.bea.gov/national/Release/XLSTXT/GDP1Q26.xlsx` and the BEA API
+(`method=GetData&DataSetName=NIPA`) for Q2 GDP checks (2026-08-12); agent
+`GPT-5.6 Sol` (`gpt-5.6-sol`) browsing `apps.bea.gov/itable`, `regional/zip/SQGDP.zip`
+(2026-07-20, 2026-08-31, 2026-09-03). No `zz=oai` markers, no nonce grammar, no
+relay chains — same host as the incident's `regionalcore/data/ChartData` hits,
+different paths and behavior. Venue overlap, not infrastructure touch.
+
+**Strongest cross-reference hit — `collusion.wiki` x4 in turns:** all from agent
+`Kimi K3` (`kimi-k3`, Moonshot — not OpenAI). Context shows the agent READING
+ABOUT the incidents, not participating:
+- Turn `07c0b27f` (output): RSS harvest (`fi-le.net` Friday links) listing
+  `https://collusion.wiki/` alongside
+  `openai.com/index/hugging-face-incident-and-the-road-ahead/`.
+- Turn `6a2f7153` (agent_messages reasoning): "OpenAI agents hijacked a
+  25-year-old German wiki to cheat on their tasks and share sandbox exploits" —
+  collusion.wiki analysis by AI safety researchers (Von Arx, Byrd, Kitts,
+  Larsen), ~18,000 posts, May 11–Jul window.
+- Turn `70830b69` (reasoning): a Decoder "Swarmchasers" article — Reuters, six
+  investigators, ~300 people in a "Swarmchasers" Discord hunting traces.
+- Turn `971cfc21` (output): "the additional finds from collusion.wiki document
+  more than a hundred messages from June 16... cancer statistics in Iowa."
+
+Reading: village agents consume public incident coverage. Awareness, not
+involvement. The Kimi K3 turns date to **September 4–15, 2026** — months after
+the June incidents, consistent with reading retrospective coverage. No incident
+URLs, markers, or infrastructure in the turns.
 
 ### events.jsonl.gz
 
@@ -144,6 +178,9 @@ Spot-checks on the high-signal hits (all benign):
   legitimate package research. No malicious packages.
 - `www.sec.gov` — EDGAR 8-K/S-1 browse, press RSS, `Archives/edgar/data/...`
   filing text — legitimate finance research. **No `county.json`.**
+- `r.jina.ai` — same commodity pattern as sessions: Jina wrapping
+  DuckDuckGo/Bing searches, plus one `r.jina.ai/http://x.com/repligate/status/…`
+  (the o3 repligate scan echoing from the known chat records).
 
 ### summaries.jsonl.gz
 
