@@ -25,7 +25,7 @@ HERMES_HOME=/path/to/hermes make hermes-install   # explicit target
 make hermes-uninstall                             # keeps the database
 ```
 
-One-click link (resolves only after the plugin is on the default branch):
+You can also use this [one-click install link](https://tinyurl.com/swarm-forensics) or the URI below in the Hermes desktop app:
 
 ```
 hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/plugins/swarm-forensics&enable=1
