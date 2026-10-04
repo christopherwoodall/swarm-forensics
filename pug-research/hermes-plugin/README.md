@@ -1,72 +1,8 @@
-# Swarm Forensics (Hermes plugin)
+# Swarm Forensics (Hermes Plugin)
 
-An autonomous swarm hunter for Hermes desktop. An operator starts a hunt.
-Hermes then searches the public web for agent traces until the operator
-stops it. The plugin keeps what it finds in a local SQLite database:
-events, evidence, IOCs, and an Obsidian-style graph of agents, swarms, and
-cases.
-
-## Install
-
-From a checkout of this repository:
-
-```
-make hermes-install      # from the repository root
-make install             # from pug-research/hermes-plugin
-```
-
-The target copies `plugins/swarm-forensics` into the Hermes home and runs
-`hermes plugins enable swarm-forensics`. It picks the Hermes home in this
-order: `HERMES_HOME`, the Windows desktop app (under WSL), then `~/.hermes`.
-Restart the Hermes desktop app afterward so the backend routes mount.
-
-```
-HERMES_HOME=/path/to/hermes make hermes-install   # explicit target
-make hermes-uninstall                             # keeps the database
-```
-
-You can also use this [one-click install link](https://tinyurl.com/swarm-forensics) or the URI below in the Hermes desktop app:
-
-```
-hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/plugins/swarm-forensics&enable=1
-```
-
-## Use
-
-Open **Swarm Forensics** in the desktop app, or use the command:
-
-| Command | Effect |
-|---|---|
-| `/swarm-forensics start [goal]` | Start an autonomous hunt. It runs until you stop it. |
-| `/swarm-forensics session [goal]` | Start an interactive hunt session in Hermes chat. |
-| `/swarm-forensics attach [id]` | Attach current chat session to a hunt for live steering. |
-| `/swarm-forensics subhunt [parent_id] [goal]` | Spawn a concurrent child hunt up to depth limit. |
-| `/swarm-forensics tools [id] [n]` | Inspect recent tool calls, queries, and model rationale. |
-| `/swarm-forensics pause [id]`, `resume [id]`, `stop [id]` | Control hunts and active sub-hunts. |
-| `/swarm-forensics status` | Show hunt state and totals. |
-| `/swarm-forensics log [n]` | Show recent hunt events and activities. |
-| `/swarm-forensics review` | List proposed IOC terms awaiting decision. |
-| `/swarm-forensics accept <id> [reason]`, `reject <id> [reason]` | Accept or reject a proposed IOC. |
-| `/swarm-forensics benign <id\|term> [reason]` | Mark an indicator as a benign false positive. |
-| `/swarm-forensics narrow <id> <term>` | Narrow an indicator term. |
-| `/swarm-forensics find <text>` | Search artifacts, agents, swarms, and campaigns. |
-| `/swarm-forensics settings [key [value]]` | Read or update configuration settings. |
-| `/swarm-forensics reset [--force]` | Wipe all data and start fresh from scratch. |
-
-Interactive Hermes tools:
-- `sf_get_context`, `sf_search_index`, `sf_record_evidence`, `sf_propose_ioc`, `sf_manage_entity`, `sf_link_entities`, `sf_triage_item`, `sf_query_knowledge`, `sf_spawn_subhunt`, `sf_attach_hunt`.
-
-Desktop pages:
-- **Hunt**: Activity log with filters, active leads with dismiss actions, recursive sub-hunt tree view, `+ Sub-hunt` spawner, live discovered URLs feed with `+ Artifact` capture, attach command helper, and interactive hunt session card.
-- **Knowledge**: Interactive graph, hierarchy browser (*Belongs to* and *Contains*), custom groups (`+ Group`), tags, and Markdown notes.
-- **Evidence**: Captured page excerpts with provenance and taint indicators.
-- **IOCs**: Indicator catalog, promotion policy status, decision audit logs, and benign triage.
-- **URLs**: Discovered and predicted URL catalog, filtering by status, benign/suspicious triage, and `+ Artifact` capture.
-- **Prompts**: Database-backed prompt templates, token placeholder chips (`{{var}}`), reset to defaults, and JSON export/import.
-- **Sources**: Index source enable toggles (Wayback CDX, crt.sh, arXiv Intelligence), candidate URL grammar rules, and wordlist import.
-- **Settings**: Plugin configuration (depth limits, multi-hunt concurrency), schedule controls, full data export bundle, and Danger Zone reset.
-
-## Architecture
+Autonomous and interactive swarm threat intelligence for Hermes Desktop and CLI.
+The plugin searches public web sources for agent infrastructure and behavioral traces.
+It writes events, evidence, indicators of compromise (IOCs), and entities to a local SQLite database.
 
 ```mermaid
 flowchart TD
@@ -76,90 +12,220 @@ flowchart TD
         CLI["CLI Commands (/swarm-forensics)"]
     end
 
-    subgraph PluginCore["Swarm Forensics Plugin Core"]
-        AgentTools["Hermes Agent Tools (10 Tools)"]
-        PluginAPI["Plugin REST API (FastAPI / Starlette)"]
-        Service["Forensics Service Coordinator"]
-        HuntService["Multi-Worker Hunt Service"]
-        PromptRegistry["Prompt Registry & Templates"]
-        OSINT["OSINT Sources & URL Grammar Engine"]
+    subgraph PluginCore["Swarm Forensics Core"]
+        Hooks["Lifecycle Hooks"]
+        Tools["Agent Tools (12 Tools)"]
+        PluginAPI["Plugin REST API"]
+        Service["Forensics Service"]
+        Analysis["TTP & Nonce Analysis"]
+        MirrorStore["Content-Addressed Mirror"]
     end
 
-    subgraph DataStore["SQLite Database (Schema v4)"]
-        HuntsTbl["hunts & hunt_events"]
-        EntitiesTbl["entities & relationships"]
-        IocsTbl["iocs & decisions"]
-        UrlsTbl["urls (triage status)"]
-        PromptsTbl["prompt_templates"]
-        SourcesTbl["osint_sources & url_grammar"]
+    subgraph Storage["Local Storage"]
+        DB[("SQLite v5 Ledger")]
+        MirrorFiles[("Text Mirror Files")]
     end
 
-    subgraph External["External Network & Target Environment"]
-        WebSearch["Hermes Web Search & Extraction"]
-        PublicIndexes["Public CDX, crt.sh & arXiv Indexes"]
+    subgraph External["External Network"]
+        Web["Hermes Web Search & Extract"]
+        PublicIndexes["Public Wayback & CDX"]
     end
 
-    Chat --> AgentTools
-    CLI --> Service
+    Chat --> Hooks
+    Chat --> Tools
     Desktop --> PluginAPI
+    CLI --> Service
+    Hooks --> Service
+    Tools --> Service
     PluginAPI --> Service
-    AgentTools --> Service
-    Service --> HuntService
-    Service --> PromptRegistry
-    Service --> OSINT
-    HuntService --> WebSearch
-    OSINT --> PublicIndexes
-    Service --> DataStore
-    HuntService --> DataStore
+    Service --> DB
+    Service --> MirrorStore
+    MirrorStore --> MirrorFiles
+    Service --> Analysis
+    Tools --> Web
+    Tools --> PublicIndexes
 ```
 
-## How a hunt works
+---
 
-Each cycle runs these steps. The loop repeats until the operator stops it.
+## Quick Start
 
-1. **Plan.** Hermes proposes search queries from past findings and open leads.
-2. **Search.** The plugin runs queries through Hermes `web_search` and
-   enabled public indexes.
-3. **Read.** Hermes `web_extract` reads promising pages.
-4. **Analyze.** The model proposes entities, links, IOC terms, and new leads.
-5. **Record.** The plugin writes evidence, entities, and proposals to the
-   database. New leads feed the next cycle.
+Get started in three steps.
 
-## Safety model
+### 1. Install the Plugin
 
-- The model proposes. Policy and the operator decide.
-- Fetched text is untrusted. The plugin fences it and screens it for
-  injection phrasing. Tainted evidence never supports an IOC promotion.
-- IOC promotion is `manual` by default. `automatic` mode needs minimum
-  evidence, distinct hosts, claim level, and a daily cap. Every change is
-  audited.
-- Entities enforce strict hierarchy: `artifact -> agent -> swarm -> campaign`.
-  Links of kind `part_of` must point from child to parent.
-- Schedules are off. The operator arms each one. Scheduled hunts run only
-  while the desktop app is open.
-- A hunt stops when the app closes. After a restart a hunt is `paused`, and
-  the operator resumes it.
-- Index sources use dynamic allowlisting from enabled database records.
-  Credentials are redacted before any write.
-- Scope is agents and public evidence. No operator attribution.
+From the repository root:
 
-## Data & Export
-
-The database lives at `<hermes home>/swarm-forensics/swarm-forensics.db`.
-Override the folder with `SWARM_FORENSICS_STATE_DIR`. State from the first
-(CLI) version is imported once, read-only.
-
-Operators can export data through the Settings tab or palette command:
-- Generates `swarm-forensics.json` streaming dump (schema v3 with prompts, URLs, and entity tags).
-- Generates an Obsidian Markdown vault with `[[wikilinks]]` in `exports/vault/`.
-
-## Develop
-
+```bash
+make hermes-install
 ```
-make hermes-test     # offline tests, synthetic data, no network or model
-make hermes-lint
-make hermes-check    # package structure, manifests, Python and JS syntax
+
+Or install from inside this directory:
+
+```bash
+make install
+```
+
+The installer copies plugin files into your Hermes home directory.
+Restart the Hermes desktop app after installation.
+
+### 2. Start a Hunt
+
+Open Hermes chat and enter:
+
+```text
+/swarm-forensics start Find agent infrastructure and relay patterns
+```
+
+This starts a session-native hunt.
+The chat agent runs the hunt in your conversation.
+You see native tool calls and model reasoning in real time.
+
+To run an autonomous background worker instead, schedule a hunt or run in headless mode.
+
+### 3. Observe and Steer
+
+- **Chat**: Read live tool arguments and model thoughts. Steer the hunt with normal chat messages.
+- **Composer Strip**: Look below the message composer for live hunt status and metrics.
+- **Companion Pane**: Look at the right sidebar for discovered URLs, captured artifacts, and tool logs.
+- **Desktop Page**: Open the **Swarm Forensics** app tab for the full database workbench.
+
+---
+
+## Core Capabilities
+
+### 1. Session-Native Execution
+Session hunts execute directly in your active Hermes chat.
+Hermes invokes native search and forensics tools.
+The plugin captures every observation into the SQLite ledger without replaying logs.
+
+### 2. Desktop Companion Pane & Composer Strip
+The composer underside strip displays current hunt status, cycle count, and active lead totals.
+The right companion pane streams newly discovered URLs in real time.
+Operators can promote any URL to an artifact entity with one click.
+
+### 3. Content-Addressed Text Mirror
+The plugin mirrors clean text from `web_extract` into `<state_dir>/mirror/`.
+Files use SHA-256 hashes for deduplication.
+The mirror enforces size caps and screens content for prompt injection before storage.
+
+### 4. Deterministic TTP Analysis
+The analysis engine normalizes URLs and unwraps nested relay chains (`r.jina.ai`, `allorigins`, `jqp`).
+It matches nonce parameter grammars (`zz=oai`, `zzbulk`, `prepnonce`).
+It classifies archive actions into create versus read operations.
+
+### 5. Recursive Sub-Hunts
+Hunts can spawn child crawler hunts to follow specific leads.
+Sub-hunts respect a maximum depth limit (default 3) and parent-child tracking.
+Stopping a parent hunt cancels all of its active child hunts immediately.
+
+### 6. Database Prompt Workbench
+All hunt prompts live in SQLite.
+Operators can edit templates, insert dynamic token chips, and export prompt bundles.
+Resetting any template restores its immutable default text.
+
+### 7. Safe Indicator Lifecycle
+IOC promotion defaults to manual operator review.
+Items marked `benign` act as negative filters.
+The engine never searches or queries benign URLs or indicator terms.
+
+---
+
+## Command Reference
+
+Run `/swarm-forensics <subcommand>` in Hermes:
+
+| Subcommand | Syntax | Description |
+|---|---|---|
+| `start` | `/swarm-forensics start [goal]` | Start a hunt. Binds active chat session automatically. |
+| `attach` | `/swarm-forensics attach [id]` | Bind current chat session to a running hunt. |
+| `subhunt` | `/swarm-forensics subhunt <goal> [parent_id]` | Spawn a recursive child crawler hunt. |
+| `tools` | `/swarm-forensics tools [id] [n]` | Inspect recent tool calls and queries. |
+| `pause` | `/swarm-forensics pause [id]` | Pause an active hunt. |
+| `resume` | `/swarm-forensics resume [id]` | Resume a paused hunt. |
+| `stop` | `/swarm-forensics stop [id]` | Stop a hunt and its child sub-hunts. |
+| `status` | `/swarm-forensics status` | Show active hunt metrics and database totals. |
+| `log` | `/swarm-forensics log [n]` | Display recent hunt activity events. |
+| `review` | `/swarm-forensics review` | List proposed IOC terms awaiting decision. |
+| `accept` | `/swarm-forensics accept <id> [reason]` | Accept a proposed IOC term. |
+| `reject` | `/swarm-forensics reject <id> [reason]` | Reject a proposed IOC term. |
+| `benign` | `/swarm-forensics benign <id\|term> [reason]` | Mark an indicator or URL as benign. |
+| `narrow` | `/swarm-forensics narrow <id> <term>` | Narrow an indicator term. |
+| `find` | `/swarm-forensics find <text>` | Search entities, artifacts, and campaigns. |
+| `settings` | `/swarm-forensics settings [key [value]]` | Read or change configuration settings. |
+| `reset` | `/swarm-forensics reset [--force]` | Wipe database and restore clean defaults. |
+
+---
+
+## Interactive Agent Tools
+
+Hermes agents use twelve native forensics tools:
+
+1. `sf_get_context`: Inspect current hunt state, indicators, open leads, and allowlists.
+2. `sf_search_index`: Query enabled public index adapters (CDX, Wayback, Arquivo).
+3. `sf_record_evidence`: Record analyzed page excerpts with provenance and claim level.
+4. `sf_mirror_url`: Mirror clean page text into the local content-addressed text store.
+5. `sf_analyze_corpus`: Analyze URL grammars, relays, and nonce tokens against the corpus.
+6. `sf_propose_ioc`: Submit candidate indicator terms for analyst review.
+7. `sf_manage_entity`: Create or update artifacts, agents, swarms, and campaigns.
+8. `sf_link_entities`: Link entities with hierarchical or loose relationships.
+9. `sf_triage_item`: Mark URLs or indicators as benign, suspicious, or examined.
+10. `sf_query_knowledge`: Search across entities, indicators, URLs, and evidence text.
+11. `sf_spawn_subhunt`: Spawn recursive child crawler hunts up to configured max depth.
+12. `sf_attach_hunt`: Bind the current conversation context to an active hunt.
+
+---
+
+## Desktop User Interface
+
+The desktop UI provides eight primary tabs, a composer strip, and a side panel:
+
+- **Hunt Tab**: Real-time event log, lead management, sub-hunt hierarchy, and URL feed.
+- **Knowledge Tab**: Interactive entity graph, hierarchy browser, custom groups, and Markdown notes.
+- **Evidence Tab**: Captured page excerpts with provenance, timestamps, and taint status.
+- **IOCs Tab**: Indicator catalog, promotion policy status, and decision audit logs.
+- **URLs Tab**: Discovered URL catalog with triage buttons and one-click artifact capture.
+- **Prompts Tab**: Database-backed template editor with token chips and reset controls.
+- **Sources Tab**: Index adapter toggles, candidate URL grammars, and wordlist imports.
+- **Settings Tab**: Configuration limits, schedule controls, JSON export, and data reset.
+- **Composer Underside Strip**: Compact status widget embedded below the message input box.
+- **Right Companion Pane**: Collapsible sidebar displaying live URLs, mirror files, and tool logs.
+
+All cards and monospaced text blocks in the desktop interface support text selection and copying.
+
+---
+
+## Epistemic Rules & Safety
+
+1. **Model Proposes, Policy Decides**: The model generates hypotheses. Policy code and human operators validate them.
+2. **Untrusted Content Fencing**: External web text is untrusted. The plugin fences all retrieved text before prompt injection.
+3. **Taint Screening**: Evidence containing prompt injection signatures is flagged as tainted. Tainted evidence cannot promote IOCs.
+4. **Claim Ladder Discipline**: Analysts MUST use claim rungs from `L1` (artifact) to `L5` (operation).
+5. **No Human Attribution**: Scope covers agent software and infrastructure only. Never attribute actions to humans.
+6. **Negative Filtering**: Benign indicators and URLs prevent redundant or unwanted searches.
+
+---
+
+## Data Storage & Export
+
+- **Database**: `<hermes home>/swarm-forensics/swarm-forensics.db` (SQLite Schema v5 with WAL).
+- **Text Mirror**: `<hermes home>/swarm-forensics/mirror/<sha256>.txt`.
+- **Environment Override**: Set `SWARM_FORENSICS_STATE_DIR` to use a custom data directory.
+- **JSON Export**: Settings page generates a complete streaming data dump.
+- **Obsidian Vault**: Settings page exports entities and notes with `[[wikilinks]]`.
+
+---
+
+## Verification & Testing
+
+Run all quality checks through the root Makefile:
+
+```bash
+make test    # Runs 130 Python unit tests and 31 Node.js render tests
+make lint    # Runs Ruff lint checks (100 character line length)
+make check   # Validates package manifests, Python compilation, and ESM syntax
 ```
 
 Detailed technical specification is in [SPEC.md](SPEC.md).
 Architecture, interfaces, and invariants are in [MODULE.md](MODULE.md).
+Operational hunt playbooks are in [HUNT.md](HUNT.md) and [TTP.md](TTP.md).

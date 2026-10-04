@@ -134,6 +134,12 @@ def taint_prescreen(snippets):
     return False
 
 
+def screen_content(text):
+    """Screen text content for injection markers and prompt taint."""
+    tainted = taint_prescreen([text] if text else [])
+    return {"tainted": bool(tainted)}
+
+
 def fence_untrusted(text, label, limit=6000):
     """Wrap fetched text so the model reads it as data."""
     body = redact_text(str(text or ""))[:limit]

@@ -87,6 +87,75 @@ class Ledger:
                 (session_id, session_id)).fetchone()
         return self._hunt_row(row) if row else None
 
+    def bind_session(self, hunt_id, session_id, session_key=""):
+        """Bind a Hermes session identifier to a hunt."""
+        if not session_id or not hunt_id:
+            return
+        now_ts = db.now()
+        with self.db.connect() as conn:
+            conn.execute(
+                "INSERT INTO session_bindings(session_id, session_key, hunt_id, bound_utc)"
+                " VALUES (?,?,?,?)"
+                " ON CONFLICT(session_id) DO UPDATE SET hunt_id=excluded.hunt_id,"
+                " session_key=excluded.session_key, bound_utc=excluded.bound_utc",
+                (session_id, session_key or "", hunt_id, now_ts))
+            conn.execute("UPDATE hunts SET session_id = ? WHERE id = ?", (session_id, hunt_id))
+
+    def hunt_for_session(self, session_id):
+        """Return the hunt bound to a session identifier, or None."""
+        if not session_id:
+            return None
+        with self.db.connect() as conn:
+            row = conn.execute(
+                "SELECT h.* FROM hunts h"
+                " JOIN session_bindings b ON h.id = b.hunt_id"
+                " WHERE b.session_id = ? OR b.session_key = ?"
+                " ORDER BY b.bound_utc DESC LIMIT 1",
+                (session_id, session_id)).fetchone()
+            if row:
+                return self._hunt_row(row)
+            row = conn.execute(
+                "SELECT * FROM hunts WHERE session_id = ?"
+                " ORDER BY created_utc DESC LIMIT 1",
+                (session_id,)).fetchone()
+            if row:
+                return self._hunt_row(row)
+        return None
+
+    def record_corpus_observation(self, hunt_id, session_id, tool_name,
+                                  query_or_url, status="observed",
+                                  result_summary="", sha256=""):
+        """Record a search or extract observation into the corpus."""
+        with self.db.connect() as conn:
+            cur = conn.execute(
+                "INSERT INTO corpus_observations("
+                " hunt_id, session_id, tool_name, query_or_url, status,"
+                " result_summary, sha256, observed_utc)"
+                " VALUES (?,?,?,?,?,?,?,?)",
+                (hunt_id, session_id, tool_name, query_or_url[:1000],
+                 status, redact_text(result_summary)[:1000], sha256[:64], db.now()))
+            return cur.lastrowid
+
+    def corpus_observations(self, hunt_id=None, session_id=None, limit=50):
+        sql = "SELECT * FROM corpus_observations WHERE 1=1"
+        args = []
+        if hunt_id:
+            sql += " AND hunt_id = ?"
+            args.append(hunt_id)
+        if session_id:
+            sql += " AND session_id = ?"
+            args.append(session_id)
+        sql += " ORDER BY id DESC LIMIT ?"
+        args.append(max(1, min(int(limit), 500)))
+        with self.db.connect() as conn:
+            rows = conn.execute(sql, args).fetchall()
+        return [_row(r) for r in rows]
+
+    def events_for_session(self, session_id, limit=50):
+        hunt = self.hunt_for_session(session_id)
+        hid = hunt["id"] if hunt else None
+        return self.events(hunt_id=hid, limit=limit)
+
     def update_hunt(self, hunt_id, **fields):
         bad = set(fields) - HUNT_FIELDS
         if bad:

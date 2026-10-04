@@ -8,7 +8,6 @@ MUST be parameterized.
 
 import contextlib
 import json
-import shutil
 import sqlite3
 import uuid
 from datetime import datetime, timezone
@@ -286,6 +285,45 @@ MIGRATIONS = [
     CREATE INDEX idx_hunts_parent ON hunts(parent_hunt_id);
     CREATE INDEX idx_hunts_session ON hunts(session_id);
     """,
+    # Migration 5: session bindings, corpus observations, and local text mirrors.
+    """
+    CREATE TABLE IF NOT EXISTS session_bindings(
+        session_id TEXT PRIMARY KEY,
+        session_key TEXT,
+        hunt_id TEXT NOT NULL,
+        bound_utc TEXT NOT NULL,
+        FOREIGN KEY(hunt_id) REFERENCES hunts(id) ON DELETE CASCADE
+    );
+    CREATE INDEX IF NOT EXISTS idx_bindings_hunt ON session_bindings(hunt_id);
+
+    CREATE TABLE IF NOT EXISTS corpus_observations(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        hunt_id TEXT,
+        session_id TEXT,
+        tool_name TEXT NOT NULL,
+        query_or_url TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'observed',
+        result_summary TEXT NOT NULL DEFAULT '',
+        sha256 TEXT NOT NULL DEFAULT '',
+        observed_utc TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_obs_hunt ON corpus_observations(hunt_id);
+    CREATE INDEX IF NOT EXISTS idx_obs_session ON corpus_observations(session_id);
+
+    CREATE TABLE IF NOT EXISTS mirrors(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        url TEXT NOT NULL UNIQUE,
+        sha256 TEXT NOT NULL,
+        path TEXT NOT NULL,
+        byte_count INTEGER NOT NULL DEFAULT 0,
+        tainted INTEGER NOT NULL DEFAULT 0,
+        hunt_id TEXT,
+        session_id TEXT,
+        fetched_utc TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_mirrors_sha ON mirrors(sha256);
+    CREATE INDEX IF NOT EXISTS idx_mirrors_hunt ON mirrors(hunt_id);
+    """,
 ]
 
 
@@ -345,11 +383,13 @@ class Database:
         try:
             temp_conn = sqlite3.connect(self.path)
             ver = temp_conn.execute("PRAGMA user_version").fetchone()[0]
-            temp_conn.close()
             if ver < len(MIGRATIONS):
                 bak = p.with_name("%s.v%d.bak" % (p.name, ver))
                 if not bak.exists():
-                    shutil.copy2(p, bak)
+                    dest = sqlite3.connect(str(bak))
+                    temp_conn.backup(dest)
+                    dest.close()
+            temp_conn.close()
         except Exception:
             pass
 

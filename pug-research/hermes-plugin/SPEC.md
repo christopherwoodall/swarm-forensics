@@ -10,14 +10,17 @@ All implementations MUST follow this specification.
 
 The system MUST maintain decoupled background execution and interactive user controls.
 The backend MUST run as a persistent service inside the Hermes runtime.
-The system MUST support concurrent worker threads for autonomous hunts.
-Each active hunt MUST execute in its own worker thread.
+The system MUST support both session-native hunts and background worker hunts.
+Session-native hunts MUST execute directly within a real Hermes chat session.
+The chat agent in session-native hunts MUST invoke web and forensics tools natively.
+Background hunts MUST execute inside dedicated worker threads.
+Background hunts MUST serve armed schedules and headless execution.
 A hunt MUST respect configured cycle limits.
 A hunt MUST respect parent-child relationships up to the configured maximum depth.
 The system MUST limit sub-hunt hierarchy depth to three levels by default.
 Child hunts MUST inherit the session identifier and root trace context of their parent.
 The system MUST provide thread-safe cancellation and pause mechanisms.
-When an operator issues a stop command, the target worker MUST terminate gracefully.
+When an operator issues a stop command, target hunts and workers MUST terminate gracefully.
 When the host application closes, all active workers MUST transition to paused state.
 Workers MUST NOT resume automatically after process restart without operator consent.
 
@@ -25,8 +28,11 @@ Workers MUST NOT resume automatically after process restart without operator con
 
 The system MUST persist all operational state in SQLite.
 The database file MUST reside in the state directory with write-ahead logging enabled.
-The schema version MUST be integer four.
+The schema version MUST be integer five.
 All database migrations MUST execute incrementally and idempotently.
+Schema tables MUST include `hunts`, `hunt_events`, `session_bindings`, and `corpus_observations`.
+Schema tables MUST also include `entities`, `entity_links`, `iocs`, `ioc_decisions`, and `urls`.
+Schema tables MUST also include `prompt_templates`, `osint_sources`, `url_grammar`, and `mirrors`.
 
 ### 3.1 Entity Model
 
@@ -77,6 +83,16 @@ The system MUST store URL expansion grammar rules in the `url_grammar` table.
 The system MUST dynamically generate candidate indicators from enabled grammar rules.
 All external index requests MUST validate against allowlisted endpoints.
 
+### 3.6 Content-Addressed Text Mirror
+
+Mirrored content MUST originate from Hermes `web_extract`.
+Mirrored content MUST be text only.
+The system MUST screen text for prompt injection before writing to disk.
+The system MUST store mirrored files using SHA-256 digests in `<state_dir>/mirror/`.
+The system MUST record source URL, fetch timestamp, hash, byte count, and taint status.
+The system MUST enforce document and total storage byte limits.
+Reset actions MUST delete mirrored files and clear mirror metadata.
+
 ## 4. Interactive Sessions & Dynamic Attachment
 
 The system MUST bind each hunt to a Hermes chat session identifier.
@@ -93,13 +109,15 @@ The plugin MUST register the following tool definitions with the Hermes runtime:
 1. `sf_get_context`: Returns current hunt state, open leads, and active indicators.
 2. `sf_search_index`: Queries enabled OSINT index sources for indicators.
 3. `sf_record_evidence`: Records analyzed web page evidence with taint metadata.
-4. `sf_propose_ioc`: Submits candidate indicator terms for analyst review.
-5. `sf_manage_entity`: Creates or updates agents, swarms, campaigns, or artifacts.
-6. `sf_link_entities`: Creates directional links between entities.
-7. `sf_triage_item`: Assigns operational status to indicators or URLs.
-8. `sf_query_knowledge`: Searches entities, links, indicators, and evidence text.
-9. `sf_spawn_subhunt`: Launches a concurrent child hunt for targeted investigation.
-10. `sf_attach_hunt`: Binds the current conversation context to an active hunt.
+4. `sf_mirror_url`: Mirrors clean web text into the local text repository.
+5. `sf_analyze_corpus`: Performs deterministic URL, relay, and nonce analysis.
+6. `sf_propose_ioc`: Submits candidate indicator terms for analyst review.
+7. `sf_manage_entity`: Creates or updates agents, swarms, campaigns, or artifacts.
+8. `sf_link_entities`: Creates directional links between entities.
+9. `sf_triage_item`: Assigns operational status to indicators or URLs.
+10. `sf_query_knowledge`: Searches entities, links, indicators, and evidence text.
+11. `sf_spawn_subhunt`: Launches a concurrent child hunt for targeted investigation.
+12. `sf_attach_hunt`: Binds the current conversation context to an active hunt.
 
 All tools MUST sanitize input arguments.
 All tools MUST return structured JSON dictionaries.
@@ -147,6 +165,19 @@ When reset is invoked, the system MUST stop and join all background workers.
 The system MUST drop all tables and re-apply schema migrations.
 The system MUST re-seed default golden indicators, OSINT sources, and prompt templates.
 The system MUST wipe all custom entities, evidence, and discovered URLs.
+
+### 7.4 Composer Underside Strip
+
+The desktop extension MUST register a status widget in `COMPOSER_AREAS.underside`.
+The widget MUST display hunt state, cycle count, and active lead count.
+The widget MUST read the active session identifier from host state.
+
+### 7.5 Right Companion Pane
+
+The desktop extension MUST register a side panel in `PANES_AREA` with right placement.
+The panel MUST stream discovered URLs, mirrored artifacts, and recent tool activity.
+The panel MUST enable operators to promote URLs to artifacts with one click.
+The panel MUST read the active session identifier from host state.
 
 ## 8. Conformance & Verification
 

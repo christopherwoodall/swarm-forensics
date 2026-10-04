@@ -6,6 +6,7 @@ stop hunts and make the same IOC decisions an operator can.
 """
 
 import json
+import os
 import shlex
 
 from .entities import EntityError
@@ -107,25 +108,42 @@ def handle(svc, raw_args):
     try:
         if verb in ("start", "hunt", "session"):
             goal_text = " ".join(args).strip()
-            from . import db
-            sid = "sf-session-" + db.new_id()[:8]
-            hunt = svc.hunts.start("command", goal_text, session_id=sid)
+            session_id = os.getenv("HERMES_SESSION_ID") or os.getenv("HERMES_SESSION_KEY") or None
+            session_key = os.getenv("HERMES_SESSION_KEY") or ""
+            origin = "session" if session_id else "command"
+            hunt = svc.hunts.start(origin, goal_text, session_id=session_id)
+            if session_id:
+                svc.ledger.bind_session(hunt["id"], session_id, session_key)
             max_depth = svc.settings.get("hunt.max_depth")
+            if session_id:
+                return (
+                    "Hunt %s started (session-native, depth %d).\n"
+                    "Bound Hermes Session: %s\n"
+                    "Goal: %s\n\n"
+                    "Agent should now investigate using native tools:\n"
+                    "- Direct the hunt or execute /goal %s\n"
+                    "- Call sf_get_context to view active indicators, leads, and context.\n"
+                    "- Call sf_search_index to query web archive indexes.\n"
+                    "- Call sf_record_evidence to record excerpts and claim levels.\n"
+                    "- Call sf_mirror_url to capture and safely mirror untrusted text.\n"
+                    "- Call sf_analyze_corpus to run deterministic TTP analysis.\n"
+                    "- Call sf_spawn_subhunt to spawn child crawlers (up to depth %d).\n"
+                    "- Stop with /swarm-forensics stop %s"
+                    % (
+                        hunt["id"], hunt.get("depth", 0), session_id, hunt["goal"],
+                        hunt["goal"], max_depth, hunt["id"],
+                    )
+                )
             return (
-                "Hunt %s started (depth %d). Session %s active.\n"
+                "Hunt %s started in background mode (depth %d).\n"
                 "Goal: %s\n\n"
-                "You can guide this hunter in chat like a normal Hermes agent:\n"
-                "- Direct investigation focus, provide leads, or ask for updates.\n"
-                "- Call sf_get_context to view findings, leads, and active indicators.\n"
-                "- Call sf_search_index to query archives, crt.sh, and research indexes.\n"
-                "- Call sf_record_evidence to record evidence excerpts and claim levels.\n"
-                "- Call sf_spawn_subhunt to spawn child crawler hunts (up to depth %d).\n"
-                "- Re-attach in any session: /swarm-forensics attach %s\n"
+                "To interact with this hunt in chat, run:\n"
+                "- /swarm-forensics attach %s\n"
                 "- Watch progress with /swarm-forensics log %s\n"
                 "- Stop with /swarm-forensics stop %s"
                 % (
-                    hunt["id"], hunt.get("depth", 0), sid, hunt["goal"],
-                    max_depth, hunt["id"], hunt["id"], hunt["id"],
+                    hunt["id"], hunt.get("depth", 0), hunt["goal"],
+                    hunt["id"], hunt["id"], hunt["id"],
                 )
             )
         if verb == "attach":
@@ -137,6 +155,13 @@ def handle(svc, raw_args):
                 hunt = svc.ledger.active_hunt() or next(iter(svc.ledger.hunts(1)), None)
             if not hunt:
                 return "Hunt not found%s." % ((" for '%s'" % target_id) if target_id else "")
+            calling_sid = os.getenv("HERMES_SESSION_ID") or os.getenv("HERMES_SESSION_KEY") or None
+            calling_skey = os.getenv("HERMES_SESSION_KEY") or ""
+            if calling_sid:
+                svc.ledger.bind_session(hunt["id"], calling_sid, calling_skey)
+                bound_label = calling_sid
+            else:
+                bound_label = hunt.get("session_id") or "unbound"
             children = svc.ledger.child_hunts(hunt["id"])
             leads = svc.ledger.open_leads("query", 3)
             lead_summary = ", ".join(ld["value"] for ld in leads) or "none"
@@ -166,7 +191,7 @@ def handle(svc, raw_args):
                 "Analysis rationale & findings:\n%s\n\n"
                 "You can now guide this hunt session using Swarm Forensics tools (sf_*)."
                 % (
-                    hunt["id"], hunt.get("session_id") or "unbound", hunt["state"],
+                    hunt["id"], bound_label, hunt["state"],
                     hunt.get("depth", 0), hunt["cycle"],
                     hunt.get("parent_hunt_id") or "none (root)",
                     hunt["goal"], len(children), lead_summary,
@@ -237,22 +262,6 @@ def handle(svc, raw_args):
             rows = svc.iocs.list("proposed", limit=25)
             return "\n".join("%d  %s  [%s]" % (r["id"], r["term"], r["category"])
                              for r in rows) or "No proposed terms."
-        if verb == "session":
-            goal = " ".join(args) or "investigate agent traces"
-            leads = svc.ledger.open_leads("query", 5)
-            lead_summary = ", ".join(lead["value"] for lead in leads) or "none yet"
-            return (
-                "Interactive Hunt Session Initiated.\n"
-                "Goal: %s\n"
-                "Open leads: %s\n\n"
-                "You can command the hunt directly using Swarm Forensics tools:\n"
-                "- Call sf_get_context to inspect indicators and sources.\n"
-                "- Call sf_search_index to sweep web archive indexes.\n"
-                "- Call sf_record_evidence to save findings.\n"
-                "- Call sf_propose_ioc to suggest new indicator terms.\n"
-                "- Call sf_manage_entity to create and tag swarms, agents, or artifacts.\n"
-                "- Call sf_triage_item to mark items as benign or active." % (goal, lead_summary)
-            )
         if verb in ("accept", "reject", "narrow", "benign"):
             return _decide(svc, verb, args)
         if verb == "find":

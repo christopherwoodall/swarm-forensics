@@ -109,7 +109,9 @@ function fixture(path, status) {
     },
     '/settings': SETTINGS,
     '/schedules': { schedules: [{ id: 's1', name: 'daily', kind: 'interval', spec: '6h', max_cycles: 5, enabled: 1, next_run_utc: NOW },
-      { id: 's2', name: 'off', kind: 'cron', spec: '0 * * * *', max_cycles: 1, enabled: 0 }] }
+      { id: 's2', name: 'off', kind: 'cron', spec: '0 * * * *', max_cycles: 1, enabled: 0 }] },
+    '/mirrors': { mirrors: [{ id: 1, url: 'https://example.test/item', sha256: 'abc12345', byte_count: 1024, tainted: 0 }], total: 1 },
+    '/sessions/ses-1/overview': { session_id: 'ses-1', hunt: HUNT, events: [{ id: 1, ts: NOW, kind: 'tool_call', message: 'search' }], corpus: [] }
   }
   if (!(route in table)) throw new Error(`No fixture for ${path}. Add one to render.test.mjs.`)
   return table[route]
@@ -155,11 +157,34 @@ function render({ tab = 'hunt', mode = 'data', status = STATUS_RUNNING, rules = 
   }
 }
 
-test('the plugin registers a page, nav entry, status chip, palette and keybind', () => {
+test('the plugin registers a page, nav entry, status chip, palette, keybind, composer strip, and companion pane', () => {
   const registered = load()
-  for (const id of ['page', 'nav', 'status', 'open', 'start', 'stop', 'export', 'open-key']) {
+  for (const id of ['page', 'nav', 'status', 'open', 'start', 'stop', 'export', 'open-key', 'composer-strip', 'swarm-forensics.companion']) {
     assert.ok(registered.has(id), `missing registration: ${id}`)
   }
+  const pane = registered.get('swarm-forensics.companion')
+  assert.equal(pane.title, 'Swarm Forensics', 'pane tab label must be a top-level title')
+  assert.equal(pane.data.placement, 'right')
+})
+
+test('the composer strip and companion pane render against the focused session', () => {
+  const registered = load()
+  Object.assign(globalThis.__sf, {
+    paths: [],
+    mode: 'data',
+    fixture: path => fixture(path, STATUS_RUNNING),
+    stateRules: [],
+    sessionId: 'ses-1',
+    storedSessionId: 'ses-1'
+  })
+  // The desktop Slot mounts contributions with no props, so renders take no
+  // argument and the session id comes from host.state (stubbed above).
+  const stripHtml = renderToStaticMarkup(registered.get('composer-strip').render())
+  assert.match(stripHtml, /Swarm Forensics/)
+  const paneHtml = renderToStaticMarkup(registered.get('swarm-forensics.companion').render())
+  assert.match(paneHtml, /Hunt Companion/)
+  assert.ok(globalThis.__sf.paths.includes('/sessions/ses-1/overview'),
+    'companion pane must query the focused session overview')
 })
 
 test('the Hunt page renders with an input and keeps its button labels', () => {

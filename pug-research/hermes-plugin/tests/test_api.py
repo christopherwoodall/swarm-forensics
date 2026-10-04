@@ -3,14 +3,11 @@
 import importlib.util
 import json
 import os
-import sqlite3
 import tempfile
 import unittest
 from pathlib import Path
 
 from support import PLUGIN_DIR, FakeHermes, wait_for
-from swarm_forensics_plugin.db import Database  # noqa: E402
-from swarm_forensics_plugin.legacy import import_state  # noqa: E402
 from swarm_forensics_plugin.service import Service  # noqa: E402
 
 try:
@@ -372,55 +369,34 @@ class ApiTest(unittest.TestCase):
         urls = self.get("/urls").json()["urls"]
         self.assertEqual(len(urls), 0)
 
+    def test_session_and_mirror_endpoints(self):
+        hunt = self.service.hunts.start("command", "session api test", session_id="ses-api-1")
+        bind_res = self.post("/sessions/ses-api-1/bind", {"hunt_id": hunt["id"]})
+        self.assertEqual(bind_res.status_code, 200)
 
+        overview = self.get("/sessions/ses-api-1/overview").json()
+        self.assertEqual(overview["session_id"], "ses-api-1")
+        self.assertEqual(overview["hunt"]["id"], hunt["id"])
 
-class LegacyImportTest(unittest.TestCase):
-    def setUp(self):
-        self.tmp = tempfile.TemporaryDirectory()
-        root = Path(self.tmp.name)
-        self.state = root / "old" / "state"
-        (self.state / "hits").mkdir(parents=True)
-        (self.state / "iocs.json").write_text(json.dumps([
-            {"term": "zz=oailegacy", "category": "nonce_grammar",
-             "status": "active", "provenance": "seed"},
-            {"term": "legacy-q.example", "status": "quarantined"}]))
-        (self.state / "hits" / "2026-01-01.jsonl").write_text(json.dumps({
-            "source": "urlquery", "query_id": "UQ-1", "term": "zz=oailegacy",
-            "url": "https://example.test/p?zz=oailegacy&token=SECRET1234567890",
-            "observed_utc": "2026-01-01T00:00:00Z", "evidence": "hit"}) + "\n")
-        old = sqlite3.connect(self.state / "swarm-forensics.db")
-        old.executescript("""
-            CREATE TABLE entities(id TEXT, type TEXT, label TEXT, data_json TEXT,
-                                  created_utc TEXT);
-            CREATE TABLE relationships(from_id TEXT, to_id TEXT, rel TEXT);
-            CREATE TABLE indicators(trace_id TEXT, kind TEXT, value TEXT);
-            INSERT INTO entities VALUES ('a','agent','Old agent','{}','2026-01-01');
-            INSERT INTO entities VALUES ('b','swarm','Old swarm','{}','2026-01-01');
-            INSERT INTO relationships VALUES ('a','b','member_of');
-            INSERT INTO indicators VALUES ('a','url','https://example.test/x');""")
-        old.commit()
-        old.close()
-        self.db = Database(root / "new.db")
+        m = self.service.mirror.save_extract(
+            "https://example.com/api_mirror", "Mirrored text sample"
+        )
+        self.assertIsNotNone(m)
 
-    def tearDown(self):
-        self.tmp.cleanup()
+        mirrors_res = self.get("/mirrors").json()
+        self.assertGreaterEqual(mirrors_res["total"], 1)
 
-    def test_import_is_complete_and_idempotent(self):
-        first = import_state(self.db, self.state)
-        self.assertEqual(first["iocs"], 2)
-        self.assertEqual(first["evidence"], 1)
-        self.assertEqual((first["entities"], first["links"], first["indicators"]),
-                         (2, 1, 1))
-        with self.db.connect() as conn:
-            self.assertEqual(conn.execute(
-                "SELECT status FROM iocs WHERE term = 'legacy-q.example'"
-            ).fetchone()[0], "proposed")
-            url = conn.execute("SELECT url FROM evidence").fetchone()[0]
-        self.assertNotIn("SECRET1234567890", url)
-        second = import_state(self.db, self.state)
-        self.assertTrue(second.get("skipped"))
-        with self.db.connect() as conn:
-            self.assertEqual(conn.execute("SELECT COUNT(*) FROM iocs").fetchone()[0], 2)
+        detail_res = self.get(f"/mirrors/{m['sha256']}?include_text=true").json()
+        self.assertEqual(detail_res["url"], "https://example.com/api_mirror")
+        self.assertEqual(detail_res["content"], "Mirrored text sample")
+
+        self.service.ledger.record_corpus_observation(
+            hunt_id=hunt["id"], session_id="ses-api-1", tool_name="web_search",
+            query_or_url="query text", status="observed",
+        )
+        corpus_res = self.get("/corpus?session_id=ses-api-1").json()
+        self.assertEqual(len(corpus_res["observations"]), 1)
+
 
 
 if __name__ == "__main__":

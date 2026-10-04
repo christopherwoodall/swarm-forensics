@@ -9,11 +9,14 @@ import {
   host,
   queryClient,
   useQuery,
+  useValue,
   ROUTES_AREA,
   SIDEBAR_NAV_AREA,
   STATUSBAR_AREAS,
   PALETTE_AREA,
-  KEYBINDS_AREA
+  KEYBINDS_AREA,
+  COMPOSER_AREAS,
+  PANES_AREA
 } from '@hermes/plugin-sdk'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { jsx, jsxs } from 'react/jsx-runtime'
@@ -1278,6 +1281,140 @@ function StatusChip() {
   }, label)
 }
 
+// Slot and pane hosts mount contributions with NO props (ContribRender calls
+// createElement(render) bare). The focused session MUST come from host.state,
+// never from props.
+function ComposerUndersideStrip() {
+  const sessionId = useValue(host.state.focusedSessionId)
+  const storedSessionId = useValue(host.state.focusedStoredSessionId)
+  const q = useApi(['status'], '/status', 3000)
+  const mq = useApi(['mirrors-summary'], '/mirrors?limit=5', 5000)
+  const hunt = q.data && q.data.hunt
+  const running = q.data && q.data.running
+  const mirrorsCount = mq.data ? mq.data.total || 0 : 0
+  const totals = (q.data && q.data.totals) || {}
+
+  return h('div', {
+    style: {
+      display: 'flex', alignItems: 'center', gap: 8, padding: '4px 10px',
+      fontSize: '0.75rem', borderTop: `1px solid ${V.line}`, background: 'var(--ui-bg-secondary, rgba(0,0,0,0.05))',
+      color: V.text, userSelect: 'text', WebkitUserSelect: 'text'
+    }
+  },
+    h('span', { style: { fontWeight: 600, color: running ? V.accent : V.dim } }, 'Swarm Forensics:'),
+    hunt
+      ? h('span', { style: { ...S.row, gap: 6 } },
+          h(Chip, { strong: running }, hunt.state),
+          h('span', {
+            style: { ...S.mono, color: V.accent, cursor: 'pointer', textDecoration: 'underline' },
+            onClick: () => host.navigate(PATH)
+          }, `Hunt ${hunt.id}`),
+          h('span', { style: S.dim }, `c:${hunt.cycle} d:${hunt.depth || 0}`),
+          h('span', { style: S.dim }, `leads:${totals.open_leads || 0}`),
+          h('span', { style: S.dim }, `mirrors:${mirrorsCount}`)
+        )
+      : h('span', { style: S.dim }, 'No active hunt.'),
+    h('span', { style: { flex: 1 } }),
+    // Bind BOTH ids: the runtime id drives this client's reads, the stored
+    // (durable) id is what the backend hooks see on tool calls.
+    sessionId && hunt && hunt.session_id !== sessionId && h(Btn, {
+      onClick: () => act(`/sessions/${sessionId}/bind`, { hunt_id: hunt.id, session_key: storedSessionId || '' }, 'POST', 'Attached hunt to this session')
+    }, 'Attach to chat'),
+    hunt && running && h(Btn, { onClick: () => act('/hunts/stop', { hunt_id: hunt.id }, 'POST', 'Stop requested') }, 'Stop'),
+    h(Btn, { onClick: () => host.navigate(PATH) }, 'Open')
+  )
+}
+
+function CompanionPane() {
+  const sessionId = useValue(host.state.focusedSessionId)
+  const sessionOverview = useApi(
+    ['session-overview', sessionId],
+    sessionId ? `/sessions/${sessionId}/overview` : '/overview',
+    3000
+  )
+  const urlsQuery = useApi(['urls-recent'], '/urls?limit=10', 4000)
+  const mirrorsQuery = useApi(['mirrors-recent'], '/mirrors?limit=10', 4000)
+
+  // A pane outlives any binding and can focus a chat that never started the
+  // hunt, so fall back to the GLOBAL active hunt and event feed when this
+  // session has none bound. Live status must never render blank.
+  const boundHunt = sessionOverview.data && sessionOverview.data.hunt
+  const statusQuery = useApi(['status'], '/status', 4000, !boundHunt)
+  const globalEvents = useApi(['events-recent'], '/events?limit=30', 4000, !boundHunt)
+  const hunt = boundHunt || (statusQuery.data && statusQuery.data.hunt)
+  const events = ((boundHunt ? sessionOverview.data.events : null)
+    || (globalEvents.data && globalEvents.data.events) || [])
+  const urls = (urlsQuery.data && urlsQuery.data.urls) || []
+  const mirrors = (mirrorsQuery.data && mirrorsQuery.data.mirrors) || []
+
+  return h('div', {
+    style: {
+      display: 'flex', flexDirection: 'column', height: '100%', padding: 12, gap: 10,
+      fontSize: '0.8125rem', overflow: 'auto', userSelect: 'text', WebkitUserSelect: 'text'
+    }
+  },
+    h('div', { style: { ...S.row, justifyContent: 'space-between' } },
+      h('span', { style: { ...S.h2, fontSize: '0.95rem' } }, 'Hunt Companion'),
+      hunt && h(Chip, { strong: hunt.state === 'running' }, hunt.state)
+    ),
+    hunt
+      ? h('div', { style: S.card },
+          h('div', { style: S.row },
+            h('span', { style: { fontWeight: 600 } }, `Hunt ${hunt.id}`),
+            h('span', { style: S.dim }, `Depth ${hunt.depth || 0} | Cycle ${hunt.cycle}`)
+          ),
+          h('div', { style: { ...S.dim, marginTop: 4 } }, hunt.goal || 'No goal set.'),
+          !boundHunt && h('div', { style: { ...S.dim, marginTop: 4 } },
+            'Not bound to this chat. Start one with /swarm-forensics session, or attach from the strip below the composer.')
+        )
+      : h('div', { style: S.card },
+          h('div', { style: S.dim }, 'No active hunt.'),
+          h('div', { style: { ...S.row, marginTop: 6 } },
+            h(Btn, { kind: 'primary', onClick: () => host.navigate(PATH) }, 'Open Hunt Workbench')
+          )
+        ),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Live Discovered URLs'),
+      urls.length > 0
+        ? h('div', { style: { ...S.col, gap: 4, marginTop: 4, maxHeight: 150, overflow: 'auto' } },
+            urls.map(u => h('div', { key: u.id || u.url, style: { ...S.row, borderTop: `1px solid ${V.line}`, padding: '2px 0' } },
+              h(Chip, null, u.status || 'discovered'),
+              h('span', { style: { ...S.mono, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' } }, u.url),
+              h(Btn, {
+                onClick: () => act('/entities', {
+                  type: 'artifact', name: u.url,
+                  summary: 'Observed artifact from ' + (u.source || 'web'),
+                }, 'POST', 'Captured URL as artifact')
+              }, '+ Artifact')
+            ))
+          )
+        : h(Empty, null, 'No URLs captured yet.')
+    ),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Mirrored Artifacts'),
+      mirrors.length > 0
+        ? h('div', { style: { ...S.col, gap: 4, marginTop: 4, maxHeight: 150, overflow: 'auto' } },
+            mirrors.map(m => h('div', { key: m.id || m.sha256, style: { ...S.row, borderTop: `1px solid ${V.line}`, padding: '2px 0' } },
+              h(Chip, { strong: !!m.tainted }, m.tainted ? 'tainted' : 'clean'),
+              h('span', { style: { ...S.mono, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' } }, m.url),
+              h('span', { style: S.dim }, `${(m.byte_count / 1024).toFixed(1)}k`)
+            ))
+          )
+        : h(Empty, null, 'No mirrored pages yet.')
+    ),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Recent Tool Activity & Rationale'),
+      events.length > 0
+        ? h('div', { style: { ...S.col, gap: 2, maxHeight: 180, overflow: 'auto' } },
+            events.slice().reverse().map(e => h('div', { key: e.id, style: S.mono },
+              `[${e.kind}] ${e.message}`
+            ))
+          )
+        : h(Empty, null, 'No tool activity logged yet.')
+    )
+  )
+}
+
 async function heartbeat() {
   try { await api('/heartbeat', { method: 'POST', body: {} }) } catch { /* backend off: the chip shows it */ }
 }
@@ -1310,6 +1447,14 @@ export default {
       { id: 'page', area: ROUTES_AREA, data: { path: PATH }, render: () => h(Page, null) },
       { id: 'nav', area: SIDEBAR_NAV_AREA, data: { path: PATH, label: 'Swarm Forensics', codicon: 'search' } },
       { id: 'status', area: STATUSBAR_AREAS.right, order: 130, render: () => h(StatusChip, null) },
+      { id: 'composer-strip', area: COMPOSER_AREAS.underside, render: () => h(ComposerUndersideStrip, null) },
+      // Panes read `title` at registration for the tab label; `data.placement`
+      // drives adoption into the layout tree. The id MUST stay namespaced —
+      // pane ids share one global tree.
+      {
+        id: `${ID}.companion`, area: PANES_AREA, title: 'Swarm Forensics',
+        data: { placement: 'right' }, render: () => h(CompanionPane, null)
+      },
       {
         id: 'open', area: PALETTE_AREA,
         data: { id: `${ID}.open`, label: 'Open Swarm Forensics', keywords: ['swarm', 'forensics', 'hunt'], run: () => host.navigate(PATH) }

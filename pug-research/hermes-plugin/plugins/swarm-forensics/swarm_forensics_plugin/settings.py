@@ -109,6 +109,12 @@ SCHEMA = {
         "Schedule", "bool", False, "Allow scheduled hunts",
         "Master switch. Each schedule also needs operator arming. "
         "Schedules only fire while the desktop app is open."),
+    "mirror.enabled": _f(
+        "Mirror", "bool", True, "Mirror extracted text locally",
+        "Safely save redacted text copies of extracted web pages."),
+    "mirror.max_bytes": _f(
+        "Mirror", "int", 500000, "Maximum bytes per mirrored artifact",
+        min=1000, max=10000000),
 }
 
 

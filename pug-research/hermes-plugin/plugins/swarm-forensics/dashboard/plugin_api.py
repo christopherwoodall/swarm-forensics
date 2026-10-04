@@ -475,3 +475,62 @@ def reset_database():
     return _run(_svc().reset_all_data)
 
 
+# -- session and mirror routes ------------------------------------------------
+
+@router.get("/sessions/{session_id}/overview")
+def session_overview(session_id: str):
+    svc = _svc()
+    hunt = svc.ledger.hunt_for_session(session_id)
+    hid = hunt["id"] if hunt else None
+    return {
+        "session_id": session_id,
+        "hunt": hunt,
+        "events": svc.ledger.events(hid, 0, 30),
+        "corpus": svc.ledger.corpus_observations(hunt_id=hid, session_id=session_id, limit=30),
+        "open_leads": svc.ledger.open_leads(limit=10),
+        "mirrors_count": svc.mirror.count(),
+    }
+
+
+@router.post("/sessions/{session_id}/bind")
+def session_bind(session_id: str, body: dict = Body(default_factory=dict)):
+    hunt_id = body.get("hunt_id")
+    if not hunt_id:
+        active = _svc().ledger.active_hunt()
+        if not active:
+            raise HTTPException(404, "no active hunt found to bind")
+        hunt_id = active["id"]
+    _svc().ledger.bind_session(hunt_id, session_id, body.get("session_key", ""))
+    return {"ok": True, "session_id": session_id, "hunt_id": hunt_id}
+
+
+@router.get("/mirrors")
+def mirrors_list(limit: int = 50):
+    svc = _svc()
+    return {
+        "mirrors": svc.mirror.list_mirrors(limit=limit),
+        "total": svc.mirror.count(),
+    }
+
+
+@router.get("/mirrors/{target}")
+def mirror_detail(target: str, include_text: bool = Query(False)):
+    svc = _svc()
+    meta = svc.mirror.get_mirror(target)
+    if not meta:
+        raise HTTPException(404, "mirror artifact not found")
+    out = dict(meta)
+    if include_text:
+        out["content"] = svc.mirror.read_text(target)
+    return out
+
+
+@router.get("/corpus")
+def corpus_list(hunt_id: str = None, session_id: str = None, limit: int = 50):
+    return {
+        "observations": _svc().ledger.corpus_observations(
+            hunt_id=hunt_id, session_id=session_id, limit=limit,
+        ),
+    }
+
+

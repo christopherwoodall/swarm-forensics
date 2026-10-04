@@ -5,6 +5,8 @@ Provide a Hermes desktop plugin (`swarm-forensics`) that runs autonomous and int
 
 ## 2. Active Invariants
 - A hunt starts only by an operator act: desktop Start button, `/swarm-forensics start`, or an armed schedule.
+- A hunt runs in either session mode (native chat agent) or background mode (scheduled or headless worker threads).
+- Session hunts MUST bind real durable Hermes session identifiers.
 - An interactive hunt runs as a standard Hermes session with native `sf_*` tools.
 - A hunt MAY spawn child sub-hunts up to `hunt.max_depth` (default 3).
 - Stopping a parent hunt MUST stop all active child hunts.
@@ -13,6 +15,8 @@ Provide a Hermes desktop plugin (`swarm-forensics`) that runs autonomous and int
 - A background hunt MUST stop when the desktop heartbeat lapses (`hunt.require_desktop`).
 - The model proposes. Policy code and the operator decide. Model output MUST pass safety parsers.
 - Fetched text is untrusted data. It MUST be fenced in prompts. Tainted evidence MUST NOT support IOC promotion.
+- Mirrored content MUST come from Hermes `web_extract`, MUST be text only, and MUST be fenced as untrusted.
+- Tool observations in session hunts MUST be captured through plugin lifecycle hooks and correlated with the bound hunt.
 - IOC promotion defaults to `manual`. Items marked `benign` MUST NOT be promoted.
 - Items marked `benign` act as negative filters. The engine MUST NOT search or probe benign URLs or terms.
 - Prompts live in SQLite. Operators MAY edit templates. Resetting a prompt restores its immutable default template.
@@ -23,24 +27,25 @@ Provide a Hermes desktop plugin (`swarm-forensics`) that runs autonomous and int
 - Every evidence row MUST record source, query, URL, excerpt, and observed time.
 - Throttled or failed queries (HTTP 429/403/5xx) MUST be logged as throttled or failed, never as negative.
 - Index adapters MUST fetch only enabled index sources in the database through `curl`.
+- Public index sources MUST declare authentication requirements. Keyed sources without credentials MUST be disabled with explicit reason.
 - Entities MUST conform to the hierarchy `artifact -> agent -> swarm -> campaign`, or unranked `collection`.
 - URLs and text MUST be redacted before write.
 - All SQL MUST be parameterized. Hunt state lives in `<hermes home>/swarm-forensics/`.
 - Python engine dependencies MUST remain standard library only. Desktop JS MUST use pure ESM.
 
 ## 3. Interfaces & Dependencies
-- Package: `plugins/swarm-forensics/` is one unified plugin. `register(ctx)` registers commands, tools, and skills.
-- Modules: Core modules include `db`, `settings`, `safety`, `extract`, `entities`, `prompt_registry`, and `url_store`. Engine modules include `agent_tools`, `registry`, `export`, `iocs`, `ledger`, `predict`, `sources`, and `command`.
-- Backend routes: Routes support hunts, events, leads, evidence, iocs, urls, prompts, entities, links, graph, sources, settings, and reset.
-- Hermes agent tools: `sf_get_context`, `sf_search_index`, `sf_record_evidence`, `sf_propose_ioc`, `sf_manage_entity`, `sf_link_entities`, `sf_triage_item`, `sf_query_knowledge`, `sf_spawn_subhunt`, `sf_attach_hunt`.
-- Desktop UI: Pages include Hunt, Knowledge, Evidence, IOCs, URLs, Prompts, Sources, and Settings.
-- `/swarm-forensics` verbs: Control verbs include `start`, `session`, `attach`, `subhunt`, `tools`, `stop`, `pause`, and `resume`. Inspection verbs include `status`, `log`, `review`, `accept`, `reject`, `benign`, `narrow`, `find`, `settings`, and `reset`.
+- Package: `plugins/swarm-forensics/` is one unified plugin. `register(ctx)` registers commands, tools, hooks, and skills.
+- Modules: Core modules include `db`, `settings`, `safety`, `extract`, `entities`, `prompt_registry`, `url_store`, and `mirror`. Engine modules include `agent_tools`, `registry`, `export`, `iocs`, `ledger`, `predict`, `sources`, `analysis`, `hooks`, and `command`.
+- Backend routes: Routes serve hunts, events, leads, evidence, and IOCs. Other routes serve URLs, entities, mirrors, corpus, and settings.
+- Hermes agent tools: `sf_get_context`, `sf_search_index`, `sf_record_evidence`, `sf_mirror_url`, `sf_analyze_corpus`, `sf_propose_ioc`, `sf_manage_entity`, `sf_link_entities`, `sf_triage_item`, `sf_query_knowledge`, `sf_spawn_subhunt`, `sf_attach_hunt`.
+- Desktop UI: Pages include Hunt, Knowledge, Evidence, IOCs, URLs, Prompts, Sources, and Settings. Components include composer underside strip and companion pane. Slot and pane hosts mount contributions with no props. Components MUST read the focused session from `host.state.focusedSessionId` via `useValue`. Pane contributions MUST declare a top-level `title` and `data.placement`.
+- `/swarm-forensics` verbs: Control verbs include `start`, `attach`, `subhunt`, `tools`, `stop`, `pause`, and `resume`. Inspection verbs include `status`, `log`, `review`, `accept`, `reject`, `benign`, `narrow`, `find`, `settings`, and `reset`.
 - Commands: `test`, `lint`, `check`, `js-deps`, `install`, `uninstall`.
 
 ## 4. Current State & Known Gaps
-- State: Schema v4, recursive sub-hunts, and session attach are complete.
-- State: Live URL artifacts, UI text selection, and Danger Zone reset are complete.
-- State: 122 offline Python unit tests and 30 JS render tests pass.
+- State: Schema v5, session-native execution, and Hermes session bindings are complete.
+- State: Local text mirror, TTP analysis, composer underside strip, and companion pane are complete.
+- State: 130 offline Python unit tests and 31 JS render tests pass.
 - State: `make lint` and `make check` pass with zero errors.
 - Gap: No live hunt has run against real external sources. Tests use fakes and synthetic data.
 - Gap: Desktop UI click handlers run in server render tests only. Operators SHOULD verify interactive behavior in the Hermes desktop app.
@@ -48,7 +53,7 @@ Provide a Hermes desktop plugin (`swarm-forensics`) that runs autonomous and int
 - Gap: The `urlquery` adapter endpoint returns HTTP 404 and remains disabled by default.
 
 ## 5. Pruned Decisions (Keep max 3)
+- [2026-10-04 Droid]: Fixed strip and pane session resolution. Desktop Slot and pane hosts pass no props, so components read `host.state.focusedSessionId` via `useValue`. Pane registration gained top-level `title` and a namespaced id. Rationale: Strip and pane rendered without session context and the pane lacked a tab label.
+- [2026-10-04 Antigravity]: Completed session-native hunts, text mirror, and companion pane. Rationale: Operator requested live tool observability, text mirroring, and hackathon readiness.
 - [2026-10-04 Antigravity]: Added Danger Zone reset, live URL capture, and selectable UI text. Rationale: Operator requested scratch reset, live URL artifacts, and ASD-STE100 specification.
-- [2026-10-04 Antigravity]: Added Schema v4, multi-worker recursive sub-hunts, and session attach. Rationale: Operator requested crawling child hunts, research blog discovery, and interactive session attachment.
-- [2026-10-04 Antigravity]: Upgraded schema to v3 with DB prompts and session tools. Rationale: Operator requested interactive chat hunts, editable prompts, and database workbench control.
 

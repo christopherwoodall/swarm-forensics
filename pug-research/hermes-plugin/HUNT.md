@@ -1,34 +1,60 @@
 # Hunt Brief: Report-Seeded Agent-Infrastructure Forensics
 
-## Kickoff
-
-Review the following [Transluce](https://transluce.org/agent-activity) report. Identify entry points, such as **urlquery** sessions (2026-05-01 → 06-30), that give you timestamped, structured records of what the agents actually fetched — URLs, hosts, and response metadata. Use these to seed your hunt for shared infrastructure and nonce grammars using the urlquery.net API.
-
-## The hunt
-
-1. **Extract** every IOC from the report and its urlquery sessions: URLs, domains, URL patterns, parameter shapes, relay/proxy hosts, file paths, and any behavioral claims (archiving, filter evasion, dead-drops).
-2. **Verify each IOC locally** against the two corpora (incident traces + wiki, AI Village tables). For each one, decide:
-   - **Confirmed** — present with matching structure (cite counts, layers, timestamps)
-   - **Commodity** — present but generic infrastructure anyone would use
-   - **Quotation** — present only inside agents *discussing* the incident after the fact (check timestamps against public reporting dates)
-   - **Absent** — clean negative; record what you searched
-3. **Go beyond the report.** The report is a seed, not a boundary. Mine the corpora for what it missed: relay hosts it didn't name, nesting patterns in proxied URLs, archive-creation behavior, nonce/parameter grammars, and domains both populations hit.
-4. **Grade everything** on one scale: **shared** (same artifact, 2+ layers) vs **linkage** (artifact plus corroborating evidence) vs **correlation** (statistical only). Shared destinations that any research agent would hit are gravity wells, not linkage.
-
-## Report format
-
-- Per-IOC verdict table with evidence
-- What the report missed, with reproduction steps
-- Three cleanest negatives
-- One paragraph: strongest finding, strongest limit, and whether this looks like one operation or two worlds
-
-## Rules
-
-- Stream large files; record sampling strides.
-- A zero is a result.
-- Mark verified vs inferred, every time.
-- Agent infrastructure and public evidence only. No human attribution, ever.
+This brief instructs Hermes agents during report-seeded swarm investigations.
+Agents receive this brief when starting a hunt seeded by an incident report.
+Operators can load or edit this prompt in the Prompts tab.
 
 ---
 
-Report in, IOCs out, corpora verify, and the hunt continues past the report's edges. urlquery first because it's timestamped and structured — the rest follows from what it surfaces.
+## 1. Kickoff
+
+Review the target incident report (for example, the Transluce report).
+Identify entry points such as recorded web sessions.
+Extract timestamped records of URLs, hosts, and response metadata.
+Use these entries to seed your hunt for shared infrastructure and nonce grammars.
+
+## 2. Investigation Steps
+
+1. **Extract Indicators**:
+   Extract every indicator of compromise from the report.
+   Capture URLs, domains, URL patterns, parameter shapes, and relay hosts.
+   Capture file paths, archive actions, and filter evasion claims.
+
+2. **Verify Indicators Locally**:
+   Cross-reference each indicator against available corpora and public indexes.
+   Classify each indicator into one category:
+   - **Confirmed**: Present with matching structure, cite counts, and timestamps.
+   - **Commodity**: Present but generic public infrastructure.
+   - **Quotation**: Present only in commentary discussing the incident after publication.
+   - **Absent**: Clean negative result. Record search parameters.
+
+3. **Expand Beyond the Seed Report**:
+   The initial report is a seed, not a boundary.
+   Search the corpus for indicators that the report missed.
+   Identify unmentioned relay hosts and nesting patterns in proxied URLs.
+   Detect archive-creation actions, parameter nonce grammars, and co-occurring domains.
+
+4. **Grade Relationships**:
+   Grade every relationship on the standard scale:
+   - **Shared**: Same artifact across two or more layers.
+   - **Linkage**: Artifact supported by corroborating evidence.
+   - **Correlation**: Statistical co-occurrence only.
+   Shared destinations that research agents routinely query are gravity wells, not linkage.
+
+## 3. Report Format
+
+Structure the final hunt findings with the following sections:
+
+- **Per-IOC Verdict Table**: Include evidence, counts, and classification for each indicator.
+- **Novel Findings**: Document discoveries that the seed report missed, with reproduction steps.
+- **Clean Negatives**: List the three cleanest negative search results with exact queries.
+- **Synthesis Paragraph**: Summarize the strongest finding, strongest limitation, and operational unity.
+
+## 4. Epistemic Rules
+
+- Stream large files line by line.
+- Record all sampling strides.
+- Treat a zero count as a valid result.
+- Mark findings as verified or inferred every time.
+- Restrict scope to agent infrastructure and public evidence.
+- Never pursue human or operator attribution.

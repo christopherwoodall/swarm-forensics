@@ -54,7 +54,7 @@ class SchemaAndSettings(unittest.TestCase):
 
             with migrated_db.connect() as c:
                 ver = c.execute("PRAGMA user_version").fetchone()[0]
-                self.assertEqual(ver, 4)
+                self.assertEqual(ver, 5)
                 fk_violations = c.execute("PRAGMA foreign_key_check").fetchall()
                 self.assertEqual(fk_violations, [])
 
@@ -104,7 +104,7 @@ class SchemaAndSettings(unittest.TestCase):
             self.assertTrue(bak.exists())
 
             with migrated.connect() as c:
-                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 4)
+                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 5)
                 self.assertEqual(c.execute("PRAGMA foreign_key_check").fetchall(), [])
                 # Entity has tags column
                 row = c.execute("SELECT tags FROM entities WHERE id = 'e1'").fetchone()
@@ -141,13 +141,43 @@ class SchemaAndSettings(unittest.TestCase):
             self.assertTrue(bak.exists())
 
             with migrated.connect() as c:
-                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 4)
+                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 5)
                 self.assertEqual(c.execute("PRAGMA foreign_key_check").fetchall(), [])
                 query = "SELECT parent_hunt_id, depth, session_id FROM hunts WHERE id = 'h1'"
                 row = c.execute(query).fetchone()
                 self.assertIsNone(row["parent_hunt_id"])
                 self.assertEqual(row["depth"], 0)
                 self.assertIsNone(row["session_id"])
+
+    def test_v4_to_v5_migration(self):
+        import sqlite3
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_file = Path(tmpdir) / "v4.db"
+            conn = sqlite3.connect(db_file)
+            for m in db.MIGRATIONS[:4]:
+                conn.executescript(m)
+            conn.execute("PRAGMA user_version = 4")
+            stamp = db.now()
+            conn.execute(
+                "INSERT INTO hunts("
+                "id, origin, goal, state, created_utc, started_utc, heartbeat_utc)"
+                " VALUES ('h1', 'desktop', 'find traces', 'running', ?, ?, ?)",
+                (stamp, stamp, stamp))
+            conn.commit()
+            conn.close()
+
+            migrated = db.Database(db_file)
+            bak = db_file.with_name(db_file.name + ".v4.bak")
+            self.assertTrue(bak.exists())
+
+            with migrated.connect() as c:
+                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 5)
+                self.assertEqual(c.execute("PRAGMA foreign_key_check").fetchall(), [])
+                self.assertIsNotNone(c.execute("SELECT 1 FROM session_bindings").fetchall())
+                self.assertIsNotNone(c.execute("SELECT 1 FROM corpus_observations").fetchall())
+                self.assertIsNotNone(c.execute("SELECT 1 FROM mirrors").fetchall())
 
     def test_defaults_and_updates(self):
         s = self.env.settings

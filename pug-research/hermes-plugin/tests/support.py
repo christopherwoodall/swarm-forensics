@@ -105,9 +105,6 @@ class Env:
         for w in workers:
             if w and w.is_alive():
                 w.join(timeout=5)
-        worker = self.hunts._worker
-        if worker is not None and worker.is_alive():
-            worker.join(timeout=5)
         self.tmp.cleanup()
 
 
