@@ -4,7 +4,7 @@
 link](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/swarm-forensics&enable=1)
 (confirm-first dialog; the subdirectory rides in the `repo`
 parameter per the SDK installer source). GitHub does not render
-`hermes://` links as clickable, so the raw URL is:
+`hermes://` links as [clickable](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/tree/pug-scratch/pug-research/hermes-plugin&enable=1), so the raw URL is:
 
 ```
 hermes://plugin/install?repo=christopherwoodall/swarm-forensics/tree/pug-scratch/pug-research/hermes-plugin&enable=1
