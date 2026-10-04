@@ -1,0 +1,4 @@
+name: swarm-forensics
+version: 1.0.0
+description: "Autonomous swarm hunter. An operator starts a hunt; Hermes then searches the public web for agent traces, mines new indicators, and writes events, IOCs, and an Obsidian-style entity graph to a local database."
+author: "christopherwoodall"

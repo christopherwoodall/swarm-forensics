@@ -1,3 +1,2 @@
-# Working state: IOC working copy, hits, candidates, cursors, logs.
-skills/swarm-forensics/state/
-skills/swarm-forensics/config.ini
+# Hunt state from a first-generation install, read once by the importer.
+plugins/swarm-forensics/state/

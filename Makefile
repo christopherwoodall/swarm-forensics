@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help setup data-info data-schema data-download data-sample data-validate replay-mock replay-export replay-serve pivot-check pivot-serve stylo-lexdb stylo-lexdb-v2 stylo-compare stylo-compare-v2 stylo-actions grammar-net goal-match goal-invert goal-ablate village-download pug-all test lint
+.PHONY: help setup data-info data-schema data-download data-sample data-validate replay-mock replay-export replay-serve pivot-check pivot-serve stylo-lexdb stylo-lexdb-v2 stylo-compare stylo-compare-v2 stylo-actions grammar-net goal-match goal-invert goal-ablate village-download pug-all test lint hermes-test hermes-lint hermes-check hermes-install hermes-uninstall
 
 # The repository can sit on a different filesystem than the uv cache.
 export UV_LINK_MODE := copy
@@ -62,6 +62,7 @@ pivot-check: setup ## Check the pivot graph file shape (PIVOT_FILE=<json>)
 STYLO_DIR := pug-research/stylometry
 GOAL_DIR := pug-research/goal-inference
 GRAM_DIR := pug-research/grammar-network
+HERMES_DIR := pug-research/hermes-plugin
 
 pivot-serve: setup ## Serve the pivot graph viewer on 127.0.0.1 (PIVOT_PORT=8001)
 	$(RUN) python data/viz_mock/v3_transluce/serve.py --port $(PIVOT_PORT)
@@ -103,8 +104,23 @@ pug-all: ## Run the full pug-research pipeline: download, stylometry, grammar ne
 	$(MAKE) -C $(GRAM_DIR) all
 	$(MAKE) -C $(GOAL_DIR) all
 
-test: setup ## Run the offline unit tests
+hermes-test: setup ## Run the Hermes plugin tests (offline)
+	$(MAKE) -C $(HERMES_DIR) test
+
+hermes-lint: setup ## Lint the Hermes plugin
+	$(MAKE) -C $(HERMES_DIR) lint
+
+hermes-check: setup ## Validate the Hermes plugin package (files, manifests, syntax)
+	$(MAKE) -C $(HERMES_DIR) check
+
+hermes-install: setup ## Install the Hermes plugin into the local Hermes and enable it (HERMES_HOME optional)
+	$(MAKE) -C $(HERMES_DIR) install
+
+hermes-uninstall: ## Remove the Hermes plugin from the local Hermes (keeps the database)
+	$(MAKE) -C $(HERMES_DIR) uninstall
+
+test: setup hermes-test ## Run the offline unit tests (includes the Hermes plugin)
 	$(RUN) python -m unittest discover -s src -t src -p "test_*.py"
 
-lint: setup ## Check code style with ruff
+lint: setup hermes-lint ## Check code style with ruff (includes the Hermes plugin)
 	$(RUN) ruff check src data/viz_mock/v2/serve.py data/viz_mock/v3_transluce/serve.py

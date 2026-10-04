@@ -1,0 +1,10 @@
+{
+  "name": "swarm-forensics",
+  "label": "Swarm Forensics",
+  "description": "Backend API for the Swarm Forensics desktop plugin.",
+  "icon": "Search",
+  "version": "1.0.0",
+  "tab": { "path": "/swarm-forensics", "hidden": true },
+  "slots": [],
+  "api": "plugin_api.py"
+}

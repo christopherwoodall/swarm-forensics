@@ -1,0 +1,9 @@
+{
+  "name": "swarm-forensics-plugin-render-tests",
+  "private": true,
+  "description": "Test-only dependencies for the desktop render tests. Installed outside the repository by `make js-deps`.",
+  "devDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

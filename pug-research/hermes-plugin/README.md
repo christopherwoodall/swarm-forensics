@@ -1,74 +1,92 @@
-# Swarm Forensics
+# Swarm Forensics (Hermes plugin)
 
-**Install:** [one-click install
-link](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/swarm-forensics&enable=1)
-(confirm-first dialog; the subdirectory rides in the `repo`
-parameter per the SDK installer source). GitHub does not render
-`hermes://` links as [clickable](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/tree/pug-scratch/pug-research/hermes-plugin&enable=1), so the raw URL is:
+An autonomous swarm hunter for Hermes desktop. An operator starts a hunt.
+Hermes then searches the public web for agent traces until the operator
+stops it. The plugin keeps what it finds in a local SQLite database:
+events, evidence, IOCs, and an Obsidian-style graph of agents, swarms, and
+cases.
+
+## Install
+
+From a checkout of this repository:
 
 ```
-hermes://plugin/install?repo=christopherwoodall/swarm-forensics/tree/pug-scratch/pug-research/hermes-plugin&enable=1
+make hermes-install      # from the repository root
+make install             # from pug-research/hermes-plugin
 ```
 
-The link resolves only
-once the plugin is merged to the repo's default branch (`main`);
-until then install manually — full instructions:
-[HERMES_SETUP.md](HERMES_SETUP.md).
+The target copies `plugins/swarm-forensics` into the Hermes home and runs
+`hermes plugins enable swarm-forensics`. It picks the Hermes home in this
+order: `HERMES_HOME`, the Windows desktop app (under WSL), then `~/.hermes`.
+Restart the Hermes desktop app afterward so the backend routes mount.
 
-## What it is
+```
+HERMES_HOME=/path/to/hermes make hermes-install   # explicit target
+make hermes-uninstall                             # keeps the database
+```
 
-Swarm Forensics is a swarm-hunting app inside Hermes desktop. It hunts
-agent-trace IOCs across public sources (urlquery, Wayback CDX,
-arquivo.pt), maintains a working IOC list, and predicts candidate
-URLs from observed request grammar.
+One-click link (resolves only after the plugin is on the default branch):
 
-The hunting dog. It hunts only with the human.
+```
+hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/plugins/swarm-forensics&enable=1
+```
 
-- Every hunt is a discrete job the human starts, watches, and
-  can cancel. No cron, no background schedule, no autonomous
-  scans. Nothing runs while the app is closed.
-- The IOC updater only proposes candidates into a human review
-  queue. Nothing promotes without a human decision.
-- The prompt firewall is advisory-only and locked. It recommends;
-  the human decides.
-- Private deployment only. Watch-term strings never leave the
-  operator's machine.
+## Use
 
-It is also a case-management and mapping interface:
+Open **Swarm Forensics** in the desktop app, or use the command:
 
-- **Collections**: file a trace under an agent, agents under a
-  swarm, swarms under a collection. Full CRUD in the GUI.
-- **Graph view**: Obsidian-style node graph of traces, agents,
-  swarms, collections, IOCs, and indicators. Pan, zoom, click
-  for detail, filter by type.
-- **Local database**: SQLite stores entities, relationships, and
-  extracted indicators (hunts, IOCs, and review decisions keep
-  their JSONL stores; the DB links to them by id). Adding a trace
-  auto-extracts its indicators into the DB. Extracted indicators
-  are working notes, not IOCs — promotion still needs a human
-  review-queue decision.
-- **Chat**: talk to the dog — ask it to hunt, ask what it found,
-  ask why a candidate was flagged. Inline accept/reject/narrow
-  on candidates wherever they appear.
-
-## Doc map
-
-| Doc | What it covers |
+| Command | Effect |
 |---|---|
-| [SPEC.md](SPEC.md) | Complete specification: architecture, entity model, DB schema, UI, commands |
-| [RATIONALE.md](RATIONALE.md) | Why each major decision was made — the trust document |
-| [HERMES_SETUP.md](HERMES_SETUP.md) | Install, first run, `/swarm-forensics` grammar, chat, SDK citations |
-| [DESIGN.md](DESIGN.md) | Plugin architecture and design decisions |
-| [LEARNING.md](LEARNING.md) | The learning loop (now human-gated; see amendment at top) |
-| [FIREWALL.md](FIREWALL.md) | Prompt-firewall design, golden set, eval status |
-| [ADVERSARIAL.md](ADVERSARIAL.md) | The 12 objections (verdict: no-build as originally specified) |
-| [ADVERSARIAL_DELTA.md](ADVERSARIAL_DELTA.md) | Re-grade under the hunting-dog model |
-| [HERMES_DESKTOP.md](HERMES_DESKTOP.md) | Desktop SDK mapping: UI spec, gaps, install link, settings schema |
-| `skills/swarm-forensics/SKILL.md` | The skill surface and command grammar |
-| `skills/swarm-forensics/config.example.ini` | Every config key, documented |
+| `/swarm-forensics start [goal]` | Start a hunt. It runs until you stop it. |
+| `/swarm-forensics pause`, `resume [id]`, `stop` | Control the hunt. |
+| `/swarm-forensics status` | Show hunt state and totals. |
+| `/swarm-forensics review` | List proposed IOC terms. |
+| `/swarm-forensics accept\|reject <id>`, `narrow <id> <term>` | Decide an IOC. |
+| `/swarm-forensics find <text>` | Search agents, swarms, and cases. |
+| `/swarm-forensics settings [key [value]]` | Read or change a setting. |
 
-## Quick start
+Desktop pages: Hunt, Knowledge (graph and notes), Evidence, IOCs, Settings.
 
-1. Install via [HERMES_SETUP.md](HERMES_SETUP.md) (manual path until the fixed link lands).
-2. Open `/swarm-forensics`, run a hunt, triage the review queue.
-3. File interesting traces into your collections; explore the graph.
+## How a hunt works
+
+Each cycle runs these steps. The loop repeats until the operator stops it.
+
+1. **Plan.** Hermes proposes search queries from past findings and open leads.
+2. **Search.** The plugin runs the queries through Hermes `web_search` and the
+   public indexes (urlquery, Wayback CDX, arquivo.pt).
+3. **Read.** Hermes `web_extract` reads promising pages.
+4. **Analyze.** The model proposes entities, links, IOC terms, and new leads.
+5. **Record.** The plugin writes evidence, entities, and proposals to the
+   database. New leads feed the next cycle.
+
+## Safety model
+
+- The model proposes. Policy and the operator decide.
+- Fetched text is untrusted. The plugin fences it and screens it for
+  injection phrasing. Tainted evidence never supports an IOC promotion.
+- IOC promotion is `manual` by default. `automatic` mode needs minimum
+  evidence, distinct hosts, claim level, and a daily cap. Every change is
+  audited.
+- Schedules are off. The operator arms each one. Scheduled hunts run only
+  while the desktop app is open.
+- A hunt stops when the app closes. After a restart a hunt is `paused`, and
+  the operator resumes it.
+- Index sources use a fixed host allowlist. Credentials are redacted before
+  any write.
+- Scope is agents and public evidence. No operator attribution.
+
+## Data
+
+The database lives at `<hermes home>/swarm-forensics/swarm-forensics.db`.
+Override the folder with `SWARM_FORENSICS_STATE_DIR`. State from the first
+(CLI) version is imported once, read-only.
+
+## Develop
+
+```
+make hermes-test     # offline tests, synthetic data, no network or model
+make hermes-lint
+make hermes-check    # package structure, manifests, Python and JS syntax
+```
+
+Architecture, interfaces, and invariants are in [MODULE.md](MODULE.md).
