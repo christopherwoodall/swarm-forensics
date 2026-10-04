@@ -50,8 +50,9 @@ It states that scanner records identify requests and times, not the programs tha
 4. Read `04-experiment-ledger.md` for all 57 experiment sections.[1]
 5. Read `05-critique-and-reproducibility.md` for limitations and internal tensions.[1]
 6. Read `06-site-structure-and-preservation.md` for capture details and source-link issues.[1]
-7. Use `data/` for normalized tables.[1]
-8. Use `_support/evidence/` for the preserved page bodies.[1]
+7. Read `07-september-29-analysis.md` for the first focused date analysis.[1]
+8. Use `data/` for normalized tables.[1]
+9. Use `_support/evidence/` for the preserved page bodies.[1]
 
 ## Data files
 

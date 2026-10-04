@@ -9,8 +9,11 @@ The user types the initial question when starting a session.
 Request-only AI Village data is excluded from the demonstration and repository.
 The owner renamed this sub-project from `swarm-rhizomics` to `distributed-rhizotechnics`.
 Source ownership: private import of an unchanged snapshot outside Git.
-First-pass edge inspection shows original records behind the connected nodes.
+Revised inspection: evidence expands from nodes or edges through a modifier gesture.
+Exact modifier and expansion location remain unselected.
 Inspection placement and density remain provisional until the owner uses the application.
+Members may retrieve additional material from the imported dataset.
+The named Hermes research directories are also supplied as reference context.
 
 ## Verified state
 
@@ -46,7 +49,7 @@ Announce completion and any remaining blockers.
 
 ## Current next question
 
-May swarm members retrieve new source material, or only analyze source nodes already in the graph?
+Should Shift-click open supporting evidence in the side inspector while ordinary click selects?
 
 SwarmTraces supersedes the initial AI Village choice.
 A particular demonstration question is deferred; runtime question entry is confirmed.
@@ -54,7 +57,7 @@ Private snapshot import is selected.
 Stable source anchors, labeled unknown times, and private snapshot continuity remain required.
 Exact identity and span encoding remain engineering details.
 Node placement is confirmed: author at the head, timestamp at the bottom.
-Edge-based inspection shows original records for now; reevaluate presentation through actual use.
+The earlier edge-only original-record choice is superseded by expandable evidence on nodes and edges.
 Historical interface and current aesthetic references are recorded without copying the screenshot.
 
 ## Checks and limits

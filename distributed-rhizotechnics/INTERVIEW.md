@@ -23,8 +23,8 @@ Current area: 3, retrieval and model context.
 | Area | Topic | Starting knowledge | Remaining elicitation | Status |
 | --- | --- | --- | --- | --- |
 | 1 | First dataset and demonstration question | SwarmTraces; user types the question at session start. | A specific demonstration example is deferred. | Complete |
-| 2 | Source identity and sentence anchoring | Private snapshots; stable source anchors; graph attribution; original records on edge selection. | Revisit inspector density after use; exact anchor encoding is engineering detail. | Complete, with provisional UI |
-| 3 | Retrieval and model context | Question-led retrieval; source and visible rhizome remain distinct. | Set context composition, roles, and source-versus-analysis retrieval. | In progress |
+| 2 | Source identity and sentence anchoring | Private snapshots; stable source anchors; graph attribution; expandable evidence on nodes and edges. | Revisit inspector density after use; exact anchor encoding is engineering detail. | Complete, with provisional UI |
+| 3 | Retrieval and model context | Members retrieve additional dataset material and use the named Hermes research collection. | Clarify reference materialization, citations, and model-context boundaries. | In progress |
 | 4 | Graph action semantics | Respond, expand, connect, challenge, summarize, and question. | Define resulting objects, relation types, and revision/adjudication behavior. | Pending |
 | 5 | Swarm execution | Optional timed single-member contributions to a frontier. | Define selection, silence, budgets, pause/stop, and pending-work behavior. | Pending |
 | 6 | Structured contribution contract | Provenance and structured conclusions precede register rendering. | Define output validation, evidence references, and confidence semantics. | Pending |
@@ -97,6 +97,32 @@ Keep those UI choices provisional and revisitable.
 Area 2 owner elicitation is complete for the initial slice.
 Existing stable-ID, exact-span, unknown-time, and snapshot requirements remain in force.
 Exact encoding and indexing mechanics remain engineering decisions, not unelicited owner preferences.
+
+### Area 3 — dataset retrieval and Hermes reference research
+
+Question: May members retrieve more dataset material or only analyze existing graph source nodes?
+Owner answer: “yes definitely retrieve additional data from the dataset.”
+Confirmed: members may retrieve beyond the materialized graph.
+
+The owner also supplied the Hermes swarm-research root for reference context.
+Root: `/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/`.
+Her requested scope covers stages 1 and 2, stage 3, stage 4, evidence, and support.
+Local inventory verified `stage-1-&-2`, `stage-3-event-discovery`, `stage-4-trace-reservoirs`, `_evidence`, and `_support`.
+No additional research folder was authorized by this statement.
+No evidence bodies or source datasets were reviewed during this inventory.
+
+Preserve reference provenance separately from selected-dataset observations.
+Still unresolved: how a reference used by a contribution becomes visible and cited in the graph.
+
+### Evidence-inspection revision during area 3
+
+The owner revises the earlier original-records-only edge inspection choice.
+Owner statement: “the evidence should be expandable from clicking the edge/node.”
+She requests a modifier gesture such as “shift click or ctrl click”.
+Confirmed: evidence access belongs to both nodes and edges.
+Still unresolved: exact modifier and where expansion appears.
+Do not treat additional visible reference nodes as required by this answer.
+The owner continues to treat inspection choices as revisitable after use.
 
 ### Project-name revision
 

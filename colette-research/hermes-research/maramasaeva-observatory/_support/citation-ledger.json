@@ -22,6 +22,22 @@
         {
           "text": "Each rule was committed before scoring and measured against ordinary-day controls. Two records carry a swarm; the rest are nulls.",
           "added": "2026-10-03"
+        },
+        {
+          "text": "The unchanged rule reproduces the three days exactly (28 May 0.65 swarm-style / 0.16 tester-style; 6 Jul 0.93 / 0.03; 29 Sep 0.83 / 0.09).",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "29 Sep has 23 unique URLs, 17 unique digests, 17 of 23 between 20:00 and 21:59 UTC, all status 200.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "One burst passes all four conditions: a `serp-*` family, 29 Sep 2026, 33 packages, 97% single-use, 100% machine-named, create-once.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "On 29 Sep: 19 distinct HF owners each created >= 20 models (above the ~14/day September average, though within the background); the Wayback httpbin index shows a swarm-like day (5.31); and PyPI has its one rule-passing burst, the serp-* cluster (5.37).",
+          "added": "2026-10-03"
         }
       ]
     },
@@ -48,6 +64,72 @@
           "added": "2026-10-03"
         }
       ]
+    },
+    {
+      "id": 3,
+      "url": "https://pypi.org/simple",
+      "title": "PyPI Simple API index",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 4,
+      "url": "https://pypi.org/project/serpentine-lang",
+      "title": "PyPI Serpentine compiler",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 5,
+      "url": "https://pypi.org/project/serpentine-shim",
+      "title": "PyPI Serpentine runtime shim",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 6,
+      "url": "https://pypi.org/project/serp-base64",
+      "title": "PyPI Serpentine base64 library",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 7,
+      "url": "https://pypi.org/project/serp-json",
+      "title": "PyPI Serpentine JSON library",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 8,
+      "url": "https://pypi.org/project/serp-math",
+      "title": "PyPI Serpentine math package",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 9,
+      "url": "https://pypi.org/project/serp-venom",
+      "title": "PyPI Serpentine web package",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 10,
+      "url": "https://pypi.org/project/serpentine-io",
+      "title": "PyPI Serpentine IO package",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 11,
+      "url": "https://pypi.org/project/serp-time",
+      "title": "PyPI Serpentine time package",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 12,
+      "url": "https://github.com/avijitbhuin21/Serpentine",
+      "title": "GitHub repository URL cited by PyPI",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 13,
+      "url": "https://warehouse.pypa.io/api-reference/xml-rpc.html",
+      "title": "PyPI XML-RPC API reference",
+      "accessed": "2026-10-03"
     }
   ]
 }

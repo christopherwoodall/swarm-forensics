@@ -59,6 +59,30 @@ Keep saved investigations tied to that dataset version.
 Sessions MAY share the imported snapshot rather than duplicate it per session.
 Exact import formats, snapshot identities, chunking, and indexing remain unresolved.
 
+### Retrieval and research context
+
+Swarm members MAY retrieve additional material from the imported dataset.
+Do not restrict them to source nodes already materialized in the graph.
+The owner also wants the existing Hermes swarm research available to members.
+
+Reference root: `/home/resonatingloop/.resonance/exoresonance/swarm-forensics/colette-research/hermes-research/`.
+The owner named stages 1 and 2, stage 3, stage 4, evidence, and support.
+Local inventory verified these corresponding directories:
+
+- `stage-1-&-2/`.
+- `stage-3-event-discovery/`.
+- `stage-4-trace-reservoirs/`.
+- `_evidence/`.
+- `_support/`.
+
+Do not automatically include unlisted research folders.
+Preserve the distinction between selected-dataset records and background research.
+Retain original source classes within the reference collection, including primary excerpts and Hermes-authored synthesis.
+Do not treat another case's observations as observations from the selected dataset.
+Treat support scripts as reference material, not authorization to execute them.
+
+Reference materialization, explicit citations, and model-context boundaries still need owner clarification.
+
 ## 4. Initial interaction sequence
 
 Follow this owner-supplied sequence:
@@ -122,8 +146,11 @@ The owner explicitly requires clear provenance for nodes and edges.
 Display the author at the head of each graph node.
 Display its labeled timestamp at the bottom.
 Keep node content and attribution directly visible on the canvas.
-For the first pass, selecting an edge reveals original records behind the connected nodes.
-Do not assume a separate relation-evidence panel is required for this initial behavior.
+The owner revised the first-pass edge-only original-record inspection behavior.
+Make evidence expandable from either a node or an edge.
+Use a modifier-click gesture; the owner suggested Shift-click or Ctrl-click.
+The exact modifier and expansion location remain unselected.
+Do not infer that every cited reference must become another visible graph node.
 Treat inspection placement and information density as provisional until the owner uses the application.
 Revisit useful-versus-cluttered judgments through rendered interaction, not premature permanent commitments.
 

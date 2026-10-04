@@ -4,6 +4,7 @@
 .PHONY: watcher-poll watcher-pending watcher-ack watcher-status watcher-monitor
 .PHONY: watcher-discord-poll watcher-discord-pending watcher-discord-ack watcher-discord-status watcher-discord-monitor
 .PHONY: watcher-discord-audit
+.PHONY: delvetown-pilot delvetown-audit delvetown-inspect delvetown-test
 
 # The repository can sit on a different filesystem than the uv cache.
 export UV_LINK_MODE := copy
@@ -30,6 +31,10 @@ DISCORD_WATCHER_MAX_PAGES ?= 20
 DISCORD_WATCHER_TOTAL_SECONDS ?= 30
 DISCORD_WATCHER_RETRY_SECONDS ?= 900
 DISCORD_WATCHER_CMD = $(WATCHER_RUN) python -m swarm_forensics.watcher.discord_cli --db "$(DISCORD_WATCHER_DB)"
+
+DELVE_DIR ?= $(RAW_DIR)/delvetown/pilot
+DELVE_COHORT ?= $(RAW_DIR)/delvetown/cohort.json
+DELVE_RUN = $(RUN) $(if $(findstring --frozen,$(RUN)),,--frozen)
 
 # Optional: TABLES="events chat_messages" and REVISION=<commit>.
 DATA_DIR ?= $(RAW_DIR)/sample
@@ -151,3 +156,15 @@ watcher-discord-audit: ## Verify private Discord event provenance and actual sou
 
 watcher-discord-monitor: ## Poll Discord and emit deterministic backlog wake token
 	@$(DISCORD_WATCHER_CMD) monitor --max-pages "$(DISCORD_WATCHER_MAX_PAGES)" --total-seconds "$(DISCORD_WATCHER_TOTAL_SECONDS)" --retry-seconds "$(DISCORD_WATCHER_RETRY_SECONDS)"
+
+delvetown-test: ## Run synthetic Delvetown collector tests without network access
+	@$(DELVE_RUN) python -m unittest swarm_forensics.delvetown.test_pilot
+
+delvetown-pilot: ## Collect the approved private 72-hour Delvetown cohort with hard safety limits
+	@$(DELVE_RUN) python -m swarm_forensics.delvetown collect --cohort "$(DELVE_COHORT)" --dest "$(DELVE_DIR)"
+
+delvetown-audit: ## Audit private Delvetown provenance and print content-free coverage counts
+	@$(DELVE_RUN) python -m swarm_forensics.delvetown audit --dest "$(DELVE_DIR)"
+
+delvetown-inspect: ## Inspect bounded private thread excerpts and account activity without network requests
+	@$(DELVE_RUN) python -m swarm_forensics.delvetown inspect --dest "$(DELVE_DIR)"

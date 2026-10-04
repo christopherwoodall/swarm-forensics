@@ -21,6 +21,9 @@ Read [PROJECT_BRIEF.md](../../PROJECT_BRIEF.md) for the proposed direction and d
 - Watcher commands: `make watcher-poll`, `watcher-pending`, `watcher-ack`, `watcher-status`, and `watcher-monitor`.
 - Discord watcher commands: `make watcher-discord-poll`, `watcher-discord-pending`, `watcher-discord-ack`, `watcher-discord-status`, `watcher-discord-audit`, and `watcher-discord-monitor`.
 - Discord watcher private state: ignored `data/raw/discord/1430962817045106792/`. Tracked ledger files contain only a pointer to Discord records.
+- Delvetown pilot: `delvetown/`. See [delvetown/MODULE.md](delvetown/MODULE.md) for the approved private collection scope.
+- Delvetown commands: `make delvetown-pilot`, `delvetown-audit`, `delvetown-inspect`, and `delvetown-test`.
+- Delvetown source records and findings MUST remain under ignored `data/raw/delvetown/`. Publication remains deferred.
 - Watcher dependency: official FairyStack peer client downloaded to ignored `data/raw/fairystack/`.
 - Watcher credential: private user configuration outside the repository; public metadata lives in `colette-research/hermes-log/ENROLLMENT.json`.
 - `replay.py`: `export_session(session_id, dir)`, `build_mock_case()`, `validate_case(case)`, `ReplayError`. CLI: `--mock | --session UUID`. Contract: `schema_version` 1, one JSON file per session, written under `data/raw/replay/`.
@@ -56,6 +59,6 @@ Read [PROJECT_BRIEF.md](../../PROJECT_BRIEF.md) for the proposed direction and d
 - Gap: Its initial manual trigger ended unknown after terminal timeout. Later scheduled runs retain backlog.
 
 ## 5. Pruned Decisions (Keep max 3)
+- [2026-10-03 Hermes]: Isolate the approved Delvetown pilot from existing trace reservoirs. Keep source records and findings private.
 - [2026-10-01 Hermes]: Separate source acquisition from acknowledged ledger extraction. Retain raw provenance and pending work after interruption.
 - [2026-10-01 Droid]: Check the pivot graph file by shape only. The counts have no source rows in this repo, so the viewer labels them as unverified.
-- [2026-10-01 Droid]: Name status `stderr_recorded`, not "error". The dataset `error` field holds stderr, and `git push` writes its normal progress text there.
