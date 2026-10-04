@@ -4,3 +4,10 @@ import {agentPrompt,firstTaskPrompt,checkAgent} from './frontend/agent-setup.js'
 const id='550e8400-e29b-41d4-a716-446655440000';
 test('recipe uses HTTPS guide, one-use exchange and no installation or handshake',()=>{const s=agentPrompt('https://swarm.example',id,'once');assert.ok(s.includes('https://swarm.example/agent-guide.md'));assert.ok(s.includes('https://swarm.example/agent/connect'));assert.ok(s.includes('Single-use setup token: once'));assert.ok(s.includes('No client plugin'));assert.ok(!s.includes('/mcp'));assert.ok(!s.includes('npm ci'));assert.ok(firstTaskPrompt(id,'https://swarm.example').includes('POST /agent/v1/discord_read_messages'));assert.throws(()=>agentPrompt('https://swarm.example',''));});
 test('connection check validates profile, channel and propagates failures with bounded requests',async()=>{const seen=[];await checkAgent(async(url,opts)=>{seen.push([url,JSON.parse(opts.body)]);assert.equal(opts.timeoutMs,10000);assert.ok(opts.signal);return url.endsWith('profile')?{id:'bot',username:'Bot'}:{messages:[]};},id);assert.deepEqual(seen.map(x=>x[0]),['/agent/v1/discord_get_bot_profile','/agent/v1/discord_read_messages']);await assert.rejects(checkAgent(async()=>({}),id),/invalid bot profile/);await assert.rejects(checkAgent(async url=>url.endsWith('profile')?{id:'bot',username:'Bot'}:{},id),/invalid channel/);await assert.rejects(checkAgent(async()=>{throw Error('denied');},id),/denied/);});
+
+test('onboarding checks saved keys before exchange and persists only a private locator',()=>{
+ const prompt=agentPrompt('https://swarm.example',id,'once');
+ assert.ok(prompt.indexOf('First look for your saved')<prompt.indexOf('exchange the token once'));
+ for(const text of ['skip token exchange','discord_list_relays','Stop on scope mismatch','server error does not','Record only its locator','read it back','onboarding incomplete','0600'])assert.ok(prompt.includes(text),text);
+ assert.ok(firstTaskPrompt(id,'https://swarm.example').includes('saved API key lookup and validation'));
+});
