@@ -1,10 +1,25 @@
-# Swarm Forensics (Hermes Plugin)
+<div align="center">
 
-Autonomous and interactive swarm threat intelligence for Hermes Desktop and CLI.
+# Swarm Forensics
+
+**Autonomous and interactive swarm threat intelligence for Hermes Desktop and CLI.**
+
+[![Version](https://img.shields.io/badge/version-3.0.0-blue)](MODULE.md)
+[![License](https://img.shields.io/badge/license-MIT-orange)](../../LICENSE)
+[![Tests](https://img.shields.io/badge/tests-146%20Python%20%C2%B7%2033%20JS-brightgreen)](#verification--testing)
+[![Platform](https://img.shields.io/badge/platform-Hermes%20Desktop%20%2B%20CLI-purple)](#quick-start)
+
+[Demo Video](https://github.com/user-attachments/assets/e82becae-596b-4e53-bcb9-b09643baf05d)
+
+</div>
+
 The plugin searches public web sources for agent infrastructure and behavioral traces.
 It writes events, evidence, indicators of compromise (IOCs), entities, and mirrors to SQLite.
 
-[Demo Video](https://github.com/user-attachments/assets/e82becae-596b-4e53-bcb9-b09643baf05d)
+- **Hunt in chat or in the background.** Run a session-native hunt with live tool calls, or schedule autonomous worker sweeps.
+- **Watch it think.** The plugin posts batched hunt digests and idle nudges directly into your chat.
+- **Steer from anywhere.** Slash commands, a composer status strip, a companion pane, and a full desktop workbench.
+- **Trust the ledger.** Every query, tool call, and verdict lands in a local SQLite corpus with provenance.
 
 ```mermaid
 flowchart TD
@@ -48,6 +63,20 @@ flowchart TD
     Tools --> PublicIndexes
 ```
 
+## Contents
+
+- [Quick Start](#quick-start)
+- [Architecture & Concurrency Model](#architecture--concurrency-model)
+- [Desktop User Interface](#desktop-user-interface)
+- [Command Reference](#command-reference)
+- [Interactive Agent Tools](#interactive-agent-tools)
+- [Data Model & Storage Specification](#data-model--storage-specification)
+- [TTP Playbook & Analytical Methodology](#ttp-playbook--analytical-methodology)
+- [Hunt Playbook: Report-Seeded Investigations](#hunt-playbook-report-seeded-investigations)
+- [Epistemic Rules & Claim Ladder](#epistemic-rules--claim-ladder)
+- [Data Export & Obsidian Vault](#data-export--obsidian-vault)
+- [Verification & Testing](#verification--testing)
+
 ---
 
 ## Quick Start
@@ -56,37 +85,25 @@ Get started in three steps.
 
 ### 1. Install the Plugin
 
-Install with the [one-click install link](https://tinyurl.com/swarm-forensics).
-Or paste this URI directly into Hermes desktop:
+**One click (recommended):** use the [install link](https://tinyurl.com/swarm-forensics),
+or paste this URI directly into Hermes desktop:
 
 ```text
 hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/plugins/swarm-forensics&enable=1
 ```
 
-To install from source repository checkout:
+**From source:** run `make hermes-install` from the repository root, or `make install` from inside this directory.
 
-From the repository root:
-
-```bash
-make hermes-install
-```
-
-Or from inside this directory:
-
-```bash
-make install
-```
-
-The installer copies plugin files into your Hermes home directory.
-It also writes `plugins.entries.swarm-forensics.allow_gateway_injection: true`
-into the Hermes config. This consent lets the plugin post hunt updates into
-your chat sessions. Without it, hunts still run, but chat stays silent and
-the UI shows a "chat updates off" hint.
-The one-click install link cannot grant this consent; Hermes reserves it for
-an explicit operator act. After a one-click install, run
-`hermes config set plugins.entries.swarm-forensics.allow_gateway_injection true`
-once, or add the YAML above by hand.
 Restart the Hermes desktop app after installation.
+
+> [!IMPORTANT]
+> Chat updates require a one-time consent. The source installer writes
+> `plugins.entries.swarm-forensics.allow_gateway_injection: true` into the Hermes
+> config. The one-click link cannot grant this consent; Hermes reserves it for an
+> explicit operator act. After a one-click install, run
+> `hermes config set plugins.entries.swarm-forensics.allow_gateway_injection true`
+> once, or add the YAML by hand. Without it, hunts still run, but chat stays silent
+> and the UI shows a "chat updates off" hint.
 
 ### 2. Start a Hunt
 
@@ -426,7 +443,7 @@ Operators can export data through the Settings tab or palette command:
 Treat the root `Makefile` as the single entry point:
 
 ```bash
-make test    # Runs 130 Python unit tests and 31 Node.js render tests
+make test    # Runs 146 Python unit tests and 33 Node.js render tests
 make lint    # Runs Ruff lint checks (100 character line length)
 make check   # Validates package manifests, Python compilation, and ESM syntax
 ```
