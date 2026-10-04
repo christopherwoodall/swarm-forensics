@@ -12,9 +12,9 @@ The swarm-forensics repo ships **no raw corpora** (they are git-ignored by desig
   - Agent traces (`traces.jsonl`, ~900MB): branch `openai-agent-traces`, path `openai-agent-traces/data/traces.jsonl`
   - Incident wiki (`revisions.jsonl`, ~40MB): branch `local`, path `data/2026-05-17-collusion-wiki/raw/revisions.jsonl`
   - In our runs these lived at `~/workspace/silent-locus/...`; set `SILENT_LOCUS=/path/to/silent-locus` and substitute.
-- **AI Village corpus** (13 tables, `.jsonl.gz`): gated HuggingFace dataset. Run `make village-download` from the repo root with `HF_TOKEN` in the environment (skips files already present). Lands in `pug-research/stylometry/data/raw/`. Never commit raw downloads.
+- **AI Village corpus** (13 tables, `.jsonl.gz`): gated HuggingFace dataset. Run `make village-download` from the repo root with `HF_TOKEN` in the environment (skips files already present). Lands in `pug-research/experiments/stylometry/data/raw/`. Never commit raw downloads.
 
-Prior writeups (in-repo, start here): `pug-research/stylometry/SHARED_URLS.md`, `pug-research/stylometry/VILLAGE_XREF.md`, `pug-research/experiments/grammar-network/REPORT.md`. Lane entry points: root `Makefile` targets (`stylo-*`, `grammar-net`, `village-download`).
+Prior writeups (in-repo, start here): `pug-research/experiments/stylometry/SHARED_URLS.md`, `pug-research/stylometry/VILLAGE_XREF.md`, `pug-research/experiments/grammar-network/REPORT.md`. Lane entry points: root `Makefile` targets (`stylo-*`, `grammar-net`, `village-download`).
 
 ## PART 1 — The TTP playbook (what to hunt)
 
