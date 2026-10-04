@@ -1,9 +1,0 @@
-{
-  "tool": "image_gen.imagegen",
-  "method": "edit",
-  "source_asset": "mcp-flow.png",
-  "source_sha256": "63ecad6e621a390ee3bca08233dee881d7fa2a77c52876621e43972b68116bb7",
-  "output_asset": "mcp-flow-v2.png",
-  "output_sha256": "b0d88bf5d4f86be1ab9c55f4eea43a50d93f68a779688c4830f6d221d5f6e683",
-  "change": "Replace app-login-token authentication with single-use setup exchange and scoped, revocable agent credential. Setup expires after10 minutes; resulting credential after7 days. Preserve Discord and model-provider paths."
-}
