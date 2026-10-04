@@ -2,7 +2,7 @@
 
 Autonomous and interactive swarm threat intelligence for Hermes Desktop and CLI.
 The plugin searches public web sources for agent infrastructure and behavioral traces.
-It writes events, evidence, indicators of compromise (IOCs), and entities to a local SQLite database.
+It writes events, evidence, indicators of compromise (IOCs), entities, and mirrors to SQLite.
 
 ```mermaid
 flowchart TD
@@ -16,12 +16,12 @@ flowchart TD
         Hooks["Lifecycle Hooks"]
         Tools["Agent Tools (12 Tools)"]
         PluginAPI["Plugin REST API"]
-        Service["Forensics Service"]
+        Service["Forensics Service Coordinator"]
         Analysis["TTP & Nonce Analysis"]
         MirrorStore["Content-Addressed Mirror"]
     end
 
-    subgraph Storage["Local Storage"]
+    subgraph Storage["Local Storage (Schema v5)"]
         DB[("SQLite v5 Ledger")]
         MirrorFiles[("Text Mirror Files")]
     end
@@ -54,13 +54,22 @@ Get started in three steps.
 
 ### 1. Install the Plugin
 
+Install with the [one-click install link](https://tinyurl.com/swarm-forensics).
+Or paste this URI directly into Hermes desktop:
+
+```text
+hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/plugins/swarm-forensics&enable=1
+```
+
+To install from source repository checkout:
+
 From the repository root:
 
 ```bash
 make hermes-install
 ```
 
-Or install from inside this directory:
+Or from inside this directory:
 
 ```bash
 make install
@@ -77,11 +86,11 @@ Open Hermes chat and enter:
 /swarm-forensics start Find agent infrastructure and relay patterns
 ```
 
-This starts a session-native hunt.
+This command starts a session-native hunt.
 The chat agent runs the hunt in your conversation.
 You see native tool calls and model reasoning in real time.
 
-To run an autonomous background worker instead, schedule a hunt or run in headless mode.
+To run an autonomous background worker instead, schedule a hunt or use headless mode.
 
 ### 3. Observe and Steer
 
@@ -92,42 +101,70 @@ To run an autonomous background worker instead, schedule a hunt or run in headle
 
 ---
 
-## Core Capabilities
+## Architecture & Concurrency Model
 
-### 1. Session-Native Execution
-Session hunts execute directly in your active Hermes chat.
-Hermes invokes native search and forensics tools.
-The plugin captures every observation into the SQLite ledger without replaying logs.
+The system supports two hunt execution modes:
 
-### 2. Desktop Companion Pane & Composer Strip
-The composer underside strip displays current hunt status, cycle count, and active lead totals.
-The right companion pane streams newly discovered URLs in real time.
-Operators can promote any URL to an artifact entity with one click.
+1. **Session-Native Mode**:
+   - The hunt executes directly within an active Hermes chat session.
+   - Hermes invokes web search, web extract, and `sf_*` tools natively.
+   - Operators observe genuine tool calls and model reasoning in the chat window.
+   - Lifecycle hooks record every tool call and query into the local corpus ledger.
+   - Operators steer the investigation through regular conversational prompts.
 
-### 3. Content-Addressed Text Mirror
-The plugin mirrors clean text from `web_extract` into `<state_dir>/mirror/`.
-Files use SHA-256 hashes for deduplication.
-The mirror enforces size caps and screens content for prompt injection before storage.
+2. **Background Worker Mode**:
+   - Dedicated worker threads run scheduled hunts and headless background sweeps.
+   - Background hunts poll enabled public indexes and run autonomous analysis cycles.
+   - Background hunts stop automatically when the desktop heartbeat lapses.
 
-### 4. Deterministic TTP Analysis
-The analysis engine normalizes URLs and unwraps nested relay chains (`r.jina.ai`, `allorigins`, `jqp`).
-It matches nonce parameter grammars (`zz=oai`, `zzbulk`, `prepnonce`).
-It classifies archive actions into create versus read operations.
+```mermaid
+flowchart TD
+    Start["Operator Start"] --> Open["Open real session"]
+    Open --> Goal["Native goal kickoff"]
+    Goal --> Agent["Hermes agent"]
+    Agent --> Web["Native web tools"]
+    Agent --> Tools["Forensics tools"]
+    Web --> Chat["Native transcript"]
+    Tools --> Chat
+    Web --> Hooks["Session hooks"]
+    Tools --> Hooks
+    Hooks --> Store["SQLite corpus"]
+    Hooks --> Mirror["Text mirror"]
+    Store --> Panel["Companion panel"]
+    Mirror --> Panel
+    Store --> TTP["TTP analysis"]
+    TTP --> Agent
+    Schedule["Armed schedule"] --> Worker["Background engine"]
+    Worker --> Store
+```
 
-### 5. Recursive Sub-Hunts
-Hunts can spawn child crawler hunts to follow specific leads.
-Sub-hunts respect a maximum depth limit (default 3) and parent-child tracking.
-Stopping a parent hunt cancels all of its active child hunts immediately.
+### Concurrency Rules
 
-### 6. Database Prompt Workbench
-All hunt prompts live in SQLite.
-Operators can edit templates, insert dynamic token chips, and export prompt bundles.
-Resetting any template restores its immutable default text.
+- A hunt MUST respect configured cycle limits.
+- Child sub-hunts inherit the session identifier and root trace context of their parent.
+- The system limits sub-hunt depth to three levels by default.
+- Stopping a parent hunt MUST stop all active child hunts immediately.
+- When the host application closes, all active workers transition to paused state.
+- Workers MUST NOT resume automatically after process restart without operator action.
 
-### 7. Safe Indicator Lifecycle
-IOC promotion defaults to manual operator review.
-Items marked `benign` act as negative filters.
-The engine never searches or queries benign URLs or indicator terms.
+---
+
+## Desktop User Interface
+
+The desktop UI provides eight tabs, an input strip, and a side companion panel:
+
+- **Hunt Tab**: Real-time event log, lead management, sub-hunt hierarchy, and URL feed.
+- **Knowledge Tab**: Interactive entity graph, hierarchy browser, custom groups, and Markdown notes.
+- **Evidence Tab**: Captured page excerpts with provenance, timestamps, and taint status.
+- **IOCs Tab**: Indicator catalog, promotion policy status, and decision audit logs.
+- **URLs Tab**: Discovered URL catalog with triage buttons and one-click artifact capture.
+- **Prompts Tab**: Database-backed template editor with token chips and reset controls.
+- **Sources Tab**: Index adapter toggles, candidate URL grammars, and wordlist imports.
+- **Settings Tab**: Configuration limits, schedule controls, JSON export, and data reset.
+- **Composer Underside Strip**: Compact status widget embedded below the message input box.
+- **Right Companion Pane**: Collapsible sidebar displaying live URLs, mirror files, and tool logs.
+
+All cards and monospaced text blocks in the desktop interface support text selection and copying.
 
 ---
 
@@ -138,7 +175,7 @@ Run `/swarm-forensics <subcommand>` in Hermes:
 | Subcommand | Syntax | Description |
 |---|---|---|
 | `start` | `/swarm-forensics start [goal]` | Start a hunt. Binds active chat session automatically. |
-| `attach` | `/swarm-forensics attach [id]` | Bind current chat session to a running hunt. |
+| `attach` | `/swarm-forensics attach [id]` | Bind current chat session to an active hunt. |
 | `subhunt` | `/swarm-forensics subhunt <goal> [parent_id]` | Spawn a recursive child crawler hunt. |
 | `tools` | `/swarm-forensics tools [id] [n]` | Inspect recent tool calls and queries. |
 | `pause` | `/swarm-forensics pause [id]` | Pause an active hunt. |
@@ -174,51 +211,207 @@ Hermes agents use twelve native forensics tools:
 11. `sf_spawn_subhunt`: Spawn recursive child crawler hunts up to configured max depth.
 12. `sf_attach_hunt`: Bind the current conversation context to an active hunt.
 
----
-
-## Desktop User Interface
-
-The desktop UI provides eight primary tabs, a composer strip, and a side panel:
-
-- **Hunt Tab**: Real-time event log, lead management, sub-hunt hierarchy, and URL feed.
-- **Knowledge Tab**: Interactive entity graph, hierarchy browser, custom groups, and Markdown notes.
-- **Evidence Tab**: Captured page excerpts with provenance, timestamps, and taint status.
-- **IOCs Tab**: Indicator catalog, promotion policy status, and decision audit logs.
-- **URLs Tab**: Discovered URL catalog with triage buttons and one-click artifact capture.
-- **Prompts Tab**: Database-backed template editor with token chips and reset controls.
-- **Sources Tab**: Index adapter toggles, candidate URL grammars, and wordlist imports.
-- **Settings Tab**: Configuration limits, schedule controls, JSON export, and data reset.
-- **Composer Underside Strip**: Compact status widget embedded below the message input box.
-- **Right Companion Pane**: Collapsible sidebar displaying live URLs, mirror files, and tool logs.
-
-All cards and monospaced text blocks in the desktop interface support text selection and copying.
+All tools sanitize arguments and return structured JSON objects.
 
 ---
 
-## Epistemic Rules & Safety
+## Data Model & Storage Specification
 
-1. **Model Proposes, Policy Decides**: The model generates hypotheses. Policy code and human operators validate them.
-2. **Untrusted Content Fencing**: External web text is untrusted. The plugin fences all retrieved text before prompt injection.
-3. **Taint Screening**: Evidence containing prompt injection signatures is flagged as tainted. Tainted evidence cannot promote IOCs.
-4. **Claim Ladder Discipline**: Analysts MUST use claim rungs from `L1` (artifact) to `L5` (operation).
-5. **No Human Attribution**: Scope covers agent software and infrastructure only. Never attribute actions to humans.
-6. **Negative Filtering**: Benign indicators and URLs prevent redundant or unwanted searches.
+Operational state lives in SQLite under `<hermes home>/swarm-forensics/swarm-forensics.db`.
+The database operates with write-ahead logging enabled (Schema v5).
+
+### 1. Database Schema
+Schema tables include:
+- `hunts`: Hunt records with origin (`session` or `worker`), state, goal, and depth.
+- `hunt_events`: Chronological event audit log for actions, findings, and errors.
+- `session_bindings`: Durable mapping between Hermes chat sessions and hunt IDs.
+- `corpus_observations`: Web queries, tool calls, and result URLs captured by hooks.
+- `entities` & `entity_links`: Graph nodes and directed relationships.
+- `iocs` & `ioc_decisions`: Indicators, lifecycle status, and human review decisions.
+- `urls`: Discovered URLs with triage states (`discovered`, `examined`, `benign`, `suspicious`).
+- `prompt_templates`: Editable prompt templates with variable token substitution (`{{var}}`).
+- `osint_sources` & `url_grammar`: Configured public indexes and URL permutation rules.
+- `mirrors`: Metadata catalog for locally mirrored text files.
+
+### 2. Entity Hierarchy
+Entities enforce a strict hierarchy:
+`artifact -> agent -> swarm -> campaign`
+
+- Links of kind `part_of` MUST point from child to parent.
+- The system supports custom agent and swarm groups.
+- Entities support user-defined tags and confidence ratings.
+- Loose links (`tagged_with`, `associated_with`, `attributed_to`) connect entities flexibly.
+
+### 3. Indicator Lifecycle
+- IOC categories include `domain`, `ip`, `agent_hash`, `prompt_signature`, and `nonce_grammar`.
+- Indicator states: `proposed`, `active`, `inactive`, `rejected`, or `benign`.
+- Promotion to `active` defaults to manual operator review.
+- Automatic promotion requires distinct host evidence and untainted records.
+- Indicators marked `benign` act as negative filters.
+- The engine NEVER queries benign terms or URLs.
+
+### 4. Content-Addressed Text Mirror
+- Mirrored content MUST originate from clean text extracts.
+- The system screens content for prompt injection before writing to disk.
+- Mirrored text files live under `<state_dir>/mirror/<sha256>.txt`.
+- The system enforces configurable file and total directory byte limits.
+- Reset operations wipe mirrored files along with database tables.
+
+### 5. Data Reset Mechanism
+- Operators can wipe all data via `POST /reset` or `/swarm-forensics reset --force`.
+- The reset operation terminates active workers before deleting data.
+- The reset drops tables, re-runs migrations, and re-seeds clean defaults.
 
 ---
 
-## Data Storage & Export
+## TTP Playbook & Analytical Methodology
 
-- **Database**: `<hermes home>/swarm-forensics/swarm-forensics.db` (SQLite Schema v5 with WAL).
-- **Text Mirror**: `<hermes home>/swarm-forensics/mirror/<sha256>.txt`.
-- **Environment Override**: Set `SWARM_FORENSICS_STATE_DIR` to use a custom data directory.
-- **JSON Export**: Settings page generates a complete streaming data dump.
-- **Obsidian Vault**: Settings page exports entities and notes with `[[wikilinks]]`.
+Forensics analysts follow eight tactics, techniques, and procedures (TTPs):
+
+### TTP-1: Stratified URL Mining
+Stream large dataset files line by line using streaming readers.
+Extract URLs with regular expressions.
+Normalize URLs to registrable domains.
+Intersect domain lists across populations to identify shared infrastructure.
+
+### TTP-2: Relay-Chain Grammar
+Decompose nested proxy and relay chains for each target URL.
+Observe nesting order: jq proxies outermost, CORS relays middle, target innermost.
+Known relays include `r.jina.ai`, `allorigins`, `corsproxy.io`, `da.gd`, and `jqp.vercel.app`.
+Known markdown proxies include `md.succ.ai`, `pure.md`, and `markdown.new`.
+
+### TTP-3: Nonce Grammar
+Match query parameter structures rather than specific values.
+Detect parameter families such as `zz=oai<digits>`, `zzbulk`, and `prepnonce`.
+Detect bare epoch integers and `oai*` tags.
+Count occurrences per corpus layer to identify population signatures.
+
+### TTP-4: Archive-First Behavior
+Search for capture creation endpoints including `web.archive.org/save/` and `arquivo.pt`.
+Identify retry and delay loops surrounding archive requests.
+Distinguish creating archive captures from reading existing captures.
+Capture creation provides a stronger behavioral signal than reading.
+
+### TTP-5: Basin Grading
+Grade shared domains and URLs across five distinct categories:
+1. **Exact URL**: Identical scheme, host, path, and normalized query parameters.
+2. **Domain and Path**: Matching host and stable path with differing queries.
+3. **Target Host**: Matching destination service.
+4. **Service Basin**: Related hosts within public organizational domains.
+5. **Temporal**: Observed hits bounded within the incident time window.
+
+### TTP-6: Trace Pulling & Verification
+Retrieve corroborating traces time-boxed to the target activity window.
+Query public Wayback CDX indexes and Arquivo endpoints.
+Record verdicts for every queried URL.
+Log zero-hit queries as verified clean negatives.
+
+### TTP-7: Tokenization Hygiene
+Use n-grams and character chunks rather than word splits.
+Normalize camel case, digit-letter boundaries, and percent encoding before comparison.
+Quarantine contaminated partitions with documented reasons.
+Never drop data partitions silently.
+
+### TTP-8: Functional Matching
+Compare equivalent communication channels: chat to chat, code to code, traces to traces.
+Never compare conversational text against raw URL dumps.
+Document the match rationale for every compared pair.
+
+---
+
+## Hunt Playbook: Report-Seeded Investigations
+
+This playbook defines the operational procedure for report-seeded investigations.
+Agents receive this prompt template when investigating report-seeded infrastructure.
+Operators can load, customize, or reset this prompt in the Prompts tab.
+
+### 1. Kickoff
+Review the target incident report to identify candidate entry points.
+Extract timestamped records of URLs, hosts, and response metadata.
+Use these entries to seed searches for shared infrastructure and nonce grammars.
+
+### 2. Investigation Steps
+1. **Extract Indicators**:
+   Extract every indicator of compromise from the report.
+   Capture URLs, domains, URL patterns, parameter shapes, and relay hosts.
+   Capture file paths, archive actions, and filter evasion claims.
+
+2. **Verify Indicators Locally**:
+   Cross-reference each indicator against available corpora and public indexes.
+   Classify each indicator into one category:
+   - **Confirmed**: Present with matching structure, cite counts, and timestamps.
+   - **Commodity**: Present but generic public infrastructure.
+   - **Quotation**: Present only in commentary discussing the incident after publication.
+   - **Absent**: Clean negative result within recorded search parameters.
+
+3. **Expand Beyond the Seed Report**:
+   The initial report is a seed, not a boundary.
+   Search the corpus for indicators that the report missed.
+   Identify unmentioned relay hosts and nesting patterns in proxied URLs.
+   Detect archive-creation actions, parameter nonce grammars, and co-occurring domains.
+
+4. **Grade Relationships**:
+   Grade every relationship on the standard scale:
+   - **Shared**: Same artifact across two or more layers.
+   - **Linkage**: Artifact supported by corroborating evidence.
+   - **Correlation**: Statistical co-occurrence only.
+   Shared destinations that research agents routinely query are gravity wells, not linkage.
+
+### 3. Report Output Structure
+- **Per-IOC Verdict Table**: Include evidence, counts, and classification for each indicator.
+- **Novel Findings**: Document discoveries that the seed report missed, with reproduction steps.
+- **Clean Negatives**: List the three cleanest negative search results with exact queries.
+- **Synthesis Paragraph**: Summarize the strongest finding, strongest limitation, and operational unity.
+
+---
+
+## Epistemic Rules & Claim Ladder
+
+1. **Model Proposes, Policy Decides**:
+   The model generates hypotheses.
+   Policy code and human operators validate them.
+
+2. **Untrusted Content Fencing**:
+   External web text is untrusted data.
+   The plugin fences all retrieved text before prompt injection.
+
+3. **Taint Screening**:
+   Evidence containing prompt injection signatures is flagged as tainted.
+   Tainted evidence CANNOT promote indicators of compromise.
+
+4. **Relationship Grading Scale**:
+   - **Sharing**: Same artifact across two or more layers.
+   - **Linkage**: Artifact supported by corroborating evidence.
+   - **Correlation**: Statistical co-occurrence only.
+   Shared destinations on public data portals are gravity wells, not linkage.
+
+5. **Claim Ladder Discipline**:
+   Interpret every hit at the lowest supported rung:
+   - **L1 Artifact**: Single URL carries agent-shaped grammar.
+   - **L2 Burst**: Cadence and digest concentration indicate automated retrieval.
+   - **L3 Task**: Selective parameter shape names target data.
+   - **L4 Toolkit**: Relay stack, nonce grammar, and construction artifacts co-occur.
+   - **L5 Operation**: Same task, window, and toolkit across venues.
+   - **Never**: Operator identity. No rule reaches a human.
+
+6. **No Human Attribution**:
+   Scope covers agent software and infrastructure only.
+   Never attribute actions to human operators.
+
+---
+
+## Data Export & Obsidian Vault
+
+Operators can export data through the Settings tab or palette command:
+
+- **JSON Export**: Complete streaming dump (`swarm-forensics.json`) containing hunts, IOCs, URLs, entities, and templates.
+- **Obsidian Vault**: Exports entities and notes with `[[wikilinks]]` into `exports/vault/`.
 
 ---
 
 ## Verification & Testing
 
-Run all quality checks through the root Makefile:
+Treat the root `Makefile` as the single entry point:
 
 ```bash
 make test    # Runs 130 Python unit tests and 31 Node.js render tests
@@ -226,6 +419,4 @@ make lint    # Runs Ruff lint checks (100 character line length)
 make check   # Validates package manifests, Python compilation, and ESM syntax
 ```
 
-Detailed technical specification is in [SPEC.md](SPEC.md).
-Architecture, interfaces, and invariants are in [MODULE.md](MODULE.md).
-Operational hunt playbooks are in [HUNT.md](HUNT.md) and [TTP.md](TTP.md).
+Architectural invariants and module decisions are documented in [MODULE.md](MODULE.md).
