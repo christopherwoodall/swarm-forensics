@@ -14,6 +14,7 @@ from .iocs import IocStore
 from .ledger import Ledger
 from .legacy import find_state_dirs, import_state
 from .paths import PLUGIN_ID, db_path
+from .registry import Registry
 from .research import Parts
 from .settings import SCHEMA_VERSION, Settings
 
@@ -33,12 +34,14 @@ class Service:
         self.settings = Settings(self.db)
         self.ledger = Ledger(self.db)
         self.graph = Graph(self.db)
+        self.registry = Registry(self.db, self.ledger)
         self.iocs = IocStore(self.db, self.settings)
         self.hermes = hermes or HermesRuntime(ctx)
         parts = Parts(self.settings, self.ledger, self.graph, self.iocs,
-                      self.hermes)
+                      self.hermes, registry=self.registry)
         self.hunts = HuntService(self.db, parts, notify=_broadcast)
         self.iocs.seed()
+        self.registry.seed()
         self.imported = [dict(import_state(self.db, d), path=str(d))
                          for d in find_state_dirs()]
         self.hunts.recover()
