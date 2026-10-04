@@ -179,12 +179,27 @@ class Engine:
     # -- index sweeps -----------------------------------------------------------
 
     def _sweep(self, hid, goal, cfg, totals):
+        registry = self.p.registry
+        allowed_hosts = registry.allowed_hosts() if registry else None
         index = IndexSources("swarm-forensics/1.0", cfg["hunt.request_delay_seconds"],
                              cfg["hunt.max_results_per_query"], self.ctl.wait,
-                             self.p.getter)
-        for source in [s for s in cfg["hunt.sources"] if s in INDEX_SOURCES]:
-            terms = self._slice_terms("idx-" + source, TERMS_PER_SOURCE)
-            since = self.p.ledger.cursor(source, "since")
+                             self.p.getter, allowed_hosts=allowed_hosts)
+
+        sources_to_run = []
+        if registry:
+            if "index" in cfg["hunt.sources"]:
+                sources_to_run = registry.sources(enabled_only=True)
+            else:
+                sources_to_run = [s for s in registry.sources(enabled_only=True)
+                                  if s["name"] in cfg["hunt.sources"] or s["kind"] in cfg["hunt.sources"]]
+        if not sources_to_run:
+            sources_to_run = [s for s in cfg["hunt.sources"] if s in INDEX_SOURCES]
+
+        for source in sources_to_run:
+            source_key = "src:%s" % source["id"] if isinstance(source, dict) else source
+            source_name = source["name"] if isinstance(source, dict) else source
+            terms = self._slice_terms("idx-" + source_name, TERMS_PER_SOURCE)
+            since = self.p.ledger.cursor(source_key, "since")
             queries = index.queries_for(source, terms, since) if terms else []
             clean = bool(queries)
             ran = found = 0
@@ -193,12 +208,12 @@ class Engine:
                 if self.ctl.stopped():
                     return
                 label = query["id"]
-                if self.p.ledger.query_seen(source, label, 6):
+                if self.p.ledger.query_seen(source_name, label, 6):
                     continue
                 outcome, status, hits = index.run(source, query)
                 if outcome == "aborted":
                     return
-                self.p.ledger.log_query(hid, source, label, outcome, status,
+                self.p.ledger.log_query(hid, source_name, label, outcome, status,
                                         len(hits))
                 totals["queries"] += 1
                 ran += 1
@@ -207,28 +222,31 @@ class Engine:
                     totals["throttled"] += 1
                     clean = False
                     self._say(hid, "throttle",
-                              "%s throttled (HTTP %s); not a negative" % (source, status),
+                              "%s throttled (HTTP %s); not a negative" % (source_name, status),
                               level="warn")
                 elif outcome == "error":
                     clean = False
                     failed[status] = failed.get(status, 0) + 1
                 if hits:
-                    self._record_hits(hid, goal, cfg, source, label, hits, totals)
+                    self._record_hits(hid, goal, cfg, source_name, label, hits, totals)
             if failed:
                 self._say(hid, "sweep", "%s: %d of %d queries failed (HTTP %s). Not counted"
-                          " as negatives." % (source, sum(failed.values()), ran,
+                          " as negatives." % (source_name, sum(failed.values()), ran,
                                               ", ".join(str(s) for s in sorted(failed))),
                           level="warn")
             elif ran:
-                self._say(hid, "sweep", "%s: %d queries, %d hits" % (source, ran, found))
+                self._say(hid, "sweep", "%s: %d queries, %d hits" % (source_name, ran, found))
             if clean:
-                self.p.ledger.set_cursor(source, "since", now()[:10])
-        if "cdx" in cfg["hunt.sources"]:
+                self.p.ledger.set_cursor(source_key, "since", now()[:10])
+
+        can_probe = "index" in cfg["hunt.sources"] or "cdx" in cfg["hunt.sources"]
+        if can_probe:
+            prober = registry.candidate_prober() if registry else None
             for cand in self.p.ledger.unprobed_candidates(3):
                 if self.ctl.stopped():
                     return
                 outcome, status, hits = index.run(
-                    "cdx", index.candidate_query(cand["url"]))
+                    prober or "cdx", index.candidate_query(cand["url"], prober))
                 if outcome in ("ok",):
                     self.p.ledger.mark_candidate(cand["id"], len(hits))
                     if hits:
