@@ -15,9 +15,7 @@ review queue. Nothing promotes without a human decision.
 
 ## Install path 1: install link (recommended)
 
-```
-hermes://plugin/install?repo=christopherwoodall/swarm-forensics&enable=1
-```
+[Install tracehound in Hermes](hermes://plugin/install?repo=christopherwoodall/swarm-forensics&enable=1)
 
 The link follows the SDK's documented install-link format
 (`website/docs/developer-guide/desktop-plugin-sdk.md`, section

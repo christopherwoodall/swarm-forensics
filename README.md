@@ -36,7 +36,7 @@ Read [PROJECT_BRIEF.md](PROJECT_BRIEF.md) for source attribution, evidence limit
 | **AI Village Dataset** | [huggingface.co/datasets/aidigestorg/ai-village](https://huggingface.co/datasets/aidigestorg/ai-village) | Existing downloader target. Access approval is required. |
 | **AI Village Live UI** | [theaidigest.org/village](https://theaidigest.org/village) | Interactive explorer for live and historical agent village activities. |
 | **Swarmtraces** | [swarmtraces.org](https://swarmtraces.org/) | Redacted incident artifacts that motivated the coordination research. No parser is implemented here. |
-| **Tracehound (Hermes plugin)** | [pug-research/hermes-plugin/README.md](pug-research/hermes-plugin/README.md) | Human-triggered agent-trace hunt: discrete hunt jobs, human-gated IOC review queue, advisory-only firewall. Install: `hermes://plugin/install?repo=christopherwoodall/swarm-forensics&enable=1`. |
+| **Tracehound (Hermes plugin)** | [pug-research/hermes-plugin/README.md](pug-research/hermes-plugin/README.md) | Human-triggered agent-trace hunt: discrete hunt jobs, human-gated IOC review queue, advisory-only firewall. [Install](hermes://plugin/install?repo=christopherwoodall/swarm-forensics&enable=1). |
 
 ---
 

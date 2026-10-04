@@ -48,6 +48,7 @@ const store = {
     selectedReviewId: null,
     pendingNarrowId: null,
     lastSeenHitUtc: null,
+    casesNewOpen: false,  // palette "New case entity…" opens the dialog
   },
   set(patch) {
     Object.assign(this.state, patch);
@@ -1733,6 +1734,653 @@ async function reviewDecideSelected(ctx, verdict) {
 }
 
 // ---------------------------------------------------------------------------
+// Case management (Worker-5). Routes /tracehound/cases and
+// /tracehound/graph. The case DB is the analyst's workspace: entities
+// (trace, agent, swarm, collection), links, and extracted indicators.
+// Extracted indicators are NOT IOCs: nothing here promotes to the
+// IOC list; promotion stays a human review-queue decision.
+// ---------------------------------------------------------------------------
+const CASE_TYPES = ['trace', 'agent', 'swarm', 'collection'];
+const CASE_REL_KINDS = ['trace_of', 'member_of', 'part_of', 'related'];
+const CASE_TYPE_COLORS = {
+  trace: '#58a6ff', agent: '#3fb950', swarm: '#d29922', collection: '#bc8cff',
+};
+
+function TypeBadge({ type }) {
+  return jsx(Badge, { style: { borderColor: CASE_TYPE_COLORS[type] || '#888' } }, type);
+}
+
+function EntityDetail({ ctx, entityId, entities, onChanged, onSelect }) {
+  const [detail, setDetail] = useState(null);
+  const [linkTarget, setLinkTarget] = useState('');
+  const [linkRel, setLinkRel] = useState('related');
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [editLabel, setEditLabel] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (!entityId) { setDetail(null); return undefined; }
+    let live = true;
+    apiGet(ctx, '/cases/entities/' + encodeURIComponent(entityId)).then((d) => {
+      if (!live) return;
+      if (d.error) { setDetail(null); return; }
+      setDetail(d);
+      setEditLabel(d.entity.label);
+      setConfirmDelete(false);
+    });
+    return () => { live = false; };
+  }, [entityId]);
+
+  if (!entityId) {
+    return jsx(EmptyState, {
+      title: 'No entity selected',
+      description: 'Pick an entity from the list, or a node in the graph.',
+    });
+  }
+  if (!detail) return jsx('div', null, 'Loading…');
+  const ent = detail.entity;
+
+  const saveLabel = async () => {
+    const label = editLabel.trim();
+    if (!label || label === ent.label) return;
+    setSaving(true);
+    const res = await apiPut(ctx, '/cases/entities/' + encodeURIComponent(entityId),
+      { label });
+    setSaving(false);
+    if (res.error) notify(ctx, 'error', `Save failed: ${res.error}`);
+    else { setDetail({ ...detail, entity: res.entity }); onChanged && onChanged(); }
+  };
+  const addLink = async () => {
+    if (!linkTarget || linkTarget === entityId) return;
+    const res = await apiPost(ctx, '/cases/link',
+      { from_id: entityId, to_id: linkTarget, rel: linkRel });
+    if (res.error) notify(ctx, 'error', `Link failed: ${res.error}`);
+    else {
+      notify(ctx, 'info', 'Linked.');
+      setLinkTarget('');
+      const d = await apiGet(ctx, '/cases/entities/' + encodeURIComponent(entityId));
+      if (!d.error) setDetail(d);
+      onChanged && onChanged();
+    }
+  };
+  const removeLink = async (linkId) => {
+    const res = await apiDelete(ctx, '/cases/link/' + encodeURIComponent(linkId));
+    if (res.error || !res.deleted) notify(ctx, 'error', 'Unlink failed.');
+    else {
+      const d = await apiGet(ctx, '/cases/entities/' + encodeURIComponent(entityId));
+      if (!d.error) setDetail(d);
+      onChanged && onChanged();
+    }
+  };
+  const deleteEntity = async () => {
+    const res = await apiDelete(ctx, '/cases/entities/' + encodeURIComponent(entityId));
+    if (res.error || !res.deleted) notify(ctx, 'error', 'Delete failed.');
+    else {
+      notify(ctx, 'info', 'Entity deleted (its links and indicators went with it).');
+      onChanged && onChanged(true);
+    }
+  };
+
+  const linkTargets = (entities || []).filter((e) => e.id !== entityId);
+  return jsxs('div', {
+    children: [
+      jsxs('div', {
+        key: 'head', style: { display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 },
+        children: [
+          jsx(TypeBadge, { key: 'b', type: ent.type }),
+          jsx('strong', { key: 'l' }, ent.label),
+          jsx('span', { key: 'p', style: { fontSize: 12, opacity: 0.7 } },
+            ent.provenance ? `provenance: ${ent.provenance}` : 'no provenance'),
+        ],
+      }),
+      jsxs('div', {
+        key: 'rename', style: { display: 'flex', gap: 8, marginBottom: 12 },
+        children: [
+          jsx(Input, {
+            key: 'i', value: editLabel,
+            onChange: (e) => setEditLabel(e.target.value),
+            onKeyDown: (e) => { if (e.key === 'Enter') saveLabel(); },
+            style: { maxWidth: 300 },
+          }),
+          jsx(Button, { key: 's', size: 'sm', onClick: saveLabel, disabled: saving }, 'Rename'),
+        ],
+      }),
+      ent.data && ent.data.job_id ? jsx('div', {
+        key: 'job', style: { fontSize: 12, marginBottom: 8 },
+      }, `Hunt job: ${ent.data.job_id}`) : null,
+      jsx('h4', { key: 'ih', style: { margin: '8px 0 4px' } },
+        `Indicators (${detail.indicators.length})`),
+      detail.indicators.length
+        ? jsx('div', {
+          key: 'il', style: { fontSize: 12, marginBottom: 8 },
+          children: detail.indicators.map((ind, i) =>
+            jsxs('div', {
+              key: i, style: { display: 'flex', gap: 8, padding: '2px 0' },
+              children: [
+                jsx(Badge, { key: 'k' }, ind.kind),
+                jsx('span', {
+                  key: 'v', style: { wordBreak: 'break-all', fontFamily: 'monospace' },
+                }, ind.value),
+              ],
+            })),
+        })
+        : jsx('p', { key: 'in', style: { fontSize: 12, opacity: 0.7 } },
+          'No indicators. Traces gain indicators from extraction on save.'),
+      jsx('p', {
+        key: 'iw', style: { fontSize: 11, opacity: 0.7, marginBottom: 12 },
+      }, 'Indicators are working notes, not IOCs. They never reach the IOC list.'),
+      jsx('h4', { key: 'lh', style: { margin: '8px 0 4px' } },
+        `Links (${detail.links.length})`),
+      detail.links.length
+        ? jsx('div', {
+          key: 'll', style: { fontSize: 12, marginBottom: 8 },
+          children: detail.links.map((l) => {
+            const otherId = l.from_id === entityId ? l.to_id : l.from_id;
+            const other = (detail.adjacent || {})[otherId];
+            const label = other ? other.label : otherId.slice(0, 8);
+            const dir = l.from_id === entityId ? '→' : '←';
+            return jsxs('div', {
+              key: l.id, style: { display: 'flex', gap: 8, alignItems: 'center', padding: '2px 0' },
+              children: [
+                jsx('span', { key: 'd' }, dir),
+                jsx('button', {
+                  key: 'o', onClick: () => onSelect && onSelect(otherId),
+                  style: {
+                    background: 'none', border: 'none', color: 'var(--tracehound-link, #58a6ff)',
+                    cursor: 'pointer', padding: 0, fontSize: 12, textDecoration: 'underline',
+                  },
+                }, label),
+                jsx(Badge, { key: 'r' }, l.rel),
+                jsx(Button, {
+                  key: 'u', size: 'sm', variant: 'ghost', onClick: () => removeLink(l.id),
+                }, 'Unlink'),
+              ],
+            });
+          }),
+        })
+        : jsx('p', { key: 'ln', style: { fontSize: 12, opacity: 0.7 } }, 'No links yet.'),
+      jsxs('div', {
+        key: 'add', style: { display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' },
+        children: [
+          jsx(Select, {
+            key: 't', value: linkTarget,
+            onChange: (e) => setLinkTarget(e.target.value),
+            children: [
+              jsx('option', { key: 'e', value: '' }, 'Link to…'),
+              ...linkTargets.map((e) =>
+                jsx('option', { key: e.id, value: e.id }, `${e.label} (${e.type})`)),
+            ],
+          }),
+          jsx(Select, {
+            key: 'r', value: linkRel,
+            onChange: (e) => setLinkRel(e.target.value),
+            children: CASE_REL_KINDS.map((r) =>
+              jsx('option', { key: r, value: r }, r)),
+          }),
+          jsx(Button, { key: 'b', size: 'sm', onClick: addLink }, 'Link'),
+        ],
+      }),
+      confirmDelete
+        ? jsxs('div', {
+          key: 'cd', style: { display: 'flex', gap: 8, alignItems: 'center' },
+          children: [
+            jsx('span', { key: 'w', style: { fontSize: 12 } },
+              'Delete this entity, its links, and its indicators?'),
+            jsx(Button, { key: 'y', size: 'sm', variant: 'destructive', onClick: deleteEntity }, 'Delete'),
+            jsx(Button, { key: 'n', size: 'sm', variant: 'outline', onClick: () => setConfirmDelete(false) }, 'Cancel'),
+          ],
+        })
+        : jsx(Button, {
+          key: 'del', size: 'sm', variant: 'destructive',
+          onClick: () => setConfirmDelete(true),
+        }, 'Delete entity'),
+    ],
+  });
+}
+
+function NewEntityDialog({ ctx, open, onClose, onSaved }) {
+  const [type, setType] = useState('trace');
+  const [label, setLabel] = useState('');
+  const [provenance, setProvenance] = useState('');
+  const [traceText, setTraceText] = useState('');
+  const [jobId, setJobId] = useState('');
+  const [preview, setPreview] = useState(null);
+  const [saving, setSaving] = useState(false);
+
+  const reset = () => {
+    setType('trace'); setLabel(''); setProvenance('');
+    setTraceText(''); setJobId(''); setPreview(null);
+  };
+  const previewIndicators = async () => {
+    const res = await apiPost(ctx, '/cases/extract', { trace_text: traceText });
+    if (res.error) notify(ctx, 'error', `Preview failed: ${res.error}`);
+    else setPreview(res.indicators);
+  };
+  const save = async () => {
+    if (!label.trim()) { notify(ctx, 'error', 'Label is required.'); return; }
+    setSaving(true);
+    const body = { type, label: label.trim(), provenance };
+    if (type === 'trace') {
+      body.trace_text = traceText;
+      if (jobId.trim()) body.job_id = jobId.trim();
+    }
+    const res = await apiPost(ctx, '/cases/entities', body);
+    setSaving(false);
+    if (res.error) { notify(ctx, 'error', `Save failed: ${res.error}`); return; }
+    notify(ctx, 'info', `'${label.trim()}' saved.`);
+    reset();
+    onSaved(res.entity);
+  };
+
+  return jsx(Dialog, {
+    open,
+    children: jsxs('div', {
+      children: [
+        jsx(DialogTitle, { key: 't' }, 'New case entity'),
+        jsxs('div', {
+          key: 'f', style: { display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 },
+          children: [
+            jsx(Select, {
+              key: 'ty', value: type, onChange: (e) => setType(e.target.value),
+              children: CASE_TYPES.map((t) =>
+                jsx('option', { key: t, value: t }, t)),
+            }),
+            jsx(Input, {
+              key: 'l', value: label, placeholder: 'Label (required)',
+              onChange: (e) => setLabel(e.target.value),
+            }),
+            jsx(Input, {
+              key: 'p', value: provenance, placeholder: 'Provenance (optional)',
+              onChange: (e) => setProvenance(e.target.value),
+            }),
+            type === 'trace' ? jsx('textarea', {
+              key: 'tt', value: traceText, rows: 5, style: { width: '100%' },
+              placeholder: 'Trace text. Saving runs indicator extraction (regex, offline).',
+              onChange: (e) => setTraceText(e.target.value),
+            }) : null,
+            type === 'trace' ? jsx(Input, {
+              key: 'j', value: jobId, placeholder: 'Hunt job id (optional)',
+              onChange: (e) => setJobId(e.target.value),
+            }) : null,
+            type === 'trace' && traceText.trim() ? jsx(Button, {
+              key: 'pv', variant: 'outline', onClick: previewIndicators,
+            }, 'Preview indicators') : null,
+            preview ? jsx('div', {
+              key: 'pvw', style: { fontSize: 12, maxHeight: 160, overflow: 'auto' },
+              children: preview.length
+                ? preview.map((ind, i) =>
+                  jsxs('div', {
+                    key: i, style: { display: 'flex', gap: 8 },
+                    children: [
+                      jsx(Badge, { key: 'k' }, ind.kind),
+                      jsx('span', { key: 'v', style: { fontFamily: 'monospace' } }, ind.value),
+                    ],
+                  }))
+                : jsx('span', { key: 'n' }, 'No indicators found in this text.'),
+            }) : null,
+          ],
+        }),
+        jsxs('div', {
+          key: 'b', style: { display: 'flex', gap: 8, marginTop: 12 },
+          children: [
+            jsx(Button, { key: 's', onClick: save, disabled: saving }, 'Save entity'),
+            jsx(Button, {
+              key: 'c', variant: 'outline',
+              onClick: () => { reset(); onClose(); },
+            }, 'Cancel'),
+          ],
+        }),
+      ],
+    }),
+  });
+}
+
+function CasesPage({ ctx }) {
+  const entsQ = useApi(ctx, 'case-entities', '/cases/entities', 15000);
+  const [typeFilter, setTypeFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [selectedId, setSelectedId] = useState(null);
+  const [newOpen, setNewOpen] = useState(false);
+  const [s, setS] = useStore();
+
+  // Palette command "New case entity…" sets the flag, then navigates here.
+  useEffect(() => {
+    if (s.casesNewOpen) { setNewOpen(true); setS({ casesNewOpen: false }); }
+  }, []);
+
+  const entities = (entsQ.data && entsQ.data.entities) || [];
+  const shown = entities.filter((e) =>
+    (typeFilter === 'all' || e.type === typeFilter) &&
+    (!search || e.label.toLowerCase().includes(search.toLowerCase())));
+
+  const refresh = (deleted) => {
+    entsQ.refetch();
+    if (deleted) setSelectedId(null);
+  };
+
+  return jsx(Page, {
+    title: 'Cases',
+    actions: jsxs(Fragment, {
+      children: [
+        jsx(BackendBadge, { key: 'b', ctx }),
+        jsx(Button, { key: 'n', onClick: () => setNewOpen(true) }, 'New entity'),
+      ],
+    }),
+    children: jsxs(Fragment, {
+      children: [
+        jsx('p', {
+          key: 'note', style: { fontSize: 12, opacity: 0.75, marginTop: 0 },
+        }, 'The analyst workspace. Entities, links, and extracted indicators live here. ' +
+          'Extracted indicators are not IOCs: promotion to the IOC list needs the review queue.'),
+        jsxs('div', {
+          key: 'ctl', style: { display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' },
+          children: [
+            jsx(SearchField, {
+              key: 'f', value: search,
+              onChange: (e) => setSearch(e.target.value),
+              placeholder: 'Search labels…',
+            }),
+            jsx(Select, {
+              key: 't', value: typeFilter,
+              onChange: (e) => setTypeFilter(e.target.value),
+              children: ['all', ...CASE_TYPES].map((t) =>
+                jsx('option', { key: t, value: t }, t)),
+            }),
+          ],
+        }),
+        jsxs('div', {
+          key: 'cols', style: { display: 'flex', gap: 16, alignItems: 'flex-start' },
+          children: [
+            jsx(ScrollArea, {
+              key: 'list', style: { maxHeight: 560, flex: '1 1 40%', minWidth: 240 },
+              children: shown.length
+                ? shown.map((e) =>
+                  jsxs('button', {
+                    key: e.id,
+                    onClick: () => setSelectedId(e.id),
+                    style: {
+                      display: 'flex', gap: 8, alignItems: 'center', width: '100%',
+                      padding: '6px 8px', marginBottom: 4, textAlign: 'left',
+                      border: '1px solid var(--tracehound-border, transparent)',
+                      borderRadius: 6, cursor: 'pointer',
+                      background: e.id === selectedId
+                        ? 'var(--tracehound-selected, rgba(88,166,255,0.12))' : 'transparent',
+                    },
+                    children: [
+                      jsx(TypeBadge, { key: 'b', type: e.type }),
+                      jsx('span', { key: 'l' }, e.label),
+                    ],
+                  }))
+                : jsx(EmptyState, {
+                  key: 'e', title: 'No entities yet',
+                  description: 'Create the first one with “New entity”.',
+                }),
+            }),
+            jsx('div', {
+              key: 'detail', style: { flex: '1 1 60%', minWidth: 280 },
+              children: jsx(EntityDetail, {
+                ctx, entityId: selectedId, entities,
+                onChanged: refresh, onSelect: setSelectedId,
+              }),
+            }),
+          ],
+        }),
+        jsx(NewEntityDialog, {
+          key: 'dlg', ctx, open: newOpen,
+          onClose: () => setNewOpen(false),
+          onSaved: (ent) => { setNewOpen(false); refresh(); setSelectedId(ent.id); },
+        }),
+      ],
+    }),
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Graph view. SVG via jsx() (no new imports). Layout is force-lite:
+// 1. Seed: nodes on a circle, order stable across reloads.
+// 2. Iterate K=90 times: pairwise Coulomb-ish repulsion (O(n^2); the
+//    case DB is a human-curated set, n stays small), Hooke springs
+//    along edges, weak gravity to the center. Step shrinks linearly.
+// 3. Freeze. No animation loop, no physics engine, no imports.
+// Interactions use plain DOM/React handlers (pointer drag for pan,
+// wheel for zoom, click for select). The SDK documents no gesture
+// widgets, and none are needed: this is standard React on SVG.
+// ---------------------------------------------------------------------------
+const GRAPH_W = 900;
+const GRAPH_H = 620;
+
+function layoutForceLite(nodes, edges) {
+  const pos = {};
+  nodes.forEach((n, i) => {
+    const a = (2 * Math.PI * i) / Math.max(nodes.length, 1);
+    pos[n.id] = {
+      x: GRAPH_W / 2 + (GRAPH_W * 0.32) * Math.cos(a),
+      y: GRAPH_H / 2 + (GRAPH_H * 0.32) * Math.sin(a),
+    };
+  });
+  const REST = 150;
+  const K = 90;
+  for (let k = 0; k < K; k++) {
+    const f = {};
+    nodes.forEach((n) => { f[n.id] = { x: 0, y: 0 }; });
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = pos[nodes[i].id];
+        const b = pos[nodes[j].id];
+        let dx = a.x - b.x;
+        let dy = a.y - b.y;
+        if (dx === 0 && dy === 0) { dx = 1; dy = 0; }
+        const d2 = dx * dx + dy * dy;
+        const d = Math.sqrt(d2);
+        const rep = 9000 / d2;
+        f[nodes[i].id].x += (dx / d) * rep;
+        f[nodes[i].id].y += (dy / d) * rep;
+        f[nodes[j].id].x -= (dx / d) * rep;
+        f[nodes[j].id].y -= (dy / d) * rep;
+      }
+    }
+    edges.forEach((e) => {
+      const a = pos[e.from];
+      const b = pos[e.to];
+      if (!a || !b) return;
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const d = Math.hypot(dx, dy) || 1;
+      const s = ((d - REST) / d) * 0.05;
+      f[e.from].x += dx * s;
+      f[e.from].y += dy * s;
+      f[e.to].x -= dx * s;
+      f[e.to].y -= dy * s;
+    });
+    nodes.forEach((n) => {
+      const p = pos[n.id];
+      f[n.id].x += (GRAPH_W / 2 - p.x) * 0.01;
+      f[n.id].y += (GRAPH_H / 2 - p.y) * 0.01;
+    });
+    const cap = 30 * (1 - k / K);
+    nodes.forEach((n) => {
+      const p = pos[n.id];
+      const v = f[n.id];
+      const m = Math.hypot(v.x, v.y);
+      const s = m > cap && m > 0 ? cap / m : 1;
+      p.x += v.x * s;
+      p.y += v.y * s;
+    });
+  }
+  return pos;
+}
+
+function GraphPage({ ctx }) {
+  const graphQ = useApi(ctx, 'case-graph', '/cases/graph', 15000);
+  const [view, setView] = useState({ tx: 0, ty: 0, k: 1 });
+  const [selectedId, setSelectedId] = useState(null);
+  const [hiddenTypes, setHiddenTypes] = useState([]);
+  const svgRef = useRef(null);
+  const drag = useRef(null);
+
+  const nodes = ((graphQ.data && graphQ.data.nodes) || [])
+    .filter((n) => !hiddenTypes.includes(n.type));
+  const keep = new Set(nodes.map((n) => n.id));
+  const edges = ((graphQ.data && graphQ.data.edges) || [])
+    .filter((e) => keep.has(e.from) && keep.has(e.to));
+
+  const nodeKey = nodes.map((n) => n.id).join(',');
+  const edgeKey = edges.map((e) => e.id).join(',');
+  const pos = useMemo(() => layoutForceLite(nodes, edges),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [nodeKey, edgeKey]);
+
+  // Wheel zoom around the cursor. Added with { passive: false } so
+  // preventDefault stops page scroll; plain DOM, no SDK surface.
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el) return undefined;
+    const onWheel = (ev) => {
+      ev.preventDefault();
+      const rect = el.getBoundingClientRect();
+      const sx = ev.clientX - rect.left;
+      const sy = ev.clientY - rect.top;
+      setView((v) => {
+        const k2 = Math.min(3, Math.max(0.3, v.k * (ev.deltaY < 0 ? 1.12 : 0.89)));
+        const wx = (sx - v.tx) / v.k;
+        const wy = (sy - v.ty) / v.k;
+        return { k: k2, tx: sx - wx * k2, ty: sy - wy * k2 };
+      });
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, []);
+
+  const onPointerDown = (ev) => {
+    drag.current = { x: ev.clientX, y: ev.clientY, tx: view.tx, ty: view.ty, moved: false };
+    ev.currentTarget.setPointerCapture && ev.currentTarget.setPointerCapture(ev.pointerId);
+  };
+  const onPointerMove = (ev) => {
+    const d = drag.current;
+    if (!d) return;
+    const dx = ev.clientX - d.x;
+    const dy = ev.clientY - d.y;
+    if (Math.abs(dx) + Math.abs(dy) > 6) d.moved = true;
+    if (d.moved) setView((v) => ({ ...v, tx: d.tx + dx, ty: d.ty + dy }));
+  };
+  const onPointerUp = (ev) => {
+    const d = drag.current;
+    drag.current = null;
+    if (d && !d.moved) {
+      const nid = ev.target && ev.target.dataset
+        ? ev.target.dataset.nodeid : null;
+      if (nid) setSelectedId(nid);
+    }
+  };
+  const toggleType = (t) => {
+    setHiddenTypes((h) => h.includes(t) ? h.filter((x) => x !== t) : [...h, t]);
+  };
+
+  return jsx(Page, {
+    title: 'Case graph',
+    actions: jsxs(Fragment, {
+      children: [
+        jsx(BackendBadge, { key: 'b', ctx }),
+        jsx(Button, {
+          key: 'r', variant: 'outline',
+          onClick: () => { setView({ tx: 0, ty: 0, k: 1 }); setSelectedId(null); },
+        }, 'Reset view'),
+      ],
+    }),
+    children: jsxs(Fragment, {
+      children: [
+        jsxs('div', {
+          key: 'ctl', style: { display: 'flex', gap: 12, marginBottom: 8, alignItems: 'center', flexWrap: 'wrap' },
+          children: [
+            jsx('span', { key: 'l', style: { fontSize: 12, opacity: 0.7 } }, 'Show:'),
+            ...CASE_TYPES.map((t) =>
+              jsxs('label', {
+                key: t, style: { display: 'flex', gap: 4, alignItems: 'center', fontSize: 12 },
+                children: [
+                  jsx(Checkbox, {
+                    key: 'c', checked: !hiddenTypes.includes(t),
+                    onChange: () => toggleType(t),
+                  }),
+                  jsx('span', {
+                    key: 'd', style: {
+                      width: 10, height: 10, borderRadius: '50%',
+                      background: CASE_TYPE_COLORS[t],
+                    },
+                  }),
+                  t,
+                ],
+              })),
+            jsx('span', { key: 'h', style: { fontSize: 12, opacity: 0.6 } },
+              'Drag to pan · wheel to zoom · click a node for detail.'),
+          ],
+        }),
+        jsxs('div', {
+          key: 'cols', style: { display: 'flex', gap: 16, alignItems: 'flex-start' },
+          children: [
+            jsx('svg', {
+              key: 'svg', ref: svgRef,
+              width: '100%', height: 620, viewBox: `0 0 ${GRAPH_W} ${GRAPH_H}`,
+              style: {
+                flex: '1 1 60%', minWidth: 320, border: '1px solid var(--tracehound-border, transparent)',
+                borderRadius: 8, cursor: 'grab', touchAction: 'none', background: 'transparent',
+              },
+              onPointerDown, onPointerMove, onPointerUp,
+              children: jsx('g', {
+                transform: `translate(${view.tx},${view.ty}) scale(${view.k})`,
+                children: [
+                  ...edges.map((e) => {
+                    const a = pos[e.from];
+                    const b = pos[e.to];
+                    if (!a || !b) return null;
+                    return jsx('line', {
+                      key: e.id, x1: a.x, y1: a.y, x2: b.x, y2: b.y,
+                      stroke: '#666', strokeWidth: 1.2, opacity: 0.6,
+                      children: jsx('title', null, e.rel),
+                    });
+                  }),
+                  ...nodes.map((n) => {
+                    const p = pos[n.id];
+                    if (!p) return null;
+                    const sel = n.id === selectedId;
+                    return jsxs('g', {
+                      key: n.id, 'data-nodeid': n.id,
+                      style: { cursor: 'pointer' },
+                      children: [
+                        jsx('circle', {
+                          key: 'c', 'data-nodeid': n.id,
+                          cx: p.x, cy: p.y, r: sel ? 16 : 12,
+                          fill: CASE_TYPE_COLORS[n.type] || '#888',
+                          stroke: sel ? '#fff' : 'none', strokeWidth: sel ? 2 : 0,
+                          opacity: 0.9,
+                          children: jsx('title', null, `${n.label} (${n.type})`),
+                        }),
+                        jsx('text', {
+                          key: 't', 'data-nodeid': n.id,
+                          x: p.x, y: p.y + 28, textAnchor: 'middle',
+                          fontSize: 11, fill: 'currentColor',
+                        }, n.label.length > 22 ? n.label.slice(0, 21) + '…' : n.label),
+                      ],
+                    });
+                  }),
+                ],
+              }),
+            }),
+            jsx('div', {
+              key: 'detail', style: { flex: '1 1 40%', minWidth: 280 },
+              children: jsx(EntityDetail, {
+                ctx, entityId: selectedId, entities: (graphQ.data && graphQ.data.nodes) || [],
+                onChanged: () => { graphQ.refetch(); setSelectedId(null); },
+                onSelect: setSelectedId,
+              }),
+            }),
+          ],
+        }),
+      ],
+    }),
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Registration. Every ctx.* / host.* call above keys to a HERMES_DESKTOP.md
 // §1 row. [INF] marks shapes inferred from doc text rather than quoted.
 // ---------------------------------------------------------------------------
@@ -1741,6 +2389,8 @@ const ROUTES = [
   { path: '/tracehound/hunt', label: 'Hunt', codicon: 'search', el: HuntPage },
   { path: '/tracehound/chat', label: 'Chat', codicon: 'comment-discussion', el: ChatPage },
   { path: '/tracehound/review', label: 'Review Queue', codicon: 'inbox', el: ReviewPage },
+  { path: '/tracehound/cases', label: 'Cases', codicon: 'briefcase', el: CasesPage },
+  { path: '/tracehound/graph', label: 'Graph', codicon: 'type-hierarchy', el: GraphPage },
   { path: '/tracehound/iocs', label: 'IOC List', codicon: 'list-unordered', el: IocsPage },
   { path: '/tracehound/research', label: 'Research', codicon: 'beaker', el: ResearchPage },
   { path: '/tracehound/settings', label: 'Settings', codicon: 'gear', el: SettingsPage },
@@ -1749,6 +2399,7 @@ const ROUTES = [
 // /swarm-forensics subcommand -> route deep links (Worker-1 CLI).
 // review -> /tracehound/review, status -> /tracehound,
 // hunt -> /tracehound/hunt, chat -> /tracehound/chat,
+// case -> /tracehound/cases, graph -> /tracehound/graph,
 // iocs -> /tracehound/iocs, research -> /tracehound/research.
 
 export default {
@@ -1806,6 +2457,11 @@ export default {
       ['swarm-forensics: Start hunt...', () => navigate(ctx, '/tracehound/hunt')],
       ['swarm-forensics: Stop hunt', () => stopRunningHunt(ctx)],
       ['swarm-forensics: Open review queue', () => navigate(ctx, '/tracehound/review')],
+      ['swarm-forensics: Open case graph', () => navigate(ctx, '/tracehound/graph')],
+      ['swarm-forensics: New case entity…', () => {
+        store.set({ casesNewOpen: true });
+        navigate(ctx, '/tracehound/cases');
+      }],
       ['swarm-forensics: Status', () => navigate(ctx, '/tracehound')],
       ['swarm-forensics: Pause / resume hunting', () => togglePause(ctx)],
     ];

@@ -1,10 +1,6 @@
 # Tracehound
 
-Install in Hermes:
-
-```
-hermes://plugin/install?repo=christopherwoodall/swarm-forensics&enable=1
-```
+[Install in Hermes](hermes://plugin/install?repo=christopherwoodall/swarm-forensics&enable=1)
 
 The link opens a confirm-first dialog. It never auto-installs. The
 dialog shows the repo identity, source links, and what the repo
