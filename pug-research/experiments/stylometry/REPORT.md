@@ -16,7 +16,7 @@ ceilings below (#10). Lower Delta means closer style.
 | evals vs traces_clean | 0.089 | 0.044 | 0.376 | 0.143 | 0.005 | 0.000 | 0.706 | 0.080 |
 | evals vs wiki | 0.145 | 0.122 | 0.311 | 0.217 | 0.007 | 0.000 | 1.472 | 0.171 |
 | gems_names vs traces | 0.007 | 0.043 | 0.000 | -0.140 | 0.000 | 0.000 | 0.698 | 0.003 |
-| gems_names vs traces_clean | 0.006 | 0.109 | 0.000 | 0.200 | 0.000 | 0.000 | 0.574 | 0.004 |
+| gems_names vs traces_clean | 0.006 | 0.109 | 0.000 | 0.200 | 0.000 | 0.574 | 0.004 |
 | gems_names vs wiki | 0.007 | 0.127 | 0.000 | 0.657 | 0.001 | 0.000 | 1.584 | 0.017 |
 | traces vs traces_clean | 0.934 | 0.419 | 0.028 | 1.000 | 0.904 | 0.867 | 0.865 | 0.351 |
 | traces vs wiki | 0.122 | 0.077 | 0.064 | 0.313 | 0.004 | 0.000 | 2.046 | 0.128 |
@@ -102,8 +102,8 @@ evals vs gems_names J@10k-equivalent is noise against a 0.089 ceiling.
   Findings 3–4 are reported on both; the clean numbers are the honest ones.
 - Tokenizer fixed: percent-decoding before tokenizing (no more '3a'/'2f'
   hex-fragment garbage); new `subword` tokenizer splits concatenated agent
-  names on case/digit/separator boundaries plus a documented morpheme list
-  (long tokens only, >=10 chars, so ordinary English is never over-split).
+  names on case/digit/separator boundaries plus a documented morpheme
+  list (long tokens only, >=10 chars, so ordinary English is never over-split).
 - The six degenerate Delta runs are marked `superseded: true` in
   runs_log.jsonl (verified by grep); they remain in the log, ignored by
   analysis.

@@ -12,8 +12,9 @@ from .hermes import HermesRuntime
 from .hunt import HuntService
 from .iocs import IocStore
 from .ledger import Ledger
-from .legacy import find_state_dirs, import_state
-from .paths import PLUGIN_ID, db_path
+from .mirror import MirrorStore
+from .narration import Narrator
+from .paths import PLUGIN_ID, db_path, state_dir
 from .prompt_registry import PromptRegistry
 from .registry import Registry
 from .research import Parts
@@ -39,22 +40,27 @@ class Service:
         self.registry = Registry(self.db, self.ledger)
         self.prompts = PromptRegistry(self.db)
         self.urls = UrlStore(self.db)
+        self.mirror = MirrorStore(self.db, state_dir())
         self.iocs = IocStore(self.db, self.settings)
         self.hermes = hermes or HermesRuntime(ctx)
         self.parts = Parts(self.settings, self.ledger, self.graph, self.iocs,
                            self.hermes, registry=self.registry,
                            prompts=self.prompts, urls=self.urls)
+        self.parts.mirror = self.mirror
         self.hunts = HuntService(self.db, self.parts, notify=_broadcast)
         self.parts.spawner = self.hunts
+        self.narrator = Narrator(self)
+        if ctx is not None:
+            self.narrator.attach(ctx)
         self.iocs.seed()
         self.registry.seed()
-        self.imported = [dict(import_state(self.db, d), path=str(d))
-                         for d in find_state_dirs()]
+        self.imported = []
         self.hunts.recover()
 
     def attach(self, ctx):
         """Give the service the plugin context once the agent half loads."""
         self.hermes.attach(ctx)
+        self.narrator.attach(ctx)
 
     def overview(self):
         return {
@@ -74,6 +80,7 @@ class Service:
                 worker.join(timeout=5)
         self.hunts._workers.clear()
         self.hunts.shutdown.clear()
+        self.mirror.clear()
         self.db.reset()
         self.iocs.seed()
         self.registry.seed()

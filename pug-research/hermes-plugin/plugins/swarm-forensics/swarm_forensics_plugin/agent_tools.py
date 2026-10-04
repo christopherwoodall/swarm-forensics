@@ -6,9 +6,18 @@ indicators, manage swarm groups, and triage false positives.
 """
 
 import json
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from .safety import CLAIM_LEVELS, ENTITY_TYPES, LINK_KINDS, TERM_CATEGORIES
+from . import session_env
+from .analysis import analyze_corpus
+from .safety import (
+    CLAIM_LEVELS,
+    ENTITY_TYPES,
+    LINK_KINDS,
+    TERM_CATEGORIES,
+    screen_content,
+    validate_url,
+)
 from .service import get_service
 
 TOOLSET_NAME = "swarm-forensics"
@@ -20,6 +29,25 @@ def _json(data: Any) -> str:
 
 def _err(msg: str) -> str:
     return _json({"ok": False, "error": str(msg)})
+
+
+def _resolve_hunt_id(srv, args: dict) -> Optional[str]:
+    """Resolve the active or session-bound hunt ID."""
+    hunt_id = args.get("hunt_id")
+    if hunt_id:
+        h = srv.ledger.hunt(hunt_id)
+        if h:
+            return h["id"]
+    sid = args.get("session_id") or session_env.any_session()
+    if sid:
+        h = srv.ledger.hunt_for_session(sid)
+        if h:
+            return h["id"]
+    h = srv.ledger.active_hunt()
+    if h:
+        return h["id"]
+    latest = next(iter(srv.ledger.hunts(1)), None)
+    return latest["id"] if latest else None
 
 
 # ---------------------------------------------------------------------------
@@ -119,7 +147,6 @@ def sf_record_evidence(args: dict, service=None, **_: Any) -> str:
         title = str(args.get("title") or "").strip()
         excerpt = str(args.get("excerpt") or "").strip()
         claim_level = str(args.get("claim_level") or "L1").strip()
-        tainted = bool(args.get("tainted", False))
 
         if not url:
             return _err("url must not be empty")
@@ -128,18 +155,92 @@ def sf_record_evidence(args: dict, service=None, **_: Any) -> str:
         if claim_level not in CLAIM_LEVELS:
             claim_level = "L1"
 
+        screen = screen_content(excerpt)
+        tainted = bool(args.get("tainted")) or bool(screen.get("tainted"))
+
+        hunt_id = _resolve_hunt_id(srv, args)
         srv.urls.add(url, source=source)
         eid, created = srv.ledger.add_evidence(
-            None, source, query, url, title, excerpt,
+            hunt_id, source, query, url, title, excerpt,
             claim_level=claim_level, tainted=tainted,
         )
+        if hunt_id:
+            srv.ledger.event(
+                hunt_id, "evidence",
+                "Recorded %s evidence for %s" % (claim_level, url),
+            )
         return _json({
             "ok": True,
             "evidence_id": eid,
+            "hunt_id": hunt_id,
             "created": created,
             "url": url,
             "claim_level": claim_level,
+            "tainted": tainted,
         })
+    except Exception as exc:
+        return _err(exc)
+
+
+def sf_mirror_url(args: dict, service=None, **_: Any) -> str:
+    """Capture and safely mirror untrusted web text into local storage."""
+    try:
+        srv = service or get_service()
+        url = str(args.get("url") or "").strip()
+        content = args.get("content")
+        if not url:
+            return _err("url must not be empty")
+        if srv.urls.is_benign(url):
+            return _err("URL is marked benign and cannot be probed or mirrored")
+        clean_url = validate_url(url)
+        hunt_id = _resolve_hunt_id(srv, args)
+        sid = args.get("session_id") or session_env.any_session()
+
+        if content is None:
+            extracted = srv.hermes.web_extract([clean_url])
+            if extracted and isinstance(extracted, list) and extracted[0].get("content"):
+                content = extracted[0]["content"]
+            else:
+                return _err("No content provided and web_extract returned no text")
+
+        cfg = srv.settings.all()
+        if not cfg.get("mirror.enabled", True):
+            return _err("local mirror is disabled in settings")
+        max_bytes = int(cfg.get("mirror.max_bytes", 500_000))
+        result = srv.mirror.save_extract(
+            clean_url, str(content), hunt_id=hunt_id, session_id=sid,
+            max_bytes=max_bytes,
+        )
+        if not result:
+            return _err("failed to write mirror file")
+        srv.urls.add(clean_url, source="mirror")
+        if hunt_id:
+            summary = "mirrored %d bytes (sha256: %s)" % (
+                result["byte_count"], result["sha256"][:12])
+            srv.ledger.record_corpus_observation(
+                hunt_id=hunt_id, session_id=sid, tool_name="sf_mirror_url",
+                query_or_url=clean_url, status="mirrored",
+                result_summary=summary, sha256=result["sha256"],
+            )
+        return _json({
+            "ok": True,
+            "mirror": result,
+        })
+    except Exception as exc:
+        return _err(exc)
+
+
+def sf_analyze_corpus(args: dict, service=None, **_: Any) -> str:
+    """Execute deterministic TTP analysis on observed corpus traces."""
+    try:
+        srv = service or get_service()
+        query = args.get("query")
+        hunt_id = _resolve_hunt_id(srv, args)
+        observations = srv.ledger.corpus_observations(hunt_id=hunt_id, limit=200)
+        evidence = srv.ledger.list_evidence(hunt_id=hunt_id, limit=200)
+        urls = srv.urls.list(limit=200)
+        analysis_result = analyze_corpus(observations, evidence, urls, query=query)
+        return _json(analysis_result)
     except Exception as exc:
         return _err(exc)
 
@@ -359,6 +460,10 @@ def sf_attach_hunt(args: dict, service=None, **_: Any) -> str:
             hunt = srv.ledger.active_hunt()
         if not hunt:
             return _err("Hunt not found for %s" % (target or "active"))
+        calling_sid = args.get("session_id") or session_env.any_session()
+        calling_skey = session_env.session_key()
+        if calling_sid:
+            srv.ledger.bind_session(hunt["id"], calling_sid, calling_skey)
         children = srv.ledger.child_hunts(hunt["id"])
         events = srv.ledger.events(hunt["id"], 0, limit=5)
         return _json({
@@ -366,6 +471,7 @@ def sf_attach_hunt(args: dict, service=None, **_: Any) -> str:
             "hunt": hunt,
             "children": children,
             "recent_events": events,
+            "bound_session": calling_sid or hunt.get("session_id"),
             "message": "Attached to hunt %s (depth %d, cycle %d)" % (
                 hunt["id"], hunt.get("depth", 0), hunt["cycle"]),
         })
@@ -450,6 +556,42 @@ AGENT_TOOLS: List[Tuple[str, Callable, str, dict, list]] = [
             },
         },
         ["url", "excerpt"],
+    ),
+    (
+        "sf_mirror_url",
+        sf_mirror_url,
+        "Safely capture and locally mirror untrusted web text from an investigation artifact.",
+        {
+            "url": {
+                "type": "string",
+                "description": "Public HTTP or HTTPS URL to mirror.",
+            },
+            "content": {
+                "type": "string",
+                "description": "Optional page content if already fetched.",
+            },
+            "hunt_id": {
+                "type": "string",
+                "description": "Optional hunt ID to associate with the mirror artifact.",
+            },
+        },
+        ["url"],
+    ),
+    (
+        "sf_analyze_corpus",
+        sf_analyze_corpus,
+        "Run deterministic TTP analysis across observed corpus traces, relays, and nonces.",
+        {
+            "query": {
+                "type": "string",
+                "description": "Optional query or candidate URL to test against corpus.",
+            },
+            "hunt_id": {
+                "type": "string",
+                "description": "Optional hunt ID to scope analysis to.",
+            },
+        },
+        [],
     ),
     (
         "sf_propose_ioc",

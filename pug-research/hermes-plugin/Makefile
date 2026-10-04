@@ -65,8 +65,19 @@ install: check ## Install into the local Hermes ($$HERMES_HOME/plugins) and enab
 	@find $(PLUGIN_DST) -name __pycache__ -prune -exec rm -rf {} +
 	@if command -v "$(HERMES_BIN)" >/dev/null 2>&1 || test -x "$(HERMES_BIN)"; then \
 		"$(HERMES_BIN)" plugins enable $(PLUGIN_ID) || echo "Enable failed. Run: hermes plugins enable $(PLUGIN_ID)"; \
+		"$(HERMES_BIN)" config set plugins.entries.$(PLUGIN_ID).allow_gateway_injection true \
+			|| "$(HERMES_BIN)" config set plugins.entries.$(PLUGIN_ID).allow_gateway_injection true --force \
+			|| echo "Could not write config. Add this to $(HERMES_HOME)/config.yaml:"; \
 	else \
 		echo "hermes CLI not found. Add '$(PLUGIN_ID)' to plugins.enabled in $(HERMES_HOME)/config.yaml"; \
+	fi
+	@if ! grep -q "allow_gateway_injection" $(HERMES_HOME)/config.yaml 2>/dev/null; then \
+		echo ""; \
+		echo "Chat updates need one config entry in $(HERMES_HOME)/config.yaml:"; \
+		echo "  plugins:"; \
+		echo "    entries:"; \
+		echo "      $(PLUGIN_ID):"; \
+		echo "        allow_gateway_injection: true"; \
 	fi
 	@echo "Installed. Restart the Hermes desktop app (or gateway) so the backend routes mount."
 

@@ -11,16 +11,18 @@ An operator starts a hunt. Hermes searches the public web for agent traces until
 
 Use the `/swarm-forensics` command. Each verb has a button in the desktop app.
 
-- `start [goal]`: start an autonomous hunt. It runs until `stop`.
-- `session [goal]`: start an interactive investigation in Hermes chat.
-- `attach [id]`: attach this chat session to a running hunt.
-- `pause`, `resume [id]`, `stop`: control the autonomous hunt.
+- `start [goal]`: start a hunt. When run in chat, it binds the session.
+- `attach [id]`: attach this chat session to an active hunt.
+- `subhunt <goal> [parent_id]`: spawn a recursive child hunt crawler.
+- `pause`, `resume [id]`, `stop`: control the active hunt.
 - `status`: show hunt state and totals.
+- `log`: display recent hunt events.
 - `review`: list proposed IOC terms.
 - `accept <id>`, `reject <id>`, `narrow <id> <term>`: decide a proposed IOC.
 - `benign <id|term>`: mark an indicator as a benign false positive.
 - `find <text>`: search artifacts, agents, swarms, and campaigns.
 - `settings [key [value]]`: read or change a setting.
+- `reset [--force]`: reset all hunt data and restore clean seed defaults.
 
 ## Interactive Tools
 
@@ -29,6 +31,8 @@ Hermes sessions have native Swarm Forensics tools:
 - `sf_get_context`: get database statistics and active indicators.
 - `sf_search_index`: query enabled public indexes (Wayback, crt.sh).
 - `sf_record_evidence`: record observed page excerpts with claim level.
+- `sf_mirror_url`: mirror clean extracted text into the local profile mirror.
+- `sf_analyze_corpus`: analyze URL grammars, relays, and nonce tokens against the corpus.
 - `sf_propose_ioc`: propose indicators for analyst or policy review.
 - `sf_manage_entity`: create or update artifacts, agents, swarms, and campaigns.
 - `sf_link_entities`: link entities with hierarchy or loose connections.

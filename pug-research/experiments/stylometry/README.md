@@ -44,6 +44,9 @@ the v1 traces 1-in-20; full builds infeasible on the shared 2-CPU box):
   (>=10 char) tokens — `agentoaitestabc123` → `agent oai test abc 123`.
   Morpheme list is documented in `build_lexdb.py`; ordinary English words are
   never over-split (length gate).
+
+- `char4`: character 4-grams. Robust to deliberate obfuscation.
+- `funcwords`: function words only. Style signal without topic signal.
 - `char4`: character 4-grams. Robust to deliberate obfuscation.
 - `funcwords`: function words only. Style signal without topic signal.
 

@@ -21,6 +21,8 @@ class PromptRegistryTests(unittest.TestCase):
         self.assertIn("analyze_system", ids)
         self.assertIn("analyze_user", ids)
         self.assertIn("interactive_agent", ids)
+        self.assertIn("hunt_brief", ids)
+        self.assertIn("hunt_report", ids)
 
     def test_get_and_render(self):
         rendered = self.prompts.render(

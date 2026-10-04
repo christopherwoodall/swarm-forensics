@@ -6,7 +6,8 @@ States: running, waiting (between cycles), paused, blocked, stopped.
 - A hunt runs until the operator stops it or a cycle limit is reached.
 - Closing the app pauses a desktop hunt. A person must resume it.
 - A host restart never resumes a hunt. It marks it paused.
-- One worker runs per profile. The database row is the lease.
+- Many hunts may run at once, up to hunt.max_active_hunts.
+- One worker runs per hunt. The database row is the lease.
 """
 
 import os
@@ -106,13 +107,6 @@ class HuntService:
         self._workers = {}
         self._scheduler = None
 
-    @property
-    def _worker(self):
-        for w in self._workers.values():
-            if w and w.is_alive():
-                return w
-        return None
-
     # -- desktop lease --------------------------------------------------------
 
     def heartbeat(self):
@@ -137,6 +131,8 @@ class HuntService:
             for hunt in self.ledger.hunts(50):
                 if hunt["state"] not in ACTIVE_STATES:
                     continue
+                if hunt.get("origin") == "session":
+                    continue
                 hid = hunt["id"]
                 worker = self._workers.get(hid)
                 if worker and worker.is_alive() and hunt["owner"] == self.owner:
@@ -160,18 +156,17 @@ class HuntService:
             if depth > cfg["hunt.max_depth"]:
                 raise HuntRefused("maximum sub-hunt depth (%d) exceeded" % cfg["hunt.max_depth"])
             active = self.ledger.active_hunts()
-            if not parent_hunt_id and any(h.get("depth", 0) == 0 for h in active):
-                raise HuntRefused("a root hunt is already running (%s)" % active[0]["id"])
             if len(active) >= cfg["hunt.max_active_hunts"]:
                 msg = "max concurrent hunts limit (%d) reached" % cfg["hunt.max_active_hunts"]
                 raise HuntRefused(msg)
-            if origin in ("desktop", "command"):
+            if origin in ("desktop", "command", "session"):
                 self.ledger.set_cursor("meta", "desktop_heartbeat", db.now())
             hunt = self.ledger.create_hunt(
                 origin, (goal or "").strip() or cfg["hunt.default_goal"],
                 max_cycles or cfg["hunt.max_cycles"], schedule_id,
                 parent_hunt_id=parent_hunt_id, depth=depth, session_id=session_id)
-            self._spawn(hunt["id"])
+            if origin != "session":
+                self._spawn(hunt["id"])
         self.ledger.event(hunt["id"], "state", "hunt started (%s, depth %d)" % (origin, depth))
         return self.ledger.hunt(hunt["id"])
 
@@ -235,35 +230,40 @@ class HuntService:
         if hunt_id:
             hunt = self.ledger.hunt(hunt_id)
             if hunt:
-                self.ledger.update_hunt(hunt["id"], pause_requested=1)
+                if hunt["state"] in ACTIVE_STATES and self._alive_for(hunt["id"]):
+                    self.ledger.update_hunt(hunt["id"], pause_requested=1)
+                elif hunt["state"] in ACTIVE_STATES:
+                    self._finish(hunt["id"], "paused", "paused by operator")
                 for child in self.ledger.child_hunts(hunt["id"]):
                     if child["state"] in ACTIVE_STATES:
-                        self.ledger.update_hunt(child["id"], pause_requested=1)
+                        self.pause(child["id"])
                 return self.ledger.hunt(hunt["id"])
         hunt = self._target(hunt_id)
-        self.ledger.update_hunt(hunt["id"], pause_requested=1)
+        if hunt["state"] in ACTIVE_STATES and self._alive_for(hunt["id"]):
+            self.ledger.update_hunt(hunt["id"], pause_requested=1)
+        elif hunt["state"] in ACTIVE_STATES:
+            self._finish(hunt["id"], "paused", "paused by operator")
         for child in self.ledger.child_hunts(hunt["id"]):
             if child["state"] in ACTIVE_STATES:
-                self.ledger.update_hunt(child["id"], pause_requested=1)
+                self.pause(child["id"])
         return self.ledger.hunt(hunt["id"])
 
     def stop(self, hunt_id=None):
         if hunt_id:
             hunt = self.ledger.hunt(hunt_id)
-            if hunt:
-                if hunt["state"] in ACTIVE_STATES and self._alive_for(hunt["id"]):
-                    self.ledger.update_hunt(hunt["id"], stop_requested=1)
-                elif hunt["state"] != "stopped":
-                    self._finish(hunt["id"], "stopped", "stopped by operator")
-                for child in self.ledger.child_hunts(hunt["id"]):
-                    if child["state"] in ACTIVE_STATES:
-                        self.stop(child["id"])
-                return self.ledger.hunt(hunt["id"])
+            if hunt is None:
+                raise HuntRefused("hunt %s not found" % hunt_id)
+            if hunt["state"] in ACTIVE_STATES and self._alive_for(hunt["id"]):
+                self.ledger.update_hunt(hunt["id"], stop_requested=1)
+            elif hunt["state"] != "stopped":
+                self._finish(hunt["id"], "stopped", "stopped by operator")
+            for child in self.ledger.child_hunts(hunt["id"]):
+                if child["state"] in ACTIVE_STATES:
+                    self.stop(child["id"])
+            return self.ledger.hunt(hunt["id"])
         active = self.ledger.active_hunts()
         if not active:
-            if not hunt_id:
-                return None
-            raise HuntRefused("no hunt to act on")
+            return None
         for h in active:
             self.stop(h["id"])
         return active[0]
@@ -411,7 +411,8 @@ class HuntService:
         cfg = self.settings.all()
         if not cfg["schedule.enabled"] or cfg["safety.paused"]:
             return None
-        if not self.desktop_alive(cfg) or self.ledger.active_hunt():
+        if not self.desktop_alive(cfg) or \
+                len(self.ledger.active_hunts()) >= cfg["hunt.max_active_hunts"]:
             return None
         now_dt = schedule.utcnow()
         for row in self.schedules():
@@ -469,6 +470,8 @@ class HuntService:
             "totals": self.ledger.totals(),
             "queries": self.ledger.query_stats(),
             "next_schedule": self._next_schedule(),
+            "narration_blocked":
+                self.ledger.cursor("narrate", "blocked") == "1",
         }
 
     def _next_schedule(self):

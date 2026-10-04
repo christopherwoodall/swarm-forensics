@@ -25,6 +25,28 @@ The module covers OpenAI-side partitions now and AI Village partitions later.
   registry (needs dataset access first).
 
 ## 4. Current State & Known Gaps
+- State: Four OpenAI-side partitions build cleanly (gems, traces, wiki, evals).
+- State: 78 comparison runs logged across six pairs (seven methods plus
+  N-sensitivity and a corrected Burrows Delta re-run).
+- State: Findings are recorded in `REPORT.md`.
+- Gap: AI Village data is unreachable. The dataset is gated and the VM
+  token lacks granted access (401 on all data files). `fetch_aivillage.sh`
+  documents the exact failure and the remedy.
+- Gap: Village-side task grouping is designed but unimplemented.
+- Gap: No significance thresholds yet. Similarities are descriptive.
+
+## 5. Pruned Decisions (Keep max 3)
+- [2026-10-04 Subagent]: Fix Burrows Delta to z-score against the
+  four-partition background and re-run. Rationale: two-profile z-scoring is
+  degenerate (Delta = 2.0 for every pair). The six bad runs stay in the log
+  marked as superseded.
+- [2026-10-04 Subagent]: Store village raw downloads under
+  `pug-research/stylometry/data/raw/`, not the repo-root `data/raw/`.
+  Rationale: the module owns its raw inputs; the parent task names this path
+  explicitly. The root AGENTS.md path applies to the core ingest module.
+- [2026-10-04 Subagent]: Exclude `pages.jsonl` and the marker-sweep events
+  from the lexdb. Rationale: pages double-count revision bodies; the sweep
+  notes are analyst prose, not agent text.
 - State: Five OpenAI-side partitions build cleanly (gems_names, traces,
   traces_clean, wiki, evals) under word+subword+char4+funcwords tokenizers.
   gems_code removed per audit.

@@ -83,11 +83,13 @@ def iter_vil_chat_agent():
     docs = (d for d in _jlines_gz(CHAT_PATH) if d.get("speaker_type") == "agent")
     for d in _strided(docs, STRIDES["vil_chat_agent"]):
         yield d.get("id"), d.get("content") or ""
+        yield d.get("id"), d.get("content") or ""
 
 
 def iter_vil_chat_all():
     """Village chat, all speakers. Contamination check partition."""
     for d in _strided(_jlines_gz(CHAT_PATH), STRIDES["vil_chat_all"]):
+        yield d.get("id"), d.get("content") or ""
         yield d.get("id"), d.get("content") or ""
 
 
@@ -121,6 +123,9 @@ def iter_vil_code():
         out = []
         _extract_text(d.get("content"), out)
         yield d.get("id"), "\n".join(out)
+        out = []
+        _extract_text(d.get("content"), out)
+        yield d.get("id"), "\n".join(out)
 
 
 def _as_text(v):
@@ -141,6 +146,9 @@ def iter_vil_computer_lex():
         parts = [
             _as_text(d.get("agent_messages")),
             _as_text(d.get("output")),
+        parts = [
+            _as_text(d.get("agent_messages")),
+            _as_text(d.get("output")),
             _as_text(d.get("error")),
         ]
         yield d.get("id"), "\n".join(parts)
@@ -149,6 +157,7 @@ def iter_vil_computer_lex():
 def iter_vil_memories():
     """Consolidated agent memories. Village-only reference partition."""
     for d in _strided(_jlines_gz(MEMORIES_PATH), STRIDES["vil_memories"]):
+        yield d.get("id"), d.get("content") or ""
         yield d.get("id"), d.get("content") or ""
 
 

@@ -38,7 +38,7 @@ silent-locus incident infrastructure:
   **reading public coverage of the incidents** (Sep 4–15, 2026): RSS harvests,
   researcher analysis (Von Arx/Byrd/Kitts/Larsen), a Decoder "Swarmchasers"
   article. Deepest instance: turn `6833ff5e`, where Kimi K3 runs forensics on
-  a fi-le.net article ("More Targets of the OpenAI Agent Swarm"), quoting its
+a fi-le.net article ("More Targets of the OpenAI Agent Swarm"), quoting its
   reconstruction of the SEC tradecraft chain (`allorigins` → `county.json`,
   `jqp` + `regCF_county_methodology` filter, `md.succ.ai` → `regcf.json`).
   Awareness and investigation, not involvement.
@@ -225,7 +225,6 @@ The agent is doing OSINT forensics *on* the incident — reading someone else's
 writeup of the attack chain, not executing it. (Note: `jqp.vercel.app` was
 absent from the wordlist `# RELAYS` block so the main scan missed it; a
 supplementary RULES.md-relay scan is covered below.)
-
 ### events.jsonl.gz
 
 Relay IOCs (unique records): `archive.today` x33, `r.jina.ai` x26, `www.sec.gov`
@@ -310,6 +309,6 @@ Key attributions are inline in the per-table sections above. Notable:
   extraction; attribution via `agents.jsonl.gz` (`name`/`model_string`), turns
   via a 78,362-entry session→agent map.
 - Hit counts are field-hits (one record can contribute multiple). Per-record
-  detail was held in `/tmp` (wiped by a daemon restart); key attributions are
+detail was held in `/tmp` (wiped by a daemon restart); key attributions are
   inline above. Scripts used: `/tmp/xref_check.py`, `/tmp/xref_ckpt.py`,
   `/tmp/xref_jqp.py` (all in `/tmp`, ephemeral).

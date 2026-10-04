@@ -71,9 +71,9 @@ pivot-check: setup ## Check the pivot graph file shape (PIVOT_FILE=<json>)
 
 # pug-research experiment lanes. Each lane owns its Makefile; the root delegates.
 # Run `make -C <lane> help` for lane-local targets.
-STYLO_DIR := pug-research/stylometry
-GOAL_DIR := pug-research/goal-inference
-GRAM_DIR := pug-research/grammar-network
+STYLO_DIR := pug-research/experiments/stylometry
+GOAL_DIR := pug-research/experiments/goal-inference
+GRAM_DIR := pug-research/experiments/grammar-network
 HERMES_DIR := pug-research/hermes-plugin
 
 pivot-serve: setup ## Serve the pivot graph viewer on 127.0.0.1 (PIVOT_PORT=8001)

@@ -6,10 +6,12 @@ from pathlib import Path
 from support import FakeHermes, fake_index_getter
 from swarm_forensics_plugin.agent_tools import (
     register_tools,
+    sf_analyze_corpus,
     sf_attach_hunt,
     sf_get_context,
     sf_link_entities,
     sf_manage_entity,
+    sf_mirror_url,
     sf_propose_ioc,
     sf_query_knowledge,
     sf_record_evidence,
@@ -227,6 +229,29 @@ class AgentToolsTests(unittest.TestCase):
         self.assertEqual(res_by_ses["hunt"]["id"], hunt["id"])
         self.svc.hunts.stop()
 
+    def test_sf_mirror_url(self):
+        res = json.loads(sf_mirror_url({
+            "url": "https://example.com/mirrored_report",
+            "content": "Observed relay token zz=oai12345 in header",
+        }, service=self.svc))
+        self.assertTrue(res["ok"])
+        self.assertEqual(res["mirror"]["url"], "https://example.com/mirrored_report")
+        self.assertTrue(self.svc.mirror.get_mirror("https://example.com/mirrored_report"))
+
+    def test_sf_analyze_corpus(self):
+        # Seed an observation and evidence
+        sf_record_evidence({
+            "url": "https://jqp.vercel.app/api/v0?jq=.data&url=https%3A%2F%2Ftarget.example%2Fapi%3Fzz%3Doai999",
+            "query": "target.example",
+            "source": "web",
+            "excerpt": "Relay trace zz=oai999",
+        }, service=self.svc)
+
+        res = json.loads(sf_analyze_corpus({}, service=self.svc))
+        self.assertTrue(res["ok"])
+        self.assertGreaterEqual(res["total_corpus_urls"], 1)
+        self.assertTrue(any(r["relay_host"] == "jqp.vercel.app" for r in res["observed_relays"]))
+
     def test_register_tools_context(self):
         registered = []
 
@@ -236,11 +261,13 @@ class AgentToolsTests(unittest.TestCase):
 
         ctx = MockCtx()
         register_tools(ctx)
-        self.assertEqual(len(registered), 10)
+        self.assertEqual(len(registered), 12)
         names = {r["name"] for r in registered}
         self.assertIn("sf_get_context", names)
         self.assertIn("sf_search_index", names)
         self.assertIn("sf_record_evidence", names)
+        self.assertIn("sf_mirror_url", names)
+        self.assertIn("sf_analyze_corpus", names)
         self.assertIn("sf_propose_ioc", names)
         self.assertIn("sf_manage_entity", names)
         self.assertIn("sf_link_entities", names)
