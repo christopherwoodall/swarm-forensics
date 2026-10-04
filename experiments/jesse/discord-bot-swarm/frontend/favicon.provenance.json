@@ -1,0 +1,11 @@
+{
+  "provider": "favicon_gen",
+  "job_id": "e236df96-1d3",
+  "favicon_id": "fdd8a15f",
+  "description": "Create cooperative Discord bot teams",
+  "sha256": {
+    "favicon.ico": "f03fa93e17814a140c7eb2efd9bb0f0c927b1d74e7a000b2cb5085488d235e43",
+    "favicon-32.png": "5aa4a34a7191b42f35f6bf797f5b0860f28c7873ad296f629229aaf978163424"
+  },
+  "review_url": "https://favicon-gen.aisloppy.com/review/e236df96-1d3"
+}

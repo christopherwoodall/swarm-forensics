@@ -1,0 +1,17 @@
+.git
+node_modules
+.env
+.env.*
+data
+traces
+notes
+*.log
+*.sql
+*.key
+*.pem
+credential-key
+*private-test-login*.json
+test-results
+playwright-report
+fairystack.json
+deploy/fairystack/auth-config.json

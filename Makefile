@@ -30,7 +30,7 @@ CASE ?= $(RAW_DIR)/replay/sample-case.json
 PORT ?= 8000
 
 # Pivot graph viewer (v3_transluce).
-PIVOT_FILE ?= data/viz_mock/v3_transluce/data/graph.json
+PIVOT_FILE ?= pug-research/experiments/viz_mock/v3_transluce/data/graph.json
 PIVOT_PORT ?= 8001
 
 DOWNLOAD_ARGS := --dest $(RAW_DIR) $(if $(TABLES),--tables $(TABLES)) $(if $(REVISION),--revision $(REVISION))
@@ -64,7 +64,7 @@ replay-export: setup ## Export one real session as a replay case (SESSION=<uuid>
 	$(RUN) python -m swarm_forensics.replay --session $(SESSION) --dir $(RAW_DIR)
 
 replay-serve: setup ## Serve the 3D viz on 127.0.0.1 (CASE=<json>, PORT=8000)
-	$(RUN) python data/viz_mock/v2/serve.py --case $(CASE) --port $(PORT)
+	$(RUN) python pug-research/experiments/viz_mock/v2/serve.py --case $(CASE) --port $(PORT)
 
 pivot-check: setup ## Check the pivot graph file shape (PIVOT_FILE=<json>)
 	$(RUN) python -m swarm_forensics.pivot --file $(PIVOT_FILE)
@@ -77,7 +77,7 @@ GRAM_DIR := pug-research/grammar-network
 HERMES_DIR := pug-research/hermes-plugin
 
 pivot-serve: setup ## Serve the pivot graph viewer on 127.0.0.1 (PIVOT_PORT=8001)
-	$(RUN) python data/viz_mock/v3_transluce/serve.py --port $(PIVOT_PORT)
+	$(RUN) python pug-research/experiments/viz_mock/v3_transluce/serve.py --port $(PIVOT_PORT)
 
 village-download: ## Download AI Village tables (HF_TOKEN required; skips existing files)
 	$(MAKE) -C $(STYLO_DIR) download
@@ -131,11 +131,11 @@ hermes-install: setup ## Install the Hermes plugin into the local Hermes and ena
 hermes-uninstall: ## Remove the Hermes plugin from the local Hermes (keeps the database)
 	$(MAKE) -C $(HERMES_DIR) uninstall
 
-test: setup hermes-test ## Run the offline unit tests (includes the Hermes plugin)
+test: setup hermes-test jesse-test ## Run the offline unit tests (includes the Hermes plugin)
 	$(RUN) python -m unittest discover -s src -t src -p "test_*.py"
 
-lint: setup hermes-lint ## Check code style with ruff (includes the Hermes plugin)
-	$(RUN) ruff check src data/viz_mock/v2/serve.py data/viz_mock/v3_transluce/serve.py
+lint: setup hermes-lint jesse-lint ## Check code style with ruff (includes the Hermes plugin)
+	$(RUN) ruff check src pug-research/experiments/viz_mock/v2/serve.py pug-research/experiments/viz_mock/v3_transluce/serve.py
 
 watcher-client: $(WATCHER_CLIENT) ## Download the official FairyStack external-agent client
 
@@ -165,3 +165,28 @@ watcher-status: ## Emit archive cursors and pending count as JSON
 
 watcher-monitor: ## Poll and emit WATCHER_IDLE or a backlog wake generation
 	@$(WATCHER_CMD) monitor --max-pages "$(WATCHER_MAX_PAGES)" --total-seconds "$(WATCHER_TOTAL_SECONDS)" --retry-seconds "$(WATCHER_RETRY_SECONDS)"
+
+JESSE_DIR := experiments/jesse/discord-bot-swarm
+.PHONY: jesse-setup jesse-check jesse-build jesse-test jesse-lint jesse-browser-test
+
+$(JESSE_DIR)/node_modules/.package-lock.json: $(JESSE_DIR)/package-lock.json $(JESSE_DIR)/package.json
+	cd $(JESSE_DIR) && npm ci --no-audit --no-fund
+
+jesse-setup: $(JESSE_DIR)/node_modules/.package-lock.json ## Install locked Discord Swarm dependencies
+
+jesse-check: ## Verify the imported Discord Swarm source hashes
+	node experiments/jesse/check-source.mjs
+
+jesse-build: jesse-setup ## Build Discord Swarm browser assets
+	cd $(JESSE_DIR) && npm run build
+
+jesse-test: jesse-setup jesse-check ## Run offline Discord Swarm unit tests
+	$(MAKE) -C $(JESSE_DIR) test
+
+jesse-lint: jesse-setup jesse-check ## Check Discord Swarm JavaScript syntax
+	$(MAKE) -C $(JESSE_DIR) lint
+	node --check experiments/jesse/check-source.mjs
+	sh -n $(JESSE_DIR)/deploy/postgres/init.sh
+
+jesse-browser-test: jesse-setup ## Test Discord Swarm onboarding with synthetic fixtures
+	cd $(JESSE_DIR) && npm run test:wizard

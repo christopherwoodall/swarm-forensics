@@ -16,7 +16,7 @@ from pathlib import Path
 from swarm_forensics import replay
 
 ROOT = Path(__file__).resolve().parents[2]
-VIZ = ROOT / "data" / "viz_mock" / "v2"
+VIZ = ROOT / "pug-research" / "experiments" / "viz_mock" / "v2"
 SESSION = "11111111-2222-4333-8444-555555555555"
 OTHER = "99999999-2222-4333-8444-555555555555"
 AGENT = "agent-1"
@@ -328,6 +328,11 @@ class ServeTests(unittest.TestCase):
             return response.status, response.getheader("Content-Type", ""), response.read()
         finally:
             conn.close()
+
+    def test_default_case_stays_in_repository_raw_data(self):
+        self.assertEqual(
+            self.module.DEFAULT_CASE, ROOT / "data" / "raw" / "replay" / "sample-case.json"
+        )
 
     def test_binds_to_loopback(self):
         self.assertEqual(self.server.server_address[0], "127.0.0.1")

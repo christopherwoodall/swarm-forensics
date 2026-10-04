@@ -19,7 +19,7 @@ from urllib.parse import unquote
 
 HERE = Path(__file__).resolve().parent
 HOST = "127.0.0.1"
-DEFAULT_CASE = HERE.parents[2] / "data" / "raw" / "replay" / "sample-case.json"
+DEFAULT_CASE = HERE.parents[3] / "data" / "raw" / "replay" / "sample-case.json"
 PUBLIC_SUFFIXES = {".html", ".js", ".json"}
 CASE_ROUTE = "/case.json"
 MAX_CASE_BYTES = 20 * 1024 * 1024
