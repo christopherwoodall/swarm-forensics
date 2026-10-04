@@ -200,6 +200,42 @@ closed objection, provided these invariants hold in the build:
   advisory mode re-enables (FIREWALL.md §5: model-or-prompt change
   blocks on golden regression).
 
+## Addendum (2026-10-04): case-management + mapping layer
+
+The user added a case layer: entity model (traces → agents → swarms →
+collections), local SQLite DB, auto indicator extraction on trace add,
+Obsidian-style graph view, SPEC.md + RATIONALE.md. Grading against the
+12 objections:
+
+- **#2 (poisoning) — stays closed.** Extraction is offline regex over
+  a human-added trace; extracted indicators populate the case DB only.
+  The load-bearing invariant is **indicators ≠ IOCs**: nothing in the
+  extraction path writes to the IOC list or the review queue. IOC
+  promotion still requires the human review queue. If extraction ever
+  feeds candidates anywhere, re-grade this objection.
+- **#9 (no consumer) — strengthened.** The case DB is the consumer's
+  workspace: hits now have somewhere to go (trace entities linked to
+  hunts), which is what the original objection asked for.
+- **#10 (operational reality) — new residual.** The DB file
+  (`state/tracehound.db`) needs a backup story: export on demand +
+  documented restore. Corruption handling: SQLite is single-writer
+  here (one human), so WAL + periodic export suffices; state this in
+  SPEC.md rather than building clustering nobody needs.
+- **#1/#11 (private deployment) — unchanged, still conditional.**
+  The DB concentrates IOCs, indicators, and case notes on one disk.
+  Private deployment covers it; the DB must never sync, export, or
+  back up to any shared location without the operator's explicit act.
+- **#5 (firewall) — not applicable.** No LLM touches extraction; it
+  is deterministic regex. Nothing to inject into.
+- **Graph view — no new attack surface.** Read-only visualization
+  over the local DB; click-to-detail renders the entity's own stored
+  fields. No network, no promotion path.
+- **CRUD discipline — hunting-dog consistent.** All entity writes are
+  human-initiated (GUI forms, chat intents, `case` subcommands). There
+  is no autonomous entity creation; the only automatic write is
+  indicator extraction from a trace the human just added, which is
+  assistive, not autonomous.
+
 ## What the build must still prove
 
 1. Objection #8 in code (HTTP-status handling) — the one fully OPEN item.
@@ -208,4 +244,7 @@ closed objection, provided these invariants hold in the build:
 3. The residuals: operator named (#10), high-precision default seed
    subset (#9), `SKILL.md` rewritten to the single threat model (#12).
 4. Addendum invariants: chat never promotes (code read), prompt edits
-   re-run the golden set, inline accept shares the decision endpoint.
+  re-run the golden set, inline accept shares the decision endpoint.
+5. Case-layer invariants: indicators≠IOCs enforced in code (extraction
+   writes to the case DB only), all SQL parameterized, DB export/
+   backup documented in SPEC.md.

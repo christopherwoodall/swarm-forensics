@@ -210,7 +210,7 @@ def main():
     ap = argparse.ArgumentParser(description="Build v2 functionally-matched lexdb.")
     ap.add_argument("--db", default="lexdb_v2.sqlite")
     ap.add_argument("--partitions", default=",".join(PARTITIONS_V2))
-    ap.add_argument("--tokenizers", default="word,char4,funcwords")
+    ap.add_argument("--tokenizers", default="word,subword,char4,funcwords")
     ap.add_argument("--skip-missing", action="store_true",
                     help="Skip village partitions whose source files are absent.")
     args = ap.parse_args()

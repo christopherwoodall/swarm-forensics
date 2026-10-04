@@ -56,6 +56,17 @@ try:
 except ImportError:
     _SETTINGS_VALIDATE = None
 
+# Optional Worker-5 case management (entities, relationships,
+# indicators). The /cases endpoints return 404 when it is absent.
+_CASES = None
+_CASES_OK = False
+try:
+    import cases as _CASES  # noqa: E402
+    _CASES_OK = True
+except ImportError:
+    _CASES = None
+    _CASES_OK = False
+
 # Optional Worker-1 hunt runner. Present in this tree. Signature:
 # run_hunt(cfg, target, sources, cap, started_by, mock=False).
 # It writes live progress to state/jobs/hunt-*.json and honors
@@ -832,6 +843,21 @@ class Handler(BaseHTTPRequestHandler):
         except (json.JSONDecodeError, UnicodeDecodeError):
             return {}
 
+    def _query(self):
+        return urllib.parse.parse_qs(
+            urllib.parse.urlparse(self.path).query)
+
+    def _case_db(self, cfg):
+        # Case DB helpers. The case layer is the system of record
+        # for entities/relationships/indicators only. It never
+        # touches the IOC list or the review queue.
+        if not _CASES_OK:
+            raise RuntimeError("case layer unavailable")
+        return _CASES.connect(cfg=cfg)
+
+    def _case_404(self):
+        self._send(404, {"error": "case layer unavailable"})
+
     def _guard(self):
         """Paused state short-circuits every scan-triggering call."""
         cfg = self._cfg()
@@ -918,6 +944,42 @@ class Handler(BaseHTTPRequestHandler):
                             continue
                 self._send(200, {"history": hist,
                                  "chat_mode": _chat_mode(cfg)})
+            elif p == "/cases/entities":
+                if not _CASES_OK:
+                    self._case_404()
+                    return
+                etype = self._query().get("type", [None])[0]
+                try:
+                    ents = _CASES.list_entities(self._case_db(cfg), etype)
+                except ValueError as e:
+                    self._send(400, {"error": str(e)})
+                    return
+                self._send(200, {"entities": ents})
+            elif p.startswith("/cases/entities/"):
+                if not _CASES_OK:
+                    self._case_404()
+                    return
+                eid = urllib.parse.unquote(p[len("/cases/entities/"):])
+                db = self._case_db(cfg)
+                ent = _CASES.get_entity(db, eid)
+                if not ent:
+                    self._send(404, {"error": "unknown entity"})
+                    return
+                inds = _CASES.list_indicators(db, eid)
+                nbrs = _CASES.neighbors(db, eid) or {}
+                self._send(200, {"entity": ent, "indicators": inds,
+                                 "links": nbrs.get("links", []),
+                                 "adjacent": nbrs.get("adjacent", {})})
+            elif p == "/cases/graph":
+                if not _CASES_OK:
+                    self._case_404()
+                    return
+                g = _CASES.graph(self._case_db(cfg))
+                # Contract shape: edges use from/to (DB uses from_id/to_id).
+                edges = [{"id": e["id"], "from": e["from_id"],
+                          "to": e["to_id"], "rel": e["rel"]}
+                         for e in g["edges"]]
+                self._send(200, {"nodes": g["nodes"], "edges": edges})
             else:
                 self._send(404, {"error": "unknown endpoint"})
         except Exception as e:  # noqa: BLE001 - never leak a traceback
@@ -1037,6 +1099,51 @@ class Handler(BaseHTTPRequestHandler):
                     self._send(200, {"ok": True})
                 else:
                     self._send(500, {"error": "config.example.ini missing"})
+            elif p == "/cases/entities":
+                if not _CASES_OK:
+                    self._case_404()
+                    return
+                etype = (body.get("type") or "").strip()
+                label = (body.get("label") or "").strip()
+                db = self._case_db(cfg)
+                try:
+                    if etype == "trace" and body.get("trace_text"):
+                        # Traces run indicator extraction on save.
+                        # Extraction populates the case DB only;
+                        # it never touches the IOC list.
+                        eid = _CASES.add_trace(
+                            db, label, body.get("trace_text", ""),
+                            provenance=body.get("provenance", ""),
+                            job_id=body.get("job_id"))
+                    else:
+                        eid = _CASES.add_entity(
+                            db, etype, label,
+                            data=body.get("data"),
+                            provenance=body.get("provenance", ""))
+                except ValueError as e:
+                    self._send(400, {"error": str(e)})
+                    return
+                self._send(201, {"entity": _CASES.get_entity(db, eid)})
+            elif p == "/cases/link":
+                if not _CASES_OK:
+                    self._case_404()
+                    return
+                try:
+                    lid = _CASES.link(
+                        self._case_db(cfg), body.get("from_id", ""),
+                        body.get("to_id", ""), body.get("rel", ""))
+                except ValueError as e:
+                    self._send(400, {"error": str(e)})
+                    return
+                self._send(201, {"link_id": lid})
+            elif p == "/cases/extract":
+                # Indicator preview. Read-only: nothing is saved.
+                if not _CASES_OK:
+                    self._case_404()
+                    return
+                inds = _CASES.extract_indicators(body.get("trace_text", ""))
+                self._send(200, {"indicators": [
+                    {"kind": k, "value": v} for k, v in inds]})
             else:
                 self._send(404, {"error": "unknown endpoint"})
         except Exception as e:  # noqa: BLE001 - never leak a traceback
@@ -1071,6 +1178,46 @@ class Handler(BaseHTTPRequestHandler):
                 cfg = self._cfg()
                 _prompt_write(cfg, name, text)
                 self._send(200, {"name": name, "source": "override"})
+            elif p.startswith("/cases/entities/"):
+                if not _CASES_OK:
+                    self._case_404()
+                    return
+                eid = urllib.parse.unquote(p[len("/cases/entities/"):])
+                db = self._case_db(self._cfg())
+                ok = _CASES.update_entity(
+                    db, eid, label=body.get("label"),
+                    data=body.get("data"),
+                    provenance=body.get("provenance"))
+                if not ok:
+                    self._send(404, {"error": "unknown entity"})
+                    return
+                self._send(200, {"entity": _CASES.get_entity(db, eid)})
+            else:
+                self._send(404, {"error": "unknown endpoint"})
+        except Exception as e:  # noqa: BLE001 - never leak a traceback
+            self._send(500, {"error": str(e)[:300]})
+
+    # -- DELETE --
+
+    def do_DELETE(self):
+        p = self._path()
+        try:
+            if p.startswith("/cases/entities/"):
+                if not _CASES_OK:
+                    self._case_404()
+                    return
+                eid = urllib.parse.unquote(p[len("/cases/entities/"):])
+                # Cascade: relationships and indicators go with the
+                # entity. The IOC list is never touched (cases.py).
+                ok = _CASES.delete_entity(self._case_db(self._cfg()), eid)
+                self._send(200 if ok else 404, {"deleted": ok})
+            elif p.startswith("/cases/link/"):
+                if not _CASES_OK:
+                    self._case_404()
+                    return
+                lid = urllib.parse.unquote(p[len("/cases/link/"):])
+                ok = _CASES.unlink(self._case_db(self._cfg()), lid)
+                self._send(200 if ok else 404, {"deleted": ok})
             else:
                 self._send(404, {"error": "unknown endpoint"})
         except Exception as e:  # noqa: BLE001 - never leak a traceback
@@ -1093,6 +1240,7 @@ def _diagnostics(cfg):
             diag["lib"][mod] = "missing"
     diag["worker1_run_hunt"] = "present" if _RUN_HUNT else "fallback"
     diag["worker2_review"] = "present" if _W2_REVIEW else "fallback"
+    diag["worker5_cases"] = "present" if _CASES_OK else "missing"
     diag["settings_validate"] = "present" if _SETTINGS_VALIDATE \
         else "fallback"
     diag["chat_mode"] = _chat_mode(cfg)

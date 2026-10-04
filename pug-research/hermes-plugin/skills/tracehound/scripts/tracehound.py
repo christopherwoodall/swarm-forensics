@@ -281,10 +281,100 @@ def main():
     p = sub.add_parser("diagnose", help="Check curl and source reachability.")
     p.set_defaults(func=cmd_diagnose)
 
+    # Worker-5 case management. Additive block: the parsers above are
+    # untouched. `case` backs the `/swarm-forensics case ...` grammar.
+    case = sub.add_parser("case", help="Case management: entities and links.")
+    csub = case.add_subparsers(dest="case_cmd", required=True)
+
+    p = csub.add_parser("add", help="Add an entity.")
+    p.add_argument("type", choices=["trace", "agent", "swarm", "collection"])
+    p.add_argument("label", help="Entity label.")
+    p.add_argument("--text", default=None,
+                   help="Trace text (trace only; runs indicator extraction).")
+    p.add_argument("--job", default=None,
+                   help="Hunt job id to link (trace only; stored in data_json).")
+    p.add_argument("--provenance", default="",
+                   help="Provenance string.")
+    p.set_defaults(func=cmd_case_add)
+
+    p = csub.add_parser("link", help="Link two entities.")
+    p.add_argument("from_id", help="Source entity id.")
+    p.add_argument("to_id", help="Target entity id.")
+    p.add_argument("rel", choices=["trace_of", "member_of", "part_of",
+                                   "related"])
+    p.set_defaults(func=cmd_case_link)
+
+    p = csub.add_parser("list", help="List entities.")
+    p.add_argument("--type", default=None,
+                   choices=["trace", "agent", "swarm", "collection"],
+                   help="Filter by entity type.")
+    p.set_defaults(func=cmd_case_list)
+
+    p = csub.add_parser("graph",
+                        help="Print the graph-view deep link.")
+    p.set_defaults(func=cmd_case_graph)
+
     args = ap.parse_args()
     cfg = load_config(args.config, state_dir=args.state_dir)
     ensure_state(cfg)
     return args.func(cfg, args)
+
+
+# ---------------------------------------------------------------------------
+# Worker-5: case subcommand group. Appended; the code above is untouched.
+# ---------------------------------------------------------------------------
+
+def _case_db(cfg):
+    import cases
+    return cases.connect(cfg=cfg)
+
+
+def cmd_case_add(cfg, args):
+    import cases
+    db = _case_db(cfg)
+    try:
+        if args.type == "trace" and args.text:
+            eid = cases.add_trace(db, args.label, args.text,
+                                  provenance=args.provenance,
+                                  job_id=args.job)
+            n = len(cases.list_indicators(db, eid))
+            print(f"case add: trace {eid} ({n} indicators extracted)")
+        else:
+            eid = cases.add_entity(db, args.type, args.label,
+                                   provenance=args.provenance)
+            print(f"case add: {args.type} {eid}")
+    except ValueError as e:
+        print(f"case add: rejected: {e}", file=sys.stderr)
+        return 2
+    return 0
+
+
+def cmd_case_link(cfg, args):
+    import cases
+    try:
+        lid = cases.link(_case_db(cfg), args.from_id, args.to_id, args.rel)
+    except ValueError as e:
+        print(f"case link: rejected: {e}", file=sys.stderr)
+        return 2
+    print(f"case link: {lid} ({args.from_id} -[{args.rel}]-> {args.to_id})")
+    return 0
+
+
+def cmd_case_list(cfg, args):
+    import cases
+    try:
+        ents = cases.list_entities(_case_db(cfg), args.type)
+    except ValueError as e:
+        print(f"case list: rejected: {e}", file=sys.stderr)
+        return 2
+    for e in ents:
+        print(f"{e['id']}  {e['type']:<10}  {e['label']}")
+    return 0
+
+
+def cmd_case_graph(cfg, args):
+    print("open /tracehound/graph in the desktop app")
+    return 0
 
 
 if __name__ == "__main__":

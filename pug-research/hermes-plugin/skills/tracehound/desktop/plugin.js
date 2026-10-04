@@ -84,6 +84,7 @@ async function rest(ctx, method, path, body) {
 const apiGet = (ctx, path) => rest(ctx, 'GET', path);
 const apiPost = (ctx, path, body) => rest(ctx, 'POST', path, body || {});
 const apiPut = (ctx, path, body) => rest(ctx, 'PUT', path, body || {});
+const apiDelete = (ctx, path) => rest(ctx, 'DELETE', path);
 
 function useApi(ctx, key, path, intervalMs) {
   return useQuery({

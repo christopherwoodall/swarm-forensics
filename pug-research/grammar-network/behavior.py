@@ -200,9 +200,9 @@ def main():
     det.append("- wiki order-2 top: " + "; ".join(
         f"{' > '.join(a)} -> {b} ({c})" for (a, b), c in t_wiki2.most_common(5)))
     findings.append(
-        f"Markov: host-chain transition matrices from wiki vs traces URLs agree "
-        f"closely (Frobenius {frob:.2f}, top-{k} overlap {ov}/{k}) — the relay "
-        f"nesting order is source-independent.")
+        f"Markov: relay-chain Markov exists only in wiki-sourced URLs "
+        f"(traces sample: 0 nested chains — direct fetches only, comparison "
+        f"degenerate by construction); order-2 confirms the 3-layer nesting rule.")
 
     rooms = load_chat_rooms()
     spk = [[s for _, s in ms] for ms in rooms.values() if len(ms) > 1]

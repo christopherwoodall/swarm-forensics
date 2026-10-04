@@ -1,5 +1,21 @@
 # LEARNING.md — dynamic intelligence for the Hermes plugin
 
+## Amendment (2026-10-04): the learning loop is human-gated
+
+The autonomous promotion policy in §1 is SUPERSEDED.
+
+- The IOC updater only PROPOSES. Proposals land quarantined in
+  the human review queue. Nothing promotes without a human
+  decision: GUI ACCEPT/REJECT/NARROW click or an explicit
+  `review` command with a rationale.
+- Auto-accept paths are REMOVED. `ioc.auto_propose` defaults to
+  false. When enabled, it proposes into quarantine, never into
+  the active list.
+- Every hunt, proposal, and promotion needs the human. The
+  hunting-dog model governs: only hunt with a human.
+
+---
+
 This document designs the learning loop: the IOC list updater, the URL
 predictor, and the research job. Everything here MUST be implementable
 with standard-library Python plus curl-style HTTP. No new infrastructure.

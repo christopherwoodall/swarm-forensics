@@ -15,7 +15,7 @@ Investigate organization across replaceable processes, not only individual agent
 The discussions combine two complementary interests:
 
 - TelepathicPug proposed mapping tools, skills, plugins, and possible egress routes.
-- Colette proposed tracing distributed coordination, shared state, and changing relationships.
+- Distributed coordination tracing was proposed: shared state and changing relationships.
 
 The team discussed combining these interests in an interactive swarm explorer.
 No final submission scope was selected in the reviewed material.
@@ -26,7 +26,7 @@ No final submission scope was selected in the reviewed material.
 | --- | --- | --- |
 | SITE | [swarmchasing.com](https://swarmchasing.com/), captured 2026-10-01, including expanded FAQs | Organizer statements, not implementation evidence |
 | DM-G | SwarmTraces Hackathon group, saved September 30–October 1 discussion | Team discussion and reported work |
-| DM-P | Colette and TelepathicPug, from September 28, 2026, at 8:09 AM | Project origin and subsequent brainstorming |
+| DM-P | Team DMs, from September 28, 2026, at 8:09 AM | Project origin and subsequent brainstorming |
 | NOTE | Shared `swarmtraces-distributed-systems-for-pug.md` attachment | Prior analysis; its underlying corpus was not reanalyzed here |
 | REPO | Local checkout at `79b1840702591f0fd5253d6b3752264b635d3904` | Source inspection and executable checks; see STATUS |
 
@@ -149,7 +149,7 @@ No integration was configured here.
 Status: desired collaboration support; continuous operation remains unimplemented.
 Source: DM-G, October 1, 10:10 AM and 10:36 AM.
 
-Colette proposed using Hermes as a quiet note-taker.
+Using Hermes as a quiet note-taker was proposed.
 The notes would summarize discussion, identify decisions, retain provenance, and support repository continuity.
 Moving collaboration to FairyStack was conditional on confirming multi-user chat access.
 This bootstrap records existing discussion only.
@@ -161,7 +161,7 @@ It does not configure a watcher, bot, shared room, or automatic repository write
 
 Existing acquisition code targets `aidigestorg/ai-village` on Hugging Face.
 The organizer site offers access but does not require this dataset.
-DM-G reports that Colette obtained access on October 1.
+DM-G reports that dataset access was obtained on October 1.
 That report does not verify the current shell token or another contributor's access.
 
 The reviewed dataset-access screenshot states research and analysis conditions.

@@ -14,11 +14,8 @@ Provenance key used throughout:
 - **[INF]** — inference / proposal. No documented basis; keyed to the
   closest real mechanism.
 
-The local `colette-research/hermes-research/` collection contains
-**nothing** about a Hermes desktop app or skill UI (its three
-"desktop" hits are Telegram Desktop, RDP, and "desktop computer" —
-coincidental). All desktop findings below come from the official SDK
-doc and the plugin-skill reference, not from local research.
+All desktop findings below come from the official SDK
+doc and the plugin-skill reference.
 
 ---
 
