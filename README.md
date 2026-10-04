@@ -21,9 +21,9 @@ This repository holds all three.
 Shout-outs to the Stigmergists behind each lane:
 
 - **Chris** — project tooling and repository integration.
-- **Colette** — morphology: the attempt-morphology taxonomy from public traces.
+- **Colette** — morphology: the attempt-morphology taxonomy and the agent-scanner findings thesis.
 - **Jesse** — the Discord Coordinator app and its source-synchronization pipeline.
-- **Pug** — the Swarm Forensics Hermes plugin.
+- **Pug** — the Swarm Forensics Hermes plugin, plus the stylometry and visualization experiments.
 
 ---
 
@@ -46,7 +46,7 @@ Discipline is built in: model proposes, policy decides, every claim sits on a gr
 
 [Watch the narrated walkthrough](showcase/hermes-plugin/docs/voice_over.mp4) · [Silent demo](showcase/hermes-plugin/docs/demo.mp4)
 
-### 2. Morphology
+### 2. Morphology — Agent-Scanner Findings
 
 Our tool investigates public traces of AI-agent activity across web archives, browser reports, relay services, wiki revisions, and published incident reports.
 It found a dense SEC archive cluster, earlier census-related request records, a malformed AIHW relay request, and repeated use of public intermediary services.
@@ -56,7 +56,13 @@ It is a clearer taxonomy of attempt morphology: how automated or semi-automated 
 The tool separates archive captures from requests, errors from successful retrievals, timing overlap from coordination, and feed silence from proof that activity stopped.
 The result is an evidence-layer reconstruction that makes agent activity more measurable without overclaiming attribution.
 
-[Grammar-network findings report](experiments/pug/grammar-network/REPORT.md) · [Trace pulls](experiments/pug/trace-pulls/TRACE_PULLS.md) · Morphology hunter: see the **Morphologies** tab in the [plugin](showcase/hermes-plugin/README.md)
+The headline result is a stabilized, adversarially reviewed thesis:
+public web archives preserve an unpublished, machine-mediated trace layer of the June 2026 agent incidents.
+That includes a 59-save nonce burst against SEC data, earlier Census and AIHW traces, and a mapped public-relay topology.
+Every headline claim survived a documented adversarial review.
+The rejected claims and open questions are published next to the survivors.
+
+[Findings thesis](showcase/agent-scanner-findings/thesis-2026-10-03.md) · [Adversarial review](showcase/agent-scanner-findings/adversarial-review/) · [Claim matrix](showcase/agent-scanner-findings/initial-claim/claim-matrix-2026-10-03.md) · Morphology hunter: see the **Morphologies** tab in the [plugin](showcase/hermes-plugin/README.md)
 
 ### 3. Discord Coordinator
 
@@ -75,8 +81,9 @@ A runtime bridge enforces configured command budgets, rates, and deadlines.
 |---|---|
 | [showcase/hermes-plugin](showcase/hermes-plugin/) | The Swarm Forensics Hermes plugin: hunts, morphology discovery, desktop workbench |
 | [showcase/discord-bot-swarm](showcase/discord-bot-swarm/) | The Discord Coordinator app source |
+| [showcase/agent-scanner-findings](showcase/agent-scanner-findings/) | The agent-scanner findings: thesis, adversarial review, and claim matrix |
 | [experiments/jesse](experiments/jesse/) | Discord Swarm upstream source and synchronization tooling |
-| [experiments/pug](experiments/pug/) | Stylometry, goal inference, grammar-network, and trace-pull research |
+| [experiments/pug](experiments/pug/) | Stylometry, goal inference, grammar-network, visualization, and trace-pull research |
 | [experiments/colette](experiments/colette/hermes-research/) | Published-source research collection: 38 cited records and Stage 3 event discovery |
 | [experiments/chris](experiments/chris/tools/) | Project research and tools |
 
