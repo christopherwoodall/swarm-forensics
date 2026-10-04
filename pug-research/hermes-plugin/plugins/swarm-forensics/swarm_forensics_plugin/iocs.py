@@ -43,6 +43,25 @@ def _ioc(row):
     return {k: row[k] for k in row.keys()}
 
 
+def parse_wordlist(lines):
+    """Parse lines of a wordlist, yielding (term, category).
+
+    Lines starting with '# SECTION' set category = section.lower().
+    Blank lines and comments not starting with '# SECTION' are skipped.
+    """
+    section = "uncategorized"
+    for line in lines:
+        line = str(line or "").strip()
+        if not line:
+            continue
+        if line.startswith("#"):
+            m = re.match(r"#\s*([A-Za-z0-9_]+)", line)
+            if m:
+                section = m.group(1).lower()
+            continue
+        yield line, section
+
+
 class IocStore:
     def __init__(self, database, settings):
         self.db = database
@@ -59,19 +78,9 @@ class IocStore:
             if done:
                 return 0
             stamp, added = db.now(), 0
-            section = "uncategorized"
             path = SEEDS_DIR / "wordlist-seed.txt"
-            terms = []
-            for line in path.read_text(encoding="utf-8").splitlines():
-                line = line.strip()
-                if not line:
-                    continue
-                if line.startswith("#"):
-                    m = re.match(r"#\s*([A-Z_]+)", line)
-                    if m:
-                        section = m.group(1).lower()
-                    continue
-                terms.append((line, section, "seeds/wordlist-seed.txt"))
+            terms = [(term, cat, "seeds/wordlist-seed.txt")
+                     for term, cat in parse_wordlist(path.read_text(encoding="utf-8").splitlines())]
             terms += [(t, c, "seeds/query-templates") for t, c in SEED_RULE_TERMS]
             for term, category, source in terms:
                 cur = conn.execute(

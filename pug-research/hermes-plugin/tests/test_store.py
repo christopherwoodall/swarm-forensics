@@ -22,6 +22,60 @@ class SchemaAndSettings(unittest.TestCase):
             self.assertEqual(
                 conn.execute("PRAGMA journal_mode").fetchone()[0], "wal")
 
+    def test_v1_to_v2_migration(self):
+        import sqlite3
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_file = Path(tmpdir) / "v1.db"
+            conn = sqlite3.connect(db_file)
+            conn.executescript(db.MIGRATIONS[0])
+            conn.execute("PRAGMA user_version = 1")
+            stamp = db.now()
+            conn.execute("INSERT INTO entities(id, type, name, origin, created_utc, updated_utc)"
+                         " VALUES ('e_trace', 'trace', 'Trace1', 'human', ?, ?)", (stamp, stamp))
+            conn.execute("INSERT INTO entities(id, type, name, origin, created_utc, updated_utc)"
+                         " VALUES ('e_case', 'case', 'Case1', 'human', ?, ?)", (stamp, stamp))
+            conn.execute("INSERT INTO entities(id, type, name, origin, created_utc, updated_utc)"
+                         " VALUES ('e_agent', 'agent', 'Agent1', 'human', ?, ?)", (stamp, stamp))
+            conn.execute("INSERT INTO links(src, dst, kind, created_utc)"
+                         " VALUES ('e_trace', 'e_agent', 'trace_of', ?)", (stamp,))
+            conn.execute("INSERT INTO links(src, dst, kind, created_utc)"
+                         " VALUES ('e_agent', 'e_case', 'member_of', ?)", (stamp,))
+            conn.execute("INSERT INTO indicators(entity_id, kind, value, first_seen_utc)"
+                         " VALUES ('e_trace', 'ip', '1.2.3.4', ?)", (stamp,))
+            conn.commit()
+            conn.close()
+
+            # Open via Database, triggering backup and migration
+            migrated_db = db.Database(db_file)
+            bak_file = db_file.with_name(db_file.name + ".v1.bak")
+            self.assertTrue(bak_file.exists())
+
+            with migrated_db.connect() as c:
+                ver = c.execute("PRAGMA user_version").fetchone()[0]
+                self.assertEqual(ver, 2)
+                fk_violations = c.execute("PRAGMA foreign_key_check").fetchall()
+                self.assertEqual(fk_violations, [])
+
+                row_trace = c.execute("SELECT type, name FROM entities WHERE id = 'e_trace'").fetchone()
+                self.assertEqual(row_trace["type"], "artifact")
+                row_case = c.execute("SELECT type, name FROM entities WHERE id = 'e_case'").fetchone()
+                self.assertEqual(row_case["type"], "campaign")
+
+                links = c.execute("SELECT src, dst, kind FROM links").fetchall()
+                self.assertEqual(len(links), 2)
+                for l in links:
+                    self.assertEqual(l["kind"], "part_of")
+
+                ind = c.execute("SELECT entity_id, kind, value FROM indicators").fetchone()
+                self.assertEqual(ind["entity_id"], "e_trace")
+                self.assertEqual(ind["value"], "1.2.3.4")
+
+                # Verify new tables exist
+                self.assertIsNotNone(c.execute("SELECT 1 FROM index_sources").fetchall())
+                self.assertIsNotNone(c.execute("SELECT 1 FROM url_grammar").fetchall())
+
     def test_defaults_and_updates(self):
         s = self.env.settings
         self.assertEqual(s.get("iocs.promotion"), "manual")
@@ -190,6 +244,36 @@ class GraphTests(unittest.TestCase):
         self.g.upsert("agent", "A")
         self.assertEqual(self.g.list(query="x' OR '1'='1"), [])
         self.assertEqual(len(self.g.list()), 1)
+
+    def test_part_of_direction_flip_and_parents_children(self):
+        agent = self.g.upsert("agent", "AgentAlpha")
+        artifact = self.g.upsert("artifact", "Page1")
+        # Try linking agent -> artifact with part_of (upside-down).
+        # Should be flipped so artifact is src and agent is dst.
+        link_id = self.g.link(agent["id"], artifact["id"], "part_of")
+        with self.env.db.connect() as conn:
+            row = conn.execute("SELECT src, dst, kind FROM links WHERE id = ?", (link_id,)).fetchone()
+            self.assertEqual(row["src"], artifact["id"])
+            self.assertEqual(row["dst"], agent["id"])
+            self.assertEqual(row["kind"], "part_of")
+
+        # Same rank (agent -> agent) with part_of becomes related
+        agent2 = self.g.upsert("agent", "AgentBeta")
+        link_same = self.g.link(agent["id"], agent2["id"], "part_of")
+        with self.env.db.connect() as conn:
+            row_same = conn.execute("SELECT kind FROM links WHERE id = ?", (link_same,)).fetchone()
+            self.assertEqual(row_same["kind"], "related")
+
+        # View check for parents and children
+        view_agent = self.g.view(agent["id"])
+        self.assertIn("artifact", view_agent["children"])
+        self.assertEqual(len(view_agent["children"]["artifact"]), 1)
+        self.assertEqual(view_agent["children"]["artifact"][0]["name"], "Page1")
+
+        view_artifact = self.g.view(artifact["id"])
+        self.assertIn("agent", view_artifact["parents"])
+        self.assertEqual(len(view_artifact["parents"]["agent"]), 1)
+        self.assertEqual(view_artifact["parents"]["agent"][0]["name"], "AgentAlpha")
 
 
 class ScheduleSpecs(unittest.TestCase):

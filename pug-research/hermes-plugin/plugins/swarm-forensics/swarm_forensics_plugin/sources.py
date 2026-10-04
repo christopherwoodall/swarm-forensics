@@ -11,7 +11,7 @@ import subprocess
 import tempfile
 import urllib.parse
 
-ALLOWLIST = ("urlquery.net", "web.archive.org", "arquivo.pt")
+ALLOWLIST = ("urlquery.net", "web.archive.org", "arquivo.pt", "commoncrawl.org")
 URLQUERY_SEARCH = "https://urlquery.net/api/v1/search"
 CDX_SEARCH = "https://web.archive.org/cdx/search/cdx"
 ARQUIVO_CDX = "https://arquivo.pt/wayback/cdx"
@@ -19,9 +19,12 @@ INDEX_SOURCES = ("urlquery", "cdx", "arquivo")
 NONCE_BATCH_SIZE = 6
 
 
-def host_allowed(url):
-    host = urllib.parse.urlparse(url).hostname or ""
-    return any(host == a or host.endswith("." + a) for a in ALLOWLIST)
+def host_allowed(url, allowed_hosts=None):
+    host = (urllib.parse.urlsplit(url).hostname or "").lower()
+    if not host:
+        return False
+    targets = allowed_hosts if allowed_hosts is not None else ALLOWLIST
+    return any(host == a or host.endswith("." + a) for a in targets)
 
 
 def _split_status(stdout):
@@ -31,11 +34,11 @@ def _split_status(stdout):
     return int(m.group(1)), stdout[:m.start()].rstrip()
 
 
-def curl_get(url, user_agent, params=None):
+def curl_get(url, user_agent, params=None, allowed_hosts=None):
     """Run one GET. Returns (http_status, headers_text, body_bytes)."""
     if params:
         url += ("&" if "?" in url else "?") + urllib.parse.urlencode(params)
-    if not host_allowed(url):
+    if not host_allowed(url, allowed_hosts):
         raise ValueError("host not allowlisted: %s" % url)
     fd, body_path = tempfile.mkstemp(prefix="sf-", suffix=".body")
     os.close(fd)
@@ -72,63 +75,81 @@ def _is_hostname_term(term):
 class IndexSources:
     """Runs index queries with backoff. `wait(seconds)` returns True to abort."""
 
-    def __init__(self, user_agent, delay, limit, wait, getter=curl_get):
+    def __init__(self, user_agent, delay, limit, wait, getter=curl_get, allowed_hosts=None):
         self.user_agent = user_agent
         self.delay = delay
         self.limit = limit
         self.wait = wait
         self.getter = getter
+        self.allowed_hosts = allowed_hosts
 
     def queries_for(self, source, terms, cursor=None):
         """Build the query list for one source. No network happens here."""
-        if source not in INDEX_SOURCES:
-            raise ValueError("unknown source: %s" % source)
-        since = self._since(source, cursor)
+        if isinstance(source, dict):
+            kind = source.get("kind", "cdx")
+            endpoint = source.get("endpoint", CDX_SEARCH)
+            cfg = source.get("config") or {}
+            field = cfg.get("filter_field", "urlkey" if "web.archive.org" in endpoint else "original")
+            nonce_prefix = cfg.get("nonce_prefix", "r.jina.ai/http*")
+            source_id = str(source.get("id", source.get("name", kind)))
+        else:
+            kind = source
+            endpoint = CDX_SEARCH if source == "cdx" else (ARQUIVO_CDX if source == "arquivo" else URLQUERY_SEARCH)
+            field = "urlkey" if source == "cdx" else "original"
+            nonce_prefix = "r.jina.ai/http*"
+            source_id = source
+
+        since = self._since(kind, cursor)
         queries = []
-        if source == "urlquery":
+        if kind == "urlquery":
             for term in terms:
                 params = {"q": term, "format": "json"}
                 params.update(since)
                 queries.append({"id": "uq:" + term, "label": term, "terms": [term],
-                                "url": URLQUERY_SEARCH, "params": params})
+                                "url": endpoint, "params": params})
             return queries
-        base = CDX_SEARCH if source == "cdx" else ARQUIVO_CDX
-        field = "urlkey" if source == "cdx" else "original"
+
         for term in terms:
             if _is_hostname_term(term):
                 params = {"url": term + "/*", "matchType": "prefix",
                           "output": "json", "limit": self.limit}
                 params.update(since)
-                queries.append({"id": "%s:host:%s" % (source, term), "label": term,
-                                "terms": [term], "url": base, "params": params})
+                queries.append({"id": "%s:host:%s" % (source_id, term), "label": term,
+                                "terms": [term], "url": endpoint, "params": params})
         loose = [t for t in terms if not _is_hostname_term(t)]
         for i in range(0, len(loose), NONCE_BATCH_SIZE):
             batch = loose[i:i + NONCE_BATCH_SIZE]
             alt = "|".join(re.escape(t) for t in batch)
-            params = {"url": "r.jina.ai/http*", "matchType": "prefix",
+            params = {"url": nonce_prefix, "matchType": "prefix",
                       "output": "json", "limit": self.limit,
                       "filter": "%s:.*(%s).*" % (field, alt)}
             params.update(since)
-            queries.append({"id": "%s:nonce:%s" % (source, "|".join(batch)),
+            queries.append({"id": "%s:nonce:%s" % (source_id, "|".join(batch)),
                             "label": "nonce-batch", "terms": batch,
-                            "url": base, "params": params})
+                            "url": endpoint, "params": params})
         return queries
 
-    def candidate_query(self, url):
+    def candidate_query(self, url, source=None):
         """Exact-match index check for one predicted URL. Never fetches it."""
+        if isinstance(source, dict):
+            endpoint = source.get("endpoint", CDX_SEARCH)
+        elif source == "arquivo":
+            endpoint = ARQUIVO_CDX
+        else:
+            endpoint = CDX_SEARCH
         params = {"url": url, "matchType": "exact", "output": "json",
                   "limit": 5}
         return {"id": "cand:" + url, "label": url, "terms": [url],
-                "url": CDX_SEARCH, "params": params}
+                "url": endpoint, "params": params}
 
     @staticmethod
-    def _since(source, cursor):
+    def _since(kind, cursor):
         if not cursor:
             return {}
         day = cursor[:10]
         if not re.match(r"\d{4}-\d{2}-\d{2}$", day):
             return {}
-        if source == "urlquery":
+        if kind == "urlquery":
             return {"date": "[%s TO *]" % day}
         return {"from": day.replace("-", "") + "000000"}
 
@@ -138,7 +159,8 @@ class IndexSources:
         hits = []
         if outcome != "ok":
             return outcome, status, hits
-        if source == "urlquery":
+        kind = source.get("kind") if isinstance(source, dict) else source
+        if kind == "urlquery":
             for row in data if isinstance(data, list) else []:
                 if isinstance(row, dict):
                     url = row.get("url") or row.get("report_url") or ""

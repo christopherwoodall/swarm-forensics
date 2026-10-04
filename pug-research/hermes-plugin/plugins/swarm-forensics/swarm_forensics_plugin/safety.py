@@ -12,8 +12,11 @@ import re
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 CLAIM_LEVELS = ("L1", "L2", "L3", "L4", "L5")
-ENTITY_TYPES = ("agent", "swarm", "case", "trace", "collection")
-LINK_KINDS = ("member_of", "part_of", "trace_of", "related", "observed_with")
+ENTITY_TYPES = ("artifact", "agent", "swarm", "campaign", "collection")
+HIERARCHY = ("artifact", "agent", "swarm", "campaign")
+LINK_KINDS = ("part_of", "related", "observed_with")
+LEGACY_TYPES = {"trace": "artifact", "case": "campaign"}
+LEGACY_LINKS = {"member_of": "part_of", "trace_of": "part_of"}
 TERM_CATEGORIES = ("nonce_grammar", "relay", "watch_term", "basin_target",
                    "toolkit", "proposed")
 
@@ -198,13 +201,16 @@ def parse_analysis(raw):
         src, dst = item.get("from"), item.get("to")
         if not (isinstance(src, dict) and isinstance(dst, dict)):
             continue
-        if src.get("type") not in ENTITY_TYPES or dst.get("type") not in ENTITY_TYPES:
+        src_type = LEGACY_TYPES.get(src.get("type"), src.get("type"))
+        dst_type = LEGACY_TYPES.get(dst.get("type"), dst.get("type"))
+        if src_type not in ENTITY_TYPES or dst_type not in ENTITY_TYPES:
             continue
-        kind = item.get("kind") if item.get("kind") in LINK_KINDS else "related"
+        raw_kind = item.get("kind")
+        kind = LEGACY_LINKS.get(raw_kind, raw_kind if raw_kind in LINK_KINDS else "related")
         names = (_text(src.get("name"), 120), _text(dst.get("name"), 120))
         if all(names):
-            links.append({"from": {"type": src["type"], "name": names[0]},
-                          "to": {"type": dst["type"], "name": names[1]},
+            links.append({"from": {"type": src_type, "name": names[0]},
+                          "to": {"type": dst_type, "name": names[1]},
                           "kind": kind})
         if len(links) >= 12:
             break
@@ -224,12 +230,16 @@ def parse_analysis(raw):
                       "why": _text(item.get("why"), 200)})
         if len(leads) >= 8:
             break
+    campaigns = _entities(obj.get("campaigns"))
+    if not campaigns and "cases" in obj:
+        campaigns = _entities(obj.get("cases"))
     return {"relevant": obj["relevant"], "invalid": False,
             "claim_level": level if level in CLAIM_LEVELS else "L1",
             "summary": _text(obj.get("summary"), 600),
             "agents": _entities(obj.get("agents")),
             "swarms": _entities(obj.get("swarms")),
-            "cases": _entities(obj.get("cases")),
+            "campaigns": campaigns,
+            "cases": campaigns,
             "terms": terms, "links": links, "leads": leads}
 
 

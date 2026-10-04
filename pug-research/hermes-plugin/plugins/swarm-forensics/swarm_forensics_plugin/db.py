@@ -8,9 +8,11 @@ MUST be parameterized.
 
 import contextlib
 import json
+import shutil
 import sqlite3
 import uuid
 from datetime import datetime, timezone
+from pathlib import Path
 
 # Each entry upgrades the schema by one version. Append only.
 MIGRATIONS = [
@@ -178,6 +180,59 @@ MIGRATIONS = [
         next_run_utc TEXT
     );
     """,
+    # Migration 2: hierarchy types, `part_of` links, editable registries.
+    # `entities` is rebuilt because SQLite cannot alter a CHECK constraint.
+    """
+    CREATE TABLE entities_v2(
+        id TEXT PRIMARY KEY,
+        type TEXT NOT NULL
+            CHECK(type IN ('artifact','agent','swarm','campaign','collection')),
+        name TEXT NOT NULL COLLATE NOCASE,
+        summary TEXT NOT NULL DEFAULT '',
+        notes TEXT NOT NULL DEFAULT '',
+        attrs TEXT NOT NULL DEFAULT '{}',
+        origin TEXT NOT NULL DEFAULT 'human',
+        created_utc TEXT NOT NULL,
+        updated_utc TEXT NOT NULL,
+        UNIQUE(type, name)
+    );
+    INSERT INTO entities_v2
+        SELECT id,
+               CASE type WHEN 'trace' THEN 'artifact'
+                         WHEN 'case' THEN 'campaign' ELSE type END,
+               name, summary, notes, attrs, origin, created_utc, updated_utc
+        FROM entities;
+    DROP TABLE entities;
+    ALTER TABLE entities_v2 RENAME TO entities;
+    UPDATE OR IGNORE links SET kind = 'part_of'
+        WHERE kind IN ('member_of','trace_of');
+    DELETE FROM links WHERE kind IN ('member_of','trace_of');
+    CREATE TABLE index_sources(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE,
+        kind TEXT NOT NULL CHECK(kind IN ('cdx','urlquery')),
+        endpoint TEXT NOT NULL,
+        config TEXT NOT NULL DEFAULT '{}',
+        enabled INTEGER NOT NULL DEFAULT 0,
+        probe_candidates INTEGER NOT NULL DEFAULT 0,
+        origin TEXT NOT NULL DEFAULT 'human',
+        note TEXT NOT NULL DEFAULT '',
+        created_utc TEXT NOT NULL,
+        updated_utc TEXT NOT NULL
+    );
+    CREATE TABLE url_grammar(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        kind TEXT NOT NULL
+            CHECK(kind IN ('pattern','relay','nonce_probe','jq_probe','target')),
+        value TEXT NOT NULL,
+        param TEXT NOT NULL DEFAULT '',
+        enabled INTEGER NOT NULL DEFAULT 1,
+        origin TEXT NOT NULL DEFAULT 'human',
+        note TEXT NOT NULL DEFAULT '',
+        created_utc TEXT NOT NULL,
+        UNIQUE(kind, value, param)
+    );
+    """,
 ]
 
 
@@ -203,10 +258,21 @@ def loads(text, default=None):
 def migrate(conn):
     """Apply pending migrations. Idempotent. Returns the schema version."""
     version = conn.execute("PRAGMA user_version").fetchone()[0]
-    for index in range(version, len(MIGRATIONS)):
-        conn.executescript("BEGIN;" + MIGRATIONS[index])
-        conn.execute("PRAGMA user_version = %d" % (index + 1))
-        conn.commit()
+    if version >= len(MIGRATIONS):
+        return len(MIGRATIONS)
+    conn.execute("PRAGMA foreign_keys = OFF")
+    try:
+        for index in range(version, len(MIGRATIONS)):
+            conn.executescript("BEGIN;" + MIGRATIONS[index])
+            violations = conn.execute("PRAGMA foreign_key_check").fetchall()
+            if violations:
+                conn.rollback()
+                raise RuntimeError("Foreign key check failed after migration %d: %s"
+                                   % (index + 1, violations))
+            conn.execute("PRAGMA user_version = %d" % (index + 1))
+            conn.commit()
+    finally:
+        conn.execute("PRAGMA foreign_keys = ON")
     return len(MIGRATIONS)
 
 
@@ -215,8 +281,24 @@ class Database:
 
     def __init__(self, path):
         self.path = str(path)
+        self._maybe_backup_v1()
         with self.connect() as conn:
             migrate(conn)
+
+    def _maybe_backup_v1(self):
+        p = Path(self.path)
+        if not p.is_file() or str(self.path) == ":memory:":
+            return
+        try:
+            temp_conn = sqlite3.connect(self.path)
+            ver = temp_conn.execute("PRAGMA user_version").fetchone()[0]
+            temp_conn.close()
+            if ver == 1 and len(MIGRATIONS) >= 2:
+                bak = p.with_name(p.name + ".v1.bak")
+                if not bak.exists():
+                    shutil.copy2(p, bak)
+        except Exception:
+            pass
 
     @contextlib.contextmanager
     def connect(self):

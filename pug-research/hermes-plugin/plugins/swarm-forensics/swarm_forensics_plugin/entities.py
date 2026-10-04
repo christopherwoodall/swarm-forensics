@@ -8,7 +8,13 @@ here too, tagged with origin `model`, and never overwrite human notes.
 
 from . import db
 from .extract import INDICATOR_KINDS, wikilinks
-from .safety import ENTITY_TYPES, LINK_KINDS
+from .safety import (
+    ENTITY_TYPES,
+    HIERARCHY,
+    LINK_KINDS,
+    LEGACY_TYPES,
+    LEGACY_LINKS,
+)
 
 ALL_LINK_KINDS = LINK_KINDS + ("mentions",)
 MAX_GRAPH_NODES = 600
@@ -26,6 +32,8 @@ def _entity(row):
 
 
 def _check_type(kind):
+    if kind in LEGACY_TYPES:
+        kind = LEGACY_TYPES[kind]
     if kind not in ENTITY_TYPES:
         raise EntityError("type must be one of %s" % ", ".join(ENTITY_TYPES))
 
@@ -48,6 +56,7 @@ class Graph:
     def upsert(self, kind, name, summary="", attrs=None, origin="model",
                evidence_id=None):
         """Create an entity or enrich an existing one. Never erases text."""
+        kind = LEGACY_TYPES.get(kind, kind)
         _check_type(kind)
         name = _clean_name(name)
         stamp = db.now()
@@ -84,6 +93,7 @@ class Graph:
         return _entity(row) if row else None
 
     def find(self, kind, name):
+        kind = LEGACY_TYPES.get(kind, kind)
         with self.db.connect() as conn:
             row = conn.execute(
                 "SELECT * FROM entities WHERE type = ? AND name = ?",
@@ -97,6 +107,7 @@ class Graph:
                " AS evidence_count FROM entities e WHERE 1=1")
         args = []
         if kind:
+            kind = LEGACY_TYPES.get(kind, kind)
             _check_type(kind)
             sql += " AND e.type = ?"
             args.append(kind)
@@ -149,15 +160,26 @@ class Graph:
     # -- links --------------------------------------------------------------
 
     def link(self, src, dst, kind, evidence_id=None):
+        kind = LEGACY_LINKS.get(kind, kind)
         if kind not in ALL_LINK_KINDS:
             raise EntityError("kind must be one of %s" % ", ".join(ALL_LINK_KINDS))
         if src == dst:
             raise EntityError("an entity cannot link to itself")
         with self.db.connect() as conn:
-            for eid in (src, dst):
-                if conn.execute("SELECT 1 FROM entities WHERE id = ?",
-                                (eid,)).fetchone() is None:
-                    raise EntityError("entity not found")
+            src_row = conn.execute("SELECT id, type FROM entities WHERE id = ?",
+                                   (src,)).fetchone()
+            dst_row = conn.execute("SELECT id, type FROM entities WHERE id = ?",
+                                   (dst,)).fetchone()
+            if src_row is None or dst_row is None:
+                raise EntityError("entity not found")
+            if kind == "part_of":
+                st, dt = src_row["type"], dst_row["type"]
+                if st in HIERARCHY and dt in HIERARCHY:
+                    sr, dr = HIERARCHY.index(st), HIERARCHY.index(dt)
+                    if sr == dr:
+                        kind = "related"
+                    elif sr > dr:
+                        src, dst = dst, src
             conn.execute(
                 "INSERT OR IGNORE INTO links(src, dst, kind, evidence_id,"
                 " created_utc) VALUES (?,?,?,?,?)",
@@ -230,8 +252,18 @@ class Graph:
                 " ORDER BY v.observed_utc DESC LIMIT 100", (eid,)).fetchall()
         names = {m for m in wikilinks(entity["notes"])}
         resolved = {r["name"].lower() for r in out if r["kind"] == "mentions"}
+        parents = {}
+        children = {}
+        for l in out:
+            if l["kind"] == "part_of":
+                parents.setdefault(l["type"], []).append(dict(l))
+        for l in back:
+            if l["kind"] == "part_of":
+                children.setdefault(l["type"], []).append(dict(l))
         entity["outgoing"] = [dict(r) for r in out]
         entity["backlinks"] = [dict(r) for r in back]
+        entity["parents"] = parents
+        entity["children"] = children
         entity["indicators"] = [dict(r) for r in indicators]
         entity["evidence"] = [dict(r) for r in evidence]
         entity["unresolved"] = sorted(n for n in names if n.lower() not in resolved)
@@ -276,5 +308,7 @@ class Graph:
         for e in edges:
             degree[e["src"]] = degree.get(e["src"], 0) + 1
             degree[e["dst"]] = degree.get(e["dst"], 0) + 1
-        return {"nodes": [dict(n, degree=degree.get(n["id"], 0)) for n in nodes],
+        return {"nodes": [dict(n, degree=degree.get(n["id"], 0),
+                               rank=HIERARCHY.index(n["type"]) if n["type"] in HIERARCHY else None)
+                          for n in nodes],
                 "edges": edges, "center": center}

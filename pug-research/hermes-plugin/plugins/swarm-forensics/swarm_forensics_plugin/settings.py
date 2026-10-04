@@ -7,9 +7,9 @@ silently.
 
 from . import db
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 CLAIM_LEVELS = ["L1", "L2", "L3", "L4", "L5"]
-SOURCES = ["web", "urlquery", "cdx", "arquivo"]
+SOURCES = ["web", "index"]
 
 
 def _f(group, kind, default, label, help_text="", **extra):
@@ -26,8 +26,8 @@ SCHEMA = {
         "indicators and new ones mined from what the crawls return.",
         "Default hunt goal", "Used when a hunt starts without a goal."),
     "hunt.sources": _f(
-        "Hunt", "multi", ["web", "urlquery", "cdx", "arquivo"],
-        "Sources", "web uses the Hermes search and extract tools.",
+        "Hunt", "multi", ["web", "index"],
+        "Sources", "web uses Hermes tools; index uses enabled index sources.",
         choices=SOURCES),
     "hunt.use_model": _f(
         "Hunt", "bool", True, "Use the Hermes model",
@@ -91,7 +91,8 @@ SCHEMA = {
         "Safety", "choice", "L3", "Alert at claim level",
         choices=CLAIM_LEVELS),
     "graph.auto_entities": _f(
-        "Graph", "bool", True, "Write agents, swarms, and cases to the graph",
+        "Graph", "bool", True,
+        "Write artifacts, agents, swarms, and campaigns to the graph",
         "Off keeps the graph human-edited only."),
     "schedule.enabled": _f(
         "Schedule", "bool", False, "Allow scheduled hunts",
@@ -134,6 +135,17 @@ def _coerce(key, field, value):
     if kind == "multi":
         if not isinstance(value, list) or not value:
             raise ValueError("must be a non-empty list")
+        if key == "hunt.sources":
+            remapped = []
+            for v in value:
+                if v in ("urlquery", "cdx", "arquivo", "index"):
+                    if "index" not in remapped:
+                        remapped.append("index")
+                elif v in field["choices"] and v not in remapped:
+                    remapped.append(v)
+            value = remapped
+            if not value:
+                raise ValueError("must be a non-empty list")
         bad = [v for v in value if v not in field["choices"]]
         if bad:
             raise ValueError("unknown: %s" % ", ".join(map(str, bad)))

@@ -44,13 +44,17 @@ class Blocked(RuntimeError):
 class Parts:
     """The collaborators the engine needs."""
 
-    def __init__(self, settings, ledger, graph, iocs, hermes, getter=curl_get):
+    def __init__(self, settings, ledger, graph, iocs, hermes, getter=curl_get, registry=None):
         self.getter = getter
         self.settings = settings
         self.ledger = ledger
         self.graph = graph
         self.iocs = iocs
         self.hermes = hermes
+        if registry is None and ledger is not None and hasattr(ledger, "db"):
+            from .registry import Registry
+            registry = Registry(ledger.db, ledger)
+        self.registry = registry
 
 
 class Engine:
@@ -70,7 +74,8 @@ class Engine:
         goal = hunt["goal"] or cfg["hunt.default_goal"]
         sources = cfg["hunt.sources"]
         if not self.p.ledger.totals()["candidates"]:
-            self.p.ledger.add_candidates(generate_candidates())
+            bundle = self.p.registry.grammar_bundle() if self.p.registry else None
+            self.p.ledger.add_candidates(generate_candidates(bundle))
         pages = []
         if "web" in sources:
             pages = self._search(hid, goal, cfg, totals)
@@ -341,8 +346,9 @@ class Engine:
         graph_on = cfg["graph.auto_entities"]
         made = {}
         if graph_on:
-            for kind in ("agent", "swarm", "case"):
-                for item in analysis[kind + "s"]:
+            for kind in ("agent", "swarm", "campaign"):
+                items = analysis.get(kind + "s") or (analysis.get("cases") if kind == "campaign" else []) or []
+                for item in items:
                     made[(kind, item["name"])] = self._entity(
                         kind, item["name"], item["description"], eid, totals)
             for link in analysis["links"]:
@@ -356,15 +362,20 @@ class Engine:
                 if all(ends) and ends[0] != ends[1]:
                     self.p.graph.link(ends[0], ends[1], link["kind"], eid)
             if CLAIM_LEVELS.index(level) >= 1 and (url or title):
-                label = (title or host_of(url) or "trace")[:100]
-                trace = self._entity("trace", label, analysis["summary"][:300],
-                                     eid, totals, {"url": url, "claim_level": level})
-                if trace:
+                label = (title or host_of(url) or "artifact")[:100]
+                artifact = self._entity("artifact", label, analysis["summary"][:300],
+                                         eid, totals, {"url": url, "claim_level": level})
+                if artifact:
                     for kind, value in extract_indicators(text)[:40]:
-                        self.p.graph.add_indicator(trace, kind, value, eid)
-                    for (kind, _), entity_id in made.items():
-                        if kind in ("agent", "swarm") and entity_id:
-                            self.p.graph.link(trace, entity_id, "trace_of", eid)
+                        self.p.graph.add_indicator(artifact, kind, value, eid)
+                    agents = [eid for (k, _), eid in made.items() if k == "agent" and eid]
+                    if agents:
+                        for agent_id in agents:
+                            self.p.graph.link(artifact, agent_id, "part_of", eid)
+                    else:
+                        for (k, _), entity_id in made.items():
+                            if k == "swarm" and entity_id:
+                                self.p.graph.link(artifact, entity_id, "part_of", eid)
         confidence = 0.2 * (CLAIM_LEVELS.index(level) + 1)
         for item in analysis["terms"]:
             ioc, reason = None, ""

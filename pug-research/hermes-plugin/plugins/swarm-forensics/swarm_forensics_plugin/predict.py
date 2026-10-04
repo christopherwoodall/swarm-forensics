@@ -55,21 +55,26 @@ def _pattern_regex(pattern):
 _OBSERVED_RES = [_pattern_regex(p) for p in OBSERVED_URL_PATTERNS]
 
 
-def matches_observed(url):
-    return any(rx.match(url) for rx in _OBSERVED_RES)
+def matches_observed(url, patterns=None):
+    if patterns is None:
+        return any(rx.match(url) for rx in _OBSERVED_RES)
+    res = [_pattern_regex(p) for p in patterns]
+    return any(rx.match(url) for rx in res)
 
 
-def _targets():
+def _targets(patterns=None, extra=None):
+    patterns = patterns if patterns is not None else OBSERVED_URL_PATTERNS
+    extra = extra if extra is not None else EXTRA_TARGETS
     out = []
-    for pattern in OBSERVED_URL_PATTERNS:
+    for pattern in patterns:
         base = pattern.split("?", 1)[0]
         if "jqp.vercel.app" not in base and base not in out:
             out.append(base)
-    return out + [t for t in EXTRA_TARGETS if t not in out]
+    return out + [t for t in extra if t not in out]
 
 
-def _wrap(relay, inner, jq=None):
-    style, prefix = RELAYS[relay]
+def _wrap(relay_cfg, inner, jq=None):
+    style, prefix = relay_cfg
     if style == "query":
         query = "url=" + quote(inner, safe="")
         if jq is not None:
@@ -87,29 +92,48 @@ def _fill(pattern, param, value):
     return re.sub(r"([?&])([^=&#?]+)=\{([^}]*)\}", repl, pattern)
 
 
-def generate_candidates():
-    """Return a deduplicated list of (url, template) pairs."""
+def generate_candidates(bundle=None):
+    """Return a deduplicated list of (url, template) pairs.
+
+    If bundle is provided, uses enabled items from the registry bundle:
+    {"patterns": [...], "relays": {host: (style, prefix)}, "nonce_probes": {param: [probes]},
+     "jq_probes": [...], "targets": [...]}
+    """
+    if bundle is not None:
+        patterns = bundle.get("patterns", [])
+        relays = bundle.get("relays", {})
+        nonce_probes = bundle.get("nonce_probes", {})
+        jq_probes = bundle.get("jq_probes", [])
+        targets = bundle.get("targets", [])
+    else:
+        patterns = list(OBSERVED_URL_PATTERNS)
+        relays = dict(RELAYS)
+        nonce_probes = dict(NONCE_PROBES)
+        jq_probes = list(JQ_PROBES)
+        targets = list(EXTRA_TARGETS)
+
     seen, out = set(), []
+    target_list = _targets(patterns, targets)
 
     def emit(template, url):
         # A candidate must match an observed shape. Others are dropped.
-        if url not in seen and matches_observed(url):
+        if url not in seen and matches_observed(url, patterns):
             seen.add(url)
             out.append((url, template))
 
-    for relay in RELAYS:
-        for target in _targets():
-            for jq in JQ_PROBES:
-                emit("relay_wrap", _wrap(relay, target, jq))
-            for param, probes in NONCE_PROBES.items():
+    for relay_host, relay_cfg in relays.items():
+        for target in target_list:
+            for jq in jq_probes:
+                emit("relay_wrap", _wrap(relay_cfg, target, jq))
+            for param, probes in nonce_probes.items():
                 for probe in probes:
                     inner = "%s%s%s=%s" % (target, "&" if "?" in target else "?",
                                            param, probe)
-                    for jq in JQ_PROBES:
-                        emit("relay_nonce", _wrap(relay, inner, jq))
-    for pattern in OBSERVED_URL_PATTERNS:
+                    for jq in jq_probes:
+                        emit("relay_nonce", _wrap(relay_cfg, inner, jq))
+    for pattern in patterns:
         names = re.findall(r"[?&]([^=&#?]+)=\{[^}]*\}", pattern)
-        for param, probes in NONCE_PROBES.items():
+        for param, probes in nonce_probes.items():
             if param in names:
                 for probe in probes:
                     emit("nonce_direct", _fill(pattern, param, probe))
