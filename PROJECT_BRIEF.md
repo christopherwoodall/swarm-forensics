@@ -82,11 +82,11 @@ Additional research questions include:
 - How does coordination break and recover?
 - Which shared artifacts connect otherwise separate processes?
 
-NOTE reports 37 distinct organizational mechanism implementations.
+[NOTE](colette-research/notes/swarmtraces-distributed-systems-for-pug.md) reports 37 distinct organizational mechanism implementations.
 That number describes an earlier analysis, not agents, runs, deployments, or verified historical events.
 This bootstrap did not reproduce that result.
 
-NOTE distinguishes constructed mechanisms from successful execution.
+[NOTE](colette-research/notes/swarmtraces-distributed-systems-for-pug.md) distinguishes constructed mechanisms from successful execution.
 It does not establish complete chronology, reliable agent attribution, or consumption of every recorded trace.
 Preserve those limitations when selecting evidence for a demonstration.
 

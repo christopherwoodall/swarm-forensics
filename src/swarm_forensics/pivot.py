@@ -19,7 +19,7 @@ from typing import Any, NoReturn
 
 from swarm_forensics.replay import ReplayError
 
-DEFAULT_FILE = Path("data/viz_mock/v3_transluce/data/graph.json")
+DEFAULT_FILE = Path("pug-research/experiments/viz_mock/v3_transluce/data/graph.json")
 LAYERS = ("source", "launcher", "pivot", "target")
 PREFIX = {"source": "S:", "launcher": "L:", "pivot": "P:", "target": "T:"}
 EDGE_LAYERS = (("source", "launcher"), ("launcher", "pivot"), ("pivot", "target"))

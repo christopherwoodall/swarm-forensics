@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "name": "discord-bot-swarm",
+  "runtime_identity": "discord-bot-swarm",
+  "display_name": "Discord Bot Swarm",
+  "description": "Create cooperative Discord bot teams",
+  "port": 4020,
+  "public_host": "discord-bot-swarm.multi.fairystack.com",
+  "health_path": "/health",
+  "services": [
+    "app_discord-bot-swarm.service"
+  ],
+  "runtime": {
+    "kind": "node",
+    "entrypoint": "server.js",
+    "isolate": true
+  },
+  "deployment": {
+    "require_locked_python": true
+  },
+  "favicon": {
+    "provider": "favicon_gen",
+    "path": "/favicon.ico",
+    "png_path": "/favicon-32.png"
+  },
+  "analytics": {
+    "provider": "gridglance",
+    "tracker_url": "https://observatory.aisloppy.com/api/usage/tracker.js?app_id=G_JcyE2ggG1K-2n17-lBdw",
+    "app_id_hash": "G_JcyE2ggG1K-2n17-lBdw"
+  },
+  "auth": {
+    "provider": "authreturn",
+    "authreturn_app_slug": "discord-bot-swarm-multi"
+  }
+}

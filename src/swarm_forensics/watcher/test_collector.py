@@ -338,8 +338,9 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout), {"synthetic": True})
         makefile = (root / "Makefile").read_text()
-        lint_recipe = makefile.split("lint: setup", 1)[1].split("watcher-client:", 1)[0]
-        self.assertIn("data/viz_mock/v2/serve.py data/viz_mock/v3_transluce/serve.py", lint_recipe)
+        lint_recipe = makefile.split("\nlint: setup", 1)[1].split("watcher-client:", 1)[0]
+        self.assertIn("pug-research/experiments/viz_mock/v2/serve.py "
+            "pug-research/experiments/viz_mock/v3_transluce/serve.py", lint_recipe)
 
     def test_make_collector_targets_are_frozen_without_setup_or_network_for_local_reads(self):
         root = Path(__file__).resolve().parents[3]

@@ -15,7 +15,7 @@ from swarm_forensics import pivot
 from swarm_forensics.replay import ReplayError
 
 ROOT = Path(__file__).resolve().parents[2]
-VIZ = ROOT / "data" / "viz_mock" / "v3_transluce"
+VIZ = ROOT / "pug-research" / "experiments" / "viz_mock" / "v3_transluce"
 
 
 def small_graph() -> dict:
