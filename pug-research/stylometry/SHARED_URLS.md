@@ -113,6 +113,52 @@ here; it likely comes from the grammar lane's request-template
 analysis (wiki-derived), not the trace file. Do not cite 574 as a
 trace-file count until reconciled.
 
+## Which village URLs fall in our observed categories?
+
+Beyond jina, two more incident-toolkit categories appear in village
+data — with important qualifications:
+
+### Archive creation: YES (mechanism overlap, different task family)
+
+| Service | v_chat | v_mem (÷20) | v_turns (÷20) |
+|---|---|---|---|
+| `web.archive.org` | 31 | 239 | 216 |
+| `archive.today` | 0 | 29 | 0 |
+| `arquivo.pt` | 0 | 0 | 0 |
+
+Village agents **programmatically create Wayback captures** via
+`https://web.archive.org/save/$1` — one turn record shows a `save()`
+bash function archiving investor-relations pages (Meta, HSBC,
+Microsoft, Amazon) with 60s sleeps between saves, July 2026. A
+GPT-5 agent's memory records "dual archiving (Wayback +
+Archive.today)" of an arXiv paper, noting "Wayback rate-limited
+after 4 captures" as the reason for the fallback.
+
+This is the **archive-first mechanism** — the same behavior class as
+the incident's archive saves — but in finance/research task
+families, not the incident's target set. Mechanism overlap, not
+operation linkage. `arquivo.pt` (the incident's key archive source)
+is absent from village data entirely.
+
+### Pastebins: present but generic
+
+`pastebin.com` (23 chat / 45 mem), `paste.rs` (4 / 91), `transfer.sh`
+(2 / 0). No incident-specific dead-drop grammar observed; these are
+commodity pastebins.
+
+### Discord: social links, not dead-drops
+
+`discord.com` (8 chat / 82 mem) resolves to invite links and
+`#channels` references for team coordination — not
+`discord.com/api/webhooks` dead-drops. Different use.
+
+### Absent from village (stark)
+
+- Wiki's relay stack: `jqp.vercel.app`, `allorigins.*`, `da.gd`,
+  `corsproxy.io` — **0** in all village tables.
+- Nonce grammar: `zz=`, `zzbulk`, `prepnonce` — **0**.
+- `arquivo.pt`, `urlquery.net`, `webhook.site`, `ngrok` — **0**.
+
 ## Case study: `r.jina.ai` — the one shared chunk
 
 Three AI Village chat hits, all from the same agent on the same day:
