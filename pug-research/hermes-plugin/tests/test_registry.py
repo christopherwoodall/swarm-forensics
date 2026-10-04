@@ -120,10 +120,9 @@ new.relay.example.com
         self.assertEqual(result2["skipped"], 3)
 
     def test_registry_writes_audit_events(self):
-        before_events = self.env.ledger.events()
         self.reg.add_grammar("jq_probe", ".custom_probe")
         after_events = self.env.ledger.events()
-        registry_events = [e for e in after_events["events"] if e["kind"] == "registry"]
+        registry_events = [e for e in after_events if e["kind"] == "registry"]
         self.assertGreater(len(registry_events), 0)
         self.assertIn(".custom_probe", registry_events[-1]["message"])
 
