@@ -1,0 +1,501 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://urlscan.io/docs/search",
+      "title": "urlscan-search-docs.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "The query field uses the",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "All queries are run in filter mode, sorted by date with the more recent scans first.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "date:\\[2020-01-01 TO 2020-02-01\\]",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "url": "https://urlscan.io/docs/api",
+      "title": "urlscan-api-docs.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Unauthenticated users only received minor",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Scan is visible<br> on the frontpage and in the public search results and info pages.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "visible on the public page or search results, but is visible to vetted<br> security researchers",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "url": "https://urlscan.io/docs/faq",
+      "title": "urlscan-faq.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "We do not guarantee retention for public scans.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "url": "https://docs.greynoise.io/docs/using-the-greynoise-query-language-gnql",
+      "title": "greynoise-gnql-docs.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "The data that this endpoint queries refreshes once per hour",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "HTTP paths the device has been observed crawling",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "url": "https://docs.greynoise.io/docs/using-the-greynoise-community-api",
+      "title": "greynoise-community-docs.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "The Community API provides a free resource",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "url": "https://docs.greynoise.io/docs/recall",
+      "title": "greynoise-recall.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Recall is a time-series capability for GNQL",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "url": "https://urlquery.net/help/search",
+      "title": "urlquery-search-docs.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search only returns reports available to the current user",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Plain text searches HTML documents and JavaScript, not every byte of every downloaded file.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "url": "https://urlquery.net/about",
+      "title": "urlquery-about.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Scan results are retained for a limited time",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Scan results are retained for a limited time to support investigations, service delivery, operational stability, and research.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "url": "https://www.asymmetricsecurity.com/newsroom/rogue-agents-investigation-initial-findings",
+      "title": "asymmetric-findings.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "September 28, 2026",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Jina Reader (r.jina.ai), markdown.new, jqp.vercel.app",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "web.archive.org (Wayback Machine, Save Page Now)",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "url": "https://www.kennethdegraff.com/swarm",
+      "title": "degraff-swarm.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "14,787 mentions on Vanderbilt; 3,235 posts",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Fourteen services in all fetched pages for the swarm, and thirteen of the fourteen were aimed at one file, the SEC's county list.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "url": "https://www.theregister.com/ai-and-ml/2026/09/10/openais-website-hijacking-swarm-reached-far-further-than-we-thought/5295644",
+      "title": "register-20260910.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "PublishedThu 10 Sept 2026 // 18:15 UTC",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "url": "https://www.manifold.security/blog/ai-agents-urlscan-aihw-government-data",
+      "title": "manifold-aihw.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Public urlscan.io records from **17-18 June 2026** show automated scans",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "url": "https://transluce.org/agent-activity",
+      "title": "transluce-agent-activity.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Published: September 23, 2026",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "url": "https://transluce.org/us-canada-gov",
+      "title": "transluce-us-canada-gov.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Between June 16 and 22, publicly posted URLs indicate attempts to reuse exposed API keys",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "url": "https://thecolony.cc/post/a7beb729-c578-4ee3-8b88-82a0c6b6603e",
+      "title": "colony-census-post.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "**Wikis: four sites, one family, all silent since July 2, 2026.**",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "url": "https://github.com/sighrobot/jqp",
+      "title": "jqp-github.md",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "**jqp** is a free serverless proxy",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Acounty.json%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-19%5D&type=reports",
+      "title": "urlquery-county-june",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 548 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Acounty.json%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-county-recent",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 0 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aaihw.gov.au%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-23%5D&type=reports",
+      "title": "urlquery-aihw-june",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 4376 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aaihw.gov.au%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-aihw-recent",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 7 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Ajqp.vercel.app%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-23%5D&type=reports",
+      "title": "urlquery-jqp-june",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 3 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Ajqp.vercel.app%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-jqp-recent",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 0 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Ar.jina.ai%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-jina-recent",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 4 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Ar.jina.ai%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-23%5D&type=reports",
+      "title": "urlquery-jina-june",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 76 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aapi.cors.lol%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-19%5D&type=reports",
+      "title": "urlquery-cors-june",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 3 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aapi.cors.lol%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-cors-recent",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 0 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aallorigins.hexlet.app%2A%20AND%20date%3A%5B2026-06-18%20TO%202026-06-19%5D&type=reports",
+      "title": "urlquery-allorigins-june",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 94 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aallorigins.hexlet.app%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-allorigins-recent",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Search: 0 hits",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "url": "https://urlscan.io/api/v1/search/?q=domain%3Agoogle.com+AND+date%3A%5B2026-06-18+TO+2026-06-19%5D&size=3",
+      "title": "urlscan-june-google",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Query domain:google.com AND date:[2026-06-18 TO 2026-06-19]; HTTP 200; total 0; has_more False.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "url": "https://urlscan.io/api/v1/search/?q=task.domain%3Asec.gov+AND+date%3A%5B2026-09-04+TO+2026-10-04%5D&size=10",
+      "title": "urlscan-recent-sec",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Query task.domain:sec.gov AND date:[2026-09-04 TO 2026-10-04]; HTTP 200; total 60; has_more False.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "url": "https://urlscan.io/api/v1/search/?q=task.domain%3Asec.gov+AND+date%3A%5B2026-06-18+TO+2026-06-19%5D&size=10",
+      "title": "urlscan-june-sec",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Query task.domain:sec.gov AND date:[2026-06-18 TO 2026-06-19]; HTTP 200; total 0; has_more False.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "url": "https://api.greynoise.io/v2/experimental/gnql?query=raw_data.http.path%3A%22%2Acounty.json%2A%22&size=1",
+      "title": "greynoise-401",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Query raw_data.http.path:\"*county.json*\"; HTTP 401; response message unauthorized.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "url": "https://web.archive.org/cdx/search/cdx?url=r.jina.ai%2Fhttp%3A%2F%2Fhttps%3A%2F%2Fwww.aihw.gov.au%2Fgetmedia%2F57e4c61f%2A&from=20260618&to=20260618&output=json&fl=timestamp%2Curlkey%2Cstatuscode&limit=10",
+      "title": "wayback-aihw",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "CDX result for wayback-aihw; HTTP 200; records [[\"20260618063135\", \"ai,jina,r)/http:/https:/www.aihw.gov.au/getmedia/57e4c61f-213a-4b27-b2fa-3a22a2a19d27/principal-diagnosis-cube_2014-15.xlsx.aspx\", \"200\"]].",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "url": "https://web.archive.org/cdx/search/cdx?url=sec.gov%2Ffiles%2Fcounty.json&matchType=prefix&from=20260618&to=20260618&output=json&fl=timestamp%2Curlkey%2Coriginal%2Cdigest%2Cstatuscode&limit=200",
+      "title": "wayback-county",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "CDX result for wayback-county; HTTP 200; count 63; first ['20260618022300', '20260618022326', '20260618065925', '20260618141937', '20260618143938', '20260618143941'].",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "url": "https://web.archive.org/cdx/search/cdx?url=transluce.org%2Fagent-activity&from=20260901&to=20261003&output=json&fl=timestamp%2Coriginal%2Cstatuscode&filter=statuscode%3A200&collapse=timestamp%3A8&limit=30",
+      "title": "wayback-report-sep24",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "CDX result for wayback-report-sep24; HTTP 200; count 6; first [['20260924031053', 'https://transluce.org/agent-activity', '200'], ['20260925021236', 'https://transluce.org/agent-activity', '200'], ['20260926113612', 'https://transluce.org/agent-activity', '200'], ['20260927040012', 'https://transluce.org/agent-activity', '200'], ['20261001134622', 'https://transluce.org/agent-activity', '200'], ['20261002121956', 'https://transluce.org/agent-activity', '200']].",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "url": "https://api.urlquery.net/public/v1/search/reports/?query=http.url.addr%3A%2Acounty.json%2A+AND+date%3A%5B2026-06-18+TO+2026-06-19%5D",
+      "title": "urlquery-api-401",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Public read-only lookup urlquery-api-401; HTTP 401; retrieved 2026-10-04T01:15:08.486224+00:00.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "url": "https://urlscan.io/api/v1/result/019ed827-0471-746c-aa31-8da7d1e6f6ae",
+      "title": "urlscan-result-403",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Public read-only lookup urlscan-result-403; HTTP 403; retrieved 2026-10-04T01:21:42.506071+00:00.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "url": "https://urlscan.io/result/019ed827-0471-746c-aa31-8da7d1e6f6ae",
+      "title": "urlscan-public-429",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Public read-only lookup urlscan-public-429; HTTP 429; retrieved 2026-10-04T01:21:50.935859+00:00.",
+          "added": "2026-10-03"
+        }
+      ]
+    }
+  ]
+}

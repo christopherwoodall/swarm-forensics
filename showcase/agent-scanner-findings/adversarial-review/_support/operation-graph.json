@@ -1,0 +1,244 @@
+{
+  "nodes": [
+    {
+      "id": "CEN17",
+      "type": "trace_cluster"
+    },
+    {
+      "id": "AIHW18",
+      "type": "trace_cluster"
+    },
+    {
+      "id": "SEC-WB18",
+      "type": "trace_cluster"
+    },
+    {
+      "id": "SEC-UQ18",
+      "type": "trace_cluster"
+    },
+    {
+      "id": "WIKI-SEC",
+      "type": "trace_cluster"
+    },
+    {
+      "id": "Census-B16001",
+      "type": "target"
+    },
+    {
+      "id": "AIHW-principal-diagnosis",
+      "type": "target"
+    },
+    {
+      "id": "SEC-county-file",
+      "type": "target"
+    },
+    {
+      "id": "Jina",
+      "type": "relay"
+    },
+    {
+      "id": "decimal-nonce",
+      "type": "nonce_grammar"
+    },
+    {
+      "id": "AIHW-double-scheme",
+      "type": "identifier"
+    },
+    {
+      "id": "Transluce-AIHW",
+      "type": "known_published_incident"
+    },
+    {
+      "id": "Transluce-SEC",
+      "type": "known_published_incident"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CEN17",
+      "to": "Census-B16001",
+      "relation": "same target",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "parent:4",
+        "parent:5",
+        "parent:6"
+      ],
+      "observation_time_utc": "2026-06-17T02:59:07Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409206+00:00",
+      "basis": "Three wrappers name the same path; embedded schemes differ",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "AIHW18",
+      "to": "AIHW-principal-diagnosis",
+      "relation": "same target",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "parent:8"
+      ],
+      "observation_time_utc": "2026-06-18T06:31:35Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409241+00:00",
+      "basis": "Replay source field names workbook",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "SEC-WB18",
+      "to": "SEC-county-file",
+      "relation": "same target",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "parent:1"
+      ],
+      "observation_time_utc": "2026-06-18T02:23:00Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409251+00:00",
+      "basis": "CDX prefix query",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "SEC-UQ18",
+      "to": "SEC-county-file",
+      "relation": "same target",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "M1"
+      ],
+      "observation_time_utc": "2026-06-18T04:23:09.763Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409256+00:00",
+      "basis": "Literal county.json request subset; not all ultimate target receipts",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "WIKI-SEC",
+      "to": "SEC-county-file",
+      "relation": "explicit cross-reference",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "sec:5"
+      ],
+      "observation_time_utc": "2026-06-18T14:10:56Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409262+00:00",
+      "basis": "Wiki additions name county.json",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "CEN17",
+      "to": "Jina",
+      "relation": "same relay",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "parent:4"
+      ],
+      "observation_time_utc": "2026-06-17T02:59:07Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409268+00:00",
+      "basis": "One wrapper uses Jina",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "AIHW18",
+      "to": "Jina",
+      "relation": "same relay",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "parent:8"
+      ],
+      "observation_time_utc": "2026-06-18T06:31:35Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409273+00:00",
+      "basis": "Malformed wrapper uses Jina",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "SEC-WB18",
+      "to": "WIKI-SEC",
+      "relation": "temporal overlap",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "sec:1",
+        "sec:5"
+      ],
+      "observation_time_utc": "2026-06-18T20:13:42Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409279+00:00",
+      "basis": "250 wiki revisions overlap the archive peak; no handoff",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "SEC-WB18",
+      "to": "decimal-nonce",
+      "relation": "observed query grammar",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "sec:1"
+      ],
+      "observation_time_utc": "2026-06-18T14:52:28Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409286+00:00",
+      "basis": "Observed decimal query shapes; common software conventions remain alternatives",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "AIHW18",
+      "to": "AIHW-double-scheme",
+      "relation": "same exact identifier",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "census-aihw:16"
+      ],
+      "observation_time_utc": "2026-06-18T06:31:35Z",
+      "analysis_time_utc": "2026-10-04T01:38:50.409315+00:00",
+      "basis": "Original and urlkey preserve malformed scheme structure",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    },
+    {
+      "from": "AIHW18",
+      "to": "Transluce-AIHW",
+      "relation": "possible common operator",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "parent:8",
+        "parent:10"
+      ],
+      "observation_time_utc": null,
+      "analysis_time_utc": "2026-10-04T01:38:50.409323+00:00",
+      "basis": "Shared agency and relay only; hospital and pharmaceutical tasks differ",
+      "confidence_in_relation": "low",
+      "operation_identity": "unestablished",
+      "hypothesis_only": true
+    },
+    {
+      "from": "SEC-UQ18",
+      "to": "Transluce-SEC",
+      "relation": "explicit cross-reference",
+      "creator_analyst": "Hermes adversarial review",
+      "source": [
+        "parent:9",
+        "M1"
+      ],
+      "observation_time_utc": null,
+      "analysis_time_utc": "2026-10-04T01:38:50.409330+00:00",
+      "basis": "Published account supplies these report exports",
+      "confidence_in_relation": "high",
+      "operation_identity": "unestablished",
+      "hypothesis_only": false
+    }
+  ],
+  "rules": "No same_operation edge. Hypotheses MUST NOT be treated as observations."
+}

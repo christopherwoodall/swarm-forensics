@@ -1,0 +1,94 @@
+{
+  "sources": [
+    {
+      "name": "jqp_repo",
+      "url": "https://api.github.com/repos/sighrobot/jqp",
+      "retrieved_at_utc": "2026-10-04T01:34:33.112995+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/jqp_repo.json",
+      "sha256": "56706ff9dfaa1798e81c44bd37cf6cf18cde68a34bfc52dd4e34840dfc096c4b",
+      "summary": {
+        "full_name": "sighrobot/jqp",
+        "created_at": "2022-05-14T21:51:48Z",
+        "homepage": "https://jqp.vercel.app",
+        "description": "A serverless proxy for filtering JSON using node-jq",
+        "default_branch": "main"
+      }
+    },
+    {
+      "name": "jqp_tree",
+      "url": "https://api.github.com/repos/sighrobot/jqp/git/trees/main?recursive=1",
+      "retrieved_at_utc": "2026-10-04T01:34:33.113385+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/jqp_tree.json",
+      "sha256": "b53ab690f911c9fe22c0a32b2ddcd0c0de1a0adf7e42ac3969860ef8b881ae75",
+      "summary": [
+        "README.md",
+        "app/api/v0",
+        "app/api/v0/route.js"
+      ]
+    },
+    {
+      "name": "cors_repo",
+      "url": "https://api.github.com/repos/BradPerbs/cors.lol",
+      "retrieved_at_utc": "2026-10-04T01:34:33.113820+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/cors_repo.json",
+      "sha256": "c92768b4ffb8c9eaf76974018121ac6741261df711263adad60097087509b2c9",
+      "summary": {
+        "full_name": "BradPerbs/cors.lol",
+        "created_at": "2024-05-17T21:11:58Z",
+        "homepage": "https://cors.lol/",
+        "description": "Free-to-use CORS proxy that adds CORS headers to your requests. This service allows you to bypass the Same-Origin Policy and make requests to external APIs without facing CORS issues.",
+        "default_branch": "main"
+      }
+    },
+    {
+      "name": "cors_commits",
+      "url": "https://api.github.com/repos/BradPerbs/cors.lol/commits?until=2026-06-18T00%3A00%3A00Z&per_page=1",
+      "retrieved_at_utc": "2026-10-04T01:34:33.114527+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/cors_commits.json",
+      "sha256": "817d2958aa014c671f2e938f107336e659c7cbec02fb53eaa2e139ac6d6adeeb",
+      "summary": {
+        "sha": "4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94",
+        "date": "2026-05-01T07:49:46Z",
+        "files": []
+      }
+    },
+    {
+      "name": "hexlet_commit",
+      "url": "https://api.github.com/repos/Hexlet/hexlet-allorigins/commits/84f7651c642cef788564b4dd285a274b53bde9e4",
+      "retrieved_at_utc": "2026-10-04T01:34:33.310614+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/hexlet_commit.json",
+      "sha256": "6a63c89036b76eb98939ec69b65adb1bc1ebc8abb8b7fdaa5ca57f479983539c",
+      "summary": {
+        "sha": "84f7651c642cef788564b4dd285a274b53bde9e4",
+        "date": "2022-03-15T18:52:11Z",
+        "files": [
+          "README.md"
+        ]
+      }
+    },
+    {
+      "name": "jqp_commits",
+      "url": "https://api.github.com/repos/sighrobot/jqp/commits?until=2026-06-18T00%3A00%3A00Z&per_page=1",
+      "retrieved_at_utc": "2026-10-04T01:34:33.321601+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/jqp_commits.json",
+      "sha256": "24bb000b063aee12a4081835640c208d43d71f33db17b94d50893bad8691f194",
+      "summary": {
+        "sha": "9d3e86787f551b5609e36fec3e6ce73e255e5149",
+        "date": "2023-07-19T23:01:13Z",
+        "files": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "raw_download_policy": "Raw downloads remain in ignored data/raw. Durable excerpts omit live target URL payloads.",
+  "sources": [
+    {
+      "source_id": 32,
+      "source_url": "https://raw.githubusercontent.com/sighrobot/jqp/9d3e86787f551b5609e36fec3e6ce73e255e5149/README.md",
+      "retrieved_at_utc": "2026-10-04T01:34:49.683426+00:00",
+      "raw_path": "data/raw/relay-review/jqp_readme.txt",
+      "raw_sha256": "6956a9753e5641f8bb053ed135eeb1d7ce87acdac68396fe832ccc28c1da5213",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 32"
+    },
+    {
+      "source_id": 33,
+      "source_url": "https://raw.githubusercontent.com/sighrobot/jqp/9d3e86787f551b5609e36fec3e6ce73e255e5149/app/api/v0/route.js",
+      "retrieved_at_utc": "2026-10-04T01:34:49.684081+00:00",
+      "raw_path": "data/raw/relay-review/jqp_route.txt",
+      "raw_sha256": "5e2bbafe7ae8ce8a0a40b6829c19f063df512fc435e95267b8577a053987852c",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 33"
+    },
+    {
+      "source_id": 34,
+      "source_url": "https://raw.githubusercontent.com/Hexlet/hexlet-allorigins/84f7651c642cef788564b4dd285a274b53bde9e4/README.md",
+      "retrieved_at_utc": "2026-10-04T01:34:49.684648+00:00",
+      "raw_path": "data/raw/relay-review/hexlet_readme.txt",
+      "raw_sha256": "acf8820284a34b2e5fa0eb47344201002330858e6118e485fa35384f86d214b7",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 34"
+    },
+    {
+      "source_id": 35,
+      "source_url": "https://raw.githubusercontent.com/BradPerbs/cors.lol/4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94/README.md",
+      "retrieved_at_utc": "2026-10-04T01:34:49.685302+00:00",
+      "raw_path": "data/raw/relay-review/cors_readme.txt",
+      "raw_sha256": "0c144458675b94513622e56e9e5a72d73ddea5d02f2f5cf1614e9b26c27996a9",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 35"
+    },
+    {
+      "source_id": 36,
+      "source_url": "https://raw.githubusercontent.com/BradPerbs/cors.lol/4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94/main.go",
+      "retrieved_at_utc": "2026-10-04T01:34:49.880740+00:00",
+      "raw_path": "data/raw/relay-review/cors_main.txt",
+      "raw_sha256": "6092e002e3605e7fab6c50eb58aee57155487251a08330ba6554d21177199121",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 36"
+    },
+    {
+      "source_id": 7,
+      "source_url": "https://platform.lemino.ai",
+      "retrieved_at_utc": "2026-10-04T01:34:49.887553+00:00",
+      "raw_path": "data/raw/relay-review/lemino_home.txt",
+      "raw_sha256": "83e755b9c80070f40cf88a2fb19d507c91423d9b59abad93ffbaa036fb55528b",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 7"
+    },
+    {
+      "source_id": 26,
+      "source_url": "https://api.github.com/repos/sighrobot/jqp",
+      "retrieved_at_utc": "2026-10-04T01:34:33.112995+00:00",
+      "raw_path": "data/raw/relay-review/jqp_repo.json",
+      "raw_sha256": "56706ff9dfaa1798e81c44bd37cf6cf18cde68a34bfc52dd4e34840dfc096c4b",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 26"
+    },
+    {
+      "source_id": 28,
+      "source_url": "https://api.github.com/repos/BradPerbs/cors.lol",
+      "retrieved_at_utc": "2026-10-04T01:34:33.113820+00:00",
+      "raw_path": "data/raw/relay-review/cors_repo.json",
+      "raw_sha256": "c92768b4ffb8c9eaf76974018121ac6741261df711263adad60097087509b2c9",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 28"
+    },
+    {
+      "source_id": 29,
+      "source_url": "https://api.github.com/repos/BradPerbs/cors.lol/commits?until=2026-06-18T00%3A00%3A00Z&per_page=1",
+      "retrieved_at_utc": "2026-10-04T01:34:33.114527+00:00",
+      "raw_path": "data/raw/relay-review/cors_commits.json",
+      "raw_sha256": "817d2958aa014c671f2e938f107336e659c7cbec02fb53eaa2e139ac6d6adeeb",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 29"
+    },
+    {
+      "source_id": 30,
+      "source_url": "https://api.github.com/repos/Hexlet/hexlet-allorigins/commits/84f7651c642cef788564b4dd285a274b53bde9e4",
+      "retrieved_at_utc": "2026-10-04T01:34:33.310614+00:00",
+      "raw_path": "data/raw/relay-review/hexlet_commit.json",
+      "raw_sha256": "6a63c89036b76eb98939ec69b65adb1bc1ebc8abb8b7fdaa5ca57f479983539c",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 30"
+    },
+    {
+      "source_id": 31,
+      "source_url": "https://api.github.com/repos/sighrobot/jqp/commits?until=2026-06-18T00%3A00%3A00Z&per_page=1",
+      "retrieved_at_utc": "2026-10-04T01:34:33.321601+00:00",
+      "raw_path": "data/raw/relay-review/jqp_commits.json",
+      "raw_sha256": "24bb000b063aee12a4081835640c208d43d71f33db17b94d50893bad8691f194",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 31"
+    },
+    {
+      "source_id": 11,
+      "source_url": "https://urlquery.net/report/830d0a0c-d9d4-483d-9149-c33c35bf2f84/json",
+      "retrieved_at_utc": "2026-10-04T01:33:46.360515+00:00",
+      "raw_path": "data/raw/relay-review/source-11.json",
+      "raw_sha256": "a0738dc2e429a7419b7afb65e4572d9ef6b36059f221b70f5e6b1bbcc34ca9e2",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 11"
+    },
+    {
+      "source_id": 12,
+      "source_url": "https://urlquery.net/report/eb91d8ad-2f82-40df-803f-5474539757c1/json",
+      "retrieved_at_utc": "2026-10-04T01:33:46.361437+00:00",
+      "raw_path": "data/raw/relay-review/source-12.json",
+      "raw_sha256": "0e3549a71b32e2df0749ef36a320ec1fefe2771d0ebcb73fe22ed7dab0ec3a0f",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 12"
+    },
+    {
+      "source_id": 19,
+      "source_url": "https://web.archive.org/cdx/search/cdx?url=jqp.vercel.app%2Fapi%2Fv0&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "retrieved_at_utc": "2026-10-04T01:33:46.361793+00:00",
+      "raw_path": "data/raw/relay-review/source-19.json",
+      "raw_sha256": "d899cf055f84457a7170d970600c65d3885d75287b2672290b1d701e6f62d604",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 19"
+    },
+    {
+      "source_id": 20,
+      "source_url": "https://web.archive.org/cdx/search/cdx?url=allorigins.hexlet.app&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "retrieved_at_utc": "2026-10-04T01:33:46.362081+00:00",
+      "raw_path": "data/raw/relay-review/source-20.json",
+      "raw_sha256": "c3a8c4724ea197bedc9f4a5ccd982ecde37b7259e5e23cf18493d401cf33e288",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 20"
+    },
+    {
+      "source_id": 21,
+      "source_url": "https://web.archive.org/cdx/search/cdx?url=api.cors.lol&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "retrieved_at_utc": "2026-10-04T01:33:46.921804+00:00",
+      "raw_path": "data/raw/relay-review/source-21.json",
+      "raw_sha256": "323cafc82b6e3e0b21ca7eccbcfb06087357f32b6d55fef35d30bfd4ff7d3e41",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 21"
+    },
+    {
+      "source_id": 22,
+      "source_url": "https://web.archive.org/cdx/search/cdx?url=platform.lemino.ai&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "retrieved_at_utc": "2026-10-04T01:33:47.184161+00:00",
+      "raw_path": "data/raw/relay-review/source-22.json",
+      "raw_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 22"
+    },
+    {
+      "source_id": 25,
+      "source_url": "https://urlquery.net/report/a9d4b7db-2921-40d9-aa1b-01d6927b9731/json",
+      "retrieved_at_utc": "2026-10-04T01:33:47.430233+00:00",
+      "raw_path": "data/raw/relay-review/source-25.json",
+      "raw_sha256": "245070fa9d26a943f54a03c9ac32f50162cb6a2b0c5aa902cba086e798247735",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 25"
+    },
+    {
+      "source_id": 2,
+      "source_url": "https://github.com/joshuadavid/wikiagentswarminvestigation/blob/e152f85f9032a8e4a55dade4b7990defe5e138c9/tasks/sec-regcf-ma-cache/data-files.md",
+      "retrieval_method": "Existing public Git clone, pinned commit e152f85f9032a8e4a55dade4b7990defe5e138c9. Recovery time is not original fetch time.",
+      "verified_at_utc": "2026-10-04T01:36:13.290374+00:00",
+      "original_fetch_time_utc": "Not saved by prior worker",
+      "raw_path": "data/raw/relay-wikiagents/tasks/sec-regcf-ma-cache/data-files.md",
+      "raw_sha256": "95f7995264a5f93953a9b35124cf58718856604388dee88b1ddd8340b4aa2916",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 2"
+    },
+    {
+      "source_id": 38,
+      "source_url": "https://github.com/joshuadavid/wikiagentswarminvestigation/blob/e152f85f9032a8e4a55dade4b7990defe5e138c9/tasks/url-fetch-proxy-usage/README.md",
+      "retrieval_method": "Existing public Git clone, pinned commit e152f85f9032a8e4a55dade4b7990defe5e138c9. Recovery time is not original fetch time.",
+      "verified_at_utc": "2026-10-04T01:36:13.290543+00:00",
+      "original_fetch_time_utc": "Not saved by prior worker",
+      "raw_path": "data/raw/relay-wikiagents/tasks/url-fetch-proxy-usage/README.md",
+      "raw_sha256": "9c79f4cf3cb0a5462558f06558fe80638f0e7d74e3d39cb190a61ab2d4fa9363",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 38"
+    },
+    {
+      "source_id": 37,
+      "source_url": "https://github.com/joshuadavid/wikiagentswarminvestigation/blob/e152f85f9032a8e4a55dade4b7990defe5e138c9/analyses/urls/outputs/urls.jsonl",
+      "retrieval_method": "Existing public Git clone, pinned commit e152f85f9032a8e4a55dade4b7990defe5e138c9. Recovery time is not original fetch time.",
+      "verified_at_utc": "2026-10-04T01:36:13.290642+00:00",
+      "original_fetch_time_utc": "Not saved by prior worker",
+      "raw_path": "data/raw/relay-wikiagents/analyses/urls/outputs/urls.jsonl",
+      "raw_sha256": "6d4b9b1bdbca1bbbcd932ea132d44ac328f2cd59da4bc4ea74a9f00698af31f2",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 37"
+    },
+    {
+      "source_id": 1,
+      "source_url": "https://github.com/joshuadavid/wikiagentswarminvestigation/tree/e152f85f9032a8e4a55dade4b7990defe5e138c9/agent-logs/prowiki",
+      "retrieval_method": "Existing public Git clone, pinned commit e152f85f9032a8e4a55dade4b7990defe5e138c9. Recovery time is not original fetch time.",
+      "verified_at_utc": "2026-10-04T01:36:13.318363+00:00",
+      "original_fetch_time_utc": "Not saved by prior worker",
+      "raw_path": "data/raw/relay-wikiagents/agent-logs/prowiki/revisions.jsonl",
+      "raw_sha256": "60df4a515178230aa952d9f64f6215aea4bd95ab2f05e31e484cf9b887e3f793",
+      "excerpt_file": "source-excerpts.md",
+      "excerpt_heading": "Source 1"
+    }
+  ]
+}

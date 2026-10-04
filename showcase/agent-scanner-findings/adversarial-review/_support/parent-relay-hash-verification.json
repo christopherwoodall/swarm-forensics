@@ -1,0 +1,112 @@
+[
+  {
+    "source_id": 32,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 33,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 34,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 35,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 36,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 7,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 26,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 28,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 29,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 30,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 31,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 11,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 12,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 19,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 20,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 21,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 22,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 25,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 2,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 38,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 37,
+    "exists": true,
+    "sha256_matches": true
+  },
+  {
+    "source_id": 1,
+    "exists": true,
+    "sha256_matches": true
+  }
+]

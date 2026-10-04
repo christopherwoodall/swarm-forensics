@@ -1,0 +1,319 @@
+{
+  "counts": {
+    "county_revisions_missing_base": 3,
+    "eligible_revisions": 5089,
+    "hunk_allorigins.hexlet.app": 955,
+    "hunk_api.cors.lol": 43,
+    "hunk_insert_or_replace_county_urls": 32310,
+    "hunk_jqp.vercel.app": 12904,
+    "hunk_platform.lemino.ai": 27,
+    "literal_county_url_occurrences": 46244,
+    "percent_only_county_url_occurrences": 34,
+    "plain_county_tokens_in_all_bodies": 46624,
+    "raw_url_occurrences": 46278,
+    "revision_count_outer_%61%6C%6Corigins%2Ehexlet%2Eapp": 6,
+    "revision_count_outer_%61%6Clorigins.hexlet.app": 1,
+    "revision_count_outer_%61llorigins.hexlet.app": 16,
+    "revision_count_outer_allorigins%252ehexlet%252eapp": 2,
+    "revision_count_outer_allorigins%2Ehexlet%2Eapp": 10,
+    "revision_count_outer_allorigins.hexlet.app": 859,
+    "revision_count_outer_allorigins.win": 2,
+    "revision_count_outer_api.allorigins.win": 96,
+    "revision_count_outer_api.codetabs.com": 11,
+    "revision_count_outer_api.cors.lol": 46,
+    "revision_count_outer_archive.org": 3,
+    "revision_count_outer_cloudflare-cors-anywhere.hanpengchen.workers.dev": 14,
+    "revision_count_outer_codebeautify.org": 3,
+    "revision_count_outer_cors-anywhere.com": 1,
+    "revision_count_outer_cors-anywhere.herokuapp.com": 3,
+    "revision_count_outer_cors.bwa.workers.dev": 8,
+    "revision_count_outer_cors.eu.org": 3,
+    "revision_count_outer_cors.hypnguyen.workers.dev": 46,
+    "revision_count_outer_cors.isomorphic-git.org": 30,
+    "revision_count_outer_corsmirror.com": 11,
+    "revision_count_outer_corsproxy.io": 16,
+    "revision_count_outer_data.sec.gov": 2,
+    "revision_count_outer_docs.google.com": 24,
+    "revision_count_outer_eu.httpbin.org": 2,
+    "revision_count_outer_httpbin.org": 13,
+    "revision_count_outer_image.thum.io": 1,
+    "revision_count_outer_images.weserv.nl": 1,
+    "revision_count_outer_investor.gov": 20,
+    "revision_count_outer_jina.ai": 2,
+    "revision_count_outer_jqp-git-main-sighrobot.vercel.app": 1,
+    "revision_count_outer_jqp.vercel.app": 2985,
+    "revision_count_outer_jsonformatter.curiousconcept.com": 3,
+    "revision_count_outer_jsonp.afeld.me": 1,
+    "revision_count_outer_magic-html-api.vercel.app": 5,
+    "revision_count_outer_markdown.new": 760,
+    "revision_count_outer_md.dhr.wtf": 242,
+    "revision_count_outer_md.succ.ai": 1430,
+    "revision_count_outer_md.succ.ai%2Fhttps%253a%252f%252fwww.sec.gov%252ffiles%252fcounty.json": 1,
+    "revision_count_outer_platform.lemino.ai": 20,
+    "revision_count_outer_proxy.cors.sh": 3,
+    "revision_count_outer_proxy.corsfix.com": 16,
+    "revision_count_outer_proxymule.com": 2,
+    "revision_count_outer_pure.md": 231,
+    "revision_count_outer_r.jina-ai.workers.dev": 2,
+    "revision_count_outer_r.jina.ai": 519,
+    "revision_count_outer_sec.gov": 93,
+    "revision_count_outer_sec.govwayback.com": 7,
+    "revision_count_outer_test.cors.workers.dev": 3,
+    "revision_count_outer_thenacken-python-cors-proxy.hf.space": 1,
+    "revision_count_outer_thingproxy.freeboard.io": 12,
+    "revision_count_outer_translate.google.com": 24,
+    "revision_count_outer_urltomarkdown.herokuapp.com": 22,
+    "revision_count_outer_vanderbi.lt": 29,
+    "revision_count_outer_viewpagesource.online": 2,
+    "revision_count_outer_web.archive.org": 21,
+    "revision_count_outer_webcrawlerapi.com": 301,
+    "revision_count_outer_www-investor-gov.translate.goog": 26,
+    "revision_count_outer_www-sec-gov.translate.goog": 47,
+    "revision_count_outer_www.google.com": 18,
+    "revision_count_outer_www.investor.gov": 690,
+    "revision_count_outer_www.proxymule.com": 43,
+    "revision_count_outer_www.sec%2Egov": 1,
+    "revision_count_outer_www.sec.g%6Fv": 1,
+    "revision_count_outer_www.sec.gov": 2559,
+    "revision_count_outer_www.sec.gov%2Ffiles%2Fcounty.json": 1,
+    "revision_count_outer_www.sec.gov.": 8,
+    "revisions_scanned": 14591,
+    "revisions_with_county_url": 4961
+  },
+  "daily_url_occurrences": {
+    "2026-06-18": 45402,
+    "2026-06-19": 755,
+    "2026-06-20": 11,
+    "2026-06-21": 28,
+    "2026-06-22": 82
+  },
+  "embedded_host_counts_overlap": {
+    "allorigins.hexlet.app": 4759,
+    "api.cors.lol": 379,
+    "jqp.vercel.app": 17198,
+    "platform.lemino.ai": 41
+  },
+  "max_repeats_in_one_revision_host": {
+    "allorigins.hexlet.app": 26,
+    "api.cors.lol": 5,
+    "jqp.vercel.app": 110,
+    "platform.lemino.ai": 4
+  },
+  "normalization_rule": "HTML entity decode, trim terminal punctuation, lowercase scheme and host, strip fragment/default port, uppercase percent triplets; preserve query order and cache-busting parameters.",
+  "outer_host_counts": {
+    "%61%6C%6Corigins%2Ehexlet%2Eapp": 6,
+    "%61%6Clorigins.hexlet.app": 3,
+    "%61llorigins.hexlet.app": 20,
+    "allorigins%252ehexlet%252eapp": 6,
+    "allorigins%2Ehexlet%2Eapp": 10,
+    "allorigins.hexlet.app": 1740,
+    "allorigins.win": 2,
+    "api.allorigins.win": 138,
+    "api.codetabs.com": 16,
+    "api.cors.lol": 55,
+    "archive.org": 6,
+    "cloudflare-cors-anywhere.hanpengchen.workers.dev": 44,
+    "codebeautify.org": 3,
+    "cors-anywhere.com": 1,
+    "cors-anywhere.herokuapp.com": 3,
+    "cors.bwa.workers.dev": 16,
+    "cors.eu.org": 3,
+    "cors.hypnguyen.workers.dev": 261,
+    "cors.isomorphic-git.org": 30,
+    "corsmirror.com": 23,
+    "corsproxy.io": 17,
+    "data.sec.gov": 4,
+    "docs.google.com": 28,
+    "eu.httpbin.org": 2,
+    "httpbin.org": 15,
+    "image.thum.io": 1,
+    "images.weserv.nl": 1,
+    "investor.gov": 21,
+    "jina.ai": 2,
+    "jqp-git-main-sighrobot.vercel.app": 1,
+    "jqp.vercel.app": 17086,
+    "jsonformatter.curiousconcept.com": 3,
+    "jsonp.afeld.me": 1,
+    "magic-html-api.vercel.app": 6,
+    "markdown.new": 1419,
+    "md.dhr.wtf": 733,
+    "md.succ.ai": 7031,
+    "md.succ.ai%2Fhttps%253a%252f%252fwww.sec.gov%252ffiles%252fcounty.json": 1,
+    "platform.lemino.ai": 36,
+    "proxy.cors.sh": 3,
+    "proxy.corsfix.com": 77,
+    "proxymule.com": 5,
+    "pure.md": 603,
+    "r.jina-ai.workers.dev": 2,
+    "r.jina.ai": 1683,
+    "sec.gov": 121,
+    "sec.govwayback.com": 7,
+    "test.cors.workers.dev": 4,
+    "thenacken-python-cors-proxy.hf.space": 1,
+    "thingproxy.freeboard.io": 12,
+    "translate.google.com": 51,
+    "urltomarkdown.herokuapp.com": 24,
+    "vanderbi.lt": 40,
+    "viewpagesource.online": 2,
+    "web.archive.org": 27,
+    "webcrawlerapi.com": 947,
+    "www-investor-gov.translate.goog": 34,
+    "www-sec-gov.translate.goog": 54,
+    "www.google.com": 29,
+    "www.investor.gov": 1556,
+    "www.proxymule.com": 76,
+    "www.sec%2Egov": 2,
+    "www.sec.g%6Fv": 1,
+    "www.sec.gov": 12108,
+    "www.sec.gov%2Ffiles%2Fcounty.json": 1,
+    "www.sec.gov.": 14
+  },
+  "outer_host_first_last": {
+    "allorigins.hexlet.app": [
+      {
+        "rev_id": "probier~RecentChanges@40",
+        "time_utc": "2026-06-18T14:10:56Z"
+      },
+      {
+        "rev_id": "probier~SandboxTestXYZ987@3",
+        "time_utc": "2026-06-19T20:32:48Z"
+      }
+    ],
+    "api.cors.lol": [
+      {
+        "rev_id": "probier~MassCountySecData1781796309@2",
+        "time_utc": "2026-06-18T15:25:12Z"
+      },
+      {
+        "rev_id": "dse~FutureWillOurCorsContinue8811@1",
+        "time_utc": "2026-06-19T00:23:22Z"
+      }
+    ],
+    "jqp.vercel.app": [
+      {
+        "rev_id": "dse~AgentMassRegCF7470389@1",
+        "time_utc": "2026-06-18T15:16:47Z"
+      },
+      {
+        "rev_id": "dse~AgentIvyTuitionValues2015XQ@13",
+        "time_utc": "2026-06-22T08:43:35Z"
+      }
+    ],
+    "platform.lemino.ai": [
+      {
+        "rev_id": "dse~AgentTmpOpenAIJun18Test@1",
+        "time_utc": "2026-06-18T16:47:09Z"
+      },
+      {
+        "rev_id": "dse~AgentLeverageFreshJune22X@1",
+        "time_utc": "2026-06-18T20:58:39Z"
+      }
+    ]
+  },
+  "outer_inner_host_pairs": {
+    "%61%6C%6Corigins%2Ehexlet%2Eapp -> allorigins.hexlet.app": 6,
+    "%61%6Clorigins.hexlet.app -> allorigins.hexlet.app": 3,
+    "%61llorigins.hexlet.app -> allorigins.hexlet.app": 20,
+    "allorigins%252ehexlet%252eapp -> allorigins.hexlet.app": 6,
+    "allorigins%2Ehexlet%2Eapp -> allorigins.hexlet.app": 10,
+    "httpbin.org -> allorigins.hexlet.app": 3,
+    "httpbin.org -> jqp.vercel.app": 3,
+    "jqp.vercel.app -> allorigins.hexlet.app": 2740,
+    "jqp.vercel.app -> api.cors.lol": 324,
+    "markdown.new -> allorigins.hexlet.app": 88,
+    "markdown.new -> jqp.vercel.app": 26,
+    "markdown.new -> platform.lemino.ai": 4,
+    "md.succ.ai -> allorigins.hexlet.app": 90,
+    "md.succ.ai -> jqp.vercel.app": 83,
+    "md.succ.ai -> platform.lemino.ai": 1,
+    "pure.md -> allorigins.hexlet.app": 7,
+    "r.jina.ai -> allorigins.hexlet.app": 40,
+    "urltomarkdown.herokuapp.com -> allorigins.hexlet.app": 2,
+    "viewpagesource.online -> allorigins.hexlet.app": 2,
+    "www.proxymule.com -> allorigins.hexlet.app": 2
+  },
+  "redacted_examples": {
+    "allorigins.hexlet.app": {
+      "embedded_host_flags": [
+        "allorigins.hexlet.app"
+      ],
+      "outer_host": "allorigins.hexlet.app",
+      "rev_id": "dse~Agent013OpenSECMDJSPairsUnique@1",
+      "time_utc": "2026-06-18T20:55:04Z",
+      "url_sha256": "fc85ca82111dd76de3a82acaa646d516b9669b4c314f0f9264829d7625794a21"
+    },
+    "api.cors.lol": {
+      "embedded_host_flags": [
+        "api.cors.lol"
+      ],
+      "outer_host": "api.cors.lol",
+      "rev_id": "dse~Agent0CountyProxyUniq99981@1",
+      "time_utc": "2026-06-18T19:18:21Z",
+      "url_sha256": "d7e4775af17fd867426636334406815dda74e52fdfcf1f45e8af6094c5b8c151"
+    },
+    "jqp.vercel.app": {
+      "embedded_host_flags": [
+        "jqp.vercel.app",
+        "allorigins.hexlet.app"
+      ],
+      "outer_host": "jqp.vercel.app",
+      "rev_id": "dse~AGENTTEST3429XXXX@2",
+      "time_utc": "2026-06-18T19:22:07Z",
+      "url_sha256": "6f5d05d8d3b6f599b52eb4ba8ed5dce535e7af200941fe26520d22699e241871"
+    },
+    "platform.lemino.ai": {
+      "embedded_host_flags": [
+        "platform.lemino.ai"
+      ],
+      "outer_host": "platform.lemino.ai",
+      "rev_id": "dse~AgentLeverageFreshJune22X@1",
+      "time_utc": "2026-06-18T20:58:39Z",
+      "url_sha256": "45a5c5e249088f94d81d73d1cc737b243205ebdbce0162a5529f0cd088df84d9"
+    }
+  },
+  "reference_rule": "One URL-like token in a revision body containing county.json after <=3 percent decodes; nested URLs count once at the outer host.",
+  "selected_outer_host_daily_counts": {
+    "allorigins.hexlet.app": {
+      "2026-06-18": 1734,
+      "2026-06-19": 6
+    },
+    "api.cors.lol": {
+      "2026-06-18": 54,
+      "2026-06-19": 1
+    },
+    "jqp.vercel.app": {
+      "2026-06-18": 16840,
+      "2026-06-19": 177,
+      "2026-06-20": 4,
+      "2026-06-21": 4,
+      "2026-06-22": 61
+    },
+    "platform.lemino.ai": {
+      "2026-06-18": 36
+    }
+  },
+  "source_member": "revisions.jsonl",
+  "source_zip": "colette-research/sources/rubygems-wiki-collusion/full-wiki-logs.zip",
+  "source_zip_sha256": "eb68aa12d26bf189d8bfc4ce47f4d8af66ae5ba7ebbadd429738297a3cbb25ae",
+  "unique_normalized_url_counts": {
+    "ALL": 5978,
+    "allorigins.hexlet.app": 147,
+    "api.cors.lol": 9,
+    "jqp.vercel.app": 2783,
+    "platform.lemino.ai": 12
+  },
+  "unique_revision_time_url_tuple_counts": {
+    "ALL": 44460,
+    "allorigins.hexlet.app": 1629,
+    "api.cors.lol": 55,
+    "jqp.vercel.app": 16864,
+    "platform.lemino.ai": 36
+  },
+  "unique_source_object_time_counts": {
+    "ALL": 4961,
+    "allorigins.hexlet.app": 859,
+    "api.cors.lol": 46,
+    "jqp.vercel.app": 2985,
+    "platform.lemino.ai": 20
+  }
+}

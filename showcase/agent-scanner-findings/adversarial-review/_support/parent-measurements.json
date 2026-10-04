@@ -1,0 +1,442 @@
+{
+  "catalog_assignments": {
+    "AIHW": {
+      "first": {
+        "data_source": "AIHW",
+        "report_date_utc": "2026-05-18T05:29:46Z",
+        "report_id": "a66cfc83-a062-4412-a9d3-062710ef80d0",
+        "source_basis": "source_method"
+      },
+      "june17_18_reports": 795,
+      "last": {
+        "data_source": "AIHW",
+        "report_date_utc": "2026-06-21T21:35:16Z",
+        "report_id": "cfbfe416-6405-43b2-be1d-a7da2e853e61",
+        "source_basis": "source_method"
+      },
+      "report_count": 4844
+    },
+    "SEC county data": {
+      "first": {
+        "data_source": "SEC county data",
+        "report_date_utc": "2026-06-18T04:23:36Z",
+        "report_id": "c25a2c53-e06f-4b25-8af3-c4b8afa8c833",
+        "source_basis": "source_method"
+      },
+      "june17_18_reports": 455,
+      "last": {
+        "data_source": "SEC county data",
+        "report_date_utc": "2026-06-18T23:27:46Z",
+        "report_id": "d2327357-3d36-4abe-a849-946844a21ad3",
+        "source_basis": "source_method"
+      },
+      "report_count": 455
+    },
+    "US Census API": {
+      "first": {
+        "data_source": "US Census API",
+        "report_date_utc": "2026-05-12T10:40:52Z",
+        "report_id": "03b8111f-1e02-4ac2-9772-e9ef2bcf4f1a",
+        "source_basis": "source_method"
+      },
+      "june17_18_reports": 0,
+      "last": {
+        "data_source": "US Census API",
+        "report_date_utc": "2026-06-03T13:42:59Z",
+        "report_id": "7d203adc-9eff-401b-9a31-35a9c7155d30",
+        "source_basis": "source_method"
+      },
+      "report_count": 5
+    }
+  },
+  "included_response_member_count": 51,
+  "included_response_members": [
+    {
+      "bytes": 12,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/247f37a91314df61.txt"
+    },
+    {
+      "bytes": 7308,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/2a18f06fa8dfe7e9.txt"
+    },
+    {
+      "bytes": 12,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/2bd055bdb7b402d2.txt"
+    },
+    {
+      "bytes": 7315,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/3c09860c16d359c7.txt"
+    },
+    {
+      "bytes": 7268,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/450ccf151e5b3d4e.txt"
+    },
+    {
+      "bytes": 12,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/51924b18c44288bc.txt"
+    },
+    {
+      "bytes": 7323,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/51cfbe12fcbeefd9.txt"
+    },
+    {
+      "bytes": 7328,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/5505a61392d67293.txt"
+    },
+    {
+      "bytes": 12,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/785170240f9fb1b1.txt"
+    },
+    {
+      "bytes": 7268,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/803bd881d62047be.txt"
+    },
+    {
+      "bytes": 7268,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/87f94ffe50e4f92e.txt"
+    },
+    {
+      "bytes": 12,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/b73063a345a2e036.txt"
+    },
+    {
+      "bytes": 7331,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/d95e20dd56c1b94b.txt"
+    },
+    {
+      "bytes": 12,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/dee0956a519c9c26.txt"
+    },
+    {
+      "bytes": 7311,
+      "member": "us-canada-government-evidence-2026-09-30-v3/01-education/responses/df3eb23126be49ab.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/1424a9b503b6efe9.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/35635251ed725cab.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/48da696b4d13f14f.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/4a7cf593d21b99c3.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/7d4ed6490d93aee6.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/86bc8f2bcd14b8cd.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/aff18dcb77fbdaae.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/c4c0a3769dd55751.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/c76d29fa74fdaa0a.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/ef4963baddb790d2.txt"
+    },
+    {
+      "bytes": 495,
+      "member": "us-canada-government-evidence-2026-09-30-v3/02-canada/responses/f6b2132e05dc9183.txt"
+    },
+    {
+      "bytes": 42,
+      "member": "us-canada-government-evidence-2026-09-30-v3/03-kansas/responses/063d72008cb9cf23.txt"
+    },
+    {
+      "bytes": 6667,
+      "member": "us-canada-government-evidence-2026-09-30-v3/03-kansas/responses/0ed36b6e294d3953.txt"
+    },
+    {
+      "bytes": 373,
+      "member": "us-canada-government-evidence-2026-09-30-v3/04-illinois/responses/023ec565cd32a3d7.txt"
+    },
+    {
+      "bytes": 84,
+      "member": "us-canada-government-evidence-2026-09-30-v3/04-illinois/responses/0eea4d97a6af7b1b.txt"
+    },
+    {
+      "bytes": 84,
+      "member": "us-canada-government-evidence-2026-09-30-v3/04-illinois/responses/10e61400736c6fac.txt"
+    },
+    {
+      "bytes": 92,
+      "member": "us-canada-government-evidence-2026-09-30-v3/04-illinois/responses/1747629da711f771.txt"
+    },
+    {
+      "bytes": 36,
+      "member": "us-canada-government-evidence-2026-09-30-v3/04-illinois/responses/8709be2642777214.txt"
+    },
+    {
+      "bytes": 11,
+      "member": "us-canada-government-evidence-2026-09-30-v3/04-illinois/responses/c1713941bd05ead1.txt"
+    },
+    {
+      "bytes": 92,
+      "member": "us-canada-government-evidence-2026-09-30-v3/04-illinois/responses/e286eb3775af3c69.txt"
+    },
+    {
+      "bytes": 93092,
+      "member": "us-canada-government-evidence-2026-09-30-v3/05-maryland/response-excerpts.json"
+    },
+    {
+      "bytes": 34,
+      "member": "us-canada-government-evidence-2026-09-30-v3/06-new-york/responses/0ebc0b6559b5e205.txt"
+    },
+    {
+      "bytes": 2480,
+      "member": "us-canada-government-evidence-2026-09-30-v3/06-new-york/responses/0fe52754ede863be.txt"
+    },
+    {
+      "bytes": 726,
+      "member": "us-canada-government-evidence-2026-09-30-v3/08-california/responses/30e6e11ac193f163.txt"
+    },
+    {
+      "bytes": 1353,
+      "member": "us-canada-government-evidence-2026-09-30-v3/08-california/responses/d506779921987073.txt"
+    },
+    {
+      "bytes": 1746,
+      "member": "us-canada-government-evidence-2026-09-30-v3/10-navy/responses/aae991050745bd3e.txt"
+    },
+    {
+      "bytes": 435,
+      "member": "us-canada-government-evidence-2026-09-30-v3/10-navy/responses/c0b4c866eceead18.txt"
+    },
+    {
+      "bytes": 474,
+      "member": "us-canada-government-evidence-2026-09-30-v3/10-navy/responses/e23820ec9e3abfe6.txt"
+    },
+    {
+      "bytes": 4371,
+      "member": "us-canada-government-evidence-2026-09-30-v3/11-justice/responses/4c074c0034580078.txt"
+    },
+    {
+      "bytes": 3127,
+      "member": "us-canada-government-evidence-2026-09-30-v3/11-justice/responses/5a5c55dcac351de1.txt"
+    },
+    {
+      "bytes": 4397,
+      "member": "us-canada-government-evidence-2026-09-30-v3/11-justice/responses/b230e960efb2e4d4.txt"
+    },
+    {
+      "bytes": 928,
+      "member": "us-canada-government-evidence-2026-09-30-v3/12-bea/responses/35dbde93d88a7753.txt"
+    },
+    {
+      "bytes": 5843,
+      "member": "us-canada-government-evidence-2026-09-30-v3/12-bea/responses/3c9424e4ef690e07.txt"
+    },
+    {
+      "bytes": 446,
+      "member": "us-canada-government-evidence-2026-09-30-v3/12-bea/responses/54b66ed598a5e91a.txt"
+    },
+    {
+      "bytes": 5811,
+      "member": "us-canada-government-evidence-2026-09-30-v3/12-bea/responses/6238a2ed3349b9a7.txt"
+    },
+    {
+      "bytes": 553,
+      "member": "us-canada-government-evidence-2026-09-30-v3/15-cdc/responses/4c484673db755ba8.txt"
+    }
+  ],
+  "retrieved_utc": "2026-10-04T01:48:31.664819+00:00",
+  "sec_cdx_recheck": {
+    "digests": {
+      "BJBCG6F62WUWNLUF5UPWWDMMOKB4V7GA": 3,
+      "VABBDDDTZS2COG3DDYVIWHVX7TDH7OYH": 60
+    },
+    "first": "2026-06-18T02:23:00+00:00",
+    "last": "2026-06-18T20:21:25+00:00",
+    "peak_median_adjacent_gap_seconds": 10.0,
+    "peak_rows": 39,
+    "peak_span_seconds": 463.0,
+    "rows": 63,
+    "urlkeys": 62
+  },
+  "sec_http": {
+    "distinct_reports": 546,
+    "first": {
+      "body_in_source_json": "False",
+      "http_entry_index": "0",
+      "method": "GET",
+      "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-http.csv:CSV-record-2",
+      "report_id": "c25a2c53-e06f-4b25-8af3-c4b8afa8c833",
+      "response_mime": "",
+      "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "",
+      "time": "2026-06-18T04:23:09.763Z",
+      "url_sha256": "40919aff68c80350785d50a214fef1df9dac30021f17b8d999d49ff1aaa75053"
+    },
+    "hour_counts": {
+      "2026-06-18T04": 2,
+      "2026-06-18T06": 9,
+      "2026-06-18T12": 1,
+      "2026-06-18T13": 32,
+      "2026-06-18T14": 75,
+      "2026-06-18T15": 87,
+      "2026-06-18T16": 92,
+      "2026-06-18T17": 95,
+      "2026-06-18T18": 100,
+      "2026-06-18T19": 26,
+      "2026-06-18T20": 30,
+      "2026-06-18T21": 8,
+      "2026-06-18T22": 7,
+      "2026-06-18T23": 4
+    },
+    "last": {
+      "body_in_source_json": "False",
+      "http_entry_index": "6",
+      "method": "GET",
+      "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-http.csv:CSV-record-6892",
+      "report_id": "d2327357-3d36-4abe-a849-946844a21ad3",
+      "response_mime": "application/json",
+      "response_sha256": "19f21855d65a95e4fecd49ee1dd0127748dbebb1eb218c4c877efbc707093297",
+      "status": "200",
+      "time": "2026-06-18T23:27:19.644Z",
+      "url_sha256": "4ecc16104d212ad238ba50e780ffa7f2a5f73725d15b437c231295000e03cb7e"
+    },
+    "late_count": 13,
+    "late_declared_http_entries": 258,
+    "late_reports": [
+      {
+        "http_entries": 2,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-594",
+        "report_id": "f54a1957-5593-4aac-941e-f29913330422",
+        "report_time": "2026-06-18T22:34:07Z",
+        "submitted_url_sha256": "4ecc16104d212ad238ba50e780ffa7f2a5f73725d15b437c231295000e03cb7e"
+      },
+      {
+        "http_entries": 46,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-595",
+        "report_id": "06667a73-8d98-4050-b54a-dca55476f483",
+        "report_time": "2026-06-18T22:34:09Z",
+        "submitted_url_sha256": "6b66697ba3087fea1f55bc77e5465acbd414ac1393493d28268c8888d7919a1c"
+      },
+      {
+        "http_entries": 46,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-596",
+        "report_id": "0de89b62-60a5-4c6e-a801-cd5e2b6a1ba7",
+        "report_time": "2026-06-18T22:34:13Z",
+        "submitted_url_sha256": "6b66697ba3087fea1f55bc77e5465acbd414ac1393493d28268c8888d7919a1c"
+      },
+      {
+        "http_entries": 46,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-597",
+        "report_id": "aa2e0f20-3e1e-49ad-b87e-45aecbc8788c",
+        "report_time": "2026-06-18T22:34:16Z",
+        "submitted_url_sha256": "6b66697ba3087fea1f55bc77e5465acbd414ac1393493d28268c8888d7919a1c"
+      },
+      {
+        "http_entries": 2,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-598",
+        "report_id": "f0076aac-e4e7-436b-8b97-7359ee948d22",
+        "report_time": "2026-06-18T22:34:26Z",
+        "submitted_url_sha256": "4ecc16104d212ad238ba50e780ffa7f2a5f73725d15b437c231295000e03cb7e"
+      },
+      {
+        "http_entries": 2,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-599",
+        "report_id": "a9d4b7db-2921-40d9-aa1b-01d6927b9731",
+        "report_time": "2026-06-18T22:35:16Z",
+        "submitted_url_sha256": "fc85ca82111dd76de3a82acaa646d516b9669b4c314f0f9264829d7625794a21"
+      },
+      {
+        "http_entries": 20,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-600",
+        "report_id": "950493a9-3562-4a6d-b61c-e0167d003b31",
+        "report_time": "2026-06-18T22:35:17Z",
+        "submitted_url_sha256": "2c581c5be3ddd28558583194ac75668b6f3067e16dd4c10dca43f171e8b5dc16"
+      },
+      {
+        "http_entries": 2,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-601",
+        "report_id": "a00a916d-5073-4026-b1c4-4fda2cf38c4d",
+        "report_time": "2026-06-18T22:35:18Z",
+        "submitted_url_sha256": "4ecc16104d212ad238ba50e780ffa7f2a5f73725d15b437c231295000e03cb7e"
+      },
+      {
+        "http_entries": 40,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-602",
+        "report_id": "9518b66a-348b-41b0-ae22-ef3dbc19dafd",
+        "report_time": "2026-06-18T22:41:43Z",
+        "submitted_url_sha256": "f3c067fe6b009c38acf9218b91481a918ac7e1ec9878b920cb332d7e75ecb972"
+      },
+      {
+        "http_entries": 2,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-603",
+        "report_id": "de3f4d3e-c53a-4a50-803d-caed9577c308",
+        "report_time": "2026-06-18T23:25:25Z",
+        "submitted_url_sha256": "6a06ce3aaf603143be181a971654daf6a856e57ee52dcb3f5fd2289c87eff040"
+      },
+      {
+        "http_entries": 2,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-604",
+        "report_id": "a50da2e2-32cf-4425-b847-07f2fda49b51",
+        "report_time": "2026-06-18T23:25:30Z",
+        "submitted_url_sha256": "1cf08d4809f6bafea402e7432ab717f259359a50a62d3df4a0da1e8cc6cc0960"
+      },
+      {
+        "http_entries": 2,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-605",
+        "report_id": "2ee0af0f-18a1-4eec-bcac-45847437e530",
+        "report_time": "2026-06-18T23:26:07Z",
+        "submitted_url_sha256": "4ecc16104d212ad238ba50e780ffa7f2a5f73725d15b437c231295000e03cb7e"
+      },
+      {
+        "http_entries": 46,
+        "raw_ref": "us-canada-government-evidence-2026-09-30-v3/14-sec/urlquery-reports.csv:CSV-record-606",
+        "report_id": "d2327357-3d36-4abe-a849-946844a21ad3",
+        "report_time": "2026-06-18T23:27:46Z",
+        "submitted_url_sha256": "6b66697ba3087fea1f55bc77e5465acbd414ac1393493d28268c8888d7919a1c"
+      }
+    ],
+    "late_unique_submitted_urls": 7,
+    "rows": 568,
+    "status_counts": {
+      "": 47,
+      "200": 396,
+      "204": 3,
+      "301": 8,
+      "302": 1,
+      "400": 43,
+      "403": 6,
+      "404": 24,
+      "429": 2,
+      "500": 3,
+      "502": 33,
+      "522": 2
+    },
+    "unit": "exported HTTP entries with literal county.json in URL"
+  },
+  "sources": {
+    "colette-research/sources/rubygems-wiki-collusion/full-wiki-logs.zip": {
+      "bytes": 4228605,
+      "sha256": "eb68aa12d26bf189d8bfc4ce47f4d8af66ae5ba7ebbadd429738297a3cbb25ae"
+    },
+    "colette-research/sources/urlquery-net-data/urlquery-agent-activity-2026-09-23.zip": {
+      "bytes": 4570708,
+      "sha256": "969a13fbd7d80d7e1556eef58a347f52ecdd85661c541f6c0d1d6f5e2a86570d"
+    },
+    "colette-research/sources/us-can-data/us-canada-government-evidence-2026-09-30.zip": {
+      "bytes": 18995315,
+      "sha256": "8a5e53d62fd92f8dbcbfe784363ba4d801ab779d30a797cf86eea1e469e2edc3"
+    }
+  }
+}

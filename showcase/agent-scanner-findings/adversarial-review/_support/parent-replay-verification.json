@@ -1,0 +1,78 @@
+[
+  {
+    "label": "census-jina",
+    "url": "https://web.archive.org/web/20260617025907id_/https://r.jina.ai/http://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+    "retrieved_utc": "2026-10-04T01:35:03.261801+00:00",
+    "expected_decoded_sha256": "b46ab42a44bb29aa8fa89247963b38c724db6e067a204797b36a0be0cb73622f",
+    "http_status": 200,
+    "bytes_received": 193,
+    "raw_sha256": "a6008ff380d1241231bbb7b34ed258dd7aa99f69276863d07df6fb5ef7c1c4b0",
+    "decoded_sha256": "b46ab42a44bb29aa8fa89247963b38c724db6e067a204797b36a0be0cb73622f",
+    "matches_child": true,
+    "markers": {
+      "Markdown Content:": true,
+      "500 Internal Server Error": false,
+      "Free usage is limited": false,
+      "Performing security verification": false,
+      "Target URL returned error 403": false
+    },
+    "decoded_bytes": 201
+  },
+  {
+    "label": "census-allorigins",
+    "url": "https://web.archive.org/web/20260617030212id_/https://api.allorigins.win/raw?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+    "retrieved_utc": "2026-10-04T01:35:05.405658+00:00",
+    "expected_decoded_sha256": "8665d05278b4f2defddf231614bf791df95f3111c0bb6f4bd03d2de3d3845391",
+    "http_status": 500,
+    "bytes_received": 579,
+    "raw_sha256": "8665d05278b4f2defddf231614bf791df95f3111c0bb6f4bd03d2de3d3845391",
+    "decoded_sha256": "8665d05278b4f2defddf231614bf791df95f3111c0bb6f4bd03d2de3d3845391",
+    "matches_child": true,
+    "markers": {
+      "Markdown Content:": false,
+      "500 Internal Server Error": true,
+      "Free usage is limited": false,
+      "Performing security verification": false,
+      "Target URL returned error 403": false
+    },
+    "decoded_bytes": 579
+  },
+  {
+    "label": "census-corsproxy",
+    "url": "https://web.archive.org/web/20260617030301id_/https://corsproxy.io/?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+    "retrieved_utc": "2026-10-04T01:35:06.261295+00:00",
+    "expected_decoded_sha256": "19ee95d6c75af03fd192a5b806420725ea1e9ddd92a3fb66d3bc110737b322e6",
+    "http_status": 403,
+    "bytes_received": 124,
+    "raw_sha256": "66303930942af5467b3662d9c71f4eba85aba011427674e2a084cccfaa9a72aa",
+    "decoded_sha256": "19ee95d6c75af03fd192a5b806420725ea1e9ddd92a3fb66d3bc110737b322e6",
+    "matches_child": true,
+    "markers": {
+      "Markdown Content:": false,
+      "500 Internal Server Error": false,
+      "Free usage is limited": true,
+      "Performing security verification": false,
+      "Target URL returned error 403": false
+    },
+    "decoded_bytes": 124
+  },
+  {
+    "label": "aihw-jina",
+    "url": "https://web.archive.org/web/20260618063135id_/https://r.jina.ai/http://https://www.aihw.gov.au/getmedia/57e4c61f-213a-4b27-b2fa-3a22a2a19d27/Principal-Diagnosis-cube_2014-15.xlsx.aspx",
+    "retrieved_utc": "2026-10-04T01:35:06.667838+00:00",
+    "expected_decoded_sha256": "0bafee236601d72d22f0ebe7ecfa909c2054655190cee7d18ba1fef308600b8b",
+    "http_status": 200,
+    "bytes_received": 404,
+    "raw_sha256": "b99c9565d3a75d14f65fca0ecbc0bf1ea67ce53ea880b42433855117f1bcf66b",
+    "decoded_sha256": "0bafee236601d72d22f0ebe7ecfa909c2054655190cee7d18ba1fef308600b8b",
+    "matches_child": true,
+    "markers": {
+      "Markdown Content:": true,
+      "500 Internal Server Error": false,
+      "Free usage is limited": false,
+      "Performing security verification": true,
+      "Target URL returned error 403": true
+    },
+    "decoded_bytes": 594
+  }
+]

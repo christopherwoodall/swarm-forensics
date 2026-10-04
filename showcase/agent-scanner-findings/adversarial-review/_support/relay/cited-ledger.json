@@ -1,0 +1,269 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://github.com/joshuadavid/wikiagentswarminvestigation/tree/e152f85f9032a8e4a55dade4b7990defe5e138c9/agent-logs/prowiki",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Filtered county JSON from SEC map:",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "url": "https://github.com/joshuadavid/wikiagentswarminvestigation/blob/e152f85f9032a8e4a55dade4b7990defe5e138c9/tasks/sec-regcf-ma-cache/data-files.md",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "24 | lemino.ai url-to-markdown",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "url": "https://platform.lemino.ai",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "API Key (Optional for Demo)",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "url": "https://urlquery.net/report/830d0a0c-d9d4-483d-9149-c33c35bf2f84/json",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"content_type\": \"application/json\", \"final_host\": \"allorigins.hexlet.app\", \"http\": [{\"body_data_present\": false, \"host\": \"allorigins.hexlet.app\", \"method\": \"GET\", \"mime\": \"application/vnd.mozilla.json.view; charset=utf-8\", \"resource_available\": false, \"sha256\": \"6e20e60c78b2ef746da3223458fd9ff8500e90b1bf0f55013be56c99db039fd2\", \"size_bytes\": 174072, \"status\": \"200\", \"time_utc\": \"2026-06-18T06:48:42.004Z\"}, {\"body_data_present\": false, \"host\": \"allorigins.hexlet.app\", \"method\": \"GET\", \"mime\": \"application/json; charset=utf-8\", \"resource_available\": true, \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"size_bytes\": 0, \"status\": \"200\", \"time_utc\": \"2026-06-18T06:48:42.884Z\"}], \"http_status\": 200, \"report_time_utc\": \"2026-06-18T06:49:06Z\", \"source_id\": 11, \"submitted_host\": \"allorigins.hexlet.app\"}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "url": "https://urlquery.net/report/eb91d8ad-2f82-40df-803f-5474539757c1/json",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"content_type\": \"application/json\", \"final_host\": \"\", \"http\": [{\"body_data_present\": false, \"host\": \"allorigins.hexlet.app\", \"method\": \"GET\", \"mime\": \"\", \"resource_available\": true, \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"size_bytes\": 0, \"status\": \"\", \"time_utc\": \"2026-06-18T18:36:06.649Z\"}], \"http_status\": 200, \"report_time_utc\": \"2026-06-18T18:36:33Z\", \"source_id\": 12, \"submitted_host\": \"allorigins.hexlet.app\"}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "url": "https://web.archive.org/cdx/search/cdx?url=jqp.vercel.app%2Fapi%2Fv0&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"captures\": [{\"digest\": \"4HFTJCSR4OAOWEOTRZAKNNHOXHXL4DH7\", \"mimetype\": \"application/json\", \"original_url_sha256\": \"4a919f7c29590d3f1aab3a10dd8fbbe408d122229b523feea18a0d3ba64728c7\", \"outer_host\": \"jqp.vercel.app\", \"path\": \"/api/v0\", \"statuscode\": \"200\", \"timestamp_utc\": \"20260526184422\"}], \"content_type\": \"application/json\", \"http_status\": 200, \"limit\": 1000, \"row_count\": 1, \"source_id\": 19, \"status_counts\": {\"200\": 1}}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "url": "https://web.archive.org/cdx/search/cdx?url=allorigins.hexlet.app&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"captures\": [{\"digest\": \"5HLR7ZYIMLF6FUSXXT4RZMM7NTJWVP4D\", \"mimetype\": \"application/json\", \"original_url_sha256\": \"61197b55575f8b739d94bf4145d3b2fdeb145a166c3d36d8fbef1c77bf464201\", \"outer_host\": \"allorigins.hexlet.app\", \"path\": \"/get\", \"statuscode\": \"200\", \"timestamp_utc\": \"20260511181247\"}, {\"digest\": \"B6NJ6JIZT3B7E442X7OKPSKPSC2TEWYR\", \"mimetype\": \"text/html\", \"original_url_sha256\": \"63e9ab025e5cc61db2c631e8e1010c0a71ed70bd0c712ecf60aa1fd28b1a6680\", \"outer_host\": \"allorigins.hexlet.app\", \"path\": \"/raw\", \"statuscode\": \"200\", \"timestamp_utc\": \"20260512142212\"}, {\"digest\": \"PC35X2RJYYWDZE3OPS2CD6Z5ZRQMJGVK\", \"mimetype\": \"application/json\", \"original_url_sha256\": \"c78ed1c865ea2f01e89e10ebdadb0d956786d0c029583ac6923757e48e9da717\", \"outer_host\": \"allorigins.hexlet.app\", \"path\": \"/favicon.ico\", \"statuscode\": \"200\", \"timestamp_utc\": \"20260512142213\"}], \"content_type\": \"application/json\", \"http_status\": 200, \"limit\": 1000, \"row_count\": 61, \"source_id\": 20, \"status_counts\": {\"-\": 1, \"200\": 31, \"404\": 19, \"502\": 10}}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "url": "https://web.archive.org/cdx/search/cdx?url=api.cors.lol&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"captures\": [{\"digest\": \"TX7FCSMZEDQD5D7E5ZPCX4O4DOJ3MUPL\", \"mimetype\": \"text/html\", \"original_url_sha256\": \"6c6fc28a5850c8ab4dd1e9edc056278ed83eebbdf97da0ab780c5d5f6640f791\", \"outer_host\": \"api.cors.lol\", \"path\": \"/\", \"statuscode\": \"404\", \"timestamp_utc\": \"20260102045832\"}, {\"digest\": \"BKPCYCLIUGUYV5RPS2BXF7KC35GF7JEM\", \"mimetype\": \"text/plain\", \"original_url_sha256\": \"da6cf89aeb4849faa85c99ad16f438cdfe0374c2a2605067b923cc347c5c246a\", \"outer_host\": \"api.cors.lol\", \"path\": \"/\", \"statuscode\": \"400\", \"timestamp_utc\": \"20260107143718\"}, {\"digest\": \"IN4GNINP5CS2WP7YFVCC5V524JZT2ETH\", \"mimetype\": \"text/html\", \"original_url_sha256\": \"d1154ba576fca64e277fbafe5a400de1291748ab661f300a58429857f51d8a88\", \"outer_host\": \"api.cors.lol\", \"path\": \"/\", \"statuscode\": \"200\", \"timestamp_utc\": \"20260113141024\"}], \"content_type\": \"application/json\", \"http_status\": 200, \"limit\": 1000, \"row_count\": 101, \"source_id\": 21, \"status_counts\": {\"200\": 22, \"400\": 23, \"403\": 1, \"404\": 4, \"429\": 46, \"451\": 2, \"502\": 3}}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "url": "https://web.archive.org/cdx/search/cdx?url=platform.lemino.ai&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"captures\": [], \"content_type\": \"application/json\", \"http_status\": 200, \"limit\": 1000, \"row_count\": 0, \"source_id\": 22, \"status_counts\": {}}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "url": "https://urlquery.net/report/a9d4b7db-2921-40d9-aa1b-01d6927b9731/json",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"content_type\": \"application/json\", \"final_host\": \"allorigins.hexlet.app\", \"http\": [{\"body_data_present\": false, \"host\": \"allorigins.hexlet.app\", \"method\": \"GET\", \"mime\": \"application/json; charset=utf-8\", \"resource_available\": true, \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"size_bytes\": 0, \"status\": \"200\", \"time_utc\": \"2026-06-18T22:34:54.392Z\"}, {\"body_data_present\": false, \"host\": \"allorigins.hexlet.app\", \"method\": \"GET\", \"mime\": \"application/vnd.mozilla.json.view; charset=utf-8\", \"resource_available\": false, \"sha256\": \"19f21855d65a95e4fecd49ee1dd0127748dbebb1eb218c4c877efbc707093297\", \"size_bytes\": 147840, \"status\": \"200\", \"time_utc\": \"2026-06-18T22:34:53.602Z\"}], \"http_status\": 200, \"report_time_utc\": \"2026-06-18T22:35:16Z\", \"source_id\": 25, \"submitted_host\": \"allorigins.hexlet.app\"}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "url": "https://api.github.com/repos/sighrobot/jqp",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "A serverless proxy for filtering JSON using node-jq",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "url": "https://api.github.com/repos/BradPerbs/cors.lol",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"full_name\": \"BradPerbs/cors.lol\", \"created_at\": \"2024-05-17T21:11:58Z\", \"homepage\": \"https://cors.lol/\", \"description\": \"Free-to-use CORS proxy that adds CORS headers to your requests. This service allows you to bypass the Same-Origin Policy and make requests to external APIs without facing CORS issues.\", \"default_branch\": \"main\"}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "url": "https://api.github.com/repos/BradPerbs/cors.lol/commits?until=2026-06-18T00%3A00%3A00Z&per_page=1",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"sha\": \"4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94\", \"date\": \"2026-05-01T07:49:46Z\", \"files\": []}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "url": "https://api.github.com/repos/Hexlet/hexlet-allorigins/commits/84f7651c642cef788564b4dd285a274b53bde9e4",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"sha\": \"84f7651c642cef788564b4dd285a274b53bde9e4\", \"date\": \"2022-03-15T18:52:11Z\", \"files\": [\"README.md\"]}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "url": "https://api.github.com/repos/sighrobot/jqp/commits?until=2026-06-18T00%3A00%3A00Z&per_page=1",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "{\"sha\": \"9d3e86787f551b5609e36fec3e6ce73e255e5149\", \"date\": \"2023-07-19T23:01:13Z\", \"files\": []}",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "url": "https://raw.githubusercontent.com/sighrobot/jqp/9d3e86787f551b5609e36fec3e6ce73e255e5149/README.md",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "filter it using",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "url": "https://raw.githubusercontent.com/sighrobot/jqp/9d3e86787f551b5609e36fec3e6ce73e255e5149/app/api/v0/route.js",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "const { url, jq: filter, debug } = query;",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "url": "https://raw.githubusercontent.com/Hexlet/hexlet-allorigins/84f7651c642cef788564b4dd285a274b53bde9e4/README.md",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "A free and open source javascript clone of",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "url": "https://raw.githubusercontent.com/BradPerbs/cors.lol/4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94/README.md",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "No subscription or payment required.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "url": "https://raw.githubusercontent.com/BradPerbs/cors.lol/4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94/main.go",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "rateLimit         = 20",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "url": "https://github.com/joshuadavid/wikiagentswarminvestigation/blob/e152f85f9032a8e4a55dade4b7990defe5e138c9/analyses/urls/outputs/urls.jsonl",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "\"source\": \"prowiki\", \"rev_id\": \"dse~AGENTTEST3429XXXX@2\"",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "url": "https://github.com/joshuadavid/wikiagentswarminvestigation/blob/e152f85f9032a8e4a55dade4b7990defe5e138c9/tasks/url-fetch-proxy-usage/README.md",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "content-fetching and markdown-render proxy services.",
+          "added": "2026-10-03"
+        }
+      ]
+    }
+  ]
+}
