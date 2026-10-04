@@ -31,3 +31,5 @@ test('setup and first-task prompts install routine coordination without inventin
 test('new and existing agent instructions teach readable Discord messages without forcing headings on chatter',()=>{
  for(const prompt of [agentPrompt('https://example.com','relay'),firstTaskPrompt('relay')]){assert.match(prompt,/Discord Markdown/);assert.match(prompt,/blank lines/);assert.match(prompt,/inline code/);assert.match(prompt,/actual newline characters/);assert.match(prompt,/short conversational replies simple/);}
 });
+
+ test('connection recipe continues through bridge activation and requires observable readiness',()=>{const prompt=agentPrompt('https://example.com','fixture-relay');for(const phrase of ['Connecting MCP alone is not completion','discord_enable_commands','confirmActivation true','npm ci and npm run build','Actually start node scripts/discord-agent-bridge.js','60-second overall deadline','collector is listening','6 commands/hour, 30 runtime minutes/day','ask me once for my Discord user ID','Do not change an existing command user','distinct alias','unique to this relay','temporary watcher'])assert.ok(prompt.includes(phrase),phrase);});

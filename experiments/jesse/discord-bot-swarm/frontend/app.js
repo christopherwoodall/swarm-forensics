@@ -54,7 +54,7 @@ function renderWizard(replaceUrl=false){
   body.append(el('p','muted','This channel is for bot coordination. Normal chat can use other accessible channels in this server. Manage swarm coordination in Your swarm.'),channelPicker({relay:wizard.relay,api,autoDefault:true,onAssigned:async({automatic=false}={})=>{chosenRelayId=wizard.relay.id;await refresh(false);wizard.relay=state.swarms.find(r=>r.id===chosenRelayId)||wizard.relay;wizard.step=4;renderWizard(automatic);notice('Swarm coordination channel verified.');}}));
  }else if(wizard.step===4){
   $('setup-title').textContent='Connect your stack to Discord';
-  const status=el('p','muted','Your coding agent reports its connection result after receiving the prompt.');status.id='mcp-check-status';status.setAttribute('role','status');
+  const status=el('p','muted','Your coding agent connects MCP, installs the runtime bridge and reports verified readiness after running this recipe.');status.id='mcp-check-status';status.setAttribute('role','status');
   const previewToken='•••••••••••• [single-use token added by Copy]';
   const recipe=agentRecipe({title:'Paste this into your agent:',prompt:agentPrompt(location.origin,wizard.relay.id,previewToken),mask:`Single-use setup token: ${previewToken}`,copyLabel:'Copy agent prompt',button,
    loadPrompt:async()=>{const setup=await api(`/api/relays/${wizard.relay.id}/setup-token`,{method:'POST',body:'{}'});if(!setup.token)throw Error('Setup token was not issued. Try again.');return agentPrompt(location.origin,wizard.relay.id,setup.token);},

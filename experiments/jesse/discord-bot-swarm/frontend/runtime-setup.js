@@ -3,7 +3,7 @@ import {bridgeSetupPrompt} from './mcp-setup.js';
 
 export function runtimeSetup({origin,relay,api,button,configure,onNext,onBack}){
  const section=document.createElement('section');section.id='runtime-setup';
- const explanation=document.createElement('p');explanation.textContent='Paste this into your connected agent to start its runtime, then enable your Discord commands and limits.';
+ const explanation=document.createElement('p');explanation.textContent='Paste this into your connected agent to install, configure and start its runtime bridge. The recipe enables commands and verifies readiness.';
  const recipe=agentRecipe({title:'Paste this into your connected agent:',prompt:bridgeSetupPrompt(origin,relay.id),copyLabel:'Copy runtime bridge setup prompt',loadPrompt:()=>bridgeSetupPrompt(origin,relay.id),button});
  const status=document.createElement('p');status.id='runtime-check-status';status.setAttribute('role','status');status.textContent='Runtime bridge not checked.';
  const next=button('Next: start your first task',onNext,'wizard-primary-cta');next.disabled=true;
