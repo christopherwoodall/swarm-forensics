@@ -2,11 +2,11 @@
   "computer_side": {
     "n_sequences": 78114,
     "n_events": 2510487,
-    "n_types": 1749,
+    "n_types": 1751,
     "top_unigrams": [
       [
-        "unknown",
-        982097
+        "shell",
+        979076
       ],
       [
         "left_click",
@@ -56,10 +56,10 @@
     "top_bigrams": [
       [
         [
-          "unknown",
-          "unknown"
+          "shell",
+          "shell"
         ],
-        823754
+        818718
       ],
       [
         [
@@ -98,10 +98,10 @@
       ],
       [
         [
-          "unknown",
+          "shell",
           "send_message_back_to_chat"
         ],
-        52347
+        52292
       ],
       [
         [
@@ -113,9 +113,9 @@
       [
         [
           "send_message_back_to_chat",
-          "unknown"
+          "shell"
         ],
-        46114
+        46084
       ],
       [
         [
@@ -139,10 +139,10 @@
         33210
       ]
     ],
-    "self_loop_rate": 0.4951,
-    "mean_run_length": 1.92,
+    "self_loop_rate": 0.4931,
+    "mean_run_length": 1.91,
     "max_run_length": 111,
-    "transition_entropy_bits": 2.163,
+    "transition_entropy_bits": 2.175,
     "n_sessions": 78114
   },
   "trace_side": {
