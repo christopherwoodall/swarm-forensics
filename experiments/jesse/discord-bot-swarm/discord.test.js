@@ -47,3 +47,29 @@ test('failed announcement is visible and retry reuses nonce without recording su
  for(let i=0;i<2;i++)await assert.rejects(announceJoined({connect:async()=>client},relay,'owner','relay','https://example.com'),/Welcome announcement failed: HTTP 403/);
  assert.equal(nonces[0],nonces[1]);assert.equal(config.joinAnnouncement,undefined);assert.equal(release,2);
 });
+
+test('disconnected channel rejects agent posts and checks before Discord calls',async()=>{
+ const disconnected={query:async(sql)=>({rows:sql.includes('FROM bots')?[{name:'Bot',secret:'cipher'}]:sql.includes('SELECT owner')?[{owner:'owner'}]:[{config:{name:'Bot'}}]})};
+ const relay=new DiscordRelay(disconnected,vault,{clientFactory:()=>{throw Error('must not connect');}});
+ await assert.rejects(relay.check('relay'),/Complete channel setup/);
+ await assert.rejects(relay.post({swarm:'relay',owner:'owner'},'hello','nonce'),/Complete channel setup/);
+});
+
+test('channel discovery filters permissions, respects ownership, and chooses only an unambiguous swarm',async()=>{
+ for(const names of [['swarm'],['swarm','swarm'],['general']]){
+  let destroyed=false;const rows=new Map(names.map((name,i)=>[String(i),{id:String(i),name,type:0,permissionsFor:()=>({has:()=>true})}]));rows.set('denied',{id:'denied',name:'swarm',type:0,permissionsFor:()=>({has:()=>false})});rows.set('voice',{type:2,name:'swarm'});
+  const guild={id:'guild',name:'Server',channels:{fetch:async()=>rows}};
+  const client={user:{},login:async()=>{},guilds:{fetch:async id=>id?guild:new Map([['guild',{id:'guild'}]])},destroy(){destroyed=true;}};
+  const relay=new DiscordRelay(pool,vault,{clientFactory:()=>client});const data=await relay.discover({swarm:'relay',owner:'owner'},AbortSignal.timeout(5000));assert.equal(data.channels.length,names.length);assert.equal(!!data.defaultChannel,names.length===1&&names[0]==='swarm');assert.equal(data.ambiguous,names.length>1);assert.equal(destroyed,true);
+ }
+ const forbidden=new DiscordRelay({query:async()=>({rows:[]})},vault,{clientFactory:()=>{throw Error('must not connect');}});await assert.rejects(forbidden.discover({swarm:'relay',owner:'other'}),/Relay not found/);
+});
+test('discovery releases Discord client on external failure and cancellation',async()=>{
+ for(const cancelled of [false,true]){let destroyed=false;const controller=new AbortController();if(cancelled)controller.abort();const relay=new DiscordRelay(pool,vault,{clientFactory:()=>({login:async()=>{throw Error('Discord unavailable');},destroy(){destroyed=true;}})});await assert.rejects(relay.discover({swarm:'relay',owner:'owner'},controller.signal));assert.equal(destroyed,true);}
+});
+
+test('ordinary chat can read and post in another channel without changing swarm coordination, but rejects other servers',async()=>{
+ const original=globalThis.fetch,channelId='123456789012345678';let foreign=false;const urls=[];
+ globalThis.fetch=async(url,options)=>{urls.push(url);if(url.endsWith('/'+channelId))return {ok:true,status:200,json:async()=>({type:0,guild_id:foreign?'other':'guild'})};if(options.method==='POST')return {ok:true,status:200,json:async()=>({id:'123456789012345679'})};return {ok:true,status:200,json:async()=>[]};};
+ try{const relay=new DiscordRelay(pool,vault),run={swarm:'relay',owner:'owner',channelId};await relay.messages(run,undefined,10);await relay.post(run,'hello','123');assert.ok(urls.every(u=>u.includes('/'+channelId)));assert.equal(config.channelId,'channel');foreign=true;await assert.rejects(relay.post(run,'hello','124'),/configured server/);await assert.rejects(relay.messages(run,undefined,10),/configured server/);await assert.rejects(relay.post({...run,channelId:'wrong'},'hello','125'),/Invalid Discord channel/);}finally{globalThis.fetch=original;}
+});

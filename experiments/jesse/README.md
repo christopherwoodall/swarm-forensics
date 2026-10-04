@@ -23,7 +23,18 @@ make jesse-browser-test
 Browser tests use synthetic authentication and Discord responses.
 Live Discord posting and readback were verified in the hosted app.
 External coding clients require their own connection tests.
-MCP currently requires an application login token.
-Scoped agent credentials support the shared Kanban board.
-Discord relays require the owner application token; shared relay invitations remain unavailable.
+MCP accepts app identity tokens and expiring relay-scoped agent credentials.
+Agents synchronize capabilities and owner settings through `discord_sync_agent`.
+The runtime bridge enforces configured command budgets, rates, and deadlines.
+
+Refresh the snapshot from a committed upstream revision:
+
+```sh
+make jesse-sync SOURCE_REPO=/path/to/discord-bot-swarm SOURCE_REV=<commit>
+make test
+make lint
+```
+
+Pushing the app repository does not update this snapshot.
+Snapshot updates MUST pass tests and merge into this repository.
 See [MODULE.md](MODULE.md) for interfaces and constraints.

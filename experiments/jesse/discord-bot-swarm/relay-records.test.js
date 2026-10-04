@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import pg from 'pg';
 import {databaseConfig} from './config.js';
 import {Vault} from './vault.js';
-import {saveVerifiedBot} from './relay-records.js';
+import {saveVerifiedBot,agentPersonality} from './relay-records.js';
 const namespace='relay_test_'+crypto.randomBytes(8).toString('hex');
 const admin=new pg.Pool(databaseConfig(process.env,null,{test:true}));
 const pool=new pg.Pool({...databaseConfig(process.env,null,{test:true}),options:`-c search_path=${namespace}`});
@@ -33,4 +33,11 @@ test('pending bot connections cannot read or post to Discord',async()=>{
  await assert.rejects(relay.check('pending'),/Complete channel setup/);
  await assert.rejects(relay.messages({swarm:'pending',owner:'owner'},null,10),/Complete channel setup/);
  await assert.rejects(relay.post({swarm:'pending',owner:'owner'},'message','nonce'),/Complete channel setup/);
+});
+
+test('personality persists through separate connections and preserves owner/setup isolation',async()=>{
+ const record=await saveVerifiedBot(pool,vault,'personality-owner',{id:'100000000000000091',name:'Personality fixture'},'synthetic-secret');
+ await agentPersonality(pool,'personality-owner',record.id,'Friendly and direct');
+ const second=new pg.Pool({...databaseConfig(process.env,null,{test:true}),options:`-c search_path=${namespace}`});
+ try{assert.equal((await agentPersonality(second,'personality-owner',record.id)).personality,'Friendly and direct');await assert.rejects(agentPersonality(second,'other-owner',record.id,'overwrite'),/not found/);assert.equal((await pool.query('SELECT config FROM swarms WHERE id=$1',[record.id])).rows[0].config.setupStage,'invite');await agentPersonality(second,'personality-owner',record.id,'');assert.equal((await agentPersonality(pool,'personality-owner',record.id)).personality,'');}finally{await second.end();}
 });
