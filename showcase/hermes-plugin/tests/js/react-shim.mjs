@@ -9,8 +9,13 @@ const require = createRequire(`${process.env.SF_JS_DEPS}/`)
 const React = require('react')
 
 export const useState = init => {
-  const rules = (globalThis.__sf && globalThis.__sf.stateRules) || []
-  const hit = rules.find(([from]) => Object.is(from, init))
+  const state = globalThis.__sf || {}
+  const rules = state.stateRules || []
+  const counts = state.stateCounts || (state.stateCounts = new Map())
+  const occurrence = counts.get(init) || 0
+  counts.set(init, occurrence + 1)
+  const hit = rules.find(([from, , index]) => Object.is(from, init) &&
+    (index === undefined || index === occurrence))
   return React.useState(hit ? hit[1] : init)
 }
 export const useEffect = React.useEffect

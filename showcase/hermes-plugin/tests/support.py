@@ -65,6 +65,31 @@ def fake_index_getter(rows_by_host=None, status=200):
     return getter
 
 
+def morphology_card(candidate_id="synthetic-card", excerpt="Synthetic source excerpt."):
+    """Return one synthetic candidate card for plugin tests."""
+    return {
+        "candidate_id": candidate_id,
+        "candidate_label": "Synthetic shared-state handoff",
+        "status": "possible_new_morphology",
+        "summary": "A shared artifact changes before later actions.",
+        "evidence": [{"source_ref": "synthetic.jsonl:1", "excerpt": excerpt}],
+        "first_observed": "2026-01-01T00:00:00Z",
+        "last_observed": "2026-01-02T00:00:00Z",
+        "distribution": {"actors": 2, "artifacts": 1},
+        "structural_signature": ["write shared state", "later action"],
+        "lexical_signature": ["lease refreshed"],
+        "nearest_known_morphology": None,
+        "similarity_to_known": None,
+        "novelty": 0.7,
+        "coordination_relevance": 0.8,
+        "evidence_strength": "e2",
+        "alternative_explanations": ["A central controller may explain the sequence."],
+        "missing_evidence": ["No captured read proves later use of the state."],
+        "recommended_investigation": ["Search for a later read of the exact artifact."],
+        "source_provenance": [{"file": "synthetic.jsonl", "record_id": "r1"}],
+    }
+
+
 class Env:
     """A temp database with every collaborator wired to fakes."""
 

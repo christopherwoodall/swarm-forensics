@@ -54,7 +54,7 @@ class SchemaAndSettings(unittest.TestCase):
 
             with migrated_db.connect() as c:
                 ver = c.execute("PRAGMA user_version").fetchone()[0]
-                self.assertEqual(ver, 5)
+                self.assertEqual(ver, 6)
                 fk_violations = c.execute("PRAGMA foreign_key_check").fetchall()
                 self.assertEqual(fk_violations, [])
 
@@ -104,7 +104,7 @@ class SchemaAndSettings(unittest.TestCase):
             self.assertTrue(bak.exists())
 
             with migrated.connect() as c:
-                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 5)
+                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 6)
                 self.assertEqual(c.execute("PRAGMA foreign_key_check").fetchall(), [])
                 # Entity has tags column
                 row = c.execute("SELECT tags FROM entities WHERE id = 'e1'").fetchone()
@@ -141,7 +141,7 @@ class SchemaAndSettings(unittest.TestCase):
             self.assertTrue(bak.exists())
 
             with migrated.connect() as c:
-                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 5)
+                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 6)
                 self.assertEqual(c.execute("PRAGMA foreign_key_check").fetchall(), [])
                 query = "SELECT parent_hunt_id, depth, session_id FROM hunts WHERE id = 'h1'"
                 row = c.execute(query).fetchone()
@@ -173,7 +173,7 @@ class SchemaAndSettings(unittest.TestCase):
             self.assertTrue(bak.exists())
 
             with migrated.connect() as c:
-                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 5)
+                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 6)
                 self.assertEqual(c.execute("PRAGMA foreign_key_check").fetchall(), [])
                 self.assertIsNotNone(c.execute("SELECT 1 FROM session_bindings").fetchall())
                 self.assertIsNotNone(c.execute("SELECT 1 FROM corpus_observations").fetchall())

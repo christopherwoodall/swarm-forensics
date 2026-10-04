@@ -6,7 +6,7 @@
 
 [![Version](https://img.shields.io/badge/version-3.0.0-blue)](MODULE.md)
 [![License](https://img.shields.io/badge/license-MIT-orange)](../../LICENSE)
-[![Tests](https://img.shields.io/badge/tests-146%20Python%20%C2%B7%2033%20JS-brightgreen)](#verification--testing)
+[![Tests](https://img.shields.io/badge/tests-189%20Python%20%C2%B7%2039%20JS-brightgreen)](#verification--testing)
 [![Platform](https://img.shields.io/badge/platform-Hermes%20Desktop%20%2B%20CLI-purple)](#quick-start)
 
 [Demo Video](https://github.com/user-attachments/assets/389dd157-1853-4faf-97cb-d3f6c967f6f4)
@@ -31,15 +31,15 @@ flowchart TD
 
     subgraph PluginCore["Swarm Forensics Core"]
         Hooks["Lifecycle Hooks"]
-        Tools["Agent Tools (12 Tools)"]
+        Tools["Agent Tools (13 Tools)"]
         PluginAPI["Plugin REST API"]
         Service["Forensics Service Coordinator"]
         Analysis["TTP & Nonce Analysis"]
         MirrorStore["Content-Addressed Mirror"]
     end
 
-    subgraph Storage["Local Storage (Schema v5)"]
-        DB[("SQLite v5 Ledger")]
+    subgraph Storage["Local Storage (Schema v6)"]
+        DB[("SQLite v6 Ledger")]
         MirrorFiles[("Text Mirror Files")]
     end
 
@@ -89,7 +89,7 @@ Get started in three steps.
 or paste this URI directly into Hermes desktop:
 
 ```text
-hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/plugins/swarm-forensics&enable=1
+hermes://plugin/install?repo=christopherwoodall/swarm-forensics/showcase/hermes-plugin/plugins/swarm-forensics&enable=1
 ```
 
 **From source:** run `make hermes-install` from the repository root, or `make install` from inside this directory.
@@ -125,6 +125,62 @@ To run an autonomous background worker instead, schedule a hunt or use headless 
 - **Composer Strip**: Look below the message composer for live hunt status and metrics.
 - **Companion Pane**: Look at the right sidebar for discovered URLs, captured artifacts, and tool logs.
 - **Desktop Page**: Open the **Swarm Forensics** app tab for the full database workbench.
+
+---
+
+## Discover Patterns from Raw Data
+
+Open the Morphologies tab and select an operator-authorized dataset path.
+Optional JSON Pointer mappings identify content, actor, artifact, operation, and time fields.
+Enable excerpt authorization before running the morphology hunter.
+The desktop run scans at most 10,000 records and uses four model rounds.
+
+The model selects probes from observed examples, not a predefined mechanism list.
+Measured matches and contrasting records can guide further probes.
+Discovery supports JSONL, NDJSON, CSV, and gzip variants.
+Sequences require operation and grouping fields.
+JSON arrays and parquet are unsupported.
+
+Reset cancels persistence from in-flight discovery. Concurrent reviews preserve audit transition order.
+CLI reports MUST NOT overwrite dataset files, including symlink and hardlink aliases.
+
+Inspect measurements without exposing excerpts to the model:
+
+```bash
+make hermes-hunter ARGS='/path/to/authorized.jsonl.gz --survey-only --max-records 1000'
+```
+
+Run bounded model discovery with explicit authorization:
+
+```bash
+make hermes-hunter ARGS='/path/to/authorized.jsonl.gz --content-field /text --max-records 1000 --max-rounds 4 --allow-excerpts --output data/raw/morphology-hunter/report.json'
+```
+
+Discovery-generated cards retain deterministic descriptions, references, counts, and hashes.
+Cards and saved reports MUST NOT retain source excerpts, probe literals, or model interpretations.
+Fenced model interpretations remain in the current desktop view only.
+CLI output excludes transient interpretations.
+Programmatic callers MUST apply `durable_report` before persisting discovery results.
+This boundary does not control host-model logging or anonymize source metadata.
+
+Text recurrence remains `e0`. Recorded sequence recurrence MAY receive `e1`.
+Neither establishes transmission, causality, maliciousness, or verified coordination.
+Combined support across observations and novelty remain unknown.
+Scan caps MUST NOT support full-corpus absence claims.
+Sequence shortlists are frequency-capped before null comparison.
+Final-round probe requests can execute without another feedback round.
+
+The desktop API imports discovery-generated cards without starting investigative hunts or promoting IOCs.
+Operators MAY also import external candidate cards through `POST /morphologies`.
+External cards follow the broader untrusted receiver contract and MAY include redacted excerpts.
+Review status tracks workflow; `resolved` does not establish a verified morphology.
+
+Investigators can retrieve cards with `sf_get_morphology_candidates`.
+Set `field` to `source_provenance` or `missing_evidence` when needed.
+Field selectors MUST name required card fields. Retrieve optional fields through full-card paging.
+Follow zero-based `page` and `next_page` until `has_more` is false.
+Each returned page remains fenced as untrusted data.
+Sanitization precedes JSON serialization. Fence-marker neutralization precedes page slicing.
 
 ---
 
@@ -180,10 +236,11 @@ flowchart TD
 
 ## Desktop User Interface
 
-The desktop UI provides eight tabs, an input strip, and a side companion panel:
+The desktop UI provides nine tabs, an input strip, and a side companion panel:
 
 - **Hunt Tab**: Real-time event log, lead management, sub-hunt hierarchy, and URL feed.
 - **Knowledge Tab**: Interactive entity graph, hierarchy browser, custom groups, and Markdown notes.
+- **Morphologies Tab**: Discover patterns from authorized raw data, import hypotheses, and inspect measurements and provenance.
 - **Evidence Tab**: Captured page excerpts with provenance, timestamps, and taint status.
 - **IOCs Tab**: Indicator catalog, promotion policy status, and decision audit logs.
 - **URLs Tab**: Discovered URL catalog with triage buttons and one-click artifact capture.
@@ -225,7 +282,7 @@ Run `/swarm-forensics <subcommand>` in Hermes:
 
 ## Interactive Agent Tools
 
-Hermes agents use twelve native forensics tools:
+Hermes agents use thirteen native forensics tools:
 
 1. `sf_get_context`: Inspect current hunt state, indicators, open leads, and allowlists.
 2. `sf_search_index`: Query enabled public index adapters (CDX, Wayback, Arquivo).
@@ -239,6 +296,7 @@ Hermes agents use twelve native forensics tools:
 10. `sf_query_knowledge`: Search across entities, indicators, URLs, and evidence text.
 11. `sf_spawn_subhunt`: Spawn recursive child crawler hunts up to configured max depth.
 12. `sf_attach_hunt`: Bind the current conversation context to an active hunt.
+13. `sf_get_morphology_candidates`: Retrieve fenced candidate cards with optional field selection and paging.
 
 All tools sanitize arguments and return structured JSON objects.
 
@@ -247,7 +305,7 @@ All tools sanitize arguments and return structured JSON objects.
 ## Data Model & Storage Specification
 
 Operational state lives in SQLite under `<hermes home>/swarm-forensics/swarm-forensics.db`.
-The database operates with write-ahead logging enabled (Schema v5).
+The database operates with write-ahead logging enabled (Schema v6).
 
 ### 1. Database Schema
 Schema tables include:
@@ -261,6 +319,9 @@ Schema tables include:
 - `prompt_templates`: Editable prompt templates with variable token substitution (`{{var}}`).
 - `osint_sources` & `url_grammar`: Configured public indexes and URL permutation rules.
 - `mirrors`: Metadata catalog for locally mirrored text files.
+- `morphology_candidates` & `morphology_candidate_log`: Imported hypotheses and audited review transitions.
+
+Migration 6 appends morphology storage. Migration 5 preserves session bindings, corpus observations, and mirrors.
 
 ### 2. Entity Hierarchy
 Entities enforce a strict hierarchy:
@@ -433,7 +494,7 @@ Use these entries to seed searches for shared infrastructure and nonce grammars.
 
 Operators can export data through the Settings tab or palette command:
 
-- **JSON Export**: Complete streaming dump (`swarm-forensics.json`) containing hunts, IOCs, URLs, entities, and templates.
+- **JSON Export**: Streaming format v4 contains hunts, IOCs, URLs, entities, templates, morphology cards, and review history.
 - **Obsidian Vault**: Exports entities and notes with `[[wikilinks]]` into `exports/vault/`.
 
 ---
@@ -443,9 +504,15 @@ Operators can export data through the Settings tab or palette command:
 Treat the root `Makefile` as the single entry point:
 
 ```bash
-make test    # Runs 146 Python unit tests and 33 Node.js render tests
+make setup   # Installs declared plugin and Discord Swarm development dependencies
+make test    # Runs maintained Python and JavaScript suites
 make lint    # Runs Ruff lint checks (100 character line length)
 make check   # Validates package manifests, Python compilation, and ESM syntax
+make hermes-hunter-test
+make hermes-hunter-ui-test
 ```
+
+The plugin suite passes 189 Python tests and 39 JavaScript tests.
+Desktop tests cover server rendering and a synthetic request handler, not live desktop interaction.
 
 Architectural invariants and module decisions are documented in [MODULE.md](MODULE.md).

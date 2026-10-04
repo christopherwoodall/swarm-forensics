@@ -3,6 +3,7 @@
 from datetime import datetime, timezone
 
 from . import db
+from .morphology import REVIEW_STATUSES, MorphologyConflict, normalize_candidate_card
 from .safety import CLAIM_LEVELS, content_hash, redact_text, redact_url
 
 ACTIVE_STATES = ("running", "waiting")
@@ -352,6 +353,129 @@ class Ledger:
             return cur.rowcount > 0
 
 
+    # -- morphology candidates ---------------------------------------------
+
+    def add_morphology_candidate(self, raw_card):
+        """Store one validated morphology card. Return (row, created)."""
+        card, tainted = normalize_candidate_card(raw_card)
+        card_json = db.dumps(card)
+        candidate_id = card["candidate_id"]
+        with self.db.connect() as conn:
+            record_id = db.new_id()
+            stamp = db.now()
+            cursor = conn.execute(
+                "INSERT OR IGNORE INTO morphology_candidates("
+                "id, candidate_id, candidate_label, candidate_status, evidence_strength,"
+                "card_json, tainted, created_utc, updated_utc)"
+                " VALUES (?,?,?,?,?,?,?,?,?)",
+                (
+                    record_id,
+                    candidate_id,
+                    card["candidate_label"],
+                    card["status"],
+                    card["evidence_strength"],
+                    card_json,
+                    int(tainted),
+                    stamp,
+                    stamp,
+                ),
+            )
+            if cursor.rowcount:
+                created = True
+            else:
+                row = conn.execute(
+                    "SELECT id, card_json, tainted FROM morphology_candidates "
+                    "WHERE candidate_id = ?",
+                    (candidate_id,),
+                ).fetchone()
+                if row is None:
+                    raise MorphologyConflict("candidate card could not be stored")
+                if row["card_json"] != card_json:
+                    raise MorphologyConflict(
+                        "candidate_id already exists with different card content"
+                    )
+                if tainted and not row["tainted"]:
+                    conn.execute(
+                        "UPDATE morphology_candidates SET tainted = 1, updated_utc = ? "
+                        "WHERE id = ?",
+                        (db.now(), row["id"]),
+                    )
+                created = False
+                record_id = row["id"]
+        return self.morphology_candidate(record_id), created
+
+    def morphology_candidate(self, record_id):
+        """Return one imported morphology card by its plugin record ID."""
+        with self.db.connect() as conn:
+            row = conn.execute(
+                "SELECT * FROM morphology_candidates WHERE id = ?", (record_id,)
+            ).fetchone()
+            history = conn.execute(
+                "SELECT ts, from_status, to_status, actor, reason"
+                " FROM morphology_candidate_log WHERE candidate_record_id = ? ORDER BY id",
+                (record_id,),
+            ).fetchall()
+        if row is None:
+            return None
+        item = _row(row)
+        item["card"] = db.loads(item.pop("card_json"), {})
+        item["tainted"] = bool(item["tainted"])
+        item["review_history"] = [_row(entry) for entry in history]
+        return item
+
+    def review_morphology_candidate(self, record_id, review_status, reason, actor="human"):
+        """Record an operator review transition without changing the candidate card."""
+        if not isinstance(review_status, str) or review_status not in REVIEW_STATUSES:
+            raise ValueError("invalid morphology review status")
+        if not isinstance(reason, str):
+            raise ValueError("review reason MUST be text")
+        reason = redact_text(reason).strip()[:1_000]
+        if not reason:
+            raise ValueError("review reason MUST NOT be empty")
+        actor = str(actor or "human")[:80]
+        with self.db.connect() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            row = conn.execute(
+                "SELECT review_status, review_reason FROM morphology_candidates WHERE id = ?",
+                (record_id,),
+            ).fetchone()
+            if row is None:
+                return None
+            if row["review_status"] != review_status or row["review_reason"] != reason:
+                conn.execute(
+                    "UPDATE morphology_candidates SET review_status = ?, review_reason = ?,"
+                    " updated_utc = ? WHERE id = ?",
+                    (review_status, reason, db.now(), record_id),
+                )
+                conn.execute(
+                    "INSERT INTO morphology_candidate_log("
+                    "candidate_record_id, ts, from_status, to_status, actor, reason)"
+                    " VALUES (?,?,?,?,?,?)",
+                    (record_id, db.now(), row["review_status"], review_status, actor, reason),
+                )
+        return self.morphology_candidate(record_id)
+
+    def list_morphology_candidates(self, review_status=None, limit=50):
+        """List bounded morphology-card metadata without loading card bodies."""
+        if review_status is not None and (
+            not isinstance(review_status, str) or review_status not in REVIEW_STATUSES
+        ):
+            raise ValueError("invalid morphology review status")
+        sql = (
+            "SELECT id, candidate_id, candidate_label, candidate_status, evidence_strength,"
+            " review_status, review_reason, tainted, created_utc, updated_utc"
+            " FROM morphology_candidates"
+        )
+        args = []
+        if review_status:
+            sql += " WHERE review_status = ?"
+            args.append(review_status)
+        sql += " ORDER BY created_utc DESC, id LIMIT ?"
+        args.append(max(1, min(int(limit), 200)))
+        with self.db.connect() as conn:
+            rows = conn.execute(sql, args).fetchall()
+        return [dict(_row(row), tainted=bool(row["tainted"])) for row in rows]
+
     # -- cursors ------------------------------------------------------------
 
     def cursor(self, source, key, default=None):
@@ -408,6 +532,7 @@ class Ledger:
                 "hunts": count("hunts"),
                 "open_leads": count("leads", "WHERE status = 'open'"),
                 "candidates": count("candidates"),
+                "morphology_candidates": count("morphology_candidates"),
             }
 
 
