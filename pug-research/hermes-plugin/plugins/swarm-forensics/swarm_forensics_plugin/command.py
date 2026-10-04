@@ -15,17 +15,20 @@ from .schedule import ScheduleError
 from .settings import SCHEMA, SettingsError
 
 HELP = """\
-/swarm-forensics start [goal]    start a hunt (runs until you stop it)
-/swarm-forensics stop            stop the hunt
-/swarm-forensics pause           pause at the next checkpoint
+/swarm-forensics start [goal]    start a guided hunt in this session
+/swarm-forensics attach [id]     attach this chat session to a running hunt
+/swarm-forensics session [goal]  start an interactive hunt in this chat session
+/swarm-forensics stop [id]       stop the hunt (and any sub-hunts)
+/swarm-forensics pause [id]      pause at the next checkpoint
 /swarm-forensics resume [id]     restart a paused or blocked hunt
 /swarm-forensics status          hunt state and totals
-/swarm-forensics log [n]          last n activity lines (default 15)
+/swarm-forensics log [n]         last n activity lines (default 15)
 /swarm-forensics review          list proposed IOC terms
 /swarm-forensics accept <id> [reason]
 /swarm-forensics reject <id> [reason]
+/swarm-forensics benign <id> [reason]
 /swarm-forensics narrow <id> <narrower-term>
-/swarm-forensics find <text>     search entities (agents, swarms, cases)
+/swarm-forensics find <text>     search entities (artifacts, agents, swarms, campaigns)
 /swarm-forensics settings [key [value]]"""
 
 
@@ -99,16 +102,65 @@ def handle(svc, raw_args):
         return "Could not parse the command.\n" + HELP
     verb, args = (words[0].lower() if words else "help"), words[1:]
     try:
-        if verb in ("start", "hunt"):
-            hunt = svc.hunts.start("command", " ".join(args))
-            return ("Hunt %s started. It runs in the background and does not post to this chat.\n"
-                    "Follow it with /swarm-forensics log or status, or open the Swarm Forensics "
-                    "page. End it with /swarm-forensics stop." % hunt["id"])
+        if verb in ("start", "hunt", "session"):
+            goal_text = " ".join(args).strip()
+            from . import db
+            sid = "sf-session-" + db.new_id()[:8]
+            hunt = svc.hunts.start("command", goal_text, session_id=sid)
+            max_depth = svc.settings.get("hunt.max_depth")
+            return (
+                "Hunt %s started (depth %d). Session %s active.\n"
+                "Goal: %s\n\n"
+                "You can guide this hunter in chat like a normal Hermes agent:\n"
+                "- Direct investigation focus, provide leads, or ask for updates.\n"
+                "- Call sf_get_context to view findings, leads, and active indicators.\n"
+                "- Call sf_search_index to query archives, crt.sh, and research indexes.\n"
+                "- Call sf_record_evidence to record evidence excerpts and claim levels.\n"
+                "- Call sf_spawn_subhunt to spawn child crawler hunts (up to depth %d).\n"
+                "- Re-attach in any session: /swarm-forensics attach %s\n"
+                "- Watch progress with /swarm-forensics log %s\n"
+                "- Stop with /swarm-forensics stop %s"
+                % (
+                    hunt["id"], hunt.get("depth", 0), sid, hunt["goal"],
+                    max_depth, hunt["id"], hunt["id"], hunt["id"],
+                )
+            )
+        if verb == "attach":
+            target_id = args[0].strip() if args else None
+            hunt = None
+            if target_id:
+                hunt = svc.ledger.hunt(target_id) or svc.ledger.hunt_by_session(target_id)
+            else:
+                hunt = svc.ledger.active_hunt() or next(iter(svc.ledger.hunts(1)), None)
+            if not hunt:
+                return "Hunt not found%s." % ((" for '%s'" % target_id) if target_id else "")
+            children = svc.ledger.child_hunts(hunt["id"])
+            leads = svc.ledger.open_leads("query", 3)
+            lead_summary = ", ".join(ld["value"] for ld in leads) or "none"
+            events = svc.ledger.events(hunt["id"], 0, 4)
+            event_lines = ["- [%s] %s" % (e["kind"], e["message"]) for e in events]
+            event_summary = "\n".join(event_lines) or "- no events yet"
+            return (
+                "Attached to Hunt %s (Session %s)\n"
+                "State: %s | Depth: %d | Cycle: %d | Parent: %s\n"
+                "Goal: %s\n"
+                "Child sub-hunts: %d\n"
+                "Open leads: %s\n\n"
+                "Recent activity:\n%s\n\n"
+                "You can now guide this hunt session using Swarm Forensics tools (sf_*)."
+                % (hunt["id"], hunt.get("session_id") or "unbound", hunt["state"],
+                   hunt.get("depth", 0), hunt["cycle"], hunt.get("parent_hunt_id") or "none (root)",
+                   hunt["goal"], len(children), lead_summary, event_summary)
+            )
         if verb == "stop":
-            hunt = svc.hunts.stop()
+            target = args[0] if args else None
+            hunt = svc.hunts.stop(target)
+            if not hunt:
+                return "No active hunt to stop."
             return "Hunt %s: stop requested (%s)." % (hunt["id"], hunt["state"])
         if verb == "pause":
-            hunt = svc.hunts.pause()
+            target = args[0] if args else None
+            hunt = svc.hunts.pause(target)
             return "Hunt %s: pause requested." % hunt["id"]
         if verb == "resume":
             hunt = svc.hunts.resume(args[0] if args else _last_paused(svc))
@@ -121,7 +173,23 @@ def handle(svc, raw_args):
             rows = svc.iocs.list("proposed", limit=25)
             return "\n".join("%d  %s  [%s]" % (r["id"], r["term"], r["category"])
                              for r in rows) or "No proposed terms."
-        if verb in ("accept", "reject", "narrow"):
+        if verb == "session":
+            goal = " ".join(args) or "investigate agent traces"
+            leads = svc.ledger.open_leads("query", 5)
+            lead_summary = ", ".join(lead["value"] for lead in leads) or "none yet"
+            return (
+                "Interactive Hunt Session Initiated.\n"
+                "Goal: %s\n"
+                "Open leads: %s\n\n"
+                "You can command the hunt directly using Swarm Forensics tools:\n"
+                "- Call sf_get_context to inspect indicators and sources.\n"
+                "- Call sf_search_index to sweep web archive indexes.\n"
+                "- Call sf_record_evidence to save findings.\n"
+                "- Call sf_propose_ioc to suggest new indicator terms.\n"
+                "- Call sf_manage_entity to create and tag swarms, agents, or artifacts.\n"
+                "- Call sf_triage_item to mark items as benign or active." % (goal, lead_summary)
+            )
+        if verb in ("accept", "reject", "narrow", "benign"):
             return _decide(svc, verb, args)
         if verb == "find":
             rows = svc.graph.list(query=" ".join(args), limit=20)

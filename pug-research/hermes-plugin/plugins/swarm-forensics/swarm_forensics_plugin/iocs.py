@@ -24,13 +24,14 @@ SEED_RULE_TERMS = [
     ("vizhub.healthdata.org", "basin_target"), ("api.datausa.io", "basin_target"),
 ]
 
-STATUSES = ("proposed", "active", "inactive", "rejected")
+STATUSES = ("proposed", "active", "inactive", "rejected", "benign")
 # actor -> {from_status: allowed to_status}
 _TRANSITIONS = {
-    "human": {"proposed": ("active", "rejected"),
-              "active": ("inactive",),
-              "inactive": ("active",),
-              "rejected": ("proposed",)},
+    "human": {"proposed": ("active", "rejected", "benign"),
+              "active": ("inactive", "benign", "rejected"),
+              "inactive": ("active", "benign", "rejected"),
+              "rejected": ("proposed", "benign", "active"),
+              "benign": ("proposed", "active", "inactive", "rejected")},
     "policy": {"proposed": ("active",)},
 }
 
@@ -212,7 +213,7 @@ class IocStore:
                 "SELECT * FROM iocs WHERE id = ?", (ioc_id,)).fetchone())
 
     def decide(self, ioc_id, decision, reason="", narrower=None):
-        """Human decision: accept, reject, narrow, deactivate, reactivate, reopen."""
+        """Human decision: accept, reject, narrow, deactivate, reactivate, reopen, benign."""
         if decision == "accept":
             return self.transition(ioc_id, "active", "human", reason)
         if decision == "reject":
@@ -223,6 +224,8 @@ class IocStore:
             return self.transition(ioc_id, "active", "human", reason)
         if decision == "reopen":
             return self.transition(ioc_id, "proposed", "human", reason)
+        if decision == "benign":
+            return self.transition(ioc_id, "benign", "human", reason)
         if decision == "narrow":
             narrower = str(narrower or "").strip()
             if not term_is_specific(narrower):

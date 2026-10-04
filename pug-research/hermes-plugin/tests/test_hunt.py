@@ -200,6 +200,17 @@ class CommandTests(unittest.TestCase):
             lambda: self.env.ledger.hunt(hid)["state"] == "stopped"))
         self.assertIn("hunt started", command.handle(self.svc, "log"))
 
+    def test_attach_command(self):
+        out = command.handle(self.svc, "start find traces")
+        self.assertIn("started", out)
+        hid = self.env.ledger.hunts(1)[0]["id"]
+        attach_out = command.handle(self.svc, "attach %s" % hid)
+        self.assertIn("Attached to Hunt", attach_out)
+        self.assertIn(hid, attach_out)
+        command.handle(self.svc, "stop")
+        self.assertTrue(support.wait_for(
+            lambda: self.env.ledger.hunt(hid)["state"] == "stopped"))
+
     def test_review_and_decisions(self):
         ioc, _ = self.env.iocs.propose("cmd.example/zz=1")
         self.assertIn("cmd.example", command.handle(self.svc, "review"))

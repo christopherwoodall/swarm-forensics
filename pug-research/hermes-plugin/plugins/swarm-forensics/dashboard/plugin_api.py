@@ -17,12 +17,16 @@ if str(_PLUGIN_DIR) not in sys.path:
     sys.path.insert(0, str(_PLUGIN_DIR))
 
 from swarm_forensics_plugin.entities import EntityError  # noqa: E402
+from swarm_forensics_plugin.export import export_all  # noqa: E402
 from swarm_forensics_plugin.extract import extract_indicators  # noqa: E402
 from swarm_forensics_plugin.hunt import HuntRefused  # noqa: E402
 from swarm_forensics_plugin.iocs import IocError  # noqa: E402
+from swarm_forensics_plugin.prompt_registry import PromptError  # noqa: E402
+from swarm_forensics_plugin.registry import RegistryError  # noqa: E402
 from swarm_forensics_plugin.schedule import ScheduleError  # noqa: E402
 from swarm_forensics_plugin.service import get_service  # noqa: E402
 from swarm_forensics_plugin.settings import Settings, SettingsError  # noqa: E402
+from swarm_forensics_plugin.url_store import UrlError  # noqa: E402
 
 router = APIRouter()
 _started = False
@@ -45,7 +49,8 @@ def _run(fn, *args, **kwargs):
         raise HTTPException(422, {"errors": exc.errors})
     except (HuntRefused,) as exc:
         raise HTTPException(409, str(exc))
-    except (IocError, EntityError, ScheduleError, ValueError) as exc:
+    except (IocError, EntityError, ScheduleError, ValueError, RegistryError,
+            PromptError, UrlError) as exc:
         raise HTTPException(400, str(exc))
 
 
@@ -103,9 +108,21 @@ def hunt(hunt_id: str):
     return _found(_svc().ledger.hunt(hunt_id))
 
 
+@router.post("/hunts/{hunt_id}/spawn")
+def hunt_spawn(hunt_id: str, body: dict = Body(default_factory=dict)):
+    return _run(_svc().hunts.spawn_subhunt, hunt_id, body.get("goal"),
+                int(body.get("max_cycles") or 0))
+
+
+@router.get("/hunts/{hunt_id}/children")
+def hunt_children(hunt_id: str):
+    return {"children": _svc().ledger.child_hunts(hunt_id)}
+
+
 @router.get("/events")
-def events(hunt_id: str = None, after: int = 0, limit: int = 200):
-    return {"events": _svc().ledger.events(hunt_id, after, limit)}
+def events(hunt_id: str = None, after: int = 0, limit: int = 200,
+           kind: str = None, level: str = None):
+    return {"events": _svc().ledger.events(hunt_id, after, limit, kind=kind, level=level)}
 
 
 @router.get("/leads")
@@ -119,6 +136,14 @@ def add_lead(body: dict = Body(...)):
     if kind not in ("query", "url") or not value:
         raise HTTPException(400, "kind must be query or url, with a value")
     return {"added": _svc().ledger.add_lead(kind, value, 0.9, "human")}
+
+
+@router.post("/leads/{lead_id}/close")
+def lead_close(lead_id: int, body: dict = Body(default_factory=dict)):
+    status = body.get("status") or "done"
+    if not _run(_svc().ledger.close_lead, lead_id, status=status):
+        raise HTTPException(404, "not found")
+    return {"closed": True}
 
 
 # -- evidence and IOCs --------------------------------------------------------
@@ -166,6 +191,14 @@ def ioc_decide(ioc_id: int, body: dict = Body(...)):
                 str(body.get("reason") or ""), body.get("narrower"))
 
 
+@router.post("/iocs/import")
+def iocs_import(body: dict = Body(...)):
+    service = _svc()
+    return _run(service.registry.import_wordlist,
+                str(body.get("text") or ""), service.iocs,
+                activate=bool(body.get("activate")))
+
+
 # -- entity graph -------------------------------------------------------------
 
 @router.get("/entities")
@@ -177,11 +210,35 @@ def entities(type: str = None, q: str = None, limit: int = 200):
 def entity_add(body: dict = Body(...)):
     service = _svc()
     entity = _run(service.graph.upsert, body.get("type"), body.get("name"),
-                  str(body.get("summary") or ""), body.get("attrs"), "human")
+                  str(body.get("summary") or ""), body.get("attrs"), "human",
+                  tags=body.get("tags"))
     if body.get("notes"):
         entity = _run(service.graph.update, entity["id"],
                       notes=str(body["notes"]))
     return entity
+
+
+@router.post("/entities/group")
+def group_create(body: dict = Body(...)):
+    service = _svc()
+    gtype = body.get("type") or "swarm"
+    name = body.get("name")
+    summary = str(body.get("summary") or "")
+    tags = body.get("tags") or []
+    members = body.get("members") or []
+    entity = _run(service.graph.upsert, gtype, name, summary=summary,
+                  origin="human", tags=tags)
+    linked = 0
+    for member_name in members:
+        member_ent = None
+        for t in ("agent", "artifact", "swarm", "collection"):
+            member_ent = service.graph.find(t, member_name)
+            if member_ent:
+                break
+        if member_ent:
+            service.graph.link(member_ent["id"], entity["id"], "part_of")
+            linked += 1
+    return {"entity": entity, "members_linked": linked}
 
 
 @router.get("/entities/{entity_id}")
@@ -192,7 +249,18 @@ def entity_one(entity_id: str):
 @router.put("/entities/{entity_id}")
 def entity_update(entity_id: str, body: dict = Body(...)):
     return _run(_svc().graph.update, entity_id, body.get("name"),
-                body.get("summary"), body.get("notes"), body.get("attrs"))
+                body.get("summary"), body.get("notes"), body.get("attrs"),
+                tags=body.get("tags"))
+
+
+@router.post("/entities/{entity_id}/tag")
+def entity_tag(entity_id: str, body: dict = Body(...)):
+    service = _svc()
+    tags = body.get("tags") or []
+    ent = _found(service.graph.get(entity_id))
+    existing = set(ent.get("tags") or [])
+    existing.update(str(t).strip() for t in tags if str(t).strip())
+    return _run(service.graph.update, entity_id, tags=list(existing))
 
 
 @router.delete("/entities/{entity_id}")
@@ -265,3 +333,137 @@ def schedule_delete(schedule_id: str):
     if not _svc().hunts.delete_schedule(schedule_id):
         raise HTTPException(404, "not found")
     return {"deleted": True}
+
+
+# -- sources and grammar ------------------------------------------------------
+
+@router.get("/sources")
+def sources():
+    return {"sources": _svc().registry.sources()}
+
+
+@router.post("/sources")
+def source_add(body: dict = Body(...)):
+    return _run(_svc().registry.add_source,
+                body.get("name"), body.get("kind"), body.get("endpoint"),
+                config=body.get("config"), note=str(body.get("note") or ""))
+
+
+@router.put("/sources/{source_id}")
+def source_update(source_id: int, body: dict = Body(...)):
+    fields = {k: v for k, v in body.items() if k in (
+        "enabled", "endpoint", "config", "note", "probe_candidates")}
+    return _run(_svc().registry.update_source, source_id, **fields)
+
+
+@router.delete("/sources/{source_id}")
+def source_delete(source_id: int):
+    if not _svc().registry.delete_source(source_id):
+        raise HTTPException(404, "not found")
+    return {"deleted": True}
+
+
+@router.get("/grammar")
+def grammar_get(kind: str = None):
+    return {"grammar": _svc().registry.grammar(kind=kind)}
+
+
+@router.post("/grammar")
+def grammar_add(body: dict = Body(...)):
+    return _run(_svc().registry.add_grammar,
+                body.get("kind"), body.get("value"),
+                param=str(body.get("param") or ""),
+                note=str(body.get("note") or ""))
+
+
+@router.put("/grammar/{grammar_id}")
+def grammar_update(grammar_id: int, body: dict = Body(...)):
+    return _run(_svc().registry.set_grammar_enabled,
+                grammar_id, bool(body.get("enabled")))
+
+
+@router.delete("/grammar/{grammar_id}")
+def grammar_delete(grammar_id: int):
+    if not _svc().registry.delete_grammar(grammar_id):
+        raise HTTPException(404, "not found")
+    return {"deleted": True}
+
+
+@router.post("/grammar/regenerate")
+def grammar_regenerate():
+    service = _svc()
+    from swarm_forensics_plugin.predict import generate_candidates
+    bundle = service.registry.grammar_bundle()
+    pairs = generate_candidates(bundle)
+    added = 0
+    for url, _template in pairs:
+        if service.ledger.add_lead("candidate", url, priority=0.6, origin="grammar"):
+            added += 1
+    return {"added": added}
+
+
+# -- prompts ------------------------------------------------------------------
+
+@router.get("/prompts")
+def prompts_list():
+    return {"prompts": _svc().prompts.list()}
+
+
+@router.get("/prompts/{prompt_id}")
+def prompt_one(prompt_id: str):
+    return _found(_svc().prompts.get(prompt_id))
+
+
+@router.put("/prompts/{prompt_id}")
+def prompt_update(prompt_id: str, body: dict = Body(...)):
+    template = body.get("template")
+    if template is None:
+        raise HTTPException(400, "template is required")
+    return _run(_svc().prompts.update, prompt_id, str(template))
+
+
+@router.post("/prompts/{prompt_id}/reset")
+def prompt_reset(prompt_id: str):
+    return _run(_svc().prompts.reset, prompt_id)
+
+
+@router.get("/prompts-export")
+def prompts_export():
+    return {"prompts": _svc().prompts.export_all()}
+
+
+@router.post("/prompts-import")
+def prompts_import(body: dict = Body(...)):
+    data = body.get("prompts") if isinstance(body.get("prompts"), dict) else body
+    count = _run(_svc().prompts.import_all, data)
+    return {"imported": count, "prompts": _svc().prompts.list()}
+
+
+# -- urls catalog -------------------------------------------------------------
+
+@router.get("/urls")
+def urls_list(status: str = None, q: str = None, limit: int = 200, offset: int = 0):
+    service = _svc()
+    return {
+        "urls": _run(service.urls.list, status, q, limit, offset),
+        "counts": service.urls.counts(),
+    }
+
+
+@router.post("/urls/triage")
+def url_triage(body: dict = Body(...)):
+    service = _svc()
+    url = body.get("url")
+    status = body.get("status") or "benign"
+    reason = str(body.get("reason") or "")
+    if not url:
+        raise HTTPException(400, "url is required")
+    return {"item": _run(service.urls.triage, url, status, reason)}
+
+
+# -- export -------------------------------------------------------------------
+
+@router.post("/export")
+def export_data():
+    return _run(export_all, _svc())
+

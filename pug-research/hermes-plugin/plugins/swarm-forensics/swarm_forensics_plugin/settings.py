@@ -53,6 +53,17 @@ SCHEMA = {
         "A desktop hunt pauses when the app stops sending heartbeats."),
     "hunt.heartbeat_timeout_seconds": _f(
         "Hunt", "int", 90, "Heartbeat timeout (s)", min=15, max=3600),
+    "hunt.max_depth": _f(
+        "Hunt", "int", 3, "Maximum sub-hunt depth",
+        "Maximum recursion depth for autonomous child hunts.",
+        min=0, max=10),
+    "hunt.auto_spawn_subhunts": _f(
+        "Hunt", "bool", True, "Allow autonomous sub-hunts",
+        "Spawn child hunts when new swarms or high-confidence leads are found."),
+    "hunt.max_active_hunts": _f(
+        "Hunt", "int", 3, "Max concurrent hunts",
+        "Maximum number of hunts running simultaneously.",
+        min=1, max=10),
     "model.provider": _f(
         "Model", "text", "", "Provider override",
         "Empty uses the active Hermes model. Overrides need Hermes trust flags."),
@@ -191,8 +202,9 @@ class Settings:
                         pass  # A bad stored value falls back to the default.
         return values
 
-    def get(self, key):
-        return self.all()[key]
+    def get(self, key, default=None):
+        vals = self.all()
+        return vals.get(key, default) if default is not None else vals[key]
 
     def update(self, updates):
         clean = validate(updates)

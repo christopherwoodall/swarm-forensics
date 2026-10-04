@@ -14,9 +14,11 @@ from .iocs import IocStore
 from .ledger import Ledger
 from .legacy import find_state_dirs, import_state
 from .paths import PLUGIN_ID, db_path
+from .prompt_registry import PromptRegistry
 from .registry import Registry
 from .research import Parts
 from .settings import SCHEMA_VERSION, Settings
+from .url_store import UrlStore
 
 
 def _broadcast(event, payload):
@@ -35,11 +37,15 @@ class Service:
         self.ledger = Ledger(self.db)
         self.graph = Graph(self.db)
         self.registry = Registry(self.db, self.ledger)
+        self.prompts = PromptRegistry(self.db)
+        self.urls = UrlStore(self.db)
         self.iocs = IocStore(self.db, self.settings)
         self.hermes = hermes or HermesRuntime(ctx)
-        parts = Parts(self.settings, self.ledger, self.graph, self.iocs,
-                      self.hermes, registry=self.registry)
-        self.hunts = HuntService(self.db, parts, notify=_broadcast)
+        self.parts = Parts(self.settings, self.ledger, self.graph, self.iocs,
+                           self.hermes, registry=self.registry,
+                           prompts=self.prompts, urls=self.urls)
+        self.hunts = HuntService(self.db, self.parts, notify=_broadcast)
+        self.parts.spawner = self.hunts
         self.iocs.seed()
         self.registry.seed()
         self.imported = [dict(import_state(self.db, d), path=str(d))

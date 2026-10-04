@@ -2,7 +2,7 @@ import unittest
 
 import support
 from swarm_forensics_plugin import predict
-from swarm_forensics_plugin.registry import Registry, RegistryError
+from swarm_forensics_plugin.registry import RegistryError
 from swarm_forensics_plugin.sources import host_allowed
 
 
@@ -64,12 +64,13 @@ class RegistryTests(unittest.TestCase):
                                   config={"filter_field": "urlkey"}, note="Test source")
         self.assertTrue(src["enabled"])
         self.assertIn("archive.example.org", self.reg.allowed_hosts())
-        self.assertTrue(host_allowed("https://archive.example.org/cdx?q=test", self.reg.allowed_hosts()))
+        allowed_url = "https://archive.example.org/cdx?q=test"
+        self.assertTrue(host_allowed(allowed_url, self.reg.allowed_hosts()))
 
         # Disable source
         self.reg.update_source(src["id"], enabled=False)
         self.assertNotIn("archive.example.org", self.reg.allowed_hosts())
-        self.assertFalse(host_allowed("https://archive.example.org/cdx?q=test", self.reg.allowed_hosts()))
+        self.assertFalse(host_allowed(allowed_url, self.reg.allowed_hosts()))
 
         # Delete source
         deleted = self.reg.delete_source(src["id"])

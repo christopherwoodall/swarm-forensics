@@ -11,9 +11,9 @@ from .extract import INDICATOR_KINDS, wikilinks
 from .safety import (
     ENTITY_TYPES,
     HIERARCHY,
-    LINK_KINDS,
-    LEGACY_TYPES,
     LEGACY_LINKS,
+    LEGACY_TYPES,
+    LINK_KINDS,
 )
 
 ALL_LINK_KINDS = LINK_KINDS + ("mentions",)
@@ -25,9 +25,11 @@ class EntityError(ValueError):
 
 
 def _entity(row):
+    tags = db.loads(row["tags"], []) if "tags" in row.keys() else []
     return {"id": row["id"], "type": row["type"], "name": row["name"],
             "summary": row["summary"], "notes": row["notes"],
             "attrs": db.loads(row["attrs"], {}), "origin": row["origin"],
+            "tags": tags,
             "created_utc": row["created_utc"], "updated_utc": row["updated_utc"]}
 
 
@@ -54,12 +56,13 @@ class Graph:
     # -- entities -----------------------------------------------------------
 
     def upsert(self, kind, name, summary="", attrs=None, origin="model",
-               evidence_id=None):
+               evidence_id=None, tags=None):
         """Create an entity or enrich an existing one. Never erases text."""
         kind = LEGACY_TYPES.get(kind, kind)
         _check_type(kind)
         name = _clean_name(name)
         stamp = db.now()
+        tags_list = [str(t).strip() for t in (tags or []) if str(t).strip()]
         with self.db.connect() as conn:
             row = conn.execute(
                 "SELECT * FROM entities WHERE type = ? AND name = ?",
@@ -68,17 +71,20 @@ class Graph:
                 eid = db.new_id()
                 conn.execute(
                     "INSERT INTO entities(id, type, name, summary, attrs, origin,"
-                    " created_utc, updated_utc) VALUES (?,?,?,?,?,?,?,?)",
+                    " tags, created_utc, updated_utc) VALUES (?,?,?,?,?,?,?,?,?)",
                     (eid, kind, name, summary[:600], db.dumps(attrs or {}),
-                     origin, stamp, stamp))
+                     origin, db.dumps(tags_list), stamp, stamp))
             else:
                 eid = row["id"]
                 merged = db.loads(row["attrs"], {})
                 merged.update(attrs or {})
+                existing_tags = db.loads(row["tags"], []) if "tags" in row.keys() else []
+                combined_tags = sorted(list(set(existing_tags + tags_list)))
                 conn.execute(
-                    "UPDATE entities SET summary = ?, attrs = ?, updated_utc = ?"
+                    "UPDATE entities SET summary = ?, attrs = ?, tags = ?, updated_utc = ?"
                     " WHERE id = ?",
-                    (row["summary"] or summary[:600], db.dumps(merged), stamp, eid))
+                    (row["summary"] or summary[:600], db.dumps(merged),
+                     db.dumps(combined_tags), stamp, eid))
             if evidence_id is not None:
                 conn.execute(
                     "INSERT OR IGNORE INTO entity_evidence(entity_id, evidence_id)"
@@ -128,7 +134,8 @@ class Graph:
             out.append(item)
         return out
 
-    def update(self, eid, name=None, summary=None, notes=None, attrs=None):
+    def update(self, eid, name=None, summary=None, notes=None, attrs=None,
+               tags=None):
         with self.db.connect() as conn:
             row = conn.execute(
                 "SELECT * FROM entities WHERE id = ?", (eid,)).fetchone()
@@ -140,13 +147,18 @@ class Graph:
                 (row["type"], new_name, eid)).fetchone()
             if clash:
                 raise EntityError("an entity with that name already exists")
+            tags_json = (row["tags"] if "tags" in row.keys() else "[]")
+            if tags is not None:
+                clean_tags = [str(t).strip() for t in tags if str(t).strip()]
+                tags_json = db.dumps(clean_tags)
             conn.execute(
                 "UPDATE entities SET name = ?, summary = ?, notes = ?, attrs = ?,"
-                " origin = 'human', updated_utc = ? WHERE id = ?",
+                " tags = ?, origin = 'human', updated_utc = ? WHERE id = ?",
                 (new_name,
                  row["summary"] if summary is None else str(summary)[:600],
                  row["notes"] if notes is None else str(notes)[:200000],
                  row["attrs"] if attrs is None else db.dumps(attrs),
+                 tags_json,
                  db.now(), eid))
             if notes is not None:
                 self._sync_mentions(conn, eid, str(notes))
@@ -254,12 +266,12 @@ class Graph:
         resolved = {r["name"].lower() for r in out if r["kind"] == "mentions"}
         parents = {}
         children = {}
-        for l in out:
-            if l["kind"] == "part_of":
-                parents.setdefault(l["type"], []).append(dict(l))
-        for l in back:
-            if l["kind"] == "part_of":
-                children.setdefault(l["type"], []).append(dict(l))
+        for edge in out:
+            if edge["kind"] == "part_of":
+                parents.setdefault(edge["type"], []).append(dict(edge))
+        for edge in back:
+            if edge["kind"] == "part_of":
+                children.setdefault(edge["type"], []).append(dict(edge))
         entity["outgoing"] = [dict(r) for r in out]
         entity["backlinks"] = [dict(r) for r in back]
         entity["parents"] = parents

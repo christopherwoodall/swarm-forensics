@@ -14,6 +14,7 @@ if str(_HERE) not in sys.path:
 
 
 def register(ctx):
+    from swarm_forensics_plugin.agent_tools import register_tools
     from swarm_forensics_plugin.command import handle
     from swarm_forensics_plugin.service import get_service
 
@@ -22,8 +23,10 @@ def register(ctx):
         "swarm-forensics",
         handler=lambda raw_args: handle(service, raw_args),
         description="Start, stop, and review autonomous swarm hunts.",
-        args_hint="start|stop|pause|resume|status|log|review|accept|reject|narrow|find|settings",
+        args_hint="start|stop|pause|resume|status|log|review|accept|reject|"
+                  "narrow|find|settings|session|benign",
     )
+    register_tools(ctx)
     skill = _HERE / "skills" / "swarm-forensics" / "SKILL.md"
     if skill.exists():
         ctx.register_skill("swarm-forensics", skill,

@@ -40,7 +40,7 @@ const SETTINGS = {
   }
 }
 
-const HUNT = { id: 'h1', state: 'running', cycle: 2, detail: 'searching', origin: 'desktop', created_utc: NOW }
+const HUNT = { id: 'h1', state: 'running', cycle: 2, detail: 'searching', origin: 'desktop', created_utc: NOW, depth: 0, parent_hunt_id: null, session_id: 'ses-1' }
 const STATUS_RUNNING = {
   hunt: HUNT, running: true, desktop_alive: true, paused_all: false,
   totals: { evidence: 3, evidence_tainted: 1, entities: 2, links: 1, open_leads: 2 },
@@ -60,8 +60,11 @@ const IOC = {
 const ENTITY = { id: 'e1', name: 'Alpha', type: 'agent', degree: 1, evidence_count: 1 }
 const ENTITY_DETAIL = {
   ...ENTITY, origin: 'model', updated_utc: NOW, summary: 'An agent', notes: 'Works with [[Beta]] and [[Nobody]].',
-  unresolved: ['Nobody'], outgoing: [{ id: 1, kind: 'member_of', other: 'e2', type: 'swarm', name: 'Beta' }],
+  tags: ['recon', 'stealth'],
+  unresolved: ['Nobody'], outgoing: [{ id: 1, kind: 'part_of', other: 'e2', type: 'swarm', name: 'Beta' }],
   backlinks: [{ id: 2, kind: 'mentions', other: 'e2', type: 'swarm', name: 'Beta' }],
+  parents: { swarm: [{ id: 1, kind: 'part_of', other: 'e2', type: 'swarm', name: 'Beta' }] },
+  children: { artifact: [{ id: 3, kind: 'part_of', other: 'e4', type: 'artifact', name: 'Artifact 1' }] },
   indicators: [{ kind: 'url', value: 'https://example.test/x' }],
   evidence: [{ id: 7, claim_level: 'L2', url: 'https://example.test/p', observed_utc: NOW, title: 'A page', excerpt: '' }]
 }
@@ -72,18 +75,37 @@ function fixture(path, status) {
     '/status': status,
     '/overview': { settings: SETTINGS.values, capabilities: { model: true, web_search: true, web_extract: true } },
     '/hunts': { hunts: [HUNT, { ...HUNT, id: 'h0', state: 'paused' }] },
+    '/hunts/h1': { ...HUNT, stats: { queries: 2 }, detail: 'running' },
+    '/hunts/h1/children': { children: [{ id: 'h2', state: 'running', depth: 1, parent_hunt_id: 'h1', goal: 'child subhunt', cycle: 1 }] },
     '/events': { events: [{ id: 1, ts: NOW, kind: 'state', level: 'info', message: 'started' },
       { id: 2, ts: NOW, kind: 'finding', level: 'alert', message: 'alert' }] },
     '/evidence': { evidence: [EVIDENCE] },
+    '/leads': { leads: [{ id: 1, kind: 'query', value: 'find traces', priority: 0.9, origin: 'human', created_utc: NOW }] },
+    '/sources': { sources: [{ id: 1, name: 'Wayback CDX', kind: 'cdx', endpoint: 'https://web.archive.org/cdx/search/cdx', config: {}, enabled: 1, probe_candidates: 1, note: '' }] },
+    '/grammar': { grammar: [{ id: 1, kind: 'pattern', value: 'https://example.test/{slot}', param: '', enabled: 1, note: '' }] },
+    '/urls': {
+      urls: [{
+        url: 'https://example.test/item', host: 'example.test', source: 'web',
+        status: 'discovered', reason: '', discovered_utc: NOW, updated_utc: NOW
+      }],
+      counts: { discovered: 1, examined: 0, benign: 0, suspicious: 0 }
+    },
+    '/prompts': {
+      prompts: [{
+        id: 'plan_system', name: 'Plan System', description: 'System prompt',
+        template: 'You are an agent.', default_template: 'You are an agent.',
+        variables: ['goal'], updated_utc: NOW
+      }]
+    },
     '/iocs': { iocs: [IOC], counts: { proposed: 1, active: 0, inactive: 0, rejected: 0 } },
     '/iocs/1': { log: [{ ts: NOW, from_status: null, to_status: 'proposed', actor: 'model', reason: 'seen' }], evidence: [EVIDENCE] },
     '/entities': { entities: [ENTITY, { ...ENTITY, id: 'e2', name: 'Beta', type: 'swarm' }] },
     '/entities/e1': ENTITY_DETAIL,
     '/graph': {
-      nodes: [{ ...ENTITY, degree: 1 }, { id: 'e2', name: 'Beta', type: 'swarm', degree: 1 },
-        { id: 'e3', name: 'Case', type: 'case', degree: 0 }, { id: 'e4', name: 'Trace', type: 'trace', degree: 0 },
-        { id: 'e5', name: 'Group', type: 'collection', degree: 0 }],
-      edges: [{ id: 1, src: 'e1', dst: 'e2', kind: 'member_of' }, { id: 2, src: 'e2', dst: 'e1', kind: 'mentions' }]
+      nodes: [{ ...ENTITY, degree: 1, rank: 1 }, { id: 'e2', name: 'Beta', type: 'swarm', degree: 1, rank: 2 },
+        { id: 'e3', name: 'Case', type: 'campaign', degree: 0, rank: 3 }, { id: 'e4', name: 'Trace', type: 'artifact', degree: 0, rank: 0 },
+        { id: 'e5', name: 'Group', type: 'collection', degree: 0, rank: null }],
+      edges: [{ id: 1, src: 'e1', dst: 'e2', kind: 'part_of' }, { id: 2, src: 'e2', dst: 'e1', kind: 'mentions' }]
     },
     '/settings': SETTINGS,
     '/schedules': { schedules: [{ id: 's1', name: 'daily', kind: 'interval', spec: '6h', max_cycles: 5, enabled: 1, next_run_utc: NOW },
@@ -97,13 +119,17 @@ function fixture(path, status) {
 function load() {
   const registered = new Map()
   const ctx = {
-    rest: path => { globalThis.__sf.lastPath = path; return Promise.resolve({}) },
+    rest: path => {
+      globalThis.__sf.lastPath = path
+      if (globalThis.__sf.paths) globalThis.__sf.paths.push(path)
+      return Promise.resolve({})
+    },
     setInterval() {},
     onEvent() {},
     storage: { get: () => null, set() {} },
     registerMany: items => items.forEach(item => registered.set(item.id, item))
   }
-  globalThis.__sf = { lastPath: null, mode: 'data', stateRules: [], status: STATUS_RUNNING, fixture: null }
+  globalThis.__sf = { lastPath: null, paths: [], mode: 'data', stateRules: [], status: STATUS_RUNNING, fixture: null }
   plugin.register(ctx)
   return registered
 }
@@ -113,6 +139,7 @@ function load() {
 function render({ tab = 'hunt', mode = 'data', status = STATUS_RUNNING, rules = [] } = {}) {
   const registered = load()
   Object.assign(globalThis.__sf, {
+    paths: [],
     mode, fixture: path => fixture(path, status),
     stateRules: [['hunt', tab], ...rules]
   })
@@ -130,7 +157,7 @@ function render({ tab = 'hunt', mode = 'data', status = STATUS_RUNNING, rules = 
 
 test('the plugin registers a page, nav entry, status chip, palette and keybind', () => {
   const registered = load()
-  for (const id of ['page', 'nav', 'status', 'open', 'start', 'stop', 'open-key']) {
+  for (const id of ['page', 'nav', 'status', 'open', 'start', 'stop', 'export', 'open-key']) {
     assert.ok(registered.has(id), `missing registration: ${id}`)
   }
 })
@@ -151,7 +178,8 @@ test('the Hunt page renders when idle, paused, and empty', () => {
 
 for (const [tab, marker] of [
   ['hunt', 'Add a lead'], ['knowledge', 'Pick an entity'], ['evidence', 'excerpt text'],
-  ['iocs', 'zz=oaitest'], ['settings', 'Save changes']
+  ['iocs', 'zz=oaitest'], ['urls', 'https://example.test/item'], ['prompts', 'Plan System'],
+  ['sources', 'Index sources'], ['settings', 'Save changes']
 ]) {
   test(`the ${tab} tab renders with data`, () => {
     // Private mode masks IOC terms until clicked, so reveal them in that tab.
@@ -165,22 +193,63 @@ for (const [tab, marker] of [
   })
 }
 
-test('the Knowledge tab renders a selected entity, its note links, and edit mode', () => {
+test('the Sources tab renders index sources, URL grammar, and wordlist import', () => {
+  const html = render({ tab: 'sources' })
+  assert.match(html, /Index sources/)
+  assert.match(html, /Wayback CDX/)
+  assert.match(html, /URL grammar/)
+  assert.match(html, />Regenerate candidates</)
+  assert.match(html, /Wordlist import/)
+  assert.match(html, />Import</)
+})
+
+test('HuntDetail renders with events, evidence, stats, sub-hunts, and close button', () => {
+  const html = render({ tab: 'hunt', rules: [[null, 'h1']] })
+  assert.match(html, /Hunt h1/)
+  assert.match(html, />Close</)
+  assert.match(html, /depth 0/)
+  assert.match(html, />\+ Sub-hunt</)
+  assert.match(html, />Attach Command</)
+  assert.match(html, /Child Sub-hunts \(1\)/)
+  assert.match(html, /Events \(/)
+  assert.match(html, /Evidence \(/)
+})
+
+test('Hunt tab renders Leads card with dismiss button', () => {
+  const html = render({ tab: 'hunt' })
+  assert.match(html, /Leads \(/)
+  assert.match(html, /find traces/)
+  assert.match(html, />Dismiss</)
+})
+
+test('the Knowledge tab renders a selected entity, its note links, hierarchy, and edit mode', () => {
   const selected = render({ tab: 'knowledge', rules: [[null, 'e1']] })
   assert.match(selected, /Works with/)
   assert.match(selected, /Unresolved links: Nobody/)
   assert.match(selected, /Backlinks/)
+  assert.match(selected, /Hierarchy/)
+  assert.match(selected, /Belongs to/)
+  assert.match(selected, /Beta/)
+  assert.match(selected, /Contains/)
+  assert.match(selected, /Artifact 1/)
   const editing = render({ tab: 'knowledge', rules: [[null, 'e1'], [false, true]] })
   assert.match(editing, /<textarea/)
 })
 
-test('the Settings tab renders every field kind, including schedules', () => {
+test('the IOCs tab does not request /iocs/1 while rows are closed', () => {
+  render({ tab: 'iocs' })
+  assert.ok(!globalThis.__sf.paths.includes('/iocs/1'), 'detail should not be requested while rows are closed')
+})
+
+test('the Settings tab renders every field kind, including schedules and export', () => {
   const html = render({ tab: 'settings' })
   assert.match(html, /type="checkbox"/)
   assert.match(html, /type="number"/)
   assert.match(html, /<select/)
   assert.match(html, />Disarm</)
   assert.match(html, />Arm</)
+  assert.match(html, /Export data/)
+  assert.match(html, />Export</)
 })
 
 test('the status chip renders in every state', () => {
@@ -190,3 +259,39 @@ test('the status chip renders in every state', () => {
     assert.match(renderToStaticMarkup(registered.get('status').render()), /sf: /)
   }
 })
+
+test('Hunt tab renders Interactive hunt session card with command', () => {
+  const html = render({ tab: 'hunt' })
+  assert.match(html, /Interactive hunt session &amp; attach/)
+  assert.match(html, /\/swarm-forensics session \[goal\]/)
+  assert.match(html, /\/swarm-forensics attach \[hunt_id\]/)
+  assert.match(html, /sf_get_context/)
+  assert.match(html, /sf_spawn_subhunt/)
+  assert.match(html, /sf_attach_hunt/)
+})
+
+test('URLs tab renders URL table and triage buttons', () => {
+  const html = render({ tab: 'urls' })
+  assert.match(html, /Discovered &amp; candidate URLs/)
+  assert.match(html, /https:\/\/example\.test\/item/)
+  assert.match(html, />Mark Benign</)
+  assert.match(html, />Mark Suspicious</)
+})
+
+test('Prompts tab renders template editor and token chips', () => {
+  const html = render({ tab: 'prompts' })
+  assert.match(html, /Prompt templates &amp; system persona/)
+  assert.match(html, /Plan System/)
+  assert.match(html, /\{\{goal\}\}/)
+  assert.match(html, />Export Prompts \(JSON\)</)
+})
+
+test('the Knowledge tab renders group creation button and tags', () => {
+  const html = render({ tab: 'knowledge' })
+  assert.match(html, />\+ Group</)
+  const selected = render({ tab: 'knowledge', rules: [[null, 'e1']] })
+  assert.match(selected, /#recon/)
+  assert.match(selected, /#stealth/)
+})
+
+

@@ -11,7 +11,10 @@ import subprocess
 import tempfile
 import urllib.parse
 
-ALLOWLIST = ("urlquery.net", "web.archive.org", "arquivo.pt", "commoncrawl.org")
+ALLOWLIST = (
+    "urlquery.net", "web.archive.org", "arquivo.pt",
+    "commoncrawl.org", "crt.sh", "export.arxiv.org",
+)
 URLQUERY_SEARCH = "https://urlquery.net/api/v1/search"
 CDX_SEARCH = "https://web.archive.org/cdx/search/cdx"
 ARQUIVO_CDX = "https://arquivo.pt/wayback/cdx"
@@ -89,12 +92,16 @@ class IndexSources:
             kind = source.get("kind", "cdx")
             endpoint = source.get("endpoint", CDX_SEARCH)
             cfg = source.get("config") or {}
-            field = cfg.get("filter_field", "urlkey" if "web.archive.org" in endpoint else "original")
+            default_field = "urlkey" if "web.archive.org" in endpoint else "original"
+            field = cfg.get("filter_field", default_field)
             nonce_prefix = cfg.get("nonce_prefix", "r.jina.ai/http*")
             source_id = str(source.get("id", source.get("name", kind)))
         else:
             kind = source
-            endpoint = CDX_SEARCH if source == "cdx" else (ARQUIVO_CDX if source == "arquivo" else URLQUERY_SEARCH)
+            endpoint = (
+                CDX_SEARCH if source == "cdx"
+                else (ARQUIVO_CDX if source == "arquivo" else URLQUERY_SEARCH)
+            )
             field = "urlkey" if source == "cdx" else "original"
             nonce_prefix = "r.jina.ai/http*"
             source_id = source

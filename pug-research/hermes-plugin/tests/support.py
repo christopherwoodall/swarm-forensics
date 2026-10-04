@@ -82,15 +82,20 @@ class Env:
         self.parts = Parts(self.settings, self.ledger, self.graph, self.iocs,
                            self.hermes, registry=self.registry, **kwargs)
         self.hunts = HuntService(self.db, self.parts)
+        self.parts.spawner = self.hunts
         self.settings.update({
             "hunt.sources": ["web"], "hunt.cycle_pause_seconds": 5,
             "hunt.request_delay_seconds": 0.5})
 
     def close(self):
         self.hunts.shutdown.set()
+        workers = list(getattr(self.hunts, "_workers", {}).values())
+        for w in workers:
+            if w and w.is_alive():
+                w.join(timeout=5)
         worker = self.hunts._worker
-        if worker is not None:
-            worker.join(timeout=10)
+        if worker is not None and worker.is_alive():
+            worker.join(timeout=5)
         self.tmp.cleanup()
 
 

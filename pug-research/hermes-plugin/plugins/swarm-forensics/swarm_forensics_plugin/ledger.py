@@ -8,7 +8,8 @@ from .safety import CLAIM_LEVELS, content_hash, redact_text, redact_url
 ACTIVE_STATES = ("running", "waiting")
 HUNT_STATES = ("running", "waiting", "paused", "blocked", "stopped")
 HUNT_FIELDS = {"state", "detail", "started_utc", "ended_utc", "cycle", "owner",
-               "heartbeat_utc", "stop_requested", "pause_requested", "stats"}
+               "heartbeat_utc", "stop_requested", "pause_requested", "stats",
+               "parent_hunt_id", "depth", "session_id"}
 
 
 def _row(row):
@@ -21,15 +22,17 @@ class Ledger:
 
     # -- hunts --------------------------------------------------------------
 
-    def create_hunt(self, origin, goal, max_cycles=0, schedule_id=None):
+    def create_hunt(self, origin, goal, max_cycles=0, schedule_id=None,
+                    parent_hunt_id=None, depth=0, session_id=None):
         hunt_id = db.new_id()
         stamp = db.now()
         with self.db.connect() as conn:
             conn.execute(
                 "INSERT INTO hunts(id, origin, goal, state, created_utc,"
-                " started_utc, max_cycles, schedule_id)"
-                " VALUES (?,?,?, 'running', ?, ?, ?, ?)",
-                (hunt_id, origin, goal, stamp, stamp, int(max_cycles), schedule_id))
+                " started_utc, max_cycles, schedule_id, parent_hunt_id, depth, session_id)"
+                " VALUES (?,?,?, 'running', ?, ?, ?, ?, ?, ?, ?)",
+                (hunt_id, origin, goal, stamp, stamp, int(max_cycles), schedule_id,
+                 parent_hunt_id, int(depth), session_id))
         return self.hunt(hunt_id)
 
     @staticmethod
@@ -59,6 +62,31 @@ class Ledger:
                 " ORDER BY created_utc DESC LIMIT 1").fetchone()
         return self._hunt_row(row) if row else None
 
+    def active_hunts(self):
+        """Return all hunts that are running or waiting."""
+        with self.db.connect() as conn:
+            rows = conn.execute(
+                "SELECT * FROM hunts WHERE state IN ('running','waiting')"
+                " ORDER BY created_utc DESC").fetchall()
+        return [self._hunt_row(r) for r in rows]
+
+    def child_hunts(self, parent_hunt_id):
+        """Return child hunts for a parent hunt."""
+        with self.db.connect() as conn:
+            rows = conn.execute(
+                "SELECT * FROM hunts WHERE parent_hunt_id = ?"
+                " ORDER BY created_utc ASC", (parent_hunt_id,)).fetchall()
+        return [self._hunt_row(r) for r in rows]
+
+    def hunt_by_session(self, session_id):
+        """Return the most recent hunt matching a session_id or id."""
+        with self.db.connect() as conn:
+            row = conn.execute(
+                "SELECT * FROM hunts WHERE session_id = ? OR id = ?"
+                " ORDER BY created_utc DESC LIMIT 1",
+                (session_id, session_id)).fetchone()
+        return self._hunt_row(row) if row else None
+
     def update_hunt(self, hunt_id, **fields):
         bad = set(fields) - HUNT_FIELDS
         if bad:
@@ -83,11 +111,17 @@ class Ledger:
                  db.dumps(data or {})))
             return cur.lastrowid
 
-    def events(self, hunt_id=None, after_id=0, limit=200):
+    def events(self, hunt_id=None, after_id=0, limit=200, kind=None, level=None):
         sql, args = "SELECT * FROM events WHERE id > ?", [int(after_id)]
         if hunt_id:
             sql += " AND hunt_id = ?"
             args.append(hunt_id)
+        if kind:
+            sql += " AND kind = ?"
+            args.append(kind)
+        if level:
+            sql += " AND level = ?"
+            args.append(level)
         sql += " ORDER BY id DESC LIMIT ?"
         args.append(max(1, min(int(limit), 1000)))
         with self.db.connect() as conn:
@@ -233,9 +267,13 @@ class Ledger:
             return [_row(r) for r in conn.execute(sql, args).fetchall()]
 
     def close_lead(self, lead_id, status="done"):
+        if status not in ("done", "dismissed"):
+            raise ValueError("status must be done or dismissed")
         with self.db.connect() as conn:
-            conn.execute("UPDATE leads SET status = ? WHERE id = ?",
-                         (status, lead_id))
+            cur = conn.execute("UPDATE leads SET status = ? WHERE id = ?",
+                               (status, lead_id))
+            return cur.rowcount > 0
+
 
     # -- cursors ------------------------------------------------------------
 

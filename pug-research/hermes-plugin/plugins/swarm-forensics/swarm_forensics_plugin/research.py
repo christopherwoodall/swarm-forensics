@@ -44,17 +44,27 @@ class Blocked(RuntimeError):
 class Parts:
     """The collaborators the engine needs."""
 
-    def __init__(self, settings, ledger, graph, iocs, hermes, getter=curl_get, registry=None):
+    def __init__(self, settings, ledger, graph, iocs, hermes, getter=curl_get,
+                 registry=None, prompts=None, urls=None, spawner=None):
         self.getter = getter
         self.settings = settings
         self.ledger = ledger
         self.graph = graph
         self.iocs = iocs
         self.hermes = hermes
+        self.spawner = spawner
         if registry is None and ledger is not None and hasattr(ledger, "db"):
             from .registry import Registry
             registry = Registry(ledger.db, ledger)
         self.registry = registry
+        if prompts is None and ledger is not None and hasattr(ledger, "db"):
+            from .prompt_registry import PromptRegistry
+            prompts = PromptRegistry(ledger.db)
+        self.prompts = prompts
+        if urls is None and ledger is not None and hasattr(ledger, "db"):
+            from .url_store import UrlStore
+            urls = UrlStore(ledger.db)
+        self.urls = urls
 
 
 class Engine:
@@ -108,22 +118,32 @@ class Engine:
         leads = self.p.ledger.open_leads("query", limit)
         if cfg["hunt.use_model"] and self.failures["model"] < MAX_FAILURES:
             try:
+                sys_prompt = (self.p.prompts.get_template("plan_system")
+                              if self.p.prompts else prompts.PLAN_SYSTEM)
+                user_prompt = prompts.plan_user(
+                    goal, self._slice_terms("prompt", PROMPT_TERMS),
+                    self.p.ledger.recent_findings(),
+                    self.p.ledger.recent_queries(), leads, limit,
+                    registry=self.p.prompts)
                 raw = self.p.hermes.complete_json(
-                    prompts.PLAN_SYSTEM,
-                    prompts.plan_user(
-                        goal, self._slice_terms("prompt", PROMPT_TERMS),
-                        self.p.ledger.recent_findings(),
-                        self.p.ledger.recent_queries(), leads, limit),
-                    "plan", cfg)
+                    sys_prompt, user_prompt, "plan", cfg)
                 self.failures["model"] = 0
                 plan = [q["query"] for q in parse_plan(raw, limit)]
                 if plan:
                     return plan, leads
             except HermesUnavailable as exc:
                 self._fail(hid, "model", exc)
-        picked = self._slice_terms("web", limit)
+        hunter_queries = []
+        if getattr(prompts, "HUNTER_QUERIES", None):
+            hq_list = prompts.HUNTER_QUERIES
+            hq_idx = int(self.p.ledger.cursor("plan", "hunter_query", "0")) % len(hq_list)
+            hunter_queries.append(hq_list[hq_idx])
+            self.p.ledger.set_cursor("plan", "hunter_query", str(hq_idx + 1))
+        term_limit = max(1, limit - len(leads) - len(hunter_queries))
+        picked = self._slice_terms("web", term_limit)
         queries = [lead["value"] for lead in leads]
         queries += ['"%s"' % t for t in picked]
+        queries += hunter_queries
         return queries[:limit], leads
 
     def _fail(self, hid, kind, exc):
@@ -190,8 +210,10 @@ class Engine:
             if "index" in cfg["hunt.sources"]:
                 sources_to_run = registry.sources(enabled_only=True)
             else:
-                sources_to_run = [s for s in registry.sources(enabled_only=True)
-                                  if s["name"] in cfg["hunt.sources"] or s["kind"] in cfg["hunt.sources"]]
+                sources_to_run = [
+                    s for s in registry.sources(enabled_only=True)
+                    if s["name"] in cfg["hunt.sources"] or s["kind"] in cfg["hunt.sources"]
+                ]
         if not sources_to_run:
             sources_to_run = [s for s in cfg["hunt.sources"] if s in INDEX_SOURCES]
 
@@ -260,6 +282,10 @@ class Engine:
     def _record_hits(self, hid, goal, cfg, source, label, hits, totals):
         ids = []
         for hit in hits:
+            if self.p.urls and self.p.urls.is_benign(hit["url"]):
+                continue
+            if self.p.urls:
+                self.p.urls.add(hit["url"], host=host_of(hit["url"]), source=source)
             tainted = taint_prescreen([hit["url"], hit["excerpt"]])
             eid, created = self.p.ledger.add_evidence(
                 hid, source, label, hit["url"], hit["title"], hit["excerpt"],
@@ -282,10 +308,17 @@ class Engine:
     def _read(self, hid, goal, cfg, pages, totals):
         texts = {}
         if cfg["hunt.fetch_pages"] and pages:
-            for i in range(0, len(pages), 5):
+            clean_pages = [
+                p for p in pages
+                if not (self.p.urls and self.p.urls.is_benign(p["url"]))
+            ]
+            for p in clean_pages:
+                if self.p.urls:
+                    self.p.urls.add(p["url"], host=host_of(p["url"]), source="web")
+            for i in range(0, len(clean_pages), 5):
                 if self.ctl.stopped():
                     return
-                batch = [p["url"] for p in pages[i:i + 5]]
+                batch = [p["url"] for p in clean_pages[i:i + 5]]
                 try:
                     for row in self.p.hermes.web_extract(batch):
                         texts[row["url"]] = row["content"]
@@ -295,6 +328,8 @@ class Engine:
         for page in pages:
             if self.ctl.stopped():
                 return
+            if self.p.urls and self.p.urls.is_benign(page["url"]):
+                continue
             text = texts.get(page["url"]) or page.get("description", "")
             totals["pages"] += 1
             self.p.ledger.log_query(hid, "page", page["url"], "ok", 200, 0)
@@ -330,8 +365,10 @@ class Engine:
     def _analyze(self, hid, goal, cfg, text, label):
         if cfg["hunt.use_model"] and self.failures["model"] < MAX_FAILURES:
             try:
+                sys_prompt = (self.p.prompts.get_template("analyze_system")
+                              if self.p.prompts else prompts.ANALYZE_SYSTEM)
                 raw = self.p.hermes.complete_json(
-                    prompts.ANALYZE_SYSTEM,
+                    sys_prompt,
                     "Hunt goal: %s\n%s" % (goal, fence_untrusted(text, label)),
                     "analysis", cfg)
                 self.failures["model"] = 0
@@ -367,7 +404,8 @@ class Engine:
         made = {}
         if graph_on:
             for kind in ("agent", "swarm", "campaign"):
-                items = analysis.get(kind + "s") or (analysis.get("cases") if kind == "campaign" else []) or []
+                legacy_cases = analysis.get("cases") if kind == "campaign" else []
+                items = analysis.get(kind + "s") or legacy_cases or []
                 for item in items:
                     made[(kind, item["name"])] = self._entity(
                         kind, item["name"], item["description"], eid, totals)
@@ -415,6 +453,25 @@ class Engine:
                 hid, "alert", "%s finding: %s" % (level, analysis["summary"][:200]),
                 level="alert", data={"evidence_id": eid, "tainted": tainted,
                                      "host": urlsplit(url).hostname or source})
+        if cfg.get("hunt.auto_spawn_subhunts", True) and getattr(self.p, "spawner", None):
+            hunt = self.p.ledger.hunt(hid)
+            current_depth = hunt.get("depth", 0) if hunt else 0
+            max_depth = cfg.get("hunt.max_depth", 3)
+            if current_depth < max_depth:
+                for (kind, name), entity_id in made.items():
+                    if kind in ("swarm", "campaign") and entity_id:
+                        sub_goal = "Investigate %s %s infrastructure and members" % (kind, name)
+                        try:
+                            self.p.spawner.spawn_subhunt(hid, sub_goal)
+                        except Exception:
+                            pass
+                for lead in analysis.get("leads", []):
+                    if lead.get("kind") in ("query", "url") and confidence >= 0.8:
+                        lead_goal = "Investigate %s: %s" % (lead.get("kind"), lead.get("value"))
+                        try:
+                            self.p.spawner.spawn_subhunt(hid, lead_goal)
+                        except Exception:
+                            pass
 
     def _entity(self, kind, name, description, evidence_id, totals, attrs=None):
         try:

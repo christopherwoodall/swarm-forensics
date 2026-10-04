@@ -233,6 +233,59 @@ MIGRATIONS = [
         UNIQUE(kind, value, param)
     );
     """,
+    # Migration 3: DB prompts, URL catalog & benign status, entity tags.
+    """
+    CREATE TABLE prompts(
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        description TEXT NOT NULL DEFAULT '',
+        template TEXT NOT NULL,
+        default_template TEXT NOT NULL,
+        variables TEXT NOT NULL DEFAULT '[]',
+        updated_utc TEXT NOT NULL
+    );
+    CREATE TABLE urls(
+        url TEXT PRIMARY KEY,
+        host TEXT NOT NULL,
+        source TEXT NOT NULL DEFAULT '',
+        status TEXT NOT NULL DEFAULT 'discovered'
+            CHECK(status IN ('discovered','examined','benign','suspicious')),
+        reason TEXT NOT NULL DEFAULT '',
+        discovered_utc TEXT NOT NULL,
+        updated_utc TEXT NOT NULL
+    );
+    CREATE INDEX idx_urls_status ON urls(status);
+    CREATE INDEX idx_urls_host ON urls(host);
+    ALTER TABLE entities ADD COLUMN tags TEXT NOT NULL DEFAULT '[]';
+    CREATE TABLE iocs_v3(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        term TEXT NOT NULL UNIQUE COLLATE NOCASE,
+        category TEXT NOT NULL DEFAULT 'proposed',
+        status TEXT NOT NULL
+            CHECK(status IN ('proposed','active','inactive','rejected','benign')),
+        origin TEXT NOT NULL,
+        confidence REAL NOT NULL DEFAULT 0,
+        provenance TEXT NOT NULL DEFAULT '',
+        note TEXT NOT NULL DEFAULT '',
+        added_utc TEXT NOT NULL,
+        updated_utc TEXT NOT NULL
+    );
+    INSERT INTO iocs_v3
+        SELECT id, term, category, status, origin, confidence, provenance, note,
+               added_utc, updated_utc
+        FROM iocs;
+    DROP TABLE iocs;
+    ALTER TABLE iocs_v3 RENAME TO iocs;
+    CREATE INDEX idx_iocs_status ON iocs(status);
+    """,
+    # Migration 4: recursive sub-hunts (parent_hunt_id, depth, session_id).
+    """
+    ALTER TABLE hunts ADD COLUMN parent_hunt_id TEXT REFERENCES hunts(id) ON DELETE SET NULL;
+    ALTER TABLE hunts ADD COLUMN depth INTEGER NOT NULL DEFAULT 0;
+    ALTER TABLE hunts ADD COLUMN session_id TEXT;
+    CREATE INDEX idx_hunts_parent ON hunts(parent_hunt_id);
+    CREATE INDEX idx_hunts_session ON hunts(session_id);
+    """,
 ]
 
 
@@ -281,11 +334,11 @@ class Database:
 
     def __init__(self, path):
         self.path = str(path)
-        self._maybe_backup_v1()
+        self._maybe_backup()
         with self.connect() as conn:
             migrate(conn)
 
-    def _maybe_backup_v1(self):
+    def _maybe_backup(self):
         p = Path(self.path)
         if not p.is_file() or str(self.path) == ":memory:":
             return
@@ -293,8 +346,8 @@ class Database:
             temp_conn = sqlite3.connect(self.path)
             ver = temp_conn.execute("PRAGMA user_version").fetchone()[0]
             temp_conn.close()
-            if ver == 1 and len(MIGRATIONS) >= 2:
-                bak = p.with_name(p.name + ".v1.bak")
+            if ver < len(MIGRATIONS):
+                bak = p.with_name("%s.v%d.bak" % (p.name, ver))
                 if not bak.exists():
                     shutil.copy2(p, bak)
         except Exception:

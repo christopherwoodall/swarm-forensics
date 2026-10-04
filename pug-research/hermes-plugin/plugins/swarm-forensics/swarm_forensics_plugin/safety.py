@@ -14,7 +14,10 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 CLAIM_LEVELS = ("L1", "L2", "L3", "L4", "L5")
 ENTITY_TYPES = ("artifact", "agent", "swarm", "campaign", "collection")
 HIERARCHY = ("artifact", "agent", "swarm", "campaign")
-LINK_KINDS = ("part_of", "related", "observed_with")
+LINK_KINDS = (
+    "part_of", "related", "observed_with", "tagged_with",
+    "associated_with", "attributed_to",
+)
 LEGACY_TYPES = {"trace": "artifact", "case": "campaign"}
 LEGACY_LINKS = {"member_of": "part_of", "trace_of": "part_of"}
 TERM_CATEGORIES = ("nonce_grammar", "relay", "watch_term", "basin_target",

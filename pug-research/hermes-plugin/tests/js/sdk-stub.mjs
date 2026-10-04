@@ -14,12 +14,14 @@ export const host = {
 
 export const queryClient = { invalidateQueries() {} }
 
-export function useQuery({ queryFn }) {
+export function useQuery({ queryFn, enabled }) {
   const state = sf()
+  if (enabled === false) return { data: undefined, isError: false, isLoading: false }
   state.lastPath = null
   const pending = queryFn()
   if (pending && pending.catch) pending.catch(() => {})
   const path = state.lastPath
+  if (state.paths && path) state.paths.push(path)
   if (state.mode === 'loading') return { data: undefined, isError: false, isLoading: true }
   if (state.mode === 'error') return { data: undefined, isError: true, error: new Error('offline') }
   return { data: state.fixture(path), isError: false }

@@ -54,19 +54,22 @@ class SchemaAndSettings(unittest.TestCase):
 
             with migrated_db.connect() as c:
                 ver = c.execute("PRAGMA user_version").fetchone()[0]
-                self.assertEqual(ver, 2)
+                self.assertEqual(ver, 4)
                 fk_violations = c.execute("PRAGMA foreign_key_check").fetchall()
                 self.assertEqual(fk_violations, [])
 
-                row_trace = c.execute("SELECT type, name FROM entities WHERE id = 'e_trace'").fetchone()
+                q_trace = "SELECT type, name, tags FROM entities WHERE id = 'e_trace'"
+                row_trace = c.execute(q_trace).fetchone()
                 self.assertEqual(row_trace["type"], "artifact")
-                row_case = c.execute("SELECT type, name FROM entities WHERE id = 'e_case'").fetchone()
+                self.assertEqual(row_trace["tags"], "[]")
+                q_case = "SELECT type, name FROM entities WHERE id = 'e_case'"
+                row_case = c.execute(q_case).fetchone()
                 self.assertEqual(row_case["type"], "campaign")
 
                 links = c.execute("SELECT src, dst, kind FROM links").fetchall()
                 self.assertEqual(len(links), 2)
-                for l in links:
-                    self.assertEqual(l["kind"], "part_of")
+                for lnk in links:
+                    self.assertEqual(lnk["kind"], "part_of")
 
                 ind = c.execute("SELECT entity_id, kind, value FROM indicators").fetchone()
                 self.assertEqual(ind["entity_id"], "e_trace")
@@ -75,6 +78,76 @@ class SchemaAndSettings(unittest.TestCase):
                 # Verify new tables exist
                 self.assertIsNotNone(c.execute("SELECT 1 FROM index_sources").fetchall())
                 self.assertIsNotNone(c.execute("SELECT 1 FROM url_grammar").fetchall())
+                self.assertIsNotNone(c.execute("SELECT 1 FROM prompts").fetchall())
+                self.assertIsNotNone(c.execute("SELECT 1 FROM urls").fetchall())
+
+    def test_v2_to_v3_migration(self):
+        import sqlite3
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_file = Path(tmpdir) / "v2.db"
+            conn = sqlite3.connect(db_file)
+            conn.executescript(db.MIGRATIONS[0])
+            conn.executescript(db.MIGRATIONS[1])
+            conn.execute("PRAGMA user_version = 2")
+            stamp = db.now()
+            conn.execute("INSERT INTO entities(id, type, name, origin, created_utc, updated_utc)"
+                         " VALUES ('e1', 'artifact', 'Artifact1', 'human', ?, ?)", (stamp, stamp))
+            conn.execute("INSERT INTO iocs(term, category, status, origin, added_utc, updated_utc)"
+                         " VALUES ('sample.ioc', 'relay', 'active', 'human', ?, ?)", (stamp, stamp))
+            conn.commit()
+            conn.close()
+
+            migrated = db.Database(db_file)
+            bak = db_file.with_name(db_file.name + ".v2.bak")
+            self.assertTrue(bak.exists())
+
+            with migrated.connect() as c:
+                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 4)
+                self.assertEqual(c.execute("PRAGMA foreign_key_check").fetchall(), [])
+                # Entity has tags column
+                row = c.execute("SELECT tags FROM entities WHERE id = 'e1'").fetchone()
+                self.assertEqual(row["tags"], "[]")
+                # Benign status can be written to iocs
+                c.execute("UPDATE iocs SET status = 'benign' WHERE term = 'sample.ioc'")
+                ioc_row = c.execute("SELECT status FROM iocs WHERE term = 'sample.ioc'").fetchone()
+                self.assertEqual(ioc_row["status"], "benign")
+                # Prompts and urls tables exist
+                self.assertEqual(c.execute("SELECT COUNT(*) FROM prompts").fetchone()[0], 0)
+                self.assertEqual(c.execute("SELECT COUNT(*) FROM urls").fetchone()[0], 0)
+
+    def test_v3_to_v4_migration(self):
+        import sqlite3
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_file = Path(tmpdir) / "v3.db"
+            conn = sqlite3.connect(db_file)
+            for m in db.MIGRATIONS[:3]:
+                conn.executescript(m)
+            conn.execute("PRAGMA user_version = 3")
+            stamp = db.now()
+            conn.execute(
+                "INSERT INTO hunts("
+                "id, origin, goal, state, created_utc, started_utc, heartbeat_utc)"
+                " VALUES ('h1', 'desktop', 'find traces', 'running', ?, ?, ?)",
+                (stamp, stamp, stamp))
+            conn.commit()
+            conn.close()
+
+            migrated = db.Database(db_file)
+            bak = db_file.with_name(db_file.name + ".v3.bak")
+            self.assertTrue(bak.exists())
+
+            with migrated.connect() as c:
+                self.assertEqual(c.execute("PRAGMA user_version").fetchone()[0], 4)
+                self.assertEqual(c.execute("PRAGMA foreign_key_check").fetchall(), [])
+                query = "SELECT parent_hunt_id, depth, session_id FROM hunts WHERE id = 'h1'"
+                row = c.execute(query).fetchone()
+                self.assertIsNone(row["parent_hunt_id"])
+                self.assertEqual(row["depth"], 0)
+                self.assertIsNone(row["session_id"])
 
     def test_defaults_and_updates(self):
         s = self.env.settings
@@ -252,7 +325,8 @@ class GraphTests(unittest.TestCase):
         # Should be flipped so artifact is src and agent is dst.
         link_id = self.g.link(agent["id"], artifact["id"], "part_of")
         with self.env.db.connect() as conn:
-            row = conn.execute("SELECT src, dst, kind FROM links WHERE id = ?", (link_id,)).fetchone()
+            q = "SELECT src, dst, kind FROM links WHERE id = ?"
+            row = conn.execute(q, (link_id,)).fetchone()
             self.assertEqual(row["src"], artifact["id"])
             self.assertEqual(row["dst"], agent["id"])
             self.assertEqual(row["kind"], "part_of")
@@ -261,7 +335,9 @@ class GraphTests(unittest.TestCase):
         agent2 = self.g.upsert("agent", "AgentBeta")
         link_same = self.g.link(agent["id"], agent2["id"], "part_of")
         with self.env.db.connect() as conn:
-            row_same = conn.execute("SELECT kind FROM links WHERE id = ?", (link_same,)).fetchone()
+            row_same = conn.execute(
+                "SELECT kind FROM links WHERE id = ?", (link_same,)
+            ).fetchone()
             self.assertEqual(row_same["kind"], "related")
 
         # View check for parents and children

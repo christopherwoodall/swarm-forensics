@@ -22,8 +22,8 @@ const ID = 'swarm-forensics'
 const PATH = '/swarm-forensics'
 const HEARTBEAT_MS = 20000
 const ALERT_POLL_MS = 10000
-const ENTITY_TYPES = ['agent', 'swarm', 'case', 'trace', 'collection']
-const LINK_KINDS = ['member_of', 'part_of', 'trace_of', 'related', 'observed_with']
+const ENTITY_TYPES = ['artifact', 'agent', 'swarm', 'campaign', 'collection']
+const LINK_KINDS = ['part_of', 'related', 'observed_with', 'tagged_with', 'associated_with', 'attributed_to']
 
 let rest = null // set in register(ctx)
 
@@ -102,12 +102,13 @@ async function act(path, body, method = 'POST', okMessage) {
   }
 }
 
-function useApi(key, path, poll) {
+function useApi(key, path, poll, enabled = true) {
   return useQuery({
     queryKey: [ID, ...key],
     queryFn: () => api(path),
     refetchInterval: poll || false,
-    retry: 1
+    retry: 1,
+    enabled: enabled !== false
   })
 }
 
@@ -152,8 +153,8 @@ function useSettings() {
   return q.data ? q.data.values : null
 }
 
-function Error({ q }) {
-  if (!q.isError) return null
+function ErrorNote({ q }) {
+  if (!q || !q.isError) return null
   return h('div', { style: { ...S.card, color: V.accent } }, `Backend unreachable: ${String(q.error && q.error.message || q.error)}. Is the plugin in plugins.enabled and the gateway restarted?`)
 }
 
@@ -167,24 +168,119 @@ const STATE_HELP = {
   stopped: 'Stopped.'
 }
 
+function HuntDetail({ huntId, onClose }) {
+  const hq = useApi(['hunt-detail', huntId], `/hunts/${huntId}`)
+  const eq = useApi(['hunt-events', huntId], `/events?hunt_id=${huntId}&limit=50`)
+  const vq = useApi(['hunt-evidence', huntId], `/evidence?hunt_id=${huntId}&limit=50`)
+  const cq = useApi(['hunt-children', huntId], `/hunts/${huntId}/children`)
+  const [spawning, setSpawning] = useState(false)
+  const [subGoal, setSubGoal] = useState('')
+  const [copied, setCopied] = useState(false)
+
+  const hdata = hq.data
+  if (!hdata) return h('div', { style: S.card }, h(ErrorNote, { q: hq }), h(Empty, null, 'Loading hunt detail...'))
+
+  const events = (eq.data && eq.data.events) || []
+  const evidence = (vq.data && vq.data.evidence) || []
+  const children = (cq.data && cq.data.children) || []
+
+  return h('div', { style: { ...S.card, ...S.col, border: `1px solid ${V.accent}` } },
+    h('div', { style: S.row },
+      h('span', { style: S.h2 }, `Hunt ${hdata.id}`),
+      h(Chip, { strong: hdata.state === 'running' }, hdata.state),
+      h(Chip, null, `depth ${hdata.depth !== undefined ? hdata.depth : 0}`),
+      h('span', { style: S.dim }, `${hdata.origin}, ${hdata.cycle} cycles`),
+      hdata.parent_hunt_id && h('span', { style: S.dim }, `sub-hunt of ${hdata.parent_hunt_id.slice(0, 8)}`),
+      hdata.session_id && h(Chip, null, `session: ${hdata.session_id}`),
+      h('span', { style: { flex: 1 } }),
+      h(Btn, {
+        onClick: () => {
+          if (typeof navigator !== 'undefined' && navigator.clipboard) {
+            navigator.clipboard.writeText(`/swarm-forensics attach ${hdata.id}`)
+            setCopied(true)
+            setTimeout(() => setCopied(false), 2000)
+          }
+        }
+      }, copied ? 'Copied!' : 'Attach Command'),
+      h(Btn, { onClick: () => setSpawning(!spawning) }, spawning ? 'Cancel' : '+ Sub-hunt'),
+      h(Btn, { onClick: onClose }, 'Close')),
+    spawning && h('div', { style: { ...S.row, padding: '8px 0', borderTop: `1px solid ${V.line}`, borderBottom: `1px solid ${V.line}` } },
+      h('input', {
+        style: { ...S.input, flex: 1 },
+        value: subGoal,
+        placeholder: 'Child hunt goal (e.g. investigate candidate swarm)',
+        onChange: e => setSubGoal(e.target.value)
+      }),
+      h(Btn, {
+        kind: 'primary',
+        disabled: !subGoal.trim(),
+        onClick: async () => {
+          const res = await act(`/hunts/${hdata.id}/spawn`, { goal: subGoal.trim() }, 'POST', 'Sub-hunt spawned')
+          if (res) {
+            setSubGoal('')
+            setSpawning(false)
+          }
+        }
+      }, 'Spawn child hunt')),
+    h('div', { style: S.dim }, hdata.detail || STATE_HELP[hdata.state] || ''),
+    h('div', null, h('strong', null, 'Goal: '), hdata.goal || 'Default'),
+    h('div', { style: S.dim }, `Started: ${hdata.started_utc || '-'} | Ended: ${hdata.ended_utc || '-'}`),
+    hdata.stats && Object.keys(hdata.stats).length > 0 && h('div', null,
+      h('div', { style: S.dim }, 'Stats:'),
+      h('pre', { style: { ...S.mono, margin: '4px 0', whiteSpace: 'pre-wrap' } }, JSON.stringify(hdata.stats, null, 2))),
+    children.length > 0 && h('div', null,
+      h('div', { style: { ...S.h2, marginTop: 8 } }, `Child Sub-hunts (${children.length})`),
+      h('div', { style: { ...S.col, gap: 4 } },
+        children.map(ch => h('div', { key: ch.id, style: { ...S.row, padding: '4px 0', borderTop: `1px solid ${V.line}` } },
+          h(Chip, null, `depth ${ch.depth || 0}`),
+          h(Chip, { strong: ch.state === 'running' }, ch.state),
+          h('span', { style: S.mono }, ch.id),
+          h('span', { style: S.dim }, ch.goal || 'Subhunt'),
+          h('span', { style: S.dim }, `${ch.cycle} cycles`))))),
+    h('div', { style: { ...S.h2, marginTop: 8 } }, `Events (${events.length})`),
+    events.length > 0
+      ? h('div', { style: { ...S.col, gap: 2, maxHeight: 180, overflow: 'auto' } },
+        events.map(e => h('div', {
+          key: e.id,
+          style: { ...S.mono, color: e.level === 'alert' ? V.accent : (e.level === 'info' ? 'inherit' : V.dim) }
+        }, `${ago(e.ts)} [${e.kind}] ${e.message}`)))
+      : h(Empty, null, 'No events for this hunt.'),
+    h('div', { style: { ...S.h2, marginTop: 8 } }, `Evidence (${evidence.length})`),
+    evidence.length > 0
+      ? h('div', { style: { ...S.col, gap: 4, maxHeight: 180, overflow: 'auto' } },
+        evidence.map(ev => h('div', { key: ev.id, style: S.row },
+          h(Chip, null, ev.claim_level),
+          h('span', { style: S.mono }, hostOf(ev.url)),
+          h('span', { style: S.dim }, ev.title || ''))))
+      : h(Empty, null, 'No evidence for this hunt.'))
+}
+
 function HuntPage() {
   const status = useApi(['status'], '/status', 3000)
   const overview = useApi(['overview'], '/overview', 30000)
   const hunts = useApi(['hunts'], '/hunts?limit=10', 8000)
+  const leadsQ = useApi(['leads'], '/leads', 5000)
   const hunt = status.data && status.data.hunt
-  const events = useApi(['events', hunt ? hunt.id : 'none'], `/events?limit=80${hunt ? `&hunt_id=${hunt.id}` : ''}`, 3000)
+
+  const [eventKind, setEventKind] = useState('')
+  const [eventLevel, setEventLevel] = useState('')
+  const eventsUrl = `/events?limit=80${hunt ? `&hunt_id=${hunt.id}` : ''}${eventKind ? `&kind=${eventKind}` : ''}${eventLevel ? `&level=${eventLevel}` : ''}`
+  const events = useApi(['events', hunt ? hunt.id : 'none', eventKind, eventLevel], eventsUrl, 3000)
+
   const settings = overview.data && overview.data.settings
   const caps = overview.data && overview.data.capabilities
   const [goal, setGoal] = useState('')
   const [lead, setLead] = useState('')
+  const [selectedHunt, setSelectedHunt] = useState(null)
   const running = !!(status.data && status.data.running)
   const st = status.data
   const t = st ? st.totals : {}
   const i = st ? st.iocs : {}
   const qs = st ? st.queries : {}
+  const openLeads = (leadsQ.data && leadsQ.data.leads) || []
 
   return h('div', { style: S.col },
-    h(Error, { q: status }),
+    h(ErrorNote, { q: status }),
     caps && (!caps.model || !caps.web_search) && h('div', { style: { ...S.card, color: V.accent } },
       [!caps.model && 'Hermes model unavailable in the backend process. Hunts fall back to indicator matching.',
         !caps.web_search && 'Hermes web_search tool not found. Configure a web backend in Hermes.'].filter(Boolean).join(' ')),
@@ -217,15 +313,44 @@ function HuntPage() {
         .map(([k, v]) => h('div', { key: k, style: S.card },
           h('div', { style: S.dim }, k), h('div', { style: { fontSize: '1.1rem' } }, v === undefined ? '-' : String(v))))),
     h('div', { style: S.card },
-      h('div', { style: S.h2 }, 'Add a lead'),
+      h('div', { style: S.row },
+        h('span', { style: S.h2 }, `Leads (${openLeads.length})`),
+        h('span', { style: { ...S.h2, fontSize: '0.8rem', color: V.dim } }, 'Add a lead')),
       h('div', { style: S.row },
         h('input', { style: { ...S.input, flex: 1 }, value: lead, placeholder: 'A search query for the next cycle', onChange: e => setLead(e.target.value) }),
         h(Btn, {
           disabled: !lead.trim(),
           onClick: async () => { if (await act('/leads', { kind: 'query', value: lead.trim() })) setLead('') }
-        }, 'Add'))),
+        }, 'Add')),
+      openLeads.length > 0 && h('div', { style: { ...S.col, gap: 4, marginTop: 8, maxHeight: 180, overflow: 'auto' } },
+        openLeads.map(l => h('div', { key: l.id, style: { ...S.row, padding: '2px 0', borderTop: `1px solid ${V.line}` } },
+          h(Chip, null, l.kind),
+          h('span', { style: { ...S.mono, flex: 1 } }, l.value),
+          h('span', { style: S.dim }, `p:${(l.priority || 0.5).toFixed(1)}`),
+          h('span', { style: S.dim }, l.origin),
+          h('span', { style: S.dim }, ago(l.created_utc)),
+          h(Btn, { onClick: () => act(`/leads/${l.id}/close`, { status: 'dismissed' }) }, 'Dismiss'))))),
     h('div', { style: S.card },
-      h('div', { style: S.h2 }, 'Activity'),
+      h('div', { style: S.row },
+        h('span', { style: S.h2 }, 'Interactive hunt session & attach'),
+        h(Chip, null, 'Hermes chat')),
+      h('div', { style: S.dim },
+        'Command or attach to an autonomous investigation directly in Hermes chat with native tools. Run in your terminal or chat:'),
+      h('div', { style: { ...S.row, gap: 12, marginTop: 4 } },
+        h('span', { style: { ...S.mono, color: V.accent, fontWeight: 600 } }, '/swarm-forensics session [goal]'),
+        h('span', { style: { ...S.mono, color: V.accent, fontWeight: 600 } }, '/swarm-forensics attach [hunt_id]')),
+      h('div', { style: { ...S.dim, fontSize: '0.75rem', marginTop: 4 } },
+        'Available tools: sf_get_context, sf_search_index, sf_record_evidence, sf_propose_ioc, sf_manage_entity, sf_link_entities, sf_triage_item, sf_query_knowledge, sf_spawn_subhunt, sf_attach_hunt.')),
+    h('div', { style: S.card },
+      h('div', { style: S.row },
+        h('span', { style: S.h2 }, 'Activity'),
+        h('span', { style: { flex: 1 } }),
+        h('select', { style: S.input, value: eventKind, onChange: e => setEventKind(e.target.value) },
+          h('option', { value: '' }, 'All kinds'),
+          ['search', 'sweep', 'page', 'plan', 'cycle', 'finding', 'state', 'registry'].map(k => h('option', { key: k, value: k }, k))),
+        h('select', { style: S.input, value: eventLevel, onChange: e => setEventLevel(e.target.value) },
+          h('option', { value: '' }, 'All levels'),
+          ['info', 'warn', 'alert', 'error'].map(lvl => h('option', { key: lvl, value: lvl }, lvl)))),
       events.data && events.data.events.length
         ? h('div', { style: { ...S.col, gap: 2, maxHeight: 280, overflow: 'auto' } },
           events.data.events.slice().reverse().map(e => h('div', {
@@ -233,11 +358,20 @@ function HuntPage() {
             style: { ...S.mono, color: e.level === 'alert' ? V.accent : (e.level === 'info' ? 'inherit' : V.dim), fontWeight: e.level === 'alert' ? 600 : 400 }
           }, `${ago(e.ts)}  [${e.kind}] ${e.message}`)))
         : h(Empty, null, 'No activity yet.')),
+    selectedHunt && h(HuntDetail, { huntId: selectedHunt, onClose: () => setSelectedHunt(null) }),
     h('div', { style: S.card },
       h('div', { style: S.h2 }, 'Recent hunts'),
       hunts.data && hunts.data.hunts.length
         ? hunts.data.hunts.map(x => h('div', { key: x.id, style: { ...S.row, padding: '2px 0' } },
-          h('span', { style: S.mono }, x.id), h(Chip, null, x.state), h('span', { style: S.dim }, `${x.origin}, ${x.cycle} cycles, ${ago(x.created_utc)}`),
+          h('span', {
+            style: { ...S.mono, cursor: 'pointer', textDecoration: 'underline', color: V.accent },
+            title: 'Click to view details',
+            onClick: () => setSelectedHunt(x.id)
+          }, x.id),
+          h(Chip, null, x.state),
+          h(Chip, null, `depth ${x.depth !== undefined ? x.depth : 0}`),
+          h('span', { style: S.dim }, `${x.origin}, ${x.cycle} cycles, ${ago(x.created_utc)}`),
+          x.parent_hunt_id && h('span', { style: S.dim }, `(parent: ${x.parent_hunt_id.slice(0, 8)})`),
           (x.state === 'paused' || x.state === 'blocked') && !running &&
             h(Btn, { onClick: () => act('/hunts/resume', { hunt_id: x.id }, 'POST', 'Hunt resumed') }, 'Resume')))
         : h(Empty, null, 'None.')))
@@ -250,7 +384,7 @@ function EvidencePage() {
   const [level, setLevel] = useState('')
   const [open, setOpen] = useState(null)
   const query = useApi(['evidence', q, level], `/evidence?limit=100${q ? `&q=${encodeURIComponent(q)}` : ''}${level ? `&min_level=${level}` : ''}`, 10000)
-  const detail = useApi(['evidence-one', open], open ? `/evidence/${open}` : '/status')
+  const detail = useApi(['evidence-one', open], `/evidence/${open}`, false, Boolean(open))
   const rows = query.data ? query.data.evidence : []
   return h('div', { style: S.col },
     h('div', { style: S.row },
@@ -258,7 +392,7 @@ function EvidencePage() {
       h('select', { style: S.input, value: level, onChange: e => setLevel(e.target.value) },
         h('option', { value: '' }, 'Any claim level'),
         ['L1', 'L2', 'L3', 'L4', 'L5'].map(l => h('option', { key: l, value: l }, `${l} and up`)))),
-    h(Error, { q: query }),
+    h(ErrorNote, { q: query }),
     rows.length === 0 && h(Empty, null, 'No evidence yet. Start a hunt.'),
     rows.map(r => h('div', { key: r.id, style: S.card },
       h('div', { style: { ...S.row, cursor: 'pointer' }, onClick: () => setOpen(open === r.id ? null : r.id) },
@@ -278,13 +412,14 @@ function EvidencePage() {
 function IocRow({ ioc, mask }) {
   const [open, setOpen] = useState(false)
   const [narrow, setNarrow] = useState('')
-  const detail = useApi(['ioc', ioc.id], `/iocs/${ioc.id}`)
+  const detail = useApi(['ioc', ioc.id], `/iocs/${ioc.id}`, false, open)
   const decide = (decision, extra) => act(`/iocs/${ioc.id}/decision`, { decision, ...extra })
   const actions = {
-    proposed: [['accept', 'Accept'], ['reject', 'Reject']],
-    active: [['deactivate', 'Deactivate']],
-    inactive: [['reactivate', 'Reactivate']],
-    rejected: [['reopen', 'Reopen']]
+    proposed: [['accept', 'Accept'], ['benign', 'Mark Benign'], ['reject', 'Reject']],
+    active: [['benign', 'Mark Benign'], ['deactivate', 'Deactivate']],
+    inactive: [['reactivate', 'Reactivate'], ['benign', 'Mark Benign']],
+    rejected: [['reopen', 'Reopen'], ['benign', 'Mark Benign']],
+    benign: [['reopen', 'Reopen']]
   }[ioc.status] || []
   return h('div', { style: S.card },
     h('div', { style: S.row },
@@ -321,25 +456,30 @@ function IocsPage() {
       h(Btn, { onClick: () => act('/settings', { updates: { 'iocs.promotion': mode === 'manual' ? 'automatic' : 'manual' } }, 'PUT') },
         `Switch to ${mode === 'manual' ? 'automatic' : 'manual'}`)),
     h('div', { style: S.row },
-      ['proposed', 'active', 'inactive', 'rejected'].map(s => h(Btn, { key: s, kind: s === status ? 'primary' : undefined, onClick: () => setStatus(s) }, `${s} (${counts[s] || 0})`)),
+      ['proposed', 'active', 'inactive', 'rejected', 'benign'].map(s => h(Btn, { key: s, kind: s === status ? 'primary' : undefined, onClick: () => setStatus(s) }, `${s} (${counts[s] || 0})`)),
       h('input', { style: { ...S.input, flex: 1 }, value: q, placeholder: 'Filter terms', onChange: e => setQ(e.target.value) })),
     h('div', { style: { ...S.card, ...S.row } },
       h('input', { style: { ...S.input, flex: 1 }, value: term, placeholder: 'Add a term by hand', onChange: e => setTerm(e.target.value) }),
       h('label', { style: S.row }, h('input', { type: 'checkbox', checked: activate, onChange: e => setActivate(e.target.checked) }), 'active now'),
       h(Btn, { disabled: !term.trim(), onClick: async () => { if (await act('/iocs', { term: term.trim(), activate })) setTerm('') } }, 'Add')),
-    h(Error, { q: query }),
+    h(ErrorNote, { q: query }),
     query.data && query.data.iocs.length === 0 && h(Empty, null, `No ${status} terms.`),
     (query.data ? query.data.iocs : []).map(ioc => h(IocRow, { key: ioc.id, ioc, mask: settings ? settings['safety.private_mode'] : true })))
 }
 
 // ---------------------------------------------------------------- graph
 
-function layout(nodes, edges, w, h0) {
+function layout(nodes, edges, w, h0, prevPos) {
   const pos = new Map()
   const n = nodes.length
   nodes.forEach((node, k) => {
-    const a = (2 * Math.PI * k) / Math.max(1, n)
-    pos.set(node.id, { x: w / 2 + Math.cos(a) * w * 0.3, y: h0 / 2 + Math.sin(a) * h0 * 0.3, vx: 0, vy: 0 })
+    if (prevPos && prevPos.has(node.id)) {
+      const prev = prevPos.get(node.id)
+      pos.set(node.id, { x: prev.x, y: prev.y, vx: 0, vy: 0 })
+    } else {
+      const a = (2 * Math.PI * k) / Math.max(1, n)
+      pos.set(node.id, { x: w / 2 + Math.cos(a) * w * 0.3, y: h0 / 2 + Math.sin(a) * h0 * 0.3, vx: 0, vy: 0 })
+    }
   })
   const iters = n > 250 ? 120 : 260
   for (let it = 0; it < iters; it++) {
@@ -364,26 +504,50 @@ function layout(nodes, edges, w, h0) {
       const f = (d - 90) * 0.02
       pa.vx += (dx / d) * f; pa.vy += (dy / d) * f; pb.vx -= (dx / d) * f; pb.vy -= (dy / d) * f
     })
-    pos.forEach(p => {
-      p.vx += (w / 2 - p.x) * 0.005; p.vy += (h0 / 2 - p.y) * 0.005
-      p.x += Math.max(-12, Math.min(12, p.vx)) * cool; p.y += Math.max(-12, Math.min(12, p.vy)) * cool
-      p.vx *= 0.6; p.vy *= 0.6
+    nodes.forEach(node => {
+      const p = pos.get(node.id)
+      if (node.rank !== null && node.rank !== undefined) {
+        const targetY = h0 * (0.8 - node.rank * 0.2)
+        p.vy += (targetY - p.y) * 0.015
+      } else {
+        p.vy += (h0 / 2 - p.y) * 0.005
+      }
+      p.vx += (w / 2 - p.x) * 0.005
+      p.x += Math.max(-12, Math.min(12, p.vx)) * cool
+      p.y += Math.max(-12, Math.min(12, p.vy)) * cool
+      p.vx *= 0.6
+      p.vy *= 0.6
     })
   }
   return pos
 }
 
-const SHAPE_OPACITY = { agent: 1, swarm: 0.75, case: 0.55, trace: 0.3, collection: 0.45 }
+const SHAPE_OPACITY = { agent: 1, swarm: 0.75, campaign: 0.55, case: 0.55, artifact: 0.35, trace: 0.35, collection: 0.45 }
 
 function GraphView({ center, selected, onSelect, height }) {
   const q = useApi(['graph', center || 'all'], `/graph?depth=2${center ? `&center=${center}` : ''}`, 15000)
   const [view, setView] = useState({ x: 0, y: 0, k: 1 })
   const drag = useRef(null)
+  const positionsRef = useRef(new Map())
   const W = 800, H = 500
   const g = q.data
-  const pos = useMemo(() => (g ? layout(g.nodes, g.edges, W, H) : new Map()), [g])
-  if (!g) return h('div', { style: { height } }, h(Error, { q }))
-  if (g.nodes.length === 0) return h(Empty, null, 'The graph is empty. Hunts add agents, swarms, and cases as they find them.')
+
+  const sig = useMemo(() => {
+    if (!g) return ''
+    const nodeIds = g.nodes.map(n => n.id).sort().join(',')
+    const edgeIds = g.edges.map(e => `${e.src}->${e.dst}:${e.kind}`).sort().join(',')
+    return `${nodeIds}|${edgeIds}`
+  }, [g])
+
+  const pos = useMemo(() => {
+    if (!g) return new Map()
+    const newPos = layout(g.nodes, g.edges, W, H, positionsRef.current)
+    positionsRef.current = newPos
+    return newPos
+  }, [sig])
+
+  if (!g) return h('div', { style: { height } }, h(ErrorNote, { q }))
+  if (g.nodes.length === 0) return h(Empty, null, 'The graph is empty. Hunts add artifacts, agents, swarms, and campaigns as they find them.')
   const vb = `${view.x} ${view.y} ${W / view.k} ${H / view.k}`
   const onWheel = e => {
     const k = Math.max(0.3, Math.min(5, view.k * (e.deltaY < 0 ? 1.15 : 0.87)))
@@ -409,13 +573,14 @@ function GraphView({ center, selected, onSelect, height }) {
     }),
     g.nodes.map(n => {
       const p = pos.get(n.id)
-      const r = 6 + Math.min(8, n.degree)
+      if (!p) return null
+      const r = 6 + Math.min(8, n.degree || 0)
       const sel = n.id === selected || n.id === center
       const common = { fill: V.accent, fillOpacity: SHAPE_OPACITY[n.type] || 0.5, stroke: sel ? 'currentColor' : V.accent, strokeWidth: sel ? 2 : 1 }
       const shape = n.type === 'swarm' ? h('rect', { x: p.x - r, y: p.y - r, width: 2 * r, height: 2 * r, ...common })
-        : n.type === 'case' ? h('polygon', { points: `${p.x},${p.y - r - 2} ${p.x + r + 2},${p.y} ${p.x},${p.y + r + 2} ${p.x - r - 2},${p.y}`, ...common })
+        : (n.type === 'campaign' || n.type === 'case') ? h('polygon', { points: `${p.x},${p.y - r - 2} ${p.x + r + 2},${p.y} ${p.x},${p.y + r + 2} ${p.x - r - 2},${p.y}`, ...common })
           : n.type === 'collection' ? h('polygon', { points: `${p.x},${p.y - r} ${p.x + r},${p.y + r} ${p.x - r},${p.y + r}`, ...common })
-            : h('circle', { cx: p.x, cy: p.y, r: n.type === 'trace' ? Math.max(4, r - 2) : r, ...common })
+            : h('circle', { cx: p.x, cy: p.y, r: (n.type === 'artifact' || n.type === 'trace') ? Math.max(3, r - 3) : r, ...common })
       return h('g', { key: n.id, style: { cursor: 'pointer' }, onPointerDown: e => e.stopPropagation(), onClick: () => onSelect && onSelect(n.id) },
         h('title', null, `${n.type}: ${n.name}`), shape,
         h('text', { x: p.x + r + 3, y: p.y + 3, fontSize: 10, fill: 'currentColor', opacity: 0.8 }, n.name.slice(0, 28)))
@@ -445,36 +610,79 @@ function EntityPane({ id, names, onOpen, onGone }) {
   const [edit, setEdit] = useState(false)
   const [notes, setNotes] = useState('')
   const [summary, setSummary] = useState('')
+  const [tags, setTags] = useState('')
   const [linkTo, setLinkTo] = useState('')
   const [linkKind, setLinkKind] = useState('related')
-  useEffect(() => { if (e) { setNotes(e.notes); setSummary(e.summary); setEdit(false) } }, [e && e.id, e && e.updated_utc])
-  if (!e) return h(Error, { q })
+  useEffect(() => {
+    if (e) {
+      setNotes(e.notes || '')
+      setSummary(e.summary || '')
+      setTags((e.tags || []).join(', '))
+      setEdit(false)
+    }
+  }, [e && e.id, e && e.updated_utc])
+  if (!e) return h(ErrorNote, { q })
   const others = Array.from(names.entries()).filter(([, v]) => v !== id)
   const edgeRow = (l, dir) => h('div', { key: `${dir}${l.id}`, style: S.row },
     h(Chip, null, l.kind), h('a', { href: '#', style: { color: V.accent }, onClick: ev => { ev.preventDefault(); onOpen(l.other) } }, `${l.type}: ${l.name}`),
     l.kind !== 'mentions' && h(Btn, { onClick: () => act(`/links/${l.id}`, undefined, 'DELETE') }, 'Unlink'))
+
+  const parents = e.parents || {}
+  const children = e.children || {}
+  const hasParents = Object.values(parents).some(g => g && g.length > 0)
+  const hasChildren = Object.values(children).some(g => g && g.length > 0)
+
   return h('div', { style: S.col },
     h('div', { style: S.row },
       h('span', { style: { fontSize: '1.05rem', fontWeight: 600 } }, e.name), h(Chip, null, e.type), h(Chip, null, e.origin),
+      (e.tags || []).map(t => h(Chip, { key: t, strong: true }, `#${t}`)),
       h('span', { style: S.dim }, `updated ${ago(e.updated_utc)}`), h('span', { style: { flex: 1 } }),
       h(Btn, { onClick: () => setEdit(!edit) }, edit ? 'Cancel' : 'Edit'),
       h(Btn, { onClick: async () => { if (window.confirm(`Delete ${e.name} and its links?`)) { await act(`/entities/${id}`, undefined, 'DELETE'); onGone() } } }, 'Delete')),
     edit
       ? h('div', { style: S.col },
         h('input', { style: S.input, value: summary, placeholder: 'One-line summary', onChange: ev => setSummary(ev.target.value) }),
+        h('input', { style: S.input, value: tags, placeholder: 'Tags (comma separated, e.g. recon, stealth)', onChange: ev => setTags(ev.target.value) }),
         h('textarea', { style: { ...S.input, minHeight: 180, fontFamily: 'ui-monospace, monospace' }, value: notes, placeholder: 'Markdown notes. Link with [[Name]].', onChange: ev => setNotes(ev.target.value) }),
-        h('div', null, h(Btn, { kind: 'primary', onClick: async () => { if (await act(`/entities/${id}`, { summary, notes }, 'PUT', 'Saved')) setEdit(false) } }, 'Save')))
+        h('div', null, h(Btn, { kind: 'primary', onClick: async () => {
+          const parsedTags = tags.split(',').map(s => s.trim()).filter(Boolean)
+          if (await act(`/entities/${id}`, { summary, notes, tags: parsedTags }, 'PUT', 'Saved')) setEdit(false)
+        } }, 'Save')))
       : h('div', { style: S.col },
+        (e.tags && e.tags.length > 0) && h('div', { style: { ...S.row, gap: 4 } },
+          h('span', { style: S.dim }, 'Tags:'),
+          e.tags.map(t => h(Chip, { key: t }, `#${t}`))),
         e.summary && h('div', { style: S.dim }, e.summary),
         e.notes ? h(NoteText, { text: e.notes, names, onOpen }) : h('div', { style: S.dim }, 'No notes yet.'),
         e.unresolved.length > 0 && h('div', { style: S.dim }, `Unresolved links: ${e.unresolved.join(', ')}`)),
     h('div', { style: S.card },
-      h('div', { style: S.h2 }, `Links (${e.outgoing.length + e.backlinks.length})`),
-      e.outgoing.map(l => edgeRow(l, 'o')),
-      e.backlinks.length > 0 && h('div', { style: { ...S.dim, marginTop: 6 } }, 'Backlinks'),
-      e.backlinks.map(l => edgeRow(l, 'b')),
+      h('div', { style: S.h2 }, 'Hierarchy'),
+      h('div', { style: { ...S.dim, fontWeight: 600, marginTop: 4 } }, 'Belongs to'),
+      hasParents
+        ? Object.entries(parents).map(([ptype, plist]) => plist.map(p => h('div', { key: `p-${p.id}`, style: S.row },
+          h(Chip, null, ptype),
+          h('a', { href: '#', style: { color: V.accent }, onClick: ev => { ev.preventDefault(); onOpen(p.other) } }, p.name),
+          h('span', { style: { flex: 1 } }),
+          h(Btn, { onClick: () => act(`/links/${p.id}`, undefined, 'DELETE') }, 'Unlink'))))
+        : h('div', { style: S.dim }, 'None.'),
+      h('div', { style: { ...S.dim, fontWeight: 600, marginTop: 6 } }, 'Contains'),
+      hasChildren
+        ? Object.entries(children).map(([ctype, clist]) => h('div', { key: ctype },
+          h('div', { style: { ...S.dim, fontSize: '0.75rem', marginTop: 2 } }, `${ctype} (${clist.length})`),
+          clist.map(c => h('div', { key: `c-${c.id}`, style: S.row },
+            h(Chip, null, ctype),
+            h('a', { href: '#', style: { color: V.accent }, onClick: ev => { ev.preventDefault(); onOpen(c.other) } }, c.name),
+            h('span', { style: { flex: 1 } }),
+            h(Btn, { onClick: () => act(`/links/${c.id}`, undefined, 'DELETE') }, 'Unlink')))))
+        : h('div', { style: S.dim }, 'None.')),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, `Links (${e.outgoing.filter(l => l.kind !== 'part_of').length + e.backlinks.filter(l => l.kind !== 'part_of').length})`),
+      e.outgoing.filter(l => l.kind !== 'part_of').map(l => edgeRow(l, 'o')),
+      e.backlinks.filter(l => l.kind !== 'part_of').length > 0 && h('div', { style: { ...S.dim, marginTop: 6 } }, 'Backlinks'),
+      e.backlinks.filter(l => l.kind !== 'part_of').map(l => edgeRow(l, 'b')),
       h('div', { style: { ...S.row, marginTop: 8 } },
-        h('select', { style: S.input, value: linkKind, onChange: ev => setLinkKind(ev.target.value) }, LINK_KINDS.map(k => h('option', { key: k, value: k }, k))),
+        h('select', { style: S.input, value: linkKind, onChange: ev => setLinkKind(ev.target.value) },
+          LINK_KINDS.map(k => h('option', { key: k, value: k }, k === 'part_of' ? 'belongs to (part_of)' : k))),
         h('select', { style: S.input, value: linkTo, onChange: ev => setLinkTo(ev.target.value) },
           h('option', { value: '' }, 'link to...'), others.map(([name, v]) => h('option', { key: v, value: v }, name))),
         h(Btn, { disabled: !linkTo, onClick: async () => { if (await act('/links', { src: id, dst: linkTo, kind: linkKind })) setLinkTo('') } }, 'Link'))),
@@ -495,6 +703,12 @@ function KnowledgePage() {
   const [sel, setSel] = useState(null)
   const [nt, setNt] = useState('agent')
   const [nn, setNn] = useState('')
+  const [showGroup, setShowGroup] = useState(0)
+  const [gName, setGName] = useState('')
+  const [gType, setGType] = useState('swarm')
+  const [gTags, setGTags] = useState('')
+  const [gMembers, setGMembers] = useState('')
+
   const list = useApi(['entities', type, q], `/entities?limit=300${type ? `&type=${type}` : ''}${q ? `&q=${encodeURIComponent(q)}` : ''}`, 10000)
   const all = useApi(['entities-all'], '/entities?limit=1000', 20000)
   const names = useMemo(() => {
@@ -511,7 +725,35 @@ function KnowledgePage() {
       h('div', { style: { ...S.row, flexWrap: 'nowrap' } },
         h('select', { style: S.input, value: nt, onChange: e => setNt(e.target.value) }, ENTITY_TYPES.map(t => h('option', { key: t, value: t }, t))),
         h('input', { style: { ...S.input, flex: 1 }, value: nn, placeholder: 'New name', onChange: e => setNn(e.target.value) }),
-        h(Btn, { disabled: !nn.trim(), onClick: async () => { const out = await act('/entities', { type: nt, name: nn.trim() }); if (out) { setNn(''); setSel(out.id) } } }, '+')),
+        h(Btn, { disabled: !nn.trim(), onClick: async () => { const out = await act('/entities', { type: nt, name: nn.trim() }); if (out) { setNn(''); setSel(out.id) } } }, '+'),
+        h(Btn, { onClick: () => setShowGroup(showGroup ? 0 : 1) }, '+ Group')),
+      showGroup === 1 && h('div', { style: { ...S.card, ...S.col, padding: 8 } },
+        h('div', { style: { ...S.h2, fontSize: '0.8rem' } }, 'Create custom group'),
+        h('select', { style: S.input, value: gType, onChange: e => setGType(e.target.value) },
+          ['swarm', 'collection', 'campaign'].map(t => h('option', { key: t, value: t }, t))),
+        h('input', { style: S.input, value: gName, placeholder: 'Group name', onChange: e => setGName(e.target.value) }),
+        h('input', { style: S.input, value: gTags, placeholder: 'Tags (e.g. recon, stealth)', onChange: e => setGTags(e.target.value) }),
+        h('input', { style: S.input, value: gMembers, placeholder: 'Members (names, comma-separated)', onChange: e => setGMembers(e.target.value) }),
+        h('div', { style: S.row },
+          h(Btn, {
+            disabled: !gName.trim(),
+            onClick: async () => {
+              const res = await act('/entities/group', {
+                type: gType,
+                name: gName.trim(),
+                tags: gTags.split(',').map(s => s.trim()).filter(Boolean),
+                members: gMembers.split(',').map(s => s.trim()).filter(Boolean)
+              }, 'POST', 'Group created')
+              if (res && res.entity) {
+                setGName('')
+                setGTags('')
+                setGMembers('')
+                setShowGroup(0)
+                setSel(res.entity.id)
+              }
+            }
+          }, 'Create'),
+          h(Btn, { onClick: () => setShowGroup(0) }, 'Cancel'))),
       h('div', { style: { ...S.col, gap: 2, overflow: 'auto', flex: 1 } },
         items.length === 0 && h(Empty, null, 'No entities yet.'),
         items.map(e => h('div', {
@@ -521,6 +763,340 @@ function KnowledgePage() {
     h('div', { style: { ...S.col, flex: 1, minWidth: 0, overflow: 'auto' } },
       h(GraphView, { center: sel, selected: sel, onSelect: setSel, height: 300 }),
       sel ? h(EntityPane, { id: sel, names, onOpen: setSel, onGone: () => setSel(null) }) : h(Empty, null, 'Pick an entity, or click a node, to open its note.')))
+}
+
+// ---------------------------------------------------------------- URLs
+
+function UrlsPage() {
+  const [status, setStatus] = useState('')
+  const [q, setQ] = useState('')
+  const [newUrl, setNewUrl] = useState('')
+  const [newReason, setNewReason] = useState('')
+  const urlsQuery = useApi(
+    ['urls', status, q],
+    `/urls?limit=300${status ? `&status=${status}` : ''}${q ? `&q=${encodeURIComponent(q)}` : ''}`,
+    8000
+  )
+  const data = urlsQuery.data
+  const urls = data ? data.urls : []
+  const counts = data ? data.counts : {}
+  const triage = (url, s, reason) => act('/urls/triage', { url, status: s, reason }, 'POST')
+
+  return h('div', { style: S.col },
+    h(ErrorNote, { q: urlsQuery }),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Discovered & candidate URLs'),
+      h('div', { style: S.dim },
+        'Catalog of all URLs observed or predicted. Mark benign infrastructure to exclude false positives from future cycles.'),
+      h('div', { style: { ...S.row, marginTop: 8 } },
+        h('input', {
+          style: { ...S.input, flex: 1 },
+          value: newUrl,
+          placeholder: 'https://example.com/endpoint',
+          onChange: e => setNewUrl(e.target.value)
+        }),
+        h('input', {
+          style: { ...S.input, width: 220 },
+          value: newReason,
+          placeholder: 'Reason (optional)',
+          onChange: e => setNewReason(e.target.value)
+        }),
+        h(Btn, {
+          disabled: !newUrl.trim(),
+          onClick: async () => {
+            if (await triage(newUrl.trim(), 'benign', newReason.trim())) {
+              setNewUrl('')
+              setNewReason('')
+            }
+          }
+        }, 'Mark Benign'),
+        h(Btn, {
+          disabled: !newUrl.trim(),
+          onClick: async () => {
+            if (await triage(newUrl.trim(), 'suspicious', newReason.trim())) {
+              setNewUrl('')
+              setNewReason('')
+            }
+          }
+        }, 'Mark Suspicious'))),
+    h('div', { style: S.row },
+      ['', 'discovered', 'examined', 'suspicious', 'benign'].map(s => h(Btn, {
+        key: s || 'all',
+        kind: s === status ? 'primary' : undefined,
+        onClick: () => setStatus(s)
+      }, s ? `${s} (${counts[s] || 0})` : `all (${Object.values(counts).reduce((a, b) => a + b, 0)})`)),
+      h('input', {
+        style: { ...S.input, flex: 1 },
+        value: q,
+        placeholder: 'Filter by URL or hostname',
+        onChange: e => setQ(e.target.value)
+      })),
+    urls.length === 0 && h(Empty, null, `No ${status || ''} URLs found.`),
+    urls.map(u => h('div', { key: u.url, style: S.card },
+      h('div', { style: S.row },
+        h(Chip, { strong: u.status === 'benign' || u.status === 'suspicious' }, u.status),
+        h('span', { style: { ...S.mono, flex: 1 } }, u.url),
+        h('span', { style: S.dim }, `${u.source} ${ago(u.updated_utc)}`),
+        u.status !== 'benign' && h(Btn, { onClick: () => triage(u.url, 'benign', 'analyst review') }, 'Mark Benign'),
+        u.status !== 'suspicious' && h(Btn, { onClick: () => triage(u.url, 'suspicious', 'analyst review') }, 'Mark Suspicious'),
+        u.status !== 'examined' && h(Btn, { onClick: () => triage(u.url, 'examined', 'analyst review') }, 'Examine')),
+      u.reason && h('div', { style: { ...S.dim, marginTop: 4 } }, `Reason: ${u.reason}`))))
+}
+
+// ---------------------------------------------------------------- prompts
+
+function PromptsPage() {
+  const promptsQ = useApi(['prompts'], '/prompts', 10000)
+  const prompts = (promptsQ.data && promptsQ.data.prompts) || []
+  const [selectedId, setSelectedId] = useState('plan_system')
+  const [drafts, setDrafts] = useState({})
+  const [importJson, setImportJson] = useState('')
+  const [showImport, setShowImport] = useState(0)
+
+  const current = prompts.find(p => p.id === selectedId) || prompts[0]
+  const currentText = current ? (selectedId in drafts ? drafts[selectedId] : current.template) : ''
+  const isDirty = current && selectedId in drafts && drafts[selectedId] !== current.template
+
+  const save = async () => {
+    if (!current) return
+    const out = await act(`/prompts/${current.id}`, { template: currentText }, 'PUT', 'Prompt updated')
+    if (out) {
+      setDrafts(prev => {
+        const next = { ...prev }
+        delete next[current.id]
+        return next
+      })
+    }
+  }
+
+  const reset = async () => {
+    if (!current) return
+    const out = await act(`/prompts/${current.id}/reset`, {}, 'POST', 'Prompt reset to default')
+    if (out) {
+      setDrafts(prev => {
+        const next = { ...prev }
+        delete next[current.id]
+        return next
+      })
+    }
+  }
+
+  const exportAll = async () => {
+    const res = await api('/prompts-export')
+    if (res && res.prompts) {
+      const txt = JSON.stringify(res.prompts, null, 2)
+      setImportJson(txt)
+      setShowImport(1)
+      host.notify({ kind: 'info', message: 'Prompts exported to JSON editor below' })
+    }
+  }
+
+  const handleImport = async () => {
+    try {
+      const parsed = JSON.parse(importJson)
+      const res = await act('/prompts-import', parsed, 'POST', 'Prompts imported')
+      if (res) {
+        setShowImport(0)
+        setDrafts({})
+      }
+    } catch (err) {
+      host.notifyError(err, 'Invalid JSON format')
+    }
+  }
+
+  return h('div', { style: S.col },
+    h(ErrorNote, { q: promptsQ }),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Prompt templates & system persona'),
+      h('div', { style: S.dim },
+        'Templates stored in database. You can customize the agent persona, analysis instructions, and token placeholders.'),
+      h('div', { style: { ...S.row, marginTop: 8 } },
+        h(Btn, { onClick: exportAll }, 'Export Prompts (JSON)'),
+        h(Btn, { onClick: () => setShowImport(showImport ? 0 : 1) }, showImport === 1 ? 'Close Import' : 'Import Prompts (JSON)'))),
+    showImport === 1 && h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'JSON Prompts Import/Export'),
+      h('textarea', {
+        style: { ...S.input, minHeight: 140, width: '100%', fontFamily: 'ui-monospace, monospace' },
+        value: importJson,
+        placeholder: '{"plan_system": {"template": "..."}}',
+        onChange: e => setImportJson(e.target.value)
+      }),
+      h('div', { style: { ...S.row, marginTop: 6 } },
+        h(Btn, { kind: 'primary', disabled: !importJson.trim(), onClick: handleImport }, 'Import JSON'),
+        h(Btn, { onClick: () => setShowImport(0) }, 'Cancel'))),
+    h('div', { style: { display: 'flex', gap: 12, minHeight: 400 } },
+      h('div', { style: { ...S.col, width: 220, flexShrink: 0 } },
+        prompts.map(p => h('div', {
+          key: p.id,
+          onClick: () => setSelectedId(p.id),
+          style: {
+            padding: '6px 8px', borderRadius: 6, cursor: 'pointer',
+            border: `1px solid ${p.id === (current && current.id) ? V.accent : V.line}`,
+            background: p.id === (current && current.id) ? 'rgba(var(--ui-accent-rgb, 128,128,128), 0.08)' : 'transparent'
+          }
+        },
+        h('div', { style: { fontWeight: 600 } }, p.name),
+        h('div', { style: S.dim }, p.id),
+        p.id in drafts && h(Chip, { strong: true }, 'modified')))),
+      current && h('div', { style: { ...S.col, flex: 1, minWidth: 0 } },
+        h('div', { style: S.row },
+          h('span', { style: S.h2 }, current.name),
+          h(Chip, null, current.id),
+          h('span', { style: { flex: 1 } }),
+          h(Btn, { kind: 'primary', disabled: !isDirty, onClick: save }, 'Save'),
+          h(Btn, { onClick: reset }, 'Reset to default')),
+        h('div', { style: S.dim }, current.description),
+        current.variables && current.variables.length > 0 && h('div', { style: { ...S.row, gap: 4 } },
+          h('span', { style: S.dim }, 'Tokens:'),
+          current.variables.map(v => h('span', {
+            key: v,
+            style: { ...S.chip, cursor: 'pointer', color: V.accent },
+            title: `Click to append {{${v}}} to prompt`,
+            onClick: () => {
+              const updated = currentText + ` {{${v}}}`
+              setDrafts({ ...drafts, [current.id]: updated })
+            }
+          }, `{{${v}}}`))),
+        h('textarea', {
+          style: { ...S.input, minHeight: 320, width: '100%', fontFamily: 'ui-monospace, monospace', lineHeight: 1.4 },
+          value: currentText,
+          onChange: e => setDrafts({ ...drafts, [current.id]: e.target.value })
+        }))))
+}
+
+// ---------------------------------------------------------------- sources
+
+function SourcesPage() {
+  const sourcesQ = useApi(['sources'], '/sources', 8000)
+  const grammarQ = useApi(['grammar'], '/grammar', 8000)
+  const [srcForm, setSrcForm] = useState({ name: '', kind: 'cdx', endpoint: '', filter_field: '', nonce_prefix: '', note: '' })
+  const [gForm, setGForm] = useState({ kind: 'pattern', value: '', param: '', note: '' })
+  const [wordlistText, setWordlistText] = useState('')
+  const [activateWordlist, setActivateWordlist] = useState(false)
+  const [wordlistStatus, setWordlistStatus] = useState(null)
+  const [regenStatus, setRegenStatus] = useState(null)
+
+  const sources = (sourcesQ.data && sourcesQ.data.sources) || []
+  const grammar = (grammarQ.data && grammarQ.data.grammar) || []
+  const grammarKinds = ['pattern', 'relay', 'nonce_probe', 'jq_probe', 'target']
+
+  const handleAddSource = async () => {
+    if (!srcForm.name.trim() || !srcForm.endpoint.trim()) return
+    const config = {}
+    if (srcForm.filter_field.trim()) config.filter_field = srcForm.filter_field.trim()
+    if (srcForm.nonce_prefix.trim()) config.nonce_prefix = srcForm.nonce_prefix.trim()
+    const res = await act('/sources', {
+      name: srcForm.name.trim(), kind: srcForm.kind, endpoint: srcForm.endpoint.trim(), config, note: srcForm.note.trim()
+    }, 'POST', 'Source added')
+    if (res) setSrcForm({ name: '', kind: 'cdx', endpoint: '', filter_field: '', nonce_prefix: '', note: '' })
+  }
+
+  const handleAddGrammar = async () => {
+    if (!gForm.value.trim()) return
+    const res = await act('/grammar', {
+      kind: gForm.kind, value: gForm.value.trim(), param: gForm.param.trim(), note: gForm.note.trim()
+    }, 'POST', 'Grammar added')
+    if (res) setGForm({ kind: 'pattern', value: '', param: '', note: '' })
+  }
+
+  const handleRegen = async () => {
+    const res = await act('/grammar/regenerate', {}, 'POST')
+    if (res) {
+      setRegenStatus(`Generated and added ${res.added} candidates`)
+      host.notify({ kind: 'info', message: `Added ${res.added} candidates` })
+    }
+  }
+
+  const handleImportWordlist = async () => {
+    if (!wordlistText.trim()) return
+    const res = await act('/iocs/import', { text: wordlistText, activate: activateWordlist }, 'POST')
+    if (res) {
+      setWordlistStatus(`added ${res.added}, skipped ${res.skipped}, refused ${res.refused}`)
+      setWordlistText('')
+      host.notify({ kind: 'info', message: `Imported wordlist: ${res.added} added` })
+    }
+  }
+
+  return h('div', { style: S.col },
+    h(ErrorNote, { q: sourcesQ }),
+    h(ErrorNote, { q: grammarQ }),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Index sources'),
+      h('div', { style: S.dim }, 'Only enabled sources are fetched. Their hosts form the allowlist.'),
+      sources.length > 0
+        ? h('div', { style: { ...S.col, gap: 4, marginTop: 8 } },
+          sources.map(s => h('div', { key: s.id, style: { ...S.row, padding: '4px 0', borderTop: `1px solid ${V.line}` } },
+            h('input', {
+              type: 'checkbox', checked: !!s.enabled, title: 'Enable or disable source',
+              onChange: () => act(`/sources/${s.id}`, { enabled: s.enabled ? 0 : 1 }, 'PUT')
+            }),
+            h('span', { style: { fontWeight: 600 } }, s.name),
+            h(Chip, null, s.kind),
+            h('span', { style: S.mono }, hostOf(s.endpoint)),
+            s.probe_candidates
+              ? h(Chip, { strong: true }, 'candidate prober')
+              : h(Btn, { onClick: () => act(`/sources/${s.id}`, { probe_candidates: 1 }, 'PUT') }, 'Make prober'),
+            s.note && h('span', { style: S.dim }, s.note),
+            h('span', { style: { flex: 1 } }),
+            h(Btn, { onClick: () => act(`/sources/${s.id}`, undefined, 'DELETE') }, 'Delete'))))
+        : h(Empty, null, 'No sources configured.'),
+      h('div', { style: { ...S.col, gap: 6, marginTop: 10, paddingTop: 8, borderTop: `1px solid ${V.line}` } },
+        h('div', { style: { ...S.h2, fontSize: '0.8rem' } }, 'Add index source'),
+        h('div', { style: S.row },
+          h('input', { style: S.input, placeholder: 'Source name', value: srcForm.name, onChange: e => setSrcForm({ ...srcForm, name: e.target.value }) }),
+          h('select', { style: S.input, value: srcForm.kind, onChange: e => setSrcForm({ ...srcForm, kind: e.target.value }) },
+            h('option', { value: 'cdx' }, 'cdx'), h('option', { value: 'urlquery' }, 'urlquery')),
+          h('input', { style: { ...S.input, flex: 1 }, placeholder: 'Endpoint URL (https://...)', value: srcForm.endpoint, onChange: e => setSrcForm({ ...srcForm, endpoint: e.target.value }) })),
+        h('div', { style: S.row },
+          h('input', { style: S.input, placeholder: 'Filter field (optional)', value: srcForm.filter_field, onChange: e => setSrcForm({ ...srcForm, filter_field: e.target.value }) }),
+          h('input', { style: S.input, placeholder: 'Nonce prefix (optional)', value: srcForm.nonce_prefix, onChange: e => setSrcForm({ ...srcForm, nonce_prefix: e.target.value }) }),
+          h('input', { style: { ...S.input, flex: 1 }, placeholder: 'Note (optional)', value: srcForm.note, onChange: e => setSrcForm({ ...srcForm, note: e.target.value }) }),
+          h(Btn, { disabled: !srcForm.name.trim() || !srcForm.endpoint.trim(), onClick: handleAddSource }, 'Add source')))),
+    h('div', { style: S.card },
+      h('div', { style: S.row },
+        h('span', { style: S.h2 }, 'URL grammar'),
+        h('span', { style: { flex: 1 } }),
+        h(Btn, { onClick: handleRegen }, 'Regenerate candidates')),
+      regenStatus && h('div', { style: { ...S.dim, marginTop: 4 } }, regenStatus),
+      h('div', { style: { ...S.col, gap: 4, marginTop: 8 } },
+        grammarKinds.map(gk => {
+          const group = grammar.filter(g => g.kind === gk)
+          if (!group.length) return null
+          return h('div', { key: gk, style: { marginBottom: 6 } },
+            h('div', { style: { ...S.dim, fontWeight: 600, fontSize: '0.75rem', marginBottom: 2 } }, `${gk} (${group.length})`),
+            group.map(g => h('div', { key: g.id, style: { ...S.row, padding: '2px 0' } },
+              h('input', {
+                type: 'checkbox', checked: !!g.enabled, title: 'Toggle grammar',
+                onChange: () => act(`/grammar/${g.id}`, { enabled: !g.enabled }, 'PUT')
+              }),
+              h('span', { style: { ...S.mono, flex: 1 } }, g.value),
+              g.param && h(Chip, null, g.param),
+              g.note && h('span', { style: S.dim }, g.note),
+              h(Btn, { onClick: () => act(`/grammar/${g.id}`, undefined, 'DELETE') }, 'Delete'))))
+        })),
+      h('div', { style: { ...S.col, gap: 6, marginTop: 10, paddingTop: 8, borderTop: `1px solid ${V.line}` } },
+        h('div', { style: { ...S.h2, fontSize: '0.8rem' } }, 'Add URL grammar'),
+        h('div', { style: S.row },
+          h('select', { style: S.input, value: gForm.kind, onChange: e => setGForm({ ...gForm, kind: e.target.value }) },
+            grammarKinds.map(k => h('option', { key: k, value: k }, k))),
+          h('input', { style: { ...S.input, flex: 1 }, placeholder: 'Value or pattern URL', value: gForm.value, onChange: e => setGForm({ ...gForm, value: e.target.value }) }),
+          h('input', { style: S.input, placeholder: 'Param (optional)', value: gForm.param, onChange: e => setGForm({ ...gForm, param: e.target.value }) }),
+          h('input', { style: S.input, placeholder: 'Note', value: gForm.note, onChange: e => setGForm({ ...gForm, note: e.target.value }) }),
+          h(Btn, { disabled: !gForm.value.trim(), onClick: handleAddGrammar }, 'Add grammar')))),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Wordlist import'),
+      h('div', { style: S.dim }, 'Paste wordlist text. Supports # SECTION category headers.'),
+      h('textarea', {
+        style: { ...S.input, minHeight: 70, width: '100%', marginTop: 6, fontFamily: 'ui-monospace, monospace' },
+        placeholder: '# SECTION Nonce\nterm1\nterm2', value: wordlistText,
+        onChange: e => setWordlistText(e.target.value)
+      }),
+      h('div', { style: { ...S.row, marginTop: 6 } },
+        h('label', { style: S.row },
+          h('input', { type: 'checkbox', checked: activateWordlist, onChange: e => setActivateWordlist(e.target.checked) }),
+          'activate now'),
+        h(Btn, { disabled: !wordlistText.trim(), onClick: handleImportWordlist }, 'Import'),
+        wordlistStatus && h('span', { style: S.dim }, wordlistStatus))))
 }
 
 // ---------------------------------------------------------------- settings and schedules
@@ -569,7 +1145,8 @@ function ScheduleSection({ enabled }) {
 function SettingsPage() {
   const q = useApi(['settings'], '/settings')
   const [draft, setDraft] = useState({})
-  if (!q.data) return h(Error, { q })
+  const [lastExport, setLastExport] = useState(null)
+  if (!q.data) return h(ErrorNote, { q })
   const { values, schema } = q.data
   const fields = schema.fields
   const groups = {}
@@ -593,16 +1170,45 @@ function SettingsPage() {
           fields[k].help && h('div', { style: S.dim }, fields[k].help),
           h(FieldEditor, { name: k, field: fields[k], value, onChange: v => setDraft({ ...draft, [k]: v }) }))
       }))),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Export data'),
+      h('div', { style: S.dim }, 'Export the hunt database to a JSON bundle and an Obsidian Markdown vault with wikilinks.'),
+      h('div', { style: { ...S.row, marginTop: 8 } },
+        h(Btn, {
+          onClick: async () => {
+            const res = await act('/export', {}, 'POST', 'Export complete')
+            if (res && res.path) setLastExport(res.path)
+          }
+        }, 'Export'),
+        lastExport && h('span', { style: S.mono }, `Exported to: ${lastExport}`))),
     h(ScheduleSection, { enabled: values['schedule.enabled'] }))
 }
 
 // ---------------------------------------------------------------- shell
 
-const TABS = [['hunt', 'Hunt'], ['knowledge', 'Agents, swarms, cases'], ['evidence', 'Evidence'], ['iocs', 'IOCs'], ['settings', 'Settings']]
+const TABS = [
+  ['hunt', 'Hunt'],
+  ['knowledge', 'Agents, swarms, campaigns'],
+  ['evidence', 'Evidence'],
+  ['iocs', 'IOCs'],
+  ['urls', 'URLs'],
+  ['prompts', 'Prompts'],
+  ['sources', 'Sources'],
+  ['settings', 'Settings']
+]
 
 function Page() {
   const [tab, setTab] = useState('hunt')
-  const pages = { hunt: HuntPage, knowledge: KnowledgePage, evidence: EvidencePage, iocs: IocsPage, settings: SettingsPage }
+  const pages = {
+    hunt: HuntPage,
+    knowledge: KnowledgePage,
+    evidence: EvidencePage,
+    iocs: IocsPage,
+    urls: UrlsPage,
+    prompts: PromptsPage,
+    sources: SourcesPage,
+    settings: SettingsPage
+  }
   return h('div', { style: S.page },
     h(Tabs, { tabs: TABS, value: tab, onChange: setTab }),
     h('div', { style: { ...S.body, ...(tab === 'knowledge' ? { overflow: 'hidden' } : null) } }, h(pages[tab], null)))
@@ -664,6 +1270,14 @@ export default {
       {
         id: 'stop', area: PALETTE_AREA,
         data: { id: `${ID}.stop`, label: 'Swarm Forensics: stop hunt', keywords: ['swarm', 'hunt', 'stop'], run: () => void act('/hunts/stop', {}, 'POST', 'Stop requested') }
+      },
+      {
+        id: 'export', area: PALETTE_AREA,
+        data: {
+          id: `${ID}.export`, label: 'Swarm Forensics: export data',
+          keywords: ['swarm', 'forensics', 'export', 'vault', 'json'],
+          run: () => void act('/export', {}, 'POST', 'Export complete')
+        }
       },
       {
         id: 'open-key', area: KEYBINDS_AREA,

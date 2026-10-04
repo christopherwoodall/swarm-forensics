@@ -51,6 +51,24 @@ DEFAULT_SOURCES = [
         "probe_candidates": 0,
         "note": "Common Crawl CDX index (update collection ID as needed)",
     },
+    {
+        "name": "crt.sh",
+        "kind": "cdx",
+        "endpoint": "https://crt.sh/?output=json",
+        "config": {},
+        "enabled": 0,
+        "probe_candidates": 0,
+        "note": "Certificate transparency log query",
+    },
+    {
+        "name": "arXiv Intelligence",
+        "kind": "cdx",
+        "endpoint": "https://export.arxiv.org/api/query",
+        "config": {},
+        "enabled": 0,
+        "probe_candidates": 0,
+        "note": "Academic research and dataset searches",
+    },
 ]
 
 DEFAULT_PATTERNS = [
@@ -127,26 +145,20 @@ class Registry:
                     " created_utc, updated_utc) VALUES (?,?,?,?,?,?,'seed',?,?,?)",
                     (s["name"], s["kind"], s["endpoint"], db.dumps(s["config"]),
                      s["enabled"], s["probe_candidates"], s["note"], stamp, stamp))
+            ins_grammar = (
+                "INSERT OR IGNORE INTO url_grammar"
+                "(kind, value, param, enabled, origin, created_utc) VALUES (?,?,?,1,'seed',?)"
+            )
             for pat in DEFAULT_PATTERNS:
-                conn.execute(
-                    "INSERT OR IGNORE INTO url_grammar(kind, value, param, enabled, origin, created_utc)"
-                    " VALUES ('pattern', ?, '', 1, 'seed', ?)", (pat, stamp))
+                conn.execute(ins_grammar, ("pattern", pat, "", stamp))
             for val, param, _note in DEFAULT_RELAYS:
-                conn.execute(
-                    "INSERT OR IGNORE INTO url_grammar(kind, value, param, enabled, origin, created_utc)"
-                    " VALUES ('relay', ?, ?, 1, 'seed', ?)", (val, param, stamp))
+                conn.execute(ins_grammar, ("relay", val, param, stamp))
             for val, param in DEFAULT_NONCE_PROBES:
-                conn.execute(
-                    "INSERT OR IGNORE INTO url_grammar(kind, value, param, enabled, origin, created_utc)"
-                    " VALUES ('nonce_probe', ?, ?, 1, 'seed', ?)", (val, param, stamp))
+                conn.execute(ins_grammar, ("nonce_probe", val, param, stamp))
             for val in DEFAULT_JQ_PROBES:
-                conn.execute(
-                    "INSERT OR IGNORE INTO url_grammar(kind, value, param, enabled, origin, created_utc)"
-                    " VALUES ('jq_probe', ?, '', 1, 'seed', ?)", (val, stamp))
+                conn.execute(ins_grammar, ("jq_probe", val, "", stamp))
             for val in DEFAULT_TARGETS:
-                conn.execute(
-                    "INSERT OR IGNORE INTO url_grammar(kind, value, param, enabled, origin, created_utc)"
-                    " VALUES ('target', ?, '', 1, 'seed', ?)", (val, stamp))
+                conn.execute(ins_grammar, ("target", val, "", stamp))
             conn.execute(
                 "INSERT INTO cursors(source, key, value) VALUES ('meta', 'registry_seeded', ?)",
                 (stamp,))
@@ -340,10 +352,10 @@ class Registry:
             gid = cur.lastrowid
         self._event("added grammar %s: %s" % (kind, value[:80]))
         with self.db.connect() as conn:
-            return _row(conn.execute("SELECT * FROM url_grammar WHERE id = ?", (gid,)).fetchone())
+            row = conn.execute("SELECT * FROM url_grammar WHERE id = ?", (gid,)).fetchone()
+            return _row(row)
 
     def set_grammar_enabled(self, gid, enabled):
-        stamp = db.now()
         val = 1 if enabled else 0
         with self.db.connect() as conn:
             conn.execute("UPDATE url_grammar SET enabled = ? WHERE id = ?", (val, gid))
@@ -364,8 +376,9 @@ class Registry:
 
     def grammar_bundle(self):
         """Return enabled grammar items grouped for candidate generation."""
+        sql = "SELECT * FROM url_grammar WHERE enabled = 1 ORDER BY id"
         with self.db.connect() as conn:
-            rows = conn.execute("SELECT * FROM url_grammar WHERE enabled = 1 ORDER BY id").fetchall()
+            rows = conn.execute(sql).fetchall()
         patterns, relays, nonce_probes, jq_probes, targets = [], {}, {}, [], []
         for r in rows:
             k = r["kind"]
