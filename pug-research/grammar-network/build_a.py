@@ -209,7 +209,7 @@ def build_network(part, sample_texts):
     n = len(vocab)
     cooc = Counter()
     for t in stream_docs(part):
-        toks = [x for x in tokenize(t) if x in idx]
+        toks = [x for x in tokenize(t) if x in idx][:4000]
         for i, w in enumerate(toks):
             a = idx[w]
             for j in range(i + 1, min(i + 1 + WINDOW, len(toks))):

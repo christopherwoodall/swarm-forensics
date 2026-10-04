@@ -144,6 +144,9 @@ Spot-checks on the high-signal hits (all benign):
   legitimate package research. No malicious packages.
 - `www.sec.gov` — EDGAR 8-K/S-1 browse, press RSS, `Archives/edgar/data/...`
   filing text — legitimate finance research. **No `county.json`.**
+- `r.jina.ai` — same commodity pattern as sessions: Jina wrapping
+  DuckDuckGo/Bing searches, plus one `r.jina.ai/http://x.com/repligate/status/…`
+  (the o3 repligate scan echoing from the known chat records).
 
 ### summaries.jsonl.gz
 
