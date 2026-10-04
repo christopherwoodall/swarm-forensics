@@ -9,7 +9,7 @@
 [![Tests](https://img.shields.io/badge/tests-146%20Python%20%C2%B7%2033%20JS-brightgreen)](#verification--testing)
 [![Platform](https://img.shields.io/badge/platform-Hermes%20Desktop%20%2B%20CLI-purple)](#quick-start)
 
-[Demo Video](https://github.com/user-attachments/assets/e82becae-596b-4e53-bcb9-b09643baf05d)
+[Demo Video](https://github.com/user-attachments/assets/389dd157-1853-4faf-97cb-d3f6c967f6f4)
 
 </div>
 
