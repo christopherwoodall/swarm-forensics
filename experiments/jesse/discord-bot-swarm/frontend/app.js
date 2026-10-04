@@ -3,7 +3,7 @@ import {connectionRow,swarmGroups} from './connections.js';
 import {agentRecipe} from './agent-recipe.js';
 import {initAuth} from './auth.js';
 import {wizardImage} from './image-loader.js';
-import {agentPrompt,firstTaskPrompt,checkMcp} from './mcp-setup.js';
+import {agentPrompt,firstTaskPrompt,checkAgent} from './agent-setup.js';
 import {wizardRoute,wizardUrl,resolveWizardRoute} from './wizard-route.js';
 import {readJsonResponse} from './http.js';
 const $=id=>document.getElementById(id);
@@ -53,22 +53,22 @@ function renderWizard(replaceUrl=false){
   body.append(el('p','muted','This channel is for bot coordination. Normal chat can use other accessible channels in this server. Manage swarm coordination in Your swarm.'),channelPicker({relay:wizard.relay,api,autoDefault:true,onAssigned:async({automatic=false}={})=>{chosenRelayId=wizard.relay.id;await refresh(false);wizard.relay=state.swarms.find(r=>r.id===chosenRelayId)||wizard.relay;wizard.step=4;renderWizard(automatic);notice('Swarm coordination channel verified.');}}));
  }else if(wizard.step===4){
   $('setup-title').textContent='Connect your stack to Discord';
-  const status=el('p','muted','Paste the prompt into your coding agent to connect and join the swarm. Your agent participates while its session is running.');status.id='mcp-check-status';status.setAttribute('role','status');
+  const status=el('p','muted','Paste the prompt into your coding agent to connect and join the swarm. Your agent participates while its session is running.');status.id='agent-check-status';status.setAttribute('role','status');
   const previewToken='•••••••••••• [single-use token added by Copy]';
   const recipe=agentRecipe({title:'Paste this into your agent:',prompt:agentPrompt(location.origin,wizard.relay.id,previewToken),mask:`Single-use setup token: ${previewToken}`,copyLabel:'Copy agent prompt',button,
    loadPrompt:async()=>{const setup=await api(`/api/relays/${wizard.relay.id}/setup-token`,{method:'POST',body:'{}'});if(!setup.token)throw Error('Setup token was not issued. Try again.');return agentPrompt(location.origin,wizard.relay.id,setup.token);},
    onCopied:()=>{status.textContent='Prompt copied. Next: paste it into your coding agent and send it to connect.';}});
-  recipe.querySelector('h2').id='agent-recipe-title';recipe.setAttribute('aria-labelledby','agent-recipe-title');recipe.querySelector('pre').id='mcp-agent-prompt';recipe.append(status);
+  recipe.querySelector('h2').id='agent-recipe-title';recipe.setAttribute('aria-labelledby','agent-recipe-title');recipe.querySelector('pre').id='agent-connection-prompt';recipe.append(status);
   const navigation=el('div','wizard-navigation');navigation.append(button('Next: test access',async()=>{wizard.step=5;renderWizard();},'wizard-primary-cta'));body.append(recipe,navigation);
  }else if(wizard.step===5){
   $('setup-title').textContent='Test server and Discord access';
-  const status=el('p','muted','');status.id='mcp-check-status';status.setAttribute('role','status');
+  const status=el('p','muted','');status.id='agent-check-status';status.setAttribute('role','status');
   const next=button('Next: join the swarm',async()=>{wizard.step=6;renderWizard();},'wizard-primary-cta');next.disabled=true;
-  const check=button('Test server and Discord access',async()=>{next.disabled=true;status.textContent='Checking…';try{await checkMcp(api,wizard.relay.id);status.textContent='✅ It worked!';next.disabled=false;}catch(e){status.textContent="❌ It didn't work: "+e.message;}},'secondary mcp-test-cta');
+  const check=button('Test server and Discord access',async()=>{next.disabled=true;status.textContent='Checking…';try{await checkAgent(api,wizard.relay.id);status.textContent='✅ It worked!';next.disabled=false;}catch(e){status.textContent="❌ It didn't work: "+e.message;}},'secondary agent-test-cta');
   const navigation=el('div','wizard-navigation');navigation.append(button('Back: connect your agent',async()=>{wizard.step=4;renderWizard();},'quiet'),next);body.append(check,status,navigation);
  }else if(wizard.step===6){
   $('setup-title').textContent='Join the swarm';
-  const kickoff=agentRecipe({title:'Paste this into your connected agent:',prompt:firstTaskPrompt(wizard.relay.id),copyLabel:'Copy join prompt',loadPrompt:()=>firstTaskPrompt(wizard.relay.id),button});kickoff.id='first-agent-task';kickoff.querySelector('pre').id='first-task-prompt';
+  const kickoff=agentRecipe({title:'Paste this into your connected agent:',prompt:firstTaskPrompt(wizard.relay.id,location.origin),copyLabel:'Copy join prompt',loadPrompt:()=>firstTaskPrompt(wizard.relay.id,location.origin),button});kickoff.id='first-agent-task';kickoff.querySelector('pre').id='first-task-prompt';
   body.append(el('p','','Prompt your agent to join and work on your goal. It participates while running and saves a handoff when it stops.'));
   const navigation=el('div','wizard-navigation');navigation.append(button('Back: test access',async()=>{wizard.step=5;renderWizard();},'quiet'),button('Finish setup',async()=>{try{localStorage.setItem(`swarm-setup-finished:${auth?.getUser()?.email||'account'}:${wizard.relay.id}`,'yes');}catch{}wizard.step=7;renderWizard();},'wizard-primary-cta'));body.append(kickoff,navigation);
  }else if(wizard.step===7){

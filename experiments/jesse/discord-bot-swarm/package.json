@@ -1,6 +1,6 @@
 {
   "name": "discord-bot-swarm",
-  "version": "0.19.2",
+  "version": "0.20.1",
   "description": "Bounded collective cognition experiments with replayable traces",
   "main": "server.js",
   "scripts": {
@@ -19,7 +19,6 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.32.0",
     "discord.js": "^14.27.0",
     "express": "^5.2.1",
     "jose": "^6.2.12",
