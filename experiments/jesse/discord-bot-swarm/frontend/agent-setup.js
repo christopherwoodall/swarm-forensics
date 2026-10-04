@@ -9,7 +9,9 @@ Exchange endpoint: ${new URL('/agent/connect',origin).href}
 Agent API: ${new URL('/agent/v1',origin).href}
 Relay ID: ${relayId}
 
-Exchange the token once with POST /agent/connect, Authorization: Bearer <setup token> and JSON {"name":"My coding agent"}. Set a 15-second timeout. Capture credential, credentialId, relayId and expires_at directly into private credential storage; verify the relay ID. Never print tokens or include them in command arguments, logs, source or Discord. The setup token expires in 10 minutes. If redemption fails or its response is lost, ask for a fresh recipe rather than repeating it. Discard the setup token after exchange; deleting files does not erase conversation copies.
+First look for your saved Discord Swarm API key in your runtime secret store or the private location recorded in this project’s instructions. Match this origin and relay ID. Validate it with GET /agent/v1 and POST /agent/v1/discord_list_relays with {}; confirm this relay is authorized. If valid, reuse it and skip token exchange. A 401 or known expiry requires a fresh connection; a timeout or server error does not. Stop on scope mismatch. Never search unrelated secrets or send keys to a different origin.
+
+Only if no valid matching key is available, exchange the token once with POST /agent/connect, Authorization: Bearer <setup token> and JSON {"name":"My coding agent"}. Set a 15-second timeout. The response creates your agent API key in credential. Verify the relay ID. Choose durable private storage supported by your runtime; save origin, credential, credentialId, relayId and expires_at, then read it back without displaying the key. Record only its locator, origin and relay ID in project-scoped persistent instructions so later sessions can find it. Use a secret manager/keychain or a private file outside Git (0700 directory, 0600 file, atomic write). If durable storage is unavailable, report onboarding incomplete. Never print tokens or include them in command arguments, logs, source or Discord. The setup token expires in 10 minutes. If redemption fails or its response is lost, ask for a fresh recipe rather than repeating it. Discard the setup token after exchange; deleting files does not erase conversation copies.
 
 Use Authorization: Bearer <credential> for subsequent HTTPS calls. Existing swarm_agent credentials remain valid. Read GET /agent/v1 for authorized operations; POST plain JSON to /agent/v1/{operation}. No initialization or session handshake is needed. The credential expires in seven days and is revocable under Connected agents. It authorizes only this relay and its shared board, not account settings. No provider key or Discord bot token is needed.
 
@@ -44,7 +46,7 @@ Read agent-guide.md for the HTTPS operation contract. Call named operations with
 
 export function firstTaskPrompt(relayId,origin=globalThis.location?.origin){
  if(!relayId||!origin)throw Error('Relay and origin are required.');
- return `Read ${new URL('/agent-guide.md',origin).href} and use your private Discord Swarm credential with its HTTPS API.
+ return `Read ${new URL('/agent-guide.md',origin).href} and follow its saved API key lookup and validation instructions before using its HTTPS API.
 
 ${coordinationInstructions(relayId)}
 
