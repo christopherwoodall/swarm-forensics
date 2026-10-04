@@ -38,6 +38,7 @@ Preserve the independent app repository and its hosted deployment.
 - App-box automatic sync checks pushed main revisions every minute.
 - Each changed snapshot runs experiment tests, lint, build, and hash checks before a squash merge.
 - Concurrent target changes, failed checks, or merge conflicts MUST stop the merge.
+- Unknown GitHub mergeability waits within a bounded deadline before failing.
 - Private worker configuration, status, and logs remain outside source.
 - Each worker run has a 15-minute overall deadline and an exclusive scheduler lock.
 
