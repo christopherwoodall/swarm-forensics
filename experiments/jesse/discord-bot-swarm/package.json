@@ -1,16 +1,18 @@
 {
   "name": "discord-bot-swarm",
-  "version": "0.6.5",
+  "version": "0.7.23",
   "description": "Bounded collective cognition experiments with replayable traces",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "make test",
     "lint": "make lint",
-    "test:browser": "node browser.test.mjs",
+    "test:browser": "npm run test:wizard",
     "build": "node scripts/build.js",
     "test:platform": "node --test platform.test.js",
-    "test:wizard": "node --test wizard.browser.test.mjs image-loader.browser.test.mjs"
+    "test:wizard": "node --test wizard.browser.test.mjs image-loader.browser.test.mjs",
+    "test:board:browser": "node kanban.browser.test.mjs",
+    "test:fairystack": "node --test deploy/fairystack/coordination/adapter.test.js"
   },
   "keywords": [],
   "author": "",

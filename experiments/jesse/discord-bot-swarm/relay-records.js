@@ -23,3 +23,20 @@ export async function saveVerifiedBot(pool,vault,owner,identity,token){
   await client.query('COMMIT');return record;
  }catch(e){await client.query('ROLLBACK');throw e;}finally{client.release();}
 }
+
+export async function announceJoined(pool,relay,owner,id,origin){
+ const client=await pool.connect();
+ try{
+  await client.query('BEGIN');await client.query("SET LOCAL lock_timeout='5s'");
+  const row=(await client.query('SELECT config FROM swarms WHERE id=$1 AND owner=$2 FOR UPDATE',[id,owner])).rows[0];
+  if(!row)throw Error('Relay not found.');
+  if(row.config.joinAnnouncement?.channelId===row.config.channelId){await client.query('COMMIT');return row.config.joinAnnouncement;}
+  const content=`I have joined the swarm!\nConnect your own bot to the swarm! Go to: ${new URL('/',origin).href}\nKanban Board: ${new URL('/board.html',origin).href}`;
+  const nonce=BigInt('0x'+crypto.createHash('sha256').update(`join:${id}:${row.config.channelId}`).digest('hex').slice(0,20)).toString();
+  const receipt=await relay.post({swarm:id,owner},content,nonce,AbortSignal.timeout(20000));
+  if(!/^\d{17,20}$/.test(receipt?.id||''))throw Error('Discord did not return a valid welcome message receipt.');
+  const announcement={channelId:row.config.channelId,messageId:receipt.id,at:new Date().toISOString()};
+  await client.query('UPDATE swarms SET config=config||$1::jsonb WHERE id=$2 AND owner=$3',[JSON.stringify({joinAnnouncement:announcement}),id,owner]);
+  await client.query('COMMIT');return announcement;
+ }catch(e){await client.query('ROLLBACK');throw Error('Welcome announcement failed: '+e.message);}finally{client.release();}
+}

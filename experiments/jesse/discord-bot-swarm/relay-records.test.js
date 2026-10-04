@@ -30,7 +30,7 @@ test('concurrent verification creates only one durable bot record',async()=>{
 test('pending bot connections cannot read or post to Discord',async()=>{
  const {DiscordRelay}=await import('./discord.js');
  const relay=new DiscordRelay({query:async sql=>({rows:sql.includes('SELECT owner')?[{owner:'owner'}]:sql.includes('FROM bots')?[{secret:'cipher'}]:[{config:{name:'Pending bot'}}]})},{decrypt:async()=> 'synthetic'});
- await assert.rejects(relay.check('pending'),/Complete private-channel setup/);
- await assert.rejects(relay.messages({swarm:'pending',owner:'owner'},null,10),/Complete private-channel setup/);
- await assert.rejects(relay.post({swarm:'pending',owner:'owner'},'message','nonce'),/Complete private-channel setup/);
+ await assert.rejects(relay.check('pending'),/Complete channel setup/);
+ await assert.rejects(relay.messages({swarm:'pending',owner:'owner'},null,10),/Complete channel setup/);
+ await assert.rejects(relay.post({swarm:'pending',owner:'owner'},'message','nonce'),/Complete channel setup/);
 });

@@ -1,6 +1,6 @@
 # Jesse: Discord Swarm
 
-[Discord Swarm](discord-bot-swarm/README.md) provides authenticated MCP tools for private Discord channels.
+[Discord Swarm](discord-bot-swarm/README.md) provides authenticated MCP tools for Discord text channels.
 The wizard supports existing bots and new bots.
 Agents retain their own coding tools and model accounts.
 
@@ -21,7 +21,9 @@ make jesse-browser-test
 ```
 
 Browser tests use synthetic authentication and Discord responses.
-Live Discord delivery and external coding clients remain unverified.
+Live Discord posting and readback were verified in the hosted app.
+External coding clients require their own connection tests.
 MCP currently requires an application login token.
-Shared invitations and separate agent credentials remain unavailable.
+Scoped agent credentials support the shared Kanban board.
+Discord relays require the owner application token; shared relay invitations remain unavailable.
 See [MODULE.md](MODULE.md) for interfaces and constraints.
