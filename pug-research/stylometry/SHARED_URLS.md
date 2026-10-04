@@ -35,14 +35,53 @@ qualifies.
 | `prepnonce` | **27,860** | 0 | 0 | 0 |
 | `jqp.vercel.app` | 0 | **667** | 0 | 0 |
 | `allorigins` | 0 | **274** | 0 | 0 |
-| `r.jina.ai` | 0 | **195** | 0 | **3** (chat) |
+| `r.jina.ai` | 0 | **195** | 0 | **3 chat + 35 mem + 48 turns** (÷20 strides) |
 | `da.gd` | 0 | 3 | 0 | 0 |
 | `corsproxy.io` | 0 | 4 | 0 | 0 |
-| `github.com` | 0 | 0 | 0 | dominant (all tables) |
+| `github.com` | 0 | 1 | 0 | dominant (all tables) |
 | `civilrightsdata.ed.gov` | 12,542 (÷20) | 0 | 0 | 0 |
 
-**`r.jina.ai` is the only URL chunk shared across layers.**
-Everything else is segregated to exactly one layer.
+**`r.jina.ai` is the only URL chunk shared across layers** — and it
+is shared more broadly than first reported: wiki coordination
+content, village chat, village long-term memories, and village
+computer-use sessions. Everything else is segregated to exactly one
+layer.
+
+## Popularity ranking: was jina niche?
+
+No. Ranked by URL-hit share within each layer:
+
+**Wiki (the incident-coordination layer)** — jina is mainstream:
+| Rank | Domain | Hits (÷5) | Share |
+|---|---|---|---|
+| #1 | wikiservice.at | 6,791 | 27.7% |
+| #3 | jqp.vercel.app | 3,920 | 16.0% |
+| **#7** | **r.jina.ai** | **558** | **2.3%** |
+| #9 | allorigins.hexlet.app | 529 | 2.2% |
+| #68 | da.gd | 8 | 0.03% |
+| #95 | corsproxy.io | 3 | 0.01% |
+| #158 | urlquery.net | 1 | ~0% |
+
+Jina is the #7 domain of 170 in wiki — an established relay, not a
+niche one. The genuinely niche relays are `da.gd` and `corsproxy.io`.
+(`urlquery.net` itself appears once — the incident operators
+documented their *targets*, not their *scanning*.)
+
+**Village** — jina is rare by count but institutionalized by role:
+| Layer | Rank | Hits | Share |
+|---|---|---|---|
+| memories (÷20) | #307/500 | 35 | 0.02% |
+| turns (÷20) | #141/500 | 48 | 0.06% |
+| chat (full) | below top-500 | 3 | ~0% |
+
+Raw counts understate it: the memory hits are not casual mentions.
+Village agents (Claude Sonnet 5, August 2026) carry jina in
+**consolidated long-term memory as a documented method** — see case
+study. A technique written into step 12 of a workflow outranks its
+hit count.
+
+**Traces** — jina is absent (0 of 589,972 lines). It is not part of
+the archived trace URL layer at all.
 
 ## Venue segregation (stratified)
 
@@ -97,6 +136,33 @@ wall — in July 2025, a year before the June 2026 incidents.
 Wiki-side, jina appears ~975 times (extrapolated) as one relay among
 several (`jqp.vercel.app`, `allorigins`, `da.gd`, `corsproxy.io`) in
 the documented request-construction grammar.
+
+### Institutionalized technique: jina in village long-term memory
+
+Beyond the three chat hits, village **computer-use turns** show agents
+actively using jina in browser sessions (48 hits at stride 20):
+
+```
+curl -s "https://r.jina.ai/https://html.duckduckgo.com/html/?q=crise+du+quart+de+vie+psychologie+conseils" 2>/dev/null | head -100
+```
+
+And village **agent memories** (35 hits at stride 20) show jina written
+into consolidated long-term memory as a numbered workflow step.
+A Claude Sonnet 5 agent (August 2026) records:
+
+> *Try 3–5 direct domain-guesses first, then pivot promptly to
+> DuckDuckGo-via-r.jina.ai search
+> (`https://r.jina.ai/https://html.duckduckgo.com/html/?q=...`,
+> URL-encode with `urllib.parse.quote` for non-Latin scripts) —
+> proven reliable, no CAPTCHA… `curl -s "https://r.jina.ai/{url}"`
+> also works well for reading full page content when needed…
+> Google/Bing via r.jina.ai often blocked/unreliable.*
+
+This is the strongest form of the "technique, not tradecraft"
+argument: by August 2026, jina-via-DuckDuckGo was a **documented,
+numbered fallback in an agent's persistent workflow**, complete with
+known limitations. Multiple agent ecosystems converged on the same
+tool independently. Nothing about jina is incident-specific.
 
 ### Interpretation (graded)
 
