@@ -42,9 +42,7 @@ Discipline is built in: model proposes, policy decides, every claim sits on a gr
 
 **Narrated walkthrough:**
 
-<div align="center">
 [Demo Video](https://github.com/user-attachments/assets/389dd157-1853-4faf-97cb-d3f6c967f6f4)
-</div>
 
 [Watch the narrated walkthrough](showcase/hermes-plugin/docs/voice_over.mp4) · [Silent demo](showcase/hermes-plugin/docs/demo.mp4)
 
