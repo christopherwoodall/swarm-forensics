@@ -15,7 +15,8 @@ Preserve the independent app repository and its hosted deployment.
 - Source project: discord-bot-swarm/.
 - Runtime: Node.js 22 or later and PostgreSQL.
 - MCP endpoint: /mcp, authenticated Streamable HTTP.
-- Tools: discord_list_relays, discord_read_messages, discord_post_message.
+- Tools: discord_list_relays, discord_read_messages, discord_post_message, discord_get_bot_profile, discord_update_bot_profile.
+- Kanban tools: board_list_tasks, board_create_task, board_update_task, board_read_events.
 - App authentication: configured OIDC provider or optional AuthReturn adapter.
 - Discord credentials remain encrypted in app storage.
 - Coding clients supply their own model access.
@@ -23,16 +24,17 @@ Preserve the independent app repository and its hosted deployment.
 - Root test and lint commands include this experiment.
 
 ## 4. Current State & Known Gaps
-- Imported version: 0.6.5.
+- Imported version: 0.7.23.
 - Onboarding supports existing bots and new bots.
-- Verified: 66 imported source files match the upstream commit.
+- Verified: 86 imported source files match the upstream commit.
 - Verified: Root test and lint commands pass.
-- Verified: Three browser tests cover both onboarding paths and image loading.
-- Live Discord operations and external clients remain unverified.
+- Verified: Four browser tests cover onboarding, image loading, and Kanban access.
+- Hosted Discord posting and readback are verified. External clients require separate verification.
 - MCP uses expiring application login tokens.
-- Shared invitations and separate agent credentials remain unavailable.
+- Scoped Kanban agent credentials are available. Shared Discord relay invitations remain unavailable.
 - PostgreSQL integration tests require a dedicated test database.
 - Imported source changes require a new snapshot and hash manifest.
 
 ## 5. Pruned Decisions
+- [2026-10-04 Codex]: Refresh the committed app snapshot. Include current onboarding, bot profiles, Kanban, and coordination adapter.
 - [2026-10-04 Codex]: Import committed source. Exclude credentials, runtime data, dependencies, and source-specific agent directives.
