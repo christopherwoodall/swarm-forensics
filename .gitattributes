@@ -1,6 +1,2 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-
-# Living documentation tree: auto-merge agent updates without friction
-**/MODULE.md merge=union
-AGENTS.md merge=union
