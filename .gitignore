@@ -1,5 +1,13 @@
 data/raw/
 !data/raw/.gitkeep
+pug-research/stylometry/data/raw/
+pug-research/stylometry/lexdb.sqlite
+pug-research/stylometry/lexdb_v2.sqlite
+pug-research/stylometry/_baselines_scratch.sqlite
+pug-research/grammar-network/patterns.sqlite
+pug-research/grammar-network/data/raw/
+# Derived/extracted data: regenerable via make targets. Never push.
+pug-research/*/data/processed/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -182,3 +190,8 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+pug-research/grammar-network/data/raw/
+# SQLite transient files
+*-journal
+*-wal
+*-shm

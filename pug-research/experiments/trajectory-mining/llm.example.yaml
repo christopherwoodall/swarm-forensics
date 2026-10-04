@@ -1,0 +1,13 @@
+# Copy to llm.local.yaml (ignored by git). LLM analysis stays OFF unless you also pass
+# --enable-llm. Credentials come from the environment: OPENROUTER_API_KEY or OPENAI_API_KEY.
+# Do not put keys in this file.
+provider: openrouter        # openrouter | openai
+model: ""                   # required, for example a model slug from your provider
+max_usd: 0.25               # hard spending limit for one run
+price_per_mtok:             # USD per 1M tokens. Look these up for your model. Required.
+  input: 0
+  output: 0
+max_input_chars: 12000      # evidence sent per call, after masking and truncation
+max_output_tokens: 800
+max_calls: 3
+timeout: 60

@@ -1,0 +1,240 @@
+{
+ "1_family_ablation": {
+  "lexical_only/stride2": {
+   "top1": 0.9233,
+   "top3": 0.9233
+  },
+  "lexical_only/drop_top5": {
+   "top1": 0.9611,
+   "top3": 0.9611
+  },
+  "structured_only/stride2": {
+   "top1": 0.1522,
+   "top3": 0.1589
+  },
+  "structured_only/drop_top5": {
+   "top1": 0.1522,
+   "top3": 0.1589
+  },
+  "hybrid/stride2": {
+   "top1": 0.9722,
+   "top3": 0.9722
+  },
+  "hybrid/drop_top5": {
+   "top1": 0.9789,
+   "top3": 0.9789
+  }
+ },
+ "2_family_importance": {
+  "baseline_top1": 0.9722,
+  "drop": {
+   "dom": 0.0011,
+   "param": 0.0,
+   "path": 0.0,
+   "jq": 0.0,
+   "filter": 0.0,
+   "relay": 0.0,
+   "agency": 0.0,
+   "year": 0.0444
+  },
+  "dsqa_250_rank_without_family": {
+   "dom": 1,
+   "param": 1,
+   "path": 1,
+   "jq": 1,
+   "filter": 1,
+   "relay": 1,
+   "agency": 1,
+   "year": 1
+  }
+ },
+ "3_village_confusion": {
+  "n_agents": 32,
+  "n_goals": 25,
+  "loao_accuracy": 0.0312,
+  "confusion": [
+   [
+    "Game dev",
+    "Ethicist",
+    1
+   ],
+   [
+    "Diplomat",
+    "Psychologist",
+    1
+   ],
+   [
+    "AI Welfarist",
+    "Reporter",
+    1
+   ],
+   [
+    "Prankster",
+    "YouTuber",
+    1
+   ],
+   [
+    "Author",
+    "Twitterati",
+    1
+   ],
+   [
+    "Twitterati",
+    "Forecaster",
+    1
+   ],
+   [
+    "Forecaster",
+    "Twitterati",
+    1
+   ],
+   [
+    "Performance coach",
+    "Game dev",
+    1
+   ],
+   [
+    "Reporter",
+    "AI Welfarist",
+    1
+   ],
+   [
+    "Psychologist",
+    "Twitterati",
+    1
+   ],
+   [
+    "YouTuber",
+    "Diplomat",
+    1
+   ],
+   [
+    "Twitterati",
+    "Psychologist",
+    1
+   ],
+   [
+    "Ethicist",
+    "YouTuber",
+    1
+   ],
+   [
+    "Substacker",
+    "Psychologist",
+    1
+   ],
+   [
+    "Press baron",
+    "Village Helper",
+    1
+   ],
+   [
+    "YouTuber",
+    "Ethicist",
+    1
+   ],
+   [
+    "Merch baron",
+    "Ethicist",
+    1
+   ],
+   [
+    "Reporter",
+    "Altruist",
+    1
+   ],
+   [
+    "Animal advocate",
+    "Forecaster",
+    1
+   ],
+   [
+    "AI Futurist",
+    "AI Safety Researcher",
+    1
+   ],
+   [
+    "Game dev",
+    "Game dev",
+    1
+   ],
+   [
+    "Artist",
+    "YouTuber",
+    1
+   ],
+   [
+    "Merch baron",
+    "Game dev",
+    1
+   ],
+   [
+    "Altruist",
+    "AI Welfarist",
+    1
+   ],
+   [
+    "Forecaster",
+    "Psychologist",
+    1
+   ]
+  ]
+ },
+ "4_prompt_element_ablation": {
+  "ranked": [
+   [
+    "tool",
+    {
+     "n_with": 21,
+     "mean_abs_delta": 18.5543,
+     "max_abs_delta": 129.5214,
+     "top_marker": "mean_len"
+    }
+   ],
+   [
+    "guardrail",
+    {
+     "n_with": 42,
+     "mean_abs_delta": 8.2133,
+     "max_abs_delta": 57.0316,
+     "top_marker": "mean_len"
+    }
+   ],
+   [
+    "mission",
+    {
+     "n_with": 30,
+     "mean_abs_delta": 6.908,
+     "max_abs_delta": 48.0663,
+     "top_marker": "mean_len"
+    }
+   ],
+   [
+    "schedule",
+    {
+     "n_with": 19,
+     "mean_abs_delta": 5.3066,
+     "max_abs_delta": 36.8778,
+     "top_marker": "mean_len"
+    }
+   ],
+   [
+    "identity",
+    {
+     "n_with": 15,
+     "mean_abs_delta": 4.7164,
+     "max_abs_delta": 32.8678,
+     "top_marker": "mean_len"
+    }
+   ]
+  ]
+ },
+ "5_evidence_breakdown": {
+  "n_inferences": 2197,
+  "fractions": {
+   "structural": 0.468,
+   "url": 0.358,
+   "prose/other": 0.174
+  }
+ }
+}

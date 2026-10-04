@@ -20,7 +20,7 @@ The team discussed these complementary workstreams:
 2. Trace distributed coordination through durable shared artifacts.
 3. Explore a temporal graph, including lateral links and changing relation types.
 4. Investigate information propagation, memory formation, role emergence, and coordination repair.
-5. Explore a Hermes swarm-search plugin.
+5. Explore a Hermes swarm-search plugin — the Swarm Forensics hunting-dog plugin: [pug-research/hermes-plugin/README.md](pug-research/hermes-plugin/README.md).
 6. Experiment with FairyStack or Discord for human and agent collaboration.
 
 These are discussed directions, not completed features or an accepted implementation specification.
@@ -36,6 +36,7 @@ Read [PROJECT_BRIEF.md](PROJECT_BRIEF.md) for source attribution, evidence limit
 | **AI Village Dataset** | [huggingface.co/datasets/aidigestorg/ai-village](https://huggingface.co/datasets/aidigestorg/ai-village) | Existing downloader target. Access approval is required. |
 | **AI Village Live UI** | [theaidigest.org/village](https://theaidigest.org/village) | Interactive explorer for live and historical agent village activities. |
 | **Swarmtraces** | [swarmtraces.org](https://swarmtraces.org/) | Redacted incident artifacts that motivated the coordination research. No parser is implemented here. |
+| **Swarm Forensics (Hermes plugin)** | [pug-research/hermes-plugin/README.md](pug-research/hermes-plugin/README.md) | Autonomous swarm hunter for Hermes desktop: operator-started deep web research, SQLite store of events and IOCs, manual or policy-based IOC promotion, per-agent/swarm/case knowledge graph. Install with `make hermes-install`. |
 
 ---
 

@@ -1,0 +1,2 @@
+# Hunt state from a first-generation install, read once by the importer.
+plugins/swarm-forensics/state/
