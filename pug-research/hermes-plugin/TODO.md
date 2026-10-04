@@ -20,6 +20,8 @@ None. All phases completed.
 - 2026-10-04: Approved searching other swarm hunter sites/blogs for indicators and datasets.
 - 2026-10-04: Approved `/swarm-forensics attach <session_id|hunt_id>` to attach sessions to running hunters.
 - 2026-10-04: Approved running `/swarm-forensics start` in a session with conversational guidance.
+- 2026-10-04: Approved full database reset and scratch restart in Settings UI and `/swarm-forensics reset --force`.
+- 2026-10-04: Approved live URL stream with one-click artifact capture and UI text selection.
 
 ## Completed Tasks
 
@@ -29,3 +31,4 @@ None. All phases completed.
 - Phase 4: Interactive Session Hunts, Attach Verb & Session Tools. `/swarm-forensics attach`, session-bound `start`, `sf_spawn_subhunt`, `sf_attach_hunt` native tools.
 - Phase 5: REST API & Desktop UI Tree View. `POST /hunts/{id}/spawn`, `GET /hunts/{id}/children`, depth badges, `+ Sub-hunt` spawner, attach command helper, 30 JS render tests.
 - Phase 6: Documentation, Lint & Definition of Done. Updated `MODULE.md` (Sections 1-5, max 3 in Section 5), `README.md`, `SKILL.md`, `make test`, `make lint`, `make check` all 100% clean.
+- Phase 7: Data Reset, Live URL Artifacts, UI Selection & ASD-STE100 Spec. Added Danger Zone reset (`/reset`, CLI `--force`), live URL feed with `+ Artifact` buttons, `userSelect: 'text'`, Architecture Mermaid diagram in `README.md`, detailed `SPEC.md` in ASD-STE100, and complete subcommands help.

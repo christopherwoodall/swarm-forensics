@@ -170,6 +170,7 @@ class Engine:
             if self.p.ledger.query_seen("web", query):
                 continue
             try:
+                self._say(hid, "tool_call", "web_search: %s" % _short(query, 90))
                 rows = self.p.hermes.web_search(
                     query, min(10, cfg["hunt.max_results_per_query"]))
             except HermesUnavailable as exc:
@@ -320,6 +321,7 @@ class Engine:
                     return
                 batch = [p["url"] for p in clean_pages[i:i + 5]]
                 try:
+                    self._say(hid, "tool_call", "web_extract: batch of %d URLs" % len(batch))
                     for row in self.p.hermes.web_extract(batch):
                         texts[row["url"]] = row["content"]
                 except HermesUnavailable as exc:
@@ -346,6 +348,8 @@ class Engine:
             self._say(hid, "page", "relevant (%s%s): %s" % (
                 analysis["claim_level"], ", tainted" if tainted else "",
                 _short(analysis["summary"] or page["url"], 120)))
+            if analysis.get("summary"):
+                self._say(hid, "rationale", "rationale: %s" % _short(analysis["summary"], 120))
             eid, created = self.p.ledger.add_evidence(
                 hid, "web", page["query"], page["url"], page.get("title", ""),
                 self._excerpt(analysis, text), tainted=tainted,

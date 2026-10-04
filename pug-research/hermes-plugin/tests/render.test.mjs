@@ -215,11 +215,13 @@ test('HuntDetail renders with events, evidence, stats, sub-hunts, and close butt
   assert.match(html, /Evidence \(/)
 })
 
-test('Hunt tab renders Leads card with dismiss button', () => {
+test('Hunt tab renders Leads card and Live discovered URLs card with + Artifact', () => {
   const html = render({ tab: 'hunt' })
   assert.match(html, /Leads \(/)
   assert.match(html, /find traces/)
   assert.match(html, />Dismiss</)
+  assert.match(html, /Live discovered URLs \(/)
+  assert.match(html, />\+ Artifact</)
 })
 
 test('the Knowledge tab renders a selected entity, its note links, hierarchy, and edit mode', () => {
@@ -241,7 +243,7 @@ test('the IOCs tab does not request /iocs/1 while rows are closed', () => {
   assert.ok(!globalThis.__sf.paths.includes('/iocs/1'), 'detail should not be requested while rows are closed')
 })
 
-test('the Settings tab renders every field kind, including schedules and export', () => {
+test('the Settings tab renders every field kind, including schedules, export, and reset', () => {
   const html = render({ tab: 'settings' })
   assert.match(html, /type="checkbox"/)
   assert.match(html, /type="number"/)
@@ -250,6 +252,8 @@ test('the Settings tab renders every field kind, including schedules and export'
   assert.match(html, />Arm</)
   assert.match(html, /Export data/)
   assert.match(html, />Export</)
+  assert.match(html, /Danger zone: Reset all data/)
+  assert.match(html, />Reset all data &amp; start from scratch</)
 })
 
 test('the status chip renders in every state', () => {
@@ -270,12 +274,13 @@ test('Hunt tab renders Interactive hunt session card with command', () => {
   assert.match(html, /sf_attach_hunt/)
 })
 
-test('URLs tab renders URL table and triage buttons', () => {
+test('URLs tab renders URL table, triage buttons, and + Artifact button', () => {
   const html = render({ tab: 'urls' })
   assert.match(html, /Discovered &amp; candidate URLs/)
   assert.match(html, /https:\/\/example\.test\/item/)
   assert.match(html, />Mark Benign</)
   assert.match(html, />Mark Suspicious</)
+  assert.match(html, />\+ Artifact</)
 })
 
 test('Prompts tab renders template editor and token chips', () => {

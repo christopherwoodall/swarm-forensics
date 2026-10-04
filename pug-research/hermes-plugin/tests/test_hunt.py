@@ -169,6 +169,7 @@ class CommandTests(unittest.TestCase):
         self.svc = Svc()
         for name in ("settings", "ledger", "graph", "iocs", "hunts"):
             setattr(self.svc, name, getattr(self.env, name))
+        self.svc.reset_all_data = self.env.reset_all_data
         self.env.hermes.plan = {"queries": []}
 
     def tearDown(self):
@@ -210,6 +211,22 @@ class CommandTests(unittest.TestCase):
         command.handle(self.svc, "stop")
         self.assertTrue(support.wait_for(
             lambda: self.env.ledger.hunt(hid)["state"] == "stopped"))
+
+    def test_subhunt_tools_reset_commands(self):
+        out = command.handle(self.svc, "start find traces")
+        self.assertIn("started", out)
+        hid = self.env.ledger.hunts(1)[0]["id"]
+        sub_out = command.handle(self.svc, "subhunt %s investigate sub" % hid)
+        self.assertIn("Spawned child hunt", sub_out)
+        self.svc.ledger.event(hid, "tool_call", "web_search: test query")
+        tools_out = command.handle(self.svc, "tools %s" % hid)
+        self.assertIn("web_search: test query", tools_out)
+        command.handle(self.svc, "stop")
+
+        reset_refused = command.handle(self.svc, "reset")
+        self.assertIn("Refused", reset_refused)
+        reset_ok = command.handle(self.svc, "reset --force")
+        self.assertIn("wiped", reset_ok)
 
     def test_review_and_decisions(self):
         ioc, _ = self.env.iocs.propose("cmd.example/zz=1")

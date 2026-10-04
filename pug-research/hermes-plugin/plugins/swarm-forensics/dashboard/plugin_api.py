@@ -467,3 +467,11 @@ def url_triage(body: dict = Body(...)):
 def export_data():
     return _run(export_all, _svc())
 
+
+# -- reset --------------------------------------------------------------------
+
+@router.post("/reset")
+def reset_database():
+    return _run(_svc().reset_all_data)
+
+

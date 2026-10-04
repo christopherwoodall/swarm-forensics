@@ -52,18 +52,18 @@ const V = {
 }
 
 const S = {
-  page: { display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, fontSize: '0.8125rem', color: V.text },
+  page: { display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, fontSize: '0.8125rem', color: V.text, userSelect: 'text', WebkitUserSelect: 'text' },
   tabs: { display: 'flex', gap: 4, padding: '8px 12px 0', borderBottom: `1px solid ${V.line}` },
-  body: { flex: 1, minHeight: 0, overflow: 'auto', padding: 12 },
+  body: { flex: 1, minHeight: 0, overflow: 'auto', padding: 12, userSelect: 'text', WebkitUserSelect: 'text' },
   row: { display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' },
   col: { display: 'flex', flexDirection: 'column', gap: 8 },
-  card: { border: `1px solid ${V.line}`, borderRadius: 8, padding: 10 },
+  card: { border: `1px solid ${V.line}`, borderRadius: 8, padding: 10, userSelect: 'text', WebkitUserSelect: 'text' },
   h2: { fontSize: '0.9rem', fontWeight: 600, margin: '4px 0' },
   dim: { color: V.dim },
-  mono: { fontFamily: 'ui-monospace, monospace', fontSize: '0.75rem', wordBreak: 'break-all' },
+  mono: { fontFamily: 'ui-monospace, monospace', fontSize: '0.75rem', wordBreak: 'break-all', userSelect: 'text', WebkitUserSelect: 'text' },
   input: {
     background: 'transparent', color: 'inherit', border: `1px solid ${V.line}`,
-    borderRadius: 6, padding: '4px 8px', font: 'inherit', minWidth: 0
+    borderRadius: 6, padding: '4px 8px', font: 'inherit', minWidth: 0, userSelect: 'text', WebkitUserSelect: 'text'
   },
   btn: {
     background: 'transparent', color: 'inherit', border: `1px solid ${V.line}`,
@@ -116,8 +116,14 @@ function useApi(key, path, poll, enabled = true) {
 
 function Btn({ onClick, children, disabled, title, kind }) {
   const style = { ...S.btn, opacity: disabled ? 0.45 : 1, cursor: disabled ? 'default' : 'pointer' }
-  if (kind === 'primary') style.borderColor = V.accent
-  if (kind === 'primary') style.color = V.accent
+  if (kind === 'primary') {
+    style.borderColor = V.accent
+    style.color = V.accent
+  }
+  if (kind === 'danger') {
+    style.borderColor = '#e53e3e'
+    style.color = '#e53e3e'
+  }
   return h('button', { type: 'button', style, title, disabled, onClick: disabled ? undefined : onClick }, children)
 }
 
@@ -257,10 +263,11 @@ function HuntDetail({ huntId, onClose }) {
 
 function HuntPage() {
   const status = useApi(['status'], '/status', 3000)
+  const hunt = status.data && status.data.hunt
   const overview = useApi(['overview'], '/overview', 30000)
   const hunts = useApi(['hunts'], '/hunts?limit=10', 8000)
   const leadsQ = useApi(['leads'], '/leads', 5000)
-  const hunt = status.data && status.data.hunt
+  const urlsQ = useApi(['live-urls', hunt ? hunt.id : 'none'], '/urls?limit=10', 4000)
 
   const [eventKind, setEventKind] = useState('')
   const [eventLevel, setEventLevel] = useState('')
@@ -278,6 +285,7 @@ function HuntPage() {
   const i = st ? st.iocs : {}
   const qs = st ? st.queries : {}
   const openLeads = (leadsQ.data && leadsQ.data.leads) || []
+  const liveUrls = (urlsQ.data && urlsQ.data.urls) || []
 
   return h('div', { style: S.col },
     h(ErrorNote, { q: status }),
@@ -330,6 +338,25 @@ function HuntPage() {
           h('span', { style: S.dim }, l.origin),
           h('span', { style: S.dim }, ago(l.created_utc)),
           h(Btn, { onClick: () => act(`/leads/${l.id}/close`, { status: 'dismissed' }) }, 'Dismiss'))))),
+    h('div', { style: S.card },
+      h('div', { style: S.row },
+        h('span', { style: S.h2 }, `Live discovered URLs (${liveUrls.length})`),
+        h('span', { style: S.dim }, 'Click + Artifact to capture URL to entity graph')),
+      liveUrls.length > 0
+        ? h('div', { style: { ...S.col, gap: 4, marginTop: 4, maxHeight: 180, overflow: 'auto' } },
+          liveUrls.map(u => h('div', { key: u.id || u.url, style: { ...S.row, padding: '3px 0', borderTop: `1px solid ${V.line}` } },
+            h(Chip, null, u.status || 'discovered'),
+            h('span', { style: { ...S.mono, flex: 1 } }, u.url),
+            h('span', { style: S.dim }, hostOf(u.url)),
+            h('span', { style: S.dim }, ago(u.discovered_utc)),
+            h(Btn, {
+              onClick: () => act('/entities', {
+                type: 'artifact', name: u.url,
+                summary: 'Observed artifact from ' + (u.source || 'web'),
+                notes: `Captured from ${u.source || 'web'} at ${u.discovered_utc || ''}`
+              }, 'POST', 'Added URL as artifact')
+            }, '+ Artifact'))))
+        : h(Empty, null, 'No URLs discovered yet.')),
     h('div', { style: S.card },
       h('div', { style: S.row },
         h('span', { style: S.h2 }, 'Interactive hunt session & attach'),
@@ -836,10 +863,16 @@ function UrlsPage() {
       h('div', { style: S.row },
         h(Chip, { strong: u.status === 'benign' || u.status === 'suspicious' }, u.status),
         h('span', { style: { ...S.mono, flex: 1 } }, u.url),
-        h('span', { style: S.dim }, `${u.source} ${ago(u.updated_utc)}`),
         u.status !== 'benign' && h(Btn, { onClick: () => triage(u.url, 'benign', 'analyst review') }, 'Mark Benign'),
         u.status !== 'suspicious' && h(Btn, { onClick: () => triage(u.url, 'suspicious', 'analyst review') }, 'Mark Suspicious'),
-        u.status !== 'examined' && h(Btn, { onClick: () => triage(u.url, 'examined', 'analyst review') }, 'Examine')),
+        u.status !== 'examined' && h(Btn, { onClick: () => triage(u.url, 'examined', 'analyst review') }, 'Examine'),
+        h(Btn, {
+          onClick: () => act('/entities', {
+            type: 'artifact', name: u.url,
+            summary: 'Observed artifact from ' + (u.source || 'web'),
+            notes: `Captured from ${u.source || 'web'} at ${u.discovered_utc || u.updated_utc || ''}`
+          }, 'POST', 'Added URL as artifact')
+        }, '+ Artifact')),
       u.reason && h('div', { style: { ...S.dim, marginTop: 4 } }, `Reason: ${u.reason}`))))
 }
 
@@ -1146,6 +1179,7 @@ function SettingsPage() {
   const q = useApi(['settings'], '/settings')
   const [draft, setDraft] = useState({})
   const [lastExport, setLastExport] = useState(null)
+  const [confirmReset, setConfirmReset] = useState(false)
   if (!q.data) return h(ErrorNote, { q })
   const { values, schema } = q.data
   const fields = schema.fields
@@ -1181,7 +1215,27 @@ function SettingsPage() {
           }
         }, 'Export'),
         lastExport && h('span', { style: S.mono }, `Exported to: ${lastExport}`))),
-    h(ScheduleSection, { enabled: values['schedule.enabled'] }))
+    h(ScheduleSection, { enabled: values['schedule.enabled'] }),
+    h('div', { style: { ...S.card, border: `1px solid ${V.accent}`, marginTop: 12 } },
+      h('div', { style: { ...S.h2, color: V.accent } }, 'Danger zone: Reset all data'),
+      h('div', { style: S.dim },
+        'Wipe all hunts, events, evidence, IOCs, URLs, entities, and prompt customizations. Reset database to initial blank state.'),
+      h('div', { style: { ...S.row, marginTop: 8 } },
+        !confirmReset
+          ? h(Btn, { kind: 'danger', onClick: () => setConfirmReset(true) }, 'Reset all data & start from scratch')
+          : h('div', { style: { ...S.row, gap: 8 } },
+            h('span', { style: { color: V.accent, fontWeight: 600 } }, 'Are you sure? All data will be permanently wiped.'),
+            h(Btn, {
+              kind: 'danger',
+              onClick: async () => {
+                const res = await act('/reset', {}, 'POST', 'Database wiped and reset')
+                if (res) {
+                  setConfirmReset(false)
+                  setDraft({})
+                }
+              }
+            }, 'Yes, wipe everything'),
+            h(Btn, { onClick: () => setConfirmReset(false) }, 'Cancel')))))
 }
 
 // ---------------------------------------------------------------- shell

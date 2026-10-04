@@ -65,6 +65,22 @@ class Service:
             "imported": self.imported,
         }
 
+    def reset_all_data(self):
+        """Stop running hunts, wipe all data, and restore clean initial state."""
+        self.hunts.stop()
+        self.hunts.shutdown.set()
+        for worker in list(self.hunts._workers.values()):
+            if worker.is_alive():
+                worker.join(timeout=5)
+        self.hunts._workers.clear()
+        self.hunts.shutdown.clear()
+        self.db.reset()
+        self.iocs.seed()
+        self.registry.seed()
+        self.prompts.seed_defaults()
+        self.imported = []
+        return {"ok": True, "message": "All data wiped. Started fresh from scratch."}
+
 
 _service = None
 _lock = threading.Lock()

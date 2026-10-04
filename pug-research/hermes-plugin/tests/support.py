@@ -87,6 +87,18 @@ class Env:
             "hunt.sources": ["web"], "hunt.cycle_pause_seconds": 5,
             "hunt.request_delay_seconds": 0.5})
 
+    def reset_all_data(self):
+        self.hunts.shutdown.set()
+        workers = list(getattr(self.hunts, "_workers", {}).values())
+        for w in workers:
+            if w and w.is_alive():
+                w.join(timeout=3)
+        self.hunts._workers.clear()
+        self.hunts.shutdown.clear()
+        self.db.reset()
+        self.iocs.seed()
+        self.registry.seed()
+
     def close(self):
         self.hunts.shutdown.set()
         workers = list(getattr(self.hunts, "_workers", {}).values())

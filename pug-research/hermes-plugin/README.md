@@ -39,27 +39,79 @@ Open **Swarm Forensics** in the desktop app, or use the command:
 |---|---|
 | `/swarm-forensics start [goal]` | Start an autonomous hunt. It runs until you stop it. |
 | `/swarm-forensics session [goal]` | Start an interactive hunt session in Hermes chat. |
-| `/swarm-forensics attach [id]` | Attach any chat session to a running hunter for live steering. |
-| `/swarm-forensics pause`, `resume [id]`, `stop` | Control the hunt and active sub-hunts. |
+| `/swarm-forensics attach [id]` | Attach current chat session to a hunt for live steering. |
+| `/swarm-forensics subhunt [parent_id] [goal]` | Spawn a concurrent child hunt up to depth limit. |
+| `/swarm-forensics tools [id] [n]` | Inspect recent tool calls, queries, and model rationale. |
+| `/swarm-forensics pause [id]`, `resume [id]`, `stop [id]` | Control hunts and active sub-hunts. |
 | `/swarm-forensics status` | Show hunt state and totals. |
-| `/swarm-forensics review` | List proposed IOC terms. |
-| `/swarm-forensics accept|reject <id>`, `narrow <id> <term>` | Decide an IOC. |
-| `/swarm-forensics benign <id|term>` | Mark an indicator as a benign false positive. |
+| `/swarm-forensics log [n]` | Show recent hunt events and activities. |
+| `/swarm-forensics review` | List proposed IOC terms awaiting decision. |
+| `/swarm-forensics accept <id> [reason]`, `reject <id> [reason]` | Accept or reject a proposed IOC. |
+| `/swarm-forensics benign <id\|term> [reason]` | Mark an indicator as a benign false positive. |
+| `/swarm-forensics narrow <id> <term>` | Narrow an indicator term. |
 | `/swarm-forensics find <text>` | Search artifacts, agents, swarms, and campaigns. |
-| `/swarm-forensics settings [key [value]]` | Read or change a setting. |
+| `/swarm-forensics settings [key [value]]` | Read or update configuration settings. |
+| `/swarm-forensics reset [--force]` | Wipe all data and start fresh from scratch. |
 
 Interactive Hermes tools:
 - `sf_get_context`, `sf_search_index`, `sf_record_evidence`, `sf_propose_ioc`, `sf_manage_entity`, `sf_link_entities`, `sf_triage_item`, `sf_query_knowledge`, `sf_spawn_subhunt`, `sf_attach_hunt`.
 
 Desktop pages:
-- **Hunt**: Activity log with filters, active leads with dismiss actions, recursive sub-hunt tree view, `+ Sub-hunt` spawner, attach command helper, and interactive hunt session card.
+- **Hunt**: Activity log with filters, active leads with dismiss actions, recursive sub-hunt tree view, `+ Sub-hunt` spawner, live discovered URLs feed with `+ Artifact` capture, attach command helper, and interactive hunt session card.
 - **Knowledge**: Interactive graph, hierarchy browser (*Belongs to* and *Contains*), custom groups (`+ Group`), tags, and Markdown notes.
 - **Evidence**: Captured page excerpts with provenance and taint indicators.
 - **IOCs**: Indicator catalog, promotion policy status, decision audit logs, and benign triage.
-- **URLs**: Discovered and predicted URL catalog, filtering by status, and benign/suspicious triage.
+- **URLs**: Discovered and predicted URL catalog, filtering by status, benign/suspicious triage, and `+ Artifact` capture.
 - **Prompts**: Database-backed prompt templates, token placeholder chips (`{{var}}`), reset to defaults, and JSON export/import.
 - **Sources**: Index source enable toggles (Wayback CDX, crt.sh, arXiv Intelligence), candidate URL grammar rules, and wordlist import.
-- **Settings**: Plugin configuration (depth limits, multi-hunt concurrency), schedule controls, and full data export bundle.
+- **Settings**: Plugin configuration (depth limits, multi-hunt concurrency), schedule controls, full data export bundle, and Danger Zone reset.
+
+## Architecture
+
+```mermaid
+flowchart TD
+    subgraph Host["Hermes Host Environment"]
+        Chat["Hermes Chat Session"]
+        Desktop["Desktop UI (React Plugin)"]
+        CLI["CLI Commands (/swarm-forensics)"]
+    end
+
+    subgraph PluginCore["Swarm Forensics Plugin Core"]
+        AgentTools["Hermes Agent Tools (10 Tools)"]
+        PluginAPI["Plugin REST API (FastAPI / Starlette)"]
+        Service["Forensics Service Coordinator"]
+        HuntService["Multi-Worker Hunt Service"]
+        PromptRegistry["Prompt Registry & Templates"]
+        OSINT["OSINT Sources & URL Grammar Engine"]
+    end
+
+    subgraph DataStore["SQLite Database (Schema v4)"]
+        HuntsTbl["hunts & hunt_events"]
+        EntitiesTbl["entities & relationships"]
+        IocsTbl["iocs & decisions"]
+        UrlsTbl["urls (triage status)"]
+        PromptsTbl["prompt_templates"]
+        SourcesTbl["osint_sources & url_grammar"]
+    end
+
+    subgraph External["External Network & Target Environment"]
+        WebSearch["Hermes Web Search & Extraction"]
+        PublicIndexes["Public CDX, crt.sh & arXiv Indexes"]
+    end
+
+    Chat --> AgentTools
+    CLI --> Service
+    Desktop --> PluginAPI
+    PluginAPI --> Service
+    AgentTools --> Service
+    Service --> HuntService
+    Service --> PromptRegistry
+    Service --> OSINT
+    HuntService --> WebSearch
+    OSINT --> PublicIndexes
+    Service --> DataStore
+    HuntService --> DataStore
+```
 
 ## How a hunt works
 
@@ -109,4 +161,5 @@ make hermes-lint
 make hermes-check    # package structure, manifests, Python and JS syntax
 ```
 
+Detailed technical specification is in [SPEC.md](SPEC.md).
 Architecture, interfaces, and invariants are in [MODULE.md](MODULE.md).

@@ -368,3 +368,15 @@ class Database:
             raise
         finally:
             conn.close()
+
+    def reset(self):
+        """Wipe all tables and re-apply all migrations from scratch."""
+        with self.connect() as conn:
+            conn.execute("PRAGMA foreign_keys = OFF")
+            rows = conn.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+            ).fetchall()
+            for r in rows:
+                conn.execute("DROP TABLE IF EXISTS %s" % r["name"])
+            conn.execute("PRAGMA user_version = 0")
+            migrate(conn)

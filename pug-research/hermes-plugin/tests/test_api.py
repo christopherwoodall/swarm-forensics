@@ -357,6 +357,21 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(dec_res.status_code, 200)
         self.assertEqual(dec_res.json()["status"], "benign")
 
+    def test_reset_endpoint(self):
+        self.post("/entities", {"type": "agent", "name": "EphemeralAgent"})
+        self.post("/iocs", {"term": "ephemeral.example"})
+        res = self.post("/reset", {})
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(res.json()["ok"])
+        entities = self.get("/entities").json()["entities"]
+        self.assertEqual(len(entities), 0)
+        iocs = self.get("/iocs").json()["iocs"]
+        ioc_terms = [i["term"] for i in iocs]
+        self.assertNotIn("ephemeral.example", ioc_terms)
+        self.assertGreaterEqual(len(iocs), 1)
+        urls = self.get("/urls").json()["urls"]
+        self.assertEqual(len(urls), 0)
+
 
 
 class LegacyImportTest(unittest.TestCase):

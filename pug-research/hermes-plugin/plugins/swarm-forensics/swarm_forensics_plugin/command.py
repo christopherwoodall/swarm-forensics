@@ -15,21 +15,24 @@ from .schedule import ScheduleError
 from .settings import SCHEMA, SettingsError
 
 HELP = """\
-/swarm-forensics start [goal]    start a guided hunt in this session
-/swarm-forensics attach [id]     attach this chat session to a running hunt
-/swarm-forensics session [goal]  start an interactive hunt in this chat session
-/swarm-forensics stop [id]       stop the hunt (and any sub-hunts)
-/swarm-forensics pause [id]      pause at the next checkpoint
-/swarm-forensics resume [id]     restart a paused or blocked hunt
-/swarm-forensics status          hunt state and totals
-/swarm-forensics log [n]         last n activity lines (default 15)
-/swarm-forensics review          list proposed IOC terms
-/swarm-forensics accept <id> [reason]
-/swarm-forensics reject <id> [reason]
-/swarm-forensics benign <id> [reason]
-/swarm-forensics narrow <id> <narrower-term>
-/swarm-forensics find <text>     search entities (artifacts, agents, swarms, campaigns)
-/swarm-forensics settings [key [value]]"""
+/swarm-forensics start [goal]            start a guided hunt in this session
+/swarm-forensics attach [id]             attach this chat session to a running hunt
+/swarm-forensics session [goal]          start an interactive hunt in this session
+/swarm-forensics subhunt [parent] [goal] spawn a child crawler hunt
+/swarm-forensics tools [id] [n]          show recent tool calls and rationale
+/swarm-forensics stop [id]               stop the hunt (and any sub-hunts)
+/swarm-forensics pause [id]              pause at the next checkpoint
+/swarm-forensics resume [id]             restart a paused or blocked hunt
+/swarm-forensics status                  hunt state and totals
+/swarm-forensics log [n]                 last n activity lines (default 15)
+/swarm-forensics review                  list proposed IOC terms
+/swarm-forensics accept <id> [reason]    accept a proposed IOC
+/swarm-forensics reject <id> [reason]    reject a proposed IOC
+/swarm-forensics benign <id|term>        mark an indicator as benign
+/swarm-forensics narrow <id> <term>      narrow an IOC term
+/swarm-forensics find <text>             search artifacts, agents, swarms
+/swarm-forensics settings [key [value]]  read or change a setting
+/swarm-forensics reset [--force]         wipe all data and start from scratch"""
 
 
 def _status(svc):
@@ -137,21 +140,82 @@ def handle(svc, raw_args):
             children = svc.ledger.child_hunts(hunt["id"])
             leads = svc.ledger.open_leads("query", 3)
             lead_summary = ", ".join(ld["value"] for ld in leads) or "none"
-            events = svc.ledger.events(hunt["id"], 0, 4)
-            event_lines = ["- [%s] %s" % (e["kind"], e["message"]) for e in events]
-            event_summary = "\n".join(event_lines) or "- no events yet"
+            events = svc.ledger.events(hunt["id"], 0, 8)
+            tool_evs = [
+                e for e in events
+                if e["kind"] in ("tool_call", "search", "sweep", "page")
+            ]
+            rat_evs = [
+                e for e in events
+                if e["kind"] in ("rationale", "finding", "plan", "state")
+            ]
+            tool_summary = (
+                "\n".join("- [%s] %s" % (e["kind"], e["message"]) for e in tool_evs[:4])
+                or "- no tool calls yet"
+            )
+            rat_summary = (
+                "\n".join("- [%s] %s" % (e["kind"], e["message"]) for e in rat_evs[:4])
+                or "- no analysis rationale yet"
+            )
             return (
                 "Attached to Hunt %s (Session %s)\n"
                 "State: %s | Depth: %d | Cycle: %d | Parent: %s\n"
                 "Goal: %s\n"
-                "Child sub-hunts: %d\n"
-                "Open leads: %s\n\n"
-                "Recent activity:\n%s\n\n"
+                "Child sub-hunts: %d | Open leads: %s\n\n"
+                "Tool calls & queries:\n%s\n\n"
+                "Analysis rationale & findings:\n%s\n\n"
                 "You can now guide this hunt session using Swarm Forensics tools (sf_*)."
-                % (hunt["id"], hunt.get("session_id") or "unbound", hunt["state"],
-                   hunt.get("depth", 0), hunt["cycle"], hunt.get("parent_hunt_id") or "none (root)",
-                   hunt["goal"], len(children), lead_summary, event_summary)
+                % (
+                    hunt["id"], hunt.get("session_id") or "unbound", hunt["state"],
+                    hunt.get("depth", 0), hunt["cycle"],
+                    hunt.get("parent_hunt_id") or "none (root)",
+                    hunt["goal"], len(children), lead_summary,
+                    tool_summary, rat_summary,
+                )
             )
+        if verb in ("subhunt", "spawn"):
+            active = svc.ledger.active_hunt()
+            if not args and not active:
+                return "No active hunt found. Usage: /swarm-forensics subhunt [parent_id] [goal]"
+            if args and len(args[0]) >= 8 and (svc.ledger.hunt(args[0]) or "-" in args[0]):
+                parent_id = args[0]
+                goal = " ".join(args[1:]).strip() if len(args) > 1 else None
+            else:
+                if not active:
+                    return "No active hunt found. Provide a parent hunt ID."
+                parent_id = active["id"]
+                goal = " ".join(args).strip() if args else None
+            child = svc.hunts.spawn_subhunt(parent_id, goal=goal)
+            return "Spawned child hunt %s at depth %d under %s (Goal: %s)" % (
+                child["id"], child["depth"], child["parent_hunt_id"], child["goal"],
+            )
+        if verb in ("tools", "tool_calls", "rationale"):
+            target_id = args[0].strip() if args and not args[0].isdigit() else None
+            hunt = (svc.ledger.hunt(target_id) if target_id else None) or svc.ledger.active_hunt()
+            hid = hunt["id"] if hunt else None
+            n = int(args[-1]) if args and args[-1].isdigit() else 10
+            events = svc.ledger.events(hid, 0, n * 2)
+            matched = [
+                e for e in events
+                if e["kind"] in ("tool_call", "search", "sweep", "page", "rationale", "finding")
+            ][:n]
+            if not matched:
+                return "No tool calls or rationale logged yet%s." % (
+                    (" for hunt " + hid) if hid else ""
+                )
+            lines = ["- [%s] %s" % (e["kind"], e["message"]) for e in matched]
+            return "Tool calls and rationale%s:\n%s" % (
+                (" (hunt " + hid + ")") if hid else "",
+                "\n".join(lines),
+            )
+        if verb == "reset":
+            if "--force" not in args and "confirm" not in args:
+                return (
+                    "Refused. Reset will wipe all data and start from scratch.\n"
+                    "Run: /swarm-forensics reset --force"
+                )
+            svc.reset_all_data()
+            return "All Swarm Forensics data has been wiped. Started fresh from scratch."
         if verb == "stop":
             target = args[0] if args else None
             hunt = svc.hunts.stop(target)
