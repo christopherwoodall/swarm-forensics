@@ -81,6 +81,16 @@ function fixture(path, status) {
       { id: 2, ts: NOW, kind: 'finding', level: 'alert', message: 'alert' }] },
     '/evidence': { evidence: [EVIDENCE] },
     '/leads': { leads: [{ id: 1, kind: 'query', value: 'find traces', priority: 0.9, origin: 'human', created_utc: NOW }] },
+    '/morphologies': { morphologies: [{
+      id: 'm1', candidate_id: 'morphology-1', candidate_label: 'Shared-state handoff',
+      candidate_status: 'possible_new_morphology', evidence_strength: 'e2',
+      review_status: 'new', tainted: 0, created_utc: NOW
+    }] },
+    '/morphologies/m1': {
+      id: 'm1', candidate_id: 'morphology-1', candidate_status: 'possible_new_morphology',
+      evidence_strength: 'e2', review_status: 'new', review_reason: '', review_history: [], tainted: 0,
+      card: { candidate_label: 'Shared-state handoff', alternative_explanations: ['A central controller may explain it.'] }
+    },
     '/sources': { sources: [{ id: 1, name: 'Wayback CDX', kind: 'cdx', endpoint: 'https://web.archive.org/cdx/search/cdx', config: {}, enabled: 1, probe_candidates: 1, note: '' }] },
     '/grammar': { grammar: [{ id: 1, kind: 'pattern', value: 'https://example.test/{slot}', param: '', enabled: 1, note: '' }] },
     '/urls': {
@@ -123,10 +133,11 @@ function fixture(path, status) {
 function load() {
   const registered = new Map()
   const ctx = {
-    rest: path => {
+    rest: (path, options) => {
       globalThis.__sf.lastPath = path
       if (globalThis.__sf.paths) globalThis.__sf.paths.push(path)
-      return Promise.resolve({})
+      globalThis.__sf.restCalls?.push({ path, options })
+      return Promise.resolve(globalThis.__sf.restResults?.[path] || {})
     },
     setInterval() {},
     onEvent() {},
@@ -318,6 +329,76 @@ test('the Settings tab renders every field kind, including schedules, export, an
   assert.match(html, />Export</)
   assert.match(html, /Danger zone: Reset all data/)
   assert.match(html, />Reset all data &amp; start from scratch</)
+})
+
+test('Morphologies tab imports and lists candidate cards as hypotheses', () => {
+  const html = render({ tab: 'morphologies' })
+  assert.ok(html.includes('Morphology candidates'))
+  assert.ok(html.includes('Paste candidate card JSON'))
+  assert.ok(html.includes('Shared-state handoff'))
+  assert.ok(html.includes('possible_new_morphology'))
+  assert.ok(html.includes('Candidates remain hypotheses until investigators verify them.'))
+})
+
+test('Morphologies tab can discover from raw data rather than requiring imported cards', () => {
+  const html = render({ tab: 'morphologies' })
+  assert.ok(html.includes('Discover from raw data'))
+  assert.ok(html.includes('Dataset path'))
+  assert.ok(html.includes('Allow redacted excerpts'))
+  assert.ok(html.includes('Run morphology hunter'))
+})
+
+test('Morphology discovery shows fenced model prose as transient escaped text', () => {
+  const report = {
+    candidates: [], rounds: 4, scope: { record_count: 2 }, limitations: [],
+    observations: [], probe_failures: [], rejected_hypotheses: [],
+    transient_proposals: [{ candidate_id: 'hunter-fixture',
+      interpretation_untrusted: '<<<UNTRUSTED transient discovery interpretation>>>\n' +
+        'violet glacier <script>not executable</script>\n<<<END UNTRUSTED>>>' }]
+  }
+  const html = render({ tab: 'morphologies', rules: [[undefined, report]] })
+  assert.ok(html.includes('Transient model interpretations (not saved)'))
+  assert.ok(html.includes('violet glacier'))
+  assert.ok(html.includes('&lt;script&gt;not executable&lt;/script&gt;'))
+  assert.ok(!html.includes('<script>not executable</script>'))
+})
+
+test('Morphology discovery handler posts consent and waits for its bounded model budget', async () => {
+  const registered = load()
+  Object.assign(globalThis.__sf, {
+    stateRules: [['hunt', 'morphologies'], ['', '/operator/authorized.jsonl', 4], [false, true, 0]],
+    stateCounts: new Map(), elements: [], restCalls: [],
+    fixture: path => fixture(path, STATUS_RUNNING),
+    restResults: { '/morphologies/discover': { candidates: [], imported_records: [] } }
+  })
+  renderToStaticMarkup(registered.get('page').render())
+  const button = globalThis.__sf.elements.find(element =>
+    element.type === 'button' &&
+    [element.props.children].flat(Infinity).includes('Run morphology hunter'))
+  assert.ok(button)
+  assert.equal(button.props.disabled, false)
+  await button.props.onClick()
+  const requests = globalThis.__sf.restCalls.filter(call => call.path === '/morphologies/discover')
+  assert.equal(requests.length, 1)
+  assert.deepEqual(requests[0].options.body, {
+    path: '/operator/authorized.jsonl', allow_excerpts: true, max_records: 10000, max_rounds: 4
+  })
+  assert.ok(requests[0].options.timeoutMs >= 4 * 120 * 1000)
+})
+
+test('Morphologies tab renders while loading and when the backend is offline', () => {
+  assert.doesNotThrow(() => render({ tab: 'morphologies', mode: 'loading' }))
+  assert.doesNotThrow(() => render({ tab: 'morphologies', mode: 'error' }))
+})
+
+test('Morphology details preserve alternatives and offer an investigator session command', () => {
+  const html = render({ tab: 'morphologies', rules: [[null, 'm1']] })
+  assert.ok(html.includes('A central controller may explain it.'))
+  assert.ok(html.includes('/swarm-forensics session Investigate morphology record m1'))
+  assert.ok(html.includes('sf_get_morphology_candidates'))
+  assert.ok(html.includes('Mark investigating'))
+  assert.ok(html.includes('Mark review complete'))
+  assert.ok(html.includes('Dismiss candidate'))
 })
 
 test('the status chip renders in every state', () => {

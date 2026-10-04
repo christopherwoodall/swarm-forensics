@@ -1,0 +1,13 @@
+[project]
+name = "swarm-forensics-plugin"
+version = "3.0.0"
+description = "Hermes swarm investigations and bounded raw-data pattern discovery."
+requires-python = ">=3.10"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "fastapi>=0.141.1",
+    "httpx>=0.28.1",
+    "ruff>=0.6",
+]

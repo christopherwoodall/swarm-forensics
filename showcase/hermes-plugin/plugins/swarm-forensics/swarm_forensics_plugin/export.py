@@ -152,7 +152,7 @@ def export_all(service, dest_root=None) -> dict:
     with service.db.connect() as conn:
         with open(json_path, "w", encoding="utf-8") as f:
             f.write("{\n")
-            f.write('  "schema": 3,\n')
+            f.write('  "schema": 4,\n')
             f.write(f'  "exported_utc": {json.dumps(db.now())},\n')
 
             counts["iocs"] = _stream_table(conn, f, "iocs")
@@ -187,6 +187,22 @@ def export_all(service, dest_root=None) -> dict:
                 transform=lambda item: dict(
                     item, variables=db.loads(item.get("variables", "[]"), [])
                 )
+            )
+            f.write(",\n")
+
+            counts["morphology_candidates"] = _stream_table(
+                conn,
+                f,
+                "morphology_candidates",
+                order_col="created_utc",
+                transform=lambda item: dict(
+                    item, card_json=db.loads(item.get("card_json", "{}"), {})
+                ),
+            )
+            f.write(",\n")
+
+            counts["morphology_candidate_log"] = _stream_table(
+                conn, f, "morphology_candidate_log"
             )
             f.write("\n}\n")
 

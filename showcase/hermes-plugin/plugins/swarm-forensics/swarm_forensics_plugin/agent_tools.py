@@ -10,11 +10,13 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from . import session_env
 from .analysis import analyze_corpus
+from .morphology import REQUIRED_FIELDS, normalize_candidate_card
 from .safety import (
     CLAIM_LEVELS,
     ENTITY_TYPES,
     LINK_KINDS,
     TERM_CATEGORIES,
+    fence_untrusted,
     screen_content,
     validate_url,
 )
@@ -77,6 +79,76 @@ def sf_get_context(args: dict, service=None, **_: Any) -> str:
         return _json(out)
     except Exception as exc:
         return _err(exc)
+
+
+def sf_get_morphology_candidates(args: dict, service=None, **_: Any) -> str:
+    """List candidate cards or return one card inside an untrusted-data fence."""
+    try:
+        srv = service or get_service()
+        record_id = str(args.get("record_id") or "").strip()
+        if record_id:
+            item = srv.ledger.morphology_candidate(record_id)
+            if not item:
+                return _err("morphology candidate not found")
+            card = normalize_candidate_card(item["card"])[0]
+            field = args.get("field")
+            if field is not None and (
+                not isinstance(field, str) or field not in REQUIRED_FIELDS
+                or field not in card
+            ):
+                return _err("unknown morphology card field")
+            page = args.get("page", 0)
+            if not isinstance(page, int) or isinstance(page, bool) or page < 0:
+                return _err("page MUST be a non-negative integer")
+            value = card if field is None else card[field]
+            card_text = json.dumps(value, ensure_ascii=False, sort_keys=True)
+            card_text = card_text.replace("<<<", "< < <").replace(">>>", "> > >")
+            limit = 12_000
+            start = page * limit
+            if start >= len(card_text):
+                return _err("morphology card page is out of range")
+            has_more = start + limit < len(card_text)
+            return _json({
+                "ok": True,
+                "candidate": {
+                    "record_id": item["id"],
+                    "evidence_strength": item["evidence_strength"],
+                    "review_status": item["review_status"],
+                    "tainted": item["tainted"],
+                },
+                "card_untrusted": (
+                    "<<<UNTRUSTED morphology candidate card>>>\n"
+                    + card_text[start:start + limit] + "\n<<<END UNTRUSTED>>>"
+                ),
+                "field": field,
+                "page": page,
+                "has_more": has_more,
+                "next_page": page + 1 if has_more else None,
+                "truncated": len(card_text) > limit,
+            })
+
+        rows = srv.ledger.list_morphology_candidates(
+            review_status=args.get("review_status"),
+            limit=int(args.get("limit", 20)),
+        )
+        return _json({
+            "ok": True,
+            "candidates": [
+                {
+                    "id": row["id"],
+                    "candidate_label_untrusted": fence_untrusted(
+                        row["candidate_label"], "morphology candidate label", limit=500
+                    ),
+                    "candidate_status": row["candidate_status"],
+                    "evidence_strength": row["evidence_strength"],
+                    "review_status": row["review_status"],
+                    "tainted": row["tainted"],
+                }
+                for row in rows
+            ],
+        })
+    except Exception as exc:
+        return _err(str(exc))
 
 
 def sf_search_index(args: dict, service=None, **_: Any) -> str:
@@ -500,6 +572,35 @@ AGENT_TOOLS: List[Tuple[str, Callable, str, dict, list]] = [
             "include_sources": {
                 "type": "boolean",
                 "description": "Include enabled public indexes (default: true).",
+            },
+        },
+        [],
+    ),
+    (
+        "sf_get_morphology_candidates",
+        sf_get_morphology_candidates,
+        "List imported morphology hypotheses or retrieve one card as untrusted data.",
+        {
+            "record_id": {
+                "type": "string",
+                "description": "Optional internal plugin record ID from the candidate list.",
+            },
+            "field": {
+                "type": "string",
+                "description": "Retrieve one exact card field, such as source_provenance.",
+            },
+            "page": {
+                "type": "integer",
+                "description": "Zero-based 12,000-character page. Follow next_page for more.",
+            },
+            "review_status": {
+                "type": "string",
+                "enum": ["new", "investigating", "resolved", "dismissed"],
+                "description": "Optional status filter when listing candidates.",
+            },
+            "limit": {
+                "type": "integer",
+                "description": "Maximum number of cards to list. Default: 20.",
             },
         },
         [],

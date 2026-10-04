@@ -324,6 +324,37 @@ MIGRATIONS = [
     CREATE INDEX IF NOT EXISTS idx_mirrors_sha ON mirrors(sha256);
     CREATE INDEX IF NOT EXISTS idx_mirrors_hunt ON mirrors(hunt_id);
     """,
+    # Migration 6: preserve morphology candidates without replacing session storage.
+    """
+    CREATE TABLE morphology_candidates(
+        id TEXT PRIMARY KEY,
+        candidate_id TEXT NOT NULL UNIQUE,
+        candidate_label TEXT NOT NULL,
+        candidate_status TEXT NOT NULL CHECK(candidate_status IN (
+            'known_variant','possible_new_morphology','anomaly','weak_lead')),
+        evidence_strength TEXT NOT NULL CHECK(evidence_strength IN (
+            'e0','e1','e2','e3','e4','e5')),
+        card_json TEXT NOT NULL,
+        review_status TEXT NOT NULL DEFAULT 'new' CHECK(review_status IN (
+            'new','investigating','resolved','dismissed')),
+        review_reason TEXT NOT NULL DEFAULT '',
+        tainted INTEGER NOT NULL DEFAULT 0 CHECK(tainted IN (0,1)),
+        created_utc TEXT NOT NULL,
+        updated_utc TEXT NOT NULL
+    );
+    CREATE INDEX idx_morphology_review ON morphology_candidates(review_status, created_utc);
+    CREATE TABLE morphology_candidate_log(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        candidate_record_id TEXT NOT NULL REFERENCES morphology_candidates(id) ON DELETE CASCADE,
+        ts TEXT NOT NULL,
+        from_status TEXT,
+        to_status TEXT NOT NULL CHECK(to_status IN (
+            'new','investigating','resolved','dismissed')),
+        actor TEXT NOT NULL,
+        reason TEXT NOT NULL DEFAULT ''
+    );
+    CREATE INDEX idx_morphology_log ON morphology_candidate_log(candidate_record_id, id);
+    """,
 ]
 
 

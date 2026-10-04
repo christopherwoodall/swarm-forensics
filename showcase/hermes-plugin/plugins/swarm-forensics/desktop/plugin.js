@@ -93,9 +93,9 @@ const api = (path, opts) => rest(path, opts)
 
 const refresh = () => queryClient.invalidateQueries({ queryKey: [ID] })
 
-async function act(path, body, method = 'POST', okMessage) {
+async function act(path, body, method = 'POST', okMessage, requestOptions = {}) {
   try {
-    const out = await api(path, { method, body })
+    const out = await api(path, { method, body, ...requestOptions })
     refresh()
     if (okMessage) host.notify({ kind: 'info', message: okMessage })
     return out
@@ -370,7 +370,7 @@ function HuntPage() {
         h('span', { style: { ...S.mono, color: V.accent, fontWeight: 600 } }, '/swarm-forensics session [goal]'),
         h('span', { style: { ...S.mono, color: V.accent, fontWeight: 600 } }, '/swarm-forensics attach [hunt_id]')),
       h('div', { style: { ...S.dim, fontSize: '0.75rem', marginTop: 4 } },
-        'Available tools: sf_get_context, sf_search_index, sf_record_evidence, sf_propose_ioc, sf_manage_entity, sf_link_entities, sf_triage_item, sf_query_knowledge, sf_spawn_subhunt, sf_attach_hunt.')),
+        'Available tools: sf_get_context, sf_get_morphology_candidates, sf_search_index, sf_record_evidence, sf_propose_ioc, sf_manage_entity, sf_link_entities, sf_triage_item, sf_query_knowledge, sf_spawn_subhunt, sf_attach_hunt.')),
     h('div', { style: S.card },
       h('div', { style: S.row },
         h('span', { style: S.h2 }, 'Activity'),
@@ -1241,11 +1241,208 @@ function SettingsPage() {
             h(Btn, { onClick: () => setConfirmReset(false) }, 'Cancel')))))
 }
 
+// ---------------------------------------------------------------- morphology cards
+
+function MorphologiesPage() {
+  const query = useApi(['morphologies'], '/morphologies?limit=50', 10000)
+  const runtimeSettings = useApi(['dataset-settings'], '/settings', false)
+  const [rawCard, setRawCard] = useState('')
+  const [selected, setSelected] = useState(null)
+  const [inputError, setInputError] = useState('')
+  const [reviewReason, setReviewReason] = useState('')
+  const [reviewError, setReviewError] = useState('')
+  const [datasetPath, setDatasetPath] = useState('')
+  const [fieldMapping, setFieldMapping] = useState({})
+  const [allowExcerpts, setAllowExcerpts] = useState(false)
+  const [discovering, setDiscovering] = useState(false)
+  const [discoveryReport, setDiscoveryReport] = useState()
+  const detail = useApi(
+    ['morphology', selected],
+    `/morphologies/${selected}`,
+    false,
+    Boolean(selected)
+  )
+  const cards = (query.data && query.data.morphologies) || []
+
+  async function importCard() {
+    setInputError('')
+    let card
+    try {
+      card = JSON.parse(rawCard)
+    } catch {
+      setInputError('Enter a valid JSON candidate card.')
+      return
+    }
+    const result = await act('/morphologies', card, 'POST', 'Candidate card imported')
+    if (result) {
+      setRawCard('')
+      setSelected(result.id)
+    }
+  }
+
+  async function discoverDataset() {
+    setDiscovering(true)
+    setDiscoveryReport(null)
+    try {
+      const timeoutSeconds = Number(runtimeSettings.data?.values?.['model.timeout_seconds']) || 120
+      const result = await act('/morphologies/discover', {
+        path: datasetPath.trim(),
+        allow_excerpts: allowExcerpts,
+        max_records: 10000,
+        max_rounds: 4,
+        ...Object.fromEntries(Object.entries(fieldMapping).filter(([, value]) => value.trim()))
+      }, 'POST', 'Morphology discovery finished', { timeoutMs: (4 * timeoutSeconds + 60) * 1000 })
+      if (result) {
+        setDiscoveryReport(result)
+        if (result.imported_records.length) setSelected(result.imported_records[0].id)
+      }
+    } finally {
+      setDiscovering(false)
+    }
+  }
+
+  const current = detail.data
+  async function reviewCandidate(status) {
+    setReviewError('')
+    if (!reviewReason.trim()) {
+      setReviewError('Enter a reason for this review transition.')
+      return
+    }
+    const result = await act(
+      `/morphologies/${current.id}/review`,
+      { status, reason: reviewReason.trim() },
+      'POST',
+      'Morphology review updated'
+    )
+    if (result) setReviewReason('')
+  }
+
+  return h('div', { style: S.col },
+    h(ErrorNote, { q: query }),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Discover from raw data'),
+      h('div', { style: S.dim },
+        'Inspect raw records, propose unfamiliar patterns, and measure targeted probes. No keyword list is required.'),
+      h('label', null, 'Dataset path', h('input', {
+        style: S.input, value: datasetPath, placeholder: '/path/to/dataset.jsonl.gz',
+        disabled: discovering, onChange: event => setDatasetPath(event.target.value)
+      })),
+      h('div', { style: S.dim },
+        'Use JSONL, NDJSON, CSV, or gzip variants. Optional field mappings use JSON Pointer paths.'),
+      ...['content', 'actor', 'artifact', 'operation', 'time'].map(name => {
+        const key = `${name}_field`
+        return h('label', { key }, `${name} field`, h('input', {
+          style: S.input, value: fieldMapping[key] || '', placeholder: `/${name}`,
+          disabled: discovering,
+          onChange: event => setFieldMapping(previous => ({ ...previous, [key]: event.target.value }))
+        }))
+      }),
+      h('label', { style: S.row }, h('input', {
+        type: 'checkbox', checked: allowExcerpts, disabled: discovering,
+        onChange: event => setAllowExcerpts(event.target.checked)
+      }), 'Allow redacted excerpts to the configured Hermes model'),
+      h(Btn, { disabled: discovering || !allowExcerpts || !datasetPath.trim(),
+        onClick: discoverDataset }, discovering ? 'Discovering…' : 'Run morphology hunter'),
+      h('div', { style: S.dim },
+        'Limit: 10,000 records and four model rounds. Only measurements and provenance are saved.'),
+      discoveryReport && h('div', { style: S.col },
+        h('div', null,
+          `${discoveryReport.candidates.length} candidates; ${discoveryReport.rounds} model rounds; ` +
+          `${discoveryReport.scope.record_count} scanned records.`),
+        ...discoveryReport.limitations.map((text, index) =>
+          h('div', { key: index, style: S.dim }, text)),
+        ...(discoveryReport.transient_proposals || []).map(proposal =>
+          h('details', { key: proposal.candidate_id },
+            h('summary', null, 'Transient model interpretations (not saved)'),
+            h('div', { style: S.dim }, 'Keep this interpretation in the current view only. It is unverified.'),
+            h('pre', { style: { whiteSpace: 'pre-wrap', userSelect: 'text' } },
+              proposal.interpretation_untrusted))),
+        h('details', null, h('summary', null, 'Measurements and rejected hypotheses'),
+          h('pre', { style: { whiteSpace: 'pre-wrap', userSelect: 'text' } }, JSON.stringify({
+            observations: discoveryReport.observations,
+            probe_failures: discoveryReport.probe_failures,
+            rejected_hypotheses: discoveryReport.rejected_hypotheses
+          }, null, 2))))),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, 'Import candidate card'),
+      h('div', { style: S.dim },
+        'Paste one structured card from the morphology pipeline. Import does not start a hunt.'),
+      h('textarea', {
+        style: { ...S.input, minHeight: 150, resize: 'vertical', fontFamily: 'ui-monospace, monospace' },
+        value: rawCard,
+        placeholder: 'Paste candidate card JSON',
+        onChange: event => setRawCard(event.target.value)
+      }),
+      inputError && h('div', { style: { color: V.accent } }, inputError),
+      h('div', { style: S.row },
+        h(Btn, { disabled: !rawCard.trim(), onClick: importCard }, 'Import candidate card'),
+        h('span', { style: S.dim }, 'Candidates remain hypotheses until investigators verify them.'))),
+    h('div', { style: S.card },
+      h('div', { style: S.h2 }, `Morphology candidates (${cards.length})`),
+      cards.length
+        ? h('div', { style: S.col }, cards.map(card => h('button', {
+          key: card.id,
+          type: 'button',
+          onClick: () => setSelected(card.id),
+          style: { ...S.row, ...S.input, width: '100%', textAlign: 'left', cursor: 'pointer' }
+        },
+        h('span', { style: { flex: 1 } }, card.candidate_label),
+        h(Chip, null, card.candidate_status),
+        h(Chip, null, card.evidence_strength),
+        h(Chip, null, card.review_status),
+        card.tainted ? h(Chip, { strong: true }, 'tainted') : null,
+        h('span', { style: S.mono }, card.id))))
+        : h(Empty, null, 'No morphology candidates imported yet.')),
+    current && h('div', { style: S.card },
+      h('div', { style: S.row },
+        h('span', { style: S.h2 }, current.card.candidate_label),
+        h(Chip, null, current.card.evidence_strength),
+        current.tainted ? h(Chip, { strong: true }, 'tainted source text') : null),
+      h('div', { style: S.dim },
+        'This imported card is unverified. Review alternatives and missing evidence before investigation.'),
+      h('div', { style: S.dim },
+        `Review status: ${current.review_status}. This tracks workflow; it does not verify a morphology.`),
+      h('input', {
+        style: S.input,
+        value: reviewReason,
+        placeholder: 'Reason for review status',
+        onChange: event => setReviewReason(event.target.value)
+      }),
+      reviewError && h('div', { style: { color: V.accent } }, reviewError),
+      h('div', { style: S.row },
+        current.review_status !== 'investigating' && h(Btn, {
+          disabled: !reviewReason.trim(), onClick: () => reviewCandidate('investigating')
+        }, 'Mark investigating'),
+        current.review_status !== 'resolved' && h(Btn, {
+          disabled: !reviewReason.trim(), onClick: () => reviewCandidate('resolved')
+        }, 'Mark review complete'),
+        current.review_status !== 'dismissed' && h(Btn, {
+          disabled: !reviewReason.trim(), onClick: () => reviewCandidate('dismissed')
+        }, 'Dismiss candidate'),
+        current.review_status !== 'new' && h(Btn, {
+          disabled: !reviewReason.trim(), onClick: () => reviewCandidate('new')
+        }, 'Reopen review')),
+      current.review_history && current.review_history.length > 0 && h('div', { style: S.col },
+        h('div', { style: S.h2 }, 'Review history'),
+        current.review_history.map((entry, index) => h('div', {
+          key: `${entry.ts}-${index}`,
+          style: { ...S.mono, borderTop: `1px solid ${V.line}`, paddingTop: 4 }
+        }, `${entry.from_status || 'new'} → ${entry.to_status}: ${entry.reason} (${entry.actor})`))),
+      h('div', { style: S.dim },
+        'Start an operator-directed chat hunt. The investigator can retrieve this fenced card with sf_get_morphology_candidates.'),
+      h('div', { style: S.mono },
+        `/swarm-forensics session Investigate morphology record ${current.id}`),
+      h('pre', {
+        style: { ...S.mono, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', maxHeight: 420, overflow: 'auto' }
+      }, JSON.stringify(current.card, null, 2))))
+}
+
 // ---------------------------------------------------------------- shell
 
 const TABS = [
   ['hunt', 'Hunt'],
   ['knowledge', 'Agents, swarms, campaigns'],
+  ['morphologies', 'Morphologies'],
   ['evidence', 'Evidence'],
   ['iocs', 'IOCs'],
   ['urls', 'URLs'],
@@ -1259,6 +1456,7 @@ function Page() {
   const pages = {
     hunt: HuntPage,
     knowledge: KnowledgePage,
+    morphologies: MorphologiesPage,
     evidence: EvidencePage,
     iocs: IocsPage,
     urls: UrlsPage,

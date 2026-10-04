@@ -261,9 +261,10 @@ class AgentToolsTests(unittest.TestCase):
 
         ctx = MockCtx()
         register_tools(ctx)
-        self.assertEqual(len(registered), 12)
+        self.assertEqual(len(registered), 13)
         names = {r["name"] for r in registered}
         self.assertIn("sf_get_context", names)
+        self.assertIn("sf_get_morphology_candidates", names)
         self.assertIn("sf_search_index", names)
         self.assertIn("sf_record_evidence", names)
         self.assertIn("sf_mirror_url", names)

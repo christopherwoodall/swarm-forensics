@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 from fastapi import APIRouter, Body, HTTPException, Query
+from fastapi.responses import JSONResponse
 
 _PLUGIN_DIR = Path(__file__).resolve().parents[1]
 if str(_PLUGIN_DIR) not in sys.path:
@@ -19,8 +20,14 @@ if str(_PLUGIN_DIR) not in sys.path:
 from swarm_forensics_plugin.entities import EntityError  # noqa: E402
 from swarm_forensics_plugin.export import export_all  # noqa: E402
 from swarm_forensics_plugin.extract import extract_indicators  # noqa: E402
+from swarm_forensics_plugin.hermes import HermesUnavailable  # noqa: E402
 from swarm_forensics_plugin.hunt import HuntRefused  # noqa: E402
 from swarm_forensics_plugin.iocs import IocError  # noqa: E402
+from swarm_forensics_plugin.morphology import (  # noqa: E402
+    REVIEW_STATUSES,
+    MorphologyCardError,
+    MorphologyConflict,
+)
 from swarm_forensics_plugin.prompt_registry import PromptError  # noqa: E402
 from swarm_forensics_plugin.registry import RegistryError  # noqa: E402
 from swarm_forensics_plugin.schedule import ScheduleError  # noqa: E402
@@ -144,6 +151,68 @@ def lead_close(lead_id: int, body: dict = Body(default_factory=dict)):
     if not _run(_svc().ledger.close_lead, lead_id, status=status):
         raise HTTPException(404, "not found")
     return {"closed": True}
+
+
+@router.post("/morphologies")
+def morphology_import(body: dict = Body(...)):
+    """Import one validated candidate card without starting a hunt."""
+    service = _svc()
+    try:
+        candidate, created = service.ledger.add_morphology_candidate(body)
+    except MorphologyConflict as exc:
+        raise HTTPException(409, str(exc)) from None
+    except MorphologyCardError as exc:
+        raise HTTPException(400, str(exc)) from None
+    if candidate is None:
+        raise HTTPException(500, "candidate import returned no record")
+    return JSONResponse(
+        status_code=201 if created else 200,
+        content={
+            "id": candidate["id"],
+            "candidate_id": candidate["candidate_id"],
+            "created": created,
+            "tainted": candidate["tainted"],
+            "review_status": candidate["review_status"],
+        },
+    )
+
+
+@router.post("/morphologies/discover")
+def morphology_discover(body: dict = Body(...)):
+    """Discover hypotheses from an operator-selected raw dataset."""
+    options = {key: body[key] for key in (
+        "content_field", "actor_field", "artifact_field", "operation_field", "time_field",
+        "max_records", "max_rounds",
+    ) if key in body}
+    try:
+        return _run(_svc().discover_dataset, body.get("path"),
+                    allow_excerpts=body.get("allow_excerpts", False), **options)
+    except HermesUnavailable as exc:
+        raise HTTPException(503, str(exc)) from None
+
+
+@router.get("/morphologies")
+def morphologies(review_status: str | None = None, limit: int = Query(50, ge=1, le=200)):
+    return {"morphologies": _run(_svc().ledger.list_morphology_candidates,
+                                  review_status, limit)}
+
+
+@router.get("/morphologies/{record_id}")
+def morphology_one(record_id: str):
+    return _found(_svc().ledger.morphology_candidate(record_id))
+
+
+@router.post("/morphologies/{record_id}/review")
+def morphology_review(record_id: str, body: dict = Body(...)):
+    status = body.get("status")
+    if not isinstance(status, str) or status not in REVIEW_STATUSES:
+        raise HTTPException(400, "invalid morphology review status")
+    return _found(_run(
+        _svc().ledger.review_morphology_candidate,
+        record_id,
+        status,
+        body.get("reason"),
+    ))
 
 
 # -- evidence and IOCs --------------------------------------------------------

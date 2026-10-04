@@ -1,10 +1,10 @@
 .DEFAULT_GOAL := help
-.PHONY: help test lint check install uninstall js-deps
+.PHONY: help setup lock test lint check install uninstall js-deps hunter hunter-test hunter-ui-test
 
 # Hermes swarm-forensics plugin lane. Run `make help` for targets.
 # The root Makefile delegates here (hermes-test, hermes-lint, hermes-install).
 
-UV_PROJECT := ../..
+UV_PROJECT := .
 export UV_LINK_MODE := copy
 
 PLUGIN_ID  := swarm-forensics
@@ -37,6 +37,21 @@ $(JS_DEPS)/node_modules/react-dom/package.json: tests/package.json
 	npm install --prefix $(JS_DEPS) --no-audit --no-fund
 
 js-deps: $(JS_DEPS)/node_modules/react-dom/package.json ## Install the test-only JS dependencies (react) under ~/.cache
+
+setup: js-deps ## Install plugin development dependencies
+	uv sync --project $(UV_PROJECT)
+
+lock: ## Resolve plugin development dependencies
+	uv lock --project $(UV_PROJECT)
+
+hunter: ## Survey or discover raw-data patterns with ARGS
+	PYTHONPATH=$(PLUGIN_SRC) uv run --project $(UV_PROJECT) python -m swarm_forensics_plugin.dataset_hunter $(ARGS)
+
+hunter-ui-test: js-deps ## Test morphology rendering and request handlers
+	SF_JS_DEPS=$(JS_DEPS) node --test tests/render.test.mjs
+
+hunter-test: ## Test morphology discovery and migration compatibility offline
+	PYTHONPATH=tests uv run --project $(UV_PROJECT) python -m unittest test_dataset_hunter test_hunter_migration test_morphology_handoff
 
 test: js-deps ## Run the offline tests: Python engine and API, JS render of the desktop page
 	uv run --project $(UV_PROJECT) python -m unittest discover -s tests -p "test_*.py"

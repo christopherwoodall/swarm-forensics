@@ -1,80 +1,52 @@
 # Status: Swarm Forensics
 
-Last verified: 2026-10-01.
-Branch: `colette-help-peer`.
-Base revision: `79b1840702591f0fd5253d6b3752264b635d3904`.
-Authority: verified local checkpoint, not an implementation specification.
+Last verified: 2026-10-04.
+Branch: `morphology-hunter-integration`.
+Integration base: `df265db`.
+Authority: verified local checkpoint, not a deployment receipt.
 
 ## Verified checkpoint
 
-- `make help`: listed the existing project commands.
-- `make test`: passed all 16 offline tests.
-- `make lint`: passed Ruff checks on Python source.
-- `make data-sample`: wrote three synthetic tables under `data/raw/sample/`.
-- Streaming inspection: parsed every sample line as JSON.
-- Sample records: 3 agent goals, 20 chat messages, and 50 events.
-- Ignore verification: all three sample files are excluded from Git.
-- Documentation checker: seven project documents checked, with no findings. Unrelated logs were excluded.
-- Module decision logs: core contains three entries; ingest contains one.
-- Local `HEAD` and `main` remain at the base revision above.
+- `make test`: 189 plugin Python tests, 39 plugin JavaScript tests, 91 Discord Swarm tests, and 7 synchronization tests passed.
+- `make lint`: plugin Python checks and maintained JavaScript syntax checks passed.
+- `make check`: plugin manifests, Python compilation, and ESM syntax passed.
+- Main migrations 1–5 retain their original fingerprint. Migration 6 adds morphology candidates and review history.
+- Synthetic v5 upgrade preserves session bindings, corpus observations, and mirror metadata.
+- Unknown-pattern, adaptive-probe, transient-inspection, and exact API read-back tests passed.
+- Discovery-generated cards, SQLite state, CLI stdout, and saved reports exclude the synthetic source-copy canary.
+- Receiver tests verify key redaction, collision rejection, taint screening, safe field selectors, and page-boundary reconstruction.
+- Held-response tests reject discovery persistence after reset. Two-thread tests preserve review transition history.
+- CLI tests refuse exact, symlink, hardlink, and directory-member source-output collisions.
+- Single-page, multi-page, and full-card tests preserve short-assignment JSON syntax.
+- Jesse source hashes match the imported revision.
 
-The bootstrap changed documentation only.
-No commit, push, or real dataset download was performed.
-No browser collection was restarted to complete this documentation pass.
+Final verification used a fresh Python environment and cached React dependencies.
+Discord Swarm dependencies were installed from the offline npm cache.
+Ambient Hermes session variables were removed for isolated tests.
+Default root setup, test, lint, and check targets passed without setup suppression.
 
 ## Working now
 
-- Acquire non-image AI Village files through the existing downloader.
-- Inspect dataset metadata with `make data-info`, after configuring approved access.
-- Generate synthetic acquisition samples offline.
-- Find project discussion and evidence limits in [PROJECT_BRIEF.md](PROJECT_BRIEF.md).
-- Find setup instructions and the authority map in [README.md](README.md).
+- Session-native hunts, chat narration, corpus observation, and text mirrors remain available.
+- Morphologies provides authorized raw-data discovery and audited candidate intake.
+- Root Make targets delegate to the showcase plugin and Jesse experiment.
+- The plugin owns its development manifest and lockfile.
 
-The downloader's network path was not exercised during this pass.
-Source inspection and offline tests support its documented interfaces.
-The existing 3D mocks use synthetic data and external CDN imports.
-Their browser behavior was not checked during this bootstrap.
+## Incomplete or unverified
 
-## Incomplete or broken
+- Live Hermes desktop interaction is unverified. Render and request-handler tests use synthetic fixtures.
+- Discovery measures recurrence, not verified coordination, causal dependence, or actor identity.
+- Sequence shortlists are frequency-capped before null comparison.
+- Joint support across observations and novelty remain unmeasured.
+- Final-round probe requests can execute without another model feedback round.
+- PostgreSQL integration and Jesse browser suites were not run during this integration.
+- The generic documentation audit reports three inherited format findings: a template-token example, Approved status, and the spec index.
+- Two independent reviews found six blockers. All fixes pass regression tests. The owner waived further review for submission.
+- GitHub write authentication remains unavailable at the last push preflight.
 
-- No unified forensic schema, timeline parser, or graph pipeline is implemented.
-- No anomaly analysis engine or Swarmtraces parser is implemented.
-- No real-data graph integration is verified.
-- No Hermes swarm-search plugin is implemented.
-- No FairyStack or Discord integration was inspected or configured.
-- Existing test and lint targets do not exercise the HTML/JavaScript mocks.
-- Referenced egress-scan and visualization-bundle attachments remain unreviewed.
-- Saved chat snapshots do not establish complete conversation coverage.
-- Prior analysis results are attributed reports, not results reproduced here.
+## Next transition
 
-The earlier remote fetch failed because GitHub authentication was unavailable.
-This bootstrap uses local `main`; newer remote changes remain unverified.
-
-## Active work
-
-The documentation bootstrap is complete.
-No implementation slice has been accepted in this pass.
-The project brief separates research interests, product ideas, and collaboration experiments.
-Existing active invariants remain unchanged.
-
-## Next useful action
-
-Select one initial demonstration and its evidence source.
-Read the open decisions in [PROJECT_BRIEF.md](PROJECT_BRIEF.md#open-decisions).
-Then define a bounded implementation specification before building the forensic pipeline.
-
-The temporal coordination explorer is a discussed direction, not an approved construction task.
-The agent-coordination experiment is separate from the forensic deliverable.
-
-## Re-entry notes
-
-Run `make setup`, `make test`, `make lint`, and `make data-sample` from the repository root.
-Start with synthetic data; real downloads require explicit user approval.
-
-During validation, `uv sync` removed the lockfile's `exclude-newer` options.
-That unrelated lockfile change was restored after inspecting its diff.
-Review future lockfile changes rather than including validation churn in documentation work.
-
-The pre-existing untracked `hermes-log/` directory was left untouched.
-No raw conversation, screenshot, private invitation, or credential was added by this bootstrap.
-Changes remain uncommitted on `colette-help-peer` for review and selective integration.
+Authenticate GitHub with repository write access.
+Publish the integration branch. The owner controls the submission merge.
+Required GitHub checks MUST pass before merge.
+Read back the merged commit before claiming remote completion.
