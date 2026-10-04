@@ -1,0 +1,12 @@
+{
+  "kind": "collaborative-native-agent-demo",
+  "title": "Bacon’s Space Station Escape",
+  "created_at": "2026-10-04",
+  "coordination": "Three bounded native Codex workers independently designed puzzles; the primary agent integrated and browser-tested the game.",
+  "contributors": [
+    {"worker": "airlock_puzzle", "contribution": "Emergency Bacon Override puzzle"},
+    {"worker": "reactor_puzzle", "contribution": "Emergency Bacon Reactor puzzle"},
+    {"worker": "launch_puzzle", "contribution": "Emergency Breakfast Launch puzzle"}
+  ],
+  "external_discord_agents": false
+}
