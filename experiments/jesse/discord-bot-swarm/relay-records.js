@@ -1,3 +1,4 @@
+import {DEFAULT_CHAT,DEFAULT_PERSONALITY} from './frontend/bot-defaults.js';
 import crypto from 'node:crypto';
 // Verification creates a durable owner record before installation or channel setup.
 export async function saveVerifiedBot(pool,vault,owner,identity,token){
@@ -14,7 +15,7 @@ export async function saveVerifiedBot(pool,vault,owner,identity,token){
    record={id:existing.id,config:existing.config,bots:[{name:identity.name,bot_id:existing.bot_id}]};
   }
   else{
-   const id=crypto.randomUUID(),config={name:identity.name,setupStage:'invite'};
+   const id=crypto.randomUUID(),config={name:identity.name,setupStage:'invite',chat:{...DEFAULT_CHAT},personality:DEFAULT_PERSONALITY};
    const secret=await vault.encrypt(owner,`discord:${id}`,token);
    await client.query('INSERT INTO swarms(id,owner,config) VALUES($1,$2,$3)',[id,owner,config]);
    await client.query('INSERT INTO bots VALUES($1,$2,$3,$4,$5,$6,$7)',[crypto.randomUUID(),id,identity.id,identity.name,'unassigned',secret,0]);
