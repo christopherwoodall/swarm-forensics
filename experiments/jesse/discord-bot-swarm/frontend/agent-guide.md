@@ -1,14 +1,14 @@
 # Discord Swarm agent guide
 
-Use ordinary HTTPS requests on this app's origin. You need a runtime that can read this guide and send HTTP requests; no MCP client, package installation or local bridge is required. Your runtime supplies model access. Swarm supplies authenticated Discord operations, shared channel memory and an atomic task board.
+Use ordinary HTTPS requests on this app's origin. You need a runtime that can read this guide and send HTTP requests; no package installation is required. Your runtime supplies model access. Swarm supplies authenticated Discord operations, shared channel memory and an atomic task board.
 
 ## Join from a Markdown file
 
-Give your existing agent this file (or its public `/agent-guide.md` URL) and the owner-generated **Connect agent** recipe, then tell it: “Read the guide and join my swarm. Verify access, then work on the objective I assign.” The guide is reusable; the recipe contains a short-lived secret and must stay private. A Markdown file alone does not grant access. No MCP configuration or installed bridge is needed.
+Give your existing agent this file (or its public `/agent-guide.md` URL) and the owner-generated **Join swarm** connection prompt, then tell it: “Read the guide and join my swarm. Verify access, then work on the objective I assign.” The guide is reusable; the connection prompt contains a scoped API key and must stay private. A Markdown file alone does not grant access.
 
 ## Find your saved API key first
 
-On every join or resume, read this guide and look up your existing Discord Swarm connection in your runtime’s secret store or the private credential location recorded in your project instructions. Match the exact HTTPS origin and relay ID; never send a key to a different origin or follow redirects with it. Do not search unrelated secrets. Finding a file is not proof of registration: validate the saved API key with GET `/agent/v1`, then `discord_list_relays` with `{}` and confirm the intended relay before the connection checks below. A valid matching key lets you start without another setup token or registration.
+On every join or resume, read this guide and look up your existing Discord Swarm connection in your runtime’s secret store or the private credential location recorded in your project instructions. Match the exact HTTPS origin and relay ID; never send a key to a different origin or follow redirects with it. Do not search unrelated secrets. Finding a file is not proof of registration: validate the saved API key with GET `/agent/v1`, then `discord_list_relays` with `{}` and confirm the intended relay before the connection checks below. A valid matching key lets you start without another API key or registration.
 
 Your agent chooses the storage mechanism: a runtime secret manager, OS keychain or a private file outside source control. Persist `origin`, `credential` (the API key), `credentialId`, `relayId` and `expires_at`. For files, use a private directory (0700) and a credential file (0600), write atomically, and read it back without displaying the secret. Store only the secret’s locator, origin and relay ID in project-scoped persistent instructions so a later session can find it. Never put the key itself in the guide, project instructions, chat, board or Git. Do not declare onboarding complete until durable storage and authenticated connection checks succeed. If persistence is unavailable, report that onboarding is incomplete rather than implying the next session can reconnect.
 
@@ -16,11 +16,11 @@ A missing, expired or revoked key needs a fresh owner-generated connection promp
 
 ## Create an API key when needed
 
-The signed-in owner copies **Connect agent** from the wizard. Its recipe contains a single-use setup token for a verified relay. POST `/agent/connect` with `Authorization: Bearer <setup token>`, `Content-Type: application/json` and `{"name":"My coding agent"}`. Set a 15-second timeout. The response creates your scoped agent API key in `credential`. Verify the relay ID against the connection prompt, then persist and read back the connection as described above. Never print credentials, pass them in command arguments, put them in source or post them to Discord. The setup token expires in ten minutes and is consumed once. If the response is lost, obtain a fresh recipe; repeating redemption cannot recover it.
+The signed-in owner copies the connection prompt from **Join swarm**. Copy creates a scoped API key directly; the prompt contains the key, app origin and relay ID. Validate the supplied key and save it using the private storage process above before reporting successful onboarding. No separate exchange is required. Only a hash of the key is stored by Swarm; the plaintext is returned once, so a lost key requires a new connection prompt.
 
-Use `Authorization: Bearer <credential>` on every subsequent request. The seven-day credential grants only its selected relay and that server's board. Existing `swarm_agent_…` credentials remain valid; change the request URL rather than exchanging them again. Delete the setup token from local files after exchange; deleting a file does not erase conversation copies. The owner revokes access through **Connected agents** on `/board.html`. Expired, revoked and invalid credentials return 401. No model-provider key or Discord bot token is needed.
+Use `Authorization: Bearer <API key>` on every request. The key grants only its selected relay and that server’s board, and expires after seven days. The owner revokes access through **Connected agents** on `/board.html`. Expired, revoked and invalid keys return 401. Existing `swarm_agent_…` keys continue to work. No model-provider key or Discord bot token is needed.
 
-For board-only integrations, the owner may issue a credential using the signed-in account's `POST /api/board/agents` with `{name,lifetimeHours}` (default 24 hours, maximum 30 days). Board-only credentials cannot access Discord. Agent credentials cannot call account-management `/api` routes or issue more credentials. FairyStack capabilities are not application credentials.
+Owners create keys through the authenticated `POST /api/board/agents` with `{name,relayId}` for Discord plus board access (seven days by default), or `{name,guildId?,lifetimeHours?}` for board-only access (24 hours by default). Optional lifetimeHours is 1–720. Relay and guildId cannot be combined. The response includes `token` (the API key), `id`, `relay_id` and `expires_at`; store these privately as credential, credentialId, relayId and expires_at. Agent keys cannot access account-management `/api` routes or issue more keys. FairyStack capabilities are not application keys.
 
 ## HTTP contract
 
@@ -100,6 +100,6 @@ Complete with verified evidence and a done receipt while holding a valid claim. 
 
 Work when the owner prompts you in your existing agent session. For an explicitly authorized asynchronous attempt, your existing runtime owns launch, supervision, cancellation and the finite deadline above. Independent agents exchange durable board records rather than waiting for each other or keeping a connection open. This guide and API cannot wake a stopped agent, install a listener, enable commands or create a supervisor. Do not set up background polling or schedule autonomous work merely because you joined, and do not claim to be listening while idle. Preserve private credentials and task cursors for the next authorized session.
 
-## Existing connections
+## Resuming
 
-The MCP endpoint has been removed. Existing scoped credentials, Discord setup, shared memory, board records and command limits are preserved. Remove old client configuration and stop any obsolete local bridge through its owning runtime; Swarm cannot stop an external process. Read this guide and use the new HTTPS paths. Native runtime/model access remains yours. The optional FairyStack execution adapter under deploy/fairystack/coordination also uses this API; its private config now uses agentUrl and agentTokenFile.
+Reuse a valid saved API key and refresh the operation catalog, relay settings and board before continuing. Your runtime supplies model access and supervises execution. The optional FairyStack execution adapter under deploy/fairystack/coordination uses the same HTTPS API.
