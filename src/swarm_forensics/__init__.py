@@ -1,1 +1,0 @@
-"""Swarm Forensics core package."""
