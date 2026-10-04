@@ -1,0 +1,289 @@
+# Pattern database findings
+
+## url_templates (top 20)
+- 4685x `https://civilrightsdata.ed.gov/api/v1.0/getstateestimation?Measure_Id={int}&State_Id={int}&survey_Year_Key={int}`
+- 3179x `https://jqp.vercel.app/api/v0?jq={long}&url={url}`
+- 2203x `https://civilrightsdata.ed.gov/api/v1.0/getstateestimation?Measure_Id={int}&State_Id={int}&survey_Year_Key={int}&zz={text}`
+- 1742x `https://civilrightsdata.ed.gov/api/v1.0/getstateestimation?Measure_Id={int}&State_Id={int}&survey_Year_Key={int}&zzbulk={text}`
+- 1456x `https://www.kansasmemory.gov/item/{id}`
+- 1393x `https://civilrightsdata.ed.gov/api/v1.0/getstateestimation?Measure_Id={int}&State_Id={int}&prepnonce={text}&survey_Year_Key={int}`
+- 925x `https://wikiservice.at/dse/wiki.cgi?action={text}&dirq={int}&id={text}&lang={int}`
+- 744x `https://civilrightsdata.ed.gov/api/v1.0/getstateestimation?Measure_Id={int}&State_Id={int}&survey_Year_Key={int}&zz={oai_tag}`
+- 675x `https://wikiservice.at/dse/wiki.cgi?action={text}&dz={int}&id={text}&lang={int}`
+- 650x `https://wikiservice.at/dse/wiki.cgi?action={text}&id={text}&rapid={int}`
+- 555x `https://wikiservice.at/dse/wiki.cgi?action={text}&id={text}&lang={int}&pfast={int}`
+- 552x `https://jqp.vercel.app/api/v0?jq={text}&url={url}`
+- 520x `https://www.sec.gov/files/county.json`
+- 480x `https://wikiservice.at/dse/wiki.cgi?action={text}&id={text}&lang={int}&mself={int}`
+- 453x `https://api.datausa.io/tesseract/data.jsonrecords?cube={text}&drilldowns={text}&include={long}&measures={text}`
+- 437x `https://civilrightsdata.ed.gov/api/v1.0/getstateestimation?Measure_Id={text}&State_Id={int}&survey_Year_Key={int}&zzbulk={text}`
+- 420x `https://wikiservice.at/dse/wiki.cgi?action={text}&id={text}&jqnew={int}&lang={int}`
+- 413x `https://wikiservice.at/dse/wiki.cgi?action={long}`
+- 372x `https://wikiservice.at/dse/wiki.cgi?action={text}&id={text}&lang={int}&uniq={int}`
+- 345x `https://reportcard.msde.maryland.gov/datadownloads/filedownload/{id}`
+
+## relay_chains (top 20)
+- 1079x jqp.vercel.app > www.investor.gov
+- 708x jqp.vercel.app > www.sec.gov
+- 646x jqp.vercel.app > md.succ.ai > www.sec.gov
+- 509x md.succ.ai > www.sec.gov
+- 389x jqp.vercel.app > allorigins.hexlet.app
+- 296x allorigins.hexlet.app > www.sec.gov
+- 242x r.jina.ai > www.sec.gov
+- 205x md.succ.ai > www.investor.gov
+- 142x jqp.vercel.app > allorigins.hexlet.app > www.sec.gov
+- 141x jqp.vercel.app > code.highcharts.com
+- 111x jqp.vercel.app > vanderbi.lt > www.sec.gov
+- 102x jqp.vercel.app > vanderbi.lt
+- 100x r.jina.ai > www.investor.gov
+- 96x webcrawlerapi.com > md.succ.ai
+- 67x markdown.new > www.investor.gov
+- 66x jqp.vercel.app > r.jina.ai > www.sec.gov
+- 62x jqp.vercel.app > md.succ.ai
+- 61x md.dhr.wtf > www.investor.gov
+- 60x pure.md > md.succ.ai
+- 57x webcrawlerapi.com > www.investor.gov
+
+## P(next hop | current hop)
+- P(www.sec.gov | md.succ.ai) = 0.82 (1193/1447)
+- P(www.investor.gov | jqp.vercel.app) = 0.28 (1089/3846)
+- P(www.sec.gov | jqp.vercel.app) = 0.19 (717/3846)
+- P(md.succ.ai | jqp.vercel.app) = 0.18 (709/3846)
+- P(allorigins.hexlet.app | jqp.vercel.app) = 0.14 (551/3846)
+- P(www.sec.gov | allorigins.hexlet.app) = 0.75 (464/620)
+- P(www.sec.gov | r.jina.ai) = 0.56 (314/564)
+- P(vanderbi.lt | jqp.vercel.app) = 0.06 (213/3846)
+- P(www.investor.gov | md.succ.ai) = 0.15 (210/1447)
+- P(www.investor.gov | r.jina.ai) = 0.31 (173/564)
+- P(code.highcharts.com | jqp.vercel.app) = 0.04 (141/3846)
+- P(www.sec.gov | vanderbi.lt) = 1.00 (128/128)
+- P(md.succ.ai | webcrawlerapi.com) = 0.45 (96/212)
+- P(www.investor.gov | markdown.new) = 0.26 (80/302)
+- P(api.cors.lol | jqp.vercel.app) = 0.02 (77/3846)
+
+## param_grammars: P(param | host)
+- civilrightsdata.ed.gov (12506): survey_Year_Key 0.98, Measure_Id 0.97, State_Id 0.96, zz 0.28, zzbulk 0.17, prepnonce 0.11
+- wikiservice.at (6690): action 0.98, id 0.92, lang 0.72, uniq 0.18, dirq 0.14, dz 0.10
+- jqp.vercel.app (3853): url 1.00, jq 0.99, _ 0.01, zx 0.00, debug 0.00, foo 0.00
+- www.sec.gov (2279): _format 0.31, z 0.16, download 0.06, _ 0.06, x 0.06, q 0.05
+- api.datausa.io (1691): cube 1.00, drilldowns 0.93, measures 0.93, include 0.91, locale 0.39, filters 0.19
+- md.succ.ai (811): mode 0.68, max_tokens 0.56, url 0.19, x 0.08, format 0.02, fresh 0.01
+- allorigins.hexlet.app (436): url 1.00, x 0.00, a 0.00, callback 0.00, pretty 0.00
+- jsonhero.io (362): path 1.00
+
+## nonce_templates
+- 925x cachebust_int in `dirq` e.g. `1310019`
+- 846x cachebust_int in `uniq` e.g. `98174`
+- 747x zz_oai in `zz` e.g. `oai17816846804506724`
+- 675x cachebust_int in `dz` e.g. `560938`
+- 650x cachebust_int in `rapid` e.g. `19990126`
+- 555x cachebust_int in `pfast` e.g. `1380006`
+- 480x cachebust_int in `mself` e.g. `880012`
+- 431x cachebust_int in `max_tokens` e.g. `3000`
+- 420x cachebust_int in `jqnew` e.g. `1300001`
+- 382x hex16 in `zz` e.g. `1781639035965977052`
+- 345x cachebust_int in `z` e.g. `858895245`
+- 323x epoch_ns in `zz` e.g. `1781639035965977052`
+- 160x cachebust_int in `zmd` e.g. `953975`
+- 135x cachebust_int in `year` e.g. `2023`
+- 129x cachebust_int in `Year` e.g. `2022`
+- 128x cachebust_int in `selfoa` e.g. `67193735`
+- 111x cachebust_int in `diff` e.g. `6008`
+- 108x cachebust_int in `fips` e.g. `55000`
+- 107x cachebust_int in `zz` e.g. `779902846`
+- 103x cachebust_int in `SCHOOLID` e.g. `0007`
+- 69x epoch_ns in `_cb` e.g. `1781652485927707433`
+- 69x hex16 in `_cb` e.g. `1781652485927707433`
+- 60x cachebust_int in `ourself` e.g. `743385`
+- 46x cachebust_int in `YEAR` e.g. `2022`
+- 45x cachebust_int in `ags` e.g. `296831`
+- 40x epoch_s in `uniq` e.g. `1781813649`
+- 40x cachebust_int in `mfinal` e.g. `990004`
+- 38x cachebust_int in `x` e.g. `25939575`
+- 36x cachebust_int in `_` e.g. `98765`
+- 33x hex16 in `cb` e.g. `1781648647358122309`
+- 30x epoch_s in `newsucc` e.g. `7782987115`
+- 30x cachebust_int in `nself` e.g. `129925`
+- 28x float_nonce in `cb` e.g. `0.6044255883110384`
+- 27x epoch_ns in `cb` e.g. `1781648647358122309`
+- 25x cachebust_int in `invest` e.g. `7722006`
+- 23x cachebust_int in `year_mort` e.g. `2000`
+- 21x cachebust_int in `foo` e.g. `9283991`
+- 20x cachebust_int in `our` e.g. `44069138`
+- 16x cachebust_int in `cb` e.g. `65554`
+- 13x float_nonce in `x` e.g. `0.12635199037651512`
+- 13x cachebust_int in `fresh` e.g. `8010`
+- 12x cachebust_int in `future` e.g. `945711`
+- 11x epoch_ns in `arqcb` e.g. `1781603763230176337`
+- 11x hex16 in `arqcb` e.g. `1781603763230176337`
+- 11x cachebust_int in `fiscal_year` e.g. `2020`
+- 10x cachebust_int in `newsucc` e.g. `778298713`
+- 10x cachebust_int in `w12` e.g. `12005`
+- 9x cachebust_int in `zx` e.g. `58774`
+- 8x cachebust_int in `freshcx` e.g. `9400`
+- 8x cachebust_int in `loop` e.g. `1383`
+- 6x cachebust_int in `abc` e.g. `1201`
+- 6x cachebust_int in `new` e.g. `777401`
+- 6x cachebust_int in `mergerefresh` e.g. `33221`
+- 6x cachebust_int in `from` e.g. `20191115`
+- 6x cachebust_int in `to` e.g. `20191115`
+- 6x epoch_s in `period1` e.g. `1573776000`
+- 6x epoch_s in `period2` e.g. `1573862400`
+- 6x float_nonce in `xq` e.g. `0.6437310240094349`
+- 5x cachebust_int in `zzbulk` e.g. `79299686`
+- 5x cachebust_int in `error_id` e.g. `2001`
+- 5x cachebust_int in `q` e.g. `8003`
+- 5x cachebust_int in `selfx` e.g. `93001`
+- 5x cachebust_int in `oo` e.g. `8840`
+- 4x epoch_ns in `nonce` e.g. `1781691984977060473`
+- 4x hex16 in `nonce` e.g. `1781691984977060473`
+- 4x cachebust_int in `gnew` e.g. `88672`
+- 4x cachebust_int in `freshself` e.g. `88001`
+- 4x cachebust_int in `freshmaster` e.g. `99003`
+- 4x cachebust_int in `ag` e.g. `7932134`
+- 3x float_nonce in `zz` e.g. `0.24849049737959872`
+- 3x epoch_ns in `x` e.g. `1781657501653946244`
+- 3x hex16 in `x` e.g. `1781657501653946244`
+- 3x cachebust_int in `bri` e.g. `99883`
+- 3x cachebust_int in `selfmassx` e.g. `89773866`
+- 3x cachebust_int in `oaf` e.g. `149080`
+- 3x cachebust_int in `xx` e.g. `9911`
+- 3x epoch_ns in `uniq` e.g. `1781636476383654283`
+- 3x hex16 in `uniq` e.g. `1781636476383654283`
+- 3x cachebust_int in `newparam` e.g. `200202`
+- 3x cachebust_int in `PUMS Occupation` e.g. `472111`
+- 2x cachebust_int in `survey_Year_Key` e.g. `2021`
+- 2x epoch_ns in `apncb` e.g. `1781639638653538884`
+- 2x hex16 in `apncb` e.g. `1781639638653538884`
+- 2x epoch_ns in `u` e.g. `1781646194267888029`
+- 2x hex16 in `u` e.g. `1781646194267888029`
+- 2x cachebust_int in `surveyYear` e.g. `2015`
+- 2x cachebust_int in `areatype` e.g. `11000`
+- 2x cachebust_int in `id` e.g. `1008048`
+- 2x cachebust_int in `session` e.g. `2023`
+- 2x cachebust_int in `vnew` e.g. `88661`
+- 2x epoch_s in `dummy` e.g. `1781916654`
+- 2x cachebust_int in `a` e.g. `32323`
+- 2x hex16 in `api_key` e.g. `910de961922b85c6e95ee1311938ece6`
+- 2x cachebust_int in `v` e.g. `9911`
+- 2x float_nonce in `re` e.g. `0.5864078796427847`
+- 2x cachebust_int in `bridge` e.g. `131035`
+- 2x epoch_ns in `item` e.g. `713485940955263759`
+- 2x hex16 in `item` e.g. `713485940955263759`
+- 2x cachebust_int in `maphelper` e.g. `1781804`
+- 2x cachebust_int in `newself` e.g. `884421`
+- 2x cachebust_int in `nine` e.g. `400471`
+- 2x cachebust_int in `ninew` e.g. `837831`
+- 2x epoch_s in `from` e.g. `1781806877`
+- 1x cachebust_int in `entityId` e.g. `238020`
+- 1x epoch_s in `zz` e.g. `9535400042`
+- 1x epoch_ns in `_x` e.g. `1781642348952494734`
+- 1x hex16 in `_x` e.g. `1781642348952494734`
+- 1x cachebust_int in `cutoff` e.g. `2010`
+- 1x cachebust_int in `zzsave` e.g. `994309182`
+- 1x epoch_ns in `dl` e.g. `1781686625591259214`
+- 1x hex16 in `dl` e.g. `1781686625591259214`
+- 1x epoch_ns in `_arq` e.g. `1781649530061813964`
+- 1x hex16 in `_arq` e.g. `1781649530061813964`
+- 1x float_nonce in `e` e.g. `0.058151137412918996`
+- 1x cachebust_int in `filingid` e.g. `2921206`
+- 1x float_nonce in `_` e.g. `0.08739209399595904`
+- 1x cachebust_int in `Date` e.g. `1905`
+- 1x cachebust_int in `start` e.g. `5000`
+- 1x cachebust_int in `RecordDivorceYear` e.g. `1907`
+- 1x cachebust_int in `startrecord` e.g. `5000`
+- 1x cachebust_int in `DateBucket` e.g. `1906`
+- 1x cachebust_int in `MAXYEAR` e.g. `2025`
+- 1x cachebust_int in `Model.SCHOOLID` e.g. `0050`
+- 1x cachebust_int in `Model.YEAR` e.g. `2022`
+- 1x cachebust_int in `md.Year` e.g. `2022`
+- 1x cachebust_int in `md[schoolid]` e.g. `0201`
+- 1x cachebust_int in `md[year]` e.g. `2022`
+- 1x cachebust_int in `SchoolID` e.g. `0050`
+- 1x cachebust_int in `schoolId` e.g. `0050`
+- 1x cachebust_int in `wid` e.g. `1000`
+- 1x cachebust_int in `width` e.g. `10000`
+- 1x epoch_s in `x` e.g. `1781813649`
+- 1x cachebust_int in `direct` e.g. `9280`
+- 1x cachebust_int in `limit` e.g. `5000`
+- 1x cachebust_int in `goto` e.g. `4490`
+- 1x cachebust_int in `self` e.g. `4490`
+- 1x epoch_s in `new` e.g. `1781811081`
+- 1x cachebust_int in `final` e.g. `999111`
+- 1x cachebust_int in `t3` e.g. `887418`
+- 1x cachebust_int in `t1` e.g. `413850`
+- 1x cachebust_int in `t2` e.g. `475653`
+- 1x cachebust_int in `t4` e.g. `498863`
+- 1x cachebust_int in `t0` e.g. `139389`
+- 1x cachebust_int in `xuniq` e.g. `199006`
+- 1x cachebust_int in `xnew` e.g. `260620`
+- 1x cachebust_int in `nocache` e.g. `260620`
+- 1x cachebust_int in `uniquemd` e.g. `779912`
+- 1x epoch_ns in `_` e.g. `629113997973625071`
+- 1x hex16 in `_` e.g. `629113997973625071`
+- 1x epoch_ns in `cache` e.g. `981787239491545960`
+- 1x hex16 in `cache` e.g. `981787239491545960`
+- 1x epoch_ns in `fresh` e.g. `893148253803755441`
+- 1x hex16 in `fresh` e.g. `893148253803755441`
+- 1x epoch_s in `cb` e.g. `1107194069`
+- 1x float_nonce in `fresh` e.g. `0.8948134037835819`
+- 1x float_nonce in `itam` e.g. `0.8948134037835819`
+- 1x cachebust_int in `cnew` e.g. `88441`
+- 1x cachebust_int in `freshunique` e.g. `119982`
+- 1x cachebust_int in `poke` e.g. `7001`
+- 1x cachebust_int in `refresh` e.g. `78234`
+- 1x cachebust_int in `maxnumber` e.g. `1000`
+- 1x cachebust_int in `special` e.g. `99381`
+- 1x cachebust_int in `download` e.g. `99383`
+- 1x cachebust_int in `offset` e.g. `50000`
+- 1x cachebust_int in `unique` e.g. `991212`
+- 1x cachebust_int in `xy` e.g. `991212`
+- 1x cachebust_int in `u` e.g. `66293`
+- 1x cachebust_int in `uniqqqq` e.g. `123921873`
+
+## action_ngrams (top 15 per source)
+### claude
+- 99702x assistant:None assistant:None
+- 68320x assistant:None user:None
+- 68310x user:None assistant:None
+- 65394x assistant:None assistant:None user:None
+- 65361x user:None assistant:None assistant:None
+- 64028x assistant:None user:None assistant:None
+- 34106x assistant:None assistant:None assistant:None
+- 3893x user:None user:None
+- 3392x assistant:None user:None user:None
+- 3342x user:None user:None assistant:None
+- 2926x user:None assistant:None user:None
+- 940x system:status system:status
+- 940x system:status system:compact_boundary
+- 940x system:compact_boundary user:None
+- 940x system:status system:status system:compact_boundary
+### chat
+- 167136x agent agent
+- 162688x agent agent agent
+- 6351x user agent
+- 6351x agent user
+- 4899x agent user agent
+- 4445x agent agent user
+- 4442x user agent agent
+- 3631x user user
+- 2175x user user user
+- 1906x user agent user
+- 1450x user user agent
+- 1449x agent user user
+### turns
+- 110589x {'text': None, 'action': 'left_click', ' {'text': None, 'action': 'left_click', '
+- 103157x sh:cd sh:cd
+- 85662x sh:cd sh:cd sh:cd
+- 82261x {'text': None, 'action': 'scroll', 'coor {'text': None, 'action': 'scroll', 'coor
+- 81500x {'action': 'get_pixel_coords_of_element' {'text': None, 'action': 'left_click', '
+- 57038x {'text': None, 'action': 'left_click', ' {'text': None, 'action': 'left_click', ' {'text': None, 'action': 'left_click', '
+- 55165x sh:I'm sh:I'm
+- 54809x {'text': None, 'action': 'scroll', 'coor {'text': None, 'action': 'scroll', 'coor {'text': None, 'action': 'scroll', 'coor
+- 46005x sh:I’m sh:I’m
+- 45789x sh:I'm sh:I'm sh:I'm
+- 44503x {'text': None, 'action': 'left_click', ' {'action': 'get_pixel_coords_of_element'
+- 38722x sh:I’m sh:I’m sh:I’m
+- 34547x {'action': 'get_pixel_coords_of_element' {'text': None, 'action': 'left_click', ' {'action': 'get_pixel_coords_of_element'
+- 31352x {'text': None, 'action': 'left_click', ' {'action': 'get_pixel_coords_of_element' {'text': None, 'action': 'left_click', '
+- 29200x {'text': None, 'action': 'left_click', ' {'text': None, 'action': 'scroll', 'coor
