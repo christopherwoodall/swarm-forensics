@@ -994,11 +994,21 @@ class Handler(BaseHTTPRequestHandler):
         try:
             if p == "/hunt/start":
                 try:
+                    raw_sources = body.get("sources")
+                    if not raw_sources:
+                        raw_sources = [
+                            s.strip() for s in
+                            cfg.get("hunt", {}).get(
+                                "default_sources",
+                                "urlquery,cdx,arquivo").split(",")
+                            if s.strip()]
+                    cap = body.get("cap")
+                    if cap is None:
+                        default_cap = int(
+                            cfg.get("hunt", {}).get("default_cap", 200))
+                        cap = default_cap if default_cap > 0 else 200
                     res = _start_hunt(
-                        cfg, body.get("target", ""),
-                        body.get("sources",
-                                 ["urlquery", "cdx", "arquivo"]),
-                        body.get("cap", 200))
+                        cfg, body.get("target", ""), raw_sources, cap)
                 except PermissionError as e:
                     self._send(403, {"error": str(e)})
                     return

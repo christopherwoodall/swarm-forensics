@@ -1343,24 +1343,28 @@ function SettingsPage({ ctx }) {
     children: jsxs(Fragment, {
       children: [
         jsx(Card, {
-          key: 'sched', title: 'Schedule', wide: true,
-          children: jsxs('div', {
-            style: { display: 'flex', gap: 16, flexWrap: 'wrap' },
+          key: 'hunt', title: 'Hunt defaults', wide: true,
+          children: jsxs(Fragment, {
             children: [
-              jsx(NumField, {
-                key: 'a', ctx, section: 'schedule', name: 'scan_interval_hours',
-                label: 'Scan interval (hours, min 1)', min: 1,
-                value: (s.schedule || {}).scan_interval_hours, onSaved: reload,
+              jsx('div', {
+                key: 'note',
+                style: { color: 'var(--ui-text-tertiary)', fontSize: '0.8rem', marginBottom: 8 },
+                children: 'Used when a hunt names no sources or cap (CLI and API). The Hunt form always sets them explicitly.',
               }),
-              jsx(NumField, {
-                key: 'b', ctx, section: 'schedule', name: 'research_interval_hours',
-                label: 'Research interval (hours, min 24)', min: 24,
-                value: (s.schedule || {}).research_interval_hours, onSaved: reload,
-              }),
-              jsx(NumField, {
-                key: 'c', ctx, section: 'schedule', name: 'predict_interval_hours',
-                label: 'Predict interval (hours, min 1)', min: 1,
-                value: (s.schedule || {}).predict_interval_hours, onSaved: reload,
+              jsxs('div', {
+                key: 'f', style: { display: 'flex', gap: 16, flexWrap: 'wrap' },
+                children: [
+                  jsx(TextField, {
+                    key: 'a', ctx, section: 'hunt', name: 'default_sources',
+                    label: 'Default sources (comma list)',
+                    value: (s.hunt || {}).default_sources, onSaved: reload,
+                  }),
+                  jsx(NumField, {
+                    key: 'b', ctx, section: 'hunt', name: 'default_cap',
+                    label: 'Default cap (0 = max_terms_per_sweep)', min: 0,
+                    value: (s.hunt || {}).default_cap, onSaved: reload,
+                  }),
+                ],
               }),
             ],
           }),

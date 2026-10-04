@@ -18,9 +18,18 @@ from config import load_config, ensure_state, state_path  # noqa: E402
 
 def cmd_hunt(cfg, args):
     from sources import run_hunt, estimate_hunt, resweep, HuntRefused
-    sources = [s.strip().lower() for s in args.sources.split(",") if s.strip()]
+    raw_sources = (args.sources if args.sources
+                   else cfg.get("hunt", {}).get("default_sources",
+                                                "urlquery,cdx,arquivo"))
+    sources = [s.strip().lower() for s in raw_sources.split(",") if s.strip()]
     max_terms = int(cfg["sources"].get("max_terms_per_sweep", 200))
-    cap = args.cap if args.cap is not None else max_terms
+    default_cap = int(cfg.get("hunt", {}).get("default_cap", 200))
+    if args.cap is not None:
+        cap = args.cap
+    elif default_cap > 0:
+        cap = default_cap
+    else:
+        cap = max_terms
     if args.resweep:
         reset = resweep(cfg, sources)
         print(f"hunt: cursors reset for: {', '.join(reset)}")
@@ -229,10 +238,12 @@ def main():
     p = sub.add_parser("hunt", help="Start a discrete hunt job.")
     p.add_argument("--target", default="all",
                    help="Term filter: 'all' or a substring to match.")
-    p.add_argument("--sources", default="urlquery,cdx,arquivo",
-                   help="Comma list: urlquery,cdx,arquivo.")
+    p.add_argument("--sources", default=None,
+                   help="Comma list: urlquery,cdx,arquivo "
+                        "(default: hunt.default_sources).")
     p.add_argument("--cap", type=int, default=None,
-                   help="Max terms to sweep (default: max_terms_per_sweep).")
+                   help="Max terms to sweep (default: hunt.default_cap; "
+                        "0 means max_terms_per_sweep).")
     p.add_argument("--resweep", action="store_true",
                    help="Reset per-source since cursors before hunting.")
     p.add_argument("--mock", action="store_true",
