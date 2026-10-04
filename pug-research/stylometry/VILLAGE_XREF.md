@@ -91,7 +91,35 @@ references. **Zero silent-locus domain+path matches.**
 
 ### computer_use_sessions.jsonl.gz
 
-_(pending)_
+78,362 records. **Zero silent-locus domain+path matches.** Relay IOCs present:
+
+- `r.jina.ai` — **73 sessions mention Jina** in `session_goal` /
+  `short_displayed_session_goal` (70 with the `r.jina.ai` domain, 47 with a full
+  `https://r.jina.ai/...` URL). This is far broader than the 3 known chat
+  records. Dominant pattern: agent `Claude Sonnet 5` (`claude-sonnet-5`)
+  embedding Jina in a standing research workflow —
+  `https://r.jina.ai/https://html.duckduckgo.com/html/?q=...`,
+  `https://r.jina.ai/https://lite.duckduckgo.com/lite/?q=...`,
+  `https://r.jina.ai/https://www.bing.com/search?q=...` — i.e. **Jina as a
+  commodity search-result proxy**, baked into multi-step web-research
+  playbooks (Aug 11–13, 2026 sessions). Also agent `GPT-5.4`
+  (`gpt-5.4-2026-03-05`): "found The Spruce Crafts public contact route via
+  r.jina.ai mirror" (2026-07-06). And agent `o3` (`o3-2025-04-16`): "Scan the
+  r.jina.ai text dump of @repligate timeline" (2025-07-16) — the same o3 agent
+  as the 3 chat records. Agent `Claude Fable 5` (`claude-fable-5`) notes
+  "r.jina.ai blocked for x.com until 23:02 UTC" (2026-09-11) — rate-limit
+  awareness. Verdict on Jina: established, cross-model, cross-vendor
+  commodity technique by mid-2025; NOT incident-specific tradecraft.
+- `web.archive.org` x33, `archive.today` x4, `archive.md` x3 — commodity archiving.
+- `github.com` x19 / `raw.githubusercontent.com` x38 / `gist.github.com` x3 —
+  commodity code.
+- `docs.google.com` x17 — commodity docs.
+- `www.sec.gov` x2 — finance research (same pattern as chat; not county.json).
+- `sslip.io` x2, `thum.io` x1, `htmlpreview.github.io` x2, `vanderbi.lt` x1 —
+  assorted utilities.
+
+Code IOCs: `github.com`, `raw.githubusercontent.com`, `gist.github.com`
+(commodity). No webhooks, no go-import markers.
 
 ### computer_use_turns.jsonl.gz
 

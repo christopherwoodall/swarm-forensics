@@ -37,8 +37,10 @@ until merged — the link resolves only after the merge.
 Pick both components: the agent skill (Python backend at
 `dashboard/plugin_api.py`) and the desktop UI (`desktop/plugin.js`).
 
-Repo-id caveat: the build notes flag this repo id for confirmation
-before publishing the link. Confirm the id is current, then share.
+Repo id: `christopherwoodall/swarm-forensics` is correct — the
+plugin ships from this repo (the hackathon submission repo). The
+2026-09-28 move to `christopherwoodall/silent-locus` concerned the
+hunt-data repo, a different project.
 
 ## Install path 2: desktop unified package
 

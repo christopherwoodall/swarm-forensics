@@ -3,7 +3,14 @@
 **Install:** [one-click install
 link](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1)
 (confirm-first dialog; the subdirectory rides in the `repo`
-parameter per the SDK installer source). The link resolves only
+parameter per the SDK installer source). GitHub does not render
+`hermes://` links as clickable, so the raw URL is:
+
+```
+hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1
+```
+
+The link resolves only
 once the plugin is merged to the repo's default branch (`main`);
 until then install manually — full instructions:
 [HERMES_SETUP.md](HERMES_SETUP.md).

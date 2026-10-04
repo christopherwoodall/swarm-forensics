@@ -1267,7 +1267,7 @@ function PromptEditor({ ctx, name, title, description }) {
 // repo moved to christopherwoodall/silent-locus on 2026-09-28, so
 // confirm the repo id before publishing this link. See report.
 const INSTALL_LINK =
-  'hermes://plugin/install?repo=christopherwoodall/swarm-forensics&enable=1';
+  'hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1';
 
 function AboutCard({ ctx }) {
   return jsx(Card, {
@@ -1334,7 +1334,8 @@ function SettingsPage({ ctx }) {
     notify(ctx, 'info', 'Diagnostics bundle requested from the backend.');
   };
 
-  const fwMode = (s.firewall || {}).firewall_mode || 'advisory';
+  const fwMode = (s.safety || {}).firewall_mode
+    || (s.firewall || {}).firewall_mode || 'advisory';
   const chatMode = (s._chat_mode || {}).mode || 'rule';
 
   return jsx(Page, {

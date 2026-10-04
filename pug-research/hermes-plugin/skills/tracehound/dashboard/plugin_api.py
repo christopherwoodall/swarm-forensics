@@ -102,7 +102,9 @@ PROMPT_DEFAULTS = {
 
 # Settings the GUI may write. Firewall mode is locked to advisory/off.
 # Any other value is rejected with an explanation, not coerced.
-WRITABLE_SECTIONS = {"schedule", "sources", "ioc", "research", "safety",
+# NOTE: no "schedule" section. Hunts are human-triggered; nothing is
+# scheduled, so schedule.* keys were removed (2026-10-04).
+WRITABLE_SECTIONS = {"hunt", "sources", "ioc", "research", "safety",
                      "firewall", "chat", "paths"}
 FIREWALL_MODES = {"advisory", "off"}
 REVIEW_SLA_DAYS = 7
@@ -174,7 +176,7 @@ def _local_validate_settings(updates):
             "eval passes (FIREWALL.md). The judge reads attacker-"
             "controlled evidence; auto-promotion is not safe."
         )
-    for section in ("schedule", "sources"):
+    for section in ("sources",):
         for k, v in updates.get(section, {}).items():
             if k.endswith(("_hours", "_seconds", "_per_query",
                            "_per_sweep", "_chars")):
@@ -183,6 +185,13 @@ def _local_validate_settings(updates):
                         return False, f"{section}.{k} must be > 0"
                 except (TypeError, ValueError):
                     return False, f"{section}.{k} must be a number"
+    hunt_cap = updates.get("hunt", {}).get("default_cap")
+    if hunt_cap is not None:
+        try:
+            if int(hunt_cap) < 0:
+                return False, "hunt.default_cap must be >= 0"
+        except (TypeError, ValueError):
+            return False, "hunt.default_cap must be a number"
     return True, "ok"
 
 

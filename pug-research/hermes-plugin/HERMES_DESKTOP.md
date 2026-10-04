@@ -305,13 +305,11 @@ number/text, list editor). Persisted via `PUT /settings` →
 `config.ini` (+ `ctx.storage` mirror for UI prefs).
 
 ```ini
-[schedule]
-# Adversarial #3: daily default, not 6-hour. The UI shows the
-# estimated queries-per-sweep next to the interval.
-scan_interval_hours     = 24        # number, min 1
-research_interval_hours = 168       # number, min 24
-predict_interval_hours  = 24        # number, min 1
-update_interval_hours   = 24        # number, min 1
+[hunt]
+# No [schedule] section exists. Hunts are human-triggered discrete
+# jobs; nothing is scheduled (hunting-dog model, adversarial #3, #10).
+default_sources         = urlquery,cdx,arquivo  # string — used when a hunt names none
+default_cap             = 200        # number, min 0 — 0 means max_terms_per_sweep
 
 [sources]
 urlquery_enabled        = true      # boolean
@@ -339,6 +337,13 @@ private_mode            = true      # boolean — mask tripwire strings in UI (#
 firewall_mode           = advisory  # off | advisory | enforcing — enforcing locked until an
                                     # injection-resistance eval passes (#5)
 alert_on_claim_level    = L3        # L1 | L2 | L3 | L4 | L5 — toast threshold (#9)
+exclusion_terms         =           # list[string] — never proposed, enforced in code (#2)
+
+[chat]                              # chat brain: rule-based responder is the default
+model_enabled           = false     # boolean — optional model rephrasing path
+endpoint                =           # string — completions endpoint URL, empty disables
+api_key_env             = TRACEHOUND_CHAT_KEY  # string — env var NAME, never a secret
+model                   =           # string — versioned model id
 ```
 
 Defaults changed from the headless design are marked with
@@ -351,12 +356,11 @@ a free community service").
 ## 4. Gaps — what the UI needs that the app doesn't document
 
 1. **No execution while the app is closed.** A desktop plugin
-   runs only with the window open. "Constantly hunting" still
-   needs the headless cron path; the desktop UI is a control
-   plane and review surface, not the runtime. **Workaround:**
-   cron and the desktop backend share `state/` and
-   `config.ini`; add the pidfile run-lock from adversarial
-   #10 so the two never double-sweep.
+   runs only with the window open. Under the hunting-dog model this
+   is the design, not a gap: every hunt is a discrete human-triggered
+   job, so there is no headless cron path and no run-locking problem
+   (adversarial #10). Nothing runs while the app is closed, by user
+   direction.
 2. **No generic plugin settings page.** The only documented
    settings surface is `APPEARANCE_AREAS.extra` (appends to
    Appearance) plus the Capabilities → Plugins enable toggle.
