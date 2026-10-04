@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/QualityCopperShovel/discord-bot-swarm",
-  "revision": "0751415012d2a2d697e6dd246caa37dfd3231df5",
-  "version": "0.18.4",
+  "revision": "67103f0ce0d7f3a824f71322c0d43aa65b366527",
+  "version": "0.18.5",
   "excluded": [
     "AGENTS.md",
     "deploy/fairystack/AGENTS.md"
@@ -14,7 +14,7 @@
     "LICENSE": "4795f7a70745d2fb66bf9b2471d93eab4966d6b08a619c0c0d56137c2c7b0184",
     "Makefile": "23881e66458796e14e0092e8394275f04da8624a7b0914e77d7d17598f8e2bd6",
     "README.md": "c6be274ab78aeca1d43b58c97716edf5a71f6c26e9d68be34940519565898c8e",
-    "VERSION": "82be2b9a7a44f99428feb6d2ba4ceca61ec3ed3e521b3815365fc4ab06f4be69",
+    "VERSION": "e3c122270d6e92cef71ca9884b7f0483dc584de61b4155d040a97a97d7a6cdc3",
     "account.browser.test.mjs": "4e168ec6111dd36dda29a4e35e4e2b4e5f864535e8de7f02e2bca74fe60c6c51",
     "agent-sync.js": "06af65e8bd1dd2aac95d69a7efe148cd246cd2e14425d46b9761aa96788e808c",
     "auth-header.browser.test.mjs": "971439e9360dc464ca20fa5250ad0b33abe47e6a6abcdfab982510ce71b7917d",
@@ -57,7 +57,7 @@
     "frontend/agent-recipe.js": "156388114d7eb43ebf47c011b5f689bd23547161b9458ffce162296de4d3172e",
     "frontend/agent.html": "df6669e574a67f93f447ec22f23af0251a837d60328f23507e61b644631c2fd6",
     "frontend/agent.js": "bef866aad934381067435736eae2ef79a5e5fda6ea05cbfdf06c475b70f3f339",
-    "frontend/app.js": "5643541a4e8865e39b50004ba113eef7885f0cea45008604abf06bcc92fabfb4",
+    "frontend/app.js": "1d124311ff9036ee2a2459975ccb8bf86cefefa2f4be84ecdd79618e68648916",
     "frontend/auth-oidc.js": "edff51a29d2b8911574b4f4b473d8d3fe8ad2b67e3adf66370599851466f38d0",
     "frontend/auth.js": "5210369e2017f3bea95750620b8f25c526529e6037602edf0da69784ac67e745",
     "frontend/board.css": "50939669688131eba0394a0b0cab3625ef2527c3903437deab0218766b6414ee",
@@ -79,6 +79,7 @@
     "frontend/discord-setup/new-application.png": "c9e366699ab69a4ae08be55216ce1757f16fc255ef8a2de16fd7295c8c70e3f5",
     "frontend/discord-setup/open-bot.png": "f19c66a27141793946a7bae1ba32e89043882635ef41d97cbff1aa0668cad47d",
     "frontend/discord-setup/paste-token.png": "6234c36152725e8044be389257945fb6a6c4eb4f022976a9f07d0ea982f18f05",
+    "frontend/discord-setup/privileged-intents.png": "9c7e477cbc083474abfef19550a1546ccd225739207601060c43d29269d09c5a",
     "frontend/discord-setup/reset-token.png": "5b80ae636408df955328a96be38b7a04b839a04518625ca0907169b4969a1911",
     "frontend/discord-setup/settings.png": "97b336514f5fb998bcd03ddc1126225df57496671c61fc1ebcf4a0c95a9770d0",
     "frontend/favicon-32.png": "5aa4a34a7191b42f35f6bf797f5b0860f28c7873ad296f629229aaf978163424",
@@ -99,7 +100,7 @@
     "frontend/style.css": "6f87b4917e1984b47ab11026e0f550b92bedac5ad7c7636c8396d66dde0132b4",
     "frontend/wizard-route.js": "a05a52b980126f6ca683ccd506f918d4903b7fd17c3bc183fef2b1c3117e4e1b",
     "http.test.js": "1e628107c226ac74986b5176adfe2e8a797a8fe1fcb99e9ea185e2c070556bbc",
-    "image-loader.browser.test.mjs": "a1813f5b2f53ba897f8b5a9c78fda261819e620c3b63d34e125f3c417078305e",
+    "image-loader.browser.test.mjs": "e892db65c41bb66a134974f9703edccdc31a2bd312d81c30aa8a220dd52a74b0",
     "kanban.browser.test.mjs": "afaf90571d2d120cceb7bb7a6038b7e96c0877475d27e3fdd24dcd8c398004a4",
     "kanban.database.test.js": "db2040c73437f8d9430d8a0b4a1af744150f3998ae969ebd3b8a14aa07fcdb02",
     "kanban.js": "a9dcd372230f45e5552a7f2e6f04cdc5924d3dec94c4cdf016d5f7fd30385c6c",
@@ -107,8 +108,8 @@
     "mcp-setup.test.js": "a8bdda53ec8f0e363f51fa237bb224b19ca282c9575b1da6fe6446f337fdf034",
     "mcp.js": "488e0fc9d17a91b2162c32dd2c30bebec667ea7188a3ac465e698a190ae01354",
     "mcp.test.js": "52f8055d0f12f3f97c98bb7a6c009cc6d6adb9ef9c8f48a91d1262bddca8e260",
-    "package-lock.json": "9d319889feaecb99bf2cab57147af14b873bab61c1ecb5fd4cc26a0bc2120442",
-    "package.json": "480947ac5384ff3637ecb199387ac29f74b51f6b9bf529331c81f6646b4a756f",
+    "package-lock.json": "f46ae7c3b7c5775ea9de50cf8552fccad15413e02560356c518347c7bebd532c",
+    "package.json": "f7600bd9553d84adbbc6c43dffd1baf044ee39d400f04169a7361b1fb1cf12ab",
     "platform.test.js": "71bfe333227878a2ae8324b7a8dd022eb9091bf97991dd11ab1f4631ed3a309e",
     "relay-records.js": "9585a862010d6f236f5e26e2dfb10d7a2a5b580a5093a03aae2f83da8c599d06",
     "relay-records.test.js": "6f15884090308bc0277a46f88d11028504e3d7ba81752d7fd58d13ff78c2473e",
@@ -127,6 +128,6 @@
     "test.js": "c6442ce29d923e36096880ad1a52ce55e36b44c5252326cb65ddceb42038803a",
     "vault.js": "aaeb884476a30145426601b800af1838bcc8828dc591eeb2760ae1c3420a5d84",
     "wizard-route.test.js": "96d760f78f9e71d68cff159b130491955e41971c6bbea7512cc620b4b0c041e2",
-    "wizard.browser.test.mjs": "d580ea89fd2999da9060e8b028fd4fa16891695ca54f5998f01d17d17099ac0c"
+    "wizard.browser.test.mjs": "633d6593b207227b87c2fbebf7f1111f1f3f3bdd9e7de0d0268e526eba59c59d"
   }
 }
