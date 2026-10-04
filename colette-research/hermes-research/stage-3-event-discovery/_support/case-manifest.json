@@ -1,0 +1,255 @@
+{
+  "research_cutoff": "2026-10-01",
+  "candidate_count": 14,
+  "primary_event_match_count": 8,
+  "boundary_comparator_count": 3,
+  "mechanism_exception_count": 3,
+  "category_counts": {
+    "field_campaign": 3,
+    "engineering_run": 2,
+    "field_experiment": 3,
+    "controlled_propagation": 2,
+    "boundary_case": 3,
+    "simulation_exception": 1
+  },
+  "card_source_count": 31,
+  "source_record_count": 40,
+  "guide_source_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+  ],
+  "documents": [
+    "01-provider-disclosed-cyber-campaigns.md",
+    "02-long-running-coding-teams.md",
+    "03-related-incident-and-simulation-exception.md",
+    "04-real-goods-and-agent-bargaining.md",
+    "05-controlled-cross-agent-propagation.md",
+    "06-qualified-and-boundary-cases.md",
+    "07-screened-leads-and-overlap.md",
+    "08-annotated-source-guide.md",
+    "README.md"
+  ],
+  "candidates": [
+    {
+      "id": "S3-GTG10007",
+      "title": "GTG-10007 — persistent espionage and exploit-foundry program",
+      "category": "field_campaign",
+      "evidence_class": "Provider-disclosed malicious field program, with associated lab exploit testing",
+      "document": "01-provider-disclosed-cyber-campaigns.md",
+      "distinctness": "Separate adversary campaign/program designation and activity; source count and target count are not case counts.",
+      "source_ids": [
+        12,
+        13
+      ]
+    },
+    {
+      "id": "S3-GTG1002",
+      "title": "GTG-1002 — AI-orchestrated espionage campaign",
+      "category": "field_campaign",
+      "evidence_class": "Provider-disclosed malicious field campaign",
+      "document": "01-provider-disclosed-cyber-campaigns.md",
+      "distinctness": "Separate adversary campaign/program designation and activity; source count and target count are not case counts.",
+      "source_ids": [
+        10,
+        11
+      ]
+    },
+    {
+      "id": "S3-GTG50020",
+      "title": "GTG-50020 — coordinated attacks on the AI supply chain",
+      "category": "field_campaign",
+      "evidence_class": "Provider-disclosed malicious field campaign",
+      "document": "01-provider-disclosed-cyber-campaigns.md",
+      "distinctness": "Separate adversary campaign/program designation and activity; source count and target count are not case counts.",
+      "source_ids": [
+        12,
+        13
+      ]
+    },
+    {
+      "id": "S3-COMPILER",
+      "title": "Anthropic: sixteen Claudes building a C compiler",
+      "category": "engineering_run",
+      "evidence_class": "executed provider capability stress test",
+      "document": "02-long-running-coding-teams.md",
+      "distinctness": "Separate operator and engineering workload; multiple reports and repeated sessions retained as one episode family.",
+      "source_ids": [
+        14,
+        15,
+        21
+      ]
+    },
+    {
+      "id": "S3-FASTRENDER",
+      "title": "Cursor: FastRender’s long-running many-agent browser experiment",
+      "category": "engineering_run",
+      "evidence_class": "executed provider research project with independent limited artifact check",
+      "document": "02-long-running-coding-teams.md",
+      "distinctness": "Separate operator and engineering workload; multiple reports and repeated sessions retained as one episode family.",
+      "source_ids": [
+        14,
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "id": "S3-RUBY",
+      "title": "RubyGems / RubyDoc registry abuse",
+      "category": "boundary_case",
+      "evidence_class": "Victim-confirmed registry incident; disputed AI attribution and possible seed-family population overlap",
+      "document": "03-related-incident-and-simulation-exception.md",
+      "distinctness": "Distinct service incident, but possible related wiki workloads; not an independently established swarm population.",
+      "source_ids": [
+        1,
+        2,
+        3,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "S3-TERRA",
+      "title": "TerraLingua artifact transmission",
+      "category": "simulation_exception",
+      "evidence_class": "Operator-reported executed persistent ecology, with earlier methods preprint",
+      "document": "03-related-incident-and-simulation-exception.md",
+      "distinctness": "Different operator/environment from seeds; March methods and July/August observations are one project family, not separately authenticated runs.",
+      "source_ids": [
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "S3-DEAL",
+      "title": "Project Deal: delegated bargaining with real goods",
+      "category": "field_experiment",
+      "evidence_class": "Provider-run controlled field marketplace experiment",
+      "document": "04-real-goods-and-agent-bargaining.md",
+      "distinctness": "Distinct business/trading episode; Deal and Swap share a research program and possible participants, not established independent populations.",
+      "source_ids": [
+        23
+      ]
+    },
+    {
+      "id": "S3-SWAP",
+      "title": "Project Swap: peer pressure and matchmaking on book-barter floors",
+      "category": "field_experiment",
+      "evidence_class": "Separate provider-run field experiment with computational reruns",
+      "document": "04-real-goods-and-agent-bargaining.md",
+      "distinctness": "Distinct business/trading episode; Deal and Swap share a research program and possible participants, not established independent populations.",
+      "source_ids": [
+        26
+      ]
+    },
+    {
+      "id": "S3-VEND",
+      "title": "Project Vend phase two: an AI shopkeeper, CEO and specialist colleague",
+      "category": "field_experiment",
+      "evidence_class": "Provider-disclosed real-world field experiment",
+      "document": "04-real-goods-and-agent-bargaining.md",
+      "distinctness": "Distinct business/trading episode; Deal and Swap share a research program and possible participants, not established independent populations.",
+      "source_ids": [
+        22
+      ]
+    },
+    {
+      "id": "S3-AGENTWORM",
+      "title": "AgentWorm — persistent message/skill-mediated agent infection",
+      "category": "controlled_propagation",
+      "evidence_class": "controlled technical experiment; author-reported execution, not a field incident",
+      "document": "05-controlled-cross-agent-propagation.md",
+      "distinctness": "Separate study and transmission mechanism; vectors, models, endpoints and reruns are not independent field incidents.",
+      "source_ids": [
+        32,
+        39
+      ]
+    },
+    {
+      "id": "S3-SHAREBORNE",
+      "title": "Share-Borne AI Virus — artifact/private-memory/artifact relay",
+      "category": "controlled_propagation",
+      "evidence_class": "controlled executed simulation using agent harnesses; not a field incident",
+      "document": "05-controlled-cross-agent-propagation.md",
+      "distinctness": "Separate study and transmission mechanism; vectors, models, endpoints and reruns are not independent field incidents.",
+      "source_ids": [
+        33,
+        40
+      ]
+    },
+    {
+      "id": "S3-KERNELS",
+      "title": "Cursor/NVIDIA CUDA-kernel optimization",
+      "category": "boundary_case",
+      "evidence_class": "executed workload-derived optimization evaluation; not documented production deployment",
+      "document": "06-qualified-and-boundary-cases.md",
+      "distinctness": "Later separately disclosed workload in the Cursor harness lineage; language-separated runs retained as one evaluation family.",
+      "source_ids": [
+        19,
+        20
+      ]
+    },
+    {
+      "id": "S3-MOLTBOOK",
+      "title": "Moltbook launch-window identity and shared-content integrity failure",
+      "category": "boundary_case",
+      "evidence_class": "Real platform technical investigation; autonomous-collective attribution bounded",
+      "document": "06-qualified-and-boundary-cases.md",
+      "distinctness": "Distinct launch-window platform incident; authentication failure does not authenticate a swarm or downstream propagation.",
+      "source_ids": [
+        24,
+        25,
+        27,
+        31
+      ]
+    }
+  ],
+  "counting_boundary": "Episode/project families, not a verified swarm census; independent agent populations are not assumed.",
+  "seed_family_exclusions": [
+    "OpenAI Artifactory/Hugging Face including METR and SwarmTraces",
+    "Public-wiki task-sharing/collusion family",
+    "Glow PixelLeak",
+    "Anthropic emerging-multiagent report/examples"
+  ],
+  "stage2_integration": "deferred; not completed by this Stage 3 deliverable"
+}

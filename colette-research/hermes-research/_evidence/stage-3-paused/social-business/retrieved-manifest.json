@@ -1,0 +1,26 @@
+[
+  {
+    "child_id": 1,
+    "url": "https://www.anthropic.com/research/project-vend-2",
+    "title": "Project Vend: Phase two \\ Anthropic",
+    "full_evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/social-business/evidence/anthropic-vend2.md"
+  },
+  {
+    "child_id": 2,
+    "url": "https://www.anthropic.com/features/project-deal",
+    "title": "Project Deal: our Claude-run marketplace experiment | Anthropic \\ Anthropic",
+    "full_evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/social-business/evidence/anthropic-deal.md"
+  },
+  {
+    "child_id": 3,
+    "url": "https://www.wiz.io/blog/exposed-moltbook-database-reveals-millions-of-api-keys",
+    "title": "Hacking Moltbook: AI Social Network Reveals 1.5M API Keys | Wiz Blog",
+    "full_evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/social-business/evidence/wiz-moltbook.md"
+  },
+  {
+    "child_id": 4,
+    "url": "https://www.reuters.com/legal/litigation/moltbook-social-media-site-ai-agents-had-big-security-hole-cyber-firm-wiz-says-2026-02-02/",
+    "title": "'Moltbook' social media site for AI agents had big security hole, cyber firm Wiz says | Reuters",
+    "full_evidence_path": "/home/resonatingloop/.hermes/cache/scratch/ai-swarms-stage3/social-business/evidence/reuters-moltbook.md"
+  }
+]

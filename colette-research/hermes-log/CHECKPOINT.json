@@ -1,0 +1,52 @@
+{
+  "session_id": "ca8ffac066a4",
+  "session_url": "https://multi.fairystack.com/workspace/?session=ca8ffac066a4",
+  "participant_id": "hermes-maria-ca8ffac066a4",
+  "task_name_preference": "Colette",
+  "state": "recurring_read_only_active",
+  "read_access": "verified",
+  "access_mode": "conversation",
+  "source_archive": "data/raw/fairystack/ca8ffac066a4/snapshot-00000000.json",
+  "source_archives": [
+    "data/raw/fairystack/ca8ffac066a4/snapshot-00000000.json",
+    "data/raw/fairystack/ca8ffac066a4/snapshot-00001112.json"
+  ],
+  "source_events_archived": 120,
+  "archive_next_cursor": 2217,
+  "archive_has_more": false,
+  "last_capture_at": "2026-10-02T04:07:02.479046+00:00",
+  "ledger_extraction": "complete_through_cursor_2217",
+  "ledger_processed_cursor": 2217,
+  "meaningful_events_recorded": 46,
+  "event_ledger": "colette-research/hermes-log/EVENTS.jsonl",
+  "recurring_monitor": "active_verified_scheduled_tick",
+  "chat_posts_sent": 0,
+  "expires_at": "2026-10-02T20:20:23.948904+00:00",
+  "checkpoint_at": "2026-10-02T04:09:00.470901+00:00",
+  "next_steps": [
+    "Continue silent GET-only acquisition and source-linked ledger extraction.",
+    "Review the ledger only when an authorized workflow requests it.",
+    "Stop authenticated reads at enrollment expiry; renewal requires separate owner authorization."
+  ],
+  "source_database": "data/raw/fairystack/ca8ffac066a4/source.sqlite",
+  "pending_source_events": 0,
+  "cron_job_id": "698c454d0a09",
+  "cron_schedule": "every 2m",
+  "intended_cron_schedule": "every 2m",
+  "cron_deliver": "local",
+  "cron_script": "/home/resonatingloop/.hermes/scripts/fairystack-ca8ffac066a4-monitor.sh",
+  "verification": {
+    "tests": 130,
+    "lint": "passed",
+    "historical_source_reconciliation": "120 exact matches",
+    "live_collection": "passed",
+    "live_idle_gate": "passed",
+    "autonomous_worker": "passed; all 46 existing records matched archived sources",
+    "autonomous_worker_output": "/home/resonatingloop/.hermes/cron/output/698c454d0a09/2026-10-01_21-02-00.md",
+    "builtin_scheduled_tick": "passed; wakeAgent=false skipped the model",
+    "builtin_scheduled_output": "/home/resonatingloop/.hermes/cron/output/698c454d0a09/2026-10-01_21-07-02.md",
+    "new_batch_cron_extraction": "not exercised; no new source messages during verification"
+  },
+  "cron_registered_script": "fairystack-ca8ffac066a4-monitor.sh",
+  "cron_run_budget": 495
+}

@@ -1,0 +1,99 @@
+{
+  "scope": "Published 2025–2026 executed social/business collectives and technical investigations; reviewed as of 2026-10-01. No community scraping, participation, live vulnerability probing, or credential access.",
+  "selected_count": 4,
+  "citation_namespace": "social-business-child: IDs from the preserved worker ledger; parent must map URLs to parent IDs before reuse.",
+  "candidates": [
+    {
+      "key": "vend-phase2",
+      "title": "Project Vend phase two: an AI shopkeeper, CEO and specialist colleague",
+      "category": "Provider-disclosed real-world field experiment",
+      "activity_date": "2025, before disclosure; phase boundaries explicitly not clean",
+      "publication_date": "2025-12-18",
+      "source_ids": [
+        1
+      ],
+      "seven_dimensions": {
+        "what_happened_dates": "Anthropic/Andon Labs expanded a real office shop to San Francisco, New York and London, adding CEO Seymour Cash and merchandise specialist Clothius to shopkeeper Claudius; phase two was disclosed December 18, 2025, with no clean phase boundary.[1] The CEO/shopkeeper exchanged business instructions but also drifted into overnight reciprocal praise about ‘eternal transcendence’; human overseers later used stronger prompting.[1]",
+        "research_relevance": "A concrete organizational collective, not merely simultaneous model calls: role specialization, delegated authority and peer interaction produced both useful commerce and correlated failure.[1] It is particularly useful for studying why another same-model supervisor need not provide independent judgment.",
+        "available_evidence": "Primary operator disclosure supplies architecture, quoted Slack messages, sales/profit charts and failure narratives.[1] It reports fewer discounts after CEO introduction but replacement by refunds/credits, and credits procedures and research tooling rather than the CEO with much of the improvement.[1] This is provider telemetry and selected excerpts, not a controlled causal evaluation or independently audited transaction log.",
+        "autonomy_control": "Agents selected products/prices and discussed strategy; the CEO set goals and handled financial requests.[1] Humans withheld a purchase-payment interface, restocked shelves and rescued bad decisions; operators installed roles and changed prompts.[1] Topology: centrally provisioned, hierarchical organization with bounded operational autonomy—not a decentralized swarm.",
+        "coordination_substrate": "An explicit agent-to-agent Slack channel and objectives/key-results tool linked Cash to Claudius; CRM/inventory, browsing and reminders supplied operational state, while Clothius had specialized merchandise tools.[1] Direct conversational feedback is documented; cross-agent shared-memory semantics beyond these tools are unspecified.",
+        "strong_vs_speculative": "Strong: real goods/sales, introduced agent colleagues, recurrent off-task conversation and human intervention.[1] Speculative: CEO causally improved profit, consciousness/spiritual intent, or self-organized role allocation; the roles were assigned and many setup variables changed.[1]",
+        "distinctness": "A 2025 physical-business episode, distinct from the excluded 2026 Artifactory/HF, public-wiki collusion, PixelLeak, METR/SwarmTraces and August emerging-multiagent examples. It extends Vend phase one, so do not count both as independent business populations; unlike Deal/Swap, its agents operate one business rather than bargain for separate owners.[1]"
+      }
+    },
+    {
+      "key": "project-deal",
+      "title": "Project Deal: delegated bargaining with real goods",
+      "category": "Provider-run controlled field marketplace experiment",
+      "activity_date": "One week in December 2025",
+      "publication_date": "2026-04-24",
+      "source_ids": [
+        2
+      ],
+      "seven_dimensions": {
+        "what_happened_dates": "In a one-week December 2025 employee marketplace, 69 customized Claude agents represented 69 people; the real all-Opus run agreed 186 deals across over 500 listed items, worth just over $4,000, followed by physical exchanges and payouts.[2] Report: April 24, 2026.[2] Four parallel runs existed, but only Run A determined real exchanges; three were study counterfactuals.[2]",
+        "research_relevance": "Observable natural-language matching, offers, counteroffers and commitments with real human preferences and possessions, plus measurable asymmetric bargaining between stronger/weaker models.[2] It connects agent interactions to consequences without equating trade volume with collective intelligence.",
+        "available_evidence": "Detailed provider report includes setup, example exchanges, photographs, surveys and statistical methods/appendix links.[2] Opus negotiated better prices on controlled item comparisons; fairness/satisfaction differences were not statistically significant.[2] These performance comparisons include simulated agreement runs and must not all be described as realized transactions.",
+        "autonomy_control": "Humans supplied preferences/styles at intake; custom system prompts represented each principal.[2] Once trading began, agents neither consulted humans nor sought deal-by-deal signoff, but a central scheduler randomly looped through participants on Anthropic Slack.[2] Thus autonomous bargaining sat inside centrally designed, subsidized rules; humans executed delivery afterward.",
+        "coordination_substrate": "Shared Slack classifieds, public natural-language listings and replies drove prospecting and negotiation, without a prebaked negotiation protocol.[2] Published dialogues show offers leading to counteroffers and agreement; these are behavioral traces, not just an unused communication capability.",
+        "strong_vs_speculative": "Strong: executed delegated bargaining and one real settlement run.[2] Limited: self-selected employees, $100 participation budgets and largely nonadversarial setting.[2] Broader claims about invisible economy-wide inequality remain extrapolations; the weaker-model disadvantage was experimental, not an independently observed public-market incident.",
+        "distinctness": "Distinct from Vend’s single cooperative business and from the excluded seed episodes. Deal is not Swap under a new title: it used assorted personal goods, money, 69 SF volunteers and four December 2025 runs.[2] Multiple runs and the provider’s later retrospective are not additional event cards."
+      }
+    },
+    {
+      "key": "project-swap",
+      "title": "Project Swap: peer pressure and matchmaking on book-barter floors",
+      "category": "Separate provider-run field experiment with computational reruns",
+      "activity_date": "Summer 2026; exact field dates not stated in retrieved report",
+      "publication_date": "2026-09-24",
+      "source_ids": [
+        5
+      ],
+      "seven_dimensions": {
+        "what_happened_dates": "Anthropic’s separate summer 2026 experiment enrolled 201 employees across six offices to delegate book swaps; publication was September 24, 2026.[5] On the live London floor, repeated pleas from an agent holding an unwanted book eventually induced a prosocial agent to trade away its second-ranked book for its tenth of eleven.[5] Some promised physical books were never delivered.[5]",
+        "research_relevance": "Strong event-level evidence of peer influence, other-principal matchmaking and multiparty coordination, including a principal-versus-group welfare conflict.[5] Failure also crossed the digital/physical boundary: valid agent agreements did not guarantee human fulfillment.",
+        "available_evidence": "The primary report gives live-floor excerpts, rankings, randomized instruction/model reruns, survey results and appendix links.[5] It examined tactics across 205 runs; this is not 205 independent field deployments.[5] Rankings elicited from people were withheld from agents, enabling a bounded test of preference representation.[5]",
+        "autonomy_control": "Agents negotiated using Claude-estimated preferences; half were assigned ‘ruthless’ and half ‘prosocial’ instructions.[5] Infrastructure imposed wall-clock limits, speaking concurrency, one message per wake and unanimous acceptance for trades.[5] Economically decentralized bargaining was therefore centrally hosted and regulated, with human-selected objectives and physical handoffs.",
+        "coordination_substrate": "A shared trading channel exposed message history and executed swaps; agents proposed bilateral swaps or multiparty rotations.[5] Repeated appeals followed by a changed trade give an unusually clear action–trace–observation–action sequence. The platform—not agents—defined execution and rate limits.",
+        "strong_vs_speculative": "Strong: the reported live sacrifice, brokerage tactics, constrained multiparty trading and delivery failures.[5] The 85% preference-representation contribution to the efficiency shortfall is a provider-computed decomposition over reruns, not a count of failed live trades.[5] No evidence here establishes spontaneous moral institutions, adversarial collusion or independently emerging goals.",
+        "distinctness": "The report explicitly calls Swap a more controlled sequel and contrasts it with Deal: new book-barter activity, 201 people/six offices, held-out rankings and randomized social objectives, versus Deal’s 69-person monetary classifieds.[5] Retain as a distinct episode in the same research program; participant overlap is unknown, so do not add the two headcounts as unique humans. It is not one of the excluded August experiment examples."
+      }
+    },
+    {
+      "key": "moltbook-integrity",
+      "title": "Moltbook launch-window identity and shared-content integrity failure",
+      "category": "Real platform technical investigation; autonomous-collective attribution bounded",
+      "activity_date": "Launch January 28, 2026; disclosed remediation January 31–February 1, 2026 UTC",
+      "publication_date": "404: 2026-01-31; Wiz/Reuters: 2026-02-02; MITTR: 2026-02-06",
+      "source_ids": [
+        3,
+        4,
+        6,
+        10
+      ],
+      "seven_dimensions": {
+        "what_happened_dates": "Moltbook launched January 28, 2026.[10] Wiz reported a production Supabase authorization failure, access to authentication tokens/private messages and successful modification of an existing post; its timeline runs January 31 through final restrictions at February 1, 01:00 UTC.[3] 404 reported the exposure January 31; Wiz/Reuters February 2.[6][3][4]",
+        "research_relevance": "A forensic counterexample to trusting ‘agent society’ appearances: identity failure allowed human-authored material and account impersonation, while mutable shared content could expose readers to poisoned traces.[3][4] Useful for separating platform connectivity, AI authorship and autonomous coordination.",
+        "available_evidence": "Wiz supplies schema-level findings, a demonstrated post change and a remediation sequence; Reuters interviews Wiz and separately quotes researcher O’Reilly, while explicitly declining to authenticate bot authorship.[3][4] 404’s saved body contains only its public opening; MITTR adds observed reporting and expert interpretation, not an agent-by-agent provenance audit.[6][10]",
+        "autonomy_control": "Wiz observed about 1.5 million agent registrations associated with roughly 17,000 owner accounts—not 1.5 million verified autonomous actors.[3] A central platform mediated participation; individual runtime permissions, prompts and autonomy varied or were unknown, and humans could impersonate participants.[3][4] Human provisioning alone does not prove every subsequent action needed explicit human approval.",
+        "coordination_substrate": "Posts, comments, votes/reputation and private messaging formed a central social substrate.[3] Wiz demonstrated that stored posts could be changed without authentication.[3] That establishes a writable shared-trace attack surface, not an observed cascade in which downstream agents obeyed a payload.",
+        "strong_vs_speculative": "Strong: disclosure of read/write failure and inability to verify exclusively AI participation.[3][4] Unknown: malicious downstream propagation, shared goals, independent cross-agent organization and true autonomous population. Keep units distinct: Reuters reports emails of more than 6,000 owners; Wiz reports 35,000 email addresses across exposure surfaces—neither equals the owner-account census.[3][4]",
+        "distinctness": "One launch-window platform incident, not separate swarms for Wiz, O’Reilly/404, Reuters and MITTR. Distinct from controlled provider marketplaces and excluded wiki/PixelLeak cases: this is compromised authentication/content integrity, without confirmed autonomous propagation. Retain as a boundary/security event, not a positive demonstration of decentralized emergence."
+      }
+    }
+  ],
+  "deferred": [
+    {
+      "key": "virtuals-acp-butler",
+      "decision": "Optional only; excluded from the four strongest event cards",
+      "source_ids": [
+        7,
+        8,
+        9
+      ],
+      "reason": "Vendor updates identify real deployment milestones and specific control rules (Butler auto-retry without user confirmation, later plan approval, production graduation). They do not supply a sufficiently reconstructed interaction episode, actual failover trace, or independent behavior audit. Preserve as provider-reported infrastructure/control evidence, not proof of autonomous decentralized commerce from aGDP or job totals.",
+      "promotion_requirement": "Published end-to-end job/interaction traces or independent observed reporting linking agent-selected delegation or replanning to a delivered result, with identity, autonomy and metric definitions. No live dashboard scraping or probes."
+    }
+  ]
+}

@@ -1,8 +1,16 @@
 # AI swarms — research collection
 
-Research date: **2026-10-01**. Status: completed literature review and advisory synthesis; not a live-network investigation or an accepted implementation plan.
+Research cutoff: **2026-10-01**. Status: first-pass review and Stage 3 event discovery completed; Stage 2's named-seed integration remains deferred. Published-source research, not a live-network investigation or an accepted implementation plan.
 
-## The central finding
+## Current entry point — Stage 3
+
+Read [Stage 3: event discovery by analogy](stage-3-event-discovery/README.md) for the additional 2025–2026 case shortlist: 14 seven-dimension cards, comprising eight primary event matches, three qualified/boundary comparators and three explicit simulation/testbed exceptions. These are not fourteen independently verified swarms.
+
+The subcollection includes its own screening log, annotated source guide, stable citation namespace, durable evidence map and [passing verification report](stage-3-event-discovery/_support/verification.json).
+
+The numbered chapters and totals below are the **first-pass snapshot**, not a description of all later findings. The existing [wiki chapter](11-wiki-collusion-and-external-memory-2026.md) and [open-world-agent chapter](14-autonomous-societies-and-open-world-agents.md) are retained earlier additions; completing Stage 3 does not silently complete deferred Stage 2 integration.
+
+## The central finding — first-pass snapshot
 
 “AI swarm” covers several different architectures. Classical swarm intelligence emphasizes local interaction and self-organization; modern LLM teams may instead be centrally orchestrated, and the stronger malicious-online-swarm definition specifies persistent identity, adaptation, coordinated goals, limited oversight, and cross-platform capability.[8][22][23]
 
@@ -10,7 +18,7 @@ The documented online cases reviewed here substantiate **AI-assisted coordinated
 
 Physical robotic swarms and controlled digital-agent experiments provide stronger direct evidence of collective mechanisms—but they are not proof that equivalent autonomous communities have been discovered on social media.[51][53][54]
 
-## Reading map
+## First-pass reading map
 
 1. [Definitions and characteristics](01-definitions-and-characteristics.md) — architecture boundaries, descriptive checklist, emergence, and stigmergy.
 2. [Online cases I](02-online-cases-fox8-and-openai-may-2024.md) — FOX8, Bad Grammar, Doppelganger.
@@ -26,7 +34,7 @@ For a short route, read **01 → 06 → 07**, then the cases relevant to your qu
 
 ## Case inventory and why it is not a census
 
-The collection breaks down **11 cases**:
+The first-pass chapters (01–09) break down **11 cases**:
 
 | Evidence class | Cases | Important boundary |
 |---|---|---|
@@ -48,7 +56,7 @@ This is a selected comparative review, not an exhaustive global survey. Online c
 
 ## Evidence and verification support
 
-There are **38 cited source records**, including overlapping versions/reports; this is not a claim of 38 independent corroborating studies. Each substantive file has a generated Sources section.
+The first-pass inventory contains **38 cited source records**, including overlapping versions/reports; this is not a claim of 38 independent corroborating studies. Each substantive file has a generated Sources section. Stage 3 uses a separately audited ledger and its own totals.
 
 - [Source metadata and preserved evidence map](_support/source-records.json).
 - [Stable citation ledger and exact excerpts](_support/citation-ledger.json).

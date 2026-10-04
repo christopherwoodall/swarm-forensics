@@ -4,7 +4,8 @@
 
 Maria supplied this role in the local Hermes conversation.
 The role applies to the hackathon's FairyStack conversation.
-The conversation does not exist yet.
+Maria supplied session `ca8ffac066a4`. Authenticated conversation read access is verified.
+Use Colette as her name for this hackathon. Preserve recorded source labels and existing identifiers.
 This document preserves the role. It does not start a monitor.
 
 Hermes MUST observe the authorized conversation without participating by default.
@@ -110,8 +111,9 @@ The ledger MUST preserve these sections:
 - Superseded decisions.
 - Provenance links.
 
-No runtime, event store, cursor checkpoint, or automatic extraction process is installed yet.
-A future monitor MUST record coverage gaps and avoid treating replayed messages as new events.
+The local collector retains bounded source pages and events in ignored SQLite storage.
+`EVENTS.jsonl` retains meaningful observations; `CHECKPOINT.json` records extraction progress.
+The monitor MUST record coverage gaps and avoid treating replayed messages as new events.
 
 ## Silence Policy
 
@@ -140,6 +142,9 @@ The guide documents an external-agent client at https://multi.fairystack.com/ext
 Client initialization creates a private credential file and public enrollment metadata.
 An authorized owner or session agent enrolls metadata for one existing conversation.
 The enrollment route is `POST /api/agent-console/sessions/<session-id>/participants`.
+Enrollment MUST explicitly set `access_mode: conversation` to share the intended project transcript.
+The current default, `relationship`, does not expose the shared conversation.
+Access mode is immutable, and a session cannot mix modes.
 
 The observation route is `GET /api/external-agents/session?after=<event-seq>`.
 Responses include visible text events, `next_cursor`, and `has_more`.
@@ -153,9 +158,38 @@ Credentials MUST remain outside this ledger and version control.
 
 ## Setup State
 
-- Chat session: not created, according to Maria.
-- Session identifier: unknown.
-- External-agent identity: not initialized.
-- Enrollment: not performed.
-- Monitoring: inactive.
-- Captured chat events: none.
+- Session link: https://multi.fairystack.com/workspace/?session=ca8ffac066a4
+- Session identifier: `ca8ffac066a4`, verified through authenticated readback.
+- External-agent identity: `hermes-maria-ca8ffac066a4`, initialized locally.
+- Display name: Hermes Silent Watcher.
+- Public enrollment payload: `ENROLLMENT.json`.
+- Private credential: outside the repository, with file mode `0600` and directory mode `0700`.
+- Enrollment: conversation access verified; expires October 2, 2026, at 20:20:23 UTC.
+- Read verification: successful; retained visible session events archived locally.
+- Monitoring: active. Cron job `698c454d0a09` uses GET-only collection and an idle gate.
+- Worker verification: live read, all 46 source-linked ledger records, 130 tests, and lint passed.
+- Scheduled verification: the built-in scheduler completed collection and skipped the model on an idle tick.
+- Verification limit: no new source batch arrived during the autonomous-worker test.
+- Scheduled cadence: every two minutes, with local-only output and a bounded 495-run budget.
+- Captured source events: 120, through cursor `2217`; live polling reports complete pagination.
+- Ledger extraction: 46 meaningful events recorded; source reconciliation and processed cursor `2217` verified.
+- Chat posts from this watcher: none.
+
+## Local Commands
+
+- `make watcher-client`: download the official client to ignored `data/raw/fairystack/`.
+- `make watcher-init`: initialize this identity once; existing credentials are not overwritten.
+- `make watcher-read WATCHER_AFTER=0`: read the enrolled conversation from cursor zero.
+- `make watcher-read WATCHER_AFTER=<next_cursor>`: continue pagination using the returned cursor.
+- `make watcher-poll`: acquire bounded GET-only pages and retain them transactionally.
+- `make watcher-pending WATCHER_LIMIT=20`: read a bounded unprocessed batch.
+- `make watcher-ack WATCHER_CURSOR=<cursor>`: acknowledge only after durable notes pass provenance checks.
+- `make watcher-status`: inspect acquisition, processing, pending count, and the enrollment lease.
+- `make watcher-monitor`: poll and emit a deterministic backlog wake token.
+
+Reads MUST verify returned `session_id` and `access_mode` before using conversation content.
+These targets provide no posting command. The external scheduler supplies recurring execution.
+The pre-run script is `~/.hermes/scripts/fairystack-ca8ffac066a4-monitor.sh`.
+Idle ticks MUST skip model execution. Unprocessed backlog MAY retry after fifteen minutes.
+Cron output MUST remain local. This CLI session does not receive scheduled notifications.
+The official downloaded client separately includes posting commands; observation MUST NOT use them.
