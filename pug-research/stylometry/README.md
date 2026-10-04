@@ -9,39 +9,41 @@ Compare pairs of partitions, not merged monoliths.
 
 | Partition | Source (read-only) | Text extracted | Docs | Sampling rule |
 |---|---|---|---|---|
-| `gems` | `silent-locus/data/processed/gems/` (618 dirs) | Gem directory names plus non-empty `.gemspec`/`.rb`/`.md`/`.txt` files | 618 | All. Names are agent-chosen and carry the signal. |
+| `gems_names` | `silent-locus/data/processed/gems/` (617 dirs, `oai-1.3.0` excluded) | Directory names only (agent-chosen) | 617 | All |
 | `traces` | `silent-locus/openai-agent-traces/data/traces.jsonl` (936 MB) | `source_url`, query parameter names and values, attribution note, tags | ~5% of lines | Every 20th line. Deterministic. |
+| `traces_clean` | same | `source_url`, query parameter names/values only (no analyst notes/tags) | ~5% of lines | Every 20th line. Deterministic. |
 | `wiki` | `silent-locus/data/2026-05-17-collusion-wiki/raw/revisions.jsonl` (41 MB) | Revision `body` (raw wiki markup, uncleaned) | 14,591 | All. |
 | `evals` | `silent-locus/data/2026-10-01-deepsearchqa/questions.jsonl` | Question `problem` text | 900 | All. |
 
-## Exclusions
+Removed: `gems_code` (740 files, median 1 byte — empty scaffolds; zero
+provider markers after the `oai-1.3.0` exclusion; bust per partition audit,
+2026-10-04). The mixed `gems` partition is superseded by `gems_names`.
 
-- `pages.jsonl`: aggregates revision bodies. Including it would double-count wiki text.
-- `data/2025-12-04-urlquery-marker-sweep/events.jsonl`: analyst prose, not agent text. Superseded by `traces.jsonl`.
-- `labels.jsonl`, `links.jsonl`: metadata, not agent prose.
+## AI Village side (data landed 2026-10-04)
 
-## AI Village side (blocked)
+All five tables in `data/raw/` (gated; downloaded with granted access):
+`chat_messages.jsonl.gz` (52 MB), `agent_memories.jsonl.gz` (1.9 GB),
+`agent_goals.jsonl.gz` (33 goals), `claude_code_messages.jsonl.gz` (104 MB),
+`computer_use_turns.jsonl.gz` (2.47 GB; first download was truncated at
+2.0 GB — gzip EOFError — resumed via HTTP 206 and verified with `gzip -t`).
 
-The `aidigestorg/ai-village` dataset is gated. Access needs manual review.
-The VM token returns 401 on all data files. Only the README is public.
-
-Planned partitions (run after access is granted):
-- `village_chat`: `chat_messages.jsonl.gz`, grouped by task via `agent_goals`.
-- `village_memories`: `agent_memories.jsonl.gz`, grouped by task.
-- `village_goals`: `agent_goals.jsonl.gz` (task descriptions).
-- `village_code`: `claude_code_messages.jsonl.gz`, grouped by task.
-- `village_computer`: `computer_use_turns.jsonl.gz`, grouped by task.
-
-Task grouping uses the goal/task IDs in `agent_goals`. The comparison then
-becomes task-vs-task-family, not corpus-vs-corpus.
-
-To proceed: request access at `https://huggingface.co/datasets/aidigestorg/ai-village`,
-then run `./fetch_aivillage.sh`. Dataset terms: research and analysis only.
-No training without written permission. No re-identification. Cite AI Digest.
+Functionally-matched v2 partitions (see `build_lexdb_v2.py`). Large village
+partitions use deterministic 1-in-N systematic sampling (same principle as
+the v1 traces 1-in-20; full builds infeasible on the shared 2-CPU box):
+- `ours_wiki` ↔ `vil_chat_agent` (speaker_type='agent' only, 1-in-5;
+  `vil_chat_all` 1-in-5 kept for the contamination check)
+- `ours_evals` ↔ `vil_goals` (33 goals, all)
+- `ours_gems_names` ↔ `vil_code` (claude_code assistant messages, 1-in-5)
+- `ours_traces` / `ours_traces_clean` ↔ `vil_computer_lex` (1-in-20)
+- `vil_memories` — village-only reference, 1-in-10 (long-horizon agent voice)
 
 ## Tokenizers
 
-- `word`: lowercase alphanumeric tokens.
+- `word`: lowercase alphanumeric tokens (percent-decoded first).
+- `subword`: case/digit/separator splits + greedy morpheme splitting on long
+  (>=10 char) tokens — `agentoaitestabc123` → `agent oai test abc 123`.
+  Morpheme list is documented in `build_lexdb.py`; ordinary English words are
+  never over-split (length gate).
 - `char4`: character 4-grams. Robust to deliberate obfuscation.
 - `funcwords`: function words only. Style signal without topic signal.
 
