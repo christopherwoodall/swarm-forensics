@@ -42,6 +42,6 @@ Preserve the independent app repository and its hosted deployment.
 - Each worker run has a 15-minute overall deadline and an exclusive scheduler lock.
 
 ## 5. Pruned Decisions
+- [2026-10-04 Codex]: Parse NUL-delimited Git status without trimming its leading status columns.
 - [2026-10-04 Codex]: Automate verified snapshot merges. Keep commands inside Jesse's directory after the parent layout change.
 - [2026-10-04 Codex]: Add a repeatable committed snapshot import. Include MCP synchronization and bounded runtime commands.
-- [2026-10-04 Codex]: Import committed source. Exclude credentials, runtime data, dependencies, and source-specific agent directives.

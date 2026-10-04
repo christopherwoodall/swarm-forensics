@@ -16,6 +16,15 @@ export function verifyMerge(base,testedBase,head,testedHead){
  if(base!==testedBase)throw Error('Target main changed during checks. Retry against the new revision.');
  if(head!==testedHead)throw Error('Pull request changed after checks. Retry with the current revision.');
 }
+export function snapshotOnly(status){
+ const entries=status.split('\0').filter(Boolean);
+ for(let i=0;i<entries.length;i++){
+  const entry=entries[i];
+  if(entry[2]!==' '||!entry.slice(3).startsWith('experiments/jesse/'))return false;
+  if(/[RC]/.test(entry.slice(0,2))&&!entries[++i]?.startsWith('experiments/jesse/'))return false;
+ }
+ return true;
+}
 export function autoSync(configFile){
  const stat=fs.lstatSync(configFile);
  if(!stat.isFile()||stat.uid!==process.getuid()||(stat.mode&0o077))throw Error('Private configuration MUST be an owner-only file.');
@@ -33,7 +42,7 @@ export function autoSync(configFile){
   const remaining=Math.floor((deadline-Date.now())/1000);if(remaining<=0)throw Error('Overall synchronization deadline expired.');
   status('running');
   fs.writeSync(log,`${new Date().toISOString()} ${step}: ${command}\n`);
-  try{const output=execFileSync('timeout',['--kill-after=5s',`${Math.min(seconds,remaining)}s`,command,...args],{cwd,env:environment,timeout:(Math.min(seconds,remaining)+10)*1000,maxBuffer:32*1024*1024,stdio:['ignore','pipe',log]});fs.writeSync(log,output);return output.toString().trim();}
+  try{const output=execFileSync('timeout',['--kill-after=5s',`${Math.min(seconds,remaining)}s`,command,...args],{cwd,env:environment,timeout:(Math.min(seconds,remaining)+10)*1000,maxBuffer:32*1024*1024,stdio:['ignore','pipe',log]});fs.writeSync(log,output);return output.toString().trimEnd();}
   catch{throw Error(`${step} failed or timed out. Inspect the private run log.`);}
  };
  const gh=(...args)=>run('gh',args);
@@ -57,7 +66,7 @@ export function autoSync(configFile){
   const moduleFile=path.join(working,'experiments/jesse/MODULE.md');let module=fs.readFileSync(moduleFile,'utf8');
   module=module.replace(/- Imported version: .*/,`- Imported version: ${snapshot.version}.`).replace(/- Source revision: .*/,`- Source revision: ${revision}.`);fs.writeFileSync(moduleFile,module);
   step='checks';runChecks((command,args,seconds)=>run(command,args,seconds,working));
-  if(git(working,'status','--short').split('\n').some(line=>line&&!/^.. experiments\/jesse\//.test(line)))throw Error('Checks modified files outside the snapshot directory.');
+  if(!snapshotOnly(git(working,'status','--porcelain=v1','-z','--untracked-files=all')))throw Error('Checks modified files outside the snapshot directory.');
   step='publish pull request';
   verifyMerge(api(`repos/${targetRepository}/commits/main`).sha,base,revision,revision);
   git(working,'add','experiments/jesse');git(working,'commit','-m',`feat: synchronize Jesse source to ${snapshot.version}`);
