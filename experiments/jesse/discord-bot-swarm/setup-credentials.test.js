@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import {SetupCredentials,setupExchangeHandler} from './setup-credentials.js';
 import {Kanban} from './kanban.js';
-import {coordinationServer} from './mcp.js';
-import {Client} from '@modelcontextprotocol/sdk/client/index.js';
-import {InMemoryTransport} from '@modelcontextprotocol/sdk/inMemory.js';
+import {agentOperations} from './agent-api.js';
+const coordinationServer=deps=>testOperations(deps,agentOperations);
+import {OperationClient as Client,linkedPair,testOperations} from './operation-test-client.js';
+
 const relayId='11111111-1111-4111-8111-111111111111',other='22222222-2222-4222-8222-222222222222';
 function fixture(){let issued,used=false;const agents=[];const query=async(sql,args)=>{
  if(sql.startsWith('INSERT INTO mcp_setup_tokens')){issued=args[0];return {rows:[{expires_at:new Date()}]};}
@@ -25,7 +26,7 @@ test('malformed exchange does not consume a valid token; expiry and missing owne
 });
 test('scoped agent exposes Discord tools but cannot use another relay or list other relays',async()=>{
  const calls=[];const pool={query:async(sql,args)=>{calls.push(args);return {rows:[{id:relayId,config:{name:'Test'}}]};}};
- const server=coordinationServer({pool,owner:'alice',version:'test',principal:{owner:'alice',kind:'agent',actor:'a',relayId},relay:{profile:async()=>({id:'bot',username:'Test'})}}),client=new Client({name:'test',version:'1'});const [a,b]=InMemoryTransport.createLinkedPair();await server.connect(a);await client.connect(b);
+ const server=coordinationServer({pool,owner:'alice',version:'test',principal:{owner:'alice',kind:'agent',actor:'a',relayId},relay:{profile:async()=>({id:'bot',username:'Test'})}}),client=new Client({name:'test',version:'1'});const [a,b]=linkedPair();await server.connect(a);await client.connect(b);
  try{const names=(await client.listTools()).tools.map(t=>t.name);assert.ok(names.includes('discord_update_bot_profile'));for(const name of ['discord_get_bot_profile','discord_get_agent_personality','discord_set_agent_personality']){const r=await client.callTool({name,arguments:{relayId:other,...(name==='discord_set_agent_personality'?{personality:'test'}:{})}});assert.equal(r.isError,true);}assert.equal(calls.length,0);await client.callTool({name:'discord_list_relays',arguments:{}});assert.deepEqual(calls[0],['alice',relayId]);const r=await client.callTool({name:'discord_get_bot_profile',arguments:{relayId}});assert.ok(!r.isError);}finally{await client.close();await server.close();}
 });
 test('exchange rejects foreign origins and hides storage errors',async()=>{

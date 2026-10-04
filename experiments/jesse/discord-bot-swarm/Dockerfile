@@ -10,7 +10,7 @@ ENV NODE_ENV=production PORT=3000 DATA_DIR=/var/lib/swarm
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && mkdir -p /var/lib/swarm && chown node:node /var/lib/swarm && chmod 700 /var/lib/swarm
-COPY --chown=node:node server.js channel-setup.js config.js authentication.js core.js research.js vault.js store.js experiment.js discord.js discord-memory.js discord-commands.js chat-settings.js kanban.js setup-credentials.js relay-records.js mcp.js VERSION ./
+COPY --chown=node:node server.js channel-setup.js config.js authentication.js core.js research.js vault.js store.js experiment.js discord.js discord-memory.js discord-commands.js chat-settings.js kanban.js setup-credentials.js relay-records.js agent-api.js agent-sync.js bot-settings-migration.js VERSION ./
 COPY --chown=node:node frontend ./frontend
 COPY --chown=node:node deploy/fairystack/adapter.js ./deploy/fairystack/adapter.js
 COPY --from=build --chown=node:node /app/frontend/auth-oidc.js /app/frontend/THIRD_PARTY_NOTICES.txt ./frontend/
