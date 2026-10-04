@@ -238,6 +238,8 @@ class Engine:
                 self._say(hid, "sweep", "%s: %d queries, %d hits" % (source_name, ran, found))
             if clean:
                 self.p.ledger.set_cursor(source_key, "since", now()[:10])
+                if isinstance(source, dict) and source.get("kind"):
+                    self.p.ledger.set_cursor(source["kind"], "since", now()[:10])
 
         can_probe = "index" in cfg["hunt.sources"] or "cdx" in cfg["hunt.sources"]
         if can_probe:
