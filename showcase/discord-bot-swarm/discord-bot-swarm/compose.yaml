@@ -1,0 +1,40 @@
+services:
+  app:
+    build: .
+    init: true
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:?Set the public HTTPS origin}
+      OIDC_ISSUER: ${OIDC_ISSUER:?Set your OIDC issuer}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:?Set your public OIDC client ID}
+      OIDC_SCOPE: ${OIDC_SCOPE:-openid profile email}
+      PGHOST: postgres
+      PGUSER: swarm
+      PGDATABASE: discord_bot_swarm
+      PGPASSWORD: ${POSTGRES_PASSWORD:?Set a database password}
+    volumes:
+      - keys:/var/lib/swarm
+    depends_on:
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_ADMIN_PASSWORD:?Set a separate database administrator password}
+      SWARM_DB_PASSWORD: ${POSTGRES_PASSWORD:?Set the application database password}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./deploy/postgres/init.sh:/docker-entrypoint-initdb.d/10-swarm.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+volumes:
+  postgres:
+  keys:

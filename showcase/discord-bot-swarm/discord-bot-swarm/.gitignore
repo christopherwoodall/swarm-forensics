@@ -1,0 +1,16 @@
+node_modules/
+.env
+*.log
+data/
+traces/
+notes/
+playwright-report/
+test-results/
+*.sqlite*
+.env.*
+!.env.example
+credential-key
+*.pem
+*.key
+*.sql
+*private-test-login*.json
