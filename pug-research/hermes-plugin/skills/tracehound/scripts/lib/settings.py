@@ -22,13 +22,13 @@ class SettingsError(Exception):
     """Raised when a setting key or value fails validation."""
 
 
-# key -> (kind, extra...). Kinds: bool, int(min,max), contact, claim, list,
-# firewall. Every key is addressed as "section.option".
+# key -> (kind, extra...). Kinds: bool, int(min,max), str, contact, claim,
+# list, firewall. Every key is addressed as "section.option".
+# NOTE: there is no [schedule] section. Hunts are human-triggered;
+# nothing is scheduled, so schedule.* keys were removed (2026-10-04).
 SCHEMA = {
-    "schedule.scan_interval_hours": ("int", 1, None),
-    "schedule.research_interval_hours": ("int", 24, None),
-    "schedule.predict_interval_hours": ("int", 1, None),
-    "schedule.update_interval_hours": ("int", 1, None),
+    "hunt.default_sources": ("str",),
+    "hunt.default_cap": ("int", 0, None),
     "sources.urlquery_enabled": ("bool",),
     "sources.cdx_enabled": ("bool",),
     "sources.arquivo_enabled": ("bool",),
@@ -47,6 +47,11 @@ SCHEMA = {
     "safety.private_mode": ("bool",),
     "safety.firewall_mode": ("firewall",),
     "safety.alert_on_claim_level": ("claim",),
+    "safety.exclusion_terms": ("list",),
+    "chat.model_enabled": ("bool",),
+    "chat.endpoint": ("str",),
+    "chat.api_key_env": ("str",),
+    "chat.model": ("str",),
 }
 
 _TRUE = {"true", "1", "yes", "on"}
@@ -95,6 +100,8 @@ def validate(key, value):
                 "URL) so source operators can reach the hunter")
         if not stored:
             raise SettingsError("user_agent MUST NOT be empty")
+    elif kind == "str":
+        stored = str(value).strip()
     elif kind == "firewall":
         v = str(value).strip().lower()
         if v == "enforcing":

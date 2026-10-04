@@ -256,7 +256,7 @@ A later PR adds a `catalog=` variant:
 Our link:
 
 ```
-hermes://plugin/install?repo=christopherwoodall/swarm-forensics&enable=1
+hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1
 ```
 
 `enable=1` follows the doc example, but the confirm-first dialog
@@ -264,6 +264,25 @@ still appears, and the plugin ships `defaultEnabled: false`: it
 inventories in Capabilities → Plugins and stays off until the user
 toggles it — plus the separate `plugins.enabled` gate in
 `config.yaml` for the Python backend (Gap 5, two toggles).
+
+**Subdirectory installs [DOC — installer source].** The deeplink
+parser (`apps/desktop/src/lib/deeplink-routes.ts`,
+`resolveDeepLinkAction`) accepts only `repo`, `enable`, `force`,
+and `catalog` — there are NO `path=` or `ref=` parameters. The
+subdirectory rides inside `repo` as path segments:
+`resolvePluginGitUrl`
+(`apps/desktop/electron/desktop-plugin-install.ts`) splits
+`owner/repo/<subdir…>` into a git URL plus a subdirectory, then
+sparse-checkouts only that folder. The probe (`findDesktopEntry`,
+same file) looks for `<dir>/plugin.js` or `<dir>/desktop/plugin.js`;
+tracehound ships `desktop/plugin.js`, so the desktop component is
+detected. The agent half is a Hermes skill (installed separately),
+not a `plugin.yaml`/`plugin.json` agent plugin, so the dialog
+offers the desktop component. **Default branch only:** the
+installer clones `--depth 1` with no `-b` flag — the GitHub
+`/tree/<branch>/` URL form does not change this. The plugin is on
+`pug-scratch`; the link resolves only after it is merged to the
+default branch (`main`).
 
 The dashboard exposes the link in Settings → About, with a
 copy-button and the confirm-first explanation. That section also

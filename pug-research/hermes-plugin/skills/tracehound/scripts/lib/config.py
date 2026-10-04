@@ -8,13 +8,12 @@ HERE = Path(__file__).resolve().parent.parent.parent  # skills/tracehound/
 
 def _defaults():
     # Defaults follow HERMES_DESKTOP.md section 3 (adversarial mitigations):
-    # daily sweeps, smaller pages, longer delays, quarantine-by-default.
+    # human-triggered hunts only (no [schedule] section exists), smaller
+    # pages, longer delays, quarantine-by-default.
     return {
-        "schedule": {
-            "scan_interval_hours": "24",
-            "research_interval_hours": "168",
-            "predict_interval_hours": "24",
-            "update_interval_hours": "24",
+        "hunt": {
+            "default_sources": "urlquery,cdx,arquivo",
+            "default_cap": "200",
         },
         "sources": {
             "urlquery_enabled": "true",
@@ -43,6 +42,12 @@ def _defaults():
             "firewall_mode": "advisory",
             "alert_on_claim_level": "L3",
             "exclusion_terms": "",
+        },
+        "chat": {
+            "model_enabled": "false",
+            "endpoint": "",
+            "api_key_env": "TRACEHOUND_CHAT_KEY",
+            "model": "",
         },
         "paths": {
             "state_dir": "state",

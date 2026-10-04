@@ -15,19 +15,25 @@ review queue. Nothing promotes without a human decision.
 
 ## Install path 1: install link (recommended)
 
-[Install tracehound in Hermes](hermes://plugin/install?repo=christopherwoodall/swarm-forensics&enable=1)
+[Install tracehound in Hermes](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1)
 
-The link follows the SDK's documented install-link format
-(`website/docs/developer-guide/desktop-plugin-sdk.md`, section
-"Distributing with an install link"). The app shows a confirm-first
-dialog: repo identity, source links, and a probe of what the repo
-ships. You pick components before anything installs. Deep links
-NEVER auto-install. `enable=1` follows the doc example; the dialog
-still appears.
+The plugin subdirectory rides inside the `repo` parameter as path
+segments. That is the documented mechanism:
+`apps/desktop/electron/desktop-plugin-install.ts`
+(`resolvePluginGitUrl`) splits `owner/repo/<subdir…>` into a git
+URL plus a subdirectory and sparse-checkouts only that folder.
+There are no `path=` or `ref=` parameters — do not add them. The
+installer probes the subdirectory for `<dir>/plugin.js` or
+`<dir>/desktop/plugin.js`; tracehound ships `desktop/plugin.js`,
+so the desktop component is detected.
 
-What to expect in the dialog: tracehound ships inside the
-`pug-research/hermes-plugin/skills/tracehound/` subdirectory of the
-repo. The installer probes the repo for agent and desktop artifacts.
+The app shows a confirm-first dialog: repo identity, source links,
+and the probe result. You pick components before anything installs.
+Deep links NEVER auto-install.
+
+REQUIREMENT: the installer clones `--depth 1` of the repo's
+DEFAULT branch only (`main`). The plugin is on `pug-scratch`
+until merged — the link resolves only after the merge.
 Pick both components: the agent skill (Python backend at
 `dashboard/plugin_api.py`) and the desktop UI (`desktop/plugin.js`).
 

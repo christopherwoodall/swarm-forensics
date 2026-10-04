@@ -1,8 +1,11 @@
 # Tracehound
 
-**Install:** the one-click install link is being corrected (it must
-point at the plugin subdirectory, not the repo root). Until the
-fixed link lands, install manually — full instructions:
+**Install:** [one-click install
+link](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1)
+(confirm-first dialog; the subdirectory rides in the `repo`
+parameter per the SDK installer source). The link resolves only
+once the plugin is merged to the repo's default branch (`main`);
+until then install manually — full instructions:
 [HERMES_SETUP.md](HERMES_SETUP.md).
 
 ## What it is
