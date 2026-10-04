@@ -7,6 +7,7 @@ const fail=(message,status=409)=>{throw Object.assign(Error(message),{status});}
 export async function kanbanSchema(pool){await pool.query(`
 CREATE TABLE IF NOT EXISTS kanban_agents(id uuid PRIMARY KEY,owner text NOT NULL,name text NOT NULL,token_hash text UNIQUE NOT NULL,expires_at timestamptz NOT NULL,revoked_at timestamptz,created_at timestamptz NOT NULL DEFAULT now());
 ALTER TABLE kanban_agents ADD COLUMN IF NOT EXISTS relay_id uuid;
+DO $$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname='kanban_agent_relay_fk' AND conrelid='kanban_agents'::regclass) THEN ALTER TABLE kanban_agents ADD CONSTRAINT kanban_agent_relay_fk FOREIGN KEY(relay_id) REFERENCES swarms(id) ON DELETE CASCADE; END IF; END $$;
 ALTER TABLE kanban_agents ADD COLUMN IF NOT EXISTS last_seen_at timestamptz;
 CREATE TABLE IF NOT EXISTS kanban_tasks(id uuid PRIMARY KEY,owner text NOT NULL,title text NOT NULL,description text NOT NULL,state text NOT NULL DEFAULT 'queued',assignee text,lease_until timestamptz,dependencies uuid[] NOT NULL DEFAULT '{}',note text NOT NULL DEFAULT '',revision integer NOT NULL DEFAULT 1,updated_at timestamptz NOT NULL DEFAULT now());
 ALTER TABLE kanban_tasks ADD COLUMN IF NOT EXISTS board_key text;
@@ -32,7 +33,6 @@ CREATE INDEX IF NOT EXISTS kanban_board_events ON kanban_events(board_key,seq);
 export class Kanban{
  constructor(pool){this.pool=pool;}
  async principal(token,authenticate){
-  if(token.startsWith('swarm_setup_'))fail('Exchange the single-use setup token before using the agent API.',401);
   if(!token.startsWith('swarm_agent_'))return {owner:await authenticate(token),actor:'owner',kind:'owner'};
   const a=(await this.pool.query('SELECT id,owner,relay_id FROM kanban_agents WHERE token_hash=$1 AND revoked_at IS NULL AND expires_at>now()',[hash(token)])).rows[0];
   if(!a)fail('Agent credential expired, revoked or invalid.',401);await this.pool.query('UPDATE kanban_agents SET last_seen_at=now() WHERE id=$1 AND owner=$2',[a.id,a.owner]);return {owner:a.owner,actor:a.id,kind:'agent',...(a.relay_id?{relayId:a.relay_id}:{})};
@@ -53,7 +53,16 @@ export class Kanban{
   if(db!==this.pool&&requested!=='unassigned'){const member=await db.query("SELECT id FROM swarms WHERE owner=$1 AND config->>'guildId'=$2 AND config->>'verifiedAt' IS NOT NULL LIMIT 1 FOR SHARE",[p.owner,requested]);if(!member.rowCount)fail('Swarm membership changed. Reconnect the channel.',403);}
   return {...p,actor:p.kind==='agent'?p.actor:'owner:'+p.owner,boardKey:requested==='unassigned'?'owner:'+p.owner:'guild:'+requested,guildId:requested==='unassigned'?null:requested,groups};
  }
- async issue(owner,input){const {name,lifetimeHours,guildId}=z.object({guildId:z.string().regex(/^(?:[0-9]{17,20}|unassigned)$/).optional(),name:z.string().trim().min(1).max(80),lifetimeHours:z.number().int().min(1).max(720).default(24)}).strict().parse(input);const scope=await this.scope({owner,guildId,kind:'owner'});const id=crypto.randomUUID(),token='swarm_agent_'+crypto.randomBytes(32).toString('base64url');const agent=(await this.pool.query('INSERT INTO kanban_agents(id,owner,name,token_hash,board_key,expires_at) VALUES($1,$2,$3,$4,$6,now()+$5*interval \'1 hour\') RETURNING id,name,expires_at,board_key',[id,owner,name,hash(token),lifetimeHours,scope.boardKey])).rows[0];return {...agent,token};}
+ async issue(owner,input){
+  const {name,lifetimeHours,guildId,relayId}=z.object({relayId:z.string().uuid().optional(),guildId:z.string().regex(/^(?:[0-9]{17,20}|unassigned)$/).optional(),name:z.string().trim().min(1).max(80),lifetimeHours:z.number().int().min(1).max(720).optional()}).strict().parse(input);
+  if(relayId&&guildId!==undefined)fail('Select a relay or board, not both.',400);
+  let boardKey;
+  if(relayId){const relay=(await this.pool.query("SELECT config->>'guildId' AS guild_id FROM swarms WHERE id=$1 AND owner=$2 AND config->>'verifiedAt' IS NOT NULL",[relayId,owner])).rows[0];if(!relay?.guild_id)fail('Verified relay not found.',404);boardKey='guild:'+relay.guild_id;}
+  else boardKey=(await this.scope({owner,guildId,kind:'owner'})).boardKey;
+  const id=crypto.randomUUID(),token='swarm_agent_'+crypto.randomBytes(32).toString('base64url');
+  const agent=(await this.pool.query("INSERT INTO kanban_agents(id,owner,name,token_hash,board_key,expires_at,relay_id) VALUES($1,$2,$3,$4,$6,now()+$5*interval '1 hour',$7) RETURNING id,name,expires_at,board_key,relay_id",[id,owner,name,hash(token),lifetimeHours??(relayId?168:24),boardKey,relayId??null])).rows[0];
+  return {...agent,token};
+ }
  async agents(owner,guildId){const scope=await this.scope({owner,guildId,kind:'owner'});return (await this.pool.query(`SELECT a.id,a.name,a.relay_id,a.expires_at,a.revoked_at,a.owner=$2 AS can_revoke FROM kanban_agents a LEFT JOIN swarms s ON s.id=a.relay_id WHERE (a.relay_id IS NOT NULL AND s.config->>'verifiedAt' IS NOT NULL AND 'guild:'||(s.config->>'guildId')=$1) OR (a.relay_id IS NULL AND a.board_key=$1) ORDER BY a.created_at DESC LIMIT 100`,[scope.boardKey,owner])).rows;}
  async revoke(owner,id){const r=await this.pool.query('UPDATE kanban_agents SET revoked_at=now() WHERE owner=$1 AND id=$2 RETURNING id',[owner,z.string().uuid().parse(id)]);if(!r.rowCount)fail('Agent not found.',404);return {status:'revoked'};}
  async list(p){p=await this.scope(p);const tasks=(await this.pool.query(`SELECT t.*,COALESCE(a.name,CASE WHEN t.assignee LIKE 'owner:%' THEN 'Owner' END) AS agent_name,CASE WHEN t.state IN ('in_progress','blocked') AND (t.lease_until<=now() OR a.revoked_at IS NOT NULL OR a.expires_at<=now() OR (a.relay_id IS NOT NULL AND (s.config->>'verifiedAt' IS NULL OR 'guild:'||COALESCE(s.config->>'guildId','')<>t.board_key)) OR (a.relay_id IS NULL AND a.id IS NOT NULL AND a.board_key<>t.board_key)) THEN 'stalled' ELSE t.state END AS effective_state FROM kanban_tasks t LEFT JOIN kanban_agents a ON a.id::text=t.assignee LEFT JOIN swarms s ON s.id=a.relay_id WHERE t.board_key=$1 ORDER BY t.updated_at DESC LIMIT 500`,[p.boardKey])).rows;return {tasks,limit:500,guildId:p.guildId,groups:p.groups};}
