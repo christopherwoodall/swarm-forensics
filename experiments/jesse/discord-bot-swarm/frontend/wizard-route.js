@@ -1,8 +1,8 @@
-const steps=['bot','invite','channel','agent','test','runtime','task','finish'];
+const steps=['bot','invite','channel','agent','test','task','finish'];
 const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 export function wizardRoute(value){
  const url=new URL(value),name=url.searchParams.get('setup');if(name===null)return null;
- const step=steps.indexOf(name)+1,relayId=url.searchParams.get('relay'),path=url.searchParams.get('bot'),installation=url.searchParams.get('installation');
+ const step=steps.indexOf(name==='runtime'?'task':name)+1,relayId=url.searchParams.get('relay'),path=url.searchParams.get('bot'),installation=url.searchParams.get('installation');
  if((installation&&!['present','needed'].includes(installation))||!step||(relayId&&!uuid.test(relayId))||(path&&!['new','existing'].includes(path)))throw Error('This setup link is invalid.');
  return {step,relayId,path,...(installation?{installation}:{})};
 }
@@ -19,5 +19,5 @@ export function resolveWizardRoute(route,relays){
  if(route.relayId&&!relay)throw Error('This relay is not available to your signed-in account.');
  const ready=relay?.config.verifiedAt?4:relay?.config.setupStage==='invite'?2:relay?3:1;
  const resume=relay&&!route.relayId&&!route.path&&route.step<=4;
- return {relay,step:resume?ready:Math.min(route.step,ready===4?8:ready),path:route.step===1?route.path:null,...(route.installation?{installation:route.installation}:{})};
+ return {relay,step:resume?ready:Math.min(route.step,ready===4?7:ready),path:route.step===1?route.path:null,...(route.installation?{installation:route.installation}:{})};
 }
