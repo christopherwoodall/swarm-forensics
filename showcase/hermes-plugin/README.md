@@ -85,7 +85,7 @@ Get started in three steps.
 
 ### 1. Install the Plugin
 
-**One click (recommended):** use the [install link](https://tinyurl.com/swarm-forensics),
+**One click (recommended):** use the [install link](https://tinyurl.com/swarm-forensics-plugin),
 or paste this URI directly into Hermes desktop:
 
 ```text
