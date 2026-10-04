@@ -1,0 +1,12 @@
+# serp-venom — Venom, Serpentine's FastAPI
+
+A FastAPI drop-in that compiles natively with `serp build` and dual-runs under CPython.
+
+Import name: `serp_fastapi` (plus `serp_uvicorn.run`).
+
+Test it with `TestClient(app)`; serve it with `serp_uvicorn.run(app, host="127.0.0.1", port=8000)`
+(an event loop: readiness-polled non-blocking sockets, one thread multiplexing every
+connection).
+
+PyPI verified that this artifact, at this checksum, originated from the publisher listed below.
+Publishing repository [github.com/avijitbhuin21/Serpentine](https://github.com/avijitbhuin21/Serpentine)

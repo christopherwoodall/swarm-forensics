@@ -1,0 +1,9 @@
+# serpentine-shim · PyPI description excerpt
+
+The runtime companion of the [Serpentine](https://github.com/serpentine-lang/serpentine)
+compiler. It provides the ownership vocabulary — `Owned`, `Ref`, `Mut`, `Shared`, `Weak`,
+`move`, `@native` — as runtime no-ops, so a Serpentine program is also a valid, runnable
+CPython program.
+
+This package is intentionally frozen and tiny: its public API is part of the Serpentine
+language spec (docs/spec.md).

@@ -81,7 +81,26 @@ Retain original source classes within the reference collection, including primar
 Do not treat another case's observations as observations from the selected dataset.
 Treat support scripts as reference material, not authorization to execute them.
 
-Reference materialization, explicit citations, and model-context boundaries still need owner clarification.
+Keep supporting references attached to their node or edge and inspectable on demand.
+Do not require every citation to become another visible node.
+Give each swarm member access to the whole current session graph.
+Do not limit context to only the selected branch.
+The graph remains distinct from the full imported corpus.
+Provide whole-graph interaction as an option, not merely whole-graph reading.
+Keep correction authority separate from permission to add a linked analytic successor.
+The owner accepts additive revisions through new linked analytic objects.
+Preserve the earlier object's content, author, timestamp, and supporting references.
+Allow an inference judged incorrect to be visibly struck through without deleting it.
+Record that correction as a semantic status change with its own actor, time, and basis.
+Do not reduce incorrect status to decorative text formatting.
+Reports MUST preserve that status rather than presenting the inference as an unqualified current conclusion.
+Direct-versus-proposed strike-through authority remains unresolved.
+
+The owner wants technical, systems, and mythopoetic responses mixed during the investigation.
+Her hypothesis is that mixing them may produce something novel.
+Do not present that possibility as a measured result.
+Keep pure register rendering separate from creating a new analytic interpretation.
+Rendering MUST preserve claim strength; new interpretations need their own provenance and evidence bounds.
 
 ## 4. Initial interaction sequence
 
@@ -148,8 +167,9 @@ Display its labeled timestamp at the bottom.
 Keep node content and attribution directly visible on the canvas.
 The owner revised the first-pass edge-only original-record inspection behavior.
 Make evidence expandable from either a node or an edge.
-Use a modifier-click gesture; the owner suggested Shift-click or Ctrl-click.
-The exact modifier and expansion location remain unselected.
+Use ordinary click to select.
+Use Shift-click on a node or edge to open its supporting evidence in the side inspector.
+Also provide an “Inspect evidence” menu action.
 Do not infer that every cited reference must become another visible graph node.
 Treat inspection placement and information density as provisional until the owner uses the application.
 Revisit useful-versus-cluttered judgments through rendered interaction, not premature permanent commitments.

@@ -1,0 +1,19 @@
+# serp-math
+
+Drop-in replacement for CPython's `math` module (docs/libraries.md drop-in facade push).
+
+- Architecture: `serp_math` is a pure-Serpentine facade over the compiler-known
+  `serp_math_core` rtlib module (runtime primitives in rt.rs/prelude.rs with
+  CPython-parity errors: `ValueError("math domain error")`,
+  `OverflowError("math range error")`).
+
+Install into a Serpentine project with `serp add serp-math`.
+
+Metadata:
+Author: Serpentine contributors
+License: MIT
+Project-URL: Homepage, https://github.com/avijitbhuin21/Serpentine
+Requires-Python: >=3.11
+
+PyPI verified that this artifact, at this checksum, originated from the publisher listed below.
+Publishing repository [github.com/avijitbhuin21/Serpentine](https://github.com/avijitbhuin21/Serpentine)

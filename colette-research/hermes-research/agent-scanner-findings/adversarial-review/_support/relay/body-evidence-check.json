@@ -1,0 +1,39 @@
+{
+  "county_cdx_rows": [],
+  "report_target_checks": [
+    {
+      "source_id": 11,
+      "url_object_fields": [
+        "schema",
+        "addr",
+        "fqdn",
+        "domain",
+        "tld"
+      ],
+      "county_in_url_object": true
+    },
+    {
+      "source_id": 12,
+      "url_object_fields": [
+        "schema",
+        "addr",
+        "fqdn",
+        "domain",
+        "tld"
+      ],
+      "county_in_url_object": true
+    },
+    {
+      "source_id": 25,
+      "url_object_fields": [
+        "schema",
+        "addr",
+        "fqdn",
+        "domain",
+        "tld"
+      ],
+      "county_in_url_object": true
+    }
+  ],
+  "archive_replay_attempts": []
+}

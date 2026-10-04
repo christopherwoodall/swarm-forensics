@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://transluce.org/us-canada-gov",
+      "title": "Transluce Census",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "We do not share underlying URLs in this case to avoid republishing sensitive materials, and found no response showing that these attempts were successful or ever reached census.gov.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "url": "https://transluce.org/agent-activity",
+      "title": "Transluce AIHW",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Agents working on a pharmaceutical-data task probed for a vulnerability and retrieved a public file from a pre-production server after bot protection blocked the main site.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "url": "https://urlquery.net/report/87465efc-fc5e-484a-8089-b99f6981f575",
+      "title": "May24 report A",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 4,
+      "url": "https://urlquery.net/report/7d967df7-fcf5-4df1-927b-2642039a7b84",
+      "title": "May24 report B",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 5,
+      "url": "https://urlquery.net/report/03b8111f-1e02-4ac2-9772-e9ef2bcf4f1a",
+      "title": "May12 false-positive",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 6,
+      "url": "https://urlquery.net/report/29a660a2-13c9-4744-83d0-3ea58c40bb7f",
+      "title": "June03 report A",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 7,
+      "url": "https://urlquery.net/report/7d203adc-9eff-401b-9a31-35a9c7155d30",
+      "title": "June03 report B",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 8,
+      "url": "https://web.archive.org/cdx/search/cdx?url=r.jina.ai%2Fhttp%2A&from=2026061702&to=2026061703&filter=original%3A.%2Acensus.%2A&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback Jina Census CDX",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 9,
+      "url": "https://web.archive.org/cdx/search/cdx?url=corsproxy.io%2F%2A&from=2026061702&to=2026061703&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback CorsProxy CDX",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 10,
+      "url": "https://web.archive.org/cdx/search/cdx?url=api.allorigins.win%2F%2A&from=2026061702&to=2026061703&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback AllOrigins CDX",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 11,
+      "url": "https://web.archive.org/web/20260617025907id_/https://r.jina.ai/http://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+      "title": "Wayback Jina replay",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 12,
+      "url": "https://web.archive.org/web/20260617030212id_/https://api.allorigins.win/raw?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+      "title": "Wayback AllOrigins replay",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 13,
+      "url": "https://web.archive.org/web/20260617030301id_/https://corsproxy.io/?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+      "title": "Wayback CorsProxy replay",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 14,
+      "url": "https://web.archive.org/cdx/search/cdx?url=www2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat&from=20260617&to=20260617&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback Census static-file CDX",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 15,
+      "url": "https://web.archive.org/web/20260617023907id_/https://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+      "title": "Wayback Census direct replay",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 16,
+      "url": "https://web.archive.org/cdx/search/cdx?url=r.jina.ai%2Fhttp%3A%2F%2Fhttps%3A%2F%2Fwww.aihw.gov.au%2Fgetmedia%2F57e4c61f-213a-4b27-b2fa-3a22a2a19d27%2FPrincipal-Diagnosis-cube_2014-15.xlsx.aspx&from=20260618&to=20260618&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback AIHW Jina CDX",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 17,
+      "url": "https://web.archive.org/web/20260618063135id_/https://r.jina.ai/http://https://www.aihw.gov.au/getmedia/57e4c61f-213a-4b27-b2fa-3a22a2a19d27/Principal-Diagnosis-cube_2014-15.xlsx.aspx",
+      "title": "Wayback AIHW replay",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Warning: Target URL returned error 403: Forbidden",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "url": "https://www.aihw.gov.au/reports/hospitals/principal-diagnosis-data-cubes/contents/summary",
+      "title": "AIHW principal diagnosis data cubes",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Separation statistics by principal diagnosis (ICD-10-AM 8th edition), Australia, 2014–15",
+          "added": "2026-10-03"
+        }
+      ]
+    }
+  ]
+}

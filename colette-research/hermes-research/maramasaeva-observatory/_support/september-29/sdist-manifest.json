@@ -1,0 +1,275 @@
+{
+  "retrieved_at": "2026-10-04T00:00:34Z",
+  "package_count": 33,
+  "records": [
+    {
+      "name": "serp-asyncio",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/14/85/dcdee4946307159ffa2e20905f4432216311dedb53c5e9ecf22ec6854f4c/serp_asyncio-0.1.0.tar.gz",
+      "filename": "serp_asyncio-0.1.0.tar.gz",
+      "bytes": 6599,
+      "sha256": "430afd19f869402981e1556b7e50973422bdc8682a94966a73c4f2fa53782884"
+    },
+    {
+      "name": "serp-coil",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/d5/54/740cdfcad13ebd846d0630bb2690cd7d688785e2d159d74e947f3b243f21/serp_coil-0.1.0.tar.gz",
+      "filename": "serp_coil-0.1.0.tar.gz",
+      "bytes": 26209,
+      "sha256": "e7a53b67a5a2cfd6c607ee42132a6480b495d5fe4943da6f705f71f4f9841f0c"
+    },
+    {
+      "name": "serp-datetime",
+      "version": "0.3.0",
+      "url": "https://files.pythonhosted.org/packages/5f/5c/7a2f8067127cad322f968a38f0ff54e87abe324187b7b33d5ea19ab07417/serp_datetime-0.3.0.tar.gz",
+      "filename": "serp_datetime-0.3.0.tar.gz",
+      "bytes": 7613,
+      "sha256": "7f40fc136a5b8236e177224a0391f57295810e7f9b1af2e827f1afe82f619911"
+    },
+    {
+      "name": "serp-fang",
+      "version": "0.3.0",
+      "url": "https://files.pythonhosted.org/packages/70/e2/8b661b127a88be2b989ffc78f44e0b9e38e61c8154558cd91787f0ab5c60/serp_fang-0.3.0.tar.gz",
+      "filename": "serp_fang-0.3.0.tar.gz",
+      "bytes": 13234,
+      "sha256": "d7a6afc274f5f5a7ae6a88103cbeb460cd3da40b892fc44f6722810db60c4a83"
+    },
+    {
+      "name": "serp-http-server",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/eb/c3/f191c44d5db879d4b43ddcf5c8ec4c308699bf22beb1958b405ec1ebce6b/serp_http_server-0.1.0.tar.gz",
+      "filename": "serp_http_server-0.1.0.tar.gz",
+      "bytes": 5139,
+      "sha256": "65e604fbea5137d637a4903d9cf39dd5006388790c1fd4d1ae2f0cb288ae7cdc"
+    },
+    {
+      "name": "serp-itertools",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/28/14/8053fa31620169948abba89dbeb7507e3dcfeec77d7c8c2d892b855e9b2c/serp_itertools-0.2.0.tar.gz",
+      "filename": "serp_itertools-0.2.0.tar.gz",
+      "bytes": 6426,
+      "sha256": "fe50fcbcde1c11bb8efe958fa2e0f120147ac7f006a372a2ab7f5ffa6df60919"
+    },
+    {
+      "name": "serp-log",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/54/2b/f13ff250e8d71a02deb3c70c9c226242c8e9a4981affe999f8219a690d43/serp_log-0.2.0.tar.gz",
+      "filename": "serp_log-0.2.0.tar.gz",
+      "bytes": 4590,
+      "sha256": "245067799f4bbf75e13204ea09a14397dd93c42bbbfef02c1da4a66a7ef51b77"
+    },
+    {
+      "name": "serp-math",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/e6/5f/4c06154789e8813e8173881db6d2e779755c2043e10446217e83709e9451/serp_math-0.1.0.tar.gz",
+      "filename": "serp_math-0.1.0.tar.gz",
+      "bytes": 5538,
+      "sha256": "aa9dbc22c3e78fdb2029299a0497f20029f1d957251e5533d17812dc097d1b5f"
+    },
+    {
+      "name": "serp-molt",
+      "version": "0.7.0",
+      "url": "https://files.pythonhosted.org/packages/01/32/aea17d34fad0567d44697b79a24b7791cb63fc79b29b43fb0d34cddd7eeb/serp_molt-0.7.0.tar.gz",
+      "filename": "serp_molt-0.7.0.tar.gz",
+      "bytes": 27798,
+      "sha256": "581814b3b5616ea262f4471803c6a2d00e5063e15c60230678f82f2a97d1b44b"
+    },
+    {
+      "name": "serp-os",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/ff/c7/8df35161021648a40804aa6f2f06d50fd4819a33e01bc5a6c4bd6dbd7041/serp_os-0.1.0.tar.gz",
+      "filename": "serp_os-0.1.0.tar.gz",
+      "bytes": 3823,
+      "sha256": "4690d40cde1d6f128a12018e3ed8940f968977434ac9590661a6a487ecbdf8f5"
+    },
+    {
+      "name": "serp-pathlib",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/ba/42/d6227ba2df40a10bde7c3402071676750a21223e98be488a1600215b0a3e/serp_pathlib-0.2.0.tar.gz",
+      "filename": "serp_pathlib-0.2.0.tar.gz",
+      "bytes": 4381,
+      "sha256": "7f18619fc2e08da8907b6adce6dd8f2e90225a89794e9a01f2b82abdd86694f8"
+    },
+    {
+      "name": "serp-queue",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/c5/29/62ba5f13e3f3b70569c6c1a59ae7193a8c6d897249ce0162f60c4be093d9/serp_queue-0.1.0.tar.gz",
+      "filename": "serp_queue-0.1.0.tar.gz",
+      "bytes": 4551,
+      "sha256": "9ae375d30011b49c49ea37ccb97cba971a6ff589e4e82f92766ab5e4e66b8581"
+    },
+    {
+      "name": "serp-random",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/ad/13/918b4233d8dc7d739770177b076df5d1007ad906040446d7f8f3ebc4a44b/serp_random-0.1.0.tar.gz",
+      "filename": "serp_random-0.1.0.tar.gz",
+      "bytes": 3712,
+      "sha256": "8393eb6760caf2e1583b75157741cf0ec69992dab87cc78c0a6e25d54e8b15b9"
+    },
+    {
+      "name": "serp-re",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/a6/45/a30e0ceb332c8f5b9e38a3e2249a313849d7983a4e0eb0d6d5939cde9be1/serp_re-0.2.0.tar.gz",
+      "filename": "serp_re-0.2.0.tar.gz",
+      "bytes": 9684,
+      "sha256": "155259999a7aeb8e8331e0478586f2663b97862d31eafabf3aeca72257e827c5"
+    },
+    {
+      "name": "serp-scales",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/5d/bf/df55154d5c9b5010a34a3c4de3ab2aac3b8eea5b838a6a719c01bd9f6982/serp_scales-0.2.0.tar.gz",
+      "filename": "serp_scales-0.2.0.tar.gz",
+      "bytes": 40259,
+      "sha256": "f710386744ada50306e46c68b1089ac648f83ec159f2d6714d8997914661a1e7"
+    },
+    {
+      "name": "serp-secrets",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/bf/0c/2e4aa5c8759a3be39e8df1f306314b8e37727394601f2dc7d9ba6161adfa/serp_secrets-0.1.0.tar.gz",
+      "filename": "serp_secrets-0.1.0.tar.gz",
+      "bytes": 3561,
+      "sha256": "bbdeae714fe093f2cec4b3c0ab70ea925b47e24a148275b885dcd7b0452542f1"
+    },
+    {
+      "name": "serp-socket",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/a1/90/26c818755105c8dcb392b8d6d058ad595de78c45413a060067d27c44415c/serp_socket-0.1.0.tar.gz",
+      "filename": "serp_socket-0.1.0.tar.gz",
+      "bytes": 4336,
+      "sha256": "52c416d3ae239d03dc3386dd43e7edcfbcd7a3d5a8802f0fb4dd8285826eca06"
+    },
+    {
+      "name": "serp-sqlite",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/54/23/04873a0301126627b74edaeb684940f0c7f635cc951314a8c4cb4a37ce67/serp_sqlite-0.2.0.tar.gz",
+      "filename": "serp_sqlite-0.2.0.tar.gz",
+      "bytes": 6643,
+      "sha256": "a48cf27dae8553172312dc251ff02bb0298cb1fa9dd244af880990437b49f690"
+    },
+    {
+      "name": "serp-statistics",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/02/dc/a388f9ab3bbf203640b8ed78bd06ffc3855b98a583b038d4dd82648062e5/serp_statistics-0.1.0.tar.gz",
+      "filename": "serp_statistics-0.1.0.tar.gz",
+      "bytes": 3650,
+      "sha256": "e8a632c9cdc54c22c0dbe3628c5db439b17b1d4c1216a158efaaf9ec495650a1"
+    },
+    {
+      "name": "serp-strings",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/d9/ca/cb2e7e33164a51ea5a204f8e6af662f117562cee85904840775dcf2038cf/serp_strings-0.1.0.tar.gz",
+      "filename": "serp_strings-0.1.0.tar.gz",
+      "bytes": 6394,
+      "sha256": "f6209d4469f15d511e47680eb0b7d2a95951baf6458368e50ed5e3c7536228f1"
+    },
+    {
+      "name": "serp-structs",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/b6/9a/08b7b14174cd71298615d5d01e028743b7685392ded283ed5151f9cb640d/serp_structs-0.1.0.tar.gz",
+      "filename": "serp_structs-0.1.0.tar.gz",
+      "bytes": 4475,
+      "sha256": "5b10c36b94260877b11de952018bd05d30323094f51ce51f56cd321c5026696f"
+    },
+    {
+      "name": "serp-subprocess",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/be/09/77535e76a17044221bc8bd949d6677be4c3795dc90cfbe4f555c27a63653/serp_subprocess-0.1.0.tar.gz",
+      "filename": "serp_subprocess-0.1.0.tar.gz",
+      "bytes": 8399,
+      "sha256": "e6e40e88cbbf967c3a789ab86017d9b455e59a47c56044a68c492f38037279b0"
+    },
+    {
+      "name": "serp-test",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/d5/57/0e3f6a376baa8a85661b708e2ef5a5bd4c64ec1f4f79432ec4fa4fa19a73/serp_test-0.2.0.tar.gz",
+      "filename": "serp_test-0.2.0.tar.gz",
+      "bytes": 3989,
+      "sha256": "47c274bd506395957fb5029e62f3411bccd3c942aa1e6e5fdd74ecef24d7b6e9"
+    },
+    {
+      "name": "serp-threading",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/c7/af/e389bb49e9a931d13ddbbe91c2d82f73ff2a033888b93831d7028870c09e/serp_threading-0.1.0.tar.gz",
+      "filename": "serp_threading-0.1.0.tar.gz",
+      "bytes": 9213,
+      "sha256": "5efe60fb149f26969afc4b06ebc1e6b079fdd4d57601cf753f77fe312cec295f"
+    },
+    {
+      "name": "serp-time",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/3d/0b/1d75b64ce4ebb3b1a51a6c1fbdb39043ce4dd47c34fea3eb66eec6dc15b2/serp_time-0.1.0.tar.gz",
+      "filename": "serp_time-0.1.0.tar.gz",
+      "bytes": 2191,
+      "sha256": "e0ec92456b3ee4304fe352c39220b704a73747672bc396b11f881ab1f0410cca"
+    },
+    {
+      "name": "serp-tomllib",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/0d/91/8c3024f62101122237f9d010901339cfe13ce716fa4e5dac388196a42103/serp_tomllib-0.2.0.tar.gz",
+      "filename": "serp_tomllib-0.2.0.tar.gz",
+      "bytes": 5221,
+      "sha256": "b1314b20bb484cf4a73e608efbe7a402efd4eb7da9b921989fac7be5be4684e9"
+    },
+    {
+      "name": "serp-url",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/bd/cf/fd4c6ec3210dbabacca127fe7031592bfff01043148da08abe2f55cfa512/serp_url-0.1.0.tar.gz",
+      "filename": "serp_url-0.1.0.tar.gz",
+      "bytes": 5773,
+      "sha256": "9b6dcd3dfb8cb42e5bfc277e35029e4ae9b20a3902e442ef4690bfd8931ca227"
+    },
+    {
+      "name": "serp-uuid",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/00/bb/e7c411d9f52a94bd101c60c45726e9c33a0baa3eae9a797b959d1b44d1e2/serp_uuid-0.2.0.tar.gz",
+      "filename": "serp_uuid-0.2.0.tar.gz",
+      "bytes": 3570,
+      "sha256": "a433c61f4394fa16f0470dbcf5b32e292a4f20a8a8a9f8c353aa02dfef40b5ad"
+    },
+    {
+      "name": "serp-venom",
+      "version": "0.4.0",
+      "url": "https://files.pythonhosted.org/packages/5a/93/7547f87771046a7beab2fc66aad0b9a0f04788aaf545399f19308e9c22fe/serp_venom-0.4.0.tar.gz",
+      "filename": "serp_venom-0.4.0.tar.gz",
+      "bytes": 20536,
+      "sha256": "28b6e5115cf4b793dccb471d4174479ce131dbde126f63cc621b228217c3ca63"
+    },
+    {
+      "name": "serp-zipfile",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/3f/34/219f2514d3c00e7724c17479b076e9dde41bb4d19b155305c00d6118c692/serp_zipfile-0.2.0.tar.gz",
+      "filename": "serp_zipfile-0.2.0.tar.gz",
+      "bytes": 5388,
+      "sha256": "a128498912106590f023807fc227369bb2003edd1dd6091aa26ce2a7577a26bd"
+    },
+    {
+      "name": "serp-zlib",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/02/9b/b017bf59a4b64ccf352fa1f6049e16686fffb48002f03cb757656619d8b1/serp_zlib-0.1.0.tar.gz",
+      "filename": "serp_zlib-0.1.0.tar.gz",
+      "bytes": 4351,
+      "sha256": "abc6a9e8f45c70ecf8ebc75f604880b8d070c80315739da7482fb857b9013df5"
+    },
+    {
+      "name": "serpentine-argparse",
+      "version": "0.2.0",
+      "url": "https://files.pythonhosted.org/packages/8f/32/0bd093fe41dc35192c1c730fc8eb0e09345a4002285d3dc216a7e413aaa0/serpentine_argparse-0.2.0.tar.gz",
+      "filename": "serpentine_argparse-0.2.0.tar.gz",
+      "bytes": 6189,
+      "sha256": "74eae4d9b7be806a1832193fe7c2c31f228d50c079a267fe77bf4388a656bf07"
+    },
+    {
+      "name": "serpentine-io",
+      "version": "0.1.0",
+      "url": "https://files.pythonhosted.org/packages/b5/e0/8dafaec3e8d7b797f7ef048dcea6613c7abd8b550466b8d5ef1154354dab/serpentine_io-0.1.0.tar.gz",
+      "filename": "serpentine_io-0.1.0.tar.gz",
+      "bytes": 4896,
+      "sha256": "157321ef3c1fff81fa98a7b3730fafc30f5173a8777911e8e2e4121fb16cce75"
+    }
+  ],
+  "notes": [
+    "Source distributions were downloaded for static inspection only.",
+    "No package was installed or executed.",
+    "The public GitHub URL cited by PyPI returned a 404 during this retrieval."
+  ]
+}

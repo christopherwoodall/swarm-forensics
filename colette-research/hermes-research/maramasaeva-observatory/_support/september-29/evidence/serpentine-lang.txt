@@ -1,0 +1,11 @@
+# serpentine-lang · PyPI description excerpt
+
+Serpentine: AOT compiler for an ownership-disciplined Python subset (serp CLI)
+
+The Serpentine compiler (`serp` CLI). Phase-1 walking skeleton:
+
+- `serp check entry.py` — frontend, type checker, SIR ownership analyses; exits 0/1.
+- `serp build entry.py [-o out] [--keep-rust]` — Backend A: transpiles to Rust and invokes
+  `rustc` to produce a native binary with no libpython dependency.
+
+Homepage: https://github.com/avijitbhuin21/Serpentine

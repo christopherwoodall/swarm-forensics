@@ -69,19 +69,37 @@
       "id": 3,
       "url": "https://pypi.org/simple",
       "title": "PyPI Simple API index",
-      "accessed": "2026-10-03"
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "serp-asyncio\nserp-coil\nserp-datetime",
+          "added": "2026-10-03"
+        }
+      ]
     },
     {
       "id": 4,
       "url": "https://pypi.org/project/serpentine-lang",
       "title": "PyPI Serpentine compiler",
-      "accessed": "2026-10-03"
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "The Serpentine compiler (`serp` CLI). Phase-1 walking skeleton:",
+          "added": "2026-10-03"
+        }
+      ]
     },
     {
       "id": 5,
       "url": "https://pypi.org/project/serpentine-shim",
       "title": "PyPI Serpentine runtime shim",
-      "accessed": "2026-10-03"
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "This package is intentionally frozen and tiny: its public API is part of the Serpentine",
+          "added": "2026-10-03"
+        }
+      ]
     },
     {
       "id": 6,
@@ -99,19 +117,45 @@
       "id": 8,
       "url": "https://pypi.org/project/serp-math",
       "title": "PyPI Serpentine math package",
-      "accessed": "2026-10-03"
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Drop-in replacement for CPython's `math` module (docs/libraries.md drop-in facade push).",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "PyPI verified that this artifact, at this checksum, originated from the publisher listed below.",
+          "added": "2026-10-03"
+        }
+      ]
     },
     {
       "id": 9,
       "url": "https://pypi.org/project/serp-venom",
       "title": "PyPI Serpentine web package",
-      "accessed": "2026-10-03"
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "A FastAPI drop-in that compiles natively with `serp build` and dual-runs under CPython.",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "Publishing repository [github.com/avijitbhuin21/Serpentine](https://github.com/avijitbhuin21/Serpentine)",
+          "added": "2026-10-03"
+        }
+      ]
     },
     {
       "id": 10,
       "url": "https://pypi.org/project/serpentine-io",
       "title": "PyPI Serpentine IO package",
-      "accessed": "2026-10-03"
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Published on PyPI as **`serpentine-io`** (the `serp-io` name is rejected by PyPI as too",
+          "added": "2026-10-03"
+        }
+      ]
     },
     {
       "id": 11,
@@ -123,12 +167,450 @@
       "id": 12,
       "url": "https://github.com/avijitbhuin21/Serpentine",
       "title": "GitHub repository URL cited by PyPI",
-      "accessed": "2026-10-03"
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Page not found · GitHub · GitHub",
+          "added": "2026-10-03"
+        }
+      ]
     },
     {
       "id": 13,
       "url": "https://warehouse.pypa.io/api-reference/xml-rpc.html",
       "title": "PyPI XML-RPC API reference",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 14,
+      "url": "https://pypi.org/pypi/serp-asyncio/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 15,
+      "url": "https://files.pythonhosted.org/packages/14/85/dcdee4946307159ffa2e20905f4432216311dedb53c5e9ecf22ec6854f4c/serp_asyncio-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 16,
+      "url": "https://pypi.org/pypi/serp-coil/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 17,
+      "url": "https://files.pythonhosted.org/packages/d5/54/740cdfcad13ebd846d0630bb2690cd7d688785e2d159d74e947f3b243f21/serp_coil-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 18,
+      "url": "https://pypi.org/pypi/serp-datetime/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 19,
+      "url": "https://files.pythonhosted.org/packages/5f/5c/7a2f8067127cad322f968a38f0ff54e87abe324187b7b33d5ea19ab07417/serp_datetime-0.3.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 20,
+      "url": "https://pypi.org/pypi/serp-fang/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 21,
+      "url": "https://files.pythonhosted.org/packages/70/e2/8b661b127a88be2b989ffc78f44e0b9e38e61c8154558cd91787f0ab5c60/serp_fang-0.3.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 22,
+      "url": "https://files.pythonhosted.org/packages/da/cb/6b27df13f7c4c51d35fc654cb5b750a783cc76a67972e05b3e67beff1bf1/serp_fang-0.3.1.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 23,
+      "url": "https://pypi.org/pypi/serp-http-server/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 24,
+      "url": "https://files.pythonhosted.org/packages/eb/c3/f191c44d5db879d4b43ddcf5c8ec4c308699bf22beb1958b405ec1ebce6b/serp_http_server-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 25,
+      "url": "https://pypi.org/pypi/serp-itertools/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 26,
+      "url": "https://files.pythonhosted.org/packages/28/14/8053fa31620169948abba89dbeb7507e3dcfeec77d7c8c2d892b855e9b2c/serp_itertools-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 27,
+      "url": "https://pypi.org/pypi/serp-log/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 28,
+      "url": "https://files.pythonhosted.org/packages/54/2b/f13ff250e8d71a02deb3c70c9c226242c8e9a4981affe999f8219a690d43/serp_log-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 29,
+      "url": "https://pypi.org/pypi/serp-math/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 30,
+      "url": "https://files.pythonhosted.org/packages/e6/5f/4c06154789e8813e8173881db6d2e779755c2043e10446217e83709e9451/serp_math-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 31,
+      "url": "https://pypi.org/pypi/serp-molt/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 32,
+      "url": "https://files.pythonhosted.org/packages/01/32/aea17d34fad0567d44697b79a24b7791cb63fc79b29b43fb0d34cddd7eeb/serp_molt-0.7.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 33,
+      "url": "https://pypi.org/pypi/serp-os/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 34,
+      "url": "https://files.pythonhosted.org/packages/ff/c7/8df35161021648a40804aa6f2f06d50fd4819a33e01bc5a6c4bd6dbd7041/serp_os-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 35,
+      "url": "https://pypi.org/pypi/serp-pathlib/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 36,
+      "url": "https://files.pythonhosted.org/packages/ba/42/d6227ba2df40a10bde7c3402071676750a21223e98be488a1600215b0a3e/serp_pathlib-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 37,
+      "url": "https://pypi.org/pypi/serp-queue/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 38,
+      "url": "https://files.pythonhosted.org/packages/c5/29/62ba5f13e3f3b70569c6c1a59ae7193a8c6d897249ce0162f60c4be093d9/serp_queue-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 39,
+      "url": "https://pypi.org/pypi/serp-random/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 40,
+      "url": "https://files.pythonhosted.org/packages/ad/13/918b4233d8dc7d739770177b076df5d1007ad906040446d7f8f3ebc4a44b/serp_random-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 41,
+      "url": "https://pypi.org/pypi/serp-re/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 42,
+      "url": "https://files.pythonhosted.org/packages/a6/45/a30e0ceb332c8f5b9e38a3e2249a313849d7983a4e0eb0d6d5939cde9be1/serp_re-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 43,
+      "url": "https://pypi.org/pypi/serp-scales/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 44,
+      "url": "https://files.pythonhosted.org/packages/5d/bf/df55154d5c9b5010a34a3c4de3ab2aac3b8eea5b838a6a719c01bd9f6982/serp_scales-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 45,
+      "url": "https://pypi.org/pypi/serp-secrets/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 46,
+      "url": "https://files.pythonhosted.org/packages/bf/0c/2e4aa5c8759a3be39e8df1f306314b8e37727394601f2dc7d9ba6161adfa/serp_secrets-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 47,
+      "url": "https://pypi.org/pypi/serp-socket/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 48,
+      "url": "https://files.pythonhosted.org/packages/a1/90/26c818755105c8dcb392b8d6d058ad595de78c45413a060067d27c44415c/serp_socket-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 49,
+      "url": "https://pypi.org/pypi/serp-sqlite/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 50,
+      "url": "https://files.pythonhosted.org/packages/54/23/04873a0301126627b74edaeb684940f0c7f635cc951314a8c4cb4a37ce67/serp_sqlite-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 51,
+      "url": "https://pypi.org/pypi/serp-statistics/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 52,
+      "url": "https://files.pythonhosted.org/packages/02/dc/a388f9ab3bbf203640b8ed78bd06ffc3855b98a583b038d4dd82648062e5/serp_statistics-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 53,
+      "url": "https://pypi.org/pypi/serp-strings/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 54,
+      "url": "https://files.pythonhosted.org/packages/d9/ca/cb2e7e33164a51ea5a204f8e6af662f117562cee85904840775dcf2038cf/serp_strings-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 55,
+      "url": "https://pypi.org/pypi/serp-structs/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 56,
+      "url": "https://files.pythonhosted.org/packages/b6/9a/08b7b14174cd71298615d5d01e028743b7685392ded283ed5151f9cb640d/serp_structs-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 57,
+      "url": "https://pypi.org/pypi/serp-subprocess/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 58,
+      "url": "https://files.pythonhosted.org/packages/be/09/77535e76a17044221bc8bd949d6677be4c3795dc90cfbe4f555c27a63653/serp_subprocess-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 59,
+      "url": "https://pypi.org/pypi/serp-test/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 60,
+      "url": "https://files.pythonhosted.org/packages/d5/57/0e3f6a376baa8a85661b708e2ef5a5bd4c64ec1f4f79432ec4fa4fa19a73/serp_test-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 61,
+      "url": "https://pypi.org/pypi/serp-threading/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 62,
+      "url": "https://files.pythonhosted.org/packages/c7/af/e389bb49e9a931d13ddbbe91c2d82f73ff2a033888b93831d7028870c09e/serp_threading-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 63,
+      "url": "https://pypi.org/pypi/serp-time/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 64,
+      "url": "https://files.pythonhosted.org/packages/3d/0b/1d75b64ce4ebb3b1a51a6c1fbdb39043ce4dd47c34fea3eb66eec6dc15b2/serp_time-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 65,
+      "url": "https://pypi.org/pypi/serp-tomllib/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 66,
+      "url": "https://files.pythonhosted.org/packages/0d/91/8c3024f62101122237f9d010901339cfe13ce716fa4e5dac388196a42103/serp_tomllib-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 67,
+      "url": "https://pypi.org/pypi/serp-url/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 68,
+      "url": "https://files.pythonhosted.org/packages/bd/cf/fd4c6ec3210dbabacca127fe7031592bfff01043148da08abe2f55cfa512/serp_url-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 69,
+      "url": "https://pypi.org/pypi/serp-uuid/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 70,
+      "url": "https://files.pythonhosted.org/packages/00/bb/e7c411d9f52a94bd101c60c45726e9c33a0baa3eae9a797b959d1b44d1e2/serp_uuid-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 71,
+      "url": "https://pypi.org/pypi/serp-venom/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 72,
+      "url": "https://files.pythonhosted.org/packages/5a/93/7547f87771046a7beab2fc66aad0b9a0f04788aaf545399f19308e9c22fe/serp_venom-0.4.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 73,
+      "url": "https://pypi.org/pypi/serp-zipfile/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 74,
+      "url": "https://files.pythonhosted.org/packages/3f/34/219f2514d3c00e7724c17479b076e9dde41bb4d19b155305c00d6118c692/serp_zipfile-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 75,
+      "url": "https://pypi.org/pypi/serp-zlib/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 76,
+      "url": "https://files.pythonhosted.org/packages/02/9b/b017bf59a4b64ccf352fa1f6049e16686fffb48002f03cb757656619d8b1/serp_zlib-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 77,
+      "url": "https://pypi.org/pypi/serpentine-argparse/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 78,
+      "url": "https://files.pythonhosted.org/packages/8f/32/0bd093fe41dc35192c1c730fc8eb0e09345a4002285d3dc216a7e413aaa0/serpentine_argparse-0.2.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 79,
+      "url": "https://pypi.org/pypi/serpentine-io/json",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 80,
+      "url": "https://files.pythonhosted.org/packages/b5/e0/8dafaec3e8d7b797f7ef048dcea6613c7abd8b550466b8d5ef1154354dab/serpentine_io-0.1.0.tar.gz",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 81,
+      "url": "https://web.archive.org/cdx/search/cdx",
+      "title": "Wayback CDX search API",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "\"capture_count\": 23,\n  \"unique_digests\": 17,",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "\"mentions_tvmaze\": 21,\n  \"mentions_archive_org\": 21,\n  \"mentions_xhr\": 18,",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "\"pattern\": \"api.tvmaze.com/schedule*\",\n      \"date\": \"20260929\",\n      \"result_count\": 2,",
+          "added": "2026-10-03"
+        },
+        {
+          "text": "httpbin.org, httpbin.dev, and httpbin.io all have same-day captures referencing the same target domains.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "url": "https://api.tvmaze.com/schedule",
+      "title": "Wayback target-series query: api.tvmaze.com/schedule",
       "accessed": "2026-10-03"
     }
   ]

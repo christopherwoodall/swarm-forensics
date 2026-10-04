@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://web.archive.org/cdx/search/cdx?url=sec.gov%2Ffiles%2Fcounty.json&matchType=prefix&from=20260618&to=20260618&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cdigest%2Cstatuscode%2Cmimetype%2Clength%2Cfilename%2Coffset",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 2,
+      "url": "https://web.archive.org/cdx/search/cdx?url=sec.gov%2Ffiles%2Fcounty.json&matchType=prefix&from=20260618&to=20260618&output=json&collapse=urlkey&fl=timestamp%2Coriginal%2Curlkey%2Cdigest%2Cstatuscode%2Cmimetype%2Clength%2Cfilename%2Coffset",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 3,
+      "url": "https://web.archive.org/cdx/search/cdx?url=www.sec.gov%2Ffiles%2Fcounty.json&matchType=prefix&from=20260601&to=20260630&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cdigest%2Cstatuscode%2Cmimetype%2Clength&limit=1000&showResumeKey=true",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 4,
+      "url": "https://web.archive.org/cdx/search/cdx?url=www.sec.gov%2Ffiles%2Fregcf.json&matchType=prefix&from=20260618&to=20260618&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cdigest%2Cstatuscode%2Cmimetype%2Clength&limit=1000",
+      "title": "",
+      "accessed": "2026-10-03"
+    },
+    {
+      "id": 5,
+      "url": "https://collusion.wiki/explorer/download.html",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "These are checksums of the expanded files, not of the gzips.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "url": "https://github.com/internetarchive/wayback/blob/master/wayback-cdx-server/README.md?plain=1",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "At this time, the following cdx fields are publicly available:",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "url": "https://help.archive.org/help/save-pages-in-the-wayback-machine",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "There are several ways to save pages and whole sites so that they appear in the Wayback Machine.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "The Math.random() static method returns a floating-point, pseudo-random number",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "url": "https://transluce.org/us-canada-gov",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "On June 18, a workflow sought public SEC crowdfunding statistics.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "url": "https://github.com/JoshuaDavid/WikiAgentSwarmInvestigation/tree/main/tasks/sec-regcf-ma-cache",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "It backs the SEC's \"Funds Raised Through Crowdfunding\" map.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "url": "https://rubyhack.ai",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "Over 3 hours on June 18th, agent activity on RubyGems briefly increased again with agents publishing 83 gems over 3 hours.",
+          "added": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "url": "https://www.kennethdegraff.com/swarm",
+      "title": "",
+      "accessed": "2026-10-03",
+      "quotes": [
+        {
+          "text": "384 of them point at sec.gov/files/county.json",
+          "added": "2026-10-03"
+        }
+      ]
+    }
+  ]
+}

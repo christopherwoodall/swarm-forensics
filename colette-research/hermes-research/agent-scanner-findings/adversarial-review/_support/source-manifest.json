@@ -1,0 +1,1937 @@
+{
+  "citation_namespaces": {
+    "sec": 12,
+    "relay": 22,
+    "census-aihw": 18,
+    "novelty": 38,
+    "parent": 18
+  },
+  "sources": [
+    {
+      "source_key": "S001",
+      "url": "https://api.github.com/repos/BradPerbs/cors.lol",
+      "title": "",
+      "namespace_keys": [
+        "relay:28"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S002",
+      "url": "https://api.github.com/repos/BradPerbs/cors.lol/commits?until=2026-06-18T00%3A00%3A00Z&per_page=1",
+      "title": "",
+      "namespace_keys": [
+        "relay:29"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S003",
+      "url": "https://api.github.com/repos/Hexlet/hexlet-allorigins/commits/84f7651c642cef788564b4dd285a274b53bde9e4",
+      "title": "",
+      "namespace_keys": [
+        "relay:30"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S004",
+      "url": "https://api.github.com/repos/sighrobot/jqp",
+      "title": "",
+      "namespace_keys": [
+        "relay:26"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S005",
+      "url": "https://api.github.com/repos/sighrobot/jqp/commits?until=2026-06-18T00%3A00%3A00Z&per_page=1",
+      "title": "",
+      "namespace_keys": [
+        "relay:31"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S006",
+      "url": "https://api.greynoise.io/v2/experimental/gnql?query=raw_data.http.path%3A%22%2Acounty.json%2A%22&size=1",
+      "title": "greynoise-401",
+      "namespace_keys": [
+        "novelty:32",
+        "parent:16"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md",
+        "00-executive-result.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S007",
+      "url": "https://api.urlquery.net/public/v1/search/reports/?query=http.url.addr%3A%2Acounty.json%2A+AND+date%3A%5B2026-06-18+TO+2026-06-19%5D",
+      "title": "urlquery-api-401",
+      "namespace_keys": [
+        "novelty:36"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S008",
+      "url": "https://collusion.wiki/explorer/download.html",
+      "title": "",
+      "namespace_keys": [
+        "sec:5",
+        "parent:17"
+      ],
+      "chapters": [
+        "01-sec-wayback.md",
+        "07-chronology.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S009",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random",
+      "title": "",
+      "namespace_keys": [
+        "sec:8"
+      ],
+      "chapters": [
+        "01-sec-wayback.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S010",
+      "url": "https://docs.greynoise.io/docs/recall",
+      "title": "greynoise-recall.md",
+      "namespace_keys": [
+        "novelty:6"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S011",
+      "url": "https://docs.greynoise.io/docs/using-the-greynoise-community-api",
+      "title": "greynoise-community-docs.md",
+      "namespace_keys": [
+        "novelty:5"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S012",
+      "url": "https://docs.greynoise.io/docs/using-the-greynoise-query-language-gnql",
+      "title": "greynoise-gnql-docs.md",
+      "namespace_keys": [
+        "novelty:4"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S013",
+      "url": "https://github.com/JoshuaDavid/WikiAgentSwarmInvestigation/tree/main/tasks/sec-regcf-ma-cache",
+      "title": "",
+      "namespace_keys": [
+        "sec:10"
+      ],
+      "chapters": [
+        "01-sec-wayback.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S014",
+      "url": "https://github.com/internetarchive/wayback/blob/master/wayback-cdx-server/README.md?plain=1",
+      "title": "",
+      "namespace_keys": [
+        "sec:6"
+      ],
+      "chapters": [
+        "01-sec-wayback.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S015",
+      "url": "https://github.com/joshuadavid/wikiagentswarminvestigation/blob/e152f85f9032a8e4a55dade4b7990defe5e138c9/analyses/urls/outputs/urls.jsonl",
+      "title": "",
+      "namespace_keys": [
+        "relay:37"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S016",
+      "url": "https://github.com/joshuadavid/wikiagentswarminvestigation/blob/e152f85f9032a8e4a55dade4b7990defe5e138c9/tasks/sec-regcf-ma-cache/data-files.md",
+      "title": "",
+      "namespace_keys": [
+        "relay:2",
+        "parent:20"
+      ],
+      "chapters": [
+        "03-relay-layer.md",
+        "00-executive-result.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S017",
+      "url": "https://github.com/joshuadavid/wikiagentswarminvestigation/blob/e152f85f9032a8e4a55dade4b7990defe5e138c9/tasks/url-fetch-proxy-usage/README.md",
+      "title": "",
+      "namespace_keys": [
+        "relay:38"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S018",
+      "url": "https://github.com/joshuadavid/wikiagentswarminvestigation/tree/e152f85f9032a8e4a55dade4b7990defe5e138c9/agent-logs/prowiki",
+      "title": "",
+      "namespace_keys": [
+        "relay:1",
+        "parent:19"
+      ],
+      "chapters": [
+        "03-relay-layer.md",
+        "00-executive-result.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S019",
+      "url": "https://github.com/sighrobot/jqp",
+      "title": "jqp-github.md",
+      "namespace_keys": [
+        "novelty:16"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S020",
+      "url": "https://help.archive.org/help/save-pages-in-the-wayback-machine",
+      "title": "",
+      "namespace_keys": [
+        "sec:7"
+      ],
+      "chapters": [
+        "01-sec-wayback.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S021",
+      "url": "https://platform.lemino.ai",
+      "title": "",
+      "namespace_keys": [
+        "relay:7"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S022",
+      "url": "https://raw.githubusercontent.com/BradPerbs/cors.lol/4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94/README.md",
+      "title": "",
+      "namespace_keys": [
+        "relay:35"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S023",
+      "url": "https://raw.githubusercontent.com/BradPerbs/cors.lol/4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94/main.go",
+      "title": "",
+      "namespace_keys": [
+        "relay:36"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S024",
+      "url": "https://raw.githubusercontent.com/Hexlet/hexlet-allorigins/84f7651c642cef788564b4dd285a274b53bde9e4/README.md",
+      "title": "",
+      "namespace_keys": [
+        "relay:34"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S025",
+      "url": "https://raw.githubusercontent.com/sighrobot/jqp/9d3e86787f551b5609e36fec3e6ce73e255e5149/README.md",
+      "title": "",
+      "namespace_keys": [
+        "relay:32"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S026",
+      "url": "https://raw.githubusercontent.com/sighrobot/jqp/9d3e86787f551b5609e36fec3e6ce73e255e5149/app/api/v0/route.js",
+      "title": "",
+      "namespace_keys": [
+        "relay:33"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S027",
+      "url": "https://rubyhack.ai",
+      "title": "",
+      "namespace_keys": [
+        "sec:11"
+      ],
+      "chapters": [
+        "01-sec-wayback.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S028",
+      "url": "https://thecolony.cc/post/a7beb729-c578-4ee3-8b88-82a0c6b6603e",
+      "title": "colony-census-post.md",
+      "namespace_keys": [
+        "novelty:15"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S029",
+      "url": "https://transluce.org/agent-activity",
+      "title": "Transluce AIHW",
+      "namespace_keys": [
+        "census-aihw:2",
+        "novelty:13",
+        "parent:10"
+      ],
+      "chapters": [
+        "05-aihw.md",
+        "06-dormancy-and-novelty.md",
+        "00-executive-result.md",
+        "02-operation-linkage.md",
+        "07-chronology.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md",
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S030",
+      "url": "https://transluce.org/us-canada-gov",
+      "title": "",
+      "namespace_keys": [
+        "sec:9",
+        "census-aihw:1",
+        "novelty:14",
+        "parent:9"
+      ],
+      "chapters": [
+        "01-sec-wayback.md",
+        "04-census.md",
+        "06-dormancy-and-novelty.md",
+        "00-executive-result.md",
+        "07-chronology.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv",
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md",
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S031",
+      "url": "https://urlquery.net/about",
+      "title": "urlquery-about.md",
+      "namespace_keys": [
+        "novelty:8"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S032",
+      "url": "https://urlquery.net/help/search",
+      "title": "urlquery-search-docs.md",
+      "namespace_keys": [
+        "novelty:7"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S033",
+      "url": "https://urlquery.net/report/03b8111f-1e02-4ac2-9772-e9ef2bcf4f1a",
+      "title": "May12 false-positive",
+      "namespace_keys": [
+        "census-aihw:5"
+      ],
+      "chapters": [
+        "04-census.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S034",
+      "url": "https://urlquery.net/report/29a660a2-13c9-4744-83d0-3ea58c40bb7f",
+      "title": "June03 report A",
+      "namespace_keys": [
+        "census-aihw:6"
+      ],
+      "chapters": [
+        "04-census.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S035",
+      "url": "https://urlquery.net/report/7d203adc-9eff-401b-9a31-35a9c7155d30",
+      "title": "June03 report B",
+      "namespace_keys": [
+        "census-aihw:7"
+      ],
+      "chapters": [
+        "04-census.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S036",
+      "url": "https://urlquery.net/report/7d967df7-fcf5-4df1-927b-2642039a7b84",
+      "title": "May24 report B",
+      "namespace_keys": [
+        "census-aihw:4",
+        "parent:3"
+      ],
+      "chapters": [
+        "04-census.md",
+        "00-executive-result.md",
+        "02-operation-linkage.md",
+        "07-chronology.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S037",
+      "url": "https://urlquery.net/report/830d0a0c-d9d4-483d-9149-c33c35bf2f84/json",
+      "title": "",
+      "namespace_keys": [
+        "relay:11"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S038",
+      "url": "https://urlquery.net/report/87465efc-fc5e-484a-8089-b99f6981f575",
+      "title": "May24 report A",
+      "namespace_keys": [
+        "census-aihw:3",
+        "parent:2"
+      ],
+      "chapters": [
+        "04-census.md",
+        "00-executive-result.md",
+        "02-operation-linkage.md",
+        "07-chronology.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S039",
+      "url": "https://urlquery.net/report/a9d4b7db-2921-40d9-aa1b-01d6927b9731/json",
+      "title": "",
+      "namespace_keys": [
+        "relay:25"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S040",
+      "url": "https://urlquery.net/report/eb91d8ad-2f82-40df-803f-5474539757c1/json",
+      "title": "",
+      "namespace_keys": [
+        "relay:12"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S041",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aaihw.gov.au%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-23%5D&type=reports",
+      "title": "urlquery-aihw-june",
+      "namespace_keys": [
+        "novelty:19"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S042",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aaihw.gov.au%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-aihw-recent",
+      "namespace_keys": [
+        "novelty:20"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S043",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aallorigins.hexlet.app%2A%20AND%20date%3A%5B2026-06-18%20TO%202026-06-19%5D&type=reports",
+      "title": "urlquery-allorigins-june",
+      "namespace_keys": [
+        "novelty:27"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S044",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aallorigins.hexlet.app%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-allorigins-recent",
+      "namespace_keys": [
+        "novelty:28"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S045",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aapi.cors.lol%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-19%5D&type=reports",
+      "title": "urlquery-cors-june",
+      "namespace_keys": [
+        "novelty:25"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S046",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Aapi.cors.lol%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-cors-recent",
+      "namespace_keys": [
+        "novelty:26"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S047",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Acounty.json%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-19%5D&type=reports",
+      "title": "urlquery-county-june",
+      "namespace_keys": [
+        "novelty:17",
+        "parent:14"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md",
+        "00-executive-result.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S048",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Acounty.json%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-county-recent",
+      "namespace_keys": [
+        "novelty:18",
+        "parent:15"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md",
+        "00-executive-result.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S049",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Ajqp.vercel.app%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-23%5D&type=reports",
+      "title": "urlquery-jqp-june",
+      "namespace_keys": [
+        "novelty:21"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S050",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Ajqp.vercel.app%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-jqp-recent",
+      "namespace_keys": [
+        "novelty:22"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S051",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Ar.jina.ai%2A%20AND%20date%3A%5B2026-06-17%20TO%202026-06-23%5D&type=reports",
+      "title": "urlquery-jina-june",
+      "namespace_keys": [
+        "novelty:24"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S052",
+      "url": "https://urlquery.net/search?q=http.url.addr%3A%2Ar.jina.ai%2A%20AND%20date%3A%5B2026-09-04%20TO%202026-10-04%5D&type=reports",
+      "title": "urlquery-jina-recent",
+      "namespace_keys": [
+        "novelty:23"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S053",
+      "url": "https://urlscan.io/api/v1/result/019ed827-0471-746c-aa31-8da7d1e6f6ae",
+      "title": "urlscan-result-403",
+      "namespace_keys": [
+        "novelty:37"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S054",
+      "url": "https://urlscan.io/api/v1/search/?q=domain%3Agoogle.com+AND+date%3A%5B2026-06-18+TO+2026-06-19%5D&size=3",
+      "title": "urlscan-june-google",
+      "namespace_keys": [
+        "novelty:29"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S055",
+      "url": "https://urlscan.io/api/v1/search/?q=task.domain%3Asec.gov+AND+date%3A%5B2026-06-18+TO+2026-06-19%5D&size=10",
+      "title": "urlscan-june-sec",
+      "namespace_keys": [
+        "novelty:31"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S056",
+      "url": "https://urlscan.io/api/v1/search/?q=task.domain%3Asec.gov+AND+date%3A%5B2026-09-04+TO+2026-10-04%5D&size=10",
+      "title": "urlscan-recent-sec",
+      "namespace_keys": [
+        "novelty:30"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S057",
+      "url": "https://urlscan.io/docs/api",
+      "title": "urlscan-api-docs.md",
+      "namespace_keys": [
+        "novelty:2"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S058",
+      "url": "https://urlscan.io/docs/faq",
+      "title": "urlscan-faq.md",
+      "namespace_keys": [
+        "novelty:3"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S059",
+      "url": "https://urlscan.io/docs/search",
+      "title": "urlscan-search-docs.md",
+      "namespace_keys": [
+        "novelty:1"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S060",
+      "url": "https://urlscan.io/result/019ed827-0471-746c-aa31-8da7d1e6f6ae",
+      "title": "urlscan-public-429",
+      "namespace_keys": [
+        "novelty:38"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S061",
+      "url": "https://web.archive.org/cdx/search/cdx?url=allorigins.hexlet.app&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "title": "",
+      "namespace_keys": [
+        "relay:20"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S062",
+      "url": "https://web.archive.org/cdx/search/cdx?url=api.allorigins.win%2F%2A&from=2026061702&to=2026061703&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback AllOrigins CDX",
+      "namespace_keys": [
+        "census-aihw:10"
+      ],
+      "chapters": [
+        "04-census.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S063",
+      "url": "https://web.archive.org/cdx/search/cdx?url=api.cors.lol&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "title": "",
+      "namespace_keys": [
+        "relay:21"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S064",
+      "url": "https://web.archive.org/cdx/search/cdx?url=corsproxy.io%2F%2A&from=2026061702&to=2026061703&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback CorsProxy CDX",
+      "namespace_keys": [
+        "census-aihw:9"
+      ],
+      "chapters": [
+        "04-census.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S065",
+      "url": "https://web.archive.org/cdx/search/cdx?url=jqp.vercel.app%2Fapi%2Fv0&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "title": "",
+      "namespace_keys": [
+        "relay:19"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S066",
+      "url": "https://web.archive.org/cdx/search/cdx?url=platform.lemino.ai&matchType=prefix&from=20260101&to=20260618&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest&output=json&limit=1000",
+      "title": "",
+      "namespace_keys": [
+        "relay:22"
+      ],
+      "chapters": [
+        "03-relay-layer.md"
+      ],
+      "retained_evidence": [
+        "_support/relay/source-evidence-manifest.json",
+        "_support/relay/source-excerpts.md",
+        "_support/relay/counts.json",
+        "_support/relay/historical-evidence.json"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S067",
+      "url": "https://web.archive.org/cdx/search/cdx?url=r.jina.ai%2Fhttp%2A&from=2026061702&to=2026061703&filter=original%3A.%2Acensus.%2A&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback Jina Census CDX",
+      "namespace_keys": [
+        "census-aihw:8"
+      ],
+      "chapters": [
+        "04-census.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S068",
+      "url": "https://web.archive.org/cdx/search/cdx?url=r.jina.ai%2Fhttp%3A%2F%2Fhttps%3A%2F%2Fwww.aihw.gov.au%2Fgetmedia%2F57e4c61f%2A&from=20260618&to=20260618&output=json&fl=timestamp%2Curlkey%2Cstatuscode&limit=10",
+      "title": "wayback-aihw",
+      "namespace_keys": [
+        "novelty:33"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S069",
+      "url": "https://web.archive.org/cdx/search/cdx?url=r.jina.ai%2Fhttp%3A%2F%2Fhttps%3A%2F%2Fwww.aihw.gov.au%2Fgetmedia%2F57e4c61f-213a-4b27-b2fa-3a22a2a19d27%2FPrincipal-Diagnosis-cube_2014-15.xlsx.aspx&from=20260618&to=20260618&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback AIHW Jina CDX",
+      "namespace_keys": [
+        "census-aihw:16"
+      ],
+      "chapters": [
+        "05-aihw.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S070",
+      "url": "https://web.archive.org/cdx/search/cdx?url=sec.gov%2Ffiles%2Fcounty.json&matchType=prefix&from=20260618&to=20260618&output=json&collapse=urlkey&fl=timestamp%2Coriginal%2Curlkey%2Cdigest%2Cstatuscode%2Cmimetype%2Clength%2Cfilename%2Coffset",
+      "title": "",
+      "namespace_keys": [
+        "sec:2"
+      ],
+      "chapters": [
+        "01-sec-wayback.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S071",
+      "url": "https://web.archive.org/cdx/search/cdx?url=sec.gov%2Ffiles%2Fcounty.json&matchType=prefix&from=20260618&to=20260618&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cdigest%2Cstatuscode%2Cmimetype%2Clength%2Cfilename%2Coffset",
+      "title": "",
+      "namespace_keys": [
+        "sec:1",
+        "parent:1"
+      ],
+      "chapters": [
+        "01-sec-wayback.md",
+        "00-executive-result.md",
+        "02-operation-linkage.md",
+        "07-chronology.md",
+        "08-methods-and-reproducibility.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S072",
+      "url": "https://web.archive.org/cdx/search/cdx?url=sec.gov%2Ffiles%2Fcounty.json&matchType=prefix&from=20260618&to=20260618&output=json&fl=timestamp%2Curlkey%2Coriginal%2Cdigest%2Cstatuscode&limit=200",
+      "title": "wayback-county",
+      "namespace_keys": [
+        "novelty:34"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S073",
+      "url": "https://web.archive.org/cdx/search/cdx?url=transluce.org%2Fagent-activity&from=20260901&to=20261003&output=json&fl=timestamp%2Coriginal%2Cstatuscode&filter=statuscode%3A200&collapse=timestamp%3A8&limit=30",
+      "title": "wayback-report-sep24",
+      "namespace_keys": [
+        "novelty:35"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S074",
+      "url": "https://web.archive.org/cdx/search/cdx?url=www.sec.gov%2Ffiles%2Fcounty.json&matchType=prefix&from=20260601&to=20260630&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cdigest%2Cstatuscode%2Cmimetype%2Clength&limit=1000&showResumeKey=true",
+      "title": "",
+      "namespace_keys": [
+        "sec:3"
+      ],
+      "chapters": [
+        "01-sec-wayback.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S075",
+      "url": "https://web.archive.org/cdx/search/cdx?url=www.sec.gov%2Ffiles%2Fregcf.json&matchType=prefix&from=20260618&to=20260618&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cdigest%2Cstatuscode%2Cmimetype%2Clength&limit=1000",
+      "title": "",
+      "namespace_keys": [
+        "sec:4"
+      ],
+      "chapters": [
+        "01-sec-wayback.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S076",
+      "url": "https://web.archive.org/cdx/search/cdx?url=www2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat&from=20260617&to=20260617&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+      "title": "Wayback Census static-file CDX",
+      "namespace_keys": [
+        "census-aihw:14",
+        "parent:7"
+      ],
+      "chapters": [
+        "04-census.md",
+        "00-executive-result.md",
+        "07-chronology.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S077",
+      "url": "https://web.archive.org/web/20260617023907id_/https://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+      "title": "Wayback Census direct replay",
+      "namespace_keys": [
+        "census-aihw:15"
+      ],
+      "chapters": [
+        "04-census.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S078",
+      "url": "https://web.archive.org/web/20260617025907id_/https://r.jina.ai/http://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+      "title": "Wayback Jina replay",
+      "namespace_keys": [
+        "census-aihw:11",
+        "parent:4"
+      ],
+      "chapters": [
+        "04-census.md",
+        "00-executive-result.md",
+        "02-operation-linkage.md",
+        "07-chronology.md",
+        "08-methods-and-reproducibility.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S079",
+      "url": "https://web.archive.org/web/20260617030212id_/https://api.allorigins.win/raw?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+      "title": "Wayback AllOrigins replay",
+      "namespace_keys": [
+        "census-aihw:12",
+        "parent:5"
+      ],
+      "chapters": [
+        "04-census.md",
+        "00-executive-result.md",
+        "02-operation-linkage.md",
+        "07-chronology.md",
+        "08-methods-and-reproducibility.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S080",
+      "url": "https://web.archive.org/web/20260617030301id_/https://corsproxy.io/?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+      "title": "Wayback CorsProxy replay",
+      "namespace_keys": [
+        "census-aihw:13",
+        "parent:6"
+      ],
+      "chapters": [
+        "04-census.md",
+        "00-executive-result.md",
+        "02-operation-linkage.md",
+        "07-chronology.md",
+        "08-methods-and-reproducibility.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S081",
+      "url": "https://web.archive.org/web/20260618063135id_/https://r.jina.ai/http://https://www.aihw.gov.au/getmedia/57e4c61f-213a-4b27-b2fa-3a22a2a19d27/Principal-Diagnosis-cube_2014-15.xlsx.aspx",
+      "title": "Wayback AIHW replay",
+      "namespace_keys": [
+        "census-aihw:17",
+        "parent:8"
+      ],
+      "chapters": [
+        "05-aihw.md",
+        "00-executive-result.md",
+        "02-operation-linkage.md",
+        "07-chronology.md",
+        "08-methods-and-reproducibility.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S082",
+      "url": "https://wet-boew.github.io/wet-boew/docs/ref/wb-disable/wb-disable-en.html",
+      "title": "WET-BOEW Basic HTML documentation",
+      "namespace_keys": [
+        "parent:18"
+      ],
+      "chapters": [
+        "09-corrected-claims.md"
+      ],
+      "retained_evidence": [
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S083",
+      "url": "https://www.aihw.gov.au/reports/hospitals/principal-diagnosis-data-cubes/contents/summary",
+      "title": "AIHW principal diagnosis data cubes",
+      "namespace_keys": [
+        "census-aihw:18"
+      ],
+      "chapters": [
+        "05-aihw.md"
+      ],
+      "retained_evidence": [
+        "_support/census-aihw/evidence-excerpts.md",
+        "_support/census-aihw/census-may24-redacted.json",
+        "_support/census-aihw/census-june17-redacted.json",
+        "_support/census-aihw/aihw-june18-redacted.json",
+        "_support/census-aihw/search-coverage.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S084",
+      "url": "https://www.asymmetricsecurity.com/newsroom/rogue-agents-investigation-initial-findings",
+      "title": "asymmetric-findings.md",
+      "namespace_keys": [
+        "novelty:9"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S085",
+      "url": "https://www.kennethdegraff.com/swarm",
+      "title": "",
+      "namespace_keys": [
+        "sec:12",
+        "novelty:10"
+      ],
+      "chapters": [
+        "01-sec-wayback.md",
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/sec/counts.json",
+        "_support/sec/retrieval-table.md",
+        "_support/sec/cdx-events-redacted.csv",
+        "_support/sec/wiki-county-added-redacted.csv",
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    },
+    {
+      "source_key": "S086",
+      "url": "https://www.manifold.security/blog/ai-agents-urlscan-aihw-government-data",
+      "title": "manifold-aihw.md",
+      "namespace_keys": [
+        "novelty:12",
+        "parent:13"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md",
+        "00-executive-result.md",
+        "07-chronology.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl",
+        "_support/parent-measurements.json",
+        "_support/parent-replay-verification.json",
+        "_support/parent-relay-hash-verification.json",
+        "_support/wet-boew-excerpt.md"
+      ],
+      "dates_recorded": [
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    {
+      "source_key": "S087",
+      "url": "https://www.theregister.com/ai-and-ml/2026/09/10/openais-website-hijacking-swarm-reached-far-further-than-we-thought/5295644",
+      "title": "register-20260910.md",
+      "namespace_keys": [
+        "novelty:11"
+      ],
+      "chapters": [
+        "06-dormancy-and-novelty.md"
+      ],
+      "retained_evidence": [
+        "_support/novelty/source-excerpts.md",
+        "_support/novelty/feed-tests.jsonl",
+        "_support/novelty/search-ledger.jsonl",
+        "_support/novelty/archive-tests.jsonl"
+      ],
+      "dates_recorded": [
+        "2026-10-03"
+      ]
+    }
+  ],
+  "limits": "Referenced evidence paths are group-level receipts. Not every publication has a full preserved body. Source access dates can be local; use receipt UTC clocks for exact retrievals."
+}

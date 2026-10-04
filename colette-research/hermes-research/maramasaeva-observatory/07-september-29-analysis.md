@@ -1,5 +1,7 @@
 # 29 September 2026: first analysis
 
+Update: The PyPI component is resolved as a coherent Serpentine release wave. Read [the resolution](08-september-29-pypi-resolution.md).[1]
+
 ## Executive reading
 
 29 September is the strongest new date in the observatory.[1]

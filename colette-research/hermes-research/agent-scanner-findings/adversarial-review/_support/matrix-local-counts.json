@@ -1,0 +1,24 @@
+{
+  "by_folder": {
+    "prepnonce": {
+      "01-education": 27865
+    },
+    "wbdisable": {
+      "02-canada": 9
+    },
+    "zz=oai": {
+      "01-education": 14941
+    },
+    "zzbulk": {
+      "01-education": 42483
+    }
+  },
+  "counts": {
+    "all_capture_rows": 561229,
+    "prepnonce": 27865,
+    "wbdisable": 9,
+    "zz=oai": 14941,
+    "zzbulk": 42483
+  },
+  "method": "Literal case-sensitive substring in target_url; CSV row unit. No URL decoding."
+}

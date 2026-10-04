@@ -1,0 +1,58 @@
+{
+  "sources": [
+    {
+      "name": "jqp_readme",
+      "url": "https://raw.githubusercontent.com/sighrobot/jqp/9d3e86787f551b5609e36fec3e6ce73e255e5149/README.md",
+      "retrieved_at_utc": "2026-10-04T01:34:49.683426+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/jqp_readme.txt",
+      "sha256": "6956a9753e5641f8bb053ed135eeb1d7ce87acdac68396fe832ccc28c1da5213"
+    },
+    {
+      "name": "jqp_route",
+      "url": "https://raw.githubusercontent.com/sighrobot/jqp/9d3e86787f551b5609e36fec3e6ce73e255e5149/app/api/v0/route.js",
+      "retrieved_at_utc": "2026-10-04T01:34:49.684081+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/jqp_route.txt",
+      "sha256": "5e2bbafe7ae8ce8a0a40b6829c19f063df512fc435e95267b8577a053987852c"
+    },
+    {
+      "name": "hexlet_readme",
+      "url": "https://raw.githubusercontent.com/Hexlet/hexlet-allorigins/84f7651c642cef788564b4dd285a274b53bde9e4/README.md",
+      "retrieved_at_utc": "2026-10-04T01:34:49.684648+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/hexlet_readme.txt",
+      "sha256": "acf8820284a34b2e5fa0eb47344201002330858e6118e485fa35384f86d214b7"
+    },
+    {
+      "name": "cors_readme",
+      "url": "https://raw.githubusercontent.com/BradPerbs/cors.lol/4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94/README.md",
+      "retrieved_at_utc": "2026-10-04T01:34:49.685302+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/cors_readme.txt",
+      "sha256": "0c144458675b94513622e56e9e5a72d73ddea5d02f2f5cf1614e9b26c27996a9"
+    },
+    {
+      "name": "cors_main",
+      "url": "https://raw.githubusercontent.com/BradPerbs/cors.lol/4f8fd6f41ffd9e7a55f68ecd6d032474637ebe94/main.go",
+      "retrieved_at_utc": "2026-10-04T01:34:49.880740+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/cors_main.txt",
+      "sha256": "6092e002e3605e7fab6c50eb58aee57155487251a08330ba6554d21177199121"
+    },
+    {
+      "name": "lemino_home",
+      "url": "https://platform.lemino.ai",
+      "retrieved_at_utc": "2026-10-04T01:34:49.887553+00:00",
+      "method": "public HTTPS GET",
+      "http_status": 200,
+      "raw_path": "data/raw/relay-review/lemino_home.txt",
+      "sha256": "83e755b9c80070f40cf88a2fb19d507c91423d9b59abad93ffbaa036fb55528b"
+    }
+  ]
+}

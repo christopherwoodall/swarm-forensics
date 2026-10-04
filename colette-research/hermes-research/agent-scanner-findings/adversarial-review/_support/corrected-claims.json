@@ -1,0 +1,314 @@
+[
+  {
+    "claim_id": "I1-count",
+    "original_item": 1,
+    "original_claim": "65 SEC captures; 61 identical digests",
+    "surviving_claim": "Current query: 63 index entries; 62 URL keys; 60 entries share the main digest",
+    "disposition": "c",
+    "level": 1,
+    "confidence": "high",
+    "evidence": [
+      "sec:1",
+      "sec:2",
+      "_support/sec/counts.json"
+    ],
+    "rejected_wording": "65 verified saves or 61 replay-verified copies",
+    "alternative": "Earlier index snapshot or different filters",
+    "missing_evidence": "Original briefdump and exact old response",
+    "novelty": "Exact burst not found in bounded publication search",
+    "changes": [
+      "scope",
+      "chronology"
+    ]
+  },
+  {
+    "claim_id": "I1-nonce",
+    "original_item": 1,
+    "original_claim": "41 exact 17-digit x nonces; agent-driven saving",
+    "surviving_claim": "41 x-decimal entries have variable digit lengths; seven have 17 digits",
+    "disposition": "c",
+    "level": 1,
+    "confidence": "high for syntax; low for actor inference",
+    "evidence": [
+      "sec:1"
+    ],
+    "rejected_wording": "Nonce grammar proves agents or Save Page Now",
+    "alternative": "Generic random-number cache busting, crawler discovery, browser integration",
+    "missing_evidence": "Capture initiator and collection method",
+    "novelty": "Unresolved beyond searched sources",
+    "changes": [
+      "mechanism",
+      "attribution"
+    ]
+  },
+  {
+    "claim_id": "I1-order",
+    "original_item": 1,
+    "original_claim": "Wiki starts before first archive capture",
+    "surviving_claim": "Wiki predates the first bare-decimal capture, but follows earlier archive entries",
+    "disposition": "c",
+    "level": 1,
+    "confidence": "high",
+    "evidence": [
+      "sec:1",
+      "sec:5"
+    ],
+    "rejected_wording": "Wiki caused the archive burst",
+    "alternative": "Independent activity around a shared task source",
+    "missing_evidence": "Exact handoff or submitter log",
+    "novelty": "Timing refinement only",
+    "changes": [
+      "chronology"
+    ]
+  },
+  {
+    "claim_id": "I2-operation",
+    "original_item": 2,
+    "original_claim": "Four clusters are one operation",
+    "surviving_claim": "Retain related-looking independent clusters; SEC shares a target",
+    "disposition": "d",
+    "level": 1,
+    "confidence": "high that linkage is not established",
+    "evidence": [
+      "02-operation-linkage.md"
+    ],
+    "rejected_wording": "One operation or authenticated shared population",
+    "alternative": "Independent tasks using common public tools",
+    "missing_evidence": "Stable common initiator, run ID, or explicit handoff",
+    "novelty": "No new operation established",
+    "changes": [
+      "scope",
+      "attribution"
+    ]
+  },
+  {
+    "claim_id": "I2-reports",
+    "original_item": 2,
+    "original_claim": "Seven late SEC urlquery reports",
+    "surviving_claim": "13 report IDs correspond to seven submitted URLs within the stated interval",
+    "disposition": "c",
+    "level": 2,
+    "confidence": "high",
+    "evidence": [
+      "_support/parent-measurements.json"
+    ],
+    "rejected_wording": "Seven reports; 252 verified block-page hits",
+    "alternative": "Reference-unit mix or omitted filter",
+    "missing_evidence": "Original selection list; block-page body fingerprint",
+    "novelty": "Count correction, not incident discovery",
+    "changes": [
+      "scope"
+    ]
+  },
+  {
+    "claim_id": "I3-count",
+    "original_item": 3,
+    "original_claim": "jqp is 14341/31525 references or 45%",
+    "surviving_claim": "Defined cumulative corpus: 17086/46278 outer-host occurrences; hunk counts differ",
+    "disposition": "c",
+    "level": 1,
+    "confidence": "high for defined counting rule",
+    "evidence": [
+      "relay:1",
+      "relay:37",
+      "_support/relay/counts.json"
+    ],
+    "rejected_wording": "Operation-wide traffic dominance",
+    "alternative": "Inherited page text, nested-host overlap, source-table inconsistency",
+    "missing_evidence": "Original counting recipe and source version",
+    "novelty": "New recount of published material",
+    "changes": [
+      "scope"
+    ]
+  },
+  {
+    "claim_id": "I3-hosts",
+    "original_item": 3,
+    "original_claim": "480 cors.lol references; Lemino never inventoried",
+    "surviving_claim": "480 labels generic CORS proxies; source inventory already names Lemino",
+    "disposition": "e",
+    "level": 0,
+    "confidence": "high",
+    "evidence": [
+      "relay:2"
+    ],
+    "rejected_wording": "480 exclusively cors.lol; Lemino never inventoried",
+    "alternative": "Category-to-host substitution",
+    "missing_evidence": "Original scanner provenance",
+    "novelty": "Already inventoried; first-publication date remains bounded",
+    "changes": [
+      "scope"
+    ]
+  },
+  {
+    "claim_id": "I3-infrastructure",
+    "original_item": 3,
+    "original_claim": "The operation built no infrastructure",
+    "surviving_claim": "Several referenced services predate the burst; full infrastructure scope is unknown",
+    "disposition": "b",
+    "level": 1,
+    "confidence": "high for historical references",
+    "evidence": [
+      "relay:19",
+      "relay:20",
+      "relay:21"
+    ],
+    "rejected_wording": "No infrastructure anywhere; unrestricted historical access",
+    "alternative": "Public tools plus unseen private infrastructure",
+    "missing_evidence": "Complete asset inventory and historical deployment records",
+    "novelty": "Public relay use already reported",
+    "changes": [
+      "mechanism",
+      "scope"
+    ]
+  },
+  {
+    "claim_id": "I4-earlier",
+    "original_item": 4,
+    "original_claim": "Census key reuse started May 24",
+    "surviving_claim": "Two matching May 24 browser requests reached Census and ended at Missing Key",
+    "disposition": "c",
+    "level": 3,
+    "confidence": "high for receipt; low for attribution",
+    "evidence": [
+      "census-aihw:3",
+      "census-aihw:4"
+    ],
+    "rejected_wording": "Operation start or successful ACS data retrieval",
+    "alternative": "Ordinary malformed URL submission",
+    "missing_evidence": "Earlier exhaustive coverage and initiator identity",
+    "novelty": "Exact records not found in bounded prior-publication search",
+    "changes": [
+      "chronology",
+      "outcome"
+    ]
+  },
+  {
+    "claim_id": "I4-chain",
+    "original_item": 4,
+    "original_claim": "Jina to CorsProxy to AllOrigins succeeded",
+    "surviving_claim": "Three separate archive wrappers return empty content or errors; no chained hops",
+    "disposition": "e",
+    "level": 1,
+    "confidence": "high",
+    "evidence": [
+      "census-aihw:11",
+      "census-aihw:12",
+      "census-aihw:13"
+    ],
+    "rejected_wording": "Successful triple-relay retrieval",
+    "alternative": "Separate retries or independent archive submissions",
+    "missing_evidence": "Content-bearing linked request sequence",
+    "novelty": "Corrected mechanism, not novel success",
+    "changes": [
+      "mechanism",
+      "outcome"
+    ]
+  },
+  {
+    "claim_id": "I4-direct",
+    "original_item": 4,
+    "original_claim": "Relay evidence overturns Transluce",
+    "surviving_claim": "Two independent target captures contain a different, key-free static file",
+    "disposition": "c",
+    "level": 4,
+    "confidence": "high for archive content only",
+    "evidence": [
+      "census-aihw:14",
+      "census-aihw:15",
+      "census-aihw:1"
+    ],
+    "rejected_wording": "Contradiction of the June exposed-key statement",
+    "alternative": "Archive fetched a public static file independently",
+    "missing_evidence": "Link from specific exposed-key request to returned dataset",
+    "novelty": "Resource-family distinction",
+    "changes": [
+      "scope",
+      "outcome"
+    ]
+  },
+  {
+    "claim_id": "I5-capture",
+    "original_item": 5,
+    "original_claim": "June 18 Jina AIHW capture exists",
+    "surviving_claim": "One capture preserves the doubled scheme; returned text is a security check",
+    "disposition": "c",
+    "level": 2,
+    "confidence": "high for record and relay response",
+    "evidence": [
+      "census-aihw:16",
+      "census-aihw:17"
+    ],
+    "rejected_wording": "The diagnosis workbook was retrieved",
+    "alternative": "Unrelated requester received a bot-protection page",
+    "missing_evidence": "Content-bearing response or verified target logs",
+    "novelty": "Exact wrapper not found in bounded prior-publication search",
+    "changes": [
+      "outcome"
+    ]
+  },
+  {
+    "claim_id": "I5-incident",
+    "original_item": 5,
+    "original_claim": "Extends the pharmaceutical incident two days earlier",
+    "surviving_claim": "The diagnosis resource differs; earlier AIHW activity was already published elsewhere",
+    "disposition": "d",
+    "level": 1,
+    "confidence": "high for resource distinction; low for linkage",
+    "evidence": [
+      "census-aihw:2",
+      "census-aihw:18",
+      "novelty:12"
+    ],
+    "rejected_wording": "Agent sloppiness proves actor; pharmaceutical incident started June 18",
+    "alternative": "Independent hospital-data lookup with generic malformed wrapper",
+    "missing_evidence": "Common task, run, or initiator record",
+    "novelty": "Earlier window already published; exact trace may be a narrower addition",
+    "changes": [
+      "scope",
+      "attribution"
+    ]
+  },
+  {
+    "claim_id": "I6-zero",
+    "original_item": 6,
+    "original_claim": "Three feeds confirm zero recent fingerprints",
+    "surviving_claim": "Only a scoped urlquery comparison has a useful county-string June control",
+    "disposition": "b",
+    "level": 0,
+    "confidence": "moderate for scoped index comparison",
+    "evidence": [
+      "novelty:17",
+      "novelty:18",
+      "novelty:29",
+      "novelty:32"
+    ],
+    "rejected_wording": "Confirmed zero in all feeds",
+    "alternative": "Access restrictions, retention, query failure, private reports",
+    "missing_evidence": "Original feed receipts and comparable working controls",
+    "novelty": "Explicit bounded test, not world-wide absence",
+    "changes": [
+      "scope"
+    ]
+  },
+  {
+    "claim_id": "I6-ended",
+    "original_item": 6,
+    "original_claim": "The operation stopped",
+    "surviving_claim": "Public-feed silence cannot establish cessation",
+    "disposition": "d",
+    "level": 0,
+    "confidence": "high that cessation is unsupported",
+    "evidence": [
+      "06-dormancy-and-novelty.md"
+    ],
+    "rejected_wording": "Dormant, stopped, or ended",
+    "alternative": "Changed targets, markers, relays, or visibility",
+    "missing_evidence": "Stable actor identity and comparable comprehensive coverage",
+    "novelty": "Prior wiki-silence assertions exist",
+    "changes": [
+      "attribution",
+      "outcome"
+    ]
+  }
+]

@@ -91,6 +91,18 @@ traces-normalize: setup ## Normalize the three trace reservoirs into data/raw/tr
 traces-report: setup ## Print cross-dataset counts and bridge-candidate summaries from data/raw/traces/
 	$(RUN) python -m swarm_forensics.traces.report
 
+.PHONY: review-measure review-verify review-relay-count
+REVIEW_AUDIT := colette-research/hermes-research/agent-scanner-findings/adversarial-review/_support/audit_review.py
+
+review-measure: ## Recompute bounded local measurements for the adversarial review
+	$(RUN) --frozen --offline --no-sync python $(REVIEW_AUDIT) measure
+
+review-verify: ## Verify review files, citations, links, and credential redaction
+	$(RUN) --frozen --offline --no-sync python $(REVIEW_AUDIT) verify
+
+review-relay-count: ## Recount the published wiki relay references without network access
+	$(RUN) --frozen --offline --no-sync python colette-research/hermes-research/agent-scanner-findings/adversarial-review/_support/relay/count_relay_refs.py
+
 traces-viz-build: setup ## Aggregate events/edges into data/viz_mock/v4_traces/data/viewer-data.json
 	$(RUN) python -m swarm_forensics.traces.viz
 

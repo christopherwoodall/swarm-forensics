@@ -1,0 +1,477 @@
+{
+  "local_zip": "colette-research/sources/urlquery-net-data/urlquery-agent-activity-2026-09-23.zip!/urlquery-agent-activity-2026-09-22-v5/report-sources.csv",
+  "may24_exact_submitted_url_equal": true,
+  "may24_same_key_as_brief": true,
+  "method": "ZIP report-sources.csv classification plus public /report/{id}/json read; no active Census requests",
+  "report_assignment_count": 5,
+  "reports": [
+    {
+      "archive_time_utc": null,
+      "catalog_time_utc": "2026-05-12T10:40:52Z",
+      "census_http_transactions": [
+        {
+          "raw_ref": "https://urlquery.net/report/03b8111f-1e02-4ac2-9772-e9ef2bcf4f1a/json#http-50",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "application/json; charset=utf-8",
+          "response_status": "200",
+          "source_time_utc": "2026-05-12T10:40:28.040Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": false,
+            "key_marker_present": false,
+            "matches_brief_indicator": false,
+            "parameter_names": [
+              "get",
+              "for"
+            ],
+            "path": "/data/2022/acs/acs5"
+          },
+          "transaction_index": 50
+        }
+      ],
+      "discovery_time_utc": "2026-10-04T01:29:01.618657Z",
+      "final": {
+        "encoded_ampersands": 0,
+        "host": "www.thebrookhavenspotlight.com",
+        "key_buried_in_get_value": false,
+        "key_is_independent_parameter": false,
+        "key_marker_present": false,
+        "matches_brief_indicator": false,
+        "parameter_names": [],
+        "path": "/"
+      },
+      "final_title": "Brookhaven Spotlight \u2014 Local Businesses. Local Homes. Connect & Thrive.",
+      "formal_publication_time_utc": null,
+      "json_sha256": "29536870e7c62b2d2ed516d242f8fef0712432291b270b250549bdac1ca2c18e",
+      "report_id": "03b8111f-1e02-4ac2-9772-e9ef2bcf4f1a",
+      "report_url": "https://urlquery.net/report/03b8111f-1e02-4ac2-9772-e9ef2bcf4f1a",
+      "submitted": {
+        "encoded_ampersands": 0,
+        "host": "www.thebrookhavenspotlight.com",
+        "key_buried_in_get_value": false,
+        "key_is_independent_parameter": false,
+        "key_marker_present": false,
+        "matches_brief_indicator": false,
+        "parameter_names": [],
+        "path": "/"
+      },
+      "total_http_transactions": 73
+    },
+    {
+      "archive_time_utc": null,
+      "catalog_time_utc": "2026-05-24T07:09:00Z",
+      "census_http_transactions": [
+        {
+          "raw_ref": "https://urlquery.net/report/87465efc-fc5e-484a-8089-b99f6981f575/json#http-0",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": true,
+          "response_mime": "text/html",
+          "response_status": "302",
+          "source_time_utc": "2026-05-24T07:08:39.335Z",
+          "target": {
+            "encoded_ampersands": 2,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": true,
+            "key_is_independent_parameter": false,
+            "key_marker_present": true,
+            "matches_brief_indicator": true,
+            "parameter_names": [
+              "get"
+            ],
+            "path": "/data/2022/acs/acs5"
+          },
+          "transaction_index": 0
+        },
+        {
+          "raw_ref": "https://urlquery.net/report/87465efc-fc5e-484a-8089-b99f6981f575/json#http-1",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "text/html",
+          "response_status": "200",
+          "source_time_utc": "2026-05-24T07:08:39.802Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": false,
+            "key_marker_present": false,
+            "matches_brief_indicator": false,
+            "parameter_names": [],
+            "path": "/data/missing_key.html"
+          },
+          "transaction_index": 1
+        },
+        {
+          "raw_ref": "https://urlquery.net/report/87465efc-fc5e-484a-8089-b99f6981f575/json#http-2",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "text/html; charset=utf-8",
+          "response_status": "200",
+          "source_time_utc": "2026-05-24T07:08:40.146Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": false,
+            "key_marker_present": false,
+            "matches_brief_indicator": false,
+            "parameter_names": [],
+            "path": "/favicon.ico"
+          },
+          "transaction_index": 2
+        }
+      ],
+      "discovery_time_utc": "2026-10-04T01:29:01.618657Z",
+      "final": {
+        "encoded_ampersands": 0,
+        "host": "api.census.gov",
+        "key_buried_in_get_value": false,
+        "key_is_independent_parameter": false,
+        "key_marker_present": false,
+        "matches_brief_indicator": false,
+        "parameter_names": [],
+        "path": "/data/missing_key.html"
+      },
+      "final_title": "Missing Key",
+      "formal_publication_time_utc": null,
+      "json_sha256": "d2bbe774ecbcf7d25ce5478e532f2d9bb854a410217033518dd0a5af214ce361",
+      "report_id": "87465efc-fc5e-484a-8089-b99f6981f575",
+      "report_url": "https://urlquery.net/report/87465efc-fc5e-484a-8089-b99f6981f575",
+      "submitted": {
+        "encoded_ampersands": 2,
+        "host": "api.census.gov",
+        "key_buried_in_get_value": true,
+        "key_is_independent_parameter": false,
+        "key_marker_present": true,
+        "matches_brief_indicator": true,
+        "parameter_names": [
+          "get"
+        ],
+        "path": "/data/2022/acs/acs5"
+      },
+      "total_http_transactions": 3
+    },
+    {
+      "archive_time_utc": null,
+      "catalog_time_utc": "2026-05-24T07:09:03Z",
+      "census_http_transactions": [
+        {
+          "raw_ref": "https://urlquery.net/report/7d967df7-fcf5-4df1-927b-2642039a7b84/json#http-0",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": true,
+          "response_mime": "text/html",
+          "response_status": "302",
+          "source_time_utc": "2026-05-24T07:08:41.987Z",
+          "target": {
+            "encoded_ampersands": 2,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": true,
+            "key_is_independent_parameter": false,
+            "key_marker_present": true,
+            "matches_brief_indicator": true,
+            "parameter_names": [
+              "get"
+            ],
+            "path": "/data/2022/acs/acs5"
+          },
+          "transaction_index": 0
+        },
+        {
+          "raw_ref": "https://urlquery.net/report/7d967df7-fcf5-4df1-927b-2642039a7b84/json#http-1",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "text/html",
+          "response_status": "200",
+          "source_time_utc": "2026-05-24T07:08:42.384Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": false,
+            "key_marker_present": false,
+            "matches_brief_indicator": false,
+            "parameter_names": [],
+            "path": "/data/missing_key.html"
+          },
+          "transaction_index": 1
+        },
+        {
+          "raw_ref": "https://urlquery.net/report/7d967df7-fcf5-4df1-927b-2642039a7b84/json#http-2",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "text/html; charset=utf-8",
+          "response_status": "200",
+          "source_time_utc": "2026-05-24T07:08:42.710Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": false,
+            "key_marker_present": false,
+            "matches_brief_indicator": false,
+            "parameter_names": [],
+            "path": "/favicon.ico"
+          },
+          "transaction_index": 2
+        }
+      ],
+      "discovery_time_utc": "2026-10-04T01:29:01.618657Z",
+      "final": {
+        "encoded_ampersands": 0,
+        "host": "api.census.gov",
+        "key_buried_in_get_value": false,
+        "key_is_independent_parameter": false,
+        "key_marker_present": false,
+        "matches_brief_indicator": false,
+        "parameter_names": [],
+        "path": "/data/missing_key.html"
+      },
+      "final_title": "Missing Key",
+      "formal_publication_time_utc": null,
+      "json_sha256": "9bc817aea86a8d7b34144bfdd7d5369991a97b992dfc01aa156a7f87f9b21d1c",
+      "report_id": "7d967df7-fcf5-4df1-927b-2642039a7b84",
+      "report_url": "https://urlquery.net/report/7d967df7-fcf5-4df1-927b-2642039a7b84",
+      "submitted": {
+        "encoded_ampersands": 2,
+        "host": "api.census.gov",
+        "key_buried_in_get_value": true,
+        "key_is_independent_parameter": false,
+        "key_marker_present": true,
+        "matches_brief_indicator": true,
+        "parameter_names": [
+          "get"
+        ],
+        "path": "/data/2022/acs/acs5"
+      },
+      "total_http_transactions": 3
+    },
+    {
+      "archive_time_utc": null,
+      "catalog_time_utc": "2026-06-03T13:42:57Z",
+      "census_http_transactions": [
+        {
+          "raw_ref": "https://urlquery.net/report/29a660a2-13c9-4744-83d0-3ea58c40bb7f/json#http-2",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": true,
+          "response_mime": "text/plain",
+          "response_status": "302",
+          "source_time_utc": "2026-06-03T13:42:36.127Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": false,
+            "key_marker_present": false,
+            "matches_brief_indicator": false,
+            "parameter_names": [
+              "get",
+              "for",
+              "in",
+              "time"
+            ],
+            "path": "/data/timeseries/eits/bfs"
+          },
+          "transaction_index": 2
+        },
+        {
+          "raw_ref": "https://urlquery.net/report/29a660a2-13c9-4744-83d0-3ea58c40bb7f/json#http-13",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "application/json; charset=utf-8",
+          "response_status": "200",
+          "source_time_utc": "2026-06-03T13:42:36.130Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": true,
+            "key_marker_present": true,
+            "matches_brief_indicator": false,
+            "parameter_names": [
+              "get",
+              "for",
+              "in",
+              "key"
+            ],
+            "path": "/data/2022/acs/acs5"
+          },
+          "transaction_index": 13
+        }
+      ],
+      "discovery_time_utc": "2026-10-04T01:29:01.618657Z",
+      "final": {
+        "encoded_ampersands": 0,
+        "host": "magiccityinsights.com",
+        "key_buried_in_get_value": false,
+        "key_is_independent_parameter": false,
+        "key_marker_present": false,
+        "matches_brief_indicator": false,
+        "parameter_names": [],
+        "path": "/report/economic-picture"
+      },
+      "final_title": "2026 State of Small Business Report | City of Birmingham",
+      "formal_publication_time_utc": null,
+      "json_sha256": "f340d0a40ebac19e170b0a6a3430413940c3273047ac66d412b79898f65bf6c5",
+      "report_id": "29a660a2-13c9-4744-83d0-3ea58c40bb7f",
+      "report_url": "https://urlquery.net/report/29a660a2-13c9-4744-83d0-3ea58c40bb7f",
+      "submitted": {
+        "encoded_ampersands": 0,
+        "host": "magiccityinsights.com",
+        "key_buried_in_get_value": false,
+        "key_is_independent_parameter": false,
+        "key_marker_present": false,
+        "matches_brief_indicator": false,
+        "parameter_names": [],
+        "path": "/report/economic-picture"
+      },
+      "total_http_transactions": 21
+    },
+    {
+      "archive_time_utc": null,
+      "catalog_time_utc": "2026-06-03T13:42:59Z",
+      "census_http_transactions": [
+        {
+          "raw_ref": "https://urlquery.net/report/7d203adc-9eff-401b-9a31-35a9c7155d30/json#http-5",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "text/plain; charset=utf-8",
+          "response_status": "400",
+          "source_time_utc": "2026-06-03T13:42:36.938Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": true,
+            "key_marker_present": true,
+            "matches_brief_indicator": false,
+            "parameter_names": [
+              "get",
+              "for",
+              "in",
+              "key"
+            ],
+            "path": "/data/2022/cbp"
+          },
+          "transaction_index": 5
+        },
+        {
+          "raw_ref": "https://urlquery.net/report/7d203adc-9eff-401b-9a31-35a9c7155d30/json#http-7",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "text/plain; charset=utf-8",
+          "response_status": "400",
+          "source_time_utc": "2026-06-03T13:42:38.372Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": true,
+            "key_marker_present": true,
+            "matches_brief_indicator": false,
+            "parameter_names": [
+              "get",
+              "for",
+              "in",
+              "key"
+            ],
+            "path": "/data/2022/cbp"
+          },
+          "transaction_index": 7
+        },
+        {
+          "raw_ref": "https://urlquery.net/report/7d203adc-9eff-401b-9a31-35a9c7155d30/json#http-8",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "text/plain; charset=utf-8",
+          "response_status": "400",
+          "source_time_utc": "2026-06-03T13:42:40.479Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": true,
+            "key_marker_present": true,
+            "matches_brief_indicator": false,
+            "parameter_names": [
+              "get",
+              "for",
+              "in",
+              "key"
+            ],
+            "path": "/data/2022/cbp"
+          },
+          "transaction_index": 8
+        },
+        {
+          "raw_ref": "https://urlquery.net/report/7d203adc-9eff-401b-9a31-35a9c7155d30/json#http-13",
+          "remote_ip": "148.129.75.191",
+          "request_method": "GET",
+          "response_body_exported": false,
+          "response_mime": "text/plain; charset=utf-8",
+          "response_status": "400",
+          "source_time_utc": "2026-06-03T13:42:44.618Z",
+          "target": {
+            "encoded_ampersands": 0,
+            "host": "api.census.gov",
+            "key_buried_in_get_value": false,
+            "key_is_independent_parameter": true,
+            "key_marker_present": true,
+            "matches_brief_indicator": false,
+            "parameter_names": [
+              "get",
+              "for",
+              "in",
+              "key"
+            ],
+            "path": "/data/2022/cbp"
+          },
+          "transaction_index": 13
+        }
+      ],
+      "discovery_time_utc": "2026-10-04T01:29:01.618657Z",
+      "final": {
+        "encoded_ampersands": 0,
+        "host": "magiccityinsights.com",
+        "key_buried_in_get_value": false,
+        "key_is_independent_parameter": false,
+        "key_marker_present": false,
+        "matches_brief_indicator": false,
+        "parameter_names": [],
+        "path": "/report/landscape"
+      },
+      "final_title": "2026 State of Small Business Report | City of Birmingham",
+      "formal_publication_time_utc": null,
+      "json_sha256": "9502a9b7722043653b7426bc381fdc7615a51f0ef322487d2cc26776d896226a",
+      "report_id": "7d203adc-9eff-401b-9a31-35a9c7155d30",
+      "report_url": "https://urlquery.net/report/7d203adc-9eff-401b-9a31-35a9c7155d30",
+      "submitted": {
+        "encoded_ampersands": 0,
+        "host": "magiccityinsights.com",
+        "key_buried_in_get_value": false,
+        "key_is_independent_parameter": false,
+        "key_marker_present": false,
+        "matches_brief_indicator": false,
+        "parameter_names": [],
+        "path": "/report/landscape"
+      },
+      "total_http_transactions": 25
+    }
+  ],
+  "retrieved_utc": "2026-10-04T01:29:01.618657Z",
+  "scope": "Exactly the five released reports classified as US Census API; not all urlquery reports"
+}

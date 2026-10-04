@@ -1,0 +1,61 @@
+{
+  "retrieved_at": "2026-10-04T00:00:34Z",
+  "package_count": 33,
+  "first_upload_start": "2026-09-29T07:39:27.387713Z",
+  "first_upload_end": "2026-09-29T10:24:14.571433Z",
+  "first_upload_span_seconds": 9887.18372,
+  "single_version_packages": 32,
+  "multi_file_release_packages": 1,
+  "common_project_urls": {
+    "https://github.com/avijitbhuin21/Serpentine": 33
+  },
+  "readme_target_mentions": {
+    "mentions_tvmaze": 0,
+    "mentions_archive_org": 0,
+    "mentions_httpbin": 0,
+    "mentions_urlquery": 0,
+    "mentions_mshots": 0,
+    "mentions_webhook": 0,
+    "mentions_swarm": 0
+  },
+  "source_package_counts": {
+    "total_files": 392,
+    "python_files": 107,
+    "test_files": 62
+  },
+  "metadata_source_ids": [
+    14,
+    16,
+    18,
+    20,
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    51,
+    53,
+    55,
+    57,
+    59,
+    61,
+    63,
+    65,
+    67,
+    69,
+    71,
+    73,
+    75,
+    77,
+    79
+  ]
+}

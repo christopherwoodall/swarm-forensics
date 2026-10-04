@@ -1,0 +1,12 @@
+# serpentine-io · PyPI description excerpt
+
+File helpers for Serpentine, on top of the language's built-in text/binary
+file IO. Pure Serpentine — the same source dual-runs under CPython.
+
+Published on PyPI as **`serpentine-io`** (the `serp-io` name is rejected by PyPI as too
+similar to an existing project); the import name is still `serp_io`.
+
+Homepage: https://github.com/avijitbhuin21/Serpentine
+
+PyPI verified that this artifact, at this checksum, originated from the publisher listed below.
+Publishing repository [github.com/avijitbhuin21/Serpentine](https://github.com/avijitbhuin21/Serpentine)

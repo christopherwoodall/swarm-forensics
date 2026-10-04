@@ -1,0 +1,254 @@
+{
+  "retrieved_at": "2026-10-04T00:42:19Z",
+  "source_url": "https://web.archive.org/cdx/search/cdx",
+  "query_date": "20260929",
+  "host_sweep": [
+    {
+      "host": "httpbin.org",
+      "query": "https://web.archive.org/cdx/search/cdx?url=httpbin.org%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 23,
+      "unique_urls": 23,
+      "unique_digests": 17,
+      "status_counts": {
+        "200": 23
+      },
+      "hours_utc": {
+        "13": 1,
+        "00": 1,
+        "20": 9,
+        "21": 8,
+        "23": 2,
+        "19": 2
+      },
+      "length_min": 890,
+      "length_max": 1670,
+      "mimetypes": [
+        "text/html"
+      ]
+    },
+    {
+      "host": "httpbun.com",
+      "query": "https://web.archive.org/cdx/search/cdx?url=httpbun.com%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 0,
+      "unique_urls": 0,
+      "unique_digests": 0,
+      "status_counts": {},
+      "hours_utc": {},
+      "length_min": null,
+      "length_max": null,
+      "mimetypes": []
+    },
+    {
+      "host": "httpbingo.org",
+      "query": "https://web.archive.org/cdx/search/cdx?url=httpbingo.org%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 1,
+      "unique_urls": 1,
+      "unique_digests": 1,
+      "status_counts": {
+        "200": 1
+      },
+      "hours_utc": {
+        "20": 1
+      },
+      "length_min": 1520,
+      "length_max": 1520,
+      "mimetypes": [
+        "text/plain"
+      ]
+    },
+    {
+      "host": "pie.dev",
+      "query": "https://web.archive.org/cdx/search/cdx?url=pie.dev%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 0,
+      "unique_urls": 0,
+      "unique_digests": 0,
+      "status_counts": {},
+      "hours_utc": {},
+      "length_min": null,
+      "length_max": null,
+      "mimetypes": []
+    },
+    {
+      "host": "httpbin.dev",
+      "query": "https://web.archive.org/cdx/search/cdx?url=httpbin.dev%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 10,
+      "unique_urls": 10,
+      "unique_digests": 9,
+      "status_counts": {
+        "200": 10
+      },
+      "hours_utc": {
+        "20": 8,
+        "21": 1,
+        "22": 1
+      },
+      "length_min": 1551,
+      "length_max": 1829,
+      "mimetypes": [
+        "text/plain"
+      ]
+    },
+    {
+      "host": "httpbin.io",
+      "query": "https://web.archive.org/cdx/search/cdx?url=httpbin.io%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 2,
+      "unique_urls": 2,
+      "unique_digests": 2,
+      "status_counts": {
+        "200": 2
+      },
+      "hours_utc": {
+        "21": 1,
+        "20": 1
+      },
+      "length_min": 1090,
+      "length_max": 1208,
+      "mimetypes": [
+        "text/plain"
+      ]
+    },
+    {
+      "host": "eu.httpbin.org",
+      "query": "https://web.archive.org/cdx/search/cdx?url=eu.httpbin.org%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 0,
+      "unique_urls": 0,
+      "unique_digests": 0,
+      "status_counts": {},
+      "hours_utc": {},
+      "length_min": null,
+      "length_max": null,
+      "mimetypes": []
+    },
+    {
+      "host": "postman-echo.com",
+      "query": "https://web.archive.org/cdx/search/cdx?url=postman-echo.com%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 0,
+      "unique_urls": 0,
+      "unique_digests": 0,
+      "status_counts": {},
+      "hours_utc": {},
+      "length_min": null,
+      "length_max": null,
+      "mimetypes": []
+    },
+    {
+      "host": "httpstat.us",
+      "query": "https://web.archive.org/cdx/search/cdx?url=httpstat.us%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 0,
+      "unique_urls": 0,
+      "unique_digests": 0,
+      "status_counts": {},
+      "hours_utc": {},
+      "length_min": null,
+      "length_max": null,
+      "mimetypes": []
+    },
+    {
+      "host": "mockbin.io",
+      "query": "https://web.archive.org/cdx/search/cdx?url=mockbin.io%2Fbase64%2F%2A&from=20260929&to=20260929&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype&filter=statuscode%3A200",
+      "error": null,
+      "rows": 0,
+      "unique_urls": 0,
+      "unique_digests": 0,
+      "status_counts": {},
+      "hours_utc": {},
+      "length_min": null,
+      "length_max": null,
+      "mimetypes": []
+    }
+  ],
+  "body_audit": [
+    {
+      "host": "httpbin.dev",
+      "rows": 10,
+      "replay_successes": 10,
+      "replay_errors": 0,
+      "unique_digests": 9,
+      "script_pages": 10,
+      "form_pages": 0,
+      "xhr_pages": 4,
+      "tvmaze_pages": 10,
+      "archive_pages": 10,
+      "image_pages": 1,
+      "hours_utc": {
+        "20": 8,
+        "21": 1,
+        "22": 1
+      }
+    },
+    {
+      "host": "httpbin.io",
+      "rows": 2,
+      "replay_successes": 2,
+      "replay_errors": 0,
+      "unique_digests": 2,
+      "script_pages": 2,
+      "form_pages": 0,
+      "xhr_pages": 2,
+      "tvmaze_pages": 2,
+      "archive_pages": 2,
+      "image_pages": 0,
+      "hours_utc": {
+        "21": 1,
+        "20": 1
+      }
+    },
+    {
+      "host": "httpbin.org",
+      "rows": 23,
+      "replay_successes": 23,
+      "replay_errors": 0,
+      "unique_digests": 17,
+      "script_pages": 22,
+      "form_pages": 0,
+      "xhr_pages": 18,
+      "tvmaze_pages": 21,
+      "archive_pages": 21,
+      "image_pages": 2,
+      "hours_utc": {
+        "13": 1,
+        "00": 1,
+        "20": 9,
+        "21": 8,
+        "23": 2,
+        "19": 2
+      }
+    },
+    {
+      "host": "httpbingo.org",
+      "rows": 1,
+      "replay_successes": 0,
+      "replay_errors": 1,
+      "unique_digests": 1,
+      "script_pages": 0,
+      "form_pages": 0,
+      "xhr_pages": 0,
+      "tvmaze_pages": 0,
+      "archive_pages": 0,
+      "image_pages": 0,
+      "hours_utc": {
+        "20": 1
+      }
+    }
+  ],
+  "redacted_body_rows": 36,
+  "redacted_body_errors": 1,
+  "shared_target_hosts": [
+    "api.tvmaze.com",
+    "archive.org"
+  ],
+  "interpretation": [
+    "httpbin.org, httpbin.dev, and httpbin.io all have same-day captures referencing the same target domains.",
+    "The per-host page-shape threshold is not met for the secondary hosts.",
+    "This cross-host result strengthens the Wayback lead but does not prove execution or common authorship."
+  ]
+}

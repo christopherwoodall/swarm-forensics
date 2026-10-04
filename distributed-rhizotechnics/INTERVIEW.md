@@ -15,8 +15,8 @@ Do not count an area complete merely because a question was asked.
 Uncertainty, refusal, and deferral are valid answers.
 Interview coverage does not establish implementation readiness.
 
-Completed areas: 2 of 9.
-Current area: 3, retrieval and model context.
+Completed areas: 3 of 9.
+Current area: 4, graph action semantics.
 
 ## Decision-area map
 
@@ -24,8 +24,8 @@ Current area: 3, retrieval and model context.
 | --- | --- | --- | --- | --- |
 | 1 | First dataset and demonstration question | SwarmTraces; user types the question at session start. | A specific demonstration example is deferred. | Complete |
 | 2 | Source identity and sentence anchoring | Private snapshots; stable source anchors; graph attribution; expandable evidence on nodes and edges. | Revisit inspector density after use; exact anchor encoding is engineering detail. | Complete, with provisional UI |
-| 3 | Retrieval and model context | Members retrieve additional dataset material and use the named Hermes research collection. | Clarify reference materialization, citations, and model-context boundaries. | In progress |
-| 4 | Graph action semantics | Respond, expand, connect, challenge, summarize, and question. | Define resulting objects, relation types, and revision/adjudication behavior. | Pending |
+| 3 | Retrieval and model context | Dataset retrieval, named Hermes references, whole-graph context, and on-demand evidence inspection. | Whole-graph action permissions continue in area 4; role execution continues in area 5. | Complete |
+| 4 | Graph action semantics | Additive linked revisions; incorrect inferences can be struck through with retained provenance. | Decide who may directly apply incorrect status. | In progress |
 | 5 | Swarm execution | Optional timed single-member contributions to a frontier. | Define selection, silence, budgets, pause/stop, and pending-work behavior. | Pending |
 | 6 | Structured contribution contract | Provenance and structured conclusions precede register rendering. | Define output validation, evidence references, and confidence semantics. | Pending |
 | 7 | Persistence and report scope | Two report kinds; JSON and Markdown; optional PDF; shared snapshot. | Define reopen state, report inclusion scope, and PDF priority. | Pending |
@@ -112,7 +112,7 @@ No additional research folder was authorized by this statement.
 No evidence bodies or source datasets were reviewed during this inventory.
 
 Preserve reference provenance separately from selected-dataset observations.
-Still unresolved: how a reference used by a contribution becomes visible and cited in the graph.
+The later inspection agreement makes supporting references inspectable without mandatory additional visible nodes.
 
 ### Evidence-inspection revision during area 3
 
@@ -120,9 +120,56 @@ The owner revises the earlier original-records-only edge inspection choice.
 Owner statement: “the evidence should be expandable from clicking the edge/node.”
 She requests a modifier gesture such as “shift click or ctrl click”.
 Confirmed: evidence access belongs to both nodes and edges.
-Still unresolved: exact modifier and where expansion appears.
+Exact modifier and expansion location were unselected at that point.
 Do not treat additional visible reference nodes as required by this answer.
 The owner continues to treat inspection choices as revisitable after use.
+
+### Evidence-inspection interaction accepted
+
+Question: Should evidence opened through Shift-click appear in the side inspector?
+Owner answer: “ohhhh yeah i like that”
+Confirmed: ordinary click selects; Shift-click opens supporting evidence for either node or edge.
+Show that evidence in the side inspector.
+Provide an “Inspect evidence” menu action too.
+Keep supporting references attached without requiring each citation to become a visible node.
+These interaction choices remain revisitable after use.
+The next answer supplies the member's existing-graph context boundary.
+
+### Area 3 — whole-graph context and optional interaction
+
+Question: Should members see the whole graph or only their relevant branch and retrieved material?
+Owner answer: “whole graph”
+Owner addition: “it should be able to interact with the whole graph too as an option”
+Confirmed: whole current session graph is available as context.
+Confirmed: whole-graph interaction is an optional capability.
+Do not assume this grants permission to modify every existing object.
+Addition-versus-revision permissions continue in area 4.
+
+Owner hypothesis: “mixing technical / systems / mythopoetic in various responses might lead to something novel”
+Record that as an exploratory possibility, not an observed outcome.
+Preserve the existing distinction between analytic contributions and invariant register rendering.
+Area 3 owner elicitation is complete for the initial slice.
+
+### Area 4 — revision meaning requires clarification
+
+Question: May members revise existing analytic nodes and edges or only add new ones?
+Owner asks what revision would mean and which objects would change.
+No revision permission is selected yet.
+
+Agent explanation: possible targets include generated interpretations, summaries, relation types, and supporting references.
+These examples are illustrative, not observed dataset findings or accepted behavior.
+Do not interpret revision as permission to modify imported source records.
+Agent proposal: add a linked successor instead of silently overwriting an existing analytic object.
+The next answer accepts additive revision and adds incorrect-inference marking.
+
+### Area 4 — additive revision and incorrect-inference marking accepted
+
+Owner answer: “additive revisions are a very good addition.”
+Confirmed: revision produces a linked analytic successor rather than overwriting earlier content.
+The owner also requires the ability to strike through an inference found incorrect.
+Preserve that inference and record correction provenance rather than deleting history.
+Treat incorrect status as part of the graph record and report basis.
+Still unresolved: members applying the status directly versus proposing it for human approval.
 
 ### Project-name revision
 
@@ -175,4 +222,30 @@ Captured: 2026-10-03T15:54:32-07:00.
 Completed interview areas: 0 of 9.
 Product direction is documented before the first question.
 
-One-third and two-thirds milestones have not been reached.
+### One-third checkpoint
+
+Captured: 2026-10-03T17:06:22-07:00.
+Completed areas: 3 of 9.
+Current checkout: `colette-help-peer`.
+Repository revision at capture: `e2456b88affe54b75efc6289bdcd9663e13aaf68`.
+
+Settled for the first slice:
+
+- SwarmTraces is the initial dataset; the user enters the question at session start.
+- Import an unchanged private source snapshot outside Git.
+- Preserve exact source anchors, source uncertainty, and independent node/edge provenance.
+- Show node author at its head and timestamp at its bottom.
+- Ordinary click selects; Shift-click or “Inspect evidence” opens evidence in the side inspector.
+- Members retrieve additional dataset material and consult the named Hermes research directories.
+- Members see the whole current graph and may use an optional whole-graph interaction mode.
+- Mixed technical, systems, and mythopoetic responses are desired as an exploratory possibility.
+
+Still provisional:
+
+- Information density and inspection placement need actual use before permanent decisions.
+- Whole-graph interaction permissions are not yet defined.
+- Exact indexing, identity encoding, and context-packing mechanics remain engineering details.
+
+The product brief and STATUS.md are updated with this checkpoint.
+No application implementation is authorized or verified.
+The two-thirds checkpoint remains due after six completed areas.

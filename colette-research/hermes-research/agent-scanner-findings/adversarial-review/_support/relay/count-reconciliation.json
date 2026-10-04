@@ -1,0 +1,59 @@
+{
+  "body_literal_outer": {
+    "allorigins.hexlet.app": 1728,
+    "api.cors.lol": 55,
+    "jqp.vercel.app": 17084,
+    "platform.lemino.ai": 36
+  },
+  "body_literal_substring_hosts_overlapping": {
+    "allorigins.hexlet.app": 4050,
+    "api.cors.lol": 379,
+    "jqp.vercel.app": 17196,
+    "platform.lemino.ai": 41
+  },
+  "claim_ratio_percent": 45.49088025376685,
+  "county_copy_difference": 13968,
+  "hunk_literal_outer": {
+    "allorigins.hexlet.app": 951,
+    "api.cors.lol": 43,
+    "jqp.vercel.app": 12902,
+    "platform.lemino.ai": 27
+  },
+  "hunk_literal_tuple_selected_hosts": {
+    "allorigins.hexlet.app": 915,
+    "api.cors.lol": 43,
+    "jqp.vercel.app": 12807,
+    "platform.lemino.ai": 27
+  },
+  "hunk_literal_unique_rev_time_url": 31521,
+  "hunk_tuple_literal_gap_from_claim": -4,
+  "jqp_copy_difference": 4182,
+  "literal_diagnostics": {
+    "body_literal_url_occurrences": 46244,
+    "body_plain_county_tokens": 46624,
+    "body_sec_literal_path_after_decode": 30765,
+    "hunk_literal_url_occurrences": 32289,
+    "hunk_plain_county_tokens": 32593,
+    "hunk_sec_literal_path_after_decode": 21609
+  },
+  "published_table_exact_rows_sum": 44980,
+  "published_url_output_literal_occurrences": 46314,
+  "published_url_output_prowiki_literal_outer": {
+    "allorigins.hexlet.app": 1728,
+    "api.cors.lol": 55,
+    "jqp.vercel.app": 17084,
+    "platform.lemino.ai": 36
+  },
+  "published_url_output_selected_outer": {
+    "allorigins.hexlet.app": 1752,
+    "api.cors.lol": 55,
+    "jqp.vercel.app": 17121,
+    "platform.lemino.ai": 36
+  },
+  "published_url_output_sources": {
+    "apchem": 22,
+    "prowiki": 46244,
+    "texteditors": 1,
+    "wiki4d": 47
+  }
+}

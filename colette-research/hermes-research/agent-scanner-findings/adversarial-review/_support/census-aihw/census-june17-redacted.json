@@ -1,0 +1,92 @@
+{
+  "case": "June 17 Census static file, not the Census API exposed-key family",
+  "discovery_date_utc": "2026-10-04",
+  "source_time_utc": null,
+  "source_time_reason": "Wayback CDX records a capture time, not an originator request time.",
+  "formal_publication_time_utc": null,
+  "target": "https://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+  "units": "Three relay archive captures; two independent target archive captures; zero proven chained hops.",
+  "queries": {
+    "jina": "https://web.archive.org/cdx/search/cdx?url=r.jina.ai%2Fhttp%2A&from=2026061702&to=2026061703&filter=original%3A.%2Acensus.%2A&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+    "corsproxy": "https://web.archive.org/cdx/search/cdx?url=corsproxy.io%2F%2A&from=2026061702&to=2026061703&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+    "allorigins": "https://web.archive.org/cdx/search/cdx?url=api.allorigins.win%2F%2A&from=2026061702&to=2026061703&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+    "target": "https://web.archive.org/cdx/search/cdx?url=www2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat&from=20260617&to=20260617&output=json&fl=timestamp%2Coriginal%2Curlkey%2Cstatuscode%2Cmimetype%2Cdigest%2Clength"
+  },
+  "query_counts": {
+    "jina_0200_0359_all_rows": 1,
+    "corsproxy_0200_0359_all_rows": 5,
+    "allorigins_0200_0359_all_rows": 2,
+    "relay_rows_with_this_file": 3,
+    "target_exact_file_rows_on_june17": 2
+  },
+  "relay_records": [
+    {
+      "archive_time_utc": "2026-06-17T02:59:07Z",
+      "service": "r.jina.ai",
+      "original": "https://r.jina.ai/http://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+      "urlkey": "ai,jina,r)/http:/www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-sf/data/1yrdata/acsdt1y2022-b16001.dat",
+      "index_status": "200",
+      "index_digest": "P7NFS3N53GERAX4BPKIXNHPZXNETIMKO",
+      "replay": "https://web.archive.org/web/20260617025907id_/https://r.jina.ai/http://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+      "replay_http_status": 200,
+      "replay_decoded_bytes": 201,
+      "replay_sha256": "b46ab42a44bb29aa8fa89247963b38c724db6e067a204797b36a0be0cb73622f",
+      "content_marker": "Metadata only; Markdown Content is empty; Published Time is 2023-08-03, not a June source event.",
+      "embedded_target_scheme": "http",
+      "embedded_other_relay": false
+    },
+    {
+      "archive_time_utc": "2026-06-17T03:02:12Z",
+      "service": "api.allorigins.win",
+      "original": "https://api.allorigins.win/raw?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+      "urlkey": "win,allorigins,api)/raw?url=https://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-sf/data/1yrdata/acsdt1y2022-b16001.dat",
+      "index_status": "500",
+      "index_digest": "BPAQJLOFQLFZOQWA3SCF3WHCP2B2NS4A",
+      "replay": "https://web.archive.org/web/20260617030212id_/https://api.allorigins.win/raw?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+      "replay_http_status": 500,
+      "replay_decoded_bytes": 579,
+      "replay_sha256": "8665d05278b4f2defddf231614bf791df95f3111c0bb6f4bd03d2de3d3845391",
+      "content_marker": "500 Internal Server Error, nginx/1.22.1",
+      "embedded_target_scheme": "https",
+      "embedded_other_relay": false
+    },
+    {
+      "archive_time_utc": "2026-06-17T03:03:01Z",
+      "service": "corsproxy.io",
+      "original": "https://corsproxy.io/?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+      "urlkey": "io,corsproxy)/?url=https://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-sf/data/1yrdata/acsdt1y2022-b16001.dat",
+      "index_status": "403",
+      "index_digest": "SSA56JACCYE7FDGBZY4A5APQYLUKJ62D",
+      "replay": "https://web.archive.org/web/20260617030301id_/https://corsproxy.io/?url=https%3A%2F%2Fwww2.census.gov%2Fprograms-surveys%2Facs%2Fsummary_file%2F2022%2Ftable-based-SF%2Fdata%2F1YRData%2Facsdt1y2022-b16001.dat",
+      "replay_http_status": 403,
+      "replay_decoded_bytes": 124,
+      "replay_sha256": "19ee95d6c75af03fd192a5b806420725ea1e9ddd92a3fb66d3bc110737b322e6",
+      "content_marker": "Free usage is limited to localhost and development environments.",
+      "embedded_target_scheme": "https",
+      "embedded_other_relay": false
+    }
+  ],
+  "target_archives": [
+    {
+      "archive_time_utc": "2026-06-17T02:39:07Z",
+      "index_status": "200",
+      "index_digest": "YTDGLFOS27WTTTW4FFCDW5BTJZ5BHII5",
+      "replay": "https://web.archive.org/web/20260617023907id_/https://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+      "replay_http_status": 200,
+      "replay_bytes": 993783,
+      "replay_sha256": "b7edb921da0b14678112ff030aaa50c32fb7baad9414f4b693a8f6f8a7bb9c41",
+      "content_marker": "GEO_ID|B16001; 831 newline bytes"
+    },
+    {
+      "archive_time_utc": "2026-06-17T05:26:13Z",
+      "index_status": "200",
+      "index_digest": "YTDGLFOS27WTTTW4FFCDW5BTJZ5BHII5",
+      "replay": "https://web.archive.org/web/20260617052613id_/https://www2.census.gov/programs-surveys/acs/summary_file/2022/table-based-SF/data/1YRData/acsdt1y2022-b16001.dat",
+      "replay_http_status": 200,
+      "replay_bytes": 993783,
+      "replay_sha256": "b7edb921da0b14678112ff030aaa50c32fb7baad9414f4b693a8f6f8a7bb9c41",
+      "content_marker": "GEO_ID|B16001; 831 newline bytes"
+    }
+  ],
+  "negative_evidence": "No relay URL embeds another relay. None of the three relay replays contains the data file. The direct target captures are separate records. No shared initiator or handoff is visible."
+}

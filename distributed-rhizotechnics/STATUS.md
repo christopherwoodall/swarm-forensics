@@ -1,71 +1,76 @@
 # Status: distributed-rhizotechnics
 
-Initial checkpoint captured: 2026-10-03T15:54:32-07:00.
+Current checkpoint: one-third interview milestone.
+Captured: 2026-10-03T17:06:22-07:00.
+Initial checkpoint: 2026-10-03T15:54:32-07:00.
 Phase: owner requirements interview.
-Completed interview areas: 2 of 9.
-Current area: 3, retrieval and model context.
-Confirmed first dataset: SwarmTraces.
-The user types the initial question when starting a session.
-Request-only AI Village data is excluded from the demonstration and repository.
-The owner renamed this sub-project from `swarm-rhizomics` to `distributed-rhizotechnics`.
-Source ownership: private import of an unchanged snapshot outside Git.
-Revised inspection: evidence expands from nodes or edges through a modifier gesture.
-Exact modifier and expansion location remain unselected.
-Inspection placement and density remain provisional until the owner uses the application.
-Members may retrieve additional material from the imported dataset.
-The named Hermes research directories are also supplied as reference context.
+Completed interview areas: 3 of 9.
+Current area: 4, graph action semantics.
 
-## Verified state
+## Confirmed direction
 
-- Documented the existing product direction and explicit unknowns.
-- Created the documentation entry point and interview record.
-- Verified the repository checkout is `colette-help-peer`.
-- Repository revision at capture: `91ecdb997d1b6acfdb039aacc7c561d51227bc7b`.
+- Use SwarmTraces first; let the user type the session question.
+- Exclude request-only AI Village data from the demonstration and repository.
+- Import an unchanged private source snapshot outside Git.
+- Preserve exact source anchors, uncertainty, and independent node/edge provenance.
+- Show author at the node head and its labeled timestamp at the bottom.
+- Ordinary click selects; Shift-click opens evidence in the side inspector.
+- Provide the same operation through an “Inspect evidence” menu action.
+- Keep supporting references attached without mandatory additional visible nodes.
+- Members retrieve additional dataset material and consult the named Hermes research directories.
+- Give members access to the whole current session graph.
+- Offer whole-graph interaction as an option.
+- Allow mixed technical, systems, and mythopoetic responses without silently strengthening claims.
+
+## Provisional and unresolved
+
+- Revisit inspection placement and density after actual use.
+- Keep original source records distinct from supplied research references.
+- Additive linked revisions are accepted; strike-through authority remains unresolved.
+- Exact indexing, source-ID encoding, and context packing remain engineering details.
+- Novelty from mixed responses is an owner hypothesis, not an observed result.
+- Areas 4 through 9 remain open.
+
+## Verified checkpoint
+
+- Updated PROJECT_BRIEF.md with confirmed direction and explicit unknowns.
+- Recorded answers, revisions, and this milestone in INTERVIEW.md.
+- Verified checkout: `colette-help-peer`.
+- Repository revision at capture: `e2456b88affe54b75efc6289bdcd9663e13aaf68`.
 - Preserved unrelated working-tree changes.
-- Created no application code or executable scaffold.
-- Installed no dependencies and collected no datasets.
-- Switched no branch and performed no commit, push, or publication.
-- Verified the previously reported AI Village folder is absent at its repository path.
-- Moved or deleted no dataset files.
+- This interview session created no application code or executable scaffold.
+- It installed no dependencies and performed no dataset import, relocation, or deletion.
+- It performed no commit, branch switch, push, or publication.
 
 ## Authority
 
 Use PROJECT_BRIEF.md for the current product seed.
-Use INTERVIEW.md for owner answers and coverage.
+Use INTERVIEW.md for owner answers, revisions, and coverage.
 Use AESTHETIC.md for the owner-supplied visual scope.
 The parent AGENTS.md continues to govern repository work.
 This checkpoint does not authorize implementation.
 
-## Checkpoint schedule
+## Remaining checkpoints
 
-- Initial checkpoint: saved before the first interview question.
-- One-third checkpoint: due after three completed decision areas.
-- Two-thirds checkpoint: due after six completed decision areas.
-- Final interview state: due after all nine areas have been addressed.
-
-Count completed areas rather than individual question turns.
-Preserve genuine unknowns and distinguish them from unasked questions.
-Announce completion and any remaining blockers.
+The one-third checkpoint is saved.
+Save the two-thirds checkpoint after six completed decision areas.
+Announce final elicitation coverage after all nine areas have been addressed.
+Distinguish that coverage from build readiness and identify remaining blockers.
+Do not count individual questions as completed areas.
 
 ## Current next question
 
-Should Shift-click open supporting evidence in the side inspector while ordinary click selects?
+May members strike through an inference directly, or only propose that action for human approval?
 
-SwarmTraces supersedes the initial AI Village choice.
-A particular demonstration question is deferred; runtime question entry is confirmed.
-Private snapshot import is selected.
-Stable source anchors, labeled unknown times, and private snapshot continuity remain required.
-Exact identity and span encoding remain engineering details.
-Node placement is confirmed: author at the head, timestamp at the bottom.
-The earlier edge-only original-record choice is superseded by expandable evidence on nodes and edges.
-Historical interface and current aesthetic references are recorded without copying the screenshot.
+Imported source snapshots remain unchanged regardless of analytic-edit permissions.
+The owner accepts additive revisions and visible strike-through for incorrect inferences.
+Preserve original analytic content and attach actor, timestamp, and basis to any correction.
+Direct-versus-proposed correction authority is not yet selected.
 
 ## Checks and limits
 
-Check documentation links, sentence lengths, and required content during creation.
-Application tests and lint were skipped because this task creates documentation only.
+Validate documentation links and coverage consistency for this milestone.
+Application tests and lint remain skipped for this documentation-only interview.
 No application behavior has been verified.
-No framework, importer, model connection, graph library, or storage engine has been exercised.
-
-The documented technical stack is selected direction, not installed or running software.
-The specification remains incomplete until the interview resolves or explicitly records its remaining decisions.
+The Tauri/Svelte direction and graph interactions are not implemented by this session.
+No importer, model connection, graph library, or storage engine has been exercised here.

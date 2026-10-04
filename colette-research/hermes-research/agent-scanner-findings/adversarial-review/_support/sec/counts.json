@@ -1,0 +1,349 @@
+{
+  "cdx": {
+    "collapsed_rows": 62,
+    "digest_counts": {
+      "BJBCG6F62WUWNLUF5UPWWDMMOKB4V7GA": 3,
+      "VABBDDDTZS2COG3DDYVIWHVX7TDH7OYH": 60
+    },
+    "duplicates_by_urlkey": [
+      {
+        "timestamps": [
+          "20260618141937",
+          "20260618165110"
+        ],
+        "urlkey_sha256": "ddee1b5941064e9b9fa3d631209d589c201a3d7d4e9ca2f9d33ab8fdc18f9da2"
+      }
+    ],
+    "excluded_by_collapse_raw_refs": [
+      "cdx:20260618165110:4ecc16104d212ad238ba50e780ffa7f2a5f73725d15b437c231295000e03cb7e"
+    ],
+    "filename_field_nonempty": 0,
+    "first": "2026-06-18T02:23:00Z",
+    "hour_counts": {
+      "02": 2,
+      "06": 1,
+      "14": 10,
+      "15": 2,
+      "16": 3,
+      "17": 4,
+      "19": 2,
+      "20": 39
+    },
+    "june07_control": [
+      {
+        "digest": "HGTQJWLQOIMQ3S3O42JSTBV76JJGU56F",
+        "query_shape": "none",
+        "status": "200"
+      }
+    ],
+    "june18_double_slash_prefix_rows": 63,
+    "june18_explicit_limit_resume_rows": 63,
+    "june_month_day_counts": {
+      "20260607": 1,
+      "20260618": 63
+    },
+    "last": "2026-06-18T20:21:25Z",
+    "mime_counts": {
+      "application/json": 59,
+      "text/html": 3,
+      "warc/revisit": 1
+    },
+    "offset_field_nonempty": 0,
+    "overall_median_gap_seconds": 11.0,
+    "peak_20_first": "2026-06-18T20:13:42+00:00",
+    "peak_20_last": "2026-06-18T20:21:25+00:00",
+    "peak_20_max_gap_seconds": 75.0,
+    "peak_20_median_gap_seconds": 10.0,
+    "peak_20_min_gap_seconds": 2.0,
+    "peak_20_span_seconds": 463.0,
+    "raw_rows": 63,
+    "regcf_sibling_control": {
+      "day_rows": 4,
+      "month_rows": 4,
+      "timestamps_and_redacted_shapes": [
+        {
+          "decimal_digits": 0,
+          "digest": "G6FTC7OVRZOV5IDDZOLP7OGWYZGDGO5A",
+          "query_shape": "none",
+          "status": "200",
+          "timestamp": "20260618141937"
+        },
+        {
+          "decimal_digits": 16,
+          "digest": "G6FTC7OVRZOV5IDDZOLP7OGWYZGDGO5A",
+          "query_shape": "bare_decimal",
+          "status": "200",
+          "timestamp": "20260618145242"
+        },
+        {
+          "decimal_digits": 16,
+          "digest": "G6FTC7OVRZOV5IDDZOLP7OGWYZGDGO5A",
+          "query_shape": "bare_decimal",
+          "status": "200",
+          "timestamp": "20260618145246"
+        },
+        {
+          "decimal_digits": 16,
+          "digest": "G6FTC7OVRZOV5IDDZOLP7OGWYZGDGO5A",
+          "query_shape": "bare_decimal",
+          "status": "200",
+          "timestamp": "20260618145306"
+        }
+      ]
+    },
+    "shape_digit_counts": [
+      {
+        "count": 1,
+        "digits": 15,
+        "shape": "bare_decimal"
+      },
+      {
+        "count": 4,
+        "digits": 16,
+        "shape": "bare_decimal"
+      },
+      {
+        "count": 3,
+        "digits": 17,
+        "shape": "bare_decimal"
+      },
+      {
+        "count": 2,
+        "digits": "",
+        "shape": "none"
+      },
+      {
+        "count": 1,
+        "digits": "",
+        "shape": "other__"
+      },
+      {
+        "count": 1,
+        "digits": "",
+        "shape": "other_a"
+      },
+      {
+        "count": 1,
+        "digits": "",
+        "shape": "other_baz"
+      },
+      {
+        "count": 1,
+        "digits": "",
+        "shape": "other_download"
+      },
+      {
+        "count": 1,
+        "digits": "",
+        "shape": "other_format"
+      },
+      {
+        "count": 1,
+        "digits": "",
+        "shape": "other_redirect"
+      },
+      {
+        "count": 5,
+        "digits": 15,
+        "shape": "x_decimal"
+      },
+      {
+        "count": 27,
+        "digits": 16,
+        "shape": "x_decimal"
+      },
+      {
+        "count": 7,
+        "digits": 17,
+        "shape": "x_decimal"
+      },
+      {
+        "count": 1,
+        "digits": 18,
+        "shape": "x_decimal"
+      },
+      {
+        "count": 1,
+        "digits": 19,
+        "shape": "x_decimal"
+      },
+      {
+        "count": 5,
+        "digits": 1,
+        "shape": "x_integer"
+      },
+      {
+        "count": 1,
+        "digits": 17,
+        "shape": "x_no_equals_decimal"
+      }
+    ],
+    "status_counts": {
+      "-": 1,
+      "200": 59,
+      "404": 3
+    },
+    "unique_originals": 62,
+    "unique_timestamps": 63,
+    "unique_urlkeys": 62
+  },
+  "wiki": {
+    "county_added_20_first": "2026-06-18T20:00:15Z",
+    "county_added_20_last": "2026-06-18T20:59:46Z",
+    "county_added_archive_marker_revisions": {
+      "archive.org": 18,
+      "wayback": 4,
+      "web.archive.org/web/": 7
+    },
+    "county_added_by_hour": {
+      "2026-06-18T14": 13,
+      "2026-06-18T15": 52,
+      "2026-06-18T16": 111,
+      "2026-06-18T17": 219,
+      "2026-06-18T18": 516,
+      "2026-06-18T19": 822,
+      "2026-06-18T20": 1759,
+      "2026-06-18T21": 632,
+      "2026-06-18T23": 8
+    },
+    "county_added_first": "2026-06-18T14:10:56Z",
+    "county_added_last": "2026-06-18T23:46:06Z",
+    "county_added_within_20_peak_archive_span": 250,
+    "county_added_within_full_archive_span": 2906,
+    "county_counts": {
+      "county_added_revisions": 4132,
+      "county_body_revisions": 4877,
+      "county_word_added_revisions": 4458
+    },
+    "early_matches": [
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=720b59a69c3c8f701a1b0e43b333e6250da9e5e7be07df15422dda1a0f45dfb8",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:10:56Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": false,
+        "county_word_added": false,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=2ebb84f2fea13388d250aba3be89224dd8d1ed39f250a9cc545ebeba07b2c66a",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:11:45Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=da66efb580c356c84f84255628a8308a60e6bccf1604d15363072b7cf63762af",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:14:30Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=48bdc6ebfbcf3a8e94d4149a0d1c065b63b2506bc05bad8835bd43ac6bca8d21",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:16:28Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=6390f857cfe78a90101d23da1aed4237fd807202f5111d1e50befca08809238d",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:17:46Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=87fd1cdcac965e985d6eb96b9c8d53c79c3b65ec8a7bdc7e41b64c154e862df9",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:27:29Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=e4cbb677b8a69d1cce1039fa876830e277e39bccb195e2b83fcc6ba1594d5bbd",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:35:38Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": false,
+        "county_word_added": false,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=502d0bde4bef437cb40d933304f42f2d5bf473af9c38aede5eed94a86a167975",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:39:50Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=4f18e472f2f45456557e81cf8878a5d32faee9e6cc769529886713a3eb9798c3",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:42:29Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=8a3308ad70689acd2de744382c45c7476fe7a4410f18d696e8e13d1bdfce6126",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:43:00Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=8566766dcccc51ed9dd598d5c946b2eb8d3b66661564aa4763d6ec4b5048fe4f",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:47:21Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=bcf5796b66471c974da8396c981f17a13b47883a24d83f07de020ca4975e6883",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:51:55Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=bf57d719694dcc51fae846bc3578ecb5d21bc84c1b13d70f552c31d5c6aa2602",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:54:23Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": true,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=1da22d5de7e5d427cfbc599de0a2c545a1542ac90c1a26fd7578f7ab0a2c3a59",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:56:14Z",
+        "uncertainty_seconds": 1
+      },
+      {
+        "county_json_added": false,
+        "county_word_added": true,
+        "raw_ref": "zip:revisions.jsonl:sha256(rev_id)=8aef4df5fb2f5290670a81ae40ec54b09cdc81f731c4486b1aae1a9ac93d7994",
+        "time_grade": "reqlog",
+        "time_utc": "2026-06-18T14:56:39Z",
+        "uncertainty_seconds": 1
+      }
+    ],
+    "exact_decimal_url_added_unique": 0,
+    "exact_url_added_total_revision_matches": 2746,
+    "exact_url_added_unique": 7,
+    "exact_url_body_total_revision_matches": 3677,
+    "exact_url_body_unique": 7,
+    "revisions_jsonl_sha256": "60df4a515178230aa952d9f64f6215aea4bd95ab2f05e31e484cf9b887e3f793",
+    "revisions_total": 14591,
+    "zip_sha256": "eb68aa12d26bf189d8bfc4ce47f4d8af66ae5ba7ebbadd429738297a3cbb25ae"
+  }
+}

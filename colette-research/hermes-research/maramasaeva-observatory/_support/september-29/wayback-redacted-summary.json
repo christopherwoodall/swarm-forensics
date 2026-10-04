@@ -1,0 +1,56 @@
+{
+  "retrieved_at": "2026-10-04T00:42:19Z",
+  "source_url": "https://web.archive.org/cdx/search/cdx",
+  "query": {
+    "url": "httpbin.org/base64/*",
+    "from": "20260929",
+    "to": "20260929",
+    "filters": [
+      "statuscode:200"
+    ]
+  },
+  "raw_original_urls_saved": false,
+  "capture_count": 23,
+  "unique_digests": 17,
+  "status_counts": {
+    "200": 23
+  },
+  "capture_hours_utc": {
+    "13": 1,
+    "00": 1,
+    "20": 9,
+    "21": 8,
+    "23": 2,
+    "19": 2
+  },
+  "mentions_tvmaze": 21,
+  "mentions_archive_org": 21,
+  "mentions_xhr": 18,
+  "mentions_image": 2,
+  "mentions_fetch": 0,
+  "script_pages": 22,
+  "form_pages": 0,
+  "external_hosts": [
+    "api.tvmaze.com",
+    "archive.org",
+    "tvmaze.com"
+  ],
+  "target_side_queries": [
+    {
+      "pattern": "api.tvmaze.com/schedule*",
+      "date": "20260929",
+      "result_count": 2,
+      "timestamps": [
+        "20260929131208",
+        "20260929221841"
+      ],
+      "note": "Insufficient to establish fetch-through."
+    },
+    {
+      "pattern": "archive.org/*",
+      "date": "20260929",
+      "result": "HTTP 504",
+      "note": "Broad CDX query timed out."
+    }
+  ]
+}
