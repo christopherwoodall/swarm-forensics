@@ -1,8 +1,8 @@
-# Tracehound on the Hermes Desktop App — UI Research & Design
+# Swarm Forensics on the Hermes Desktop App — UI Research & Design
 
-Status: design proposal. The headless skill (`skills/tracehound/`,
+Status: design proposal. The headless skill (`skills/swarm-forensics/`,
 cron + scripts) is unchanged; this document adds the desktop control
-plane: what the app really supports, the tracehound UI spec, the
+plane: what the app really supports, the swarm-forensics UI spec, the
 settings schema, and the gaps. Nothing here is committed to code yet.
 
 Provenance key used throughout:
@@ -28,7 +28,7 @@ step; the file loads uncompiled (write UI with `jsx()` calls, not
 JSX syntax); the app hot-reloads every save. Only three import
 specifiers resolve: `@hermes/plugin-sdk`, `react`, `react/jsx-runtime`.
 
-For a plugin that also ships agent-side code (tracehound does — the
+For a plugin that also ships agent-side code (swarm-forensics does — the
 skill), the documented delivery is the **unified package**:
 `$HERMES_HOME/plugins/<id>/desktop/plugin.js` plus an optional
 Python backend at `$HERMES_HOME/plugins/<id>/dashboard/` with
@@ -40,7 +40,7 @@ Contribution areas (`ctx.register({ id, area, render?, data? })`):
 | Surface | Area | Notes |
 |---|---|---|
 | Layout pane | `panes` | `title` + `data: { placement: 'left'\|'right'\|'bottom'\|'main', dock?, width?, height? }`. Stacks with same-role panes; user-draggable afterward. |
-| Full page | `ROUTES_AREA` | `data: { path: '/tracehound' }`; mounts in the workspace like a built-in view. |
+| Full page | `ROUTES_AREA` | `data: { path: '/swarm-forensics' }`; mounts in the workspace like a built-in view. |
 | Sidebar nav | `SIDEBAR_NAV_AREA` | `data: { path, label, codicon }`; row below Artifacts, lights up at the route. |
 | Status bar | `statusBar.left` / `statusBar.right` | Chips. Clickable. |
 | Title bar | `TITLEBAR_AREAS.*` | Tool contributions; mount-scoped via `<Contribute>`. |
@@ -82,20 +82,20 @@ Capabilities the plugin can call:
 
 ---
 
-## 2. Tracehound UI spec
+## 2. Swarm Forensics UI spec
 
 Delivery: unified package —
-`skills/tracehound/desktop/plugin.js` (this spec) and
-`skills/tracehound/dashboard/plugin_api.py` (new backend;
+`skills/swarm-forensics/desktop/plugin.js` (this spec) and
+`skills/swarm-forensics/dashboard/plugin_api.py` (new backend;
 REST: `/hits`, `/iocs`, `/review`, `/candidates`, `/settings`,
 `/scan/trigger`, `/scan/state`). `defaultEnabled: false`.
 The backend enforces the headless guardrails (allowlisted
 hosts, check-don't-fetch); the UI never triggers scans through
 the model path — see §5, threat model.
 
-### 2.1 Dashboard page — `/tracehound`
+### 2.1 Dashboard page — `/swarm-forensics`
 
-Sidebar nav row "Tracehound" (`codicon: 'eye'`), reachable also
+Sidebar nav row "Swarm Forensics" (`codicon: 'eye'`), reachable also
 via ⌘K. Tabs: **Overview · Hits · IOCs · Review · Candidates ·
 Research · Settings**.
 
@@ -169,34 +169,34 @@ reveal plugin folder, export diagnostics bundle.
 
 ### 2.2 Status-bar chip — `statusBar.right`
 
-`● tracehound` — colored by scanner state (same mapping as
-Overview). Click navigates to `/tracehound`; tooltip shows
+`● swarm-forensics` — colored by scanner state (same mapping as
+Overview). Click navigates to `/swarm-forensics`; tooltip shows
 hits today and next scan. Order after core items. This is the
 always-visible answer to "is the hunter running right now."
 
 ### 2.3 Compact pane (optional) — `panes`, `placement: 'right'`
 
-"Tracehound hits": the five most recent L2+ hits with claim
+"Swarm Forensics hits": the five most recent L2+ hits with claim
 badges, auto-refreshing via React Query. Width `300px`.
 User-draggable; closable without disabling the plugin
 (documented behavior: closing one pane leaves the rest live).
 
 ### 2.4 Command palette + keybind
 
-- "Tracehound: Open dashboard" → `host.navigate('/tracehound')`
-- "Tracehound: Run scan now" → `POST /scan/trigger`
+- "Swarm Forensics: Open dashboard" → `host.navigate('/swarm-forensics')`
+- "Swarm Forensics: Run scan now" → `POST /scan/trigger`
   (backend job; honors pause state and per-source budgets)
-- "Tracehound: Pause / resume scanning" → toggles the kill
+- "Swarm Forensics: Pause / resume scanning" → toggles the kill
   switch (with confirm on pause)
 - Keybind: one rebindable action — pause/resume.
 
 ### 2.5 Settings → Appearance extras
 
-`APPEARANCE_AREAS.extra`: a compact "Tracehound" section —
+`APPEARANCE_AREAS.extra`: a compact "Swarm Forensics" section —
 enable switch, pause switch, scan-interval stepper. Full
 settings stay on the dashboard page (§4, Gap 2).
 
-### 2.6 Chat pattern — `/tracehound/chat` [INF]
+### 2.6 Chat pattern — `/swarm-forensics/chat` [INF]
 
 A real chat interface inside the plugin. The human talks to the
 hunting-dog in plain language. Design rules:
@@ -228,7 +228,7 @@ When the dog surfaces candidate IOCs — in chat replies or in hunt
 results — each candidate renders inline with **ACCEPT / REJECT /
 NARROW** buttons calling the existing `POST /review/decision`.
 No detour to the Review tab is required. The Review Queue
-(`/tracehound/review`) stays the full triage view with provenance,
+(`/swarm-forensics/review`) stays the full triage view with provenance,
 evidence excerpts, SLA flags, and keyboard triage; inline accept is
 the fast path. Both faces write the same decision record
 (reviewer, timestamp, rationale) through one backend function.
@@ -256,7 +256,7 @@ A later PR adds a `catalog=` variant:
 Our link:
 
 ```
-hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1
+hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/swarm-forensics&enable=1
 ```
 
 `enable=1` follows the doc example, but the confirm-first dialog
@@ -275,14 +275,36 @@ subdirectory rides inside `repo` as path segments:
 `owner/repo/<subdir…>` into a git URL plus a subdirectory, then
 sparse-checkouts only that folder. The probe (`findDesktopEntry`,
 same file) looks for `<dir>/plugin.js` or `<dir>/desktop/plugin.js`;
-tracehound ships `desktop/plugin.js`, so the desktop component is
+swarm-forensics ships `desktop/plugin.js`, so the desktop component is
 detected. The agent half is a Hermes skill (installed separately),
 not a `plugin.yaml`/`plugin.json` agent plugin, so the dialog
-offers the desktop component. **Default branch only:** the
-installer clones `--depth 1` with no `-b` flag — the GitHub
-`/tree/<branch>/` URL form does not change this. The plugin is on
-`pug-scratch`; the link resolves only after it is merged to the
-default branch (`main`).
+offers the desktop component. **Default branch only — verified against the hermes-agent installer
+source (2026-10-04).** There is no branch parameter anywhere in the
+install chain:
+
+- `apps/desktop/src/lib/deeplink-routes.ts` (`resolveDeepLinkAction`)
+  parses only `repo`, `enable`, `force`, `catalog`. No `ref=`,
+  `branch=`, or `path=` parameter exists.
+- `apps/desktop/electron/desktop-plugin-install.ts`
+  (`resolvePluginGitUrl`) splits `owner/repo/<subdir…>` into a git URL
+  plus a subdirectory and sparse-checkouts only that folder, cloning
+  `--depth 1` with no `-b` flag. The GitHub `/tree/<branch>/` URL form
+  does not change this.
+- `apps/desktop/src/lib/plugin-source-urls.ts` returns only
+  `{gitUrl, subdir}` and ignores tree-URL branch segments.
+- `apps/desktop/src/app/settings/plugin-install-modal.tsx` offers a
+  "pin to commit" option, but it is dialog-only and agent-half-only
+  (`apps/desktop/src/store/agent-plugins.ts`): it accepts a full
+  commit SHA only — `COMMIT_SHA_RE /^[0-9a-f]{40}$/i`; branches and
+  tags are refused server-side. It is not link-driven, so no branch
+  (or pin) can be encoded in the install link.
+
+**Verdict:** the install link resolves only after the plugin merges to
+the default branch (`main`); it lives on `pug-scratch` until then. To
+install from `pug-scratch` before the merge, use the manual
+unified-package path: check out the branch locally and copy
+`skills/swarm-forensics/` to `$HERMES_HOME/plugins/swarm-forensics/`
+(see HERMES_SETUP.md, "Installing from a branch (pre-merge)").
 
 The dashboard exposes the link in Settings → About, with a
 copy-button and the confirm-first explanation. That section also
@@ -290,7 +312,7 @@ states the plugin's requests: read-only egress to the allowlisted
 public sources, local working state under `state/`, and
 plugin-namespaced UI prefs. No silent installs, ever.
 
-`APPEARANCE_AREAS.extra`: a compact "Tracehound" section —
+`APPEARANCE_AREAS.extra`: a compact "Swarm Forensics" section —
 enable switch, pause switch, scan-interval stepper. Full
 settings stay on the dashboard page (§4, Gap 2).
 
@@ -318,7 +340,7 @@ arquivo_enabled         = true      # boolean
 request_delay_seconds   = 5         # number, min 1 — was 2; #3
 max_results_per_query   = 50        # number — was 100; #3
 max_terms_per_sweep     = 200       # number — NEW cap; #3. UI shows sweep cost estimate.
-user_agent              = tracehound/0.1 (+contact)  # string — contact required; #3
+user_agent              = swarm-forensics/0.1 (+contact)  # string — contact required; #3
 
 [ioc]
 # Adversarial #2: quarantine-by-default until the two-venue rule
@@ -342,7 +364,7 @@ exclusion_terms         =           # list[string] — never proposed, enforced 
 [chat]                              # chat brain: rule-based responder is the default
 model_enabled           = false     # boolean — optional model rephrasing path
 endpoint                =           # string — completions endpoint URL, empty disables
-api_key_env             = TRACEHOUND_CHAT_KEY  # string — env var NAME, never a secret
+api_key_env             = SWARM_FORENSICS_CHAT_KEY  # string — env var NAME, never a secret
 model                   =           # string — versioned model id
 ```
 
@@ -402,7 +424,7 @@ guardrails: allowlisted source hosts, per-source budgets,
 check-don't-fetch, pause state. The "Run scan now" palette
 command invokes the backend job — it does **not** hand the
 model a browser and a prompt. The model-invoked skill path
-(`/tracehound scan` via SKILL.md) keeps its wider blast
+(`/swarm-forensics scan` via SKILL.md) keeps its wider blast
 radius and must not be presented in the UI as equivalent;
 the UI labels it "agent-assisted (unrestricted)" wherever
 it is reachable, or it is removed. One surface, one threat
@@ -410,8 +432,8 @@ model: the UI is the safe path.
 
 ## 6. What changes in the existing design
 
-- `skills/tracehound/desktop/plugin.js` — new (this spec).
-- `skills/tracehound/dashboard/plugin_api.py` — new backend
+- `skills/swarm-forensics/desktop/plugin.js` — new (this spec).
+- `skills/swarm-forensics/dashboard/plugin_api.py` — new backend
   namespace: `/hits`, `/iocs` (GET list, POST add, POST bulk-import,
   POST demote, GET export), `/review` (GET queue, POST decision),
   `/candidates`, `/jobs` (+ `/jobs/<id>`), `/settings` (GET/PUT,
@@ -421,7 +443,7 @@ model: the UI is the safe path.
 - `config.example.ini` — gains the `[safety]` section and
   the revised defaults (§3).
 - `HERMES_SETUP.md` — gains the desktop install path
-  (unified package → `~/.hermes/plugins/tracehound/`,
+  (unified package → `~/.hermes/plugins/swarm-forensics/`,
   both toggles, ⌘K reload) alongside the skill install.
 - `Makefile` (lane) — gains a `desktop-check` target:
   syntax-check `plugin.js` (node --check if available, else

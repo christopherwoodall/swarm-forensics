@@ -1,13 +1,13 @@
-# Tracehound
+# Swarm Forensics
 
 **Install:** [one-click install
-link](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1)
+link](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/swarm-forensics&enable=1)
 (confirm-first dialog; the subdirectory rides in the `repo`
 parameter per the SDK installer source). GitHub does not render
 `hermes://` links as clickable, so the raw URL is:
 
 ```
-hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1
+hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/swarm-forensics&enable=1
 ```
 
 The link resolves only
@@ -17,7 +17,7 @@ until then install manually — full instructions:
 
 ## What it is
 
-Tracehound is a swarm-hunting app inside Hermes desktop. It hunts
+Swarm Forensics is a swarm-hunting app inside Hermes desktop. It hunts
 agent-trace IOCs across public sources (urlquery, Wayback CDX,
 arquivo.pt), maintains a working IOC list, and predicts candidate
 URLs from observed request grammar.
@@ -41,9 +41,12 @@ It is also a case-management and mapping interface:
 - **Graph view**: Obsidian-style node graph of traces, agents,
   swarms, collections, IOCs, and indicators. Pan, zoom, click
   for detail, filter by type.
-- **Local database**: SQLite stores entities, relationships,
-  extracted indicators, hunt history, and review decisions.
-  Adding a trace auto-extracts its indicators into the DB.
+- **Local database**: SQLite stores entities, relationships, and
+  extracted indicators (hunts, IOCs, and review decisions keep
+  their JSONL stores; the DB links to them by id). Adding a trace
+  auto-extracts its indicators into the DB. Extracted indicators
+  are working notes, not IOCs — promotion still needs a human
+  review-queue decision.
 - **Chat**: talk to the dog — ask it to hunt, ask what it found,
   ask why a candidate was flagged. Inline accept/reject/narrow
   on candidates wherever they appear.
@@ -61,8 +64,8 @@ It is also a case-management and mapping interface:
 | [ADVERSARIAL.md](ADVERSARIAL.md) | The 12 objections (verdict: no-build as originally specified) |
 | [ADVERSARIAL_DELTA.md](ADVERSARIAL_DELTA.md) | Re-grade under the hunting-dog model |
 | [HERMES_DESKTOP.md](HERMES_DESKTOP.md) | Desktop SDK mapping: UI spec, gaps, install link, settings schema |
-| `skills/tracehound/SKILL.md` | The skill surface and command grammar |
-| `skills/tracehound/config.example.ini` | Every config key, documented |
+| `skills/swarm-forensics/SKILL.md` | The skill surface and command grammar |
+| `skills/swarm-forensics/config.example.ini` | Every config key, documented |
 
 ## Quick start
 

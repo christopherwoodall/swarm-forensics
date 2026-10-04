@@ -8,7 +8,7 @@ keys are rejected with the list of valid keys.
 import configparser
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent.parent.parent  # skills/tracehound/
+HERE = Path(__file__).resolve().parent.parent.parent  # skills/swarm-forensics/
 
 _ENFORCING_LOCKED_MSG = (
     "firewall_mode 'enforcing' is locked: the prompt firewall has not "

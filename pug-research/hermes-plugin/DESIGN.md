@@ -1,4 +1,4 @@
-# Tracehound — Hermes plugin design
+# Swarm Forensics — Hermes plugin design
 
 A Hermes-agent skill that runs the swarm-forensics hunt methodology on a loop:
 scan public sources for agent-trace IOCs, maintain the IOC list, predict
@@ -14,12 +14,12 @@ Hermes (NousResearch hermes-agent) installs **skills** as directories under
 `user-invocable`). Install via `hermes skills install <repo>` (security
 scanned) or `git clone` + `cp`/`ln -s` into the skills dir, then
 `hermes skills list` and `/reload-skills`. This plugin ships as
-`skills/tracehound/` → `~/.hermes/skills/hunt/tracehound`.
+`skills/swarm-forensics/` → `~/.hermes/skills/hunt/swarm-forensics`.
 
 Two invocation paths:
-- **Model-invoked:** `/tracehound scan`, `/tracehound research`, etc. The
+- **Model-invoked:** `/swarm-forensics scan`, `/swarm-forensics research`, etc. The
   model reads SKILL.md and runs the scripts.
-- **Headless:** host cron calls `python3 scripts/tracehound.py --job <name>`.
+- **Headless:** host cron calls `python3 scripts/swarm_forensics.py --job <name>`.
   No Hermes-native scheduler was found in the surveyed material, so periodic
   execution is cron-driven. If hermes-agent documents scheduling later, the
   cron wrapper migrates without changing the jobs.
@@ -108,7 +108,7 @@ cdx_enabled = true
 arquivo_enabled = true
 request_delay_seconds = 2
 max_results_per_query = 100
-user_agent = tracehound/0.1 (+https://github.com/christopherwoodall/swarm-forensics)
+user_agent = swarm-forensics/0.1 (+https://github.com/christopherwoodall/swarm-forensics)
 
 [ioc]
 auto_propose = true
@@ -124,7 +124,7 @@ state_dir = state
 ```
 
 Every interval lives here. Nothing periodic is hardcoded. `config.example.ini`
-ships the defaults; the live file is `skills/tracehound/config.ini`
+ships the defaults; the live file is `skills/swarm-forensics/config.ini`
 (untracked, created on first run from the example).
 
 ## Data flow

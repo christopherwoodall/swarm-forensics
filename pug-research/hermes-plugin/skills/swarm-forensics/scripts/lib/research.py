@@ -19,7 +19,7 @@ MIN_CHARS_DEFAULT = 4
 
 
 def _fetch(url, cfg):
-    ua = cfg["sources"].get("user_agent", "tracehound/0.1")
+    ua = cfg["sources"].get("user_agent", "swarm-forensics/0.1")
     cmd = ["curl", "-sL", "--max-time", "60", "-A", ua, url]
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
     time.sleep(float(cfg["sources"].get("request_delay_seconds", 2)))

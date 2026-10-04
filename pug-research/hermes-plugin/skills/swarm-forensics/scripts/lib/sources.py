@@ -65,7 +65,7 @@ def _curl_once(url, cfg, params=None):
         url = url + ("&" if "?" in url else "?") + urllib.parse.urlencode(params)
     if not _host_allowed(url):
         raise ValueError(f"host not allowlisted: {url}")
-    ua = cfg["sources"].get("user_agent", "tracehound/0.1")
+    ua = cfg["sources"].get("user_agent", "swarm-forensics/0.1")
     fd, body_path = tempfile.mkstemp(prefix="th-", suffix=".body")
     os.close(fd)
     try:

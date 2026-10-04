@@ -1,5 +1,5 @@
 /**
- * Tracehound desktop plugin — the hunting-dog control plane.
+ * Swarm Forensics desktop plugin — the hunting-dog control plane.
  *
  * Single hot-reloaded ESM file. UI is written with jsx() calls,
  * not JSX syntax. Imports resolve only from @hermes/plugin-sdk,
@@ -67,7 +67,7 @@ function useStore() {
 
 // ---------------------------------------------------------------------------
 // Backend access. ctx.rest hits the plugin namespace /api/plugins/
-// tracehound (HERMES_DESKTOP.md §1: ctx.rest / ctx.socket). The options
+// swarm-forensics (HERMES_DESKTOP.md §1: ctx.rest / ctx.socket). The options
 // shape below is [INF]: the doc names the method but does not quote
 // the parameter shape. Live hit streaming is not used; polling via
 // useQuery refetchInterval is the documented pattern (Gap 4).
@@ -89,7 +89,7 @@ const apiDelete = (ctx, path) => rest(ctx, 'DELETE', path);
 
 function useApi(ctx, key, path, intervalMs) {
   return useQuery({
-    queryKey: ['tracehound', key],
+    queryKey: ['swarm-forensics', key],
     queryFn: () => apiGet(ctx, path),
     refetchInterval: intervalMs || 15000,
     retry: 1,
@@ -166,7 +166,7 @@ function Page({ title, children, actions }) {
 function Card({ title, children, wide }) {
   return jsxs('div', {
     style: {
-      border: '1px solid var(--tracehound-border, transparent)',
+      border: '1px solid var(--swarm-forensics-border, transparent)',
       borderRadius: 8, padding: 12, marginBottom: 12,
       flex: wide ? '1 1 100%' : '1 1 280px',
     },
@@ -200,7 +200,7 @@ function QueueBadge({ ctx }) {
 }
 
 // ---------------------------------------------------------------------------
-// Dashboard — /tracehound (HERMES_DESKTOP.md §1 row: ROUTES_AREA)
+// Dashboard — /swarm-forensics (HERMES_DESKTOP.md §1 row: ROUTES_AREA)
 // ---------------------------------------------------------------------------
 function stateColor(state) {
   // green idle / amber running / red throttled / grey paused
@@ -283,7 +283,7 @@ function DashboardPage({ ctx }) {
     if (fresh.length > 0) {
       const top = fresh[0];
       notify(ctx, 'warning',
-        `Tracehound: ${fresh.length} new ${threshold}+ hit(s). Latest: ${top.term} on ${top.source}.`);
+        `Swarm Forensics: ${fresh.length} new ${threshold}+ hit(s). Latest: ${top.term} on ${top.source}.`);
       const maxUtc = fresh.reduce((m, h) =>
         h.observed_utc > m ? h.observed_utc : m, storeState.lastSeenHitUtc || '');
       setStore({ lastSeenHitUtc: maxUtc });
@@ -306,7 +306,7 @@ function DashboardPage({ ctx }) {
   });
 
   return jsx(Page, {
-    title: 'Tracehound dashboard',
+    title: 'Swarm Forensics dashboard',
     actions: jsx(BackendBadge, { ctx }),
     children: jsxs(Fragment, {
       children: [
@@ -384,7 +384,7 @@ function DashboardPage({ ctx }) {
                   jsx('div', { key: 'g' },
                     jsx(Button, {
                       variant: 'link',
-                      onClick: () => navigate(ctx, '/tracehound/review'),
+                      onClick: () => navigate(ctx, '/swarm-forensics/review'),
                     }, 'Open review queue')),
                 ],
               }),
@@ -443,7 +443,7 @@ function DashboardPage({ ctx }) {
 }
 
 // ---------------------------------------------------------------------------
-// Hunt — /tracehound/hunt
+// Hunt — /swarm-forensics/hunt
 // ---------------------------------------------------------------------------
 function HuntPage({ ctx }) {
   const [target, setTarget] = useState('');
@@ -669,7 +669,7 @@ function CandidateCard({ ctx, entryId, term, provenance, ageDays, slaBreach, onD
 }
 
 // ---------------------------------------------------------------------------
-// Chat — /tracehound/chat. The human talks to the hunting-dog.
+// Chat — /swarm-forensics/chat. The human talks to the hunting-dog.
 // Messages go to POST /chat. The responder is rule-based first
 // (zero model dependency); an optional model path exists behind
 // config [chat]. The UI always shows which path is active.
@@ -784,7 +784,7 @@ function ChatPage({ ctx }) {
 }
 
 // ---------------------------------------------------------------------------
-// Review — /tracehound/review. The human queue made real.
+// Review — /swarm-forensics/review. The human queue made real.
 // ---------------------------------------------------------------------------
 function ReviewPage({ ctx }) {
   const [storeState, setStore] = useStore();
@@ -900,7 +900,7 @@ function ReviewPage({ ctx }) {
 }
 
 // ---------------------------------------------------------------------------
-// IOCs — /tracehound/iocs. The working list, fully editable in-GUI.
+// IOCs — /swarm-forensics/iocs. The working list, fully editable in-GUI.
 // Manual adds and bulk imports enter as proposed: they go to the
 // review queue, never straight to active.
 // ---------------------------------------------------------------------------
@@ -1074,7 +1074,7 @@ function IocsPage({ ctx }) {
 }
 
 // ---------------------------------------------------------------------------
-// Research — /tracehound/research. Watchlist + check-now + proposals.
+// Research — /swarm-forensics/research. Watchlist + check-now + proposals.
 // ---------------------------------------------------------------------------
 function ResearchPage({ ctx }) {
   const settingsQ = useApi(ctx, 'settings', '/settings', 60000);
@@ -1162,7 +1162,7 @@ function ResearchPage({ ctx }) {
 }
 
 // ---------------------------------------------------------------------------
-// Settings — /tracehound/settings. Every tunable, prompt editors,
+// Settings — /swarm-forensics/settings. Every tunable, prompt editors,
 // firewall lock, danger zone. Writes go through PUT /settings and
 // PUT /prompts/<name>. UI-only prefs mirror to ctx.storage
 // (HERMES_DESKTOP.md §1 row: ctx.storage).
@@ -1267,7 +1267,7 @@ function PromptEditor({ ctx, name, title, description }) {
 // repo moved to christopherwoodall/silent-locus on 2026-09-28, so
 // confirm the repo id before publishing this link. See report.
 const INSTALL_LINK =
-  'hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1';
+  'hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/swarm-forensics&enable=1';
 
 function AboutCard({ ctx }) {
   return jsx(Card, {
@@ -1296,7 +1296,7 @@ function AboutCard({ ctx }) {
           'allowlisted public sources (urlquery.net, web.archive.org, ' +
           'arquivo.pt, transluce.org); local working state under state/ ' +
           '(hits, IOC list, review log, chat log); plugin-namespaced UI ' +
-          'prefs (hermes.plugin.tracehound.*). No credentials, no ' +
+          'prefs (hermes.plugin.swarm-forensics.*). No credentials, no ' +
           'authenticated APIs, no posting.'),
         jsx('div', { key: 's' },
           'No silent installs, ever. No autonomous scanning, ever: every ' +
@@ -1471,7 +1471,7 @@ function SettingsPage({ ctx }) {
                 onSaved: reload,
               }),
               jsx('div', { key: 'k', style: { fontSize: 12 } },
-                `API key comes from env var ${(s.chat || {}).api_key_env || 'TRACEHOUND_CHAT_KEY'}. Never in config, never logged.`),
+                `API key comes from env var ${(s.chat || {}).api_key_env || 'SWARM_FORENSICS_CHAT_KEY'}. Never in config, never logged.`),
             ],
           }),
         }),
@@ -1603,24 +1603,24 @@ function StatusChip({ ctx }) {
   const diag = useApi(ctx, 'diag', '/diagnostics', 15000);
   const jobsQ = useApi(ctx, 'jobs-chip', '/jobs', 10000);
   if (!storeState.uiEnabled) {
-    return jsx('span', { title: 'Tracehound UI hidden (Appearance)' }, '○');
+    return jsx('span', { title: 'Swarm Forensics UI hidden (Appearance)' }, '○');
   }
   const paused = diag.data && diag.data.paused;
   const jobs = (jobsQ.data && jobsQ.data.jobs) || [];
   const running = jobs.some((j) => j.status === 'running' || j.status === 'queued');
   const state = !diag.data ? 'unknown' : paused ? 'paused' : running ? 'running' : 'idle';
   const tip = !diag.data
-    ? 'tracehound: backend disconnected'
-    : `tracehound: ${state}` +
+    ? 'swarm-forensics: backend disconnected'
+    : `swarm-forensics: ${state}` +
       (jobs[0] ? ` — last hunt ${jobs[0].job_id} (${jobs[0].status}, ${jobs[0].new_hits || 0} hits)` : '');
   return jsx('button', {
-    onClick: () => navigate(ctx, '/tracehound'),
+    onClick: () => navigate(ctx, '/swarm-forensics'),
     title: tip,
     style: { display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' },
     children: jsxs(Fragment, {
       children: [
         jsx(StatusDot, { key: 'd', color: stateColor(state) }),
-        jsx('span', { key: 't' }, 'tracehound'),
+        jsx('span', { key: 't' }, 'swarm-forensics'),
       ],
     }),
   });
@@ -1654,7 +1654,7 @@ function AppearanceExtra({ ctx }) {
   return jsxs('div', {
     style: { display: 'flex', flexDirection: 'column', gap: 8 },
     children: [
-      jsx('strong', { key: 'h' }, 'Tracehound'),
+      jsx('strong', { key: 'h' }, 'Swarm Forensics'),
       jsxs('label', {
         key: 'e', style: { display: 'flex', gap: 8, alignItems: 'center' },
         children: [
@@ -1729,7 +1729,7 @@ async function reviewDecideSelected(ctx, verdict) {
   }
   if (verdict === 'narrow') {
     store.set({ pendingNarrowId: id });
-    navigate(ctx, '/tracehound/review');
+    navigate(ctx, '/swarm-forensics/review');
     notify(ctx, 'info', `Narrow '${id}': use the Narrow button on its card.`);
     return;
   }
@@ -1739,8 +1739,8 @@ async function reviewDecideSelected(ctx, verdict) {
 }
 
 // ---------------------------------------------------------------------------
-// Case management (Worker-5). Routes /tracehound/cases and
-// /tracehound/graph. The case DB is the analyst's workspace: entities
+// Case management (Worker-5). Routes /swarm-forensics/cases and
+// /swarm-forensics/graph. The case DB is the analyst's workspace: entities
 // (trace, agent, swarm, collection), links, and extracted indicators.
 // Extracted indicators are NOT IOCs: nothing here promotes to the
 // IOC list; promotion stays a human review-queue decision.
@@ -1891,7 +1891,7 @@ function EntityDetail({ ctx, entityId, entities, onChanged, onSelect }) {
                 jsx('button', {
                   key: 'o', onClick: () => onSelect && onSelect(otherId),
                   style: {
-                    background: 'none', border: 'none', color: 'var(--tracehound-link, #58a6ff)',
+                    background: 'none', border: 'none', color: 'var(--swarm-forensics-link, #58a6ff)',
                     cursor: 'pointer', padding: 0, fontSize: 12, textDecoration: 'underline',
                   },
                 }, label),
@@ -2106,10 +2106,10 @@ function CasesPage({ ctx }) {
                     style: {
                       display: 'flex', gap: 8, alignItems: 'center', width: '100%',
                       padding: '6px 8px', marginBottom: 4, textAlign: 'left',
-                      border: '1px solid var(--tracehound-border, transparent)',
+                      border: '1px solid var(--swarm-forensics-border, transparent)',
                       borderRadius: 6, cursor: 'pointer',
                       background: e.id === selectedId
-                        ? 'var(--tracehound-selected, rgba(88,166,255,0.12))' : 'transparent',
+                        ? 'var(--swarm-forensics-selected, rgba(88,166,255,0.12))' : 'transparent',
                     },
                     children: [
                       jsx(TypeBadge, { key: 'b', type: e.type }),
@@ -2326,7 +2326,7 @@ function GraphPage({ ctx }) {
               key: 'svg', ref: svgRef,
               width: '100%', height: 620, viewBox: `0 0 ${GRAPH_W} ${GRAPH_H}`,
               style: {
-                flex: '1 1 60%', minWidth: 320, border: '1px solid var(--tracehound-border, transparent)',
+                flex: '1 1 60%', minWidth: 320, border: '1px solid var(--swarm-forensics-border, transparent)',
                 borderRadius: 8, cursor: 'grab', touchAction: 'none', background: 'transparent',
               },
               onPointerDown, onPointerMove, onPointerUp,
@@ -2390,26 +2390,26 @@ function GraphPage({ ctx }) {
 // §1 row. [INF] marks shapes inferred from doc text rather than quoted.
 // ---------------------------------------------------------------------------
 const ROUTES = [
-  { path: '/tracehound', label: 'Dashboard', codicon: 'eye', el: DashboardPage },
-  { path: '/tracehound/hunt', label: 'Hunt', codicon: 'search', el: HuntPage },
-  { path: '/tracehound/chat', label: 'Chat', codicon: 'comment-discussion', el: ChatPage },
-  { path: '/tracehound/review', label: 'Review Queue', codicon: 'inbox', el: ReviewPage },
-  { path: '/tracehound/cases', label: 'Cases', codicon: 'briefcase', el: CasesPage },
-  { path: '/tracehound/graph', label: 'Graph', codicon: 'type-hierarchy', el: GraphPage },
-  { path: '/tracehound/iocs', label: 'IOC List', codicon: 'list-unordered', el: IocsPage },
-  { path: '/tracehound/research', label: 'Research', codicon: 'beaker', el: ResearchPage },
-  { path: '/tracehound/settings', label: 'Settings', codicon: 'gear', el: SettingsPage },
+  { path: '/swarm-forensics', label: 'Dashboard', codicon: 'eye', el: DashboardPage },
+  { path: '/swarm-forensics/hunt', label: 'Hunt', codicon: 'search', el: HuntPage },
+  { path: '/swarm-forensics/chat', label: 'Chat', codicon: 'comment-discussion', el: ChatPage },
+  { path: '/swarm-forensics/review', label: 'Review Queue', codicon: 'inbox', el: ReviewPage },
+  { path: '/swarm-forensics/cases', label: 'Cases', codicon: 'briefcase', el: CasesPage },
+  { path: '/swarm-forensics/graph', label: 'Graph', codicon: 'type-hierarchy', el: GraphPage },
+  { path: '/swarm-forensics/iocs', label: 'IOC List', codicon: 'list-unordered', el: IocsPage },
+  { path: '/swarm-forensics/research', label: 'Research', codicon: 'beaker', el: ResearchPage },
+  { path: '/swarm-forensics/settings', label: 'Settings', codicon: 'gear', el: SettingsPage },
 ];
 
 // /swarm-forensics subcommand -> route deep links (Worker-1 CLI).
-// review -> /tracehound/review, status -> /tracehound,
-// hunt -> /tracehound/hunt, chat -> /tracehound/chat,
-// case -> /tracehound/cases, graph -> /tracehound/graph,
-// iocs -> /tracehound/iocs, research -> /tracehound/research.
+// review -> /swarm-forensics/review, status -> /swarm-forensics,
+// hunt -> /swarm-forensics/hunt, chat -> /swarm-forensics/chat,
+// case -> /swarm-forensics/cases, graph -> /swarm-forensics/graph,
+// iocs -> /swarm-forensics/iocs, research -> /swarm-forensics/research.
 
 export default {
-  id: 'tracehound',
-  name: 'Tracehound',
+  id: 'swarm-forensics',
+  name: 'Swarm Forensics',
   defaultEnabled: false, // opt-in: inventories in Capabilities -> Plugins
   register(ctx) {
     // Restore the Appearance enable pref (HERMES_DESKTOP.md §1: ctx.storage).
@@ -2422,7 +2422,7 @@ export default {
     // Full pages (HERMES_DESKTOP.md §1 row: ROUTES_AREA).
     ROUTES.forEach((r) => {
       ctx.register({
-        id: `tracehound-route-${r.path}`,
+        id: `swarm-forensics-route-${r.path}`,
         area: 'ROUTES_AREA',
         data: { path: r.path }, // §1 row: data: { path }
         render: () => jsx(r.el, { ctx }),
@@ -2435,13 +2435,13 @@ export default {
     // ignores grouping hints.
     ROUTES.forEach((r, i) => {
       ctx.register({
-        id: `tracehound-nav-${r.path}`,
+        id: `swarm-forensics-nav-${r.path}`,
         area: 'SIDEBAR_NAV_AREA',
         data: {
           path: r.path,
-          label: i === 0 ? 'Tracehound' : r.label,
+          label: i === 0 ? 'Swarm Forensics' : r.label,
           codicon: r.codicon, // §1 row: data: { path, label, codicon }
-          group: 'tracehound', // [INF] grouping hint
+          group: 'swarm-forensics', // [INF] grouping hint
           indent: i === 0 ? 0 : 1, // [INF] section nesting hint
         },
         render: undefined,
@@ -2450,7 +2450,7 @@ export default {
 
     // Status-bar chip (HERMES_DESKTOP.md §1 row: statusBar.right).
     ctx.register({
-      id: 'tracehound-status-chip',
+      id: 'swarm-forensics-status-chip',
       area: 'statusBar.right',
       render: () => jsx(StatusChip, { ctx }),
     });
@@ -2458,21 +2458,21 @@ export default {
     // Command palette (HERMES_DESKTOP.md §1 row: PALETTE_AREA).
     // [INF]: command payload shape { command, run }.
     const commands = [
-      ['swarm-forensics: Open dashboard', () => navigate(ctx, '/tracehound')],
-      ['swarm-forensics: Start hunt...', () => navigate(ctx, '/tracehound/hunt')],
+      ['swarm-forensics: Open dashboard', () => navigate(ctx, '/swarm-forensics')],
+      ['swarm-forensics: Start hunt...', () => navigate(ctx, '/swarm-forensics/hunt')],
       ['swarm-forensics: Stop hunt', () => stopRunningHunt(ctx)],
-      ['swarm-forensics: Open review queue', () => navigate(ctx, '/tracehound/review')],
-      ['swarm-forensics: Open case graph', () => navigate(ctx, '/tracehound/graph')],
+      ['swarm-forensics: Open review queue', () => navigate(ctx, '/swarm-forensics/review')],
+      ['swarm-forensics: Open case graph', () => navigate(ctx, '/swarm-forensics/graph')],
       ['swarm-forensics: New case entity…', () => {
         store.set({ casesNewOpen: true });
-        navigate(ctx, '/tracehound/cases');
+        navigate(ctx, '/swarm-forensics/cases');
       }],
-      ['swarm-forensics: Status', () => navigate(ctx, '/tracehound')],
+      ['swarm-forensics: Status', () => navigate(ctx, '/swarm-forensics')],
       ['swarm-forensics: Pause / resume hunting', () => togglePause(ctx)],
     ];
     commands.forEach(([command, run], i) => {
       ctx.register({
-        id: `tracehound-palette-${i}`,
+        id: `swarm-forensics-palette-${i}`,
         area: 'PALETTE_AREA',
         data: { command, run },
       });
@@ -2481,13 +2481,13 @@ export default {
     // Keybinds (HERMES_DESKTOP.md §1 row: KEYBINDS_AREA).
     // [INF]: payload shape { id, title, run }. Rebindable per doc.
     const binds = [
-      ['tracehound.pause-resume', 'Tracehound: pause / resume hunting',
+      ['swarm-forensics.pause-resume', 'Swarm Forensics: pause / resume hunting',
         () => togglePause(ctx)],
-      ['tracehound.review-accept', 'Tracehound review: accept selected',
+      ['swarm-forensics.review-accept', 'Swarm Forensics review: accept selected',
         () => reviewDecideSelected(ctx, 'accept')],
-      ['tracehound.review-reject', 'Tracehound review: reject selected',
+      ['swarm-forensics.review-reject', 'Swarm Forensics review: reject selected',
         () => reviewDecideSelected(ctx, 'reject')],
-      ['tracehound.review-narrow', 'Tracehound review: narrow selected',
+      ['swarm-forensics.review-narrow', 'Swarm Forensics review: narrow selected',
         () => reviewDecideSelected(ctx, 'narrow')],
     ];
     binds.forEach(([id, title, run]) => {
@@ -2496,7 +2496,7 @@ export default {
 
     // Appearance extras (HERMES_DESKTOP.md §1 row: APPEARANCE_AREAS.extra).
     ctx.register({
-      id: 'tracehound-appearance',
+      id: 'swarm-forensics-appearance',
       area: 'APPEARANCE_AREAS.extra',
       render: () => jsx(AppearanceExtra, { ctx }),
     });

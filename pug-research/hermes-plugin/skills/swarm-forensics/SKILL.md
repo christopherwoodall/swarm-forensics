@@ -1,5 +1,5 @@
 ---
-name: tracehound
+name: swarm-forensics
 version: "0.2.0"
 description: "Hunting-dog agent-trace IOC hunts across public sources. Every hunt is a discrete human-triggered job: the human starts it, watches it, and cancels it. No cron, no autonomous scans, no background schedule. IOC proposals wait in a human review queue; nothing promotes without an explicit human accept."
 argument-hint: '/swarm-forensics [hunt <target> | stop | status | review | modify | research | predict-urls | update-iocs | diagnose]'
@@ -10,7 +10,7 @@ author: swarm-forensics
 license: MIT
 user-invocable: true
 metadata:
-  tracehound:
+  swarm-forensics:
     bins:
       - python3
       - curl
@@ -25,7 +25,7 @@ metadata:
       - urlquery
 ---
 
-# Tracehound
+# Swarm Forensics
 
 The hunting dog. It hunts only with the human.
 
@@ -44,7 +44,7 @@ human → command/UI → backend with guardrails.
 
 The backend enforces allowlisted hosts, per-source budgets,
 check-don't-fetch, and the paused state. The old model-invoked
-`/tracehound scan` path with `allowed-tools: Bash` is removed.
+`/swarm-forensics scan` path with `allowed-tools: Bash` is removed.
 The command surface calls the backend, never raw shell.
 (ADVERSARIAL_DELTA.md §12.)
 
@@ -55,16 +55,20 @@ human's intent into the CLI flags below. The model never invents
 new verbs and never schedules work.
 
 ```
-/swarm-forensics                              # dashboard  -> /tracehound
+/swarm-forensics                              # dashboard  -> /swarm-forensics
 /swarm-forensics hunt <target> [--sources urlquery,cdx,arquivo] [--cap N]
-                                              # new hunt   -> /tracehound/hunt
+                                              # new hunt   -> /swarm-forensics/hunt
 /swarm-forensics stop [job-id]                 # kill switch (stops active hunt)
 /swarm-forensics modify <setting> <value>     # validated setting change
-/swarm-forensics status                       # JSON summary -> /tracehound
-/swarm-forensics review                       # list queue -> /tracehound/review
+/swarm-forensics status                       # JSON summary -> /swarm-forensics
+/swarm-forensics review                       # list queue -> /swarm-forensics/review
 /swarm-forensics review accept <id>           # promote to active list
 /swarm-forensics review reject <id>           # mark inactive, keep provenance
 /swarm-forensics review narrow <id> <chunk>   # propose narrower term
+/swarm-forensics case add <type> <label>    # new trace/agent/swarm/collection
+/swarm-forensics case link <from> <to> <rel> # relate two entities
+/swarm-forensics case list [--type T]       # list entities
+/swarm-forensics case graph                 # open /swarm-forensics/graph
 ```
 
 GUI deep links live as ⌘K palette entries in the desktop plugin
@@ -75,15 +79,16 @@ GUI deep links live as ⌘K palette entries in the desktop plugin
 ## CLI (what the skill actually runs)
 
 ```bash
-python3 scripts/tracehound.py hunt [--target T] [--sources urlquery,cdx,arquivo] [--cap N] [--resweep] [--mock]
-python3 scripts/tracehound.py stop [--job-id J]
-python3 scripts/tracehound.py modify <setting> <value>
-python3 scripts/tracehound.py status
-python3 scripts/tracehound.py review {accept,reject,narrow} <id> --rationale R [--reviewer X] [--chunk C]
-python3 scripts/tracehound.py update-iocs      # proposes only; no-op unless ioc.auto_propose=true
-python3 scripts/tracehound.py predict-urls     # candidate URLs from observed grammar (manual)
-python3 scripts/tracehound.py research         # checks research watchlist once (manual)
-python3 scripts/tracehound.py diagnose         # curl + config + source reachability
+python3 scripts/swarm_forensics.py hunt [--target T] [--sources urlquery,cdx,arquivo] [--cap N] [--resweep] [--mock]
+python3 scripts/swarm_forensics.py stop [--job-id J]
+python3 scripts/swarm_forensics.py modify <setting> <value>
+python3 scripts/swarm_forensics.py status
+python3 scripts/swarm_forensics.py review {accept,reject,narrow} <id> --rationale R [--reviewer X] [--chunk C]
+python3 scripts/swarm_forensics.py case {add,link,list,graph} [...]  # case entities
+python3 scripts/swarm_forensics.py update-iocs      # proposes only; no-op unless ioc.auto_propose=true
+python3 scripts/swarm_forensics.py predict-urls     # candidate URLs from observed grammar (manual)
+python3 scripts/swarm_forensics.py research         # checks research watchlist once (manual)
+python3 scripts/swarm_forensics.py diagnose         # curl + config + source reachability
 ```
 
 Notes:

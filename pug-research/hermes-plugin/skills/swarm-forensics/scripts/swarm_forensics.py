@@ -1,4 +1,4 @@
-"""Tracehound: human-triggered agent-trace hunts for Hermes.
+"""Swarm Forensics: human-triggered agent-trace hunts for Hermes.
 
 The human starts each hunt, watches progress in the job file, and can
 cancel it. The human reviews every hit. No command here schedules
@@ -225,8 +225,8 @@ def cmd_diagnose(cfg, args):
 
 def main():
     ap = argparse.ArgumentParser(
-        prog="tracehound",
-        description="Tracehound: human-triggered agent-trace hunts. "
+        prog="swarm-forensics",
+        description="Swarm Forensics: human-triggered agent-trace hunts. "
                     "Every scan is a discrete job the human starts, watches, "
                     "and can cancel. Nothing here runs on its own.")
     ap.add_argument("--config", default=None,
@@ -384,7 +384,7 @@ def cmd_case_list(cfg, args):
 
 
 def cmd_case_graph(cfg, args):
-    print("open /tracehound/graph in the desktop app")
+    print("open /swarm-forensics/graph in the desktop app")
     return 0
 
 

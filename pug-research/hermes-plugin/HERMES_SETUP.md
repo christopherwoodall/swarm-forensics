@@ -1,4 +1,4 @@
-# Tracehound — Hermes setup
+# Swarm Forensics — Hermes setup
 
 The hunting dog. It hunts only with the human.
 
@@ -15,7 +15,7 @@ review queue. Nothing promotes without a human decision.
 
 ## Install path 1: install link (recommended)
 
-[Install tracehound in Hermes](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/tracehound&enable=1)
+[Install swarm-forensics in Hermes](hermes://plugin/install?repo=christopherwoodall/swarm-forensics/pug-research/hermes-plugin/skills/swarm-forensics&enable=1)
 
 The plugin subdirectory rides inside the `repo` parameter as path
 segments. That is the documented mechanism:
@@ -24,7 +24,7 @@ segments. That is the documented mechanism:
 URL plus a subdirectory and sparse-checkouts only that folder.
 There are no `path=` or `ref=` parameters — do not add them. The
 installer probes the subdirectory for `<dir>/plugin.js` or
-`<dir>/desktop/plugin.js`; tracehound ships `desktop/plugin.js`,
+`<dir>/desktop/plugin.js`; swarm-forensics ships `desktop/plugin.js`,
 so the desktop component is detected.
 
 The app shows a confirm-first dialog: repo identity, source links,
@@ -42,6 +42,25 @@ plugin ships from this repo (the hackathon submission repo). The
 2026-09-28 move to `christopherwoodall/silent-locus` concerned the
 hunt-data repo, a different project.
 
+### Installing from a branch (pre-merge)
+
+The install link clones the repo's DEFAULT branch only — the
+hermes-agent installer source exposes no branch parameter (verified
+in `deeplink-routes.ts`, `desktop-plugin-install.ts`, and
+`plugin-source-urls.ts`; the settings dialog's "pin to commit" takes
+a full commit SHA only, dialog-side, and cannot be encoded in the
+link — HERMES_DESKTOP.md §2.8). The plugin is on `pug-scratch`
+until merged, so the link resolves only after the merge. Until then,
+install manually:
+
+1. Check out `pug-scratch` locally.
+2. Copy `skills/swarm-forensics/` to `$HERMES_HOME/plugins/swarm-forensics/`
+   (the unified-package layout: `desktop/plugin.js`, `dashboard/`,
+   `SKILL.md`, `scripts/`, `references/`).
+3. Flip BOTH gates below (Capabilities → Plugins → swarm-forensics,
+   and `swarm-forensics` in `plugins.enabled` in `config.yaml`).
+4. `/reload-skills` (or a new session) to pick up the skill.
+
 ## Install path 2: desktop unified package
 
 The documented delivery for a plugin with agent-side code is the
@@ -52,10 +71,10 @@ manifest `"api": "plugin_api.py"` (HERMES_DESKTOP.md §1 [DOC]).
 Two toggles gate the plugin. Enable BOTH, or the backend stays
 silent and the UI shows "disconnected".
 
-1. In-app switch: Capabilities → Plugins → tracehound. The plugin
+1. In-app switch: Capabilities → Plugins → swarm-forensics. The plugin
    ships `defaultEnabled: false`: it inventories there but stays
    off until you flip it.
-2. Backend gate: add `tracehound` to `plugins.enabled` in
+2. Backend gate: add `swarm-forensics` to `plugins.enabled` in
    `config.yaml`. The Python backend loads only under this gate
    ([SKILL], HERMES_DESKTOP.md §1; the doc tags this behavior
    SKILL, not DOC).
@@ -89,15 +108,15 @@ Weekly cadence:
 
 1. Install via the link above.
 2. Flip both toggles (in-app switch + `plugins.enabled`).
-3. Open the dashboard: route `/tracehound`.
+3. Open the dashboard: route `/swarm-forensics`.
 4. Run a first hunt (see grammar below).
-5. Triage the review queue at `/tracehound/review`.
+5. Triage the review queue at `/swarm-forensics/review`.
 
 ```bash
-cd <skill dir>/skills/tracehound
+cd <skill dir>/skills/swarm-forensics
 cp config.example.ini config.ini
-python3 scripts/tracehound.py diagnose
-python3 scripts/tracehound.py hunt --target <term> --mock
+python3 scripts/swarm_forensics.py diagnose
+python3 scripts/swarm_forensics.py hunt --target <term> --mock
 ```
 
 Use `--mock` first: synthetic hits, no network. Inspect
@@ -107,15 +126,19 @@ Use `--mock` first: synthetic hits, no network. Inspect
 
 | Command | What it does | GUI deep link |
 |---|---|---|
-| `/swarm-forensics` | Open the dashboard | `/tracehound` |
-| `/swarm-forensics hunt <target> [--sources urlquery,cdx,arquivo] [--cap N]` | Start a discrete hunt job | `/tracehound/hunt` |
+| `/swarm-forensics` | Open the dashboard | `/swarm-forensics` |
+| `/swarm-forensics hunt <target> [--sources urlquery,cdx,arquivo] [--cap N]` | Start a discrete hunt job | `/swarm-forensics/hunt` |
 | `/swarm-forensics stop [job-id]` | Cancel the running hunt | kill switch |
-| `/swarm-forensics modify <setting> <value>` | Change one setting (validated) | `/tracehound/settings` |
-| `/swarm-forensics status` | JSON summary: jobs, IOCs, pause state | `/tracehound` |
-| `/swarm-forensics review` | List the review queue | `/tracehound/review` |
-| `/swarm-forensics review accept <id>` | Promote term to active | `/tracehound/review` |
-| `/swarm-forensics review reject <id>` | Mark inactive, keep provenance | `/tracehound/review` |
-| `/swarm-forensics review narrow <id> <chunk>` | Propose a narrower term | `/tracehound/review` |
+| `/swarm-forensics modify <setting> <value>` | Change one setting (validated) | `/swarm-forensics/settings` |
+| `/swarm-forensics status` | JSON summary: jobs, IOCs, pause state | `/swarm-forensics` |
+| `/swarm-forensics review` | List the review queue | `/swarm-forensics/review` |
+| `/swarm-forensics review accept <id>` | Promote term to active | `/swarm-forensics/review` |
+| `/swarm-forensics review reject <id>` | Mark inactive, keep provenance | `/swarm-forensics/review` |
+| `/swarm-forensics review narrow <id> <chunk>` | Propose a narrower term | `/swarm-forensics/review` |
+| `/swarm-forensics case add <type> <label>` | New trace/agent/swarm/collection | `/swarm-forensics/cases` |
+| `/swarm-forensics case link <from> <to> <rel>` | Relate two entities | `/swarm-forensics/cases` |
+| `/swarm-forensics case list [--type T]` | List entities | `/swarm-forensics/cases` |
+| `/swarm-forensics case graph` | Open the graph view | `/swarm-forensics/graph` |
 
 Notes:
 
@@ -135,9 +158,25 @@ The same verbs also live as ⌘K palette entries (`swarm-forensics:
 Open dashboard`, `Start hunt...`, `Stop hunt`, `Open review
 queue`, `Status`, `Pause / resume hunting`).
 
+## Case management
+
+Hits become cases. The entity model is traces → agents → swarms →
+collections, in a local SQLite DB (`state/swarm-forensics.db`, stdlib
+only). Full CRUD lives at `/swarm-forensics/cases`; the Obsidian-style
+graph at `/swarm-forensics/graph` (SVG, pan/zoom, click-detail, type
+filters). Adding a trace auto-extracts indicators (URLs, domains,
+nonces, relay hosts, hashes) into the DB.
+
+The load-bearing invariant: **extracted indicators are not IOCs**.
+Extraction writes to the case DB only. Nothing in the case layer
+touches the IOC list or the review queue — promotion still needs a
+human review-queue decision. The DB is local-only; back it up with
+the Settings → export action. Full spec: `SPEC.md`. Design
+rationale: `RATIONALE.md`.
+
 ## Chat
 
-The Chat tab (`/tracehound/chat`) is a rule-based responder
+The Chat tab (`/swarm-forensics/chat`) is a rule-based responder
 ([INF], HERMES_DESKTOP.md §2.6). It understands:
 
 - `hunt <term> [on urlquery|cdx|arquivo]` — starts a hunt job.
@@ -159,17 +198,21 @@ which brain is active ("rule-based" / "model path").
 
 ## Desktop pages
 
-- `/tracehound` — Dashboard: status cards, hits, IOCs, review,
+- `/swarm-forensics` — Dashboard: status cards, hits, IOCs, review,
   candidates, research, settings.
-- `/tracehound/hunt` — Hunt control: target, sources, cap,
+- `/swarm-forensics/hunt` — Hunt control: target, sources, cap,
   live progress, cancel.
-- `/tracehound/chat` — Chat ([INF]).
-- `/tracehound/review` — Review queue: candidate cards with
+- `/swarm-forensics/chat` — Chat ([INF]).
+- `/swarm-forensics/review` — Review queue: candidate cards with
   evidence, venue count, firewall advisory, ACCEPT / REJECT /
   NARROW, 7-day SLA flag.
-- `/tracehound/iocs` — IOC list management.
-- `/tracehound/research` — Research watchlist (manual check).
-- `/tracehound/settings` — Settings incl. the install link
+- `/swarm-forensics/iocs` — IOC list management.
+- `/swarm-forensics/cases` — Case entities: traces, agents, swarms,
+  collections; link/unlink; indicator lists.
+- `/swarm-forensics/graph` — Entity graph: SVG nodes/edges, pan/zoom,
+  click for details, filter by type.
+- `/swarm-forensics/research` — Research watchlist (manual check).
+- `/swarm-forensics/settings` — Settings incl. the install link
   (Settings → About) and prompt editors.
 
 ## SDK capability citations
@@ -199,7 +242,7 @@ citation. [INF] marks inferences carried through honestly
 | `host.navigate` | SDK, via HERMES_DESKTOP.md §1 [DOC] |
 | `defaultEnabled: false` opt-in inventory | SDK, via HERMES_DESKTOP.md §1 [DOC] |
 | `plugins.enabled` in `config.yaml` (backend gate) | [SKILL] — HERMES_DESKTOP.md tags this SKILL, not DOC |
-| Chat surface (`/tracehound/chat`, rule-based intents) | [INF] — HERMES_DESKTOP.md §2.6 |
+| Chat surface (`/swarm-forensics/chat`, rule-based intents) | [INF] — HERMES_DESKTOP.md §2.6 |
 | Inline ACCEPT/REJECT/NARROW buttons | [INF] — HERMES_DESKTOP.md §2.7 |
 
 Could not cite (no SDK surface found in the sections read):

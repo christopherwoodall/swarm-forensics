@@ -125,7 +125,7 @@ second writer, no direct-DB GUI path, no model-invoked tool that
 bypasses the backend.
 
 The objection it answers: the old skill had two threat models —
-the desktop path and the model-invoked `/tracehound scan` path with
+the desktop path and the model-invoked `/swarm-forensics scan` path with
 raw shell (#12). One enforcement point means one audit surface.
 Validation (entity types, rel kinds, indicator kinds) lives in
 `cases.py` and is therefore identical for every caller.

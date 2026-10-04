@@ -3,6 +3,11 @@
 Date: 2026-10-04. Parent review: `ADVERSARIAL.md` (verdict: no-build as
 specified — public, self-updating, autonomous hunter).
 
+Historical note: this plugin was originally proposed under the codename
+tracehound (see ADVERSARIAL.md); the name changed to `swarm-forensics`
+and every live reference now uses the new name. ADVERSARIAL.md is the
+frozen review record — its tracehound mentions stay.
+
 ## The model change
 
 The user directed: "Only hunt with a human. Like a hunting dog." The
@@ -148,7 +153,7 @@ GUI plus the `/swarm-forensics` command grammar, with the Python
 backend as its engine. One threat model: human → command/UI → backend,
 where the backend enforces allowlisted hosts, per-source budgets,
 check-don't-fetch, and the paused state. The old model-invoked
-`/tracehound scan` path with `allowed-tools: Bash` is removed; the
+`/swarm-forensics scan` path with `allowed-tools: Bash` is removed; the
 command surface calls the backend, never raw shell. **Remaining:**
 `SKILL.md` must be rewritten to describe exactly this (no stale
 dual-path text).
@@ -217,7 +222,7 @@ Obsidian-style graph view, SPEC.md + RATIONALE.md. Grading against the
   workspace: hits now have somewhere to go (trace entities linked to
   hunts), which is what the original objection asked for.
 - **#10 (operational reality) — new residual.** The DB file
-  (`state/tracehound.db`) needs a backup story: export on demand +
+  (`state/swarm-forensics.db`) needs a backup story: export on demand +
   documented restore. Corruption handling: SQLite is single-writer
   here (one human), so WAL + periodic export suffices; state this in
   SPEC.md rather than building clustering nobody needs.

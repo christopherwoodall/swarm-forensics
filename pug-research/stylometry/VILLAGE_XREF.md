@@ -127,11 +127,13 @@ _(pending — largest table, streamed last)_
 
 ### events.jsonl.gz
 
-_(pending)_
+_(scan running)_
 
 ### summaries.jsonl.gz
 
-_(pending)_
+939 records. Relay IOCs: `github.com` x66, `docs.google.com` x26,
+`archive.today` x4, `r.jina.ai` x1, `htmlpreview.github.io` x1 — all commodity.
+**Zero silent-locus domain+path matches.**
 
 ### village_goals.jsonl.gz
 

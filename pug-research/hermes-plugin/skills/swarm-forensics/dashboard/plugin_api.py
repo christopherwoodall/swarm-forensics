@@ -1,15 +1,15 @@
-"""Tracehound desktop backend: plugin namespace HTTP handler.
+"""Swarm Forensics desktop backend: plugin namespace HTTP handler.
 
 Stdlib only. This module is the single enforcement point for the
 desktop GUI. It imports the SAME scripts/lib/ modules the CLI uses,
-so the GUI and the /tracehound CLI stay two faces of one state:
+so the GUI and the /swarm-forensics CLI stay two faces of one state:
 one config.ini, one state/ dir, one code path, one threat model.
 
 The GUI must never trigger scans except through this module.
 Hunts are discrete, human-initiated jobs. There is no cron and no
 background schedule in the desktop lane.
 
-Namespace: /api/plugins/tracehound/<endpoint>.
+Namespace: /api/plugins/swarm-forensics/<endpoint>.
 """
 
 import configparser
@@ -26,9 +26,9 @@ from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler
 from pathlib import Path
 
-NAMESPACE = "/api/plugins/tracehound"
+NAMESPACE = "/api/plugins/swarm-forensics"
 
-# skills/tracehound/dashboard/plugin_api.py -> skills/tracehound/
+# skills/swarm-forensics/dashboard/plugin_api.py -> skills/swarm-forensics/
 SKILL_ROOT = Path(__file__).resolve().parent.parent
 LIB_DIR = SKILL_ROOT / "scripts" / "lib"
 sys.path.insert(0, str(LIB_DIR))
@@ -617,7 +617,7 @@ def _chat_mode(cfg):
     """Report which chat brain is active. The GUI shows this."""
     chat = cfg.get("chat", {})
     if chat.get("model_enabled", "false") == "true" and chat.get("endpoint"):
-        key_env = chat.get("api_key_env", "TRACEHOUND_CHAT_KEY")
+        key_env = chat.get("api_key_env", "SWARM_FORENSICS_CHAT_KEY")
         if os.environ.get(key_env):
             return {"mode": "model", "endpoint": chat["endpoint"],
                     "model": chat.get("model", ""),
@@ -633,7 +633,7 @@ def _chat_model_reply(cfg, system_prompt, history, message):
     judge: the key lives in the environment, never in config."""
     chat = cfg.get("chat", {})
     endpoint = chat["endpoint"]
-    key = os.environ.get(chat.get("api_key_env", "TRACEHOUND_CHAT_KEY"), "")
+    key = os.environ.get(chat.get("api_key_env", "SWARM_FORENSICS_CHAT_KEY"), "")
     payload = {
         "model": chat.get("model", ""),
         "messages": ([{"role": "system", "content": system_prompt}] +
@@ -814,7 +814,7 @@ def _research_check(cfg):
 # --- HTTP plumbing ---
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "TracehoundPlugin/0.1"
+    server_version = "SwarmForensicsPlugin/0.1"
 
     def log_message(self, fmt, *args):  # keep logs quiet
         pass
@@ -893,7 +893,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Disposition",
-                                 "attachment; filename=tracehound-iocs.json")
+                                 "attachment; filename=swarm-forensics-iocs.json")
                 self.send_header("Content-Length", str(len(body.encode())))
                 self.end_headers()
                 self.wfile.write(body.encode("utf-8"))
@@ -1273,7 +1273,7 @@ def run(host="127.0.0.1", port=0):
     serves NAMESPACE. Direct runs are for tests only."""
     from http.server import HTTPServer
     srv = HTTPServer((host, port), Handler)
-    print(f"tracehound plugin API on {srv.server_address}")
+    print(f"swarm-forensics plugin API on {srv.server_address}")
     srv.serve_forever()
 
 

@@ -1,4 +1,4 @@
-"""Tracehound case management: entities, relationships, indicators.
+"""Swarm Forensics case management: entities, relationships, indicators.
 
 The case DB is the system of record for the analyst's workspace:
 entities (traces, agents, swarms, collections), the links between
@@ -29,7 +29,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 
-DB_NAME = "tracehound.db"
+DB_NAME = "swarm-forensics.db"
 
 # Current schema version. migrate() applies every migration below it.
 SCHEMA_VERSION = 1
@@ -46,7 +46,7 @@ def _utcnow():
 def connect(path=None, cfg=None):
     """Open the case DB and migrate it. Give path or cfg, not both.
 
-    With cfg, the DB lives at <state_dir>/tracehound.db (config.state_path).
+    With cfg, the DB lives at <state_dir>/swarm-forensics.db (config.state_path).
     Every caller gets a migrated schema: connect() always runs migrate().
     """
     if path is None and cfg is None:

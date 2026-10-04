@@ -3,7 +3,7 @@
 import configparser
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent.parent.parent  # skills/tracehound/
+HERE = Path(__file__).resolve().parent.parent.parent  # skills/swarm-forensics/
 
 
 def _defaults():
@@ -25,7 +25,7 @@ def _defaults():
             "urlquery_budget": "60",
             "cdx_budget": "60",
             "arquivo_budget": "60",
-            "user_agent": ("tracehound/0.1 "
+            "user_agent": ("swarm-forensics/0.1 "
                            "(+https://github.com/christopherwoodall/swarm-forensics)"),
         },
         "ioc": {
@@ -46,7 +46,7 @@ def _defaults():
         "chat": {
             "model_enabled": "false",
             "endpoint": "",
-            "api_key_env": "TRACEHOUND_CHAT_KEY",
+            "api_key_env": "SWARM_FORENSICS_CHAT_KEY",
             "model": "",
         },
         "paths": {

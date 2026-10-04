@@ -116,7 +116,7 @@ def build_firewall_input(candidate, mechanical, evidence, list_context):
         },
         "provenance": {"source": "scanner",
                        "first_seen": datetime.now(timezone.utc).isoformat(),
-                       "operator": "tracehound"},
+                       "operator": "swarm-forensics"},
     }
 
 

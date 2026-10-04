@@ -75,7 +75,7 @@ _FALLBACK = {"relays": ["jqp.vercel.app", "allorigins.hexlet.app",
 
 
 def _warn(msg):
-    print(f"tracehound predict: WARNING: {msg}", file=sys.stderr)
+    print(f"swarm-forensics predict: WARNING: {msg}", file=sys.stderr)
 
 
 def _load_grammar():

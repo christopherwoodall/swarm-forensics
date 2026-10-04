@@ -77,7 +77,7 @@ No silent auto-promotion. Ever.
   "provenance": {
     "source": "scanner",
     "first_seen": "2026-09-28T00:00:00Z",
-    "operator": "tracehound"
+    "operator": "swarm-forensics"
   }
 }
 ```
@@ -375,7 +375,7 @@ sees everything.
 enabled = false            ; no judge endpoint configured -> disabled, fall through to human queue
 endpoint =                 ; completions endpoint URL; empty disables
 model =                    ; versioned model id, pinned
-api_key_env = TRACEHOUND_JUDGE_KEY   ; env var name; never logged, never in config
+api_key_env = SWARM_FORENSICS_JUDGE_KEY   ; env var name; never logged, never in config
 budget_per_cycle = 50
 evidence_snippets = 5
 max_snippet_chars = 300

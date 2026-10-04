@@ -1,4 +1,4 @@
-# Tracehound case-management layer — SPEC
+# Swarm Forensics case-management layer — SPEC
 
 Date: 2026-10-04. Worker: 5 (case management + mapping layer).
 Scope: the analyst workspace for SWARM hunting. Read `MODULE.md`
@@ -13,7 +13,7 @@ The case layer sits BESIDE the hunt pipeline, not inside it. The
 pipeline (hunts, hits, IOC working list, review queue) is unchanged:
 its stores stay JSONL (`state/jobs/`, `state/hits/`, `state/iocs.json`,
 `state/review.json`). The case layer is a SQLite DB
-(`state/tracehound.db`) that records what the HUMAN concludes: which
+(`state/swarm-forensics.db`) that records what the HUMAN concludes: which
 traces belong to which agents, which agents form a swarm, and what
 indicators each trace contains.
 
@@ -54,7 +54,7 @@ invariant is enforced in code (`cases.py` module docstring and
 
 ## 3. Database DDL and migration policy
 
-File: `state/tracehound.db`. Library: stdlib `sqlite3` only.
+File: `state/swarm-forensics.db`. Library: stdlib `sqlite3` only.
 
 ```sql
 CREATE TABLE entities(
@@ -102,10 +102,10 @@ Safety invariant: every SQL statement uses `?` placeholders. No
 string interpolation into SQL, ever. Trace text is untrusted input
 and enters only as bound parameters.
 
-Module: `skills/tracehound/scripts/lib/cases.py`. Functions:
+Module: `skills/swarm-forensics/scripts/lib/cases.py`. Functions:
 
 - `connect(path=None, cfg=None)` — open + migrate. With `cfg`,
-  the path resolves via `config.state_path(cfg, "tracehound.db")`.
+  the path resolves via `config.state_path(cfg, "swarm-forensics.db")`.
 - `add_entity`, `get_entity`, `list_entities(type?)`,
   `update_entity`, `delete_entity`.
 - `link(from_id, to_id, rel)`, `unlink(id)`, `neighbors(id)`,
@@ -140,7 +140,7 @@ relay is.
 
 ## 5. Backend endpoints
 
-Namespace: `/api/plugins/tracehound`. All follow the existing
+Namespace: `/api/plugins/swarm-forensics`. All follow the existing
 conventions (`_send`, `_body`, `_path`; 400 on bad input, 404 on
 unknown id, 500 never leaks a traceback).
 
@@ -168,7 +168,7 @@ every `/cases` endpoint returns 404 with "case layer unavailable".
 
 Routes (after Review Queue, before IOC List):
 
-- `/tracehound/cases` — entity CRUD. List with type filter and
+- `/swarm-forensics/cases` — entity CRUD. List with type filter and
   label search. "New entity" dialog: type, label, provenance; for
   traces, a text area, an optional hunt job id, and a "Preview
   indicators" button that calls `POST /cases/extract` before
@@ -176,7 +176,7 @@ Routes (after Review Queue, before IOC List):
   indicator list (with the indicators-are-not-IOCs note), links
   with unlink buttons, link adder (target select + rel select),
   delete with inline confirm.
-- `/tracehound/graph` — the Obsidian-style view. SVG rendered with
+- `/swarm-forensics/graph` — the Obsidian-style view. SVG rendered with
   `jsx()`. No imports beyond `react`, `react/jsx-runtime`,
   `@hermes/plugin-sdk`.
 
@@ -208,13 +208,13 @@ No required interaction lacks a documented SDK path, so no
 
 Palette commands:
 
-- `swarm-forensics: Open case graph` -> `/tracehound/graph`.
+- `swarm-forensics: Open case graph` -> `/swarm-forensics/graph`.
 - `swarm-forensics: New case entity…` -> sets a store flag, then
-  navigates to `/tracehound/cases`, which opens the dialog.
+  navigates to `/swarm-forensics/cases`, which opens the dialog.
 
 ## 7. Command grammar
 
-`tracehound.py case …` backs the `/swarm-forensics case …`
+`swarm_forensics.py case …` backs the `/swarm-forensics case …`
 grammar. Added without touching existing subcommands.
 
 - `case add <type> <label> [--text T] [--job J] [--provenance P]`
@@ -223,10 +223,10 @@ grammar. Added without touching existing subcommands.
 - `case link <from_id> <to_id> <rel>` — rel in
   `trace_of|member_of|part_of|related`.
 - `case list [--type T]`.
-- `case graph` — prints `open /tracehound/graph in the desktop app`.
+- `case graph` — prints `open /swarm-forensics/graph in the desktop app`.
 
-Deep links: `case add/list/link` -> `/tracehound/cases`;
-`case graph` -> `/tracehound/graph`.
+Deep links: `case add/list/link` -> `/swarm-forensics/cases`;
+`case graph` -> `/swarm-forensics/graph`.
 
 ## 8. Hunting-dog interaction model
 
@@ -242,7 +242,7 @@ The plugin points, fetches, and files. The human decides.
 
 ## 9. Security posture
 
-- Local-only DB. `state/tracehound.db` lives under `state/`
+- Local-only DB. `state/swarm-forensics.db` lives under `state/`
   (untracked). Nothing syncs it anywhere.
 - Parameterized SQL everywhere (§3 safety invariant). No string
   interpolation into SQL.
