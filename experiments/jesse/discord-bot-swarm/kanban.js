@@ -7,6 +7,7 @@ const fail=(message,status=409)=>{throw Object.assign(Error(message),{status});}
 export async function kanbanSchema(pool){await pool.query(`
 CREATE TABLE IF NOT EXISTS kanban_agents(id uuid PRIMARY KEY,owner text NOT NULL,name text NOT NULL,token_hash text UNIQUE NOT NULL,expires_at timestamptz NOT NULL,revoked_at timestamptz,created_at timestamptz NOT NULL DEFAULT now());
 ALTER TABLE kanban_agents ADD COLUMN IF NOT EXISTS relay_id uuid;
+ALTER TABLE kanban_agents ADD COLUMN IF NOT EXISTS last_seen_at timestamptz;
 CREATE TABLE IF NOT EXISTS kanban_tasks(id uuid PRIMARY KEY,owner text NOT NULL,title text NOT NULL,description text NOT NULL,state text NOT NULL DEFAULT 'queued',assignee text,lease_until timestamptz,dependencies uuid[] NOT NULL DEFAULT '{}',note text NOT NULL DEFAULT '',revision integer NOT NULL DEFAULT 1,updated_at timestamptz NOT NULL DEFAULT now());
 ALTER TABLE kanban_tasks ADD COLUMN IF NOT EXISTS board_key text;
 ALTER TABLE kanban_agents ADD COLUMN IF NOT EXISTS board_key text;
@@ -34,7 +35,7 @@ export class Kanban{
   if(token.startsWith('swarm_setup_'))fail('Exchange the single-use setup token before connecting MCP.',401);
   if(!token.startsWith('swarm_agent_'))return {owner:await authenticate(token),actor:'owner',kind:'owner'};
   const a=(await this.pool.query('SELECT id,owner,relay_id FROM kanban_agents WHERE token_hash=$1 AND revoked_at IS NULL AND expires_at>now()',[hash(token)])).rows[0];
-  if(!a)fail('Agent credential expired, revoked or invalid.',401);return {owner:a.owner,actor:a.id,kind:'agent',...(a.relay_id?{relayId:a.relay_id}:{})};
+  if(!a)fail('Agent credential expired, revoked or invalid.',401);await this.pool.query('UPDATE kanban_agents SET last_seen_at=now() WHERE id=$1 AND owner=$2',[a.id,a.owner]);return {owner:a.owner,actor:a.id,kind:'agent',...(a.relay_id?{relayId:a.relay_id}:{})};
  }
  async groups(owner,db=this.pool){return (await db.query("SELECT config->>'guildId' AS id,COALESCE(max(config->>'guildName'),'Discord server '||(config->>'guildId')) AS name,count(*)::int AS connections FROM swarms WHERE owner=$1 AND config->>'verifiedAt' IS NOT NULL AND config->>'guildId' ~ '^[0-9]{17,20}$' GROUP BY config->>'guildId' ORDER BY name",[owner])).rows;}
  async boards(owner){const groups=await this.groups(owner);const legacy=(await this.pool.query("SELECT EXISTS(SELECT 1 FROM kanban_tasks WHERE board_key=$1) OR EXISTS(SELECT 1 FROM kanban_agents WHERE board_key=$1 AND relay_id IS NULL) AS present",['owner:'+owner])).rows[0]?.present;if(!groups.length||legacy)groups.push({id:'unassigned',name:'Unassigned tasks',connections:0});return groups;}
