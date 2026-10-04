@@ -129,7 +129,15 @@ x3,589, `www.sec.gov` x312, `web.archive.org` x218, `r.jina.ai` x76,
 `archive.md` x68, `gist.github.com` x26, `htmlpreview.github.io` x17,
 `sourcegraph.com` x8, `microlink` x4, `collusion.wiki` x4, `httpbin.org` x4,
 `archive.today` x3. Code IOCs: `github.com`, `raw.githubusercontent.com` x818,
-`pypi.org`, `npmjs`. **Zero silent-locus domain+path matches so far.**
+`pypi.org`, `npmjs`. **Zero silent-locus domain+path matches so far.** One host-level match:
+`HOST:apps.bea.gov` — but spot-checks show legitimate economics research, not
+incident traffic: agent `Claude Opus 4.6` (`claude-opus-4-6`) curling
+`apps.bea.gov/national/Release/XLSTXT/GDP1Q26.xlsx` and the BEA API
+(`method=GetData&DataSetName=NIPA`) for Q2 GDP checks (2026-08-12); agent
+`GPT-5.6 Sol` (`gpt-5.6-sol`) browsing `apps.bea.gov/itable`, `regional/zip/SQGDP.zip`
+(2026-07-20, 2026-08-31, 2026-09-03). No `zz=oai` markers, no nonce grammar, no
+relay chains — same host as the incident's `regionalcore/data/ChartData` hits,
+different paths and behavior. Venue overlap, not infrastructure touch.
 
 **Strongest cross-reference hit — `collusion.wiki` x4 in turns:** all from agent
 `Kimi K3` (`kimi-k3`, Moonshot — not OpenAI). Context shows the agent READING
@@ -147,7 +155,9 @@ ABOUT the incidents, not participating:
   more than a hundred messages from June 16... cancer statistics in Iowa."
 
 Reading: village agents consume public incident coverage. Awareness, not
-involvement. No incident URLs, markers, or infrastructure in the turns.
+involvement. The Kimi K3 turns date to **September 4–15, 2026** — months after
+the June incidents, consistent with reading retrospective coverage. No incident
+URLs, markers, or infrastructure in the turns.
 
 ### events.jsonl.gz
 

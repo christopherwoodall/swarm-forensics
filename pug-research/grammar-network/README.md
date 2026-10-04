@@ -33,9 +33,9 @@ See [MODULE.md](MODULE.md) for invariants and [REPORT.md](REPORT.md) for finding
 
 ## Sampling rules
 
-Build A streams all sources; village chat stride 5, memories stride 20,
-Claude Code stride 5, goals unstrided (n=33). Co-occurrence pass caps at
-4000 tokens per doc (long memories add no structural signal beyond that).
+Build A streams all sources; village chat stride 5, memories stride 100
+(stride 20 is compute-prohibitive: p50 doc 17KB), Claude Code stride 5,
+goals unstrided (n=33). Co-occurrence pass caps at 4000 tokens per doc.
 Build B: traces stride 20, wiki bodies stride 5. Structural features
 computed on the first 400 docs per partition (4k chars cap each).
 

@@ -25,6 +25,7 @@ Output: networks.json, runs_log.jsonl. Run: python3 build_a.py
 import gzip
 import json
 import math
+import os
 import re
 import statistics
 import sys
@@ -119,8 +120,9 @@ def stream_docs(part):
         yield from _v_chat()
     elif part == "v-mem":
         p = DATA_RAW / "agent_memories.jsonl.gz"
+        stride = 100 if os.environ.get("MEM_STRIDE100") else 20
         for i, line in enumerate(gz_lines(p)):
-            if i % 20:
+            if i % stride:
                 continue
             r = json.loads(line)
             if r.get("content"):
@@ -298,9 +300,20 @@ def build_network(part, sample_texts):
 
 def main():
     parts = ["wiki", "evals", "gems-code-nl", "v-chat", "v-mem", "v-goals", "v-code"]
+    only = os.environ.get("PARTS")
+    if only:
+        parts = [p for p in parts if p in only.split(",")]
     results = {"params": {"top_n": TOP_N, "window": WINDOW, "min_edge": MIN_EDGE,
                           "tagger": None, "note": "windowed co-occurrence fallback"},
                "partitions": {}}
+    # merge with any prior partial run
+    try:
+        prior = json.load(open(HERE / "networks.json"))
+        for p, r in prior.get("partitions", {}).items():
+            if p not in parts:
+                results["partitions"][p] = r
+    except (OSError, ValueError):
+        pass
     t0 = time.time()
     for part in parts:
         t1 = time.time()

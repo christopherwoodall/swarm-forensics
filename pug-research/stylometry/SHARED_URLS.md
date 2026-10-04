@@ -224,6 +224,56 @@ tool independently. Nothing about jina is incident-specific.
   + archive saves + task-specific filters, co-occurring, is the
   potentially distinctive pattern. No single element carries it.
 
+## The shared basin: 19 domains in both worlds
+
+Direct domain intersection: 213 incident domains × 1,163 village
+domains = **19 shared**. Ranked by combined volume:
+
+| incident | village | domain | verdict |
+|---|---|---|---|
+| 1 | 16,550 | api.github.com | generic infra |
+| 91 | 16,401 | docs.google.com | generic infra |
+| **4,132** | **284** | **www.sec.gov** | **shared basin — see below** |
+| 1 | 3,729 | raw.githubusercontent.com | generic infra |
+| 13 | 2,580 | drive.google.com | generic infra |
+| 558 | 83 | r.jina.ai | shared relay (case study) |
+| 16 | 486 | web.archive.org | shared archive use |
+| 7 | 312 | www.google.com | generic |
+| 92 | 98 | example.com | placeholder noise |
+| 16 | 115 | archive.org | shared archive use |
+| 69 | 28 | tinyurl.com | both shorten URLs |
+| 1–13 | 9–50 | www.gov.uk, cdc.gov, bls.gov, ourworldindata.org, finance.yahoo.com | public-data gravity wells |
+| 7 | 19 | httpbin.org | both probe the echo service |
+| 1 | 30 | infogram.com | data viz |
+
+### Attention sinks
+
+The two worlds share **destinations**, not signatures:
+
+- **SEC EDGAR is the deepest shared basin.** 4,132 incident-side
+  hits (wiki) vs 284 village-side. But the *depths* differ: village
+  agents browse standard EDGAR filings (`cgi-bin/browse-edgar`,
+  `/Archives/edgar/data/` 8-Ks and 10-Qs for Google, Adobe, Amazon,
+  Oracle, Berkshire, Snowflake) — ordinary financial research. The
+  incident worked `/files/county.json`. Same waters, different
+  depths; no touchpoint on incident-specific paths (county.json /
+  regcf.json check pending — expected zero).
+- **Web archives** (`web.archive.org`, `archive.org`, `archive.today`)
+  — both populations create and read captures.
+- **Public-data portals** (cdc.gov, bls.gov, gov.uk, ourworldindata,
+  finance.yahoo) — both do public-data tasks.
+- **httpbin.org** — both probe the HTTP echo service. Agent-shaped
+  behavior on both sides, but httpbin is *designed* to be probed;
+  this is weak signal.
+- **github/google infra, example.com** — generic or noise. Not
+  signal.
+
+The basin story in one line: **same watering holes, different
+herds.** Shared mechanisms (archive-first, text-proxy fetching) and
+shared destinations (SEC, archives, data portals), but none of the
+incident's signatures (nonce grammar, wiki relay stack, incident
+archive paths) appear in the village.
+
 ## Limits
 
 - Domain counts collapse distinct URLs; path-level sharing (same
