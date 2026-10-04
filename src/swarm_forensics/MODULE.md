@@ -13,6 +13,7 @@ Read [PROJECT_BRIEF.md](../../PROJECT_BRIEF.md) for the proposed direction and d
 
 ## 3. Interfaces & Dependencies
 - Implemented subpackage: `ingest/` for acquisition and synthetic samples. See [ingest/MODULE.md](ingest/MODULE.md).
+- Implemented subpackage: `dataset_morphology/` for Stage 0 reconnaissance. See [dataset_morphology/MODULE.md](dataset_morphology/MODULE.md).
 - Implemented dependencies: `huggingface_hub`; Ruff is a development dependency.
 - Planned interfaces: forensic schema, event stream parsers, and graph builder. These are not exported yet.
 - Commands: run through the root `Makefile` (`make help`).
@@ -23,6 +24,7 @@ Read [PROJECT_BRIEF.md](../../PROJECT_BRIEF.md) for the proposed direction and d
 - Discord watcher private state: ignored `data/raw/discord/1430962817045106792/`. Tracked ledger files contain only a pointer to Discord records.
 - Delvetown pilot: `delvetown/`. See [delvetown/MODULE.md](delvetown/MODULE.md) for the approved private collection scope.
 - Delvetown commands: `make delvetown-pilot`, `delvetown-audit`, `delvetown-inspect`, `delvetown-record`, and `delvetown-test`.
+- Dataset morphology command: `make morphology-inventory MORPHOLOGY_INPUT=<path> [MORPHOLOGY_OUTPUT=<json>]`.
 - Delvetown source records and findings MUST remain under ignored `data/raw/delvetown/`. Publication remains deferred.
 - Watcher dependency: official FairyStack peer client downloaded to ignored `data/raw/fairystack/`.
 - Watcher credential: private user configuration outside the repository; public metadata lives in `colette-research/hermes-log/ENROLLMENT.json`.
@@ -33,12 +35,14 @@ Read [PROJECT_BRIEF.md](../../PROJECT_BRIEF.md) for the proposed direction and d
 
 ## 4. Current State & Known Gaps
 - State: Acquisition scaffolding. `ingest/` downloads raw data and writes synthetic samples. `replay.py` exports one session as a replay case.
+- State: Dataset morphology Stage 0 inventories JSONL, NDJSON, and CSV, including gzip variants.
 - State: Offline tests, lint, and synthetic sample generation pass.
 - State: Discussion sources and open decisions are recorded in the root project brief.
 - State: Read [STATUS.md](../../STATUS.md) for the verified checkpoint.
 - Gap: The unified forensic schema is not defined.
 - Gap: Timeline reconstruction and the graph pipeline are not implemented.
 - Gap: Anomaly heuristics engine not yet implemented.
+- Gap: Dataset morphology normalization, discovery, scoring, and candidate cards remain unimplemented.
 - Gap: The replay exporter scans `computer_use_turns` and `events` once per session (about 40 s). It has no index.
 - Gap: The pivot graph counts come from another investigation and have no event ids. Nothing here re-derives them. Source-layer links are confirmed, candidate, or hypothesized by the other investigation. This repo does not test them.
 - Gap: Other visualization mocks use synthetic data. Real-data integration is not verified.

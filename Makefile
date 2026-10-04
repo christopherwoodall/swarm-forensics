@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 .PHONY: help setup data-info data-download data-sample test lint watcher-client watcher-init watcher-read
-.PHONY: help setup data-info data-schema data-download data-sample data-validate replay-mock replay-export replay-serve pivot-check pivot-serve test lint
+.PHONY: help setup data-info data-schema data-download data-sample data-validate morphology-inventory replay-mock replay-export replay-serve pivot-check pivot-serve test lint
 .PHONY: watcher-poll watcher-pending watcher-ack watcher-status watcher-monitor
 .PHONY: watcher-discord-poll watcher-discord-pending watcher-discord-ack watcher-discord-status watcher-discord-monitor
 .PHONY: watcher-discord-audit
@@ -39,6 +39,8 @@ DELVE_RUN = $(RUN) $(if $(findstring --frozen,$(RUN)),,--frozen)
 # Optional: TABLES="events chat_messages" and REVISION=<commit>.
 DATA_DIR ?= $(RAW_DIR)/sample
 LIMIT ?= 100
+MORPHOLOGY_INPUT ?=
+MORPHOLOGY_OUTPUT ?=
 
 ## Variables
 
@@ -74,6 +76,10 @@ data-sample: setup ## Write synthetic sample tables to data/raw/sample/ (offline
 
 data-validate: setup ## Validate tables against the JSON Schema (DATA_DIR, TABLES, LIMIT; default: sample, 100 rows)
 	$(RUN) python -m swarm_forensics.ingest.schema --dir $(DATA_DIR) --limit $(LIMIT) $(if $(TABLES),--tables $(TABLES))
+
+morphology-inventory: setup ## Build a value-free dataset inventory (MORPHOLOGY_INPUT=<path>, optional MORPHOLOGY_OUTPUT=<json>)
+	@test -n "$(MORPHOLOGY_INPUT)" || { printf '%s\n' 'Set MORPHOLOGY_INPUT to a file or directory.' >&2; exit 1; }
+	$(RUN) python -m swarm_forensics.dataset_morphology.inventory "$(MORPHOLOGY_INPUT)" $(if $(MORPHOLOGY_OUTPUT),--output "$(MORPHOLOGY_OUTPUT)")
 
 replay-mock: setup ## Write the synthetic replay case to data/raw/replay/ (offline)
 	$(RUN) python -m swarm_forensics.replay --mock
