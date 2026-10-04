@@ -5,8 +5,9 @@ shapes, basin targets, param grammars) to produce candidate URLs the
 scanner sweeps for. Predictions are hypotheses: a candidate with no hit
 is a recorded negative, not a silent drop.
 
-Slot inventories are read programmatically from
-pug-research/grammar-network/request_grammar.json. That file carries
+Slot inventories are read from embedded verbatim patterns (see below),
+with an optional override from a grammar JSON file if present. The
+embedded patterns carry
 node masses and nesting chains, not literal URLs; the observed-URL
 validation corpus is the lane's published observed URL patterns
 (grammar-network/REPORT.md, verbatim below). Every template MUST

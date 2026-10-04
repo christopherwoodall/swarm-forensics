@@ -92,8 +92,8 @@ assumes, because the human queue is the real gate.
 
 ## 6. Predictor templates unvalidated and partly malformed — FIXED (by implementation)
 
-The build reads slot inventories programmatically from
-`pug-research/grammar-network/request_grammar.json`, fixes the
+The build reads slot inventories from embedded verbatim patterns (with optional
+grammar-JSON override), fixes the
 `relay_nonce` template (nonce attaches to the *target* URL's query
 string, not the relay's), and validates every template against at
 least one observed real URL before it enters the candidate pool.

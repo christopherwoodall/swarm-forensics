@@ -1,4 +1,4 @@
-# Query templates (derived from pug-research/detection/RULES.md)
+# Query templates (bundled with the plugin)
 
 Seed queries for the scanner. Each template is parameterized by working-copy
 IOC terms at runtime. Venue quirks from RULES.md apply.

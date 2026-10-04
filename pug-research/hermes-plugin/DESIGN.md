@@ -28,8 +28,8 @@ Two invocation paths:
 
 ### 1. IOC scanner (`--job scan`)
 
-Periodic hunts across three public sources, driven by query templates derived
-from `pug-research/detection/RULES.md`:
+Periodic hunts across three public sources, driven by the bundled query templates
+(`skills/swarm-forensics/references/query-templates.md`):
 
 - **urlquery:** `UQ-1` nonce-grammar sweep (`zz=oai`, `zzbulk`), `UQ-2`
   jq-proxy extraction (`jqp.vercel.app`, `jq=[`), `UQ-3` relay-chain
@@ -49,8 +49,8 @@ limits and delays are configurable. Transport is curl-via-subprocess
 
 ### 2. IOC list updater (`--job update-iocs`)
 
-The seed set (`pug-research/detection/wordlist.txt` + terms mined from
-`RULES.md`) is read-only. The plugin keeps a working copy at
+The seed set (`skills/swarm-forensics/references/wordlist-seed.txt` + terms mined from
+the bundled query templates) is read-only. The plugin keeps a working copy at
 `state/iocs.json`: `[{term, category, status, provenance, added_utc, note}]`.
 
 - `propose_term(term, provenance)`: adds with `status: proposed`.
@@ -144,8 +144,8 @@ predict-urls ← grammar tables + iocs.json ──→ state/candidates/*.jsonl
 - No authenticated sources, no private APIs, no credentials of any kind.
 - No posting, no alerting integrations, no operator attribution.
 - No claim stronger than the evidence: a hit means agent-shaped behavior
-  was observed at a public source. The SOC runbook's claim ladder
-  (`pug-research/detection/RULES.md` §3) governs interpretation.
+  was observed at a public source. The bundled claim ladder
+  (`skills/swarm-forensics/references/claim-ladder.md`) governs interpretation.
 - Learning policy (when a proposed term promotes, how novelty is scored,
   feedback from confirmed hits) is specified in `LEARNING.md`, written
   separately. This document specifies the machinery.

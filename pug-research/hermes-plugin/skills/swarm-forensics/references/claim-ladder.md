@@ -1,4 +1,4 @@
-# Claim ladder (from pug-research/detection/RULES.md §3)
+# Claim ladder (bundled with the plugin)
 
 Interpret every hit at the lowest supported rung. Never operator identity.
 

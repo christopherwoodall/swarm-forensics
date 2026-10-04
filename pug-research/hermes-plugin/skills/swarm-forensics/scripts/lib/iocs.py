@@ -18,10 +18,8 @@ from pathlib import Path
 
 from config import state_path
 
-SEED_WORDLIST = (Path(__file__).resolve().parents[5]
-                 / "detection" / "wordlist.txt")
-SEED_RULES = (Path(__file__).resolve().parents[5]
-              / "detection" / "RULES.md")
+SEED_WORDLIST = (Path(__file__).resolve().parents[2]
+                 / "references" / "wordlist-seed.txt")
 
 # Terms mined from RULES.md query templates (UQ-1..UQ-5, CDX-1..CDX-4).
 SEED_RULE_TERMS = [
@@ -69,13 +67,13 @@ def seed_working_copy(cfg):
                 continue
             terms[line] = {
                 "term": line, "category": section, "status": "active",
-                "provenance": "pug-research/detection/wordlist.txt",
+                "provenance": "references/wordlist-seed.txt",
                 "added_utc": _now(), "note": "",
             }
     for term, category in SEED_RULE_TERMS:
         terms.setdefault(term, {
             "term": term, "category": category, "status": "active",
-            "provenance": "pug-research/detection/RULES.md",
+            "provenance": "references/query-templates.md",
             "added_utc": _now(), "note": "",
         })
     records = sorted(terms.values(), key=lambda r: r["term"])

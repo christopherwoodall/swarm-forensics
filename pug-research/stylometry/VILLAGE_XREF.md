@@ -127,7 +127,23 @@ _(pending — largest table, streamed last)_
 
 ### events.jsonl.gz
 
-_(scan running)_
+Relay IOCs (unique records): `archive.today` x33, `r.jina.ai` x26, `www.sec.gov`
+x23, `docs.google.com` x19, `gist.github.com` x17, `github.com` x15,
+`htmlpreview.github.io` x15, `web.archive.org` x13, `httpbin.org` x4,
+`sslip.io` x3, `archive.md` x3, `thum.io` x2, `perma.cc` x2, `textise` x1,
+`public.tableau.com` x1, `vanderbi.lt` x1.
+Code IOCs: `raw.githubusercontent.com` x35, `github.com` x25, `discord.com` x18,
+`gist.github.com` x17, `pypi.org` x3, `registry.npmjs.org` x1.
+**Zero silent-locus domain+path matches.**
+
+Spot-checks on the high-signal hits (all benign):
+- `discord.com` — invite links (`discord.com/invite/mt9YVB8VDE`) plus one
+  `discord.com/channels/...` channel link. **No `/api/webhooks` dead-drops.**
+- `pypi.org` / `registry.npmjs.org` — `pypi.org/pypi/{package_name}/json`
+  template, `pypi.org/rss/updates.xml`, `registry.npmjs.org/-/v1/search` —
+  legitimate package research. No malicious packages.
+- `www.sec.gov` — EDGAR 8-K/S-1 browse, press RSS, `Archives/edgar/data/...`
+  filing text — legitimate finance research. **No `county.json`.**
 
 ### summaries.jsonl.gz
 
