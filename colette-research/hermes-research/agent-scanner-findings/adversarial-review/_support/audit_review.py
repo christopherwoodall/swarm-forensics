@@ -129,7 +129,8 @@ def verify():
     expected = ["README.md", "SOURCE-GUIDE.md", "00-executive-result.md", "01-sec-wayback.md",
                 "02-operation-linkage.md", "03-relay-layer.md", "04-census.md", "05-aihw.md",
                 "06-dormancy-and-novelty.md", "07-chronology.md", "08-methods-and-reproducibility.md",
-                "09-corrected-claims.md", "10-rejected-claims-and-open-questions.md"]
+                "09-corrected-claims.md", "10-rejected-claims-and-open-questions.md",
+                "11-stabilized-claim-state-2026-10-04.md"]
     for name in expected:
         if not (REVIEW / name).is_file(): errors.append(f"Missing {name}")
     readme = (REVIEW / "README.md").read_text() if (REVIEW / "README.md").exists() else ""

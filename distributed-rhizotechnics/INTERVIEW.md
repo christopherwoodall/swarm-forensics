@@ -15,8 +15,8 @@ Do not count an area complete merely because a question was asked.
 Uncertainty, refusal, and deferral are valid answers.
 Interview coverage does not establish implementation readiness.
 
-Completed areas: 4 of 9.
-Current area: 5, swarm execution.
+Completed areas: 5 of 9.
+Current area: 6, structured contribution contract.
 
 ## Decision-area map
 
@@ -26,8 +26,8 @@ Current area: 5, swarm execution.
 | 2 | Source identity and sentence anchoring | Private snapshots; stable source anchors; graph attribution; expandable evidence on nodes and edges. | Revisit inspector density after use; exact anchor encoding is engineering detail. | Complete, with provisional UI |
 | 3 | Retrieval and model context | Dataset retrieval, named Hermes references, whole-graph context, and on-demand evidence inspection. | Whole-graph action permissions continue in area 4; role execution continues in area 5. | Complete |
 | 4 | Graph action semantics | Additive linked revisions; members propose strike-through and humans approve the status change. | Detailed UI remains revisitable; preserve all correction provenance. | Complete |
-| 5 | Swarm execution | Optional contributions; tentative node-count cadence from 20 seconds toward an 80-second cap. | Define counting scope, member selection, budgets, pause/stop, and pending-work behavior. | In progress |
-| 6 | Structured contribution contract | Provenance and structured conclusions precede register rendering. | Define output validation, evidence references, and confidence semantics. | Pending |
+| 5 | Swarm execution | Baton passing; tunable node-count cadence; 12-node review; finish on Pause; three no-node passes trigger pause. | Monetary/token limits continue in area 8; exact scheduler mechanics remain engineering details. | Complete |
+| 6 | Structured contribution contract | Provenance and structured conclusions precede register rendering. | Define output validation, evidence references, and confidence semantics. | In progress |
 | 7 | Persistence and report scope | Two report kinds; JSON and Markdown; optional PDF; shared snapshot. | Define reopen state, report inclusion scope, and PDF priority. | Pending |
 | 8 | Trust boundaries and failure behavior | Local files; no web research; request-only AI Village data excluded from demonstration and repository. | Define model privacy, credentials, exports, and failure handling. | Pending |
 | 9 | Observable acceptance criteria | One complete gesture loop and inspectable provenance. | Define success, negative cases, and completion evidence. | Pending |
@@ -232,7 +232,43 @@ Agent options: fixed rotation, random or shuffled rounds, member nomination, or 
 These are alternatives for consideration, not accepted implementation requirements.
 For baton passing, distinguish a member's nomination from the scheduler's actual grant.
 Validation and a fallback would prevent an invalid nomination from stranding the run.
-Exact member-selection policy remains open.
+The next answer selects baton passing with a random fallback.
+
+### Area 5 — baton passing accepted
+
+The agent recommended baton passing with a random fallback for the first version.
+Owner answer: “agreed”
+Confirmed: contributing members nominate the next member.
+The scheduler validates the nomination and grants the next turn.
+Use a random fallback for missing or invalid nominations.
+Detailed pause and pending-work behavior remain unresolved.
+
+### Area 5 — pending contribution finishes on Pause
+
+Question: Should a running contribution finish or stop without adding a node when paused?
+Owner answer: “finish”
+Confirmed: finish the already-running contribution and add it to the graph.
+Do not start another automatic contribution while paused.
+No Pause implementation was exercised.
+Still unresolved: whether a member may decline to add a node and simply pass the baton.
+
+### Area 5 — passing without a node accepted
+
+Question: May a member pass the baton without creating a node when it has nothing useful to add?
+Owner answer: “yes”
+Confirmed: passing without a graph contribution is legal.
+Retain the handoff in activity history rather than creating a filler node.
+A no-node pass does not advance the swarm-added-node counter.
+The next answer supplies an automatic pause threshold for repeated no-node passes.
+
+### Area 5 — stall-review threshold accepted
+
+Question: Should three consecutive no-node passes automatically pause the swarm?
+Owner answer: “yup”
+Confirmed: pause after three consecutive passes without a new node.
+Do not interpret this as consensus or proof that investigation is complete.
+Area 5 owner elicitation is complete for the initial slice.
+Money/token limits continue in area 8; precise scheduler mechanics remain engineering details.
 
 ### Project-name revision
 

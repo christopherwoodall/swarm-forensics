@@ -15,10 +15,11 @@ Read the [executive result](00-executive-result.md) for the bounded conclusions.
 
 ## Reading order
 
-1. [Executive result](00-executive-result.md) — short corrected synthesis.
-2. [Corrected claims](09-corrected-claims.md) — six original items, fifteen subclaims, and the later matrix crosswalk.
-3. [Rejected claims and open questions](10-rejected-claims-and-open-questions.md) — what failed and what would change it.
-4. [Source guide](SOURCE-GUIDE.md) — source types, provenance, limits, and evidence locations.
+1. [Stabilized claim state](11-stabilized-claim-state-2026-10-04.md) — current wording, authority, and unresolved conflicts.
+2. [Executive result](00-executive-result.md) — short corrected synthesis.
+3. [Corrected claims](09-corrected-claims.md) — six original items, fifteen subclaims, and the later matrix crosswalk.
+4. [Rejected claims and open questions](10-rejected-claims-and-open-questions.md) — what failed and what would change it.
+5. [Source guide](SOURCE-GUIDE.md) — source types, provenance, limits, and evidence locations.
 
 ## Focused reviews
 
@@ -41,7 +42,7 @@ Read the [executive result](00-executive-result.md) for the bounded conclusions.
 
 These are the claims and requirements under review, not evidence of their own correctness.
 The later matrix partly demotes operation linkage but retains incompatible stronger language elsewhere.
-This review records that difference rather than treating either version as settled truth.
+The stabilized claim-state note records the current reading and preserves unresolved conflicts.
 
 The six original claims received focused reviews.
 Additional matrix leads are explicitly screened or left unverified in the crosswalk.

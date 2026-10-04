@@ -42,6 +42,15 @@ Timestamp ranges MUST keep timezone-naive values separate from aware values.
 Unit hypotheses MUST NOT classify individual records.
 Exact duplicates MUST NOT be treated as proof of copied or derived data.
 
+## Downstream handoff
+
+Stage 0 emits an inventory, not a candidate morphology card.
+Later discovery stages MUST construct the complete card defined in `SPEC.md`.
+The `pug-scratch` plugin accepts complete cards through `POST /api/plugins/swarm-forensics/morphologies`.
+Operators MAY paste a complete card into the plugin's Morphologies tab.
+Import does not start a hunt or promote an IOC.
+The upstream analyzer-to-plugin client remains unimplemented.
+
 ## Run
 
 Run `make morphology-inventory MORPHOLOGY_INPUT=<file-or-directory>`.

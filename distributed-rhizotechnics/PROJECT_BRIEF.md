@@ -208,13 +208,18 @@ Owner timing proposal: scale the interval with node count.
 Candidate sequence: `20/20/30/30/40/40`, continuing toward an approximately `80sec` cap.
 The proposal is tentative; do not silently treat it as a finalized timer contract.
 Provisional owner preference: base the timing ramp on swarm-added nodes, not total graph size.
-Counter reset, pause/stop behavior, member selection, and budgets remain open.
+Counter reset, automatic-stopping edge cases, and remaining resource budgets are open.
+Use baton passing with a random fallback for member selection.
+The contributing member nominates the next member; the scheduler validates and grants the turn.
+Missing or invalid nominations use the random fallback.
 The owner prefers automatic additions to become optional after an initial growth period.
 Accepted first-pass default: pause automatic growth after 12 swarm-added nodes.
 Make the threshold adjustable.
 Offer “Add one” for one contribution and “Continue automatically” for renewed timed growth.
 Keep manual graph interactions available while automatic growth is paused.
 This is a review threshold, not a declaration that analysis is complete.
+On Pause, let an already-running contribution finish and enter the graph.
+Do not start another automatic contribution while paused.
 
 Each contribution MUST become a graph object.
 Record author/role identity, provenance, parent node or nodes, and timestamp.
@@ -224,7 +229,12 @@ Repeated analysis of one source does not create independent corroboration.
 Different analytic roles or voices may operate over the same evidence graph.
 Separate analytic roles from presentation registers.
 
-Member selection, budgets, silence, pause, stop, and pending-work behavior remain unresolved.
+Allow a member to pass the baton without adding a node when it has nothing useful to contribute.
+Record that pass in the activity history; do not force a filler node.
+Pause automatically after three consecutive no-node passes.
+Treat that as a stall-review threshold, not proof of consensus or completed analysis.
+Remaining resource limits still need clarification.
+Resume and counter-reset mechanics remain implementation details to define.
 Selection versus active-frontier behavior also needs a precise contract.
 
 ## 8. Witness organism and presentation registers
@@ -284,6 +294,7 @@ Do not assume every recorded interpretation is true.
 
 Graph records contain provenance, timestamps, confidence, evidence class, and source references.
 The meaning and assignment of confidence remain unresolved.
+Qualitative-versus-numerical confidence presentation remains an owner decision.
 
 Possible later transforms include:
 

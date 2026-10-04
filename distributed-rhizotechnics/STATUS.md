@@ -4,8 +4,8 @@ Latest documented milestone: one-third interview checkpoint.
 Milestone captured: 2026-10-03T17:06:22-07:00.
 Initial checkpoint: 2026-10-03T15:54:32-07:00.
 Phase: owner requirements interview.
-Completed interview areas: 4 of 9.
-Current area: 5, swarm execution.
+Completed interview areas: 5 of 9.
+Current area: 6, structured contribution contract.
 
 ## Confirmed direction
 
@@ -27,10 +27,11 @@ Current area: 5, swarm execution.
 - Revisit inspection placement and density after actual use.
 - Keep original source records distinct from supplied research references.
 - Additive revisions are accepted; members propose strike-through and humans approve it.
-- Cadence provisionally counts swarm-added nodes; execution limits and scheduling remain unresolved.
+- Cadence provisionally counts swarm-added nodes; three no-node passes trigger automatic pause.
+- Money/token limits continue in area 8; scheduler mechanics remain engineering details.
 - Exact indexing, source-ID encoding, and context packing remain engineering details.
 - Novelty from mixed responses is an owner hypothesis, not an observed result.
-- Areas 5 through 9 remain open.
+- Areas 6 through 9 remain open.
 
 ## Verified checkpoint
 
@@ -61,13 +62,16 @@ Do not count individual questions as completed areas.
 
 ## Current next question
 
-Which member-selection policy should the first version use?
+Should confidence use qualitative labels or numerical scores in the first version?
 
 Imported source snapshots remain unchanged regardless of analytic-edit permissions.
 The owner reserves strike-through approval for the human.
 Her tentative timing sequence starts `20/20/30/30/40/40` and approaches an `80sec` cap.
 The owner tentatively selects swarm-added node count.
-Pending-work behavior, member selection, detailed pause handling, and resource budgets remain unresolved.
+Baton passing with a random fallback is accepted.
+On Pause, the already-running contribution finishes and appears; no new automatic contribution starts.
+No-node passing is accepted; three consecutive passes trigger automatic pause.
+Remaining resource limits are unresolved.
 The owner prefers optional continuation after an initial growth period.
 The adjustable 12-node review threshold is accepted.
 “Add one” and “Continue automatically” provide explicit continuation.

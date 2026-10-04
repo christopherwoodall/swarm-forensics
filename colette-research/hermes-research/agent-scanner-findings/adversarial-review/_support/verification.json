@@ -2,77 +2,77 @@
   "chronology_rows": 74,
   "citation_quote_attachment_gaps": {
     "00-executive-result.md": [
-      "2",
-      "3",
+      "1",
+      "9",
+      "19",
+      "6",
+      "15",
+      "5",
+      "13",
+      "14",
+      "4",
       "8",
+      "16",
+      "20",
       "7",
       "10",
-      "4",
-      "5",
-      "9",
-      "13",
-      "19",
-      "15",
-      "6",
-      "20",
-      "16",
-      "1",
-      "14"
+      "2",
+      "3"
     ],
     "01-sec-wayback.md": [
-      "2",
-      "3",
+      "1",
       "4",
-      "1"
+      "2",
+      "3"
     ],
     "02-operation-linkage.md": [
-      "2",
-      "8",
-      "3",
-      "10",
-      "4",
+      "1",
       "5",
+      "3",
+      "4",
+      "8",
+      "10",
       "6",
-      "1"
+      "2"
     ],
     "04-census.md": [
-      "3",
-      "8",
-      "7",
-      "11",
-      "13",
-      "4",
-      "9",
-      "10",
       "15",
-      "5",
       "6",
+      "13",
+      "14",
+      "5",
+      "7",
+      "4",
+      "8",
+      "10",
       "12",
-      "14"
+      "11",
+      "9",
+      "3"
     ],
     "05-aihw.md": [
       "16"
     ],
     "07-chronology.md": [
-      "2",
-      "3",
+      "1",
+      "9",
+      "6",
+      "17",
+      "5",
+      "13",
+      "4",
       "8",
       "7",
-      "17",
       "10",
-      "4",
-      "5",
-      "9",
-      "13",
-      "6",
-      "1"
+      "2",
+      "3"
     ],
     "08-methods-and-reproducibility.md": [
-      "8",
-      "4",
+      "1",
       "5",
-      "6",
-      "1"
+      "4",
+      "8",
+      "6"
     ]
   },
   "claim_rows": 15,
@@ -134,9 +134,14 @@
       "sha256": "7ae7031d8e28bc9bbf8b3f8fc675521cc83e40db0b1b0729654e924785b9add5"
     },
     {
-      "bytes": 5524,
+      "bytes": 8303,
+      "path": "11-stabilized-claim-state-2026-10-04.md",
+      "sha256": "5584a93e2712a3534ef91491cb189c87b56ac60c72a8455ba6009db4f76cccc9"
+    },
+    {
+      "bytes": 5657,
       "path": "README.md",
-      "sha256": "2837b0f860836de5530b5bfe7345951bc8e728a219ec4bfd0f4454f18677991d"
+      "sha256": "1d241a73dfafc87414283d64d8afc253760a44f6ac2fd6ebc65c476404d459fc"
     },
     {
       "bytes": 9402,
@@ -144,9 +149,9 @@
       "sha256": "ace58fe0c7fc83f5f00f07755ba97e6a7092b9b373af34217d2ef52e6260ca04"
     },
     {
-      "bytes": 14456,
+      "bytes": 14515,
       "path": "_support/audit_review.py",
-      "sha256": "dc0ccd49c6a3340fee2423dfcf40e1487e06d29f1bcb489a1f6649378bbc08e8"
+      "sha256": "c56fa5ee4018da3062808377844d035b2ef7673e514e81f80f16a21a0f4eb0a5"
     },
     {
       "bytes": 1001,
@@ -379,8 +384,8 @@
       "sha256": "9be4b9a29472f077452b0109b76fa39efef211e751bf756283152d5b0ab26b69"
     }
   ],
-  "root_documents": 13,
+  "root_documents": 14,
   "scope": "Artifact checks only. Structured evidence receipts are separate from ledger quotes. Missing quote attachments are disclosed, not treated as a passed evidence-quote gate. These checks do not establish scientific entailment.",
   "source_records": 87,
-  "verified_utc": "2026-10-04T01:52:04.042431+00:00"
+  "verified_utc": "2026-10-04T19:25:57.232870+00:00"
 }
