@@ -26,6 +26,10 @@ downloads/
 eggs/
 .eggs/
 lib/
+# Re-include tracehound plugin source: skills/tracehound/scripts/lib/ is
+# shipped source code, not a packaging build dir (adversarial build 2026-10-04).
+!pug-research/hermes-plugin/skills/tracehound/scripts/lib/
+!pug-research/hermes-plugin/skills/tracehound/scripts/lib/**
 lib64/
 parts/
 sdist/

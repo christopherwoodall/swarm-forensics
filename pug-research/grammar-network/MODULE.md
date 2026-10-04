@@ -51,9 +51,11 @@ provenance and sampling rules.
   POST-body grammar are unmeasured.
 
 ## 5. Pruned Decisions (Keep max 3)
-- [2026-10-04 Subagent]: Use windowed co-occurrence (no tagger on VM) and
-  record it as a fallback, not as equivalent to dependency parsing.
-- [2026-10-04 Subagent]: Exclude the `traces` URL-metadata partition from
-  Build A prose networks; it is non-linguistic and belongs to Build B.
-- [2026-10-04 Subagent]: Code-embedded NL (comments, strings) is its own
-  partition (`gems-code-nl`), not merged into the gem name/code partition.
+- [2026-10-04 Subagent]: Lane is standard library only (review #17 was
+  right about the docs; the numpy was real but has been removed). No
+  numpy/scipy/networkx/tagger anywhere in the lane.
+- [2026-10-04 Subagent]: gems-code-nl extraction and Build A skip gracefully
+  when the gems source is absent (audit may remove it); logged, never crash.
+- [2026-10-04 Subagent]: Pattern DB + behavioral experiments use plain
+  counts (frequencies, conditional probabilities, Markov, CV) over SOTA
+  methods, per user steer; every run logged.

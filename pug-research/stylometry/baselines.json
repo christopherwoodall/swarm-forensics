@@ -1,0 +1,3127 @@
+{
+  "gems_names": [
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 1000
+      },
+      "headline": "J=0.089",
+      "results": {
+        "jaccard": 0.08922558922558922,
+        "n_overlap": 53,
+        "n_union": 594,
+        "overlap_sample": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "35329",
+          "4",
+          "c160",
+          "c217",
+          "controllerlambda",
+          "goproxylondonx",
+          "gozzz",
+          "lambcrawlxyz",
+          "lambegitx4062",
+          "lambethssrfhack",
+          "lambethx33zzz",
+          "lambexploitabc1",
+          "lambpx26687",
+          "lambqueryjanabc",
+          "lambtmp35293950",
+          "lambyard17",
+          "londonyardtestabc",
+          "oaifetchgemugkejy",
+          "oaiproxytestabc789",
+          "oaitest1778473828",
+          "pathpkg94321zz"
+        ]
+      }
+    },
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "J=0.089",
+      "results": {
+        "jaccard": 0.08922558922558922,
+        "n_overlap": 53,
+        "n_union": 594,
+        "overlap_sample": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "35329",
+          "4",
+          "c160",
+          "c217",
+          "controllerlambda",
+          "goproxylondonx",
+          "gozzz",
+          "lambcrawlxyz",
+          "lambegitx4062",
+          "lambethssrfhack",
+          "lambethx33zzz",
+          "lambexploitabc1",
+          "lambpx26687",
+          "lambqueryjanabc",
+          "lambtmp35293950",
+          "lambyard17",
+          "londonyardtestabc",
+          "oaifetchgemugkejy",
+          "oaiproxytestabc789",
+          "oaitest1778473828",
+          "pathpkg94321zz"
+        ]
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "cos=0.984",
+      "results": {
+        "cosine_tfidf": 0.9838053361174166,
+        "vocab_size": 594
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "funcwords",
+        "n": 200
+      },
+      "headline": "cos=0.000",
+      "results": {
+        "cosine_tfidf": 0.0,
+        "vocab_size": 0
+      }
+    },
+    {
+      "method": "keyness",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000,
+        "top_k": 20
+      },
+      "headline": "max|G2|=5.5",
+      "results": {
+        "distinctive_gems_names__h0": [
+          [
+            "1fossil",
+            2.8,
+            2,
+            0
+          ],
+          [
+            "test",
+            2.8,
+            2,
+            0
+          ],
+          [
+            "4",
+            1.9,
+            4,
+            1
+          ],
+          [
+            "oaijfossilunswgx",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "zzfadgivar09",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "oailamtest3",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "dlxprobe9",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "json",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "newhackhg1778556006",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "southpxdatapp6pi",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "rootmtest14978",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "tryf3zz",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "rfetchg",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "southmodinj1778552871",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "tryf5zz",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "sproxytestfossilone",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "southmeet8320",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "lambproxy1",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "southc0ea",
+            1.4,
+            1,
+            0
+          ],
+          [
+            "slnprobe16",
+            1.4,
+            1,
+            0
+          ]
+        ],
+        "distinctive_gems_names__h1": [
+          [
+            "5",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "0fossil",
+            -2.8,
+            0,
+            2
+          ],
+          [
+            "2fossil",
+            -2.8,
+            0,
+            2
+          ],
+          [
+            "oaitsvnxlnrat",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "zztxtwtmp10",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "trya4zz",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "lambfetch003",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "oaijanla",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "test12",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "oaijfossilafvimh",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "slnprobe4",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "oailm9",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "oailm7",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "southmeet8402",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "southrobots",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "wandfossiltest",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "zzjinavcsgit",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "southwarkssrfhack",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "v19zzgbqvirfx",
+            -1.4,
+            0,
+            1
+          ],
+          [
+            "lambq4344",
+            -1.4,
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "method": "spearman",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "rho=0.6667",
+      "results": {
+        "spearman_rho": 0.6667,
+        "n_shared": 53
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 2,
+        "topn": 2000
+      },
+      "headline": "J=0.085",
+      "results": {
+        "ngram_n": 2,
+        "jaccard": 0.08482871125611746,
+        "n_overlap": 52,
+        "top_shared": [
+          [
+            "0 0",
+            305,
+            304
+          ],
+          [
+            "0 1",
+            272,
+            273
+          ],
+          [
+            "0 2",
+            23,
+            18
+          ],
+          [
+            "0 3",
+            5,
+            6
+          ],
+          [
+            "probejiqptzco 0",
+            3,
+            3
+          ],
+          [
+            "sprox c160",
+            2,
+            3
+          ],
+          [
+            "0 4",
+            4,
+            1
+          ],
+          [
+            "goproxylondonx 0",
+            2,
+            3
+          ],
+          [
+            "1 0",
+            2,
+            3
+          ],
+          [
+            "lambqueryjanabc 0",
+            2,
+            1
+          ],
+          [
+            "southnewsprobe1778550995 0",
+            1,
+            2
+          ],
+          [
+            "runhack 0",
+            1,
+            2
+          ],
+          [
+            "oaifetchgemugkejy 0",
+            2,
+            1
+          ],
+          [
+            "wprox c217",
+            1,
+            2
+          ],
+          [
+            "35329 0",
+            2,
+            1
+          ],
+          [
+            "yard runhack",
+            1,
+            2
+          ],
+          [
+            "southfetchprobe42 0",
+            1,
+            2
+          ],
+          [
+            "pathpkg94321zz 0",
+            2,
+            1
+          ],
+          [
+            "lambcrawlxyz 0",
+            1,
+            1
+          ],
+          [
+            "lambtmp35293950 0",
+            1,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 3,
+        "topn": 2000
+      },
+      "headline": "J=0.077",
+      "results": {
+        "ngram_n": 3,
+        "jaccard": 0.07729468599033816,
+        "n_overlap": 48,
+        "top_shared": [
+          [
+            "0 0 1",
+            270,
+            270
+          ],
+          [
+            "0 0 2",
+            21,
+            18
+          ],
+          [
+            "0 0 3",
+            5,
+            6
+          ],
+          [
+            "probejiqptzco 0 0",
+            3,
+            3
+          ],
+          [
+            "goproxylondonx 0 0",
+            2,
+            3
+          ],
+          [
+            "0 0 4",
+            4,
+            1
+          ],
+          [
+            "lambqueryjanabc 0 0",
+            2,
+            1
+          ],
+          [
+            "pathpkg94321zz 0 1",
+            2,
+            1
+          ],
+          [
+            "southfetchprobe42 0 0",
+            1,
+            2
+          ],
+          [
+            "yard runhack 0",
+            1,
+            2
+          ],
+          [
+            "southnewsprobe1778550995 0 0",
+            1,
+            2
+          ],
+          [
+            "runhack 0 0",
+            1,
+            2
+          ],
+          [
+            "oaifetchgemugkejy 0 0",
+            2,
+            1
+          ],
+          [
+            "35329 0 0",
+            2,
+            1
+          ],
+          [
+            "oaitest1778473828 0 0",
+            1,
+            1
+          ],
+          [
+            "zzsouthrunner 1 0",
+            1,
+            1
+          ],
+          [
+            "slhackprobe999 0 0",
+            1,
+            1
+          ],
+          [
+            "wandsfetchzzabc 0 0",
+            1,
+            1
+          ],
+          [
+            "londonyardtestabc 0 0",
+            1,
+            1
+          ],
+          [
+            "wandhackmy 0 0",
+            1,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "method": "burrows_delta",
+      "params": {
+        "tokenizer": "word",
+        "n": 200
+      },
+      "headline": "delta=0.0153",
+      "results": {
+        "burrows_delta": 0.0153,
+        "n_words": 200
+      }
+    },
+    {
+      "method": "char_cosine",
+      "params": {
+        "n": 5000
+      },
+      "headline": "cos=0.945",
+      "results": {
+        "char_cosine": 0.9448553038065933
+      }
+    }
+  ],
+  "traces": [
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 1000
+      },
+      "headline": "J=0.463",
+      "results": {
+        "jaccard": 0.4630577907827359,
+        "n_overlap": 633,
+        "n_union": 1367,
+        "overlap_sample": [
+          "0",
+          "00",
+          "0007",
+          "0050",
+          "0064",
+          "0217",
+          "0234",
+          "0249",
+          "03",
+          "050",
+          "1",
+          "10",
+          "11",
+          "112",
+          "113",
+          "114",
+          "115",
+          "116",
+          "117",
+          "118",
+          "119",
+          "12",
+          "124",
+          "125",
+          "129"
+        ]
+      }
+    },
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "J=0.079",
+      "results": {
+        "jaccard": 0.07898144151920587,
+        "n_overlap": 732,
+        "n_union": 9268,
+        "overlap_sample": [
+          "0",
+          "00",
+          "0007",
+          "0050",
+          "0062",
+          "0064",
+          "0217",
+          "0234",
+          "0242",
+          "0249",
+          "03",
+          "050",
+          "092",
+          "1",
+          "10",
+          "100",
+          "11",
+          "112",
+          "113",
+          "114",
+          "115",
+          "116",
+          "117",
+          "118",
+          "119"
+        ]
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "cos=1.000",
+      "results": {
+        "cosine_tfidf": 0.9999766110405233,
+        "vocab_size": 9268
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "funcwords",
+        "n": 200
+      },
+      "headline": "cos=1.000",
+      "results": {
+        "cosine_tfidf": 0.999999866056366,
+        "vocab_size": 28
+      }
+    },
+    {
+      "method": "keyness",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000,
+        "top_k": 20
+      },
+      "headline": "max|G2|=11.1",
+      "results": {
+        "distinctive_traces__h0": [
+          [
+            "0206",
+            11.1,
+            8,
+            0
+          ],
+          [
+            "original",
+            6.9,
+            5,
+            0
+          ],
+          [
+            "sex",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "performance2021",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "than",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "mcapassessment",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "1907",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "0067",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "txt",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "searchtype",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "mcapmathematics2021",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "g9",
+            4.2,
+            230,
+            188
+          ],
+          [
+            "controller",
+            4.2,
+            12,
+            4
+          ],
+          [
+            "0105",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "davis",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "23000",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "esea",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "allowances",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "histories",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "james",
+            4.2,
+            3,
+            0
+          ]
+        ],
+        "distinctive_traces__h1": [
+          [
+            "limit",
+            -11.1,
+            0,
+            8
+          ],
+          [
+            "mathassessment",
+            -9.9,
+            11,
+            31
+          ],
+          [
+            "abbottston",
+            -9.7,
+            0,
+            7
+          ],
+          [
+            "dataela",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "offset",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "histcateid",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "mcap2021",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "504",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "file",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "staff",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "0260",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "390",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "d",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "3",
+            -4.8,
+            699,
+            783
+          ],
+          [
+            "g8",
+            -4.2,
+            181,
+            222
+          ],
+          [
+            "fill2310",
+            -4.2,
+            0,
+            3
+          ],
+          [
+            "date",
+            -4.2,
+            0,
+            3
+          ],
+          [
+            "resource",
+            -4.2,
+            0,
+            3
+          ],
+          [
+            "counselors",
+            -4.2,
+            0,
+            3
+          ],
+          [
+            "section",
+            -4.2,
+            0,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "method": "spearman",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "rho=0.9849",
+      "results": {
+        "spearman_rho": 0.9849,
+        "n_shared": 732
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 2,
+        "topn": 2000
+      },
+      "headline": "J=0.775",
+      "results": {
+        "ngram_n": 2,
+        "jaccard": 0.775410563692854,
+        "n_overlap": 1747,
+        "top_shared": [
+          [
+            "zz oai",
+            44247,
+            44247
+          ],
+          [
+            "dsqa 250",
+            29498,
+            29498
+          ],
+          [
+            "present in",
+            14749,
+            14749
+          ],
+          [
+            "no row",
+            14749,
+            14749
+          ],
+          [
+            "row level",
+            14749,
+            14749
+          ],
+          [
+            "17 doe",
+            14749,
+            14749
+          ],
+          [
+            "oai values",
+            14749,
+            14749
+          ],
+          [
+            "never attributed",
+            14749,
+            14749
+          ],
+          [
+            "250 traffic",
+            14749,
+            14749
+          ],
+          [
+            "traffic agent",
+            14749,
+            14749
+          ],
+          [
+            "the jun",
+            14749,
+            14749
+          ],
+          [
+            "are candidate",
+            14749,
+            14749
+          ],
+          [
+            "evidence zz",
+            14749,
+            14749
+          ],
+          [
+            "attributed no",
+            14749,
+            14749
+          ],
+          [
+            "in the",
+            14749,
+            14749
+          ],
+          [
+            "doe zz",
+            14749,
+            14749
+          ],
+          [
+            "digits tag",
+            14749,
+            14749
+          ],
+          [
+            "instance never",
+            14749,
+            14749
+          ],
+          [
+            "provider openai",
+            14749,
+            14749
+          ],
+          [
+            "not attribution",
+            14749,
+            14749
+          ]
+        ]
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 3,
+        "topn": 2000
+      },
+      "headline": "J=0.871",
+      "results": {
+        "ngram_n": 3,
+        "jaccard": 0.8709073900841908,
+        "n_overlap": 1862,
+        "top_shared": [
+          [
+            "level evidence zz",
+            14749,
+            14749
+          ],
+          [
+            "captured url eval",
+            14749,
+            14749
+          ],
+          [
+            "zz oai digits",
+            14749,
+            14749
+          ],
+          [
+            "openai only where",
+            14749,
+            14749
+          ],
+          [
+            "zz oai values",
+            14749,
+            14749
+          ],
+          [
+            "confirmed dsqa 250",
+            14749,
+            14749
+          ],
+          [
+            "in the captured",
+            14749,
+            14749
+          ],
+          [
+            "labels not attribution",
+            14749,
+            14749
+          ],
+          [
+            "values are candidate",
+            14749,
+            14749
+          ],
+          [
+            "no row level",
+            14749,
+            14749
+          ],
+          [
+            "oai values are",
+            14749,
+            14749
+          ],
+          [
+            "dsqa 250 traffic",
+            14749,
+            14749
+          ],
+          [
+            "agent instance never",
+            14749,
+            14749
+          ],
+          [
+            "deepsearchqa dsqa 250",
+            14749,
+            14749
+          ],
+          [
+            "session labels not",
+            14749,
+            14749
+          ],
+          [
+            "instance never attributed",
+            14749,
+            14749
+          ],
+          [
+            "dsqa 250 only",
+            14749,
+            14749
+          ],
+          [
+            "candidate session labels",
+            14749,
+            14749
+          ],
+          [
+            "the captured url",
+            14749,
+            14749
+          ],
+          [
+            "250 only for",
+            14749,
+            14749
+          ]
+        ]
+      }
+    },
+    {
+      "method": "burrows_delta",
+      "params": {
+        "tokenizer": "word",
+        "n": 200
+      },
+      "headline": "delta=0.0029",
+      "results": {
+        "burrows_delta": 0.0029,
+        "n_words": 200
+      }
+    },
+    {
+      "method": "char_cosine",
+      "params": {
+        "n": 5000
+      },
+      "headline": "cos=1.000",
+      "results": {
+        "char_cosine": 0.9999943270064859
+      }
+    }
+  ],
+  "traces_clean": [
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 1000
+      },
+      "headline": "J=0.427",
+      "results": {
+        "jaccard": 0.42653352353780316,
+        "n_overlap": 598,
+        "n_union": 1402,
+        "overlap_sample": [
+          "0",
+          "00",
+          "0007",
+          "0050",
+          "0064",
+          "0217",
+          "0234",
+          "0249",
+          "03",
+          "050",
+          "1",
+          "10",
+          "11",
+          "112",
+          "113",
+          "114",
+          "115",
+          "116",
+          "117",
+          "118",
+          "119",
+          "12",
+          "124",
+          "125",
+          "129"
+        ]
+      }
+    },
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "J=0.075",
+      "results": {
+        "jaccard": 0.07492206815005913,
+        "n_overlap": 697,
+        "n_union": 9303,
+        "overlap_sample": [
+          "0",
+          "00",
+          "0007",
+          "0050",
+          "0062",
+          "0064",
+          "0217",
+          "0234",
+          "0242",
+          "0249",
+          "03",
+          "050",
+          "092",
+          "1",
+          "10",
+          "100",
+          "11",
+          "112",
+          "113",
+          "114",
+          "115",
+          "116",
+          "117",
+          "118",
+          "119"
+        ]
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "cos=1.000",
+      "results": {
+        "cosine_tfidf": 0.9998493198319026,
+        "vocab_size": 9303
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "funcwords",
+        "n": 200
+      },
+      "headline": "cos=0.999",
+      "results": {
+        "cosine_tfidf": 0.9992344067384373,
+        "vocab_size": 25
+      }
+    },
+    {
+      "method": "keyness",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000,
+        "top_k": 20
+      },
+      "headline": "max|G2|=11.1",
+      "results": {
+        "distinctive_traces_clean__h0": [
+          [
+            "0206",
+            11.1,
+            8,
+            0
+          ],
+          [
+            "original",
+            6.9,
+            5,
+            0
+          ],
+          [
+            "zz",
+            5.8,
+            3948,
+            3738
+          ],
+          [
+            "sex",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "performance2021",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "than",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "mcapassessment",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "1907",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "0067",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "txt",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "searchtype",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "mcapmathematics2021",
+            5.5,
+            4,
+            0
+          ],
+          [
+            "g9",
+            4.2,
+            230,
+            188
+          ],
+          [
+            "controller",
+            4.2,
+            12,
+            4
+          ],
+          [
+            "0105",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "davis",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "23000",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "esea",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "allowances",
+            4.2,
+            3,
+            0
+          ],
+          [
+            "histories",
+            4.2,
+            3,
+            0
+          ]
+        ],
+        "distinctive_traces_clean__h1": [
+          [
+            "limit",
+            -11.1,
+            0,
+            8
+          ],
+          [
+            "mathassessment",
+            -9.9,
+            11,
+            31
+          ],
+          [
+            "abbottston",
+            -9.7,
+            0,
+            7
+          ],
+          [
+            "dataela",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "offset",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "histcateid",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "mcap2021",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "504",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "file",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "staff",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "0260",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "390",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "d",
+            -5.5,
+            0,
+            4
+          ],
+          [
+            "3",
+            -4.7,
+            699,
+            783
+          ],
+          [
+            "g8",
+            -4.2,
+            181,
+            222
+          ],
+          [
+            "fill2310",
+            -4.2,
+            0,
+            3
+          ],
+          [
+            "date",
+            -4.2,
+            0,
+            3
+          ],
+          [
+            "resource",
+            -4.2,
+            0,
+            3
+          ],
+          [
+            "counselors",
+            -4.2,
+            0,
+            3
+          ],
+          [
+            "section",
+            -4.2,
+            0,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "method": "spearman",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "rho=0.9822",
+      "results": {
+        "spearman_rho": 0.9822,
+        "n_shared": 697
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 2,
+        "topn": 2000
+      },
+      "headline": "J=0.753",
+      "results": {
+        "ngram_n": 2,
+        "jaccard": 0.7528483786152498,
+        "n_overlap": 1718,
+        "top_shared": [
+          [
+            "survey year",
+            12282,
+            12281
+          ],
+          [
+            "year key",
+            12282,
+            12281
+          ],
+          [
+            "measure id",
+            12122,
+            12117
+          ],
+          [
+            "state id",
+            11996,
+            11994
+          ],
+          [
+            "msde maryland",
+            7348,
+            7347
+          ],
+          [
+            "maryland gov",
+            7348,
+            7347
+          ],
+          [
+            "reportcard msde",
+            7177,
+            7176
+          ],
+          [
+            "https reportcard",
+            7177,
+            7176
+          ],
+          [
+            "gov datadownloads",
+            7080,
+            7079
+          ],
+          [
+            "2022 2022",
+            6296,
+            6288
+          ],
+          [
+            "https civilrightsdata",
+            6271,
+            6270
+          ],
+          [
+            "ed gov",
+            6271,
+            6270
+          ],
+          [
+            "civilrightsdata ed",
+            6271,
+            6270
+          ],
+          [
+            "gov api",
+            6161,
+            6161
+          ],
+          [
+            "api v1",
+            6161,
+            6160
+          ],
+          [
+            "v1 0",
+            6161,
+            6160
+          ],
+          [
+            "key measure",
+            6060,
+            6054
+          ],
+          [
+            "0 getstateestimation",
+            5998,
+            5999
+          ],
+          [
+            "getstateestimation survey",
+            5997,
+            5998
+          ],
+          [
+            "id state",
+            5997,
+            5992
+          ]
+        ]
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 3,
+        "topn": 2000
+      },
+      "headline": "J=0.878",
+      "results": {
+        "ngram_n": 3,
+        "jaccard": 0.8779342723004695,
+        "n_overlap": 1870,
+        "top_shared": [
+          [
+            "survey year key",
+            12282,
+            12281
+          ],
+          [
+            "msde maryland gov",
+            7348,
+            7347
+          ],
+          [
+            "reportcard msde maryland",
+            7177,
+            7176
+          ],
+          [
+            "https reportcard msde",
+            7177,
+            7176
+          ],
+          [
+            "maryland gov datadownloads",
+            7080,
+            7079
+          ],
+          [
+            "https civilrightsdata ed",
+            6271,
+            6270
+          ],
+          [
+            "civilrightsdata ed gov",
+            6271,
+            6270
+          ],
+          [
+            "ed gov api",
+            6161,
+            6161
+          ],
+          [
+            "api v1 0",
+            6161,
+            6160
+          ],
+          [
+            "gov api v1",
+            6161,
+            6160
+          ],
+          [
+            "year key measure",
+            6060,
+            6054
+          ],
+          [
+            "key measure id",
+            6060,
+            6054
+          ],
+          [
+            "v1 0 getstateestimation",
+            5998,
+            5999
+          ],
+          [
+            "0 getstateestimation survey",
+            5997,
+            5998
+          ],
+          [
+            "getstateestimation survey year",
+            5997,
+            5998
+          ],
+          [
+            "id state id",
+            5997,
+            5992
+          ],
+          [
+            "measure id state",
+            5997,
+            5992
+          ],
+          [
+            "gov datadownloads 2022",
+            4295,
+            4295
+          ],
+          [
+            "datadownloads 2022 2022",
+            3913,
+            3912
+          ],
+          [
+            "gov datadownloads 2023",
+            2397,
+            2397
+          ]
+        ]
+      }
+    },
+    {
+      "method": "burrows_delta",
+      "params": {
+        "tokenizer": "word",
+        "n": 200
+      },
+      "headline": "delta=0.0099",
+      "results": {
+        "burrows_delta": 0.0099,
+        "n_words": 200
+      }
+    },
+    {
+      "method": "char_cosine",
+      "params": {
+        "n": 5000
+      },
+      "headline": "cos=1.000",
+      "results": {
+        "char_cosine": 0.9999551029985461
+      }
+    }
+  ],
+  "wiki": [
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 1000
+      },
+      "headline": "J=0.967",
+      "results": {
+        "jaccard": 0.9665683382497542,
+        "n_overlap": 983,
+        "n_union": 1017,
+        "overlap_sample": [
+          "0",
+          "00",
+          "001",
+          "003",
+          "005",
+          "007",
+          "009",
+          "01",
+          "011",
+          "013",
+          "015",
+          "017",
+          "019",
+          "02",
+          "021",
+          "023",
+          "025",
+          "027",
+          "03",
+          "04",
+          "04000us25",
+          "05",
+          "06",
+          "07",
+          "08"
+        ]
+      }
+    },
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "J=0.919",
+      "results": {
+        "jaccard": 0.9186492709132771,
+        "n_overlap": 4788,
+        "n_union": 5212,
+        "overlap_sample": [
+          "0",
+          "00",
+          "000",
+          "001",
+          "003",
+          "005",
+          "007",
+          "009",
+          "01",
+          "010",
+          "01000us",
+          "0101",
+          "011",
+          "013",
+          "015",
+          "017",
+          "019",
+          "02",
+          "021",
+          "023",
+          "025",
+          "027",
+          "028",
+          "029",
+          "03"
+        ]
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "cos=0.999",
+      "results": {
+        "cosine_tfidf": 0.9986835843692734,
+        "vocab_size": 5212
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "funcwords",
+        "n": 200
+      },
+      "headline": "cos=1.000",
+      "results": {
+        "cosine_tfidf": 0.9998178640346065,
+        "vocab_size": 110
+      }
+    },
+    {
+      "method": "keyness",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000,
+        "top_k": 20
+      },
+      "headline": "max|G2|=271.3",
+      "results": {
+        "distinctive_wiki__h0": [
+          [
+            "li",
+            271.3,
+            196,
+            0
+          ],
+          [
+            "dirq",
+            259.2,
+            2883,
+            1783
+          ],
+          [
+            "agent13secsmallessential",
+            248.0,
+            2961,
+            1866
+          ],
+          [
+            "pfast",
+            156.1,
+            1725,
+            1065
+          ],
+          [
+            "href",
+            150.9,
+            109,
+            0
+          ],
+          [
+            "ma19",
+            142.5,
+            103,
+            0
+          ],
+          [
+            "typ",
+            86.4,
+            117,
+            16
+          ],
+          [
+            "m12",
+            55.4,
+            40,
+            0
+          ],
+          [
+            "lang",
+            51.2,
+            15596,
+            14324
+          ],
+          [
+            "zp",
+            48.4,
+            35,
+            0
+          ],
+          [
+            "agentcountyseclinks009",
+            44.3,
+            32,
+            0
+          ],
+          [
+            "tvu5xgybf7jz",
+            42.9,
+            31,
+            0
+          ],
+          [
+            "themagazinearchive",
+            42.9,
+            31,
+            0
+          ],
+          [
+            "w12",
+            41.5,
+            30,
+            0
+          ],
+          [
+            "scheme",
+            40.1,
+            29,
+            0
+          ],
+          [
+            "timeframe",
+            40.1,
+            29,
+            0
+          ],
+          [
+            "combo",
+            37.4,
+            27,
+            0
+          ],
+          [
+            "1",
+            37.0,
+            20831,
+            19561
+          ],
+          [
+            "2010color",
+            36.0,
+            26,
+            0
+          ],
+          [
+            "newself",
+            36.0,
+            26,
+            0
+          ]
+        ],
+        "distinctive_wiki__h1": [
+          [
+            "media",
+            -180.9,
+            1558,
+            2396
+          ],
+          [
+            "63176",
+            -165.3,
+            1330,
+            2073
+          ],
+          [
+            "line",
+            -152.4,
+            1206,
+            1886
+          ],
+          [
+            "withheld",
+            -151.4,
+            1109,
+            1762
+          ],
+          [
+            "z",
+            -120.9,
+            899,
+            1424
+          ],
+          [
+            "format",
+            -120.4,
+            2497,
+            3326
+          ],
+          [
+            "2026",
+            -118.8,
+            1486,
+            2136
+          ],
+          [
+            "pre",
+            -104.4,
+            1821,
+            2485
+          ],
+          [
+            "oai",
+            -101.6,
+            99,
+            294
+          ],
+          [
+            "a12",
+            -97.2,
+            0,
+            70
+          ],
+          [
+            "ownself",
+            -83.3,
+            0,
+            60
+          ],
+          [
+            "1002",
+            -70.8,
+            0,
+            51
+          ],
+          [
+            "agentfinalsecmdqueriesxy991",
+            -55.5,
+            0,
+            40
+          ],
+          [
+            "mfinal",
+            -55.5,
+            0,
+            40
+          ],
+          [
+            "agent0massmapcustomjune20",
+            -49.2,
+            157,
+            306
+          ],
+          [
+            "75rl",
+            -47.2,
+            0,
+            34
+          ],
+          [
+            "oaicountylinksagentjunex53396",
+            -47.2,
+            0,
+            34
+          ],
+          [
+            "drive",
+            -45.8,
+            0,
+            33
+          ],
+          [
+            "dan7303",
+            -44.4,
+            0,
+            32
+          ],
+          [
+            "quicklink",
+            -44.4,
+            0,
+            32
+          ]
+        ]
+      }
+    },
+    {
+      "method": "spearman",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "rho=0.9731",
+      "results": {
+        "spearman_rho": 0.9731,
+        "n_shared": 4788
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 2,
+        "topn": 2000
+      },
+      "headline": "J=0.847",
+      "results": {
+        "ngram_n": 2,
+        "jaccard": 0.8467220683287165,
+        "n_overlap": 1834,
+        "top_shared": [
+          [
+            "https www",
+            22137,
+            22533
+          ],
+          [
+            "gov files",
+            22367,
+            22110
+          ],
+          [
+            "county json",
+            22128,
+            22050
+          ],
+          [
+            "files county",
+            21846,
+            21802
+          ],
+          [
+            "sec gov",
+            19935,
+            20419
+          ],
+          [
+            "wiki cgi",
+            19934,
+            19093
+          ],
+          [
+            "action browse",
+            19683,
+            18779
+          ],
+          [
+            "cgi action",
+            19627,
+            18739
+          ],
+          [
+            "www sec",
+            18106,
+            18784
+          ],
+          [
+            "dse wiki",
+            18605,
+            17798
+          ],
+          [
+            "wikiservice at",
+            18455,
+            17657
+          ],
+          [
+            "at dse",
+            18396,
+            17594
+          ],
+          [
+            "browse id",
+            18058,
+            17100
+          ],
+          [
+            "https wikiservice",
+            17655,
+            16929
+          ],
+          [
+            "lang 1",
+            15068,
+            13771
+          ],
+          [
+            "url https",
+            14226,
+            13899
+          ],
+          [
+            "id willkommenimwiki",
+            10368,
+            10354
+          ],
+          [
+            "vercel app",
+            9844,
+            9566
+          ],
+          [
+            "app api",
+            9840,
+            9542
+          ],
+          [
+            "https jqp",
+            9836,
+            9538
+          ]
+        ]
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 3,
+        "topn": 2000
+      },
+      "headline": "J=0.853",
+      "results": {
+        "ngram_n": 3,
+        "jaccard": 0.8527095877721167,
+        "n_overlap": 1841,
+        "top_shared": [
+          [
+            "files county json",
+            21836,
+            21786
+          ],
+          [
+            "gov files county",
+            21466,
+            21390
+          ],
+          [
+            "cgi action browse",
+            19611,
+            18717
+          ],
+          [
+            "wiki cgi action",
+            19570,
+            18688
+          ],
+          [
+            "www sec gov",
+            18105,
+            18783
+          ],
+          [
+            "dse wiki cgi",
+            18604,
+            17797
+          ],
+          [
+            "wikiservice at dse",
+            18396,
+            17594
+          ],
+          [
+            "at dse wiki",
+            18367,
+            17556
+          ],
+          [
+            "action browse id",
+            18058,
+            17100
+          ],
+          [
+            "https wikiservice at",
+            17633,
+            16904
+          ],
+          [
+            "https www sec",
+            15801,
+            16418
+          ],
+          [
+            "sec gov files",
+            15763,
+            15521
+          ],
+          [
+            "browse id willkommenimwiki",
+            9986,
+            9990
+          ],
+          [
+            "https jqp vercel",
+            9835,
+            9538
+          ],
+          [
+            "jqp vercel app",
+            9835,
+            9538
+          ],
+          [
+            "vercel app api",
+            9833,
+            9535
+          ],
+          [
+            "app api v0",
+            9825,
+            9522
+          ],
+          [
+            "id willkommenimwiki lang",
+            8535,
+            8199
+          ],
+          [
+            "willkommenimwiki lang 1",
+            8534,
+            8199
+          ],
+          [
+            "www investor gov",
+            6942,
+            6966
+          ]
+        ]
+      }
+    },
+    {
+      "method": "burrows_delta",
+      "params": {
+        "tokenizer": "word",
+        "n": 200
+      },
+      "headline": "delta=0.0333",
+      "results": {
+        "burrows_delta": 0.0333,
+        "n_words": 200
+      }
+    },
+    {
+      "method": "char_cosine",
+      "params": {
+        "n": 5000
+      },
+      "headline": "cos=0.999",
+      "results": {
+        "char_cosine": 0.9988574708221277
+      }
+    }
+  ],
+  "evals": [
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 1000
+      },
+      "headline": "J=0.491",
+      "results": {
+        "jaccard": 0.49142431021625654,
+        "n_overlap": 659,
+        "n_union": 1341,
+        "overlap_sample": [
+          "0",
+          "000",
+          "1",
+          "10",
+          "100",
+          "1000",
+          "12",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "1990",
+          "2",
+          "20",
+          "2000",
+          "2004",
+          "2005",
+          "2008",
+          "2009",
+          "2010",
+          "2011",
+          "2012",
+          "2013",
+          "2014"
+        ]
+      }
+    },
+    {
+      "method": "jaccard_topn",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "J=0.348",
+      "results": {
+        "jaccard": 0.34835047889322457,
+        "n_overlap": 1964,
+        "n_union": 5638,
+        "overlap_sample": [
+          "0",
+          "000",
+          "01",
+          "1",
+          "10",
+          "100",
+          "1000",
+          "100000",
+          "100k",
+          "10k",
+          "10th",
+          "11",
+          "12",
+          "120",
+          "13",
+          "14",
+          "15",
+          "15th",
+          "16",
+          "17",
+          "18",
+          "19",
+          "1900",
+          "191",
+          "1919"
+        ]
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "cos=0.979",
+      "results": {
+        "cosine_tfidf": 0.9785499519115759,
+        "vocab_size": 5638
+      }
+    },
+    {
+      "method": "cosine_tfidf",
+      "params": {
+        "tokenizer": "funcwords",
+        "n": 200
+      },
+      "headline": "cos=0.995",
+      "results": {
+        "cosine_tfidf": 0.9954569362360034,
+        "vocab_size": 114
+      }
+    },
+    {
+      "method": "keyness",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000,
+        "top_k": 20
+      },
+      "headline": "max|G2|=13.8",
+      "results": {
+        "distinctive_evals__h0": [
+          [
+            "living",
+            13.8,
+            10,
+            0
+          ],
+          [
+            "temperature",
+            12.4,
+            9,
+            0
+          ],
+          [
+            "medicaid",
+            11.0,
+            8,
+            0
+          ],
+          [
+            "private",
+            11.0,
+            8,
+            0
+          ],
+          [
+            "island",
+            11.0,
+            8,
+            0
+          ],
+          [
+            "heritage",
+            11.0,
+            8,
+            0
+          ],
+          [
+            "continent",
+            9.6,
+            11,
+            1
+          ],
+          [
+            "witnesses",
+            9.6,
+            7,
+            0
+          ],
+          [
+            "jehovah",
+            9.6,
+            7,
+            0
+          ],
+          [
+            "combined",
+            8.9,
+            13,
+            2
+          ],
+          [
+            "official",
+            8.5,
+            31,
+            12
+          ],
+          [
+            "mp",
+            8.3,
+            6,
+            0
+          ],
+          [
+            "resources",
+            8.3,
+            6,
+            0
+          ],
+          [
+            "example",
+            8.3,
+            6,
+            0
+          ],
+          [
+            "guide",
+            8.3,
+            6,
+            0
+          ],
+          [
+            "degree",
+            7.8,
+            12,
+            2
+          ],
+          [
+            "system",
+            7.8,
+            12,
+            2
+          ],
+          [
+            "period",
+            7.7,
+            18,
+            5
+          ],
+          [
+            "quarterly",
+            7.3,
+            9,
+            1
+          ],
+          [
+            "proportion",
+            7.3,
+            9,
+            1
+          ]
+        ],
+        "distinctive_evals__h1": [
+          [
+            "1st",
+            -11.2,
+            0,
+            8
+          ],
+          [
+            "team",
+            -11.0,
+            3,
+            17
+          ],
+          [
+            "books",
+            -9.9,
+            1,
+            11
+          ],
+          [
+            "last",
+            -9.8,
+            5,
+            20
+          ],
+          [
+            "issue",
+            -9.8,
+            0,
+            7
+          ],
+          [
+            "nz",
+            -9.8,
+            0,
+            7
+          ],
+          [
+            "expenditure",
+            -9.8,
+            0,
+            7
+          ],
+          [
+            "school",
+            -8.9,
+            22,
+            46
+          ],
+          [
+            "extinct",
+            -8.4,
+            0,
+            6
+          ],
+          [
+            "alone",
+            -8.4,
+            0,
+            6
+          ],
+          [
+            "singer",
+            -8.4,
+            0,
+            6
+          ],
+          [
+            "arts",
+            -8.4,
+            0,
+            6
+          ],
+          [
+            "coach",
+            -8.4,
+            0,
+            6
+          ],
+          [
+            "females",
+            -8.4,
+            0,
+            6
+          ],
+          [
+            "postpartum",
+            -8.4,
+            0,
+            6
+          ],
+          [
+            "board",
+            -8.4,
+            0,
+            6
+          ],
+          [
+            "draft",
+            -8.4,
+            0,
+            6
+          ],
+          [
+            "that",
+            -7.9,
+            252,
+            316
+          ],
+          [
+            "percent",
+            -7.8,
+            4,
+            16
+          ],
+          [
+            "hispanic",
+            -7.4,
+            1,
+            9
+          ]
+        ]
+      }
+    },
+    {
+      "method": "spearman",
+      "params": {
+        "tokenizer": "word",
+        "n": 5000
+      },
+      "headline": "rho=0.6844",
+      "results": {
+        "spearman_rho": 0.6844,
+        "n_shared": 1964
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 2,
+        "topn": 2000
+      },
+      "headline": "J=0.285",
+      "results": {
+        "ngram_n": 2,
+        "jaccard": 0.28493414712495985,
+        "n_overlap": 887,
+        "top_shared": [
+          [
+            "of the",
+            287,
+            260
+          ],
+          [
+            "according to",
+            243,
+            231
+          ],
+          [
+            "in the",
+            217,
+            205
+          ],
+          [
+            "to the",
+            148,
+            153
+          ],
+          [
+            "for the",
+            79,
+            60
+          ],
+          [
+            "the top",
+            65,
+            70
+          ],
+          [
+            "on the",
+            57,
+            74
+          ],
+          [
+            "from the",
+            69,
+            56
+          ],
+          [
+            "had the",
+            63,
+            58
+          ],
+          [
+            "which of",
+            68,
+            51
+          ],
+          [
+            "had a",
+            55,
+            60
+          ],
+          [
+            "with the",
+            57,
+            51
+          ],
+          [
+            "the highest",
+            52,
+            53
+          ],
+          [
+            "at least",
+            62,
+            39
+          ],
+          [
+            "more than",
+            53,
+            47
+          ],
+          [
+            "less than",
+            42,
+            56
+          ],
+          [
+            "as of",
+            46,
+            49
+          ],
+          [
+            "in 2023",
+            41,
+            40
+          ],
+          [
+            "in 2022",
+            33,
+            45
+          ],
+          [
+            "and the",
+            36,
+            39
+          ]
+        ]
+      }
+    },
+    {
+      "method": "shared_ngrams",
+      "params": {
+        "ngram_n": 3,
+        "topn": 2000
+      },
+      "headline": "J=0.147",
+      "results": {
+        "ngram_n": 3,
+        "jaccard": 0.14678899082568808,
+        "n_overlap": 512,
+        "top_shared": [
+          [
+            "according to the",
+            113,
+            122
+          ],
+          [
+            "which of the",
+            36,
+            24
+          ],
+          [
+            "in the top",
+            28,
+            28
+          ],
+          [
+            "had the highest",
+            21,
+            21
+          ],
+          [
+            "2023 according to",
+            16,
+            23
+          ],
+          [
+            "the top 10",
+            16,
+            18
+          ],
+          [
+            "of the following",
+            16,
+            18
+          ],
+          [
+            "the top 5",
+            13,
+            20
+          ],
+          [
+            "the u s",
+            18,
+            15
+          ],
+          [
+            "of less than",
+            22,
+            11
+          ],
+          [
+            "all of the",
+            11,
+            21
+          ],
+          [
+            "2022 according to",
+            12,
+            20
+          ],
+          [
+            "a list of",
+            13,
+            19
+          ],
+          [
+            "the united states",
+            10,
+            21
+          ],
+          [
+            "which of these",
+            13,
+            17
+          ],
+          [
+            "with the highest",
+            13,
+            17
+          ],
+          [
+            "out of the",
+            18,
+            11
+          ],
+          [
+            "of the top",
+            16,
+            12
+          ],
+          [
+            "data from the",
+            14,
+            14
+          ],
+          [
+            "the name of",
+            10,
+            17
+          ]
+        ]
+      }
+    },
+    {
+      "method": "burrows_delta",
+      "params": {
+        "tokenizer": "word",
+        "n": 200
+      },
+      "headline": "delta=0.061",
+      "results": {
+        "burrows_delta": 0.061,
+        "n_words": 200
+      }
+    },
+    {
+      "method": "char_cosine",
+      "params": {
+        "n": 5000
+      },
+      "headline": "cos=0.990",
+      "results": {
+        "char_cosine": 0.9900528009064716
+      }
+    }
+  ]
+}

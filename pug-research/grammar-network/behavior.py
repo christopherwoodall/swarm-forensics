@@ -113,13 +113,15 @@ def top_overlap(t1, t2, k=10):
 
 
 def load_chat_rooms():
+    """room_id -> [(ts, speaker)]; slim tuples, not full records (OOM)."""
     rooms = defaultdict(list)
     with gzip.open(DATA_RAW / "chat_messages.jsonl.gz", "rt", encoding="utf-8") as f:
         for line in f:
             r = json.loads(line)
-            rooms[r.get("room_id")].append(r)
+            rooms[r.get("room_id")].append((r.get("created_at") or "",
+                                            r.get("speaker_type")))
     for rid in rooms:
-        rooms[rid].sort(key=lambda r: r.get("created_at") or "")
+        rooms[rid].sort(key=lambda x: x[0])
     return rooms
 
 
@@ -128,9 +130,10 @@ def load_claude_sessions():
     with gzip.open(DATA_RAW / "claude_code_messages.jsonl.gz", "rt", encoding="utf-8") as f:
         for line in f:
             r = json.loads(line)
-            sess[r.get("sdk_session_id") or r.get("agent_id")].append(r)
+            sess[r.get("sdk_session_id") or r.get("agent_id")].append(
+                (r.get("created_at") or "", r.get("message_type")))
     for sid in sess:
-        sess[sid].sort(key=lambda r: r.get("created_at") or "")
+        sess[sid].sort(key=lambda x: x[0])
     return sess
 
 
@@ -151,13 +154,20 @@ def action_label(a):
 
 
 def load_turn_sessions():
+    """session_id -> [(ts, action_label, error?)]; streams, tolerates truncation."""
     sess = defaultdict(list)
-    with gzip.open(DATA_RAW / "computer_use_turns.jsonl.gz", "rt", encoding="utf-8") as f:
-        for line in f:
-            r = json.loads(line)
-            sess[r.get("session_id")].append(r)
+    try:
+        with gzip.open(DATA_RAW / "computer_use_turns.jsonl.gz", "rt", encoding="utf-8") as f:
+            for line in f:
+                r = json.loads(line)
+                sess[r.get("session_id")].append(
+                    (r.get("created_at") or "",
+                     action_label(r.get("agent_action")),
+                     bool(r.get("error"))))
+    except EOFError:
+        print("WARN truncated turns gzip tolerated", flush=True)
     for sid in sess:
-        sess[sid].sort(key=lambda r: r.get("created_at") or "")
+        sess[sid].sort(key=lambda x: x[0])
     return sess
 
 
@@ -195,13 +205,13 @@ def main():
         f"nesting order is source-independent.")
 
     rooms = load_chat_rooms()
-    spk = [[m.get("speaker_type") for m in ms] for ms in rooms.values() if len(ms) > 1]
+    spk = [[s for _, s in ms] for ms in rooms.values() if len(ms) > 1]
     t_spk = markov(spk, 1)
     det.append("- chat speaker order-1: " + "; ".join(
         f"{a[0]}->{b} {c}" for (a, b), c in t_spk.most_common(6)))
 
     sess = load_claude_sessions()
-    mseq = [[f"{m.get('message_type')}" for m in ms] for ms in sess.values() if len(ms) > 1]
+    mseq = [[mt for _, mt in ms] for ms in sess.values() if len(ms) > 1]
     t_msg = markov(mseq, 1)
     det.append("- claude msgtype order-1 top: " + "; ".join(
         f"{a[0]}->{b} {c}" for (a, b), c in t_msg.most_common(6)))
@@ -224,7 +234,7 @@ def main():
     cyc = 0
     cyc_sess = 0
     for sid, ms in turns.items():
-        acts = [action_label(m.get("agent_action")) for m in ms]
+        acts = [a for _, a, _ in ms]
         seen = False
         for i in range(len(acts) - 2):
             if acts[i] == acts[i + 2] and acts[i] != acts[i + 1]:
@@ -260,14 +270,14 @@ def main():
     # ---- 4. first/last ----
     det.append("")
     det.append("## 4. First/last actions")
-    first_spk = Counter(ms[0].get("speaker_type") for ms in rooms.values() if ms)
-    last_spk = Counter(ms[-1].get("speaker_type") for ms in rooms.values() if ms)
+    first_spk = Counter(ms[0][1] for ms in rooms.values() if ms)
+    last_spk = Counter(ms[-1][1] for ms in rooms.values() if ms)
     det.append(f"- chat first speaker: {dict(first_spk)}; last: {dict(last_spk)}")
-    first_mt = Counter(ms[0].get("message_type") for ms in sess.values() if ms)
-    last_mt = Counter(ms[-1].get("message_type") for ms in sess.values() if ms)
+    first_mt = Counter(ms[0][1] for ms in sess.values() if ms)
+    last_mt = Counter(ms[-1][1] for ms in sess.values() if ms)
     det.append(f"- claude first msgtype: {dict(first_mt)}; last: {dict(last_mt)}")
-    first_a = Counter(action_label(ms[0].get("agent_action")) for ms in turns.values() if ms)
-    last_a = Counter(action_label(ms[-1].get("agent_action")) for ms in turns.values() if ms)
+    first_a = Counter(ms[0][1] for ms in turns.values() if ms)
+    last_a = Counter(ms[-1][1] for ms in turns.values() if ms)
     det.append(f"- turns first action: {first_a.most_common(5)}")
     det.append(f"- turns last action: {last_a.most_common(5)}")
     findings.append(
@@ -313,7 +323,7 @@ def main():
     det.append("- " + burst("traces/global", ttimes))
     for h in sorted(per_host, key=lambda h: len(per_host[h]), reverse=True)[:5]:
         det.append("- " + burst(f"traces/{h}", per_host[h]))
-    det.append("- " + burst("chat/global", [ts(m.get("created_at")) for ms in rooms.values() for m in ms]))
+    det.append("- " + burst("chat/global", [ts(t) for ms in rooms.values() for t, _ in ms]))
     wtimes = defaultdict(list)
     with open(SILENT / "data/2026-05-17-collusion-wiki/raw/revisions.jsonl", encoding="utf-8") as f:
         for line in f:
