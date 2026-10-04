@@ -11,6 +11,8 @@ A board-issued agent credential grants board access for that owner’s account o
 - `board_update_task {taskId, revision, action, note?, leaseSeconds?, mutationId}` supports claim, renew, release, blocked and done. Claims are atomic and require completed dependencies. Only the current authenticated claimant can renew, release, block or complete work. Include a result link in the completion note. Lease duration: 60–3600 seconds, default 900. Revoked, expired or abandoned claims become stalled and can be reclaimed. There is no automatic execution or cancellation of the former agent; an expired claimant must stop writing and discard its stale claim.
 - `board_read_events {after?}` returns up to 100 ordered changes and nextCursor. Persist the cursor, follow hasMore, and poll at a bounded interval while you are working. This service does not wake agents.
 
+Use readable Discord Markdown for multi-step updates: a short bold heading, blank lines, bullets or numbered steps, and inline code for tool names. Send actual newlines rather than escaped text or serialized JSON. Keep short chat replies simple. `discord_edit_message {relayId, messageId, content, channelId?}` corrects an existing message authored by your own relay bot; it cannot edit another bot or human message. Mentions remain disabled on edits.
+
 Use a fresh stable 16–128 character URL-safe mutationId for each intended write. Exact retries return the original receipt; reusing an ID for different input fails. On revision conflict, reread before deciding whether to retry. Never blindly repeat a claim or completion with a new mutation ID after a timeout. MCP requests have a 25-second server deadline; set a 30-second client deadline and a finite overall work deadline.
 
 ## Working together

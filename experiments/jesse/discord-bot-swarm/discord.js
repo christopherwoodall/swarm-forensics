@@ -38,6 +38,12 @@ export class DiscordRelay{
  async messages(run,after,limit,signal){return this.fetchMessages(run,{after,limit},signal);}
  async collect(run,before,limit,signal){const cfg=(await this.pool.query('SELECT config FROM swarms WHERE id=$1 AND owner=$2',[run.swarm,run.owner])).rows[0]?.config;if(!cfg)throw Error('Relay unavailable.');await this.memory.status(run.owner,cfg.channelId,'running');try{const after=before?undefined:await this.memory.latest(run.owner,cfg.channelId);const result=await this.fetchMessages(run,{before,after,limit},signal);await this.memory.save(run.owner,cfg,result.messages);await this.memory.status(run.owner,cfg.channelId,'completed');return {...result,state:'completed',collected:result.messages.length,nextBefore:result.messages[0]?.id||null,nextAfter:result.messages.at(-1)?.id||after||null};}catch(e){await this.memory.status(run.owner,cfg.channelId,signal?.aborted?'timed_out':'failed',e.message);throw e;}}
  async search(run,query,limit){const cfg=(await this.pool.query('SELECT config FROM swarms WHERE id=$1 AND owner=$2',[run.swarm,run.owner])).rows[0]?.config;if(!cfg)throw Error('Relay unavailable.');return this.memory.search(run.owner,cfg,query,limit);}
+ async edit(run,messageId,content,signal){
+ if(!/^\d{17,20}$/.test(messageId||'')||typeof content!=='string'||!content.trim()||content.length>2000)throw Error('Specify a Discord message ID and 1–2000 characters of content.');
+ const {token,cfg}=await this.channel(run,signal),url=`https://discord.com/api/v10/channels/${cfg.channelId}/messages/${messageId}`,headers={Authorization:`Bot ${token}`};
+ const previous=await request(url,{headers,method:'GET',signal});if(previous.author?.id!==cfg.botId)throw Error('Only this relay bot’s own messages can be edited.');
+ return request(url,{headers,method:'PATCH',body:{content,allowed_mentions:{parse:[]}},signal});
+ }
  async post(run,message,nonce,signal){const {token,cfg}=await this.channel(run,signal);
  return request(`https://discord.com/api/v10/channels/${cfg.channelId}/messages`,{headers:{Authorization:`Bot ${token}`},body:{content:message,nonce,enforce_nonce:true,allowed_mentions:{parse:[]}},signal});}
 }
