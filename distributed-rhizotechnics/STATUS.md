@@ -1,11 +1,11 @@
 # Status: distributed-rhizotechnics
 
-Current checkpoint: one-third interview milestone.
-Captured: 2026-10-03T17:06:22-07:00.
+Latest documented milestone: one-third interview checkpoint.
+Milestone captured: 2026-10-03T17:06:22-07:00.
 Initial checkpoint: 2026-10-03T15:54:32-07:00.
 Phase: owner requirements interview.
-Completed interview areas: 3 of 9.
-Current area: 4, graph action semantics.
+Completed interview areas: 4 of 9.
+Current area: 5, swarm execution.
 
 ## Confirmed direction
 
@@ -26,10 +26,11 @@ Current area: 4, graph action semantics.
 
 - Revisit inspection placement and density after actual use.
 - Keep original source records distinct from supplied research references.
-- Additive linked revisions are accepted; strike-through authority remains unresolved.
+- Additive revisions are accepted; members propose strike-through and humans approve it.
+- Cadence provisionally counts swarm-added nodes; execution limits and scheduling remain unresolved.
 - Exact indexing, source-ID encoding, and context packing remain engineering details.
 - Novelty from mixed responses is an owner hypothesis, not an observed result.
-- Areas 4 through 9 remain open.
+- Areas 5 through 9 remain open.
 
 ## Verified checkpoint
 
@@ -60,12 +61,16 @@ Do not count individual questions as completed areas.
 
 ## Current next question
 
-May members strike through an inference directly, or only propose that action for human approval?
+Which member-selection policy should the first version use?
 
 Imported source snapshots remain unchanged regardless of analytic-edit permissions.
-The owner accepts additive revisions and visible strike-through for incorrect inferences.
-Preserve original analytic content and attach actor, timestamp, and basis to any correction.
-Direct-versus-proposed correction authority is not yet selected.
+The owner reserves strike-through approval for the human.
+Her tentative timing sequence starts `20/20/30/30/40/40` and approaches an `80sec` cap.
+The owner tentatively selects swarm-added node count.
+Pending-work behavior, member selection, detailed pause handling, and resource budgets remain unresolved.
+The owner prefers optional continuation after an initial growth period.
+The adjustable 12-node review threshold is accepted.
+“Add one” and “Continue automatically” provide explicit continuation.
 
 ## Checks and limits
 

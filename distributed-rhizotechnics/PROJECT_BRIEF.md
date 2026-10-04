@@ -94,7 +94,9 @@ Allow an inference judged incorrect to be visibly struck through without deletin
 Record that correction as a semantic status change with its own actor, time, and basis.
 Do not reduce incorrect status to decorative text formatting.
 Reports MUST preserve that status rather than presenting the inference as an unqualified current conclusion.
-Direct-versus-proposed strike-through authority remains unresolved.
+Members may propose incorrect-inference marking, not apply strike-through directly.
+Require human approval before changing the inference's current status.
+Preserve both proposal and approval provenance.
 
 The owner wants technical, systems, and mythopoetic responses mixed during the investigation.
 Her hypothesis is that mixing them may produce something novel.
@@ -201,6 +203,18 @@ The precise revision, challenge, supersession, and retention lifecycle remains u
 Support optional timed contributions to the active frontier.
 Every configurable x seconds, one member may contribute one node.
 Do not treat this as unbounded parallel chatting.
+
+Owner timing proposal: scale the interval with node count.
+Candidate sequence: `20/20/30/30/40/40`, continuing toward an approximately `80sec` cap.
+The proposal is tentative; do not silently treat it as a finalized timer contract.
+Provisional owner preference: base the timing ramp on swarm-added nodes, not total graph size.
+Counter reset, pause/stop behavior, member selection, and budgets remain open.
+The owner prefers automatic additions to become optional after an initial growth period.
+Accepted first-pass default: pause automatic growth after 12 swarm-added nodes.
+Make the threshold adjustable.
+Offer “Add one” for one contribution and “Continue automatically” for renewed timed growth.
+Keep manual graph interactions available while automatic growth is paused.
+This is a review threshold, not a declaration that analysis is complete.
 
 Each contribution MUST become a graph object.
 Record author/role identity, provenance, parent node or nodes, and timestamp.

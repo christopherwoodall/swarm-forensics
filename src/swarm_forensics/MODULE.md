@@ -22,7 +22,7 @@ Read [PROJECT_BRIEF.md](../../PROJECT_BRIEF.md) for the proposed direction and d
 - Discord watcher commands: `make watcher-discord-poll`, `watcher-discord-pending`, `watcher-discord-ack`, `watcher-discord-status`, `watcher-discord-audit`, and `watcher-discord-monitor`.
 - Discord watcher private state: ignored `data/raw/discord/1430962817045106792/`. Tracked ledger files contain only a pointer to Discord records.
 - Delvetown pilot: `delvetown/`. See [delvetown/MODULE.md](delvetown/MODULE.md) for the approved private collection scope.
-- Delvetown commands: `make delvetown-pilot`, `delvetown-audit`, `delvetown-inspect`, and `delvetown-test`.
+- Delvetown commands: `make delvetown-pilot`, `delvetown-audit`, `delvetown-inspect`, `delvetown-record`, and `delvetown-test`.
 - Delvetown source records and findings MUST remain under ignored `data/raw/delvetown/`. Publication remains deferred.
 - Watcher dependency: official FairyStack peer client downloaded to ignored `data/raw/fairystack/`.
 - Watcher credential: private user configuration outside the repository; public metadata lives in `colette-research/hermes-log/ENROLLMENT.json`.

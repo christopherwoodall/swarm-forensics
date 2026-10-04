@@ -41,6 +41,21 @@ def read_connection(dest):
     return sqlite3.connect((Path(dest) / "archive.sqlite").resolve().as_uri() + "?mode=ro", uri=True)
 
 
+def record_view(dest, uri):
+    """Read one complete retained post without truncation or network requests."""
+    with read_connection(dest) as conn:
+        found = conn.execute("SELECT normalized, source_request FROM posts WHERE uri=?",
+                             (uri,)).fetchone()
+        if found is None:
+            raise SourceError("record is absent from the private snapshot")
+        post = json.loads(found[0])
+        actor = json.loads(conn.execute("SELECT snapshot FROM actors WHERE did=?",
+                                       (post["actor_did"],)).fetchone()[0])
+        request = json.loads(conn.execute("SELECT metadata FROM requests WHERE id=?",
+                                         (found[1],)).fetchone()[0])
+        return {"post": post, "source_handle": actor["handle"], "source_request": request}
+
+
 def audit(dest):
     """Verify exact projections, bounds, references, and private permissions."""
     dest = Path(dest)

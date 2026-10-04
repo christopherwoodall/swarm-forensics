@@ -4,7 +4,7 @@
 .PHONY: watcher-poll watcher-pending watcher-ack watcher-status watcher-monitor
 .PHONY: watcher-discord-poll watcher-discord-pending watcher-discord-ack watcher-discord-status watcher-discord-monitor
 .PHONY: watcher-discord-audit
-.PHONY: delvetown-pilot delvetown-audit delvetown-inspect delvetown-test
+.PHONY: delvetown-pilot delvetown-audit delvetown-inspect delvetown-record delvetown-test
 
 # The repository can sit on a different filesystem than the uv cache.
 export UV_LINK_MODE := copy
@@ -180,3 +180,7 @@ delvetown-audit: ## Audit private Delvetown provenance and print content-free co
 
 delvetown-inspect: ## Inspect bounded private thread excerpts and account activity without network requests
 	@$(DELVE_RUN) python -m swarm_forensics.delvetown inspect --dest "$(DELVE_DIR)"
+
+delvetown-record: ## Read one complete private source post without network requests (DELVE_URI required)
+	@test -n "$(DELVE_URI)" || { printf '%s\n' 'Set DELVE_URI to an exact source URI.' >&2; exit 1; }
+	@$(DELVE_RUN) python -m swarm_forensics.delvetown record --dest "$(DELVE_DIR)" --uri "$(DELVE_URI)"

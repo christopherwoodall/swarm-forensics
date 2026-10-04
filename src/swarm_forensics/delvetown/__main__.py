@@ -8,7 +8,7 @@ from pathlib import Path
 
 from .collector import collect, validate_cohort
 from .records import SourceError
-from .report import audit, inspect
+from .report import audit, inspect, record_view
 from .transport import Reader
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -30,12 +30,18 @@ def destination(value):
 def main(argv=None):
     """Emit content-free receipts and preserve partial-coverage diagnostics."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("operation", choices=("collect", "audit", "inspect"))
+    parser.add_argument("operation", choices=("collect", "audit", "inspect", "record"))
     parser.add_argument("--dest", type=Path, required=True)
     parser.add_argument("--cohort", type=Path)
+    parser.add_argument("--uri")
     args = parser.parse_args(argv)
     try:
         dest = destination(args.dest)
+        if args.operation == "record":
+            if not args.uri:
+                raise SourceError("record lookup requires an exact URI")
+            print(json.dumps(record_view(dest, args.uri), sort_keys=True, ensure_ascii=False))
+            return 0
         if args.operation == "inspect":
             print(json.dumps(inspect(dest), sort_keys=True, ensure_ascii=False))
             return 0

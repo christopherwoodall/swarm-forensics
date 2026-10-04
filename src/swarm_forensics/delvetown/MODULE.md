@@ -29,6 +29,7 @@ Use the Python standard library and the root Makefile.
 - `make delvetown-pilot DELVE_COHORT=<json> DELVE_DIR=<new-directory>`: collect one bounded snapshot.
 - `make delvetown-audit DELVE_DIR=<directory>`: verify the retained snapshot without network requests.
 - `make delvetown-inspect DELVE_DIR=<directory>`: inspect bounded private thread excerpts without network requests.
+- `make delvetown-record DELVE_URI=<uri> DELVE_DIR=<directory>`: read one complete retained post without network requests.
 - The cohort JSON MUST contain an `actors` list with unique DID and handle fields.
 - Optional cohort labels remain self-reported source metadata.
 - Outputs include a raw-record SQLite archive, normalized JSONL, structural edges, and a private coverage report.
@@ -37,6 +38,7 @@ Use the Python standard library and the root Makefile.
 - `collector.collect`: filter the fixed time window while scanning collection pages through exhaustion or a safety limit.
 - `report.audit`: compare every exported post and edge against the retained record JSON and request metadata.
 - `report.inspect`: return at most 20 discussion samples with bounded excerpts.
+- `report.record_view`: return one exact post with its source handle and request provenance. Preserve complete text.
 - The CLI requires output paths under ignored `data/raw/delvetown/`.
 - The archive retains selected record JSON, not complete transport response bodies.
 - Request metadata preserves response hashes, byte counts, statuses, headers, and receipt timestamps.
@@ -45,13 +47,14 @@ Use the Python standard library and the root Makefile.
 
 ## 4. Current State & Known Gaps
 
-- Verified: Fourteen synthetic tests cover normalization, scope gates, budgets, retry delays, partial coverage, provenance, and inspection.
-- Verified: The current tree passes 189 tests and Ruff using the existing frozen environment.
+- Verified: Fifteen synthetic tests cover normalization, scope gates, budgets, retry delays, partial coverage, provenance, inspection, and complete-text lookup.
+- Verified: The current tree passes 190 tests and Ruff using the existing frozen environment.
 - Verified: The private pilot scanned all 45 approved accounts and retained 1,529 posts from 36 posting accounts.
 - Verified: The pilot completed within 182 GET attempts and 2,495,340 downloaded response bytes.
 - Verified: Offline audit checks raw projections, time bounds, structural references, request counts, and private permissions.
 - State: Private coverage and initial readings live under ignored `data/raw/delvetown/pilot/`.
 - State: Source files remain mode 0600. The pilot directory remains mode 0700.
+- State: Private branch-to-minutes analysis preserves source URIs, exact excerpts, and a companion evidence bundle.
 - Gap: Public discovery is not an authoritative admission roster.
 - Gap: Current repositories do not recover deleted records.
 - Gap: Independent account snapshots are not an atomic network snapshot.

@@ -51,9 +51,10 @@ class RecordTests(unittest.TestCase):
 
 
 class FixtureReader:
-    def __init__(self):
+    def __init__(self, text=None):
         self.requests = 0
         self.body_bytes = 0
+        self.text = text
 
     def get(self, url):
         self.requests += 1
@@ -72,6 +73,9 @@ class FixtureReader:
         else:
             body = {"records": [record(created="2026-09-01T12:00:00Z"), record()],
                     "cursor": "synthetic-cursor"}
+        if self.text is not None:
+            for item in body.get("records", []):
+                item["value"]["text"] = self.text
         raw = json.dumps(body).encode()
         self.body_bytes += len(raw)
         return body, {"url": url, "method": "GET", "status": 200,
@@ -179,6 +183,22 @@ class PilotTests(unittest.TestCase):
             self.assertEqual(len(result["threads"]), 2)
             self.assertTrue(any(not row["root_in_archive"] for row in result["threads"]))
             self.assertTrue(all(len(row["excerpt"]) <= 12 for row in result["threads"]))
+
+    def test_record_view_preserves_long_text_and_explicit_provenance(self):
+        from swarm_forensics.delvetown.collector import collect
+        from swarm_forensics.delvetown.report import record_view
+
+        text = "Synthetic long record. " * 300
+        with tempfile.TemporaryDirectory() as parent:
+            dest = Path(parent) / "pilot"
+            collect([{"did": DID, "handle": "synthetic.example"}], dest,
+                    reader=FixtureReader(text=text), started_at=NOW)
+            result = record_view(dest, URI)
+            self.assertEqual(result["post"]["text"], text)
+            self.assertEqual(result["source_handle"], "synthetic.example")
+            self.assertEqual(result["source_request"]["method"], "GET")
+            with self.assertRaises(SourceError):
+                record_view(dest, URI + "absent")
 
 
 class ReaderTests(unittest.TestCase):

@@ -15,8 +15,8 @@ Do not count an area complete merely because a question was asked.
 Uncertainty, refusal, and deferral are valid answers.
 Interview coverage does not establish implementation readiness.
 
-Completed areas: 3 of 9.
-Current area: 4, graph action semantics.
+Completed areas: 4 of 9.
+Current area: 5, swarm execution.
 
 ## Decision-area map
 
@@ -25,8 +25,8 @@ Current area: 4, graph action semantics.
 | 1 | First dataset and demonstration question | SwarmTraces; user types the question at session start. | A specific demonstration example is deferred. | Complete |
 | 2 | Source identity and sentence anchoring | Private snapshots; stable source anchors; graph attribution; expandable evidence on nodes and edges. | Revisit inspector density after use; exact anchor encoding is engineering detail. | Complete, with provisional UI |
 | 3 | Retrieval and model context | Dataset retrieval, named Hermes references, whole-graph context, and on-demand evidence inspection. | Whole-graph action permissions continue in area 4; role execution continues in area 5. | Complete |
-| 4 | Graph action semantics | Additive linked revisions; incorrect inferences can be struck through with retained provenance. | Decide who may directly apply incorrect status. | In progress |
-| 5 | Swarm execution | Optional timed single-member contributions to a frontier. | Define selection, silence, budgets, pause/stop, and pending-work behavior. | Pending |
+| 4 | Graph action semantics | Additive linked revisions; members propose strike-through and humans approve the status change. | Detailed UI remains revisitable; preserve all correction provenance. | Complete |
+| 5 | Swarm execution | Optional contributions; tentative node-count cadence from 20 seconds toward an 80-second cap. | Define counting scope, member selection, budgets, pause/stop, and pending-work behavior. | In progress |
 | 6 | Structured contribution contract | Provenance and structured conclusions precede register rendering. | Define output validation, evidence references, and confidence semantics. | Pending |
 | 7 | Persistence and report scope | Two report kinds; JSON and Markdown; optional PDF; shared snapshot. | Define reopen state, report inclusion scope, and PDF priority. | Pending |
 | 8 | Trust boundaries and failure behavior | Local files; no web research; request-only AI Village data excluded from demonstration and repository. | Define model privacy, credentials, exports, and failure handling. | Pending |
@@ -169,7 +169,70 @@ Confirmed: revision produces a linked analytic successor rather than overwriting
 The owner also requires the ability to strike through an inference found incorrect.
 Preserve that inference and record correction provenance rather than deleting history.
 Treat incorrect status as part of the graph record and report basis.
-Still unresolved: members applying the status directly versus proposing it for human approval.
+The next answer assigns members proposal authority and reserves approval for the human.
+
+### Area 4 — human approval for incorrect-inference marking
+
+Question: May members strike through an inference directly or only propose it for approval?
+Owner answer: “propose”
+Confirmed: members submit correction proposals; the human approves any strike-through status change.
+Preserve the inference, proposal, approval, timestamps, actors, and stated basis.
+Area 4 owner elicitation is complete for the initial slice.
+
+### Area 5 — node-count timing proposal
+
+The owner wants contribution timing to scale with node count.
+Owner proposal: “maybe start 20/20/30/30/40/40 etc, topping out at like 80sec?”
+Record it as tentative timing rather than a finalized schedule.
+Candidate continuation: `20,20,30,30,40,40,50,50,60,60,70,70,80,80...` seconds.
+That continuation assumes two counted nodes per interval step.
+The next answer provisionally selects swarm-added nodes as the counting population.
+Member selection, pause/stop, budgets, and pending-work behavior remain open.
+
+### Area 5 — tentative timing counter selected
+
+Question: Should timing count all graph nodes or only swarm-added nodes?
+Owner answer: “swarm-added i think”
+Provisional preference: swarm-added node count.
+Preserve “i think” as uncertainty; the timing remains adjustable rather than permanently settled.
+Automatic stopping, contribution budgets, member selection, and pause behavior remain unresolved.
+
+### Area 5 — optional continuation threshold requested
+
+Question: Continue automatic additions until paused or stop after a configurable contribution count?
+The owner tentatively prefers automation to become optional after a certain point.
+She asks for a reasonable threshold.
+
+Agent proposal: pause automatic growth after 12 swarm-added nodes and offer explicit continuation.
+The current candidate cadence totals 540 seconds of timer intervals for those additions.
+That is nine minutes of scheduled waiting, excluding model generation and retrieval time.
+The next candidate interval would be 80 seconds.
+This calculation is conditional on the provisional two-nodes-per-step cadence.
+No application timing was exercised.
+The next answer accepts this as an adjustable first-pass default.
+
+### Area 5 — initial automatic growth and continuation accepted
+
+Question: Would the proposed 12-node review threshold work as the first-pass default?
+Owner answer: “yes”
+Confirmed: pause automatic growth after 12 swarm-added nodes by default.
+Make the threshold adjustable.
+Offer “Add one” and “Continue automatically”.
+Keep manual graph interactions active during the pause.
+Do not treat the threshold as an evidence-sufficiency or completion verdict.
+Member selection and pending-work behavior remain unresolved.
+
+### Area 5 — member-selection options requested
+
+Question: How should the next swarm member be chosen?
+The owner suggests random selection or baton passing, but has not chosen a policy.
+She requests an explanation of the options.
+
+Agent options: fixed rotation, random or shuffled rounds, member nomination, or explicit human selection.
+These are alternatives for consideration, not accepted implementation requirements.
+For baton passing, distinguish a member's nomination from the scheduler's actual grant.
+Validation and a fallback would prevent an invalid nomination from stranding the run.
+Exact member-selection policy remains open.
 
 ### Project-name revision
 
