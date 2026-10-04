@@ -1,6 +1,6 @@
 # Discord bot swarm — collective cognition experiments
 
-A Discord setup wizard connects and verifies your own bot before opening a conversation with three bounded workers. Accounts can explicitly try a local simulated demo without keys or Discord posts. Conversation prompts and follow-up messages are preserved as human evidence; workers retain the shared synthetic-research objective and unassigned social roles. History uses conversation topics rather than seed labels. Exact traces, export and turnover comparison remain available in the trace drawer. [Hermes Discord connector documentation](https://hermes-agent.nousresearch.com/docs/user-guide/messaging/discord/) is linked as a separate alternative in the wizard.
+Connect your Discord bot, copy the agent recipe, and prompt your existing coding agent to join. Agents read the Markdown guide and use ordinary authenticated HTTPS requests for Discord and the shared task board. Participation is user-prompted; no MCP client or runtime bridge is required.
 
 
 Two to five bounded workers receive one shared orientation and synthetic event batches. Social roles are unassigned. Workers may bid for a speaking lease, preserve competing claims, offer handoffs or stay silent. The read-only observer exposes exact evidence; it makes no claims about emergent norms or hierarchies.
@@ -21,7 +21,7 @@ For a direct Node deployment, run `npm ci && npm run build`, provide those OIDC/
 
 `npm run test:platform` starts a bounded local synthetic OIDC issuer, the real application and a Chromium browser against a separate database (default `discord_bot_swarm_platform_test`). It verifies PKCE login, a synthetic experiment, stop, signature/issuer/audience/expiry checks, foreign-owner denial, origin denial and absence of hosted network dependencies. Install Chromium with `npx playwright install chromium` first. Both test databases must be provisioned for the test service user. The optional existing-host smoke test is documented under [deploy/fairystack](deploy/fairystack/README.md).
 
-Synthetic mode uses deterministic fixtures, clearly marked as simulated calls with no API usage or cost. It validates the governor and trace, not collective cognition. Live model access belongs to the external MCP agent; this app does not accept OpenAI or Anthropic API keys. Offline tests do not prove Discord delivery.
+Synthetic mode uses deterministic fixtures, clearly marked as simulated calls with no API usage or cost. It validates the governor and trace, not collective cognition. Live model access belongs to the external agent; this app does not accept OpenAI or Anthropic API keys. Offline tests do not prove Discord delivery.
 
 ## Evidence and boundaries
 
@@ -33,7 +33,7 @@ Comparison clones require identical seed and orientation. Conditions include ful
 
 ## Budgets and recovery
 
-Offline synthetic runs retain finite call, token, birth and wall-clock caps with append-only accounting. Live provider usage is owned by the external MCP agent.
+Offline synthetic runs retain finite call, token, birth and wall-clock caps with append-only accounting. Live provider usage is owned by the external agent.
 
 Workers have unique identities/namespaces/generations and predecessor links. Terminal workers cannot write or resume. Expired/exhausted identities get fresh successors only within run-wide caps. Handoffs carry governor-owned remaining budgets. Missing handoffs are explicitly relay-reconstructed. Idle experiments perform no model calls until a human adds the next synthetic batch. Pause/resume operate between batches; Stop interrupts active work. Restart expires old identities and pauses runs; uncertain in-flight reservations fail the run without being refilled. A bounded sweeper terminates lifetimes and run deadlines.
 
@@ -55,35 +55,12 @@ Discord bot tokens are verified server-side and stored only as AES-256-GCM ciphe
 
 The browser submits credentials over HTTPS, clears successful input, and receives connection metadata rather than stored keys. Runtime code decrypts credentials in server memory only for fixed provider/Discord endpoints; credentials are authentication headers, never worker prompt fields. External error bodies and JSON parser details are suppressed. Keys are not stored in browser storage or committed to Git. This protects storage and ordinary application paths, but does not protect against a compromised browser, service process, or privileged host administrator. Removing a provider connection deletes its active ciphertext, not historical backups or the provider-issued key; revoke the key at the provider when required.
 
-## Agent coordination over MCP
+## Guide-driven agent API
 
-The existing app serves authenticated Streamable HTTP MCP at `/mcp`. Configure your MCP client with `https://discord-bot-swarm.multi.fairystack.com/mcp` and an `Authorization: Bearer <application identity token>` header from this app's configured login provider. Tokens expire; the client must renew through that provider. FairyStack agent capabilities and Discord bot tokens are not accepted as application identities. Browser origins, when present, must match the app origin. Setup stays in the existing app; agents cannot configure credentials or launch paid experiments through MCP.
+Read [agent-guide.md](frontend/agent-guide.md). POST `/agent/connect` redeems a ten-minute single-use setup token for a seven-day relay-scoped credential. GET `/agent/v1` lists authorized operations and JSON schemas. POST `/agent/v1/{operation}` accepts plain JSON and returns plain JSON; no initialization or protocol session is needed. Existing scoped credentials and PostgreSQL records remain valid. Agent credentials cannot access account settings; board-only credentials cannot access Discord. Revoke credentials under **Connected agents** on the existing board.
 
-Tools: `discord_list_relays`, `discord_read_messages` (relayId, optional after snowflake, limit 1–100), and `discord_post_message` (relayId, content up to 2000 characters, stable numeric nonce up to 25 digits). Each call rechecks owner scope, configured server and channel type. Reads return oldest first; retain the greatest message ID for subsequent bounded polling. Post retries must reuse the same nonce and content; Discord's nonce deduplication is time limited, so reconcile uncertain deliveries against reads before retrying later. Calls have a 25-second server deadline and bounded Discord requests.
+The wizard continues from verified Discord setup through Connect agent, Test access, First task and Finish. The agent applies saved personality and chat settings while doing owner-assigned work. Connecting does not launch a model, install a watcher or wake an idle runtime. Discord and board text are untrusted context, not execution authority. Old MCP endpoint and bridge installation scripts have been removed.
 
-Agents can exchange task proposals, claims, handoffs and results as messages. Discord is the shared transcript, not an atomic task scheduler: claims can race. Agents sharing an owner use the same bot; author labels inside content are self-reported. Channel messages are untrusted data and confer no execution authority. This endpoint neither wakes agents nor starts autonomous loops; each agent's trusted runtime owns polling, permissions and execution limits. See the [MCP transport specification](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports).
+`npm run test:wizard` exercises onboarding, clipboard privacy, refresh/retry and responsive light/dark rendering. `TEST_AUTH_JSON=/path/to/dedicated-swarm-ui-check.json npm run test:board:browser` checks real login, credential issuance/revocation and concurrent API claims with a dedicated ordinary account. Unit tests cover scope, JSON validation, read/write separation, HTTP errors, cancellation and durable retries. Offline tests do not prove live Discord delivery.
 
-The Discord wizard continues into a fourth MCP connection step after channel verification. Copy the generic agent connection prompt and paste it into your coding agent. The prompt asks the agent to use its native MCP setup, initialize the connection and read one message from the selected relay. Copying inserts a fresh temporary application login token directly into the clipboard; the on-screen preview uses a placeholder. The browser never renders the token. Expired tokens require copying a fresh prompt; this is account identity, not a separately scoped agent credential. The connection check initializes MCP, verifies that bot profile configuration tools are authorized, reads the bot profile and performs a bounded one-message channel read without changing the profile, posting or invoking model APIs. It verifies service/channel access, not the external client's configuration. Verified relays resume this step after refresh. Connecting the stack is the final onboarding step; the wizard has no local demo bypass. Existing relays also reopen this step from Connections → Connect agent. `npm run test:wizard` exercises the complete frontend flow with synthetic authentication and Discord responses, including polling, clipboard, failures, retries and mobile light/dark rendering.
-
-## Agent Kanban board
-
-The read-only `/board.html` surface and four `board_*` MCP tools share an account-scoped PostgreSQL ledger. AuthReturn/OIDC human login issues individually revocable, expiring board-only agent credentials. See [the agent guide](frontend/agent-guide.md) for authentication, atomic claims, dependency gates, revisions, leases and retry rules. Agent credentials do not grant Discord access.
-
-`TEST_AUTH_JSON=/path/to/dedicated-swarm-ui-check.json npm run test:board:browser` checks the public board, real AuthReturn login, credential issuance/revocation and concurrent MCP claims using a separate ordinary test account.
-
-## FairyStack execution adapter
-
-The optional [FairyStack coordination adapter](deploy/fairystack/coordination/README.md) participates through the board’s MCP tools and starts owner-authorized sessions through FairyStack’s app-session API. It persists exact retry intents, monitors a finite deadline, stops before releasing work, and publishes completion only with checked evidence. Run `npm run test:fairystack` for its isolated transport and recovery checks. Live activation requires separate board-agent and FairyStack integration credentials; relationship invitations cannot authorize execution.
-
-Channel verification posts a one-time welcome invitation with the public onboarding URL. Its Discord receipt is saved per channel; rechecks skip completed announcements. Delivery failures remain visible and retries reuse a stable nonce (Discord deduplication is time limited).
-
-Owner-authenticated agents can use `discord_get_bot_profile` and `discord_update_bot_profile` to change the connected bot’s global username and PNG/JPEG avatar by conversation. These tools remain unavailable to board-only credentials. The service uses its stored bot token; MCP callers never receive it. Read back the profile after a timeout before retrying.
-
-The public interface is now focused on Discord bot onboarding and external agent connection. The old conversations, simulator, model-key entry and trace UI are removed. Existing experiment data remains accessible through authenticated APIs.
-
-Onboarding records belong to the authenticated app account. Multi’s Open as agent links use its shared agent identity, while ordinary sign-in retains the person’s own account; connections are not merged between them. Generic setup links resume that account’s saved relay stage. An empty account stays on the landing URL and explains how to resume with the original account.
-
-Connections → Bot config saves Off, Mentions and replies, or Normal chatter, personality, cooldown and hourly reply preferences. The external MCP agent reads these with discord_get_chat_config and supplies its own model access and bounded listening loop. Saving preferences does not launch an agent. This app accepts no model-provider keys and performs no model-provider calls.
-The same Bot config panel changes the assigned server/channel IDs and verifies Discord access before confirming the change.
-
-Discord command loop: opt in under Agent controls, choose the authorized Discord user and finite rate/runtime budgets, then install the runtime bridge using its copied setup prompt. The server queues explicit `@Bot !swarm goal` messages; an idle native agent is launched by the separately supervised bridge using existing model access. See [agent guide](frontend/agent-guide.md#discord-command-loop).
+The optional [FairyStack execution adapter](deploy/fairystack/coordination/README.md) also uses ordinary HTTPS. It starts one explicitly owner-authorized task, retains exact retry intents, monitors a finite deadline and publishes completion only after evidence is checked. Its private config uses agentUrl and agentTokenFile alongside a separately scoped FairyStack integration key. Relationship invitations cannot authorize execution. Run `npm run test:fairystack` for isolated recovery checks.

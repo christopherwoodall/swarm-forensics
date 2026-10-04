@@ -10,7 +10,7 @@ try{
  const signal=AbortSignal.timeout(['dispatch','watch'].includes(command)?(config.deadlineSeconds+60)*1000:60000);
  connection=await connections(config,signal);adapter=new Adapter({config,store,...connection});
  let result;
- if(['check','list'].includes(command)){result=await connection.mcp('board_list_tasks');if(!Array.isArray(result.tasks))throw Error('The service does not expose the shared board contract.');if(command==='check')result={status:'completed',tasksVisible:result.tasks.length,scope:'Read-only MCP board check; no session or model call was started.'};}
+ if(['check','list'].includes(command)){result=await connection.agent('board_list_tasks');if(!Array.isArray(result.tasks))throw Error('The service does not expose the shared board contract.');if(command==='check')result={status:'completed',tasksVisible:result.tasks.length,scope:'Read-only HTTPS API board check; no session or model call was started.'};}
  if(command==='dispatch')result=await adapter.dispatch(id,privateFile(textFile));
  if(command==='status')result=await adapter.status(id);
  if(command==='stop')result=await adapter.stop(id);
