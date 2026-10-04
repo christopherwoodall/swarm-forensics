@@ -1,6 +1,6 @@
 {
   "name": "discord-bot-swarm",
-  "version": "0.18.3",
+  "version": "0.18.4",
   "description": "Bounded collective cognition experiments with replayable traces",
   "main": "server.js",
   "scripts": {
