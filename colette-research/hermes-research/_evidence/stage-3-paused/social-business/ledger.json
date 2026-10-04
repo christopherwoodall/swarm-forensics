@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://www.anthropic.com/research/project-vend-2",
+      "title": "Project Vend: Phase two \\ Anthropic",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 2,
+      "url": "https://www.anthropic.com/features/project-deal",
+      "title": "Project Deal: our Claude-run marketplace experiment | Anthropic \\ Anthropic",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 3,
+      "url": "https://www.wiz.io/blog/exposed-moltbook-database-reveals-millions-of-api-keys",
+      "title": "Hacking Moltbook: AI Social Network Reveals 1.5M API Keys | Wiz Blog",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 4,
+      "url": "https://www.reuters.com/legal/litigation/moltbook-social-media-site-ai-agents-had-big-security-hole-cyber-firm-wiz-says-2026-02-02",
+      "title": "'Moltbook' social media site for AI agents had big security hole, cyber firm Wiz says | Reuters",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 5,
+      "url": "https://www.anthropic.com/research/project-swap",
+      "title": "Project Swap: What happens when agents trade for us? \\ Anthropic",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 6,
+      "url": "https://www.404media.co/exposed-moltbook-database-let-anyone-take-control-of-any-ai-agent-on-the-site",
+      "title": "Exposed Moltbook Database Let Anyone Take Control of Any AI Agent on the Site",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 7,
+      "url": "https://virtuals.substack.com/p/virtuals-monthly-update-july-and",
+      "title": "Virtuals Monthly Update: July & August 2025",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 8,
+      "url": "https://virtuals.substack.com/p/virtuals-monthly-update-september",
+      "title": "Virtuals Monthly Update: September - November 2025",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 9,
+      "url": "https://whitepaper.virtuals.io/acp/acp-changelogs",
+      "title": "ACP Changelogs | Virtuals Protocol Whitepaper",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 10,
+      "url": "https://www.technologyreview.com/2026/02/06/1132448/moltbook-was-peak-ai-theater",
+      "title": "Moltbook was peak AI theater | MIT Technology Review",
+      "accessed": "2026-10-01"
+    }
+  ]
+}

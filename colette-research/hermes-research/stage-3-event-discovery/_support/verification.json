@@ -1,0 +1,205 @@
+{
+  "status": "passed",
+  "research_cutoff": "2026-10-01",
+  "structural_and_evidence": {
+    "exit_code": 0,
+    "result": {
+      "status": "passed",
+      "errors": [],
+      "documents": [
+        {
+          "file": "01-provider-disclosed-cyber-campaigns.md",
+          "words": 1109,
+          "bytes": 9347
+        },
+        {
+          "file": "02-long-running-coding-teams.md",
+          "words": 1317,
+          "bytes": 10126
+        },
+        {
+          "file": "03-related-incident-and-simulation-exception.md",
+          "words": 1387,
+          "bytes": 10986
+        },
+        {
+          "file": "04-real-goods-and-agent-bargaining.md",
+          "words": 1173,
+          "bytes": 9298
+        },
+        {
+          "file": "05-controlled-cross-agent-propagation.md",
+          "words": 899,
+          "bytes": 7144
+        },
+        {
+          "file": "06-qualified-and-boundary-cases.md",
+          "words": 838,
+          "bytes": 7092
+        },
+        {
+          "file": "07-screened-leads-and-overlap.md",
+          "words": 1065,
+          "bytes": 9200
+        },
+        {
+          "file": "08-annotated-source-guide.md",
+          "words": 3160,
+          "bytes": 29580
+        },
+        {
+          "file": "README.md",
+          "words": 1231,
+          "bytes": 10697
+        }
+      ],
+      "candidate_count": 14,
+      "category_counts": {
+        "field_campaign": 3,
+        "engineering_run": 2,
+        "boundary_case": 3,
+        "simulation_exception": 1,
+        "field_experiment": 3,
+        "controlled_propagation": 2
+      },
+      "cited_source_count": 40,
+      "card_source_count": 31,
+      "checked_quote_count": 178,
+      "evidence_hashes": {
+        "_support/evidence/source-001.md": "12d97f40377873d5932a0b4ff8410b925993b46fe04075eb56aa71514cd64527",
+        "_support/evidence/source-002.md": "bff1d1a1bd34ccfae9bd4ab4d7b96170760d4afa55fa41289d013ef194df80d4",
+        "_support/evidence/source-003.md": "c0808251e6c713fb8d8e0a41f63d844bc8486e5310907febc600347631bc9217",
+        "_support/evidence/source-004.md": "fc60f192fd863929e89bc47acbfeb9f438073953b321f2906816230c25e6f68a",
+        "_support/evidence/source-005.md": "f155eb716720c0bc28c49e6312cc172d5f7c8216aaf9d58a488a0ffe6758b5d0",
+        "_support/evidence/source-006.md": "6a197abdd8d0764bd35b9750bf9f8f7daa456f8d38e36be8264460b2275bbf3b",
+        "_support/evidence/source-007.md": "cac18dc057c391498e1c7be790287cfadce5011e87782f845f15b934bf537f59",
+        "_support/evidence/source-008.md": "d2b6a4e96e5ab24dd21e85ab7658099b9b22eebe5d30e56cad5fd7da68fa94d2",
+        "_support/evidence/source-009.md": "30b06777bef7f4edb5c1207a4dc70b672949c3decdd2e9ba2ff1d0c4871e5a95",
+        "_support/evidence/source-010.md": "082ab29c4d5851d15f14f44f749c8666e913ec85d427d9d908b524908332ad10",
+        "_support/evidence/source-011.md": "a3efbd8b8f4113a2d1656f4cb63e09829164f5d821bb45248cfd803b6e54b79b",
+        "_support/evidence/source-012.md": "967b85cd980fbe8b1cf23083ce281fcceaf8be268003c58e782cd74e02cd95d2",
+        "_support/evidence/source-013.md": "c993e1db1a6afd4ccd775cfd232457b69879005c69c11c50d317953aea4b57cc",
+        "_support/evidence/source-014.md": "30bfd07bb66bc139ab72aedc4dfd8b9e0ac2fc50c9a13c5e0686f726cff39111",
+        "_support/evidence/source-015.md": "212e3ee39010916e1da9001dcecd0fcfafa6640f7276aa58e0e02949f10d41f1",
+        "_support/evidence/source-016.md": "35aa8bc469d560ed46d4f16e854c52c5462675d05b953a661b87000ae8e7b531",
+        "_support/evidence/source-017.md": "7fb2a038b934dd8262988705c85cec14cc847ba052f4d0281a1edadae07e7c52",
+        "_support/evidence/source-018.md": "fa799ecfc33d24dfa8cc8f601b52bcd920d3389eeb458362d9ae8f5aed657df2",
+        "_support/evidence/source-019.md": "315306e957cffa58957f11e88a4c3abde394d2d69d7b0f10eb147791ceceffa8",
+        "_support/evidence/source-020.md": "69b33402112bc3e952412669295bb759e29b8e637fd8fd87a3bd58cce714c17e",
+        "_support/evidence/source-021.md": "5b44da020341de344c50a12dfbed96f437aaaa553c798a2baae1889bc6a87b65",
+        "_support/evidence/source-022.md": "30fbf11fc9b505c9ac413103dded986007228c40816df1a61caf1b991259908d",
+        "_support/evidence/source-023.md": "edde3c9558ece03d4703e246c9baf6435e5c1224c6c2aba32a78b8a1a7a52928",
+        "_support/evidence/source-024.md": "24fd7a19fff2642ee88a9597483cbf915c68b46ce6486218b8e940db15b6f161",
+        "_support/evidence/source-025.md": "735896ff15ddce5474dff8ebd17db89718ae6dd02b9516b010623840d201debc",
+        "_support/evidence/source-026.md": "526f11d11d424c79f649340fe241c1f64db2d872e80a9abd3a93b932e212424f",
+        "_support/evidence/source-027.md": "ba0361f76dcd7996bc534fbe7def0bf56568922fd303d80e814a3b30b42334b3",
+        "_support/evidence/source-028.md": "69afae99775b1ed919cc75170aff00d3d9f9f7131a60092b66c3a28281522183",
+        "_support/evidence/source-029.md": "23c41bb7c51add9bdf53f4d8d2d8f3b878b386a938b7c727a691c7208a14c001",
+        "_support/evidence/source-030.md": "a1f191df06928440efbeaec7a98d9d66f4f0a2e0f4695be0ad5d69fdfd66311c",
+        "_support/evidence/source-031.md": "e6aa32995137bbfa00b5c8346de786dfb6151b2dac4bab3d190c336bd6ddb17c",
+        "_support/evidence/source-032.md": "c66f41573019741cac33eb512a8540a681e6b9121dc52d168a3ec11f51fc5097",
+        "_support/evidence/source-033.md": "d694d3fb4e465628c5a92bd96d1b693a6d68c419cb1878f4e4ab8404f2ba4028",
+        "_support/evidence/source-034.md": "c88bb83bf3967950b5e6766fe0611e055654f28c5b7c3e4e851905437288ebe9",
+        "_support/evidence/source-035.md": "f4e3fd57e1eab105032df91f4876ec6e802e482cbc66952e535e15aa3a77315e",
+        "_support/evidence/source-036.md": "393862ee12b02c96648b73dece924a0026c95eb973add3ec7e029ee7a7b2407c",
+        "_support/evidence/source-037.md": "a644a30f95ad71ce534f133d12c6f34af40b7a4b6a21c1a8e1bed85bf80c6378",
+        "_support/evidence/source-038.md": "958c8e0f789ad02db385b5d8e0f567ae6cc23952eba94262b4c1dc57f0b73a3f",
+        "_support/evidence/source-039.md": "ec1e03349dd44e8d7e02aeeb8468dd674e903287ccb5b96e369ae2640be8a2fd",
+        "_support/evidence/source-040.md": "f36b17487b5390ffcdd0d250010e229e680993b6bac5722a81fc4856d6162883"
+      },
+      "limitations": "Checks structure and preserved evidence, not causal inference, authorship, experimental replication or every sentence's entailment."
+    }
+  },
+  "strict_citations": {
+    "exit_code": 0,
+    "result": {
+      "status": "passed",
+      "mode": "Strict per-chapter cited subsets; collection-wide source coverage checked separately.",
+      "chapters": [
+        {
+          "file": "01-provider-disclosed-cyber-campaigns.md",
+          "exit_code": 0,
+          "errors": [],
+          "messages": [
+            "stats: 69 prose sentence(s), 63 with declared provenance (91%) — 63 cited, 0 marked [unverified] (a sentence may be both); 4 distinct source(s) cited, 4 in ledger (4 with evidence quotes)"
+          ]
+        },
+        {
+          "file": "02-long-running-coding-teams.md",
+          "exit_code": 0,
+          "errors": [],
+          "messages": [
+            "stats: 67 prose sentence(s), 62 with declared provenance (93%) — 62 cited, 0 marked [unverified] (a sentence may be both); 6 distinct source(s) cited, 6 in ledger (6 with evidence quotes)"
+          ]
+        },
+        {
+          "file": "03-related-incident-and-simulation-exception.md",
+          "exit_code": 0,
+          "errors": [],
+          "messages": [
+            "stats: 46 prose sentence(s), 29 with declared provenance (63%) — 29 cited, 0 marked [unverified] (a sentence may be both); 8 distinct source(s) cited, 8 in ledger (8 with evidence quotes)"
+          ]
+        },
+        {
+          "file": "04-real-goods-and-agent-bargaining.md",
+          "exit_code": 0,
+          "errors": [],
+          "messages": [
+            "stats: 61 prose sentence(s), 36 with declared provenance (59%) — 36 cited, 0 marked [unverified] (a sentence may be both); 3 distinct source(s) cited, 3 in ledger (3 with evidence quotes)"
+          ]
+        },
+        {
+          "file": "05-controlled-cross-agent-propagation.md",
+          "exit_code": 0,
+          "errors": [],
+          "messages": [
+            "stats: 50 prose sentence(s), 41 with declared provenance (82%) — 41 cited, 0 marked [unverified] (a sentence may be both); 4 distinct source(s) cited, 4 in ledger (4 with evidence quotes)"
+          ]
+        },
+        {
+          "file": "06-qualified-and-boundary-cases.md",
+          "exit_code": 0,
+          "errors": [],
+          "messages": [
+            "stats: 43 prose sentence(s), 32 with declared provenance (74%) — 32 cited, 0 marked [unverified] (a sentence may be both); 6 distinct source(s) cited, 6 in ledger (6 with evidence quotes)"
+          ]
+        },
+        {
+          "file": "07-screened-leads-and-overlap.md",
+          "exit_code": 0,
+          "errors": [],
+          "messages": [
+            "stats: 47 prose sentence(s), 14 with declared provenance (30%) — 14 cited, 0 marked [unverified] (a sentence may be both); 17 distinct source(s) cited, 17 in ledger (17 with evidence quotes)"
+          ]
+        },
+        {
+          "file": "08-annotated-source-guide.md",
+          "exit_code": 0,
+          "errors": [],
+          "messages": [
+            "stats: 186 prose sentence(s), 40 with declared provenance (22%) — 40 cited, 0 marked [unverified] (a sentence may be both); 40 distinct source(s) cited, 40 in ledger (40 with evidence quotes)"
+          ]
+        },
+        {
+          "file": "README.md",
+          "exit_code": 0,
+          "errors": [],
+          "messages": [
+            "stats: 40 prose sentence(s), 9 with declared provenance (22%) — 9 cited, 0 marked [unverified] (a sentence may be both); 9 distinct source(s) cited, 9 in ledger (9 with evidence quotes)"
+          ]
+        }
+      ]
+    }
+  },
+  "authored_document_checks": {
+    "documents": 11,
+    "errors": [],
+    "warnings": [],
+    "scope": "Nine authored Stage 3 documents plus owner README/checkpoint; external extracted evidence bodies excluded from authored-doc checks."
+  },
+  "owner_entrypoints": {
+    "local_links": "passed",
+    "parent_readme_citations": "passed"
+  },
+  "interpretation_boundary": "Automated checks validate structure, coverage, source mappings and preserved quotes; they do not authenticate authorship, reproduce experiments or independently validate provider outcomes."
+}

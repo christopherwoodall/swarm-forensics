@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://www.anthropic.com/news/disrupting-AI-espionage",
+      "title": "Disrupting an AI-orchestrated cyber espionage campaign \\ Anthropic",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 2,
+      "url": "https://www-cdn.anthropic.com/d7dd50dd1185f59be051b307150d877f2b82bd2c.pdf",
+      "title": "Full report: Disrupting the first reported AI-orchestrated cyber espionage campaign",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 3,
+      "url": "https://www.tenable.com/blog/the-agentic-ai-threat-cluster-seven-incidents-three-actors-and-what-they-mean",
+      "title": "Agentic AI Threat Cluster: What It Means for Your Exposure",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 4,
+      "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+      "title": "Countering misuse of AI: September 2026 / Anthropic \\ Anthropic",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 5,
+      "url": "https://www.anthropic.com/threat-intelligence",
+      "title": "Threat Intelligence / Anthropic \\ Anthropic",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 6,
+      "url": "https://dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia",
+      "title": "Multi-Agent AI Attacks on Asian Governments | Dream Research",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 7,
+      "url": "https://unit42.paloaltonetworks.com/autonomous-ai-cyber-attack-campaign",
+      "title": "Chinese-Speaking Threat Actor Harnesses AI Models for Autonomous Cyberattacks",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 8,
+      "url": "https://www.sysdig.com/blog/jadepuffer-agentic-ransomware-for-automated-database-extortion",
+      "title": "JADEPUFFER: Agentic ransomware for automated database extortion | Sysdig",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 9,
+      "url": "https://arxiv.org/html/2602.20021v1",
+      "title": "Agents of Chaos",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 10,
+      "url": "https://www.arxiv.org/abs/2602.20021",
+      "title": "[2602.20021] Agents of Chaos",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 11,
+      "url": "https://moda.gov.tw/ACS/press/news/press/20394",
+      "title": "境外駭客發動AI Agent攻擊政府機關    數發部啟動應變聯防強化資安防線｜新聞稿 - 最新消息 - 訊息公告｜資通安全署 Administration for Cyber Security, moda",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 12,
+      "url": "https://moda.gov.tw/ACS/press/report/20430",
+      "title": "資通安全網路月報（115年7月）｜資安月報 - 訊息公告｜資通安全署 Administration for Cyber Security, moda",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 13,
+      "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents",
+      "title": "An alignment assessment of recent cybersecurity incidents \\ Anthropic",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 14,
+      "url": "https://arxiv.org/pdf/2602.20021v1",
+      "title": "Agents of Chaos",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 15,
+      "url": "https://agentsofchaos.baulab.info",
+      "title": "Agents of Chaos",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 16,
+      "url": "https://agentsofchaos.baulab.info/report.html",
+      "title": "Agents of Chaos",
+      "accessed": "2026-10-01"
+    },
+    {
+      "id": 17,
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/07/31/captivecrunch-midnight-blizzard-targets-travelers-worldwide-for-malware-delivery-and-credential-theft",
+      "title": "CaptiveCrunch: Midnight Blizzard targets travelers worldwide for malware delivery and credential theft | Microsoft Security Blog",
+      "accessed": "2026-10-01"
+    }
+  ]
+}

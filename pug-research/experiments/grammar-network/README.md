@@ -35,7 +35,9 @@ See [MODULE.md](MODULE.md) for invariants and [REPORT.md](REPORT.md) for finding
 
 Build A streams all sources; village chat stride 5, memories stride 100
 (stride 20 is compute-prohibitive: p50 doc 17KB), Claude Code stride 5,
-goals unstrided (n=33). Co-occurrence pass caps at 4000 tokens per doc.
+goals unstrided (n=33). v-mem is excluded by default (p50 doc 17KB makes
+co-occurrence compute-prohibitive on this VM). Co-occurrence pass caps at
+4000 tokens per doc.
 Build B: traces stride 20, wiki bodies stride 5. Structural features
 computed on the first 400 docs per partition (4k chars cap each).
 

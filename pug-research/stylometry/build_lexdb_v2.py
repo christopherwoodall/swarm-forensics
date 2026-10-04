@@ -58,17 +58,38 @@ def _jlines_gz(path):
                 continue
 
 
+def _strided(docs, stride):
+    """Deterministic 1-in-stride systematic sample (documented sampling)."""
+    for i, item in enumerate(docs):
+        if i % stride == 0:
+            yield item
+
+
+# Sampling strides for the large village partitions. The v1 traces partition
+# already samples 1-in-20; the same principle applies here: systematic,
+# deterministic, documented. Full builds are infeasible on the shared box
+# (2 CPUs, load >10 from sibling lanes); profiles are unbiased estimates.
+STRIDES = {
+    "vil_chat_agent": 5,
+    "vil_chat_all": 5,
+    "vil_code": 5,
+    "vil_computer_lex": 20,
+    "vil_memories": 10,
+}
+
+
 def iter_vil_chat_agent():
     """Village chat, speaker_type='agent' only. ~10k user rows excluded."""
-    for d in _jlines_gz(CHAT_PATH):
-        if d.get("speaker_type") != "agent":
-            continue
+    docs = (d for d in _jlines_gz(CHAT_PATH) if d.get("speaker_type") == "agent")
+    for d in _strided(docs, STRIDES["vil_chat_agent"]):
+        yield d.get("id"), d.get("content") or ""
         yield d.get("id"), d.get("content") or ""
 
 
 def iter_vil_chat_all():
     """Village chat, all speakers. Contamination check partition."""
-    for d in _jlines_gz(CHAT_PATH):
+    for d in _strided(_jlines_gz(CHAT_PATH), STRIDES["vil_chat_all"]):
+        yield d.get("id"), d.get("content") or ""
         yield d.get("id"), d.get("content") or ""
 
 
@@ -97,9 +118,11 @@ def iter_vil_code():
 
     Assistant messages are agent output. User/system/result excluded.
     """
-    for d in _jlines_gz(CODE_PATH):
-        if d.get("message_type") != "assistant":
-            continue
+    docs = (d for d in _jlines_gz(CODE_PATH) if d.get("message_type") == "assistant")
+    for d in _strided(docs, STRIDES["vil_code"]):
+        out = []
+        _extract_text(d.get("content"), out)
+        yield d.get("id"), "\n".join(out)
         out = []
         _extract_text(d.get("content"), out)
         yield d.get("id"), "\n".join(out)
@@ -119,7 +142,10 @@ def _as_text(v):
 
 def iter_vil_computer_lex():
     """Computer-use turns, lexical side: agent_messages + output + error."""
-    for d in _jlines_gz(COMPUTER_PATH):
+    for d in _strided(_jlines_gz(COMPUTER_PATH), STRIDES["vil_computer_lex"]):
+        parts = [
+            _as_text(d.get("agent_messages")),
+            _as_text(d.get("output")),
         parts = [
             _as_text(d.get("agent_messages")),
             _as_text(d.get("output")),
@@ -130,7 +156,8 @@ def iter_vil_computer_lex():
 
 def iter_vil_memories():
     """Consolidated agent memories. Village-only reference partition."""
-    for d in _jlines_gz(MEMORIES_PATH):
+    for d in _strided(_jlines_gz(MEMORIES_PATH), STRIDES["vil_memories"]):
+        yield d.get("id"), d.get("content") or ""
         yield d.get("id"), d.get("content") or ""
 
 
@@ -142,12 +169,12 @@ PARTITIONS_V2 = {
     "ours_traces": ("openai", "traces.jsonl 1-in-20 (incl. analyst notes)", iter_traces),
     "ours_traces_clean": ("openai", "traces.jsonl 1-in-20, URL+params only", iter_traces_clean),
     # Village side (functional matches).
-    "vil_chat_agent": ("village", "chat_messages speaker_type=agent only", iter_vil_chat_agent),
-    "vil_chat_all": ("village", "chat_messages all speakers (contamination check)", iter_vil_chat_all),
-    "vil_goals": ("village", "agent_goals name+short_name+description", iter_vil_goals),
-    "vil_code": ("village", "claude_code assistant messages (nested text extracted)", iter_vil_code),
-    "vil_computer_lex": ("village", "computer_use_turns agent_messages+output+error", iter_vil_computer_lex),
-    "vil_memories": ("village", "agent_memories consolidated prose (reference)", iter_vil_memories),
+    "vil_chat_agent": ("village", "chat_messages speaker_type=agent only, 1-in-5", iter_vil_chat_agent),
+    "vil_chat_all": ("village", "chat_messages all speakers 1-in-5 (contamination check)", iter_vil_chat_all),
+    "vil_goals": ("village", "agent_goals name+short_name+description (33, all)", iter_vil_goals),
+    "vil_code": ("village", "claude_code assistant messages 1-in-5 (nested text extracted)", iter_vil_code),
+    "vil_computer_lex": ("village", "computer_use_turns agent_messages+output+error 1-in-20", iter_vil_computer_lex),
+    "vil_memories": ("village", "agent_memories consolidated prose 1-in-10 (reference)", iter_vil_memories),
 }
 
 # Diagonal (function-matched) pairs for the comparison matrix.
@@ -244,6 +271,8 @@ def main():
                 ("build", "v2-functional"))
     cur.execute("INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)",
                 ("diagonals", json.dumps(DIAGONALS)))
+    cur.execute("INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)",
+                ("strides", json.dumps(STRIDES)))
     con.commit()
     con.close()
     print(f"Wrote {args.db}")

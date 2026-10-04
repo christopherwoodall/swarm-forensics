@@ -86,4 +86,73 @@ for free.
 
 ## Build A: co-occurrence grammar networks
 
-(Results below when the run completes.)
+Six partitions (v-mem excluded: p50 doc 17KB makes it compute-prohibitive;
+see README). Window ±4, top-1500 terms, stdlib only.
+
+| part | edges | density | cc_exp | clust | sent_len | imp_rate | urls/doc |
+|---|---|---|---|---|---|---|---|
+| wiki | 116,318 | 0.103 | -0.77 | 0.70 | 104.7±176.6 | 0.015 | 6.38 |
+| evals | 10,673 | 0.009 | -0.65 | 0.79 | 26.6±15.5 | 0.096 | 0.03 |
+| gems-code-nl | 4,395 | 0.004 | -0.62 | 0.67 | 38.6±103.7 | 0.036 | 1.40 |
+| v-chat | 348,348 | 0.310 | -1.00 | 0.87 | 19.1±16.9 | 0.009 | 0.18 |
+| v-goals | 160 | 0.006 | -0.68 | 0.11 | 21.4±63.2 | 0.000 | 0.91 |
+| v-code | 294,371 | 0.262 | -0.80 | 0.81 | 74.7±113.9 | 0.041 | 0.13 |
+
+Central nodes: wiki = {https, wiki, gov, dse, json}; v-chat =
+{the, to, and, i, a, for}; v-code = {ispaused, null, email, false,
+pauseduntil}; evals = function words.
+
+**Strongest divergence (structural, not lexical):** the two "agent
+coordination" corpora are structurally different species. The swarm wiki
+is URL-list space (mean "sentence" 105 tokens, 6.4 URLs/doc — the
+sentence splitter drowns in URL dumps). Village chat is conversational
+first-person prose (19-token sentences, "i" among the most central
+nodes, 0.18 URLs/doc). Bag-of-words already said their vocabularies
+differ; the graphs say their *shapes* differ: one is a database that
+agents write to, the other is a room agents talk in.
+
+**Weak convergence:** clustering is high everywhere (0.67–0.87) and
+degree exponents sit in [-0.62, -1.00] — all agent text is clumpy and
+hub-dominated. That is a property of the method's resolution, not
+evidence of shared structure; natural language baselines would be
+needed to claim otherwise (not built).
+
+**Discriminative structural features:** imperative-sentence rate isolates
+task prompts (evals 0.096 vs 0.009–0.041 elsewhere); URL density isolates
+the wiki (6.4/doc); list-marker density isolates gem READMEs
+(16.7/doc); v-code is tool-result JSON space (null/false central).
+
+**Caveat:** wiki sentence-length stats are a measurement artifact of URL
+dumps, not prose rhythm — reported as-is because the artifact itself is
+the structural signal.
+
+## Pattern DB (`patterns.sqlite`, stdlib)
+
+15,114 URL templates, 270 relay chains, 929 param grammars, 168 nonce
+shapes, 758k action n-grams. Full dump: [PATTERNS.md](PATTERNS.md).
+`make patterns` rebuilds.
+
+- **Nesting order is invariant**: jq-proxy outermost, render/CORS relays
+  middle, target innermost — across 242 observed chains. Relay inventory
+  churns (new: md.succ.ai, pure.md, markdown.new, vanderbi.lt,
+  webcrawlerapi.com, worker CORS proxies, md.dhr.wtf) but the order does not.
+- **zz takes three shapes**: `oai<digits>` (747x), bare epoch_ns (323x),
+  bare int (107x) — the tag grammar is richer than "zz=oai".
+- **Wiki venue fuzz family**: dirq/uniq/dz/rapid/pfast/mself/jqnew/zmd/
+  selfoa/mfinal/ourself/nself — timing/cachebust probes against the
+  agents' own wiki.cgi.
+- **New target**: reportcard.msde.maryland.gov bulk downloads
+  (14,353 refs, `{id}` path grammar) — not on the incident map.
+- P(sec.gov | vanderbi.lt) = 1.00 — single-purpose relay.
+
+## Behavioral experiments (see [BEHAVIOR.md](BEHAVIOR.md))
+
+`make behavior`. One-liners: 324k A→X→A retry cycles in 62.6k turn
+sessions (retry is first-class behavior); traces CV=57, 99% sub-minute
+gaps, median gap 1s (machine cadence; history.navy.mil is the human-paced
+outlier at 78s); turn sessions start `mouse_move` (56k) and end
+`send_message_back_to_chat`; failure vocab centers on
+fail/blocked/syntax/workaround/escalation. The relay-chain Markov is
+degenerate for traces (zero nested chains — direct fetches only); the
+honest comparison is wiki-internal order-2, which confirms the 3-layer
+nesting rule.

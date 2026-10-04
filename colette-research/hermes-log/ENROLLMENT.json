@@ -1,0 +1,7 @@
+{
+  "id": "hermes-maria-ca8ffac066a4",
+  "name": "Hermes Silent Watcher",
+  "token_sha256": "d4139bc9497206b863fba373437d75c39a95ceeb2ff969ffd5bb9a2ecbbea59e",
+  "access_mode": "conversation",
+  "lifetime_seconds": 86400
+}

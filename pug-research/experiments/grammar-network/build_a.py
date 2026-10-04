@@ -303,6 +303,13 @@ def main():
     only = os.environ.get("PARTS")
     if only:
         parts = [p for p in parts if p in only.split(",")]
+    # v-mem excluded by default: p50 doc 17KB makes co-occurrence
+    # compute-prohibitive on this VM; run explicitly with PARTS=v-mem
+    # and MEM_STRIDE100=1 if needed.
+    if not only and "v-mem" in parts:
+        parts.remove("v-mem")
+        print("SKIP v-mem: compute-prohibitive at stride 20 (see README)",
+              flush=True)
     results = {"params": {"top_n": TOP_N, "window": WINDOW, "min_edge": MIN_EDGE,
                           "tagger": None, "note": "windowed co-occurrence fallback"},
                "partitions": {}}
