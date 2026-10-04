@@ -25,6 +25,15 @@ export function snapshotOnly(status){
  }
  return true;
 }
+export function waitForMergeability(read,pause,attempts=10){
+ for(let i=0;i<attempts;i++){
+  const request=read();
+  if(request.mergeable==='MERGEABLE')return request;
+  if(request.mergeable==='CONFLICTING')throw Error('Pull request has merge conflicts.');
+  if(i+1<attempts)pause();
+ }
+ throw Error('Timed out waiting for GitHub mergeability calculation.');
+}
 export function autoSync(configFile){
  const stat=fs.lstatSync(configFile);
  if(!stat.isFile()||stat.uid!==process.getuid()||(stat.mode&0o077))throw Error('Private configuration MUST be an owner-only file.');
@@ -76,7 +85,7 @@ export function autoSync(configFile){
   step='required checks';
   const protection=api(`repos/${targetRepository}/branches/main`).protection?.required_status_checks;
   if((protection?.contexts?.length||0)+(protection?.checks?.length||0)>0)run('gh',['pr','checks',pr,'--repo',targetRepository,'--required','--watch','--interval','10','--fail-fast'],300);
-  const request=JSON.parse(gh('pr','view',pr,'--repo',targetRepository,'--json','headRefOid,mergeable'));
+  const request=waitForMergeability(()=>JSON.parse(gh('pr','view',pr,'--repo',targetRepository,'--json','headRefOid,mergeable')),()=>Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,2000));
   verifyMerge(api(`repos/${targetRepository}/commits/main`).sha,base,request.headRefOid,testedHead);
   if(request.mergeable!=='MERGEABLE')throw Error('Pull request is conflicted or mergeability is unknown.');
   step='merge';gh('pr','merge',pr,'--repo',targetRepository,'--squash','--delete-branch','--match-head-commit',testedHead);
