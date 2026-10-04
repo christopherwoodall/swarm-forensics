@@ -65,7 +65,7 @@ Read [AGENTS.md](AGENTS.md) before using real data.
 | [AGENTS.md](AGENTS.md) | Repository requirements and agent authorization |
 | [Core MODULE.md](src/swarm_forensics/MODULE.md) | Local architecture, invariants, and implementation gaps |
 | [Ingest MODULE.md](src/swarm_forensics/ingest/MODULE.md) | Acquisition interfaces and data-safety requirements |
-| [Visualization references](data/viz_mock/README.md) | Synthetic mocks, not implemented forensic analysis |
+| [Visualization references](pug-research/experiments/viz_mock/v1/README.md) | Synthetic mocks, not implemented forensic analysis |
 
 Keep architecture documentation in local `src/**/MODULE.md` files.
 Reserve `docs/` for MkDocs and GitHub Pages assets.
@@ -98,7 +98,7 @@ The sample command writes three gzipped JSON Lines tables under `data/raw/sample
 It requires no credentials and downloads no dataset files.
 
 The existing mocks require internet access for Three.js from a CDN.
-Open `data/viz_mock/pipeline-mock-v2.html` in a browser to inspect the synthetic reference.
+Open `pug-research/experiments/viz_mock/v1/pipeline-mock-v2.html` in a browser to inspect the synthetic reference.
 This bootstrap did not validate browser rendering or real-data integration.
 
 ### Getting the Data
@@ -161,3 +161,9 @@ with gzip.open("data/raw/events.jsonl.gz", "rt", encoding="utf-8") as handle:
         print(event["data"]["actionType"], event["created_at"])
         break
 ```
+
+## Jesse's Experiment
+
+[Discord Swarm](experiments/jesse/README.md) provides Discord coordination tools through MCP.
+Its source lives under `experiments/jesse/discord-bot-swarm/`.
+Run `make jesse-test` and `make jesse-browser-test` for offline verification.

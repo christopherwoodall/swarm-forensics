@@ -97,6 +97,8 @@ Its Ruff check now belongs to `lint`, including both viewer servers.
 
 ## 4. Current State & Known Gaps
 
+- Verified: Root lint checks use relocated viewer paths. Watcher contract tests pass.
+
 - Verified: `make -o setup test lint RUN='uv run --frozen'` passes 130 tests and Ruff.
 - Verified: Vertical RED/GREEN tracers cover capture, replay, restart, acknowledgement, safety gates, monitor retries, and Make interfaces.
 - Verified: Offline tests cover failed transactions, wrong sessions, wrong modes, stalled cursors, redirects, lease expiry, and deadlines.
@@ -118,6 +120,8 @@ Its Ruff check now belongs to `lint`, including both viewer servers.
 - Gap: A persisted expired lease blocks polling. Lease renewal requires separate authorization and local reconciliation.
 
 ## 5. Pruned Decisions (Keep max 3)
+
+- [2026-10-04 Codex]: Verify root lint paths after the visualization directory move. Preserve watcher acquisition contracts.
 
 - [2026-10-01 Hermes]: Separate source acquisition from analysis acknowledgement. Retain backlog after extraction failure.
 - [2026-10-01 Hermes]: Persist backlog retry generations. Avoid model wakeups from volatile metadata and unchanged idle ticks.
