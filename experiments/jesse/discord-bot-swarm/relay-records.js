@@ -40,3 +40,14 @@ export async function announceJoined(pool,relay,owner,id,origin){
   await client.query('COMMIT');return announcement;
  }catch(e){await client.query('ROLLBACK');throw Error('Welcome announcement failed: '+e.message);}finally{client.release();}
 }
+
+// Merge only this preference so concurrent setup changes remain intact.
+export async function agentPersonality(pool,owner,relayId,personality){
+ if(personality!==undefined&&(typeof personality!=='string'||personality.length>4000))throw Error('Personality must be a string of at most 4000 characters.');
+ const row=(await pool.query(personality===undefined?
+  'SELECT config FROM swarms WHERE id=$1 AND owner=$2':
+  "UPDATE swarms SET config=config||jsonb_build_object('personality',$3::text) WHERE id=$1 AND owner=$2 RETURNING config",
+  personality===undefined?[relayId,owner]:[relayId,owner,personality])).rows[0];
+ if(!row)throw Error('Relay not found.');
+ return {relayId,personality:row.config.personality??''};
+}

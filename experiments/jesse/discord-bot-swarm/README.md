@@ -21,7 +21,7 @@ For a direct Node deployment, run `npm ci && npm run build`, provide those OIDC/
 
 `npm run test:platform` starts a bounded local synthetic OIDC issuer, the real application and a Chromium browser against a separate database (default `discord_bot_swarm_platform_test`). It verifies PKCE login, a synthetic experiment, stop, signature/issuer/audience/expiry checks, foreign-owner denial, origin denial and absence of hosted network dependencies. Install Chromium with `npx playwright install chromium` first. Both test databases must be provisioned for the test service user. The optional existing-host smoke test is documented under [deploy/fairystack](deploy/fairystack/README.md).
 
-Synthetic mode uses deterministic fixtures, clearly marked as simulated calls with no API usage or cost. It validates the governor and trace, not collective cognition. BYOK mode runs actual models against the same synthetic batches. Discord mode additionally requires an explicit channel approval and a verified relay; live delivery requires user credentials and an installed bot. Offline tests do not prove Discord delivery.
+Synthetic mode uses deterministic fixtures, clearly marked as simulated calls with no API usage or cost. It validates the governor and trace, not collective cognition. Live model access belongs to the external MCP agent; this app does not accept OpenAI or Anthropic API keys. Offline tests do not prove Discord delivery.
 
 ## Evidence and boundaries
 
@@ -33,7 +33,7 @@ Comparison clones require identical seed and orientation. Conditions include ful
 
 ## Budgets and recovery
 
-Finite configurable run token, cost, call, turn, birth and wall-clock limits apply to all replacements. Worker allotments and lifetimes are separate. Atomic PostgreSQL transactions reserve exact counted input, maximum output and known standard-rate cost before inference. Actual provider usage reconciles the reservation; cached tokens are conservatively priced as ordinary input. Unknown usage/price fails closed and retains the reservation. Pricing sources and verification date live in pricing.json; stale or unsupported pricing disables provider runs. Token counting is separately recorded; there are no auxiliary inference calls or worker tool calls. No provider retries bypass caps.
+Offline synthetic runs retain finite call, token, birth and wall-clock caps with append-only accounting. Live provider usage is owned by the external MCP agent.
 
 Workers have unique identities/namespaces/generations and predecessor links. Terminal workers cannot write or resume. Expired/exhausted identities get fresh successors only within run-wide caps. Handoffs carry governor-owned remaining budgets. Missing handoffs are explicitly relay-reconstructed. Idle experiments perform no model calls until a human adds the next synthetic batch. Pause/resume operate between batches; Stop interrupts active work. Restart expires old identities and pauses runs; uncertain in-flight reservations fail the run without being refilled. A bounded sweeper terminates lifetimes and run deadlines.
 
@@ -47,11 +47,11 @@ PostgreSQL stores application state using the deployment's configured database r
 
 ## Hosting adapters
 
-`deploy/fairystack/` and the root `fairystack.json` preserve the original live deployment. They are optional and excluded from the container's runtime configuration. Public deployment identifiers are not secrets. With PUBLIC_ORIGIN configured, the app does not read them or load AuthReturn/Observatory scripts. Core providers, Discord transport, encryption, governor, trace store and UI are shared across hosts.
+`deploy/fairystack/` and the root `fairystack.json` preserve the original live deployment. They are optional and excluded from the container's runtime configuration. Public deployment identifiers are not secrets. With PUBLIC_ORIGIN configured, the app does not read them or load AuthReturn/Observatory scripts. Discord transport, encryption, governor, trace store and UI are shared across hosts.
 
 ## Credential storage
 
-Provider API keys and Discord bot tokens are verified server-side and stored only as AES-256-GCM ciphertext in PostgreSQL. Each authenticated owner has a random data key, itself encrypted with the deployment master key in DATA_DIR/credential-key (mode 0600; DATA_DIR is 0700). Authenticated owner and credential purpose are authenticated encryption context, preventing cross-owner or cross-purpose substitution. Database backups alone cannot decrypt credentials; a backup containing the master key as well can.
+Discord bot tokens are verified server-side and stored only as AES-256-GCM ciphertext in PostgreSQL. Each authenticated owner has a random data key, itself encrypted with the deployment master key in DATA_DIR/credential-key (mode 0600; DATA_DIR is 0700). Authenticated owner and credential purpose are authenticated encryption context, preventing cross-owner or cross-purpose substitution. Database backups alone cannot decrypt credentials; a backup containing the master key as well can.
 
 The browser submits credentials over HTTPS, clears successful input, and receives connection metadata rather than stored keys. Runtime code decrypts credentials in server memory only for fixed provider/Discord endpoints; credentials are authentication headers, never worker prompt fields. External error bodies and JSON parser details are suppressed. Keys are not stored in browser storage or committed to Git. This protects storage and ordinary application paths, but does not protect against a compromised browser, service process, or privileged host administrator. Removing a provider connection deletes its active ciphertext, not historical backups or the provider-issued key; revoke the key at the provider when required.
 
@@ -82,3 +82,8 @@ Owner-authenticated agents can use `discord_get_bot_profile` and `discord_update
 The public interface is now focused on Discord bot onboarding and external agent connection. The old conversations, simulator, model-key entry and trace UI are removed. Existing experiment data remains accessible through authenticated APIs.
 
 Onboarding records belong to the authenticated app account. Multi’s Open as agent links use its shared agent identity, while ordinary sign-in retains the person’s own account; connections are not merged between them. Generic setup links resume that account’s saved relay stage. An empty account stays on the landing URL and explains how to resume with the original account.
+
+Connections → Bot config saves Off, Mentions and replies, or Normal chatter, personality, cooldown and hourly reply preferences. The external MCP agent reads these with discord_get_chat_config and supplies its own model access and bounded listening loop. Saving preferences does not launch an agent. This app accepts no model-provider keys and performs no model-provider calls.
+The same Bot config panel changes the assigned server/channel IDs and verifies Discord access before confirming the change.
+
+Discord command loop: opt in under Agent controls, choose the authorized Discord user and finite rate/runtime budgets, then install the runtime bridge using its copied setup prompt. The server queues explicit `@Bot !swarm goal` messages; an idle native agent is launched by the separately supervised bridge using existing model access. See [agent guide](frontend/agent-guide.md#discord-command-loop).
