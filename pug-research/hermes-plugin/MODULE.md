@@ -5,8 +5,12 @@ Provide a Hermes desktop plugin (`swarm-forensics`) that runs autonomous and int
 
 ## 2. Active Invariants
 - A hunt starts only by an operator act: desktop Start button, `/swarm-forensics start`, or an armed schedule.
+- Multiple hunts MAY run concurrently up to `hunt.max_active_hunts` (default 3). Each chat session follows its own bound hunt.
 - A hunt runs in either session mode (native chat agent) or background mode (scheduled or headless worker threads).
 - Session hunts MUST bind real durable Hermes session identifiers.
+- Session identity MUST be read through `session_env` (ContextVar-aware), never bare `os.getenv` on host worker threads.
+- Chat narration MUST go through `ctx.inject_message` with the durable session key and MUST respect the host's `allow_gateway_injection` consent. Denial sets `narration_blocked`; it MUST NOT raise.
+- Session-scoped verbs target the calling session's bound hunt. With no binding and several active hunts, verbs MUST ask for an id instead of guessing. `on_session_start` MUST NOT auto-bind when zero or several unbound hunts are active.
 - An interactive hunt runs as a standard Hermes session with native `sf_*` tools.
 - A hunt MAY spawn child sub-hunts up to `hunt.max_depth` (default 3).
 - Stopping a parent hunt MUST stop all active child hunts.
@@ -35,17 +39,19 @@ Provide a Hermes desktop plugin (`swarm-forensics`) that runs autonomous and int
 
 ## 3. Interfaces & Dependencies
 - Package: `plugins/swarm-forensics/` is one unified plugin. `register(ctx)` registers commands, tools, hooks, and skills.
-- Modules: Core modules include `db`, `settings`, `safety`, `extract`, `entities`, `prompt_registry`, `url_store`, and `mirror`. Engine modules include `agent_tools`, `registry`, `export`, `iocs`, `ledger`, `predict`, `sources`, `analysis`, `hooks`, and `command`.
+- Modules: Core modules include `db`, `settings`, `safety`, `extract`, `entities`, `prompt_registry`, `url_store`, and `mirror`. Engine modules include `agent_tools`, `registry`, `export`, `iocs`, `ledger`, `predict`, `sources`, `analysis`, `hooks`, `session_env`, `narration`, and `command`.
 - Backend routes: Routes serve hunts, events, leads, evidence, and IOCs. Other routes serve URLs, entities, mirrors, corpus, and settings.
 - Hermes agent tools: `sf_get_context`, `sf_search_index`, `sf_record_evidence`, `sf_mirror_url`, `sf_analyze_corpus`, `sf_propose_ioc`, `sf_manage_entity`, `sf_link_entities`, `sf_triage_item`, `sf_query_knowledge`, `sf_spawn_subhunt`, `sf_attach_hunt`.
-- Desktop UI: Pages include Hunt, Knowledge, Evidence, IOCs, URLs, Prompts, Sources, and Settings. Components include composer underside strip and companion pane. Slot and pane hosts mount contributions with no props. Components MUST read the focused session from `host.state.focusedSessionId` via `useValue`. Pane contributions MUST declare a top-level `title` and `data.placement`.
+- Desktop UI: Pages include Hunt, Knowledge, Evidence, IOCs, URLs, Prompts, Sources, and Settings. Components include composer underside strip and companion pane. Slot and pane hosts mount contributions with no props. Components MUST read the focused session from `host.state.focusedSessionId` via `useValue`, preferring `focusedStoredSessionId` (durable) for backend lookups. Pane contributions MUST declare a top-level `title` and `data.placement`.
+- Narration: `narration.py` posts batched digests and drive prompts into bound sessions. A fresh session hunt gets an immediate kickoff prompt; `narrate.drive_idle_seconds` gates only later stall nudges. Tuning lives in `narrate.enabled`, `narrate.min_interval_seconds`, and `narrate.drive_idle_seconds`. The installer writes `plugins.entries.swarm-forensics.allow_gateway_injection: true` via `hermes config set`.
 - `/swarm-forensics` verbs: Control verbs include `start`, `attach`, `subhunt`, `tools`, `stop`, `pause`, and `resume`. Inspection verbs include `status`, `log`, `review`, `accept`, `reject`, `benign`, `narrow`, `find`, `settings`, and `reset`.
 - Commands: `test`, `lint`, `check`, `js-deps`, `install`, `uninstall`.
 
 ## 4. Current State & Known Gaps
 - State: Schema v5, session-native execution, and Hermes session bindings are complete.
 - State: Local text mirror, TTP analysis, composer underside strip, and companion pane are complete.
-- State: 130 offline Python unit tests and 31 JS render tests pass.
+- State: 144 offline Python unit tests and 33 JS render tests pass.
+- State: Chat narration (digests, drive prompts, denial flag) and multi-session hunts are complete.
 - State: `make lint` and `make check` pass with zero errors.
 - Gap: No live hunt has run against real external sources. Tests use fakes and synthetic data.
 - Gap: Desktop UI click handlers run in server render tests only. Operators SHOULD verify interactive behavior in the Hermes desktop app.
@@ -53,7 +59,7 @@ Provide a Hermes desktop plugin (`swarm-forensics`) that runs autonomous and int
 - Gap: The `urlquery` adapter endpoint returns HTTP 404 and remains disabled by default.
 
 ## 5. Pruned Decisions (Keep max 3)
+- [2026-10-04 Droid]: Replaced the single-root-hunt refusal with the `hunt.max_active_hunts` cap, added ContextVar-aware session identity (`session_env`), and added chat narration through `ctx.inject_message` with installer-written `allow_gateway_injection` consent. A target that fails 3 posts in a row is muted for 10 minutes so a stale binding cannot hold the global `narration_blocked` flag. Rationale: Chat hunts were invisible in their own sessions and only one hunt could run; live verification showed a dead binding poisoning the blocked flag.
 - [2026-10-04 Droid]: Fixed strip and pane session resolution. Desktop Slot and pane hosts pass no props, so components read `host.state.focusedSessionId` via `useValue`. Pane registration gained top-level `title` and a namespaced id. Rationale: Strip and pane rendered without session context and the pane lacked a tab label.
 - [2026-10-04 Antigravity]: Completed session-native hunts, text mirror, and companion pane. Rationale: Operator requested live tool observability, text mirroring, and hackathon readiness.
-- [2026-10-04 Antigravity]: Added Danger Zone reset, live URL capture, and selectable UI text. Rationale: Operator requested scratch reset, live URL artifacts, and ASD-STE100 specification.
 

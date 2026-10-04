@@ -111,7 +111,9 @@ function fixture(path, status) {
     '/schedules': { schedules: [{ id: 's1', name: 'daily', kind: 'interval', spec: '6h', max_cycles: 5, enabled: 1, next_run_utc: NOW },
       { id: 's2', name: 'off', kind: 'cron', spec: '0 * * * *', max_cycles: 1, enabled: 0 }] },
     '/mirrors': { mirrors: [{ id: 1, url: 'https://example.test/item', sha256: 'abc12345', byte_count: 1024, tainted: 0 }], total: 1 },
-    '/sessions/ses-1/overview': { session_id: 'ses-1', hunt: HUNT, events: [{ id: 1, ts: NOW, kind: 'tool_call', message: 'search' }], corpus: [] }
+    '/sessions/ses-1/overview': { session_id: 'ses-1', hunt: HUNT, events: [{ id: 1, ts: NOW, kind: 'tool_call', message: 'search' }], corpus: [] },
+    '/sessions/durable-1/overview': { session_id: 'durable-1', hunt: HUNT, events: [], corpus: [] },
+    '/sessions/ses-free/overview': { session_id: 'ses-free', hunt: null, events: [], corpus: [], narration_blocked: true }
   }
   if (!(route in table)) throw new Error(`No fixture for ${path}. Add one to render.test.mjs.`)
   return table[route]
@@ -185,6 +187,43 @@ test('the composer strip and companion pane render against the focused session',
   assert.match(paneHtml, /Hunt Companion/)
   assert.ok(globalThis.__sf.paths.includes('/sessions/ses-1/overview'),
     'companion pane must query the focused session overview')
+})
+
+test('the strip and pane look up the durable session key first', () => {
+  const registered = load()
+  Object.assign(globalThis.__sf, {
+    paths: [], mode: 'data',
+    fixture: path => fixture(path, STATUS_RUNNING),
+    stateRules: [],
+    sessionId: 'runtime-1', storedSessionId: 'durable-1'
+  })
+  renderToStaticMarkup(registered.get('composer-strip').render())
+  renderToStaticMarkup(registered.get('swarm-forensics.companion').render())
+  assert.ok(globalThis.__sf.paths.includes('/sessions/durable-1/overview'),
+    'session lookup must prefer the durable key')
+  assert.ok(!globalThis.__sf.paths.includes('/sessions/runtime-1/overview'),
+    'the runtime id must not be queried when a durable key exists')
+})
+
+test('the strip and pane surface multi-hunt state and blocked chat updates', () => {
+  const status = {
+    ...STATUS_RUNNING,
+    active_hunts: [HUNT, { ...HUNT, id: 'h9' }],
+    narration_blocked: true
+  }
+  const registered = load()
+  Object.assign(globalThis.__sf, {
+    paths: [], mode: 'data',
+    fixture: path => fixture(path, status),
+    stateRules: [],
+    sessionId: 'ses-free', storedSessionId: ''
+  })
+  const stripHtml = renderToStaticMarkup(registered.get('composer-strip').render())
+  assert.match(stripHtml, /\+1/, 'strip must count the other active hunts')
+  assert.match(stripHtml, /chat updates off/)
+  const paneHtml = renderToStaticMarkup(registered.get('swarm-forensics.companion').render())
+  assert.match(paneHtml, /2 hunts are running/)
+  assert.match(paneHtml, /Chat updates are off/)
 })
 
 test('the Hunt page renders with an input and keeps its button labels', () => {

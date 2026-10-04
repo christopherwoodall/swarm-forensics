@@ -13,6 +13,7 @@ from .hunt import HuntService
 from .iocs import IocStore
 from .ledger import Ledger
 from .mirror import MirrorStore
+from .narration import Narrator
 from .paths import PLUGIN_ID, db_path, state_dir
 from .prompt_registry import PromptRegistry
 from .registry import Registry
@@ -48,6 +49,9 @@ class Service:
         self.parts.mirror = self.mirror
         self.hunts = HuntService(self.db, self.parts, notify=_broadcast)
         self.parts.spawner = self.hunts
+        self.narrator = Narrator(self)
+        if ctx is not None:
+            self.narrator.attach(ctx)
         self.iocs.seed()
         self.registry.seed()
         self.imported = []
@@ -56,6 +60,7 @@ class Service:
     def attach(self, ctx):
         """Give the service the plugin context once the agent half loads."""
         self.hermes.attach(ctx)
+        self.narrator.attach(ctx)
 
     def overview(self):
         return {

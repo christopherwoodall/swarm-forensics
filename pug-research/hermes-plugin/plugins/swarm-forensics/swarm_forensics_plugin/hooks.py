@@ -22,13 +22,17 @@ class LifecycleHooks:
         """Handle session creation and bind active hunt if applicable."""
         if not session_id:
             return
-        active = self.svc.ledger.active_hunt()
-        if active and not active.get("session_id"):
-            self.svc.ledger.bind_session(active["id"], session_id)
-            self.svc.ledger.event(
-                active["id"], "state",
-                "Bound session %s to active hunt" % session_id,
-            )
+        unbound = [h for h in self.svc.ledger.active_hunts()
+                   if not h.get("session_id")
+                   and not self.svc.ledger.bindings_for_hunt(h["id"])]
+        if len(unbound) != 1:
+            # Zero or several candidates: never guess which hunt is ours.
+            return
+        self.svc.ledger.bind_session(unbound[0]["id"], session_id)
+        self.svc.ledger.event(
+            unbound[0]["id"], "state",
+            "Bound session %s to active hunt" % session_id,
+        )
 
     def pre_llm_call(
         self,

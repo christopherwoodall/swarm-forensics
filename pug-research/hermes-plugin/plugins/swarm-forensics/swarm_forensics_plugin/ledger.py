@@ -101,6 +101,14 @@ class Ledger:
                 (session_id, session_key or "", hunt_id, now_ts))
             conn.execute("UPDATE hunts SET session_id = ? WHERE id = ?", (session_id, hunt_id))
 
+    def bindings_for_hunt(self, hunt_id):
+        """Return session binding rows for a hunt, most recent first."""
+        with self.db.connect() as conn:
+            rows = conn.execute(
+                "SELECT * FROM session_bindings WHERE hunt_id = ?"
+                " ORDER BY bound_utc DESC", (hunt_id,)).fetchall()
+        return [_row(r) for r in rows]
+
     def hunt_for_session(self, session_id):
         """Return the hunt bound to a session identifier, or None."""
         if not session_id:

@@ -7,7 +7,7 @@ silently.
 
 from . import db
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 CLAIM_LEVELS = ["L1", "L2", "L3", "L4", "L5"]
 SOURCES = ["web", "index"]
 
@@ -105,6 +105,17 @@ SCHEMA = {
         "Graph", "bool", True,
         "Write artifacts, agents, swarms, and campaigns to the graph",
         "Off keeps the graph human-edited only."),
+    "narrate.enabled": _f(
+        "Narration", "bool", True, "Post hunt updates into chat",
+        "Batched digests and continuation prompts appear as chat messages in "
+        "bound sessions. Each post may start a model turn."),
+    "narrate.min_interval_seconds": _f(
+        "Narration", "int", 60, "Minimum seconds between posts",
+        min=10, max=3600),
+    "narrate.drive_idle_seconds": _f(
+        "Narration", "int", 120, "Drive idle session hunts after (s)",
+        "A session hunt that shows no activity for this long gets a "
+        "continuation prompt.", min=30, max=86400),
     "schedule.enabled": _f(
         "Schedule", "bool", False, "Allow scheduled hunts",
         "Master switch. Each schedule also needs operator arming. "

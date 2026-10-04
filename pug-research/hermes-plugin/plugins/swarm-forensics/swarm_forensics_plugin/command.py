@@ -6,12 +6,13 @@ stop hunts and make the same IOC decisions an operator can.
 """
 
 import json
-import os
 import shlex
 
+from . import session_env
 from .entities import EntityError
 from .hunt import HuntRefused
 from .iocs import IocError
+from .ledger import ACTIVE_STATES
 from .schedule import ScheduleError
 from .settings import SCHEMA, SettingsError
 
@@ -21,11 +22,11 @@ HELP = """\
 /swarm-forensics session [goal]          start an interactive hunt in this session
 /swarm-forensics subhunt [parent] [goal] spawn a child crawler hunt
 /swarm-forensics tools [id] [n]          show recent tool calls and rationale
-/swarm-forensics stop [id]               stop the hunt (and any sub-hunts)
+/swarm-forensics stop [id|all]           stop this session's hunt, one id, or all
 /swarm-forensics pause [id]              pause at the next checkpoint
 /swarm-forensics resume [id]             restart a paused or blocked hunt
-/swarm-forensics status                  hunt state and totals
-/swarm-forensics log [n]                 last n activity lines (default 15)
+/swarm-forensics status                  hunt state and totals (this session first)
+/swarm-forensics log [id] [n]            last n activity lines (default 15)
 /swarm-forensics review                  list proposed IOC terms
 /swarm-forensics accept <id> [reason]    accept a proposed IOC
 /swarm-forensics reject <id> [reason]    reject a proposed IOC
@@ -36,25 +37,57 @@ HELP = """\
 /swarm-forensics reset [--force]         wipe all data and start from scratch"""
 
 
+def _target_session_hunt(svc, states=ACTIVE_STATES):
+    """The hunt bound to the calling chat session, when it is in `states`."""
+    sid = session_env.any_session()
+    if not sid:
+        return None
+    hunt = svc.ledger.hunt_for_session(sid)
+    if hunt and (states is None or hunt["state"] in states):
+        return hunt
+    return None
+
+
+def _multi_msg(svc, verb):
+    ids = ", ".join(h["id"][:8] for h in svc.ledger.active_hunts())
+    return ("Multiple hunts are active (%s). Name one: "
+            "/swarm-forensics %s <id>%s" % (
+                ids, verb,
+                ", or stop them all: /swarm-forensics stop all"
+                if verb == "stop" else "."))
+
+
 def _status(svc):
     st = svc.hunts.status()
-    hunt = st["hunt"]
+    hunt = _target_session_hunt(svc, states=None) or st["hunt"]
     if hunt is None:
         head = "No hunts yet."
     else:
         head = "Hunt %s: %s, cycle %d. %s" % (
             hunt["id"], hunt["state"], hunt["cycle"], hunt["detail"])
     t, i = st["totals"], st["iocs"]
-    return ("%s\nEvidence %d, entities %d, open leads %d.\n"
-            "IOCs: %d active, %d proposed, %d inactive, %d rejected." % (
-                head, t["evidence"], t["entities"], t["open_leads"],
-                i["active"], i["proposed"], i["inactive"], i["rejected"]))
+    lines = ["%s\nEvidence %d, entities %d, open leads %d.\n"
+             "IOCs: %d active, %d proposed, %d inactive, %d rejected." % (
+                 head, t["evidence"], t["entities"], t["open_leads"],
+                 i["active"], i["proposed"], i["inactive"], i["rejected"])]
+    act = st["active_hunts"]
+    if len(act) > 1:
+        lines.append("%d hunts active: %s" % (len(act), ", ".join(
+            "%s (%s)" % (h["id"][:8], h["state"]) for h in act)))
+    if st.get("narration_blocked"):
+        lines.append("Chat updates are off: the host refused message injection. "
+                     "Set plugins.entries.swarm-forensics."
+                     "allow_gateway_injection: true in the Hermes config.")
+    return "\n".join(lines)
 
 
 def _log(svc, args):
     """Show recent hunt activity. A chat command cannot stream, so this is pull-based."""
-    count = int(args[0]) if args and args[0].isdigit() else 15
-    hunt = svc.ledger.active_hunt() or next(iter(svc.ledger.hunts(1)), None)
+    hunt_id = args[0] if args and not args[0].isdigit() else None
+    count = next((int(a) for a in reversed(args or []) if a.isdigit()), 15)
+    hunt = (svc.ledger.hunt(hunt_id) if hunt_id else None) \
+        or _target_session_hunt(svc, states=None) \
+        or svc.ledger.active_hunt() or next(iter(svc.ledger.hunts(1)), None)
     rows = svc.ledger.events(hunt["id"] if hunt else None, 0, min(count, 100))
     if not rows:
         return "No activity yet."
@@ -108,8 +141,8 @@ def handle(svc, raw_args):
     try:
         if verb in ("start", "hunt", "session"):
             goal_text = " ".join(args).strip()
-            session_id = os.getenv("HERMES_SESSION_ID") or os.getenv("HERMES_SESSION_KEY") or None
-            session_key = os.getenv("HERMES_SESSION_KEY") or ""
+            session_id = session_env.any_session()
+            session_key = session_env.session_key()
             origin = "session" if session_id else "command"
             hunt = svc.hunts.start(origin, goal_text, session_id=session_id)
             if session_id:
@@ -155,8 +188,8 @@ def handle(svc, raw_args):
                 hunt = svc.ledger.active_hunt() or next(iter(svc.ledger.hunts(1)), None)
             if not hunt:
                 return "Hunt not found%s." % ((" for '%s'" % target_id) if target_id else "")
-            calling_sid = os.getenv("HERMES_SESSION_ID") or os.getenv("HERMES_SESSION_KEY") or None
-            calling_skey = os.getenv("HERMES_SESSION_KEY") or ""
+            calling_sid = session_env.any_session()
+            calling_skey = session_env.session_key()
             if calling_sid:
                 svc.ledger.bind_session(hunt["id"], calling_sid, calling_skey)
                 bound_label = calling_sid
@@ -242,17 +275,32 @@ def handle(svc, raw_args):
             svc.reset_all_data()
             return "All Swarm Forensics data has been wiped. Started fresh from scratch."
         if verb == "stop":
+            if args and args[0].lower() == "all":
+                svc.hunts.stop()
+                return "Stop requested for every active hunt."
             target = args[0] if args else None
-            hunt = svc.hunts.stop(target)
-            if not hunt:
+            hunt = _target_session_hunt(svc) if target is None else None
+            if target is None and hunt is None \
+                    and len(svc.ledger.active_hunts()) > 1:
+                return _multi_msg(svc, "stop")
+            stopped = svc.hunts.stop(target or (hunt["id"] if hunt else None))
+            if not stopped:
                 return "No active hunt to stop."
-            return "Hunt %s: stop requested (%s)." % (hunt["id"], hunt["state"])
+            return "Hunt %s: stop requested (%s)." % (stopped["id"], stopped["state"])
         if verb == "pause":
             target = args[0] if args else None
-            hunt = svc.hunts.pause(target)
-            return "Hunt %s: pause requested." % hunt["id"]
+            hunt = _target_session_hunt(svc) if target is None else None
+            if target is None and hunt is None \
+                    and len(svc.ledger.active_hunts()) > 1:
+                return _multi_msg(svc, "pause")
+            paused = svc.hunts.pause(target or (hunt["id"] if hunt else None))
+            return "Hunt %s: pause requested." % paused["id"]
         if verb == "resume":
-            hunt = svc.hunts.resume(args[0] if args else _last_paused(svc))
+            target = args[0] if args else None
+            if target is None:
+                bound = _target_session_hunt(svc, states=("paused", "blocked"))
+                target = bound["id"] if bound else _last_paused(svc)
+            hunt = svc.hunts.resume(target)
             return "Hunt %s resumed." % hunt["id"]
         if verb == "status":
             return _status(svc)

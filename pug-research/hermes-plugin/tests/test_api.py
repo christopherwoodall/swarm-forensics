@@ -71,12 +71,19 @@ class ApiTest(unittest.TestCase):
         started = self.post("/hunts/start", {"goal": "test goal"})
         self.assertEqual(started.status_code, 200)
         hunt_id = started.json()["id"]
-        again = self.post("/hunts/start", {})
-        self.assertEqual(again.status_code, 409)
+        second = self.post("/hunts/start", {"goal": "another"})
+        self.assertEqual(second.status_code, 200)
+        second_id = second.json()["id"]
+        self.assertNotEqual(second_id, hunt_id)
+        self.client.put(self.base + "/settings",
+                        json={"updates": {"hunt.max_active_hunts": 2}})
+        capped = self.post("/hunts/start", {})
+        self.assertEqual(capped.status_code, 409)
         self.assertEqual(self.post("/hunts/stop", {"hunt_id": hunt_id}).status_code, 200)
         self.assertTrue(wait_for(
             lambda: self.get("/hunts/%s" % hunt_id).json()["state"] == "stopped"))
         self.assertEqual(self.get("/hunts/missing").status_code, 404)
+        self.post("/hunts/stop", {"hunt_id": second_id})
 
     def test_subhunt_spawn_and_children(self):
         started = self.post("/hunts/start", {"goal": "root hunt"})

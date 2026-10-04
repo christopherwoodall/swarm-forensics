@@ -1,5 +1,6 @@
 """Shared test helpers. Everything runs offline with synthetic data."""
 
+import contextlib
 import json
 import os
 import sys
@@ -106,6 +107,21 @@ class Env:
             if w and w.is_alive():
                 w.join(timeout=5)
         self.tmp.cleanup()
+
+
+@contextlib.contextmanager
+def session_ctx(session_id="", session_key=""):
+    """Pretend the host bound these session vars for the calling thread."""
+    from swarm_forensics_plugin import session_env
+    old = session_env._host_env
+    def fake(name, default=""):
+        return {"HERMES_SESSION_ID": session_id,
+                "HERMES_SESSION_KEY": session_key}.get(name, default)
+    session_env._host_env = fake
+    try:
+        yield
+    finally:
+        session_env._host_env = old
 
 
 def wait_for(predicate, timeout=10.0):

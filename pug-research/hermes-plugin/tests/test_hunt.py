@@ -32,7 +32,18 @@ class LifecycleTests(unittest.TestCase):
         self.assertTrue(support.wait_for(lambda: self.state(h["id"]) == "stopped"))
         self.assertIsNotNone(self.env.ledger.hunt(h["id"])["ended_utc"])
 
-    def test_one_hunt_at_a_time(self):
+    def test_many_root_hunts_up_to_the_cap(self):
+        first = self.env.hunts.start("desktop")
+        second = self.env.hunts.start("desktop")  # cap defaults to 3
+        self.assertNotEqual(first["id"], second["id"])
+        self.assertEqual(len(self.env.ledger.active_hunts()), 2)
+        self.env.hunts.stop(first["id"])
+        self.env.hunts.stop(second["id"])
+        self.assertTrue(support.wait_for(
+            lambda: not self.env.ledger.active_hunts()))
+
+    def test_cap_refuses_another_hunt(self):
+        self.env.settings.update({"hunt.max_active_hunts": 1})
         h = self.env.hunts.start("desktop")
         with self.assertRaises(HuntRefused):
             self.env.hunts.start("desktop")
@@ -87,7 +98,8 @@ class LifecycleTests(unittest.TestCase):
         self.assertIn("operator restart required", row["detail"])
         self.assertIsNone(self.env.ledger.active_hunt())
 
-    def test_fresh_foreign_lease_blocks_start(self):
+    def test_fresh_foreign_lease_counts_toward_cap(self):
+        self.env.settings.update({"hunt.max_active_hunts": 1})
         other = self.env.ledger.create_hunt("desktop", "g")
         self.env.ledger.update_hunt(other["id"], owner="999:other",
                                     heartbeat_utc=db.now())
@@ -183,11 +195,29 @@ class CommandTests(unittest.TestCase):
         out = command.handle(self.svc, "start find traces")
         self.assertIn("started", out)
         self.assertIn("Hunt", command.handle(self.svc, "status"))
-        self.assertIn("Refused", command.handle(self.svc, "start again"))
-        self.assertIn("stop requested", command.handle(self.svc, "stop"))
-        hid = self.env.ledger.hunts(1)[0]["id"]
+        self.assertIn("started", command.handle(self.svc, "start again"))
+        self.assertIn("Multiple hunts", command.handle(self.svc, "stop"))
+        self.assertIn("every active hunt", command.handle(self.svc, "stop all"))
         self.assertTrue(support.wait_for(
-            lambda: self.env.ledger.hunt(hid)["state"] == "stopped"))
+            lambda: not self.env.ledger.active_hunts()))
+
+    def test_session_scoped_stop(self):
+        command.handle(self.svc, "start first")
+        command.handle(self.svc, "start second")
+        hunts = self.env.ledger.active_hunts()
+        self.assertEqual(len(hunts), 2)
+        mine = hunts[0]["id"]
+        self.env.ledger.bind_session(mine, "sess-test", "sess-key-test")
+        with support.session_ctx("sess-test", "sess-key-test"):
+            out = command.handle(self.svc, "stop")
+        self.assertIn(mine, out)
+        self.assertTrue(support.wait_for(
+            lambda: self.env.ledger.hunt(mine)["state"] == "stopped"))
+        others = self.env.ledger.active_hunts()
+        self.assertEqual(len(others), 1)
+        self.assertNotEqual(others[0]["id"], mine)
+        command.handle(self.svc, "stop all")
+        support.wait_for(lambda: not self.env.ledger.active_hunts())
 
     def test_log_shows_activity_and_start_explains_where_to_look(self):
         out = command.handle(self.svc, "start find traces")

@@ -489,6 +489,8 @@ def session_overview(session_id: str):
         "corpus": svc.ledger.corpus_observations(hunt_id=hid, session_id=session_id, limit=30),
         "open_leads": svc.ledger.open_leads(limit=10),
         "mirrors_count": svc.mirror.count(),
+        "narration_blocked":
+            svc.ledger.cursor("narrate", "blocked") == "1",
     }
 
 

@@ -76,6 +76,14 @@ make install
 ```
 
 The installer copies plugin files into your Hermes home directory.
+It also writes `plugins.entries.swarm-forensics.allow_gateway_injection: true`
+into the Hermes config. This consent lets the plugin post hunt updates into
+your chat sessions. Without it, hunts still run, but chat stays silent and
+the UI shows a "chat updates off" hint.
+The one-click install link cannot grant this consent; Hermes reserves it for
+an explicit operator act. After a one-click install, run
+`hermes config set plugins.entries.swarm-forensics.allow_gateway_injection true`
+once, or add the YAML above by hand.
 Restart the Hermes desktop app after installation.
 
 ### 2. Start a Hunt
@@ -83,7 +91,7 @@ Restart the Hermes desktop app after installation.
 Open Hermes chat and enter:
 
 ```text
-/swarm-forensics start Find agent infrastructure and relay patterns
+/swarm-forensics start Find agent infrastructure and relay patterns based on the following [Transluce report](https://transluce.org/agent-activity) on the urlquery.net website.
 ```
 
 This command starts a session-native hunt.
@@ -94,7 +102,7 @@ To run an autonomous background worker instead, schedule a hunt or use headless 
 
 ### 3. Observe and Steer
 
-- **Chat**: Read live tool arguments and model thoughts. Steer the hunt with normal chat messages.
+- **Chat**: Read live tool arguments and model thoughts. Steer the hunt with normal chat messages. The plugin also posts batched hunt digests (milestones, tool calls, rationale) into the chat, and nudges an idle session hunt to continue. Tune with `narrate.enabled`, `narrate.min_interval_seconds`, and `narrate.drive_idle_seconds`.
 - **Composer Strip**: Look below the message composer for live hunt status and metrics.
 - **Companion Pane**: Look at the right sidebar for discovered URLs, captured artifacts, and tool logs.
 - **Desktop Page**: Open the **Swarm Forensics** app tab for the full database workbench.
@@ -140,6 +148,8 @@ flowchart TD
 
 ### Concurrency Rules
 
+- Multiple hunts MAY run at once, up to `hunt.max_active_hunts` (default 3).
+- Each chat session follows its own hunt; session-less verbs (`stop`, `status`, `log`) target the bound hunt of the calling session.
 - A hunt MUST respect configured cycle limits.
 - Child sub-hunts inherit the session identifier and root trace context of their parent.
 - The system limits sub-hunt depth to three levels by default.
@@ -180,9 +190,9 @@ Run `/swarm-forensics <subcommand>` in Hermes:
 | `tools` | `/swarm-forensics tools [id] [n]` | Inspect recent tool calls and queries. |
 | `pause` | `/swarm-forensics pause [id]` | Pause an active hunt. |
 | `resume` | `/swarm-forensics resume [id]` | Resume a paused hunt. |
-| `stop` | `/swarm-forensics stop [id]` | Stop a hunt and its child sub-hunts. |
-| `status` | `/swarm-forensics status` | Show active hunt metrics and database totals. |
-| `log` | `/swarm-forensics log [n]` | Display recent hunt activity events. |
+| `stop` | `/swarm-forensics stop [id\|all]` | Stop this session's hunt, one id, or every hunt. |
+| `status` | `/swarm-forensics status` | Show hunt metrics and totals (this session's hunt first). |
+| `log` | `/swarm-forensics log [id] [n]` | Display recent hunt activity events. |
 | `review` | `/swarm-forensics review` | List proposed IOC terms awaiting decision. |
 | `accept` | `/swarm-forensics accept <id> [reason]` | Accept a proposed IOC term. |
 | `reject` | `/swarm-forensics reject <id> [reason]` | Reject a proposed IOC term. |

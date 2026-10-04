@@ -6,9 +6,9 @@ indicators, manage swarm groups, and triage false positives.
 """
 
 import json
-import os
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
+from . import session_env
 from .analysis import analyze_corpus
 from .safety import (
     CLAIM_LEVELS,
@@ -38,8 +38,7 @@ def _resolve_hunt_id(srv, args: dict) -> Optional[str]:
         h = srv.ledger.hunt(hunt_id)
         if h:
             return h["id"]
-    sid = (args.get("session_id") or os.getenv("HERMES_SESSION_ID")
-           or os.getenv("HERMES_SESSION_KEY"))
+    sid = args.get("session_id") or session_env.any_session()
     if sid:
         h = srv.ledger.hunt_for_session(sid)
         if h:
@@ -195,8 +194,7 @@ def sf_mirror_url(args: dict, service=None, **_: Any) -> str:
             return _err("URL is marked benign and cannot be probed or mirrored")
         clean_url = validate_url(url)
         hunt_id = _resolve_hunt_id(srv, args)
-        sid = (args.get("session_id") or os.getenv("HERMES_SESSION_ID")
-               or os.getenv("HERMES_SESSION_KEY"))
+        sid = args.get("session_id") or session_env.any_session()
 
         if content is None:
             extracted = srv.hermes.web_extract([clean_url])
@@ -462,9 +460,8 @@ def sf_attach_hunt(args: dict, service=None, **_: Any) -> str:
             hunt = srv.ledger.active_hunt()
         if not hunt:
             return _err("Hunt not found for %s" % (target or "active"))
-        calling_sid = (args.get("session_id") or os.getenv("HERMES_SESSION_ID")
-                       or os.getenv("HERMES_SESSION_KEY"))
-        calling_skey = os.getenv("HERMES_SESSION_KEY") or ""
+        calling_sid = args.get("session_id") or session_env.any_session()
+        calling_skey = session_env.session_key()
         if calling_sid:
             srv.ledger.bind_session(hunt["id"], calling_sid, calling_skey)
         children = srv.ledger.child_hunts(hunt["id"])

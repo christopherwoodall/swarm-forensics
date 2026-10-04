@@ -1287,10 +1287,18 @@ function StatusChip() {
 function ComposerUndersideStrip() {
   const sessionId = useValue(host.state.focusedSessionId)
   const storedSessionId = useValue(host.state.focusedStoredSessionId)
+  // The durable (stored) key survives restarts; the runtime id does not.
+  // The backend matches either column, so look up stored-first.
+  const lookupId = storedSessionId || sessionId
   const q = useApi(['status'], '/status', 3000)
   const mq = useApi(['mirrors-summary'], '/mirrors?limit=5', 5000)
-  const hunt = q.data && q.data.hunt
+  const sq = useApi(['strip-session', lookupId || 'none'],
+    lookupId ? `/sessions/${lookupId}/overview` : '/status', 3000, !!lookupId)
+  const boundHunt = (lookupId && sq.data && sq.data.hunt) || null
+  const hunt = boundHunt || (q.data && q.data.hunt)
   const running = q.data && q.data.running
+  const activeN = (q.data && q.data.active_hunts && q.data.active_hunts.length) || 0
+  const blocked = !!(q.data && q.data.narration_blocked)
   const mirrorsCount = mq.data ? mq.data.total || 0 : 0
   const totals = (q.data && q.data.totals) || {}
 
@@ -1309,16 +1317,21 @@ function ComposerUndersideStrip() {
             style: { ...S.mono, color: V.accent, cursor: 'pointer', textDecoration: 'underline' },
             onClick: () => host.navigate(PATH)
           }, `Hunt ${hunt.id}`),
+          activeN > 1 && h('span', { style: S.dim, title: 'Other active hunts' }, `+${activeN - 1}`),
           h('span', { style: S.dim }, `c:${hunt.cycle} d:${hunt.depth || 0}`),
           h('span', { style: S.dim }, `leads:${totals.open_leads || 0}`),
           h('span', { style: S.dim }, `mirrors:${mirrorsCount}`)
         )
       : h('span', { style: S.dim }, 'No active hunt.'),
+    blocked && h('span', {
+      style: { color: '#e5a50a' },
+      title: 'The host refused chat updates. Set plugins.entries.swarm-forensics.allow_gateway_injection: true in the Hermes config.'
+    }, 'chat updates off'),
     h('span', { style: { flex: 1 } }),
     // Bind BOTH ids: the runtime id drives this client's reads, the stored
     // (durable) id is what the backend hooks see on tool calls.
-    sessionId && hunt && hunt.session_id !== sessionId && h(Btn, {
-      onClick: () => act(`/sessions/${sessionId}/bind`, { hunt_id: hunt.id, session_key: storedSessionId || '' }, 'POST', 'Attached hunt to this session')
+    lookupId && hunt && !boundHunt && h(Btn, {
+      onClick: () => act(`/sessions/${sessionId || storedSessionId}/bind`, { hunt_id: hunt.id, session_key: storedSessionId || '' }, 'POST', 'Attached hunt to this session')
     }, 'Attach to chat'),
     hunt && running && h(Btn, { onClick: () => act('/hunts/stop', { hunt_id: hunt.id }, 'POST', 'Stop requested') }, 'Stop'),
     h(Btn, { onClick: () => host.navigate(PATH) }, 'Open')
@@ -1327,9 +1340,12 @@ function ComposerUndersideStrip() {
 
 function CompanionPane() {
   const sessionId = useValue(host.state.focusedSessionId)
+  const storedSessionId = useValue(host.state.focusedStoredSessionId)
+  // Stored-first: the durable key survives restarts, the runtime id does not.
+  const queryId = storedSessionId || sessionId
   const sessionOverview = useApi(
-    ['session-overview', sessionId],
-    sessionId ? `/sessions/${sessionId}/overview` : '/overview',
+    ['session-overview', queryId],
+    queryId ? `/sessions/${queryId}/overview` : '/overview',
     3000
   )
   const urlsQuery = useApi(['urls-recent'], '/urls?limit=10', 4000)
@@ -1344,6 +1360,11 @@ function CompanionPane() {
   const hunt = boundHunt || (statusQuery.data && statusQuery.data.hunt)
   const events = ((boundHunt ? sessionOverview.data.events : null)
     || (globalEvents.data && globalEvents.data.events) || [])
+  const activeN = (statusQuery.data && statusQuery.data.active_hunts
+    && statusQuery.data.active_hunts.length) || 0
+  const blocked = !!(
+    (sessionOverview.data && sessionOverview.data.narration_blocked)
+    || (statusQuery.data && statusQuery.data.narration_blocked))
   const urls = (urlsQuery.data && urlsQuery.data.urls) || []
   const mirrors = (mirrorsQuery.data && mirrorsQuery.data.mirrors) || []
 
@@ -1365,7 +1386,11 @@ function CompanionPane() {
           ),
           h('div', { style: { ...S.dim, marginTop: 4 } }, hunt.goal || 'No goal set.'),
           !boundHunt && h('div', { style: { ...S.dim, marginTop: 4 } },
-            'Not bound to this chat. Start one with /swarm-forensics session, or attach from the strip below the composer.')
+            activeN > 1
+              ? `${activeN} hunts are running; this chat follows none. Attach from the strip below the composer.`
+              : 'Not bound to this chat. Start one with /swarm-forensics session, or attach from the strip below the composer.'),
+          blocked && h('div', { style: { ...S.dim, marginTop: 4, color: '#e5a50a' } },
+            'Chat updates are off: the host refused message injection. Set plugins.entries.swarm-forensics.allow_gateway_injection: true in the Hermes config.')
         )
       : h('div', { style: S.card },
           h('div', { style: S.dim }, 'No active hunt.'),
