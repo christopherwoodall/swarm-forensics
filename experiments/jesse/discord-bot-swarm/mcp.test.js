@@ -1,3 +1,4 @@
+import {DiscordMessageContentError} from './discord.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Client} from '@modelcontextprotocol/sdk/client/index.js';
@@ -120,3 +121,5 @@ test('credential rejection stays 401 while verification infrastructure failures 
   const handler=mcpHandler({publicOrigin:'https://example.com',authenticate:async()=>{throw Object.assign(Error('private credential detail'),{code});}});let actual,body;const res={status(n){actual=n;return this;},json(v){body=v;return this;}};await handler({method:'POST',headers:{authorization:'Bearer invalid'}},res);assert.equal(actual,status,code);assert.ok(!JSON.stringify(body).includes('private credential detail'));
  }
 });
+
+ test('MCP exposes only the typed message-content remedy and keeps unrelated failures private',async()=>{const relayId='550e8400-e29b-41d4-a716-446655440000';let failure=new DiscordMessageContentError('123456789012345678');const server=coordinationServer({pool:{query:async()=>({rows:[{id:relayId,config:{}}]})},relay:{messages:async()=>{throw failure;}},owner:'owner',version:'test'}),client=new Client({name:'intent-test',version:'1'}),[a,b]=InMemoryTransport.createLinkedPair();await server.connect(a);await client.connect(b);try{const call=()=>client.callTool({name:'discord_read_messages',arguments:{relayId}});assert.match((await call()).content[0].text,/Message Content Intent is disabled.*developers\/applications\/123456789012345678\/bot/);failure=Error('private-token');assert.ok(!(await call()).content[0].text.includes('private-token'));}finally{await client.close();await server.close();}});
