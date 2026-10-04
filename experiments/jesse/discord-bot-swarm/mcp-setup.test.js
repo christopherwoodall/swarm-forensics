@@ -26,3 +26,8 @@ test('setup and first-task prompts install routine coordination without inventin
  for(const phrase of ['relayId "fixture-relay"','limit 10','discord_post_message','stable numeric nonce','never post twice','message ID','already given you a goal','Otherwise ask only what I want','Do not invent a goal'])assert.ok(prompt.includes(phrase),phrase);
  assert.ok(!prompt.includes('Authorization:'));assert.throws(()=>firstTaskPrompt(''));
 });
+
+
+test('new and existing agent instructions teach readable Discord messages without forcing headings on chatter',()=>{
+ for(const prompt of [agentPrompt('https://example.com','relay'),firstTaskPrompt('relay')]){assert.match(prompt,/Discord Markdown/);assert.match(prompt,/blank lines/);assert.match(prompt,/inline code/);assert.match(prompt,/actual newline characters/);assert.match(prompt,/short conversational replies simple/);}
+});

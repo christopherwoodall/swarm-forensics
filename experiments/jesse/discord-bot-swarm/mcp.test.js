@@ -10,7 +10,7 @@ test('MCP discovers tools, scopes relays, validates input and hides internal err
  const pool={query:async(sql,args)=>{queries.push(args);return {rows:sql.includes('AND owner')?[]:[{id:'a',config:{name:'Relay',channelId:'123',secret:'hidden'}}]};}};
  const server=coordinationServer({pool,relay:{post:async()=>{posts++;}},owner:'owner-a',version:'test'});
  const client=new Client({name:'test',version:'1'});const [a,b]=InMemoryTransport.createLinkedPair();await server.connect(a);await client.connect(b);
- try{assert.equal((await client.listTools()).tools.length,12);
+ try{assert.equal((await client.listTools()).tools.length,13);
  const list=await client.callTool({name:'discord_list_relays',arguments:{}});assert.ok(!list.content[0].text.includes('hidden'));assert.deepEqual(queries[0],['owner-a',null]);
  const denied=await client.callTool({name:'discord_post_message',arguments:{relayId:'550e8400-e29b-41d4-a716-446655440000',content:'hello',nonce:'123'}});assert.equal(denied.isError,true);assert.equal(posts,0);assert.equal(queries[1][1],'owner-a');
  const invalid=await client.callTool({name:'discord_read_messages',arguments:{relayId:'wrong',limit:101}});assert.equal(invalid.isError,true);
@@ -25,7 +25,7 @@ test('HTTP MCP initializes and lists tools with authenticated identity',async()=
  const {default:express}=await import('express');
  const app=express();app.use(express.json());app.all('/mcp',mcpHandler({publicOrigin:'https://example.com',authenticate:async t=>{assert.equal(t,'synthetic');return 'owner';},pool:{query:async()=>({rows:[]})},relay:{},version:'test'}));
  const http=app.listen(0,'127.0.0.1');await new Promise(r=>http.once('listening',r));
- try{const {StreamableHTTPClientTransport}=await import('@modelcontextprotocol/sdk/client/streamableHttp.js');const client=new Client({name:'http-test',version:'1'});await client.connect(new StreamableHTTPClientTransport(new URL(`http://127.0.0.1:${http.address().port}/mcp`),{requestInit:{headers:{Authorization:'Bearer synthetic'}},fetch:(url,options)=>fetch(url,{...options,signal:AbortSignal.timeout(5000)})}));assert.equal((await client.listTools()).tools.length,12);assert.equal((await client.callTool({name:'discord_list_relays',arguments:{}})).isError,undefined);await client.close();}finally{http.closeAllConnections();await new Promise(r=>http.close(r));}
+ try{const {StreamableHTTPClientTransport}=await import('@modelcontextprotocol/sdk/client/streamableHttp.js');const client=new Client({name:'http-test',version:'1'});await client.connect(new StreamableHTTPClientTransport(new URL(`http://127.0.0.1:${http.address().port}/mcp`),{requestInit:{headers:{Authorization:'Bearer synthetic'}},fetch:(url,options)=>fetch(url,{...options,signal:AbortSignal.timeout(5000)})}));assert.equal((await client.listTools()).tools.length,13);assert.equal((await client.callTool({name:'discord_list_relays',arguments:{}})).isError,undefined);await client.close();}finally{http.closeAllConnections();await new Promise(r=>http.close(r));}
 });
 
 test('Discord read and post both reject a channel in another server',async()=>{
@@ -91,7 +91,7 @@ test('tool discovery explicitly distinguishes reads from mutations for owner and
  for(const principal of [{kind:'owner',owner:'alice'},{kind:'agent',owner:'alice',actor:'agent'}]){
  const server=coordinationServer({pool:{query:async()=>({rows:[]})},relay:{},board:{},principal,owner:'alice',version:'test'}),client=new Client({name:'annotation-test',version:'1'}),[a,b]=InMemoryTransport.createLinkedPair();
  await server.connect(a);await client.connect(b);
- try{const tools=(await client.listTools()).tools;assert.equal(tools.length,principal.kind==='owner'?16:4);for(const tool of tools)assert.equal(tool.annotations?.readOnlyHint,reads.has(tool.name),tool.name);}
+ try{const tools=(await client.listTools()).tools;assert.equal(tools.length,principal.kind==='owner'?17:4);for(const tool of tools)assert.equal(tool.annotations?.readOnlyHint,reads.has(tool.name),tool.name);}
  finally{await client.close();await server.close();}
  }
 });
@@ -113,7 +113,7 @@ test('ordinary chat tools forward channel selection while retaining owner and re
  const relayId='550e8400-e29b-41d4-a716-446655440000';
  const pool={query:async sql=>{assert.ok(sql.startsWith('SELECT'));return {rows:[{id:relayId,config:{channelId:'123456789012345678',chat:{mode:'off',cooldownSeconds:80},personality:'Calm'}}]};}};
  const server=coordinationServer({pool,relay:{},owner:'owner',principal:{kind:'agent',relayId},version:'0.16.0'}),client=new Client({name:'sync-test',version:'1'}),[a,b]=InMemoryTransport.createLinkedPair();await server.connect(a);await client.connect(b);
- try{const call=async id=>client.callTool({name:'discord_sync_agent',arguments:{relayId:id,protocolVersion:0}});const r=JSON.parse((await call(relayId)).content[0].text);assert.equal(r.compatible,false);assert.equal(r.chat.mode,'off');assert.equal(r.chat.cooldownSeconds,80);assert.equal(r.chat.maxRepliesPerHour,30);assert.equal(r.channelId,'123456789012345678');assert.equal(r.runtime.bridge,'offline');assert.match(r.coordinationInstructions,/Post short progress, handoff and completion/);assert.match(r.coordinationInstructions,/Honor Off/);assert.equal(r.configurationVersion,3);assert.equal((await call('550e8400-e29b-41d4-a716-446655440001')).isError,true);const resource=await client.readResource({uri:'swarm://agent-sync'});assert.equal(JSON.parse(resource.contents[0].text).protocolVersion,1);assert.match(client.getInstructions(),/Never enable commands/);}finally{await client.close();await server.close();}
+ try{const call=async id=>client.callTool({name:'discord_sync_agent',arguments:{relayId:id,protocolVersion:0}});const r=JSON.parse((await call(relayId)).content[0].text);assert.equal(r.compatible,false);assert.equal(r.chat.mode,'off');assert.equal(r.chat.cooldownSeconds,80);assert.equal(r.chat.maxRepliesPerHour,30);assert.equal(r.channelId,'123456789012345678');assert.equal(r.runtime.bridge,'offline');assert.match(r.coordinationInstructions,/Post short progress, handoff and completion/);assert.match(r.coordinationInstructions,/Honor Off/);assert.equal(r.configurationVersion,4);assert.equal((await call('550e8400-e29b-41d4-a716-446655440001')).isError,true);const resource=await client.readResource({uri:'swarm://agent-sync'});assert.equal(JSON.parse(resource.contents[0].text).protocolVersion,1);assert.match(client.getInstructions(),/Never enable commands/);}finally{await client.close();await server.close();}
  });
 
 test('credential rejection stays 401 while verification infrastructure failures stay 503',async()=>{
@@ -130,4 +130,10 @@ test('existing relay sync supplies scoped bridge setup without installing or ena
  const pool={query:async sql=>{assert.ok(sql.startsWith('SELECT'));return {rows:[{id:relayId,config:{commands:{enabled:false},secret:'must-not-leak'}}]};}};
  const server=coordinationServer({pool,relay:{},commands:{status:async()=>({bridge})},publicOrigin:'https://example.com',owner:'owner',principal:{kind:'agent',relayId},version:'test'}),client=new Client({name:'setup-test',version:'1'}),[a,b]=InMemoryTransport.createLinkedPair();await server.connect(a);await client.connect(b);
  try{const call=async id=>client.callTool({name:'discord_sync_agent',arguments:{relayId:id}});let r=JSON.parse((await call(relayId)).content[0].text);assert.equal(r.runtime.setup.state,'required');assert.match(r.runtime.setup.prompt,new RegExp(relayId));assert.ok(r.runtime.setup.prompt.includes('https://example.com/mcp'));assert.ok(r.runtime.setup.prompt.includes('existing relay-scoped MCP credential'));assert.equal(r.runtime.setup.localOwnerAuthorizationRequired,true);assert.equal(r.runtime.setup.commandOptInRequired,true);assert.equal(r.commands.enabled,false);assert.ok(!JSON.stringify(r).includes('must-not-leak'));assert.equal((await call('550e8400-e29b-41d4-a716-446655440001')).isError,true);bridge='online';r=JSON.parse((await call(relayId)).content[0].text);assert.equal(r.runtime.setup.state,'ready');assert.equal(r.runtime.setup.prompt,null);assert.equal(r.runtime.setup.commandOptInRequired,true);}finally{await client.close();await server.close();}
+});
+
+test('message editing is relay scoped and preserves exact formatted content',async()=>{
+ const relayId='550e8400-e29b-41d4-a716-446655440000',messageId='123456789012345678',content='**Setup**\n\n- Call `discord_sync_agent`.';let edits=0;
+ const server=coordinationServer({pool:{query:async()=>({rows:[{id:relayId,config:{}}]})},relay:{edit:async(run,id,text)=>{edits++;assert.deepEqual(run,{swarm:relayId,owner:'owner'});assert.equal(id,messageId);assert.equal(text,content);return {id,content:text};}},owner:'owner',principal:{kind:'agent',relayId},version:'test'}),client=new Client({name:'edit-test',version:'1'}),[a,b]=InMemoryTransport.createLinkedPair();await server.connect(a);await client.connect(b);
+ try{assert.equal((await client.callTool({name:'discord_edit_message',arguments:{relayId,messageId,content}})).isError,undefined);assert.equal((await client.callTool({name:'discord_edit_message',arguments:{relayId:'550e8400-e29b-41d4-a716-446655440001',messageId,content}})).isError,true);assert.equal(edits,1);}finally{await client.close();await server.close();}
 });
