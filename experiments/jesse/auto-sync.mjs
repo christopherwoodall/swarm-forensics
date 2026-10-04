@@ -10,7 +10,7 @@ export function syncNeeded(imported,current){
  return imported!==current;
 }
 export function runChecks(run){
- for(const target of ['test','lint','jesse-build','jesse-check'])run('make',[target],600);
+ for(const target of ['test','lint','build','check'])run('make',['-C','experiments/jesse',target],600);
 }
 export function verifyMerge(base,testedBase,head,testedHead){
  if(base!==testedBase)throw Error('Target main changed during checks. Retry against the new revision.');
@@ -52,7 +52,7 @@ export function autoSync(configFile){
   git(config.stateDir,'clone','--depth','1',`https://github.com/${targetRepository}.git`,working);
   const base=git(working,'rev-parse','HEAD');const branch=`auto-sync/jesse-${revision.slice(0,12)}-${Date.now()}`;
   git(working,'switch','-c',branch);git(working,'config','user.name','FairyStack Agent');git(working,'config','user.email','multi-agent@fairystack.com');
-  step='import committed source';run('make',['jesse-sync',`SOURCE_REPO=${source}`,`SOURCE_REV=${revision}`],60,working);
+  step='import committed source';run('make',['-C','experiments/jesse','sync',`SOURCE_REPO=${source}`,`SOURCE_REV=${revision}`],60,working);
   const snapshot=JSON.parse(fs.readFileSync(path.join(working,'experiments/jesse/SOURCE.json'),'utf8'));
   const moduleFile=path.join(working,'experiments/jesse/MODULE.md');let module=fs.readFileSync(moduleFile,'utf8');
   module=module.replace(/- Imported version: .*/,`- Imported version: ${snapshot.version}.`).replace(/- Source revision: .*/,`- Source revision: ${revision}.`);fs.writeFileSync(moduleFile,module);
@@ -62,7 +62,7 @@ export function autoSync(configFile){
   verifyMerge(api(`repos/${targetRepository}/commits/main`).sha,base,revision,revision);
   git(working,'add','experiments/jesse');git(working,'commit','-m',`feat: synchronize Jesse source to ${snapshot.version}`);
   const testedHead=git(working,'rev-parse','HEAD');git(working,'push','origin',branch);
-  const bodyFile=path.join(config.stateDir,'pull-request.md');fs.writeFileSync(bodyFile,`Synchronize Jesse source to Discord Swarm ${snapshot.version}.\n\nSource commit: ${revision}.\n\nValidation: root make test, make lint, make jesse-build, and make jesse-check passed.\n\nThe snapshot MUST preserve committed source hashes. Credentials and runtime data MUST remain excluded.\n`,{mode:0o600});
+  const bodyFile=path.join(config.stateDir,'pull-request.md');fs.writeFileSync(bodyFile,`Synchronize Jesse source to Discord Swarm ${snapshot.version}.\n\nSource commit: ${revision}.\n\nValidation: Jesse make test, lint, build, and check passed.\n\nThe snapshot MUST preserve committed source hashes. Credentials and runtime data MUST remain excluded.\n`,{mode:0o600});
   pr=gh('pr','create','--repo',targetRepository,'--base','main','--head',branch,'--title',`Synchronize Jesse Discord Swarm to ${snapshot.version}`,'--body-file',bodyFile);
   step='required checks';
   const protection=api(`repos/${targetRepository}/branches/main`).protection?.required_status_checks;

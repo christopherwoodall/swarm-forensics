@@ -8,16 +8,16 @@ Source: [QualityCopperShovel/discord-bot-swarm](https://github.com/QualityCopper
 [SOURCE.json](SOURCE.json) records the imported commit and file hashes.
 The hosted app remains at [Discord Swarm](https://discord-bot-swarm.multi.fairystack.com/).
 This directory contains source only. It contains no account data or runtime credentials.
-Parent repository directives apply. Source-specific agent directives are excluded.
+Source-specific agent directives are excluded.
 
 Run these commands from the repository root:
 
 ```sh
-make jesse-setup
-make jesse-check
-make jesse-build
-make jesse-test
-make jesse-browser-test
+make -C experiments/jesse setup
+make -C experiments/jesse check
+make -C experiments/jesse build
+make -C experiments/jesse test
+make -C experiments/jesse browser-test
 ```
 
 Browser tests use synthetic authentication and Discord responses.
@@ -30,18 +30,18 @@ The runtime bridge enforces configured command budgets, rates, and deadlines.
 Refresh the snapshot from a committed upstream revision:
 
 ```sh
-make jesse-sync SOURCE_REPO=/path/to/discord-bot-swarm SOURCE_REV=<commit>
-make test
-make lint
+make -C experiments/jesse sync SOURCE_REPO=/path/to/discord-bot-swarm SOURCE_REV=<commit>
+make -C experiments/jesse test
+make -C experiments/jesse lint
 ```
 
 The app-box scheduler checks pushed app commits every minute.
-It imports committed source, runs root tests, lint, build, and hash checks, then squash-merges a pull request.
+It imports committed source, runs experiment tests, lint, build, and hash checks, then squash-merges a pull request.
 Failed checks, conflicts, or concurrent target changes stop the merge.
 Private status and logs remain under `~/.local/state/jesse-auto-sync/`.
 Uncommitted files are never imported. Agent changes MUST be committed and pushed first.
 
-A worker run uses `make jesse-auto-sync SYNC_CONFIG=/private/config.json`.
+A worker run uses `make -C experiments/jesse auto-sync SYNC_CONFIG=/private/config.json`.
 Private configuration contains `token` and an absolute `stateDir`.
 The configuration MUST be mode 0600. The state directory MUST be mode 0700.
 See [MODULE.md](MODULE.md) for interfaces and constraints.
