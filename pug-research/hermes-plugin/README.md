@@ -4,6 +4,10 @@ Autonomous and interactive swarm threat intelligence for Hermes Desktop and CLI.
 The plugin searches public web sources for agent infrastructure and behavioral traces.
 It writes events, evidence, indicators of compromise (IOCs), entities, and mirrors to SQLite.
 
+<video src="docs/demo.mp4" controls muted></video>
+
+[Watch the demo](docs/demo.mp4)
+
 ```mermaid
 flowchart TD
     subgraph Host["Hermes Host Environment"]
