@@ -2,6 +2,7 @@ import {DEFAULT_CHAT,DEFAULT_PERSONALITY} from './frontend/bot-defaults.js';
 import {migrateBotSettings,migrationKey} from './bot-settings-migration.js';
 import {DiscordCommands,commandSchema} from './discord-commands.js';
 import express from 'express';
+import {agentGuideEntry} from './agent-guide-entry.js';
 import {registerChannelDiscovery} from './channel-setup.js';
 import {chatConfig,savedChat} from './chat-settings.js';
 import {Kanban,kanbanSchema} from './kanban.js';
@@ -40,6 +41,7 @@ await commandSchema(pool);const commands=new DiscordCommands(pool,relay);const s
 const engine=new Engine(store);
 const app=express();app.disable('x-powered-by');
 app.use((req,res,next)=>{res.set('X-Content-Type-Options','nosniff');res.set('Referrer-Policy','no-referrer');res.set('Cache-Control','no-store');next();});
+app.use(agentGuideEntry({origin:settings.publicOrigin,guide:fs.readFileSync(path.join(root,'frontend/agent-guide.md'),'utf8')}));
 app.use('/agent',express.json({limit:'384kb'}));
 app.use(express.json({limit:'24kb'}));
 app.all(['/agent/v1','/agent/v1/:operation'],agentHandler({pool,relay,board,commands,authenticate,publicOrigin:settings.publicOrigin,version:fs.readFileSync(path.join(root,'VERSION'),'utf8').trim()}));
