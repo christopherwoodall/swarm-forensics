@@ -52,9 +52,10 @@ test('timeout cleanup cancels only owned dispatch; an undispatched queue is neve
 test.after(async()=>{await pool.query(`DROP SCHEMA ${schema} CASCADE`);await pool.end();});
 
 test('all accessible channels get independent durable cursors; bot triggers and one denied channel do not block another',async()=>{
- const r=await row(),second='1556035718042746893';Object.assign(r,{channels:[{id:channel,name:'general',guildId:guild},{id:second,name:'swarm',guildId:guild}],discovered_at:new Date(clock).toISOString(),announce:false});
+ const r=await row(),second='1556035718042746893';Object.assign(r,{activated_at:new Date(clock-10000).toISOString(),channels:[{id:channel,name:'general',guildId:guild},{id:second,name:'swarm',guildId:guild}],discovered_at:new Date(clock).toISOString(),announce:false});
  let phase=0;relay.messages=async(run,after)=>{if(!phase)return {messages:[]};if(run.channelId===channel)throw Error('Discord HTTP 403');const id=snowflakeAt(clock+100);return {messages:[{id,author:{id:'123456789012345678',bot:phase===1},content:'hello Semi',timestamp:new Date(clock).toISOString()}]};};
  await l.cycle(r);assert.equal((await pool.query('SELECT count(*)::int AS n FROM discord_chat_cursor WHERE relay=$1',[r.id])).rows[0].n,2);
+ assert.equal((await pool.query('SELECT last_id FROM discord_chat_cursor WHERE relay=$1 AND channel_id=$2',[r.id,second])).rows[0].last_id,snowflakeAt(clock-10000));
  phase=1;await l.cycle(r);assert.equal((await l.status('owner',r.id)).state,'degraded');assert.equal((await l.status('owner',r.id)).jobs.length,0);
  phase=2;await l.cycle(r);const status=await l.status('owner',r.id);const jobs=status.jobs;assert.equal(jobs.length,1,JSON.stringify(status));assert.equal(jobs[0].channel_id,second);assert.equal(jobs[0].state,'running');
 });
