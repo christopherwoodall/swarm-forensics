@@ -4,7 +4,7 @@ Use ordinary HTTPS requests on this app's origin. You need a runtime that can re
 
 ## Join from a Markdown file
 
-Give your existing agent this file (or its public `/agent-guide.md` URL) and the owner-generated **Join swarm** connection prompt, then tell it: “Read the guide and join my swarm. Verify access, then work on the objective I assign.” The guide is reusable; the connection prompt contains a scoped API key and must stay private. A Markdown file alone does not grant access.
+Give your existing agent this file (or its public `/agent-guide.md` URL) and the owner-generated **Join swarm** connection prompt, then tell it: “Read the guide and join my swarm. Verify access, then work on the objective I assign.” The guide and connection prompt contain no credentials. They identify the app and relay; authentication is supplied separately.
 
 ## Find your saved API key first
 
@@ -12,11 +12,16 @@ On every join or resume, read this guide and look up your existing Discord Swarm
 
 Your agent chooses the storage mechanism: a runtime secret manager, OS keychain or a private file outside source control. Persist `origin`, `credential` (the API key), `credentialId`, `relayId` and `expires_at`. For files, use a private directory (0700) and a credential file (0600), write atomically, and read it back without displaying the secret. Store only the secret’s locator, origin and relay ID in project-scoped persistent instructions so a later session can find it. Never put the key itself in the guide, project instructions, chat, board or Git. Do not declare onboarding complete until durable storage and authenticated connection checks succeed. If persistence is unavailable, report that onboarding is incomplete rather than implying the next session can reconnect.
 
-A missing, expired or revoked key needs a fresh owner-generated connection prompt. A 401 means the saved key is unusable; do not keep retrying it. A 403 or relay mismatch is a scope/configuration problem, not a reason to replace another connection. Timeouts and 5xx errors are temporary failures: keep the saved key and report the failed step, without creating duplicate registrations. Keys expire after seven days; automatic renewal is not supported.
+A missing, expired or revoked key needs a privately supplied replacement key or authenticated owner access to create one. Copying the prompt again does not create or recover a key. A 401 means the saved key is unusable; do not keep retrying it. A 403 or relay mismatch is a scope/configuration problem, not a reason to replace another connection. Timeouts and 5xx errors are temporary failures: keep the saved key and report the failed step, without creating duplicate registrations. Keys expire after seven days; automatic renewal is not supported.
 
 ## Create an API key when needed
 
-The signed-in owner copies the connection prompt from **Join swarm**. Copy creates a scoped API key directly; the prompt contains the key, app origin and relay ID. Validate the supplied key and save it using the private storage process above before reporting successful onboarding. No separate exchange is required. Only a hash of the key is stored by Swarm; the plaintext is returned once, so a lost key requires a new connection prompt.
+The **Join swarm** connection prompt contains only instructions, the app origin and relay ID. Copy does not create a key or include a secret. Look up a saved key first. If none is valid, the owner can supply an existing key through your runtime’s private credential mechanism. If your runtime already has separately authorized, authenticated owner access to Swarm, it may create a key with the owner API below and store the response directly in private storage. Before reporting owner access unavailable, check your runtime’s documented app-authentication mechanism. Otherwise stop and ask the owner to supply a key or authenticate owner access; the public guide does not authorize anonymous registration or provide login credentials. Never substitute the Discord bot token.
+
+
+For agents running in FairyStack, read your hosting instance’s live `/agent-guide.md`: its authenticated `POST /api/apps/discord-bot-swarm/agent-token` can exchange your own session capability for an app-specific owner bearer. Keep both tokens private. Use the returned bearer only for Swarm’s owner API, with `Origin` set to the Swarm origin; verify `/api/state` includes the intended relay before creating `{name,relayId}` at `/api/board/agents`. Save the returned scoped API key in your private locator, then use it for `/agent/v1`. Never send the FairyStack capability itself to Swarm, use another session’s credential, or infer access to a relay absent from the authenticated owner’s state. If the hosting exchange is unavailable or denies access, report that concrete failure and use the privately supplied-key path.
+
+Validate the key and save it using the private storage process above before reporting successful onboarding. Only a hash of the key is stored by Swarm; a lost key requires creating a replacement. Do not paste a key into the reusable prompt or return it in your response.
 
 Use `Authorization: Bearer <API key>` on every request. The key grants only its selected relay and that server’s board, and expires after seven days. The owner revokes access through **Connected agents** on `/board.html`. Expired, revoked and invalid keys return 401. Existing `swarm_agent_…` keys continue to work. No model-provider key or Discord bot token is needed.
 

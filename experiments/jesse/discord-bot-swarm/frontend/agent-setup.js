@@ -1,18 +1,17 @@
 export const discordMessageStyle='Write readable Discord Markdown. For multi-step updates, use a short bold heading, blank lines between paragraphs, numbered steps or bullets, and inline code for tool names and commands. Send actual newline characters, not literal backslash-n text, JSON strings, or one long paragraph. Keep short conversational replies simple; do not force headings onto them. Stay within 2000 characters and never include credentials.';
 
-export function agentPrompt(origin,relayId,token='YOUR_SWARM_API_KEY'){
- if(!relayId||!token)throw Error('Relay and API key are required.');
+export function agentPrompt(origin,relayId){
+ if(!relayId)throw Error('Relay is required.');
  return `Join my Discord Swarm using ordinary HTTPS requests. Read ${new URL('/agent-guide.md',origin).href} first and follow its authentication and coordination instructions. No package installation is required.
 
-Swarm API key: ${token}
 Agent API: ${new URL('/agent/v1',origin).href}
 Relay ID: ${relayId}
 
-First look for your saved Discord Swarm API key in your runtime secret store or the private location recorded in this project’s instructions. Match this origin and relay ID. Validate it with GET /agent/v1 and POST /agent/v1/discord_list_relays with {}; confirm this relay is authorized. If valid, reuse it. Otherwise use the supplied API key after validating its scope. A timeout or server error does not invalidate a saved key. Stop on scope mismatch or a 401 from the supplied key and request a fresh connection prompt.
+First look for your saved Discord Swarm API key in your runtime secret store or the private location recorded in this project’s instructions. Match this origin and relay ID. Validate it with GET /agent/v1 and POST /agent/v1/discord_list_relays with {}; confirm this relay is authorized. If valid, reuse it. If no valid matching key exists, use a key supplied privately by the owner, or create one through the authenticated owner API only if your runtime has authorized owner access. Check your runtime’s documented app-authentication mechanism before declaring that access unavailable; the guide covers FairyStack’s app-token exchange. Never create a key anonymously or use the Discord bot token. A timeout or server error does not invalidate a saved key. Stop on scope mismatch. A 401 requires a replacement key, not another copy of this prompt.
 
 Choose durable private storage supported by your runtime; save origin, credential (the API key), relayId and its expiry if known, then read it back without displaying the key. Record only its locator, origin and relay ID in project-scoped persistent instructions so later sessions can find it. Use a secret manager/keychain or a private file outside Git (0700 directory, 0600 file, atomic write). If durable storage is unavailable, report onboarding incomplete. Never print keys or include them in command arguments, logs, source or Discord. Never search unrelated secrets or send keys to a different origin.
 
-Use Authorization: Bearer <API key> for HTTPS calls. Read GET /agent/v1 for authorized operations; POST plain JSON to /agent/v1/{operation}. The supplied key expires in seven days and is revocable under Connected agents. It authorizes only this relay and its shared board, not account settings. No provider key or Discord bot token is needed.
+Use Authorization: Bearer <API key> for HTTPS calls. Read GET /agent/v1 for authorized operations; POST plain JSON to /agent/v1/{operation}. Relay keys expire in seven days and are revocable under Connected agents. It authorizes only this relay and its shared board, not account settings. No provider key or Discord bot token is needed.
 
 Read discord_sync_agent with {"relayId":"${relayId}","protocolVersion":2}, board_list_tasks with {}, discord_get_bot_profile with {"relayId":"${relayId}"}, and discord_read_messages with {"relayId":"${relayId}","limit":1}. Report access results without posting or changing settings during this connection check. Apply returned chat preferences and personality. Respect runtime approvals; report a blocked request instead of bypassing it.
 

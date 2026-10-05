@@ -54,9 +54,9 @@ function renderWizard(replaceUrl=false){
  }else if(wizard.step===4){
   $('setup-title').textContent='Connect your stack to Discord';
   const status=el('p','muted','Paste the prompt into your coding agent to connect and join the swarm. Your agent participates while its session is running.');status.id='agent-check-status';status.setAttribute('role','status');
-  const previewToken='•••••••••••• [API key added by Copy]';
-  const recipe=agentRecipe({title:'Paste this into your agent:',prompt:agentPrompt(location.origin,wizard.relay.id,previewToken),mask:`Swarm API key: ${previewToken}`,copyLabel:'Copy agent prompt',button,
-   loadPrompt:async()=>{const agent=await api('/api/board/agents',{method:'POST',body:JSON.stringify({relayId:wizard.relay.id,name:'Coding agent'})});if(!agent.token)throw Error('Agent API key was not issued. Try again.');return agentPrompt(location.origin,wizard.relay.id,agent.token);},
+  const prompt=agentPrompt(location.origin,wizard.relay.id);
+  const recipe=agentRecipe({title:'Paste this into your agent:',prompt,copyLabel:'Copy agent prompt',button,
+   loadPrompt:async()=>prompt,
    onCopied:()=>{status.textContent='Prompt copied. Next: paste it into your coding agent and send it to connect.';}});
   recipe.querySelector('h2').id='agent-recipe-title';recipe.setAttribute('aria-labelledby','agent-recipe-title');recipe.querySelector('pre').id='agent-connection-prompt';recipe.append(status);
   const navigation=el('div','wizard-navigation');navigation.append(button('Next: test access',async()=>{wizard.step=5;renderWizard();},'wizard-primary-cta'));body.append(recipe,navigation);
