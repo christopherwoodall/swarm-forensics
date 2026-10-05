@@ -5,7 +5,7 @@ export function snowflake(value,name) {if(!idPattern.test(value||'')) throw new 
 export async function request(url,{headers={},body,signal,method}={},fetcher=fetch){
  const timeout=AbortSignal.timeout(25000); const s=signal?AbortSignal.any([signal,timeout]):timeout;
  let r;try{r=await fetcher(url,{method:method||(body?'POST':'GET'),headers:{'Content-Type':'application/json',...headers},body:body?JSON.stringify(body):undefined,signal:s,redirect:'error'});}catch(e){throw new Error(s.aborted?'External request timed out or was cancelled.':'External service could not be reached.');}
- if(!r.ok){const service=new URL(url).hostname;throw new Error(`${service} returned HTTP ${r.status}${r.status===429?' (rate limited; try later).':'. Check the credential, model and permissions.'}`);}
+ if(!r.ok){const service=new URL(url).hostname;throw Object.assign(new Error(`${service} returned HTTP ${r.status}${r.status===429?' (rate limited; try later).':'. Check the credential, model and permissions.'}`),{httpStatus:r.status});}
  if(r.status===204)return null;
  try{return await r.json();}catch{throw new Error('External service returned invalid JSON.');}
 }
