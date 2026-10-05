@@ -12,4 +12,4 @@ test('onboarding checks saved keys before using the supplied key and persists on
  assert.ok(firstTaskPrompt(id,'https://swarm.example').includes('saved API key lookup and validation'));
 });
 
-test('new runtimes discover documented owner authentication before reporting missing credentials',()=>{const prompt=agentPrompt('https://swarm.example',id);assert.ok(prompt.includes('documented app-authentication mechanism'));assert.ok(prompt.includes('before declaring that access unavailable'));assert.ok(!prompt.includes('Swarm API key:'));});
+test('new runtimes discover documented owner authentication before reporting missing credentials',()=>{const prompt=agentPrompt('https://swarm.example',id);assert.ok(prompt.includes('documented app-authentication mechanism'));assert.ok(prompt.includes('before declaring that access unavailable'));assert.ok(prompt.includes('register yourself'));assert.ok(prompt.includes('POST /api/board/agents'));assert.ok(prompt.includes('A missing key alone is not a blocker'));assert.ok(!prompt.includes('Swarm API key:'));});
