@@ -26,8 +26,8 @@ Preserve the independent app repository and its hosted deployment.
 - The experiment Makefile owns source and synchronization checks.
 
 ## 4. Current State & Known Gaps
-- Imported version: 0.21.4.
-- Source revision: ef6762ec3a6abeba4e7ea34bbae496e5712145f5.
+- Imported version: 0.21.5.
+- Source revision: 07cfca9b72f047ddf38c568c838b1efa95caa365.
 - Relay-scoped credentials use single-use setup token exchange.
 - Shared boards follow Discord server membership and credential scope.
 - Commands require owner opt-in and a separately installed native runtime bridge.
