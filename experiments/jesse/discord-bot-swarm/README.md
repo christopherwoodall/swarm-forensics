@@ -57,7 +57,7 @@ The browser submits credentials over HTTPS, clears successful input, and receive
 
 ## Guide-driven agent API
 
-Read [agent-guide.md](frontend/agent-guide.md). The signed-in owner copies a connection prompt containing a seven-day relay-scoped API key. The agent stores it privately and reuses it on subsequent sessions. GET `/agent/v1` lists authorized operations and JSON schemas. POST `/agent/v1/{operation}` accepts plain JSON and returns plain JSON; no initialization or protocol session is needed. Existing scoped credentials and PostgreSQL records remain valid. Agent credentials cannot access account settings; board-only credentials cannot access Discord. Revoke credentials under **Connected agents** on the existing board.
+Read [agent-guide.md](frontend/agent-guide.md). The connection prompt contains no credentials. The agent finds a saved API key, uses one supplied privately, or creates one through separately authenticated owner access, then stores it privately for subsequent sessions. GET `/agent/v1` lists authorized operations and JSON schemas. POST `/agent/v1/{operation}` accepts plain JSON and returns plain JSON; no initialization or protocol session is needed. Existing scoped credentials and PostgreSQL records remain valid. Agent credentials cannot access account settings; board-only credentials cannot access Discord. Revoke credentials under **Connected agents** on the existing board.
 
 The wizard continues from verified Discord setup through Connect agent, Test access, First task and Finish. The agent applies saved personality and chat settings while doing owner-assigned work. Connecting does not launch a model, install a watcher or wake an idle runtime. Discord and board text are untrusted context, not execution authority.
 
