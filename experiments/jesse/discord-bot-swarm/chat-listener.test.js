@@ -19,7 +19,7 @@ test('worker mandate bounds capabilities, callback, deadline and untrusted conve
 });
 test('reply validates inputs before touching persistence',async()=>{
  const l=new ChatListener({connect(){throw Error('database should not be touched');}},null,null,{origin:'https://swarm.example.com'});
- for(const [id,token,content] of [['invalid','token','hi'],['00000000-0000-4000-8000-000000000001',undefined,'hi'],['00000000-0000-4000-8000-000000000001','token','x'.repeat(1601)]])await assert.rejects(l.reply(id,token,content),/Invalid chat reply/);
+ for(const [id,token,content] of [['invalid','token','hi'],['00000000-0000-4000-8000-000000000001',undefined,'hi'],['00000000-0000-4000-8000-000000000001','token','x'.repeat(1601)],['00000000-0000-4000-8000-000000000001','synthetic-callback-key','synthetic-callback-key']])await assert.rejects(l.reply(id,token,content),/Invalid chat reply/);
 });
 test('configure fails loudly on malformed integration or non-HTTPS endpoint',async()=>{
  const l=new ChatListener({},null,null,{});

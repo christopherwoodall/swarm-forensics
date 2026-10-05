@@ -56,7 +56,7 @@ export class ChatListener{
  await c.query("INSERT INTO discord_chat_delivery(relay,nonce,state,payload_hash) VALUES($1,$2,'reserved',$3)",[id,nonce,crypto.createHash('sha256').update(content).digest('hex')]);return 'reserved';
  });}
  async reply(id,token,content){
- if(!uuid.test(id)||typeof token!=='string'||typeof content!=='string'||content.length>1600)throw Object.assign(Error('Invalid chat reply.'),{status:400});
+ if(!uuid.test(id)||typeof token!=='string'||typeof content!=='string'||content.length>1600||token.length<16||content.includes(token))throw Object.assign(Error('Invalid chat reply.'),{status:400});
  let j;
  await this.transaction(async c=>{j=(await c.query('SELECT j.*,s.owner,s.config,l.enabled FROM discord_chat_job j JOIN swarms s ON s.id=j.relay JOIN discord_chat_listener l ON l.relay=j.relay WHERE j.id=$1 FOR UPDATE OF j',[id])).rows[0];
  if(!j||crypto.createHash('sha256').update(token).digest('hex')!==j.callback_hash)throw Object.assign(Error('Chat reply not authorized.'),{status:403});

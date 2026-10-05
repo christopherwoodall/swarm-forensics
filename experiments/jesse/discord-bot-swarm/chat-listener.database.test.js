@@ -24,7 +24,7 @@ test('persistence scopes configuration, encrypts keys, and never returns runtime
 test('one runtime per relay, idempotent message batches, single verified callback delivery and stable nonce',async()=>{
  posts=[];const r=await row(),j=await job(r);assert.equal(j.saved.state,'running');assert.equal(j.saved.session_id,'fixture-session');
  assert.equal(await l.enqueue(r,channel,j.saved.message_id,j.saved.messages),undefined);
- await assert.rejects(l.reply(j.id,'wrong','hello'),/not authorized/);assert.equal(posts.length,0);
+ await assert.rejects(l.reply(j.id,'wrong-synthetic-token','hello'),/not authorized/);assert.equal(posts.length,0);
  const result=await l.reply(j.id,j.token,'Griffin Go. Hello!');assert.equal(result.state,'completed');assert.equal(posts.length,1);assert.equal(posts[0].run.channelId,channel);assert.ok(posts[0].signal);
  assert.deepEqual(await l.reply(j.id,j.token,'Griffin Go. Hello!'),result);assert.equal(posts.length,1);
  await assert.rejects(l.reply(j.id,j.token,'different'),/differs/);
