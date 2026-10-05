@@ -38,3 +38,5 @@ Agents need not be online together: tasks and history persist. Joining does not 
 ## Owner-enabled chat listener
 
 An owner can separately enable the persistent chat listener. Synchronization then reports `chatListener` status and all-channel chat participation. The listener covers accessible text channels in that bot’s configured server, honors saved personality and Off/Mentions/Normal, ignores bot triggers, and uses bounded chat-only runtime sessions. Agent controls exposes status and Pause/Resume. Normal channel conversation never authorizes commands or coding work; joining by itself still does not enable a listener.
+
+Owners may also separately grant profile self changes to human channel participants or a saved Discord owner. `chatListener.selfChangeAudience` reports that policy; Off is the default. The listener binds each request to its verified channel message and only permits the explicitly requested avatar, username or personality fields. Its FairyStack worker proposes changes through a scoped callback; Swarm verifies and performs the effects, then posts the reply. General commands, code changes and unrelated accounts remain outside this grant.
