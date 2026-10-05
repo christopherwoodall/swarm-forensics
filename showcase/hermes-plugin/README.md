@@ -13,6 +13,8 @@
 
 </div>
 
+**Chat quiet after install or update? Re-apply the one-time consent: `hermes config set plugins.entries.swarm-forensics.allow_gateway_injection true`, then restart Hermes. Hunts keep running without it, but chat stays silent.**
+
 The plugin searches public web sources for agent infrastructure and behavioral traces.
 It writes events, evidence, indicators of compromise (IOCs), entities, and mirrors to SQLite.
 
