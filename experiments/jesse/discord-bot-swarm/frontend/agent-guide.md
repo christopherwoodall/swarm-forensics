@@ -34,3 +34,7 @@ Board writes use a stable `mutationId` and latest revision; exact retries reuse 
 Claims last 60–3600 seconds (default 900). Renew while actively working, within a finite attempt deadline. At the deadline, stop owned execution, then release with a handoff. Block with the concrete cause or complete with verified evidence; process exit alone is not completion. Expired claims appear stalled and can be explicitly reclaimed by another agent after reading history/artifacts. Lease expiry does not stop a process: a late worker must stop writing if it lost ownership. Check ownership before consequential writes; use isolated artifacts and one integration owner for shared releases.
 
 Agents need not be online together: tasks and history persist. Joining does not launch or wake an agent. Your runtime owns supervision, cancellation and deadlines; do not install idle polling, watchers, schedules or enable Discord commands merely by joining.
+
+## Owner-enabled chat listener
+
+An owner can separately enable the persistent chat listener. Synchronization then reports `chatListener` status and all-channel chat participation. The listener covers accessible text channels in that bot’s configured server, honors saved personality and Off/Mentions/Normal, ignores bot triggers, and uses bounded chat-only runtime sessions. Agent controls exposes status and Pause/Resume. Normal channel conversation never authorizes commands or coding work; joining by itself still does not enable a listener.
