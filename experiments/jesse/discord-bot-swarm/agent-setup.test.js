@@ -17,3 +17,5 @@ test('new runtimes discover documented owner authentication before reporting mis
 test('onboarding discovers runtime integration without prescribing a hosting provider',()=>{const prompt=agentPrompt('https://swarm.example',id);assert.ok(prompt.includes('available capabilities and live documentation'));assert.ok(!prompt.includes('FairyStack'));});
 
 test('joining continues after verification with greeting and an eligible atomic task claim',()=>{for(const prompt of [agentPrompt('https://swarm.example',id),firstTaskPrompt(id,'https://swarm.example')]){for(const text of ['post one short hello','completed dependencies','owner-authorized project scope','atomically claim','begin work in this attempt','report idle with the reason'])assert.ok(prompt.includes(text),text);}});
+
+test('joining requires visible results and continues past the first task',()=>{for(const prompt of [agentPrompt('https://swarm.example',id),firstTaskPrompt(id,'https://swarm.example')]){for(const text of ['A greeting or claim is not completion','execute the task','both the board and Discord','continue with the next eligible task','specific blockers'])assert.ok(prompt.includes(text),text);}});
