@@ -31,7 +31,7 @@ CREATE INDEX IF NOT EXISTS discord_chat_job_active ON discord_chat_job(relay,sta
 CREATE TABLE IF NOT EXISTS discord_chat_delivery(relay uuid REFERENCES swarms ON DELETE CASCADE,nonce text NOT NULL,at timestamptz NOT NULL DEFAULT now(),state text NOT NULL,payload_hash text NOT NULL,PRIMARY KEY(relay,nonce));
 `);}
 export class ChatListener{
- constructor(pool,relay,vault,{origin,now=()=>Date.now(),fairyRequest=request}={}){Object.assign(this,{pool,relay,vault,origin,now,fairyRequest});this.controller=new AbortController();this.busy=false;}
+ constructor(pool,relay,vault,{origin,now=()=>Date.now(),fairyRequest=request,research}={}){Object.assign(this,{pool,relay,vault,origin,now,fairyRequest,research});this.controller=new AbortController();this.busy=false;}
  async transaction(fn){const c=await this.pool.connect();try{await c.query('BEGIN');await c.query("SET LOCAL lock_timeout='3s'");const v=await fn(c);await c.query('COMMIT');return v;}catch(e){await c.query('ROLLBACK');throw e;}finally{c.release();}}
  async owned(c,owner,id){const row=(await c.query('SELECT * FROM swarms WHERE id=$1 AND owner=$2 FOR UPDATE',[id,owner])).rows[0];if(!row)throw Object.assign(Error('Relay not found.'),{status:404});return row;}
  async configure(owner,id,{enabled,controlOrigin,integrationKey}){
@@ -101,12 +101,12 @@ export class ChatListener{
  if(changes.personality!==undefined){await this.pool.query('UPDATE swarms SET config=config||$1::jsonb WHERE id=$2 AND owner=$3',[JSON.stringify({personality:changes.personality}),job.relay,job.owner]);const checked=(await this.pool.query('SELECT config FROM swarms WHERE id=$1 AND owner=$2',[job.relay,job.owner])).rows[0]?.config;if(checked?.personality!==changes.personality)throw Error('Personality change could not be verified.');receipt.personalitySaved=true;receipt.appliedFields.push('personality');await this.pool.query('UPDATE discord_chat_job SET self_change_receipt=$2 WHERE id=$1',[job.id,JSON.stringify(receipt)]);}
  return receipt;
  }
- async tick(){if(this.busy||this.controller.signal.aborted)return;this.busy=true;try{
+ async tick(){if(this.busy||this.controller.signal.aborted)return;this.busy=true;try{if(this.research)await this.research.listenerJobs();
  const rows=(await this.pool.query(`SELECT s.*,l.integration_secret,l.control_origin,l.activated_at,l.discovered_at,l.blocked_until,l.channels,l.announce,b.bot_id,b.name AS bot_name FROM discord_chat_listener l JOIN swarms s ON s.id=l.relay JOIN bots b ON b.swarm=s.id AND b.position=0 WHERE l.enabled=true`)).rows;
  for(const row of rows){try{await this.cycle(row);}catch(e){await this.pool.query("UPDATE discord_chat_listener SET state=CASE WHEN blocked_until>now() THEN 'blocked' ELSE 'failed' END,error=$2,heartbeat_at=now() WHERE relay=$1",[row.id,e.message]);}}
  await this.pool.query("UPDATE discord_chat_job SET state='timed_out',error='Chat run exceeded its deadline.',finished_at=now() WHERE state=ANY($1) AND deadline_at<=now()",[active]);
  await this.cleanup();
- }finally{this.busy=false;}}
+ }finally{try{if(this.research)await this.research.listenerJobs();}finally{this.busy=false;}}}
  async cycle(row){
  const signal=AbortSignal.any([this.controller.signal,AbortSignal.timeout(75000)]);
  if(row.blocked_until&&Date.parse(row.blocked_until)>this.now()){await this.pool.query("UPDATE discord_chat_listener SET state='blocked',heartbeat_at=now() WHERE relay=$1",[row.id]);return;}

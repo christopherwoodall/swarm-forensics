@@ -1,3 +1,4 @@
+import {LiveResearch,liveResearchSchema} from './live-research.js';
 import {DEFAULT_CHAT,DEFAULT_PERSONALITY} from './frontend/bot-defaults.js';
 import {migrateBotSettings,migrationKey} from './bot-settings-migration.js';
 import {DiscordCommands,commandSchema} from './discord-commands.js';
@@ -39,7 +40,8 @@ await schema(pool);const store=new Store(pool);await store.restart();
 const vault=new Vault(pool,key);await vault.init();const relay=new DiscordRelay(pool,vault);
 startCollection(pool,relay,{onError:e=>console.error("Discord collection failed:",e.message)});
 await commandSchema(pool);const commands=new DiscordCommands(pool,relay);const stopCommands=commands.start();
-await listenerSchema(pool);const listener=new ChatListener(pool,relay,vault,{origin:settings.publicOrigin});const stopListener=listener.start();
+await liveResearchSchema(pool);const research=new LiveResearch(pool,{version:fs.readFileSync(path.join(root,'VERSION'),'utf8').trim()});
+await listenerSchema(pool);const listener=new ChatListener(pool,relay,vault,{origin:settings.publicOrigin,research});const stopListener=listener.start();
 const engine=new Engine(store);
 const app=express();app.disable('x-powered-by');
 app.use((req,res,next)=>{res.set('X-Content-Type-Options','nosniff');res.set('Referrer-Policy','no-referrer');res.set('Cache-Control','no-store');next();});
@@ -48,7 +50,7 @@ app.use('/agent',express.json({limit:'384kb'}));
 app.use('/api/chat-listener/jobs',express.json({limit:'384kb'}));
 app.use(express.json({limit:'24kb'}));
 app.post('/api/chat-listener/jobs/:id/reply',async(req,res)=>{try{const token=req.headers.authorization?.match(/^Bearer (.+)$/)?.[1];res.json(await listener.reply(req.params.id,token,req.body.content,req.body.changes));}catch(e){res.status(e.status||503).json({error:e.message});}});
-app.all(['/agent/v1','/agent/v1/:operation'],agentHandler({pool,relay,board,commands,listener,authenticate,publicOrigin:settings.publicOrigin,version:fs.readFileSync(path.join(root,'VERSION'),'utf8').trim()}));
+app.all(['/agent/v1','/agent/v1/:operation'],agentHandler({research,pool,relay,board,commands,listener,authenticate,publicOrigin:settings.publicOrigin,version:fs.readFileSync(path.join(root,'VERSION'),'utf8').trim()}));
 app.get('/health',async(req,res)=>{try{await pool.query('SELECT 1');res.json({status:'ok',configurationMigration:migrationKey,version:fs.readFileSync(path.join(root,'VERSION'),'utf8').trim()});}catch{res.status(503).json({error:'PostgreSQL unavailable'});}});
 app.get('/api/config',(req,res)=>res.json({auth:settings.auth,orientation:ORIENTATION,limits:DEFAULT_LIMITS}));
 app.use('/api',async(req,res,next)=>{try{const t=req.headers.authorization?.match(/^Bearer (.+)$/)?.[1];if(!t)throw Error();req.owner=await authenticate(t);next();}catch{res.status(401).json({error:'Sign in to continue.'});}});
@@ -59,6 +61,7 @@ const route=fn=>async(req,res,next)=>{try{await fn(req,res);}catch(e){next(e);}f
 async function getSwarm(id,owner){const s=(await pool.query('SELECT * FROM swarms WHERE id=$1 AND owner=$2',[id,owner])).rows[0];if(!s)throw Object.assign(Error('Relay not found.'),{status:404});return s;}
 app.get('/api/swarms',route(async(req,res)=>res.json({swarms:await board.boards(req.owner)})));
 app.get('/api/board',route(async(req,res)=>res.json(await board.list({owner:req.owner,guildId:req.query.guildId}))));
+app.get('/api/research/export',route(async(req,res)=>{const result=await research.export({owner:req.owner,kind:'owner'},{...req.query,...(req.query.limit!==undefined?{limit:Number(req.query.limit)}:{})});res.set('Content-Disposition','attachment; filename="swarm-research.json"');res.json(result);}));
 app.get('/api/board/agents',route(async(req,res)=>res.json({agents:await board.agents(req.owner,req.query.guildId)})));
 app.post('/api/board/agents',route(async(req,res)=>res.status(201).json(await board.issue(req.owner,req.body))));
 app.delete('/api/board/agents/:id',route(async(req,res)=>res.json(await board.revoke(req.owner,req.params.id))));
