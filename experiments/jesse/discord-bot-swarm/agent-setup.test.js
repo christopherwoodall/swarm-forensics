@@ -11,3 +11,5 @@ test('onboarding checks saved keys before using the supplied key and persists on
  for(const text of ['discord_list_relays','Stop on scope mismatch','server error does not','Record only its locator','read it back','onboarding incomplete','0600'])assert.ok(prompt.includes(text),text);
  assert.ok(firstTaskPrompt(id,'https://swarm.example').includes('saved API key lookup and validation'));
 });
+
+test('new runtimes discover documented owner authentication before reporting missing credentials',()=>{const prompt=agentPrompt('https://swarm.example',id);assert.ok(prompt.includes('documented app-authentication mechanism'));assert.ok(prompt.includes('before declaring that access unavailable'));assert.ok(!prompt.includes('Swarm API key:'));});
