@@ -60,6 +60,6 @@ test('all accessible channels get independent durable cursors; bot triggers and 
  phase=2;await l.cycle(r);const status=await l.status('owner',r.id);const jobs=status.jobs;assert.equal(jobs.length,1,JSON.stringify(status));assert.equal(jobs[0].channel_id,second);assert.equal(jobs[0].state,'running');
 });
 test('runtime guardrail 429 terminates the job without resubmitting or starting it during cleanup',async()=>{
- const r=await row(),id=await l.enqueue(r,channel,'quota-runtime',[]),old=l.fairyRequest;l.fairyRequest=async()=>{throw Object.assign(Error('Runtime daily allowance reached: HTTP 429'),{httpStatus:429});};
- try{await assert.rejects(l.jobs(r),/allowance/);const j=(await pool.query('SELECT * FROM discord_chat_job WHERE id=$1',[id])).rows[0];assert.equal(j.state,'failed');assert.equal(j.stop_confirmed,true);assert.equal(j.request_secret,null);}finally{l.fairyRequest=old;}
+ const r=await row(),id=await l.enqueue(r,channel,'quota-runtime',[]),old=l.fairyRequest;l.fairyRequest=async()=>{throw Object.assign(Error('Runtime daily allowance reached: HTTP 429'),{httpStatus:429,retryAt:clock/1000+60});};
+ try{await assert.rejects(l.jobs(r),/allowance/);const j=(await pool.query('SELECT * FROM discord_chat_job WHERE id=$1',[id])).rows[0];assert.equal(j.state,'failed');assert.equal(j.stop_confirmed,true);assert.equal(j.request_secret,null);const status=await l.status('owner',r.id);assert.equal(status.state,'blocked');assert.ok(Date.parse(status.blocked_until)>clock);const saved=(await pool.query('SELECT blocked_until FROM discord_chat_listener WHERE relay=$1',[r.id])).rows[0];await l.cycle({...r,...saved});assert.equal((await l.status('owner',r.id)).state,'blocked');}finally{l.fairyRequest=old;}
 });
