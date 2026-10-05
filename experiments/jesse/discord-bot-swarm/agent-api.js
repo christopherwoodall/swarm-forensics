@@ -1,3 +1,4 @@
+import {registerResearchOperations} from './live-research.js';
 import {discordMessageStyle} from './frontend/agent-setup.js';
 import {DiscordMessageContentError} from './discord.js';
 import {syncManifest,relaySync} from './agent-sync.js';
@@ -7,14 +8,16 @@ import {registerBoardOperations} from './kanban.js';
 import {agentPersonality} from './relay-records.js';
 
 export class Operations {
- constructor(){this.operations=new Map();}
+ constructor(observe){this.operations=new Map();this.observe=observe;}
  registerOperation(name,definition,execute){this.operations.set(name,{...definition,schema:z.object(definition.inputSchema).strict(),execute});}
  catalog(){return [...this.operations].map(([name,op])=>({name,method:'POST',path:'/agent/v1/'+name,readOnly:!!op.annotations?.readOnlyHint,description:op.description,input:z.toJSONSchema(op.schema)}));}
- async invoke(name,input={}){const op=this.operations.get(name);if(!op)throw Object.assign(Error('Operation not available for this credential.'),{status:404});return op.execute(op.schema.parse(input));}
+ async invoke(name,input={}){const op=this.operations.get(name);if(!op)throw Object.assign(Error('Operation not available for this credential.'),{status:404});if(!this.observe||name.startsWith('research_'))return op.execute(op.schema.parse(input));const call=await this.observe.start(name,input);let result;try{result=await op.execute(op.schema.parse(input));}catch(error){await this.observe.finish(call,name,null,error);throw error;}await this.observe.finish(call,name,result);return result;}
 }
 
-export function agentOperations({pool,relay,owner,version,board,principal,commands,listener,publicOrigin}){
- const server=new Operations();
+export function agentOperations({pool,relay,owner,version,board,principal,commands,listener,publicOrigin,research}){
+ const p=principal||{owner,actor:'owner',kind:'owner'};
+ const server=new Operations(research?{start:(name,args)=>research.start(p,name,args),finish:(call,name,result,error)=>research.finish(p,call,name,result,error)}:null);
+ if(research)registerResearchOperations(server,research,p);
 
  if(board)registerBoardOperations(server,board,principal||{owner,actor:'owner',kind:'owner'});
  if(principal?.kind==='agent'&&!principal.relayId)return server;
