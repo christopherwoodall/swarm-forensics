@@ -13,7 +13,7 @@ const vault=new Vault(pool,crypto.randomBytes(32));await vault.init();
 let clock=Date.now(),posts=[],calls=[];const relay={post:async(run,content,nonce,signal)=>{posts.push({run,content,nonce,signal});return {id:'1556792435932270704'};}};
 const l=new ChatListener(pool,relay,vault,{origin:'https://chat.example.com',now:()=>clock,fairyRequest:async(url,opts)=>{calls.push({url,opts});return url.endsWith('/api/app-sessions')?{session_id:'fixture-session'}:{status:'stopped',background_jobs_running:0};}});
 const bot='1556011112946729031',channel='1556035718042746892',guild='1430962816315031654';
-async function row(){const id=crypto.randomUUID();await pool.query('INSERT INTO swarms VALUES($1,$2,$3)',[id,'owner',{verifiedAt:'fixture',guildId:guild,channelId:channel,chat:{mode:'normal',cooldownSeconds:0,maxRepliesPerHour:2},personality:'curious griffin'}]);await pool.query('INSERT INTO bots VALUES($1,$2,$3,0)',[id,bot,'Semi']);await l.configure('owner',id,{enabled:true,controlOrigin:'https://runtime.example.com',integrationKey:'synthetic-private-key'});return {...(await pool.query('SELECT * FROM swarms WHERE id=$1',[id])).rows[0],...(await pool.query('SELECT integration_secret,control_origin FROM discord_chat_listener WHERE relay=$1',[id])).rows[0],bot_id:bot,bot_name:'Semi'};}
+async function row(){const id=crypto.randomUUID();await pool.query('INSERT INTO swarms VALUES($1,$2,$3)',[id,'owner',{verifiedAt:'fixture',guildId:guild,channelId:channel,chat:{mode:'normal',cooldownSeconds:0,maxRepliesPerHour:2,replyStyle:'brief'},personality:'curious griffin'}]);await pool.query('INSERT INTO bots VALUES($1,$2,$3,0)',[id,bot,'Semi']);await l.configure('owner',id,{enabled:true,controlOrigin:'https://runtime.example.com',integrationKey:'synthetic-private-key'});return {...(await pool.query('SELECT * FROM swarms WHERE id=$1',[id])).rows[0],...(await pool.query('SELECT integration_secret,control_origin FROM discord_chat_listener WHERE relay=$1',[id])).rows[0],bot_id:bot,bot_name:'Semi'};}
 async function job(r,id=crypto.randomUUID()){const message={id,author:{id:'123456789012345678',bot:false},content:`<@${bot}> hello`,directed:true,timestamp:new Date(clock).toISOString()};const j=await l.enqueue(r,channel,id,[message]);await l.jobs(r);const saved=(await pool.query('SELECT * FROM discord_chat_job WHERE id=$1',[j])).rows[0];const request=JSON.parse(await vault.decrypt('owner',`chat-job:${j}`,saved.request_secret));const token=request.objective.match(/Authorization: Bearer ([\w-]+)/)[1];return {id:j,token,saved};}
 test('persistence scopes configuration, encrypts keys, and never returns runtime/callback secrets',async()=>{
  const r=await row();await assert.rejects(l.configure('foreign',r.id,{enabled:false}),/not found/);
@@ -25,10 +25,25 @@ test('one runtime per relay, idempotent message batches, single verified callbac
  posts=[];const r=await row(),j=await job(r);assert.equal(j.saved.state,'running');assert.equal(j.saved.session_id,'fixture-session');
  assert.equal(await l.enqueue(r,channel,j.saved.message_id,j.saved.messages),undefined);
  await assert.rejects(l.reply(j.id,'wrong-synthetic-token','hello'),/not authorized/);assert.equal(posts.length,0);
- const result=await l.reply(j.id,j.token,'Griffin Go. Hello!');assert.equal(result.state,'completed');assert.equal(posts.length,1);assert.equal(posts[0].run.channelId,channel);assert.ok(posts[0].signal);
- assert.deepEqual(await l.reply(j.id,j.token,'Griffin Go. Hello!'),result);assert.equal(posts.length,1);
+ const result=await l.reply(j.id,j.token,'Griffin Go, hello!');assert.equal(result.state,'completed');assert.equal(posts.length,1);assert.equal(posts[0].run.channelId,channel);assert.ok(posts[0].signal);
+ assert.deepEqual(await l.reply(j.id,j.token,'Griffin Go, hello!'),result);assert.equal(posts.length,1);
  await assert.rejects(l.reply(j.id,j.token,'different'),/differs/);
  const snapshot=await l.status('owner',r.id);assert.equal(snapshot.jobs[0].message_receipt,result.messageId);assert.ok(!JSON.stringify(snapshot).includes(j.token));
+});
+test('callback rejects verbose replies before effects and permits corrected delivery while preserving old receipts',async()=>{
+ posts=[];const r=await row(),j=await job(r);
+ for(const content of ['Done. Hello!', 'done. hello.', 'x'.repeat(401), 'One\nTwo']){
+  await assert.rejects(l.reply(j.id,j.token,content),e=>e.status===400&&/one brief sentence/.test(e.message));
+  assert.equal(posts.length,0);
+  const saved=(await pool.query('SELECT state,content FROM discord_chat_job WHERE id=$1',[j.id])).rows[0];assert.equal(saved.state,'running');assert.equal(saved.content,null);
+  assert.equal((await pool.query('SELECT count(*)::int AS n FROM discord_chat_delivery WHERE relay=$1',[r.id])).rows[0].n,0);
+ }
+ assert.equal((await l.reply(j.id,j.token,'One brief sentence, verified.')).state,'completed');assert.equal(posts.length,1);
+ const r2=await row(),j2=await job(r2),old='Earlier verbose reply. Preserved without reposting.';
+ await pool.query("UPDATE discord_chat_job SET state='completed',content=$2,message_receipt=$3 WHERE id=$1",[j2.id,old,'1556792435932270704']);
+ assert.equal((await l.reply(j2.id,j2.token,old)).state,'completed');assert.equal(posts.length,1);
+ const r3=await row();await pool.query("UPDATE swarms SET config=jsonb_set(config,'{chat}',(config->'chat')-'replyStyle') WHERE id=$1",[r3.id]);const j3=await job(r3);
+ assert.equal((await l.reply(j3.id,j3.token,'Other bot reply. Existing style stays.')).state,'completed');assert.equal(posts.length,2);
 });
 test('pause, disconnect, current Off/Mentions policy, and deadline prevent late posting',async()=>{
  for(const mode of ['pause','disconnect','off','mentions','deadline']){
@@ -70,6 +85,9 @@ test('any verified channel participant can request only supported self changes a
  const id=await l.enqueue(r,channel,message.id,[message]);await l.jobs(r);const saved=(await pool.query('SELECT * FROM discord_chat_job WHERE id=$1',[id])).rows[0];assert.deepEqual(saved.allowed_fields,['personality']);assert.ok(Date.parse(saved.deadline_at)>clock+500000);
  const req=JSON.parse(await vault.decrypt('owner',`chat-job:${id}`,saved.request_secret)),token=req.objective.match(/Authorization: Bearer ([\w-]+)/)[1];assert.ok(req.objective.includes('TRUSTED SELF-CHANGE PERMISSION'));
  await assert.rejects(l.reply(id,token,'no',{username:'Other'}),/does not authorize/);
+ await assert.rejects(l.reply(id,token,'Quieter now. All changed.',{personality:'curious griffin, quieter'}),e=>e.status===400&&/one brief sentence/.test(e.message));
+ assert.equal((await pool.query('SELECT config FROM swarms WHERE id=$1',[r.id])).rows[0].config.personality,'curious griffin');
+ assert.equal((await pool.query('SELECT state FROM discord_chat_job WHERE id=$1',[id])).rows[0].state,'running');
  const result=await l.reply(id,token,'Quieter now.',{personality:'curious griffin, quieter'});assert.deepEqual(result.selfChangeReceipt.appliedFields,['personality']);assert.equal((await pool.query('SELECT config FROM swarms WHERE id=$1',[r.id])).rows[0].config.personality,'curious griffin, quieter');
  assert.deepEqual(await l.reply(id,token,'Quieter now.',{personality:'curious griffin, quieter'}),result);
 });

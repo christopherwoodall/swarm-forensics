@@ -4,6 +4,16 @@ import assert from 'node:assert/strict';
 import {OperationClient as Client,linkedPair,testOperations} from './operation-test-client.js';
 
 import {agentOperations,agentHandler} from './agent-api.js';
+test('brief posts and edits follow their saved connection style before reservation or Discord effects',async()=>{
+ const relayId='550e8400-e29b-41d4-a716-446655440000';let effects=[],replyStyle='brief';
+ const server=agentOperations({pool:{query:async()=>({rows:[{id:relayId,config:{chat:{replyStyle}}}]})},owner:'owner',version:'test',listener:{reserve:async()=>effects.push('reserve')},relay:{post:async(_,content)=>{effects.push('post');return {id:'receipt',content};},edit:async(_,id,content)=>{effects.push('edit');return {id,content};}}});
+ for(const [name,args] of [['discord_post_message',{nonce:'123'}],['discord_edit_message',{messageId:'1556859459135873045'}]]){
+  await assert.rejects(server.invoke(name,{relayId,...args,content:'Done. Hello!'}),e=>e.status===400&&/one brief sentence/.test(e.message));assert.deepEqual(effects,[]);
+ }
+ await server.invoke('discord_post_message',{relayId,nonce:'124',content:'One brief comment.'});assert.deepEqual(effects,['reserve','post']);
+ effects=[];replyStyle=undefined;
+ await server.invoke('discord_edit_message',{relayId,messageId:'1556859459135873045',content:'Other bots retain their style. Two sentences.'});assert.deepEqual(effects,['edit']);
+});
 const coordinationServer=deps=>testOperations(deps,agentOperations);
 
 test('HTTPS API discovers tools, scopes relays, validates input and hides internal errors',async()=>{
