@@ -1,4 +1,5 @@
 import {DiscordPresence} from './discord-presence.js';
+import {messageViewSchema} from './discord-message-view.js';
 import {LiveResearch,liveResearchSchema} from './live-research.js';
 import {DEFAULT_CHAT,DEFAULT_PERSONALITY} from './frontend/bot-defaults.js';
 import {migrateBotSettings,migrationKey} from './bot-settings-migration.js';
@@ -36,6 +37,7 @@ await pool.query(`CREATE TABLE IF NOT EXISTS swarms(id uuid PRIMARY KEY,owner te
 CREATE TABLE IF NOT EXISTS bots(id uuid PRIMARY KEY,swarm uuid NOT NULL REFERENCES swarms ON DELETE CASCADE,bot_id text UNIQUE NOT NULL,name text NOT NULL,role text NOT NULL,secret text NOT NULL,position integer NOT NULL);`);
 const botSettingsMigration=await migrateBotSettings(pool);if(botSettingsMigration.applied)console.log("Bot defaults migration applied:",botSettingsMigration.affected);
 await memorySchema(pool);
+await messageViewSchema(pool);
 await kanbanSchema(pool);const board=new Kanban(pool);
 await schema(pool);const store=new Store(pool);await store.restart();
 const vault=new Vault(pool,key);await vault.init();const relay=new DiscordRelay(pool,vault);

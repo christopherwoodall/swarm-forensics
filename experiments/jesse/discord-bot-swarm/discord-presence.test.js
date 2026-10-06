@@ -7,3 +7,9 @@ test('availability requires verification and honors paused/off states',()=>{asse
 test('Gateway login has a finite timeout and destroys abandoned clients',async()=>{const f=fixture();const factory=f.manager.clientFactory;f.manager.clientFactory=options=>{const c=factory(options);c.login=()=>new Promise(()=>{});return c;};await f.manager.sync();assert.equal(f.manager.status('relay').state,'failed');assert.equal(f.created[0].destroyed,true);});
 
 test('login returning before clientReady waits for the Gateway ready event',async()=>{const f=fixture();const factory=f.manager.clientFactory;f.manager.clientFactory=options=>{const c=factory(options);c.login=async()=>{setTimeout(()=>{c.ready=true;c.emit('clientReady');},1);};return c;};await f.manager.sync();assert.equal(f.manager.status('relay').state,'online');assert.equal(f.created[0].destroyed,false);});
+
+test('existing Gateway forwards button interactions to the scoped message view without model work',async()=>{
+ const f=fixture(),handled=[];f.manager.relay.messageView={interaction:async(...args)=>handled.push(args)};
+ await f.manager.sync();const interaction={id:'synthetic'};f.created[0].emit('interactionCreate',interaction);assert.deepEqual(handled,[['relay',interaction]]);
+ await f.manager.sync();f.created[0].emit('interactionCreate',interaction);assert.equal(handled.length,2);assert.equal(f.created[0].listenerCount('interactionCreate'),1);
+});

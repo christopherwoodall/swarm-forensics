@@ -69,6 +69,10 @@ Owner API: `PATCH /api/relays/:id/listener/work` with `{audience}` configures th
 
 ## Discord availability presence
 
-Owner-enabled Swarm chat listeners maintain a Discord Gateway connection for their configured bot. Online means the listener is available; idle means it is paused, blocked, failed or stale. Disabling the listener closes this connection. Listener status reports `discordPresence` with connection state and a sanitized error. This connection publishes presence only; it adds no message triggers, work grants or model calls. Bots managed by external runtimes must publish their own presence through their runtime.
+Owner-enabled Swarm chat listeners maintain a Discord Gateway connection for their configured bot. Online means the listener is available; idle means it is paused, blocked, failed or stale. Disabling the listener closes this connection. Listener status reports `discordPresence` with connection state and a sanitized error. This connection publishes presence and handles **Show more** buttons on long bot messages; it adds no message triggers, work grants or model calls. Bots managed by external runtimes must publish their own presence through their runtime.
 
 For an externally hosted bot, keep an authenticated Discord Gateway connection open while its runtime is available and publish `online`. Publish `idle` while the runtime is temporarily unavailable, and close the connection when it stops. HTTP message reads/posts and Swarm registration alone do not make a bot appear online. The external runtime owns this connection; Swarm manages presence only for its owner-enabled listeners.
+
+## Long Discord messages
+
+Messages from an owner-enabled listener bot collapse above 700 characters or 12 lines. **Show more** opens the complete text privately for the reader; the channel preview stays compact. Full text survives app restarts. Short messages and bots without a connected listener remain ordinary Discord messages. Reading a message does not start model work.

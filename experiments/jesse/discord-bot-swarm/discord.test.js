@@ -78,7 +78,25 @@ test('ordinary chat can read and post in another channel without changing swarm 
 
 test('message edits preserve Markdown, suppress mentions and refuse foreign authors or servers',async()=>{
  const original=globalThis.fetch,messageId='123456789012345678';let author='bot',foreign=false,patches=0;const formatted='**Bridge setup**\n\n1. Call `discord_sync_agent`.\n2. Run the recipe.';
- const editPool={query:async sql=>({rows:sql.includes('SELECT owner')?[{owner:'owner'}]:sql.includes('FROM bots')?[{bot_id:'bot',secret:'cipher'}]:[{config}]})};
+ const editPool={query:async query=>{const sql=query.text||query;return {rows:sql.includes('SELECT owner')?[{owner:'owner'}]:sql.includes('FROM bots')?[{bot_id:'bot',secret:'cipher'}]:[{config}]};}};
  globalThis.fetch=async(url,options)=>{if(url.endsWith('/channel'))return {ok:true,status:200,json:async()=>({type:0,guild_id:foreign?'foreign':'guild'})};if(options.method==='PATCH'){patches++;const body=JSON.parse(options.body);assert.equal(body.content,formatted);assert.deepEqual(body.allowed_mentions,{parse:[]});assert.ok(options.signal);return {ok:true,status:200,json:async()=>({id:messageId,content:body.content})};}return {ok:true,status:200,json:async()=>({id:messageId,author:{id:author}})};};
  try{const relay=new DiscordRelay(editPool,vault),run={swarm:'relay',owner:'owner'};assert.equal((await relay.edit(run,messageId,formatted)).content,formatted);author='human';await assert.rejects(relay.edit(run,messageId,formatted),/own messages/);foreign=true;await assert.rejects(relay.edit(run,messageId,formatted),/configured server/);await assert.rejects(relay.edit(run,'invalid',formatted),/message ID/);await assert.rejects(relay.edit(run,messageId,' '.repeat(4)),/content/);assert.equal(patches,1);}finally{globalThis.fetch=original;}
+});
+
+test('connected listener posts compact buttons and saves a delivery binding; disconnected bots retain full text',async()=>{
+ const original=globalThis.fetch,queries=[],posted=[],body='Long original **message**. '.repeat(40),botId='123456789012345678';
+ const viewPool={query:async query=>{const sql=query.text||query;if(sql.includes('discord_message_view')){queries.push(query);return {rows:[{nonce:'123'}]};}return {rows:sql.includes('SELECT owner')?[{owner:'owner'}]:sql.includes('FROM bots')?[{bot_id:botId,secret:'cipher'}]:[{config}]};}};
+ globalThis.fetch=async(url,options)=>{if(url.endsWith('/channel'))return {ok:true,status:200,json:async()=>({type:0,guild_id:'guild'})};const payload=JSON.parse(options.body);posted.push(payload);assert.ok(options.signal);return {ok:true,status:200,json:async()=>({id:'123456789012345679',content:payload.content,components:payload.components||[]})};};
+ try{const relay=new DiscordRelay(viewPool,vault),run={swarm:'relay',owner:'owner'};relay.presence={status:()=>({state:'online'})};const receipt=await relay.post(run,body,'123');assert.ok(receipt.content.length<400);assert.equal(receipt.components[0].components[0].label,'Show more');assert.deepEqual(posted[0].allowed_mentions,{parse:[]});assert.equal(queries[0].values[3],body);assert.equal(queries[1].values[2],receipt.id);
+ relay.presence={status:()=>({state:'offline'})};await relay.post(run,body,'124');assert.equal(posted[1].content,body);assert.equal(posted[1].components,undefined);assert.equal(queries.length,2);
+ }finally{globalThis.fetch=original;}
+});
+
+test('editing long messages replaces the saved body and editing short clears its button',async()=>{
+ const original=globalThis.fetch,queries=[],patches=[],bot='123456789012345678',id='123456789012345679';
+ const editPool={query:async query=>{const sql=query.text||query;if(sql.includes('discord_message_view')){queries.push(query);return {rows:[{nonce:'saved'}]};}return {rows:sql.includes('SELECT owner')?[{owner:'owner'}]:sql.includes('FROM bots')?[{bot_id:bot,secret:'cipher'}]:[{config}]};}};
+ globalThis.fetch=async(url,options)=>({ok:true,status:200,json:async()=>{if(url.endsWith('/channel'))return {type:0,guild_id:'guild'};if(options.method==='GET')return {author:{id:bot}};const payload=JSON.parse(options.body);patches.push(payload);return {id,content:payload.content};}});
+ try{const relay=new DiscordRelay(editPool,vault);relay.presence={status:()=>({state:'online'})};await relay.edit({swarm:'relay',owner:'owner'},id,'Updated long text. '.repeat(60));assert.equal(patches[0].components[0].components[0].label,'Show more');assert.equal(queries.length,3);assert.match(queries[2].values[3],/^\d{1,25}$/);
+ await relay.edit({swarm:'relay',owner:'owner'},id,'Short correction.');assert.deepEqual(patches[1].components,[]);assert.equal(patches[1].content,'Short correction.');assert.equal(queries[3].values[3],null);
+ }finally{globalThis.fetch=original;}
 });
