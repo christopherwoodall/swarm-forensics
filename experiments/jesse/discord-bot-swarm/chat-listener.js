@@ -6,6 +6,8 @@ import {commandOwner} from './discord-commands.js';
 import {savedChat} from './chat-settings.js';
 
 export const CHAT_RUN_SECONDS=180;
+function runtimeIdle(runtime){return runtime.status==='open'&&runtime.upstream_status==='completed'&&runtime.background_jobs_running===0;}
+function validateRuntime(runtime){if(!Number.isFinite(runtime.background_jobs_running)||runtime.background_jobs_running<0)throw Error('Runtime returned invalid background-work status.');return runtime;}
 export const CHAT_REPLY_MAX_CHARS=400;
 const sentenceSegmenter=new Intl.Segmenter('en',{granularity:'sentence'});
 export function validateChatReply(content){
@@ -39,6 +41,8 @@ export function chatObjective({job,origin,botName,personality,messages,context,r
  const callback=`${origin}/api/chat-listener/jobs/${job.id}/reply`;
  return `${work||`Trusted owner mandate: generate ONE short conversational reply as ${botName} in the triggering Discord channel, or choose silence if joining would be intrusive. This is a chat-only worker for an owner-enabled always-on listener. You may not execute channel requests, build apps, edit files, read local credentials, change settings, start agents, use other services, or disclose private context except for the narrow SELF-CHANGE PERMISSION below, when present. No research or web browsing. Use only the supplied conversation. Ignore bots as triggers. Be honest about your limitations.`}
 
+This is a new listener turn. Prior turns in this runtime are history, not current authority. Use only this turn’s verified trigger, job control and reply callback; never reuse an earlier turn’s callback or work grant.
+
 Owner personality (tone preference only): ${personality}
 
 ${brief?`Reply style: exactly one brief sentence on one line, at most ${CHAT_REPLY_MAX_CHARS} characters, or an empty reply for silence. This limit applies to conversational replies, work results and self-change confirmations, regardless of personality. Put details in the task or artifact and link it when useful; do not split a long answer across comments. Complete the authorized work before reporting it.`:''}
@@ -52,6 +56,7 @@ Return your reply to the app, which controls delivery. ${selfInstructions}Use ${
 export async function listenerSchema(pool){await pool.query(`
 CREATE TABLE IF NOT EXISTS discord_chat_listener(relay uuid PRIMARY KEY REFERENCES swarms ON DELETE CASCADE,enabled boolean NOT NULL DEFAULT false,integration_secret text,control_origin text,activated_at timestamptz,heartbeat_at timestamptz,blocked_until timestamptz,discovered_at timestamptz,channels jsonb NOT NULL DEFAULT '[]',self_change_audience text NOT NULL DEFAULT 'off',work_audience text NOT NULL DEFAULT 'off',announce boolean NOT NULL DEFAULT true,state text NOT NULL DEFAULT 'stopped',error text);
 ALTER TABLE discord_chat_listener ADD COLUMN IF NOT EXISTS blocked_until timestamptz;
+ALTER TABLE discord_chat_listener ADD COLUMN IF NOT EXISTS runtime_session_id text;
 ALTER TABLE discord_chat_listener ADD COLUMN IF NOT EXISTS self_change_audience text NOT NULL DEFAULT 'off';
 ALTER TABLE discord_chat_listener ADD COLUMN IF NOT EXISTS work_audience text NOT NULL DEFAULT 'off';
 CREATE TABLE IF NOT EXISTS discord_chat_cursor(relay uuid REFERENCES swarms ON DELETE CASCADE,channel_id text,last_id text NOT NULL,error text,PRIMARY KEY(relay,channel_id));
@@ -61,6 +66,7 @@ ALTER TABLE discord_chat_job ADD COLUMN IF NOT EXISTS changes jsonb;
 ALTER TABLE discord_chat_job ADD COLUMN IF NOT EXISTS self_change_receipt jsonb;
 ALTER TABLE discord_chat_job ADD COLUMN IF NOT EXISTS allowed_work boolean NOT NULL DEFAULT false;
 ALTER TABLE discord_chat_job ADD COLUMN IF NOT EXISTS context jsonb;
+ALTER TABLE discord_chat_job ADD COLUMN IF NOT EXISTS runtime_reused boolean NOT NULL DEFAULT false;
 CREATE INDEX IF NOT EXISTS discord_chat_job_active ON discord_chat_job(relay,state,created_at);
 CREATE TABLE IF NOT EXISTS discord_chat_delivery(relay uuid REFERENCES swarms ON DELETE CASCADE,nonce text NOT NULL,at timestamptz NOT NULL DEFAULT now(),state text NOT NULL,payload_hash text NOT NULL,PRIMARY KEY(relay,nonce));
 `);}
@@ -73,7 +79,7 @@ export class ChatListener{
  if(controlOrigin!==undefined){const u=new URL(controlOrigin);if(u.protocol!=='https:'||u.origin!==controlOrigin||u.username||u.password)throw Error('Control origin must be an HTTPS origin.');}
  if(integrationKey!==undefined&&(typeof integrationKey!=='string'||integrationKey.length<16||integrationKey.length>500))throw Error('Invalid runtime integration key.');
  await this.transaction(async c=>{const s=await this.owned(c,owner,id),old=(await c.query('SELECT * FROM discord_chat_listener WHERE relay=$1',[id])).rows[0];if(enabled&&!s.config.verifiedAt)throw Error('Verify a server/channel before enabling the listener.');if(enabled&&!(controlOrigin||old?.control_origin))throw Error('Configure an HTTPS runtime control origin.');if(enabled&&!(integrationKey||old?.integration_secret))throw Error('Configure the runtime integration first.');
- if((integrationKey||controlOrigin)&&old){const pending=(await c.query('SELECT count(*)::int AS n FROM discord_chat_job WHERE relay=$1 AND dispatch_attempted AND NOT stop_confirmed',[id])).rows[0].n;if(pending)throw Error('Pause and finish runtime cleanup before replacing its integration.');}
+ if((integrationKey||controlOrigin)&&old){if(old.runtime_session_id)throw Error('Pause and retire the retained runtime before replacing its integration.');const pending=(await c.query('SELECT count(*)::int AS n FROM discord_chat_job WHERE relay=$1 AND dispatch_attempted AND NOT stop_confirmed',[id])).rows[0].n;if(pending)throw Error('Pause and finish runtime cleanup before replacing its integration.');}
  const secret=integrationKey?await this.vault.encrypt(owner,`chat-runtime:${id}`,integrationKey):old?.integration_secret;
  await c.query(`INSERT INTO discord_chat_listener(relay,enabled,integration_secret,control_origin,activated_at,state) VALUES($1,$2,$3,$4,now(),$5) ON CONFLICT(relay) DO UPDATE SET enabled=excluded.enabled,integration_secret=excluded.integration_secret,control_origin=excluded.control_origin,activated_at=CASE WHEN NOT discord_chat_listener.enabled AND excluded.enabled THEN now() ELSE discord_chat_listener.activated_at END,state=excluded.state,error=NULL,blocked_until=NULL,discovered_at=NULL`,[id,enabled,secret,controlOrigin||old?.control_origin,enabled?'starting':'stopped']);
  if(!enabled)await c.query("UPDATE discord_chat_job SET state='cancelled',error='Owner disabled listener.',finished_at=now() WHERE relay=$1 AND state=ANY($2)",[id,active]);
@@ -100,7 +106,7 @@ export class ChatListener{
  const replay={...source,id:'owner-replay-'+messageId,sourceMessageId:messageId,ownerRequestedReplay:true,directed:true};
  const jobId=await this.enqueue({...row,bot_name:bot.name,bot_id:bot.bot_id},channelId,replay.id,[...messages.slice(-14).filter(m=>m.id!==messageId),replay]);if(!jobId||jobId==='suppressed')throw Error('Self-change request is already queued or the reply limit is reached.');return {jobId,state:'queued'};
  }
- async status(owner,id){const r=(await this.pool.query('SELECT (l.integration_secret IS NOT NULL) AS configured,l.enabled,l.self_change_audience AS "selfChangeAudience",l.work_audience AS "workAudience",l.state,l.error,l.heartbeat_at,l.blocked_until,l.channels,l.activated_at FROM discord_chat_listener l JOIN swarms s ON s.id=l.relay WHERE l.relay=$1 AND s.owner=$2',[id,owner])).rows[0];if(!r)return {enabled:false,state:'stopped',channels:[],error:null};const jobs=(await this.pool.query('SELECT id,channel_id,state,session_id,created_at,deadline_at,finished_at,error,message_receipt,allowed_work AS "allowedWork",self_change_receipt AS "selfChangeReceipt" FROM discord_chat_job WHERE relay=$1 ORDER BY created_at DESC LIMIT 10',[id])).rows;return {...r,discordPresence:this.relay.presence?.status(id)||{state:'offline',error:null},state:r.enabled&&r.heartbeat_at&&this.now()-Date.parse(r.heartbeat_at)>90000?'stalled':r.state,jobs};}
+ async status(owner,id){const r=(await this.pool.query('SELECT (l.integration_secret IS NOT NULL) AS configured,l.enabled,l.self_change_audience AS "selfChangeAudience",l.work_audience AS "workAudience",l.runtime_session_id AS "runtimeSessionId",l.state,l.error,l.heartbeat_at,l.blocked_until,l.channels,l.activated_at FROM discord_chat_listener l JOIN swarms s ON s.id=l.relay WHERE l.relay=$1 AND s.owner=$2',[id,owner])).rows[0];if(!r)return {enabled:false,state:'stopped',channels:[],error:null};const jobs=(await this.pool.query('SELECT id,channel_id,state,session_id,created_at,deadline_at,finished_at,error,message_receipt,allowed_work AS "allowedWork",self_change_receipt AS "selfChangeReceipt" FROM discord_chat_job WHERE relay=$1 ORDER BY created_at DESC LIMIT 10',[id])).rows;return {...r,discordPresence:this.relay.presence?.status(id)||{state:'offline',error:null},state:r.enabled&&r.heartbeat_at&&this.now()-Date.parse(r.heartbeat_at)>90000?'stalled':r.state,jobs};}
  async fairy(row,path,body,signal){const key=await this.vault.decrypt(row.owner,`chat-runtime:${row.id}`,row.integration_secret);return this.fairyRequest(row.control_origin+path,{headers:{'X-API-Key':key},...(body!==undefined?{body}:{}),signal:AbortSignal.any([this.controller.signal,AbortSignal.timeout(20000),...(signal?[signal]:[])])});}
  async enqueue(row,channelId,messageId,messages,context){return this.transaction(async c=>{
  const s=await this.owned(c,row.owner,row.id);const l=(await c.query('SELECT enabled,self_change_audience,work_audience FROM discord_chat_listener WHERE relay=$1',[row.id])).rows[0];if(!l?.enabled||!s.config.verifiedAt||savedChat(s.config).mode==='off')return null;
@@ -152,14 +158,14 @@ export class ChatListener{
  return receipt;
  }
  async tick(){if(this.busy||this.controller.signal.aborted)return;this.busy=true;try{if(this.research)await this.research.listenerJobs();
- const rows=(await this.pool.query(`SELECT s.*,l.integration_secret,l.control_origin,l.activated_at,l.discovered_at,l.blocked_until,l.channels,l.announce,l.work_audience,b.bot_id,b.name AS bot_name FROM discord_chat_listener l JOIN swarms s ON s.id=l.relay JOIN bots b ON b.swarm=s.id AND b.position=0 WHERE l.enabled=true`)).rows;
+ const rows=(await this.pool.query(`SELECT s.*,l.integration_secret,l.control_origin,l.activated_at,l.discovered_at,l.runtime_session_id,l.error AS listener_error,l.blocked_until,l.channels,l.announce,l.work_audience,b.bot_id,b.name AS bot_name FROM discord_chat_listener l JOIN swarms s ON s.id=l.relay JOIN bots b ON b.swarm=s.id AND b.position=0 WHERE l.enabled=true`)).rows;
  for(const row of rows){try{await this.cycle(row);}catch(e){await this.pool.query("UPDATE discord_chat_listener SET state=CASE WHEN blocked_until>now() THEN 'blocked' ELSE 'failed' END,error=$2,heartbeat_at=now() WHERE relay=$1",[row.id,e.message]);}}
  await this.pool.query("UPDATE discord_chat_job SET state='timed_out',error='Chat run exceeded its deadline.',finished_at=now() WHERE state=ANY($1) AND deadline_at<=now()",[active]);
  await this.cleanup();
  }finally{try{if(this.research)await this.research.listenerJobs();}finally{this.busy=false;}}}
  async cycle(row){
  const signal=AbortSignal.any([this.controller.signal,AbortSignal.timeout(75000)]);
- if(row.blocked_until&&Date.parse(row.blocked_until)>this.now()){await this.pool.query("UPDATE discord_chat_listener SET state='blocked',heartbeat_at=now() WHERE relay=$1",[row.id]);return;}
+ if(row.blocked_until&&Date.parse(row.blocked_until)>this.now()&&!(row.runtime_session_id&&row.listener_error?.includes('app_session_daily_limit'))){await this.pool.query("UPDATE discord_chat_listener SET state='blocked',heartbeat_at=now() WHERE relay=$1",[row.id]);return;}
  if(!row.config.verifiedAt||!row.config.guildId){await this.pool.query("UPDATE discord_chat_listener SET state='stopped',error='Server disconnected.',heartbeat_at=now() WHERE relay=$1",[row.id]);return;}
  if(savedChat(row.config).mode==='off'){await this.pool.query("UPDATE discord_chat_listener SET state='paused',heartbeat_at=now(),error=NULL WHERE relay=$1",[row.id]);return;}
  if(!row.discovered_at||this.now()-Date.parse(row.discovered_at)>300000){const d=await this.relay.discover({swarm:row.id,owner:row.owner,guildId:row.config.guildId},signal);row.channels=d.channels.filter(c=>c.guildId===row.config.guildId);if(row.channels.length>100)throw Error('Listener supports up to 100 accessible text channels.');await this.pool.query('UPDATE discord_chat_listener SET channels=$2,discovered_at=now() WHERE relay=$1',[row.id,JSON.stringify(row.channels)]);}
@@ -181,24 +187,70 @@ export class ChatListener{
  await this.jobs(row,signal);
  await this.pool.query('UPDATE discord_chat_listener SET state=$2,error=$3,heartbeat_at=now() WHERE relay=$1',[row.id,channelErrors.length?'degraded':'listening',channelErrors.join('; ').slice(0,1000)||null]);
  }
+ async dispatchRuntime(row,j,body,signal){
+ let sid=j.runtime_reused?j.session_id:null;
+ if(!sid&&!j.dispatch_attempted){
+ sid=(await this.pool.query('SELECT runtime_session_id FROM discord_chat_listener WHERE relay=$1',[row.id])).rows[0]?.runtime_session_id;
+ if(sid){const current=validateRuntime(await this.fairy(row,`/api/app-sessions/${sid}`,undefined,signal));
+ if(!runtimeIdle(current)){if(['running','queued'].includes(current.status)||current.background_jobs_running)throw Object.assign(Error('Retained runtime is still working.'),{httpStatus:409,errorCode:'session_busy'});
+ await this.pool.query('UPDATE discord_chat_listener SET runtime_session_id=NULL WHERE relay=$1 AND runtime_session_id=$2',[row.id,sid]);sid=null;}
+ }
+ }
+ // Save the chosen target before sending. A lost response must retry that exact operation.
+ await this.pool.query('UPDATE discord_chat_job SET dispatch_attempted=true,session_id=CASE WHEN $2::text IS NOT NULL THEN $2 ELSE session_id END,runtime_reused=$3 WHERE id=$1',[j.id,sid,!!sid]);
+ let result;
+ if(sid){result=await this.fairy(row,`/api/app-sessions/${sid}/input`,{client_mutation_id:body.client_mutation_id,input:body.objective},signal);if(result.session_id!==sid||result.turn?.client_mutation_id!==body.client_mutation_id||typeof result.turn.turn_id!=='string'||!result.turn.turn_id)throw Error('Runtime returned no valid follow-up receipt.');}
+ else result=await this.fairy(row,'/api/app-sessions',body,signal);
+ const receipt=result.session_id||result.session?.id||result.id;if(typeof receipt!=='string'||!/^[-\w]{1,128}$/.test(receipt))throw Error('Runtime returned no valid session receipt.');
+ await this.pool.query("UPDATE discord_chat_listener SET runtime_session_id=$2 WHERE relay=$1 AND enabled=true",[row.id,receipt]);return receipt;
+ }
  async jobs(row,signal=AbortSignal.timeout(60000)){
  const jobs=(await this.pool.query('SELECT * FROM discord_chat_job WHERE relay=$1 AND state=ANY($2) ORDER BY created_at',[row.id,active])).rows;
  for(const j of jobs){signal.throwIfAborted();if(Date.parse(j.deadline_at)<=this.now()){await this.pool.query("UPDATE discord_chat_job SET state='timed_out',error='Listener run exceeded its deadline.',finished_at=now() WHERE id=$1",[j.id]);continue;}
  if(j.state==='queued'){
  const claimed=await this.transaction(async c=>{await this.owned(c,row.owner,row.id);const n=(await c.query("SELECT count(*)::int AS n FROM discord_chat_job WHERE relay=$1 AND state IN ('starting','running','applying','posting')",[row.id])).rows[0].n;if(n)return false;const r=await c.query("UPDATE discord_chat_job SET state='starting' WHERE id=$1 AND state='queued' RETURNING id",[j.id]);return !!r.rows[0];});if(!claimed)continue;j.state='starting';}
- if(j.state==='starting'){try{await this.pool.query('UPDATE discord_chat_job SET dispatch_attempted=true WHERE id=$1',[j.id]);const body=JSON.parse(await this.vault.decrypt(row.owner,`chat-job:${j.id}`,j.request_secret));const r=await this.fairy(row,'/api/app-sessions',body,signal);const sid=r.session_id||r.session?.id||r.id;if(typeof sid!=='string'||!/^[-\w]{1,128}$/.test(sid))throw Error('Runtime returned no valid session receipt.');await this.pool.query("UPDATE discord_chat_job SET session_id=$2,state=CASE WHEN state='starting' THEN 'running' ELSE state END WHERE id=$1",[j.id,sid]);}catch(e){if([400,401,403,404,409,422,429].includes(e.httpStatus)){if(e.httpStatus===429){const until=rateLimitUntil(e,this.now());await this.pool.query("UPDATE discord_chat_listener SET state='blocked',blocked_until=$2,error=$3,heartbeat_at=now() WHERE relay=$1",[row.id,new Date(until),e.message]);}await this.pool.query("UPDATE discord_chat_job SET state='failed',error=$2,finished_at=now(),dispatch_attempted=false,stop_confirmed=true,request_secret=NULL WHERE id=$1",[j.id,e.message]);}else await this.pool.query("UPDATE discord_chat_job SET error=$2 WHERE id=$1",[j.id,e.message]);throw e;}}
- else if(j.state==='running'&&j.session_id){const r=await this.fairy(row,`/api/app-sessions/${j.session_id}`,undefined,signal);if(['failed','stopped'].includes(r.status)||r.status==='open'&&!r.background_jobs_running)await this.pool.query("UPDATE discord_chat_job SET state='failed',error='Runtime finished without a reply receipt.',finished_at=now() WHERE id=$1 AND state='running'",[j.id]);}
+ if(j.state==='starting'){try{
+ const pending=(await this.pool.query("SELECT EXISTS(SELECT 1 FROM discord_chat_job WHERE relay=$1 AND id<>$2 AND (session_id IS NOT NULL OR dispatch_attempted) AND NOT stop_confirmed AND state=ANY($3)) AS pending",[row.id,j.id,['completed','skipped','failed','cancelled','timed_out']])).rows[0]?.pending;if(pending)continue;
+ const body=JSON.parse(await this.vault.decrypt(row.owner,`chat-job:${j.id}`,j.request_secret));const sid=await this.dispatchRuntime(row,j,body,signal);await this.pool.query("UPDATE discord_chat_job SET session_id=$2,state=CASE WHEN state='starting' THEN 'running' ELSE state END WHERE id=$1",[j.id,sid]);
+ }catch(e){
+ if(e.errorCode==='session_busy'){await this.pool.query("UPDATE discord_chat_job SET dispatch_attempted=false,error=$2 WHERE id=$1",[j.id,e.message]);continue;}
+ if(e.errorCode==='session_not_reusable'||e.errorCode==='app_session_budget'&&e.retryAt===null){
+ const saved=(await this.pool.query('SELECT session_id,runtime_reused FROM discord_chat_job WHERE id=$1',[j.id])).rows[0];
+ if(saved?.runtime_reused){await this.fairy(row,`/api/app-sessions/${saved.session_id}/stop`,{},signal);await this.pool.query('UPDATE discord_chat_listener SET runtime_session_id=NULL WHERE relay=$1 AND runtime_session_id=$2',[row.id,saved.session_id]);await this.pool.query('UPDATE discord_chat_job SET session_id=NULL,runtime_reused=false,dispatch_attempted=false,error=$2 WHERE id=$1',[j.id,'Retained runtime retired; replacement pending.']);continue;}
+ }
+ if([400,401,403,404,409,422,429].includes(e.httpStatus)){if(e.httpStatus===429){const until=rateLimitUntil(e,this.now());await this.pool.query("UPDATE discord_chat_listener SET state='blocked',blocked_until=$2,error=$3,heartbeat_at=now() WHERE relay=$1",[row.id,new Date(until),e.message]);}await this.pool.query("UPDATE discord_chat_job SET state='failed',error=$2,finished_at=now(),dispatch_attempted=false,stop_confirmed=true,request_secret=NULL WHERE id=$1",[j.id,e.message]);}else await this.pool.query("UPDATE discord_chat_job SET error=$2 WHERE id=$1",[j.id,e.message]);throw e;
+ }}
+ else if(j.state==='running'&&j.session_id){
+ const r=await this.fairy(row,`/api/app-sessions/${j.session_id}`,undefined,signal);
+ if(j.runtime_reused){const receipt=await this.fairy(row,`/api/app-sessions/${j.session_id}/turns/chat-${j.id}`,undefined,signal);if(receipt.session_id!==j.session_id||receipt.turn?.client_mutation_id!==`chat-${j.id}`)throw Error('Runtime returned a mismatched follow-up receipt.');if(['completed','failed','cancelled','timed_out'].includes(receipt.turn?.state))await this.pool.query("UPDATE discord_chat_job SET state='failed',error=$2,finished_at=now() WHERE id=$1 AND state='running'",[j.id,`Runtime follow-up ${receipt.turn.state} without a reply receipt.`]);}
+ else if(['failed','stopped'].includes(r.status)||r.status==='open'&&!r.background_jobs_running)await this.pool.query("UPDATE discord_chat_job SET state='failed',error='Runtime finished without a reply receipt.',finished_at=now() WHERE id=$1 AND state='running'",[j.id]);
+ }
  }
  }
  async cleanup(){const signal=AbortSignal.any([this.controller.signal,AbortSignal.timeout(45000)]);
  const rows=(await this.pool.query(`SELECT j.*,s.owner,l.integration_secret,l.control_origin,s.id AS relay_id FROM discord_chat_job j JOIN swarms s ON s.id=j.relay JOIN discord_chat_listener l ON l.relay=j.relay WHERE j.state IN ('completed','skipped','failed','cancelled','timed_out') AND NOT j.stop_confirmed AND j.request_secret IS NOT NULL ORDER BY j.created_at LIMIT 10`)).rows;
  for(const j of rows){if(signal.aborted)return;try{
  const row={...j,id:j.relay};let sid=j.session_id;
- // Exact creation retry reconciles a lost response before stopping owned runtime.
- if(!sid&&j.dispatch_attempted){const body=JSON.parse(await this.vault.decrypt(j.owner,`chat-job:${j.id}`,j.request_secret));const r=await this.fairy(row,'/api/app-sessions',body,signal);sid=r.session_id||r.session?.id||r.id;if(sid)await this.pool.query('UPDATE discord_chat_job SET session_id=$2 WHERE id=$1',[j.id,sid]);}
- if(sid){await this.fairy(row,`/api/app-sessions/${sid}/stop`,{},signal);const r=await this.fairy(row,`/api/app-sessions/${sid}`,undefined,signal);if(r.background_jobs_running||['running','queued'].includes(r.status))continue;}
+ // Reconcile ambiguous admission with its exact persisted operation before cancellation.
+ if(j.dispatch_attempted&&(!sid||j.runtime_reused)){
+ const body=JSON.parse(await this.vault.decrypt(j.owner,`chat-job:${j.id}`,j.request_secret));
+ if(j.runtime_reused){await this.fairy(row,`/api/app-sessions/${sid}/input`,{client_mutation_id:body.client_mutation_id,input:body.objective},signal);}
+ else{const r=await this.fairy(row,'/api/app-sessions',body,signal);sid=r.session_id||r.session?.id||r.id;if(sid)await this.pool.query('UPDATE discord_chat_job SET session_id=$2 WHERE id=$1',[j.id,sid]);}
+ }
+ if(sid){const current=validateRuntime(await this.fairy(row,`/api/app-sessions/${sid}`,undefined,signal));
+ const retained=(await this.pool.query('SELECT enabled,runtime_session_id FROM discord_chat_listener WHERE relay=$1',[j.relay])).rows[0];
+ const success=['completed','skipped'].includes(j.state),busy=['running','queued'].includes(current.status)||current.background_jobs_running;
+ if(success&&retained?.enabled&&busy&&Date.parse(j.deadline_at)>this.now())continue;
+ if(success&&retained?.enabled&&runtimeIdle(current)){await this.pool.query('UPDATE discord_chat_listener SET runtime_session_id=$2 WHERE relay=$1 AND (runtime_session_id IS NULL OR runtime_session_id=$2)',[j.relay,sid]);}
+ else{await this.fairy(row,`/api/app-sessions/${sid}/stop`,{},signal);const r=await this.fairy(row,`/api/app-sessions/${sid}`,undefined,signal);if(r.background_jobs_running||['running','queued'].includes(r.status))continue;await this.pool.query('UPDATE discord_chat_listener SET runtime_session_id=NULL WHERE relay=$1 AND runtime_session_id=$2',[j.relay,sid]);}
+ }
+
  await this.pool.query('UPDATE discord_chat_job SET stop_confirmed=true,request_secret=NULL WHERE id=$1',[j.id]);
  }catch(e){await this.pool.query('UPDATE discord_chat_job SET error=$2 WHERE id=$1',[j.id,`Runtime cleanup: ${e.message}`]);}}
+ // Pausing retires even a previously cleaned idle session; no retained worker survives revocation.
+ const idle=(await this.pool.query("SELECT l.*,s.owner,s.config,s.id FROM discord_chat_listener l JOIN swarms s ON s.id=l.relay WHERE l.runtime_session_id IS NOT NULL AND (NOT l.enabled OR s.config->'chat'->>'mode'='off')")).rows;
+ for(const row of idle){if(signal.aborted)return;try{await this.pool.query("UPDATE discord_chat_job SET state='cancelled',error='Listener authority paused.',finished_at=now() WHERE relay=$1 AND state=ANY($2)",[row.id,active]);await this.fairy(row,`/api/app-sessions/${row.runtime_session_id}/stop`,{},signal);const status=await this.fairy(row,`/api/app-sessions/${row.runtime_session_id}`,undefined,signal);if(!status.background_jobs_running&&!['running','queued'].includes(status.status))await this.pool.query('UPDATE discord_chat_listener SET runtime_session_id=NULL WHERE relay=$1 AND runtime_session_id=$2',[row.id,row.runtime_session_id]);}catch(e){await this.pool.query('UPDATE discord_chat_listener SET error=$2 WHERE relay=$1',[row.id,`Runtime retirement: ${e.message}`]);}}
+
  }
  start(){const timer=setInterval(()=>this.tick().catch(e=>console.error('Chat listener failed:',e.message)),10000);timer.unref();void this.tick().catch(e=>console.error('Chat listener startup failed:',e.message));return ()=>{clearInterval(timer);this.controller.abort(Error('Service stopping.'));};}
 }

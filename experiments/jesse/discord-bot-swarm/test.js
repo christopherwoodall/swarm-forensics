@@ -22,3 +22,9 @@ test('successful external responses cannot echo secrets through JSON parser erro
  await assert.rejects(request('https://example.com/api',{},async()=>new Response(JSON.stringify(body),{status:429,headers})),e=>{assert.equal(e.httpStatus,429);assert.equal(e.errorCode,code);if(body.retry_at)assert.equal(e.retryAt,body.retry_at);if(headers['Retry-After'])assert.ok(e.retryAt>Date.now()/1000+55);assert.ok(!e.message.includes('private secret'));return true;});
  }
  });
+
+test('follow-up errors retain busy/retirement codes and explicit lifetime-budget null without leaking payloads',async()=>{
+ for(const [code,status,retry] of [['session_busy',409,undefined],['session_not_reusable',409,undefined],['app_session_budget',429,null]]){
+ await assert.rejects(request('https://example.com/api',{},async()=>new Response(JSON.stringify({error:code,retry_at:retry,detail:'private secret'}),{status,headers:retry===null?{'Retry-After':'30'}:{}})),e=>{assert.equal(e.errorCode,code);assert.equal(e.retryAt,retry);assert.ok(!e.message.includes('private secret'));return true;});
+ }
+});
