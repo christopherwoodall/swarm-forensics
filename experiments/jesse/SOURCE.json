@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/QualityCopperShovel/discord-bot-swarm",
-  "revision": "1e329b10ea57fcdb6f71eb08b269752f36290ff9",
-  "version": "0.26.2",
+  "revision": "097ffc789596173545fdfb13c550d0b496a98540",
+  "version": "0.26.3",
   "excluded": [
     "AGENTS.md",
     "deploy/fairystack/AGENTS.md"
@@ -14,13 +14,13 @@
     "LICENSE": "4795f7a70745d2fb66bf9b2471d93eab4966d6b08a619c0c0d56137c2c7b0184",
     "Makefile": "5751cbc5bc54c763731f9778e43a06eb2f1ba9d0d67a4926977bd46488b68591",
     "README.md": "4e30b85112f2836ad0b60bb22787e26ec7a98588146b5dcee7f1637f290367b5",
-    "VERSION": "571a0345e4957939455a4c4518d264d47cae46917a626c2852416fdb2fa417db",
+    "VERSION": "0c5837fb59e93d275c2c439543cc54e7a4dd71a10bb6965718e6807d3f8256cc",
     "account.browser.test.mjs": "4e168ec6111dd36dda29a4e35e4e2b4e5f864535e8de7f02e2bca74fe60c6c51",
     "agent-api.js": "dd26c22c439ddf683a7128779dcf8121e47cd0d764bf7f026bda575b1f0329bc",
     "agent-api.test.js": "3201a92965350e6170af3d6fd1a732175f6bc4db435c0fb551a078cd9eac8859",
     "agent-guide-entry.js": "3b0629f41d27c8d3e57598e1bb8006fb2ab1f564d44d888010ed6fc297c8a20d",
     "agent-guide-entry.test.js": "0d822a66b75ac1d27282f65a1d0491343831f49af8f79211d1bd8c847fd83224",
-    "agent-setup.test.js": "cc334e58822fa68a8ecc81f2fc0a6789efb5de3c886606e3fd3611570788243d",
+    "agent-setup.test.js": "3a0ba59aa832a0ded951a383223347c8966c95f32d85ddeb484e992db870d56e",
     "agent-sync.js": "0ab3979f56e8604c069c7292cee2599d90c056e7a40baa0785aac3aed9a62a58",
     "auth-header.browser.test.mjs": "971439e9360dc464ca20fa5250ad0b33abe47e6a6abcdfab982510ce71b7917d",
     "authentication.js": "c5de43d9c9a5783eef81ad605b47bfd2d61fd55d143b367fcb92e28d8c0f50a7",
@@ -60,12 +60,12 @@
     "fairystack.json": "39a485978200f0f4ba1af4996b4d90d4ada7cd7181a415a6d5ff9c462a98d234",
     "frontend/THIRD_PARTY_NOTICES.txt": "4dfc4823a9600cc14c3def880dbd0588937671850f02710523883bc4b14f2936",
     "frontend/account.css": "95e02bc357d9eab59bfcfcfebf32cb734d60bc5e2e57778ec54b2d43e9310a50",
-    "frontend/agent-guide.md": "3d0fac07de27cc62a0cdf64dcb07183fce891f311e79a6a2ff0792cd29f02b7b",
+    "frontend/agent-guide.md": "62bc591dac7f03ec6e33da8fffce21ef15f30c677bf87c3c21617eeea26898e8",
     "frontend/agent-recipe.js": "ae96ef8c7dfa7f6cb6740ded747aee8ba2c45b502cf1f5f6a99253c1fc4470b5",
-    "frontend/agent-setup.js": "67994ddd4cef5af9b4c3e1fa94ec09994208e6df87097922ba1d84d0b070a1b4",
+    "frontend/agent-setup.js": "82032d331b2dfb90d30e3bb128b33943ec1940257427e0a9562d70c3bbbce3b4",
     "frontend/agent.html": "df6669e574a67f93f447ec22f23af0251a837d60328f23507e61b644631c2fd6",
     "frontend/agent.js": "bef866aad934381067435736eae2ef79a5e5fda6ea05cbfdf06c475b70f3f339",
-    "frontend/app.js": "ae2c1eca66ed52db56c5bbffa64f767182bb927dde5f0f8f8879f17e4eb8619c",
+    "frontend/app.js": "4cb7f8aadaff6a76471bb34d660d2c1ef4a317a8c7b10d04a90ea06e9189c1f0",
     "frontend/auth-oidc.js": "edff51a29d2b8911574b4f4b473d8d3fe8ad2b67e3adf66370599851466f38d0",
     "frontend/auth.js": "5210369e2017f3bea95750620b8f25c526529e6037602edf0da69784ac67e745",
     "frontend/board.css": "50939669688131eba0394a0b0cab3625ef2527c3903437deab0218766b6414ee",
@@ -113,8 +113,8 @@
     "live-research.js": "9d51e8a827500035fcab2daa7ac7f954111182b69c31bf726b288955700f53bd",
     "live-research.test.js": "8ef611d11c6eeb2b4720625beeaa2f3c7cfc13d08f4fe33850a12ea0ab459855",
     "operation-test-client.js": "ae56cb9e3b81c448d4bffda34ae52a46bc491557a55760ed1a558fa521e512d0",
-    "package-lock.json": "5631eadd65cc076e1c32a0e372b627b6d4f0fad78700b86ade7ead7b8b79f373",
-    "package.json": "07a80cbe59ac60b9a65742f8207478770c63879d5910cb2a8145b74dff7dd554",
+    "package-lock.json": "2f63b1e78d9770b4142a0d0dfe45b5a20eb423e72d73fffb410d330fa57c90b7",
+    "package.json": "0c1795de0ebe8cc91717ac63b9f455c869ab6e7f2dc508feb6106ab2667ffe35",
     "platform.test.js": "920065fc95f89c86c62dd7b0974ba514e0f5bc3f5750a1611e74f64de9ce09dd",
     "relay-records.js": "9585a862010d6f236f5e26e2dfb10d7a2a5b580a5093a03aae2f83da8c599d06",
     "relay-records.test.js": "6f15884090308bc0277a46f88d11028504e3d7ba81752d7fd58d13ff78c2473e",
@@ -130,6 +130,6 @@
     "test.js": "ae4b03adb078d29c16dcb4a5b4008106626c3d4a8ee301a6c740d3ae4b17b397",
     "vault.js": "aaeb884476a30145426601b800af1838bcc8828dc591eeb2760ae1c3420a5d84",
     "wizard-route.test.js": "96b96d4c6c1a7cea4f20f91f4fbe01205799f11a8fe5e0f96f24da60a994cdd9",
-    "wizard.browser.test.mjs": "c1500443ef2cab45bdc5b07f75dc28e5f467737466feac819a9290b33ada1dde"
+    "wizard.browser.test.mjs": "39e282bc64835c1525e61cafb84a02808c8d064580e115cb70a745cfdf00845d"
   }
 }

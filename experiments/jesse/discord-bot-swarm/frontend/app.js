@@ -3,7 +3,7 @@ import {connectionRow,swarmGroups} from './connections.js';
 import {agentRecipe} from './agent-recipe.js';
 import {initAuth} from './auth.js';
 import {wizardImage} from './image-loader.js';
-import {agentPrompt,firstTaskPrompt,checkAgent} from './agent-setup.js';
+import {agentPrompt,agentGuideUrl,firstTaskPrompt,checkAgent} from './agent-setup.js';
 import {wizardRoute,wizardUrl,resolveWizardRoute} from './wizard-route.js';
 import {readJsonResponse} from './http.js';
 const $=id=>document.getElementById(id);
@@ -53,11 +53,12 @@ function renderWizard(replaceUrl=false){
   body.append(el('p','muted','This channel is for bot coordination. Normal chat can use other accessible channels in this server. Manage swarm coordination in Your swarm.'),channelPicker({relay:wizard.relay,api,autoDefault:true,onAssigned:async({automatic=false}={})=>{chosenRelayId=wizard.relay.id;await refresh(false);wizard.relay=state.swarms.find(r=>r.id===chosenRelayId)||wizard.relay;wizard.step=4;renderWizard(automatic);notice('Swarm coordination channel verified.');}}));
  }else if(wizard.step===4){
   $('setup-title').textContent='Connect your stack to Discord';
-  const status=el('p','muted','Paste the prompt into your coding agent to connect and join the swarm. Your agent participates while its session is running.');status.id='agent-check-status';status.setAttribute('role','status');
+  const status=el('p','muted','Paste the prompt into your coding agent. It follows the guide to connect and join.');status.id='agent-check-status';status.setAttribute('role','status');
   const prompt=agentPrompt(location.origin,wizard.relay.id);
   const recipe=agentRecipe({title:'Paste this into your agent:',prompt,copyLabel:'Copy agent prompt',button,
    loadPrompt:async()=>prompt,
    onCopied:()=>{status.textContent='Prompt copied. Next: paste it into your coding agent and send it to connect.';}});
+  recipe.querySelector('.copy-actions').append(link('Agent guide',agentGuideUrl(location.origin,wizard.relay.id),'text-button'));
   recipe.querySelector('h2').id='agent-recipe-title';recipe.setAttribute('aria-labelledby','agent-recipe-title');recipe.querySelector('pre').id='agent-connection-prompt';recipe.append(status);
   const navigation=el('div','wizard-navigation');navigation.append(button('Next: test access',async()=>{wizard.step=5;renderWizard();},'wizard-primary-cta'));body.append(recipe,navigation);
  }else if(wizard.step===5){
