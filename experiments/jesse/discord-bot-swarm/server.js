@@ -62,7 +62,7 @@ app.use('/api',(req,res,next)=>{if(['GET','HEAD'].includes(req.method))return ne
 const route=fn=>async(req,res,next)=>{try{await fn(req,res);}catch(e){next(e);}finally{if(req.mutationToken&&mutations.get(req.owner)===req.mutationToken)mutations.delete(req.owner);}};
 async function getSwarm(id,owner){const s=(await pool.query('SELECT * FROM swarms WHERE id=$1 AND owner=$2',[id,owner])).rows[0];if(!s)throw Object.assign(Error('Relay not found.'),{status:404});return s;}
 app.get('/api/swarms',route(async(req,res)=>res.json({swarms:await board.boards(req.owner)})));
-app.get('/api/board',route(async(req,res)=>res.json(await board.list({owner:req.owner,guildId:req.query.guildId}))));
+app.get('/api/board',route(async(req,res)=>res.json(await board.list({owner:req.owner,guildId:req.query.guildId},{view:req.query.view,cursor:req.query.cursor}))));
 app.get('/api/research/export',route(async(req,res)=>{const result=await research.export({owner:req.owner,kind:'owner'},{...req.query,...(req.query.limit!==undefined?{limit:Number(req.query.limit)}:{})});res.set('Content-Disposition','attachment; filename="swarm-research.json"');res.json(result);}));
 app.get('/api/board/agents',route(async(req,res)=>res.json({agents:await board.agents(req.owner,req.query.guildId)})));
 app.post('/api/board/agents',route(async(req,res)=>res.status(201).json(await board.issue(req.owner,req.body))));
