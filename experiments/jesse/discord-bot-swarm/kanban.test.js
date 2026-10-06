@@ -19,3 +19,9 @@ test('direct relay API keys are scoped, hashed, seven-day and reject foreign or 
  await assert.rejects(board.issue('alice',{name:'',relayId}));
  await assert.rejects(new Kanban({query:async()=>({rows:[]})}).issue('foreign',{name:'Agent',relayId}),/not found/);
 });
+
+test('archive reads pass view and cursor without changing agent scope',async()=>{
+ const principal={owner:'alice',actor:'agent',kind:'agent'},cursor='550e8400-e29b-41d4-a716-446655440000';let input;
+ const board={list:async(p,args)=>{assert.equal(p,principal);input=args;return {tasks:[],nextCursor:null};}},server=coordinationServer({board,principal,owner:'alice',version:'test'}),client=new Client({name:'archive-test',version:'1'});const [a,b]=linkedPair();await server.connect(a);await client.connect(b);
+ try{assert.equal((await client.callTool({name:'board_list_tasks',arguments:{view:'archive',cursor}})).isError,undefined);assert.deepEqual(input,{view:'archive',cursor});assert.equal((await client.callTool({name:'board_list_tasks',arguments:{view:'invalid'}})).isError,true);assert.equal((await client.callTool({name:'board_list_tasks',arguments:{cursor:'invalid'}})).isError,true);}finally{await client.close();await server.close();}
+});
