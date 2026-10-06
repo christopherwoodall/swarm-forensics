@@ -16,3 +16,9 @@ test('noisy synthetic batches are reproducible and explicitly labeled',()=>{asse
 test('provider calls have deadlines and never expose provider error payloads',async()=>{await assert.rejects(request('https://api.openai.com/v1/models',{},async(url,options)=>{assert.ok(options.signal);return {ok:false,status:401,json:async()=>({key:'secret'})};}),e=>e.message.includes('401')&&!e.message.includes('secret'));});
 
 test('successful external responses cannot echo secrets through JSON parser errors',async()=>{const sentinel='synthetic-credential-sentinel';await assert.rejects(request('https://api.openai.com/v1/models',{},async()=>({ok:true,status:200,json:async()=>{throw new SyntaxError(sentinel);}})),e=>e.message==='External service returned invalid JSON.'&&!e.message.includes(sentinel));});
+
+ test('runtime limits preserve safe codes and body/header retry timing',async()=>{
+ for(const [body,headers,code] of [[{error:'app_session_daily_limit',retry_at:1900000000},{},'app_session_daily_limit'],[{error:'app_session_limit'},{'Retry-After':'60'},'app_session_limit'],[{error:'private secret text'},{},undefined]]){
+ await assert.rejects(request('https://example.com/api',{},async()=>new Response(JSON.stringify(body),{status:429,headers})),e=>{assert.equal(e.httpStatus,429);assert.equal(e.errorCode,code);if(body.retry_at)assert.equal(e.retryAt,body.retry_at);if(headers['Retry-After'])assert.ok(e.retryAt>Date.now()/1000+55);assert.ok(!e.message.includes('private secret'));return true;});
+ }
+ });

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {eligible,chatObjective,snowflakeAt,ChatListener,CHAT_RUN_SECONDS} from './chat-listener.js';
+import {eligible,chatObjective,snowflakeAt,ChatListener,CHAT_RUN_SECONDS,rateLimitUntil} from './chat-listener.js';
 const now=1791239000000,botId='1556011112946729031';
 const human={id:'1556792435932270704',author:{id:'123456789012345678',bot:false},content:'hello',timestamp:new Date(now).toISOString()};
 test('chat eligibility respects Off, mentions/replies, freshness, and never loops on bots',()=>{
@@ -31,3 +31,5 @@ test('runtime requests load encrypted per-owner key each call and use finite dea
  await l.fairy(row,'/api/app-sessions',{objective:'chat'});await l.fairy(row,'/api/app-sessions/job');
  assert.equal(calls[0].options.headers['X-API-Key'],'rotated-1');assert.equal(calls[1].options.headers['X-API-Key'],'rotated-2');assert.ok(calls.every(x=>x.options.signal));assert.equal(calls[1].options.body,undefined);
 });
+
+test('rate limits without retry metadata wait one minute, explicit daily reset is retained',()=>{assert.equal(rateLimitUntil({},now),now+60000);assert.equal(rateLimitUntil({retryAt:(now+3600000)/1000},now),now+3600000);assert.equal(rateLimitUntil({retryAt:(now-1)/1000},now),now+10000);});
