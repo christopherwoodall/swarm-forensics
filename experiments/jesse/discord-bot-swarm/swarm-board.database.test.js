@@ -16,6 +16,27 @@ before(async()=>{
  for(const [principal,relay] of [[a,relayA],[b,relayB]]){const issued=await board.issue(principal.owner,{name:principal.owner+' agent',guildId:guild});await pool.query('UPDATE kanban_agents SET relay_id=$1 WHERE id=$2',[relay,issued.id]);const p=await board.principal(issued.token,()=>{throw Error('no fallback');});if(principal===a)pa=p;else pb=p;}
 });
 after(async()=>{await pool.end();await admin.query(`DROP SCHEMA ${namespace} CASCADE`);await admin.end();});
+test('one owner can connect two bots concurrently and rotate, expire or revoke keys independently',async()=>{
+ const owner='shared-laptop-'+crypto.randomUUID(),relays=[crypto.randomUUID(),crypto.randomUUID()];
+ for(const id of relays)await pool.query('INSERT INTO swarms VALUES($1,$2,$3)',[id,owner,{guildId:'223456789012345678',verifiedAt:new Date().toISOString()}]);
+ const authenticate=key=>board.principal(key.token,()=>{throw Error('no fallback');});
+ const [first,second]=await Promise.all(relays.map((relayId,i)=>board.issue(owner,{name:'Laptop bot '+i,relayId})));
+ assert.notEqual(first.id,second.id);assert.notEqual(first.token,second.token);
+ const [pfirst,psecond]=await Promise.all([authenticate(first),authenticate(second)]);
+ assert.equal(pfirst.relayId,relays[0]);assert.equal(psecond.relayId,relays[1]);
+ const task=(await board.mutate(psecond,{title:'Second bot survives first bot rotation',mutationId:mid()},true)).task;
+ await board.mutate(psecond,{taskId:task.id,revision:1,action:'claim',mutationId:mid()});
+ const replacement=await board.issue(owner,{name:'Laptop bot 0 replacement',relayId:relays[0]});
+ assert.equal((await authenticate(first)).relayId,relays[0]); // Registration never revokes another saved key.
+ assert.equal((await authenticate(replacement)).relayId,relays[0]);
+ await board.revoke(owner,first.id);await assert.rejects(authenticate(first),/revoked/);
+ await assert.rejects(board.list(pfirst),/revoked/);
+ await pool.query("UPDATE kanban_agents SET expires_at=now()-interval '1 second' WHERE id=$1",[replacement.id]);
+ await assert.rejects(authenticate(replacement),/expired/);
+ assert.equal((await authenticate(second)).actor,second.id);
+ const done=(await board.mutate(psecond,{taskId:task.id,revision:2,action:'done',note:'Unaffected credential and claim',mutationId:mid()})).task;
+ assert.equal(done.assignee,second.id);assert.equal(done.state,'done');
+});
 test('different accounts and channel agents share the server board, claims and events',async()=>{
  const t=(await board.mutate(pa,{title:'Shared task',mutationId:mid()},true)).task;
  assert.ok((await board.list(pb)).tasks.some(x=>x.id===t.id));assert.ok((await board.list(b)).tasks.some(x=>x.id===t.id));
