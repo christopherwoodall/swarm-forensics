@@ -1,3 +1,4 @@
+import {DiscordPresence} from './discord-presence.js';
 import {LiveResearch,liveResearchSchema} from './live-research.js';
 import {DEFAULT_CHAT,DEFAULT_PERSONALITY} from './frontend/bot-defaults.js';
 import {migrateBotSettings,migrationKey} from './bot-settings-migration.js';
@@ -41,7 +42,7 @@ const vault=new Vault(pool,key);await vault.init();const relay=new DiscordRelay(
 startCollection(pool,relay,{onError:e=>console.error("Discord collection failed:",e.message)});
 await commandSchema(pool);const commands=new DiscordCommands(pool,relay);const stopCommands=commands.start();
 await liveResearchSchema(pool);const research=new LiveResearch(pool,{version:fs.readFileSync(path.join(root,'VERSION'),'utf8').trim()});
-await listenerSchema(pool);const listener=new ChatListener(pool,relay,vault,{origin:settings.publicOrigin,research});const stopListener=listener.start();
+await listenerSchema(pool);const listener=new ChatListener(pool,relay,vault,{origin:settings.publicOrigin,research});const stopListener=listener.start();const presence=new DiscordPresence(pool,relay);relay.presence=presence;const stopPresence=presence.start();
 const engine=new Engine(store);
 const app=express();app.disable('x-powered-by');
 app.use((req,res,next)=>{res.set('X-Content-Type-Options','nosniff');res.set('Referrer-Policy','no-referrer');res.set('Cache-Control','no-store');next();});
@@ -102,4 +103,4 @@ app.use(express.static(path.join(root,'frontend'),{index:'index.html',dotfiles:'
 app.use((e,req,res,next)=>{if(e.type==='entity.parse.failed')return res.status(400).json({error:'Request body must be valid JSON.'});return res.status(e.status||(e.code==='23505'?409:400)).json({error:e.code==='23505'?'Stop your current experiment first, or remove the duplicate relay bot.':e.code?'Storage operation failed.':e.message||'Request failed.'});});
 const server=app.listen(settings.port,'0.0.0.0');server.requestTimeout=120000;server.headersTimeout=15000;
 const sweeper=setInterval(()=>engine.sweep().catch(e=>console.error('Deadline sweep failed',e.message)),3000);
-async function shutdown(){stopListener();stopCommands();clearInterval(sweeper);for(const c of engine.active.values())c.abort(Error('Service stopping.'));server.close();setTimeout(()=>process.exit(0),5000).unref();}process.on('SIGTERM',shutdown);process.on('SIGINT',shutdown);
+async function shutdown(){stopListener();stopPresence();stopCommands();clearInterval(sweeper);for(const c of engine.active.values())c.abort(Error('Service stopping.'));server.close();setTimeout(()=>process.exit(0),5000).unref();}process.on('SIGTERM',shutdown);process.on('SIGINT',shutdown);
