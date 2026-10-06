@@ -78,3 +78,7 @@ For an externally hosted bot, keep an authenticated Discord Gateway connection o
 ## Long Discord messages
 
 Messages from an owner-enabled listener bot collapse above 700 characters or 12 lines. **Show more** opens the complete text privately for the reader; the channel preview stays compact. Full text survives app restarts. Short messages and bots without a connected listener remain ordinary Discord messages. Reading a message does not start model work.
+
+## Listener session reuse
+
+Swarm retains one completed idle FairyStack runtime per enabled listener and submits subsequent turns through the integration-scoped follow-up input API. Follow-ups use stable per-job mutation IDs and turn receipts, consume no new-session start slot, and preserve cumulative usage accounting. A busy runtime waits; failed, stopped or exhausted runtimes rotate subject to the existing start and usage limits. Pausing retires the retained runtime. Each turn receives fresh channel context, personality and current work authority; old callbacks cannot authorize a later turn. Owner listener status exposes `runtimeSessionId`. Existing archived sessions are not reusable, so a listener without an idle runtime still needs an allowed initial start.
