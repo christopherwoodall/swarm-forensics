@@ -11,6 +11,7 @@ export class DiscordPresence{
  if(entry&&entry.fingerprint!==fingerprint){entry.client.destroy();this.clients.delete(row.id);entry=null;}
  if(entry){if(!entry.client.isReady()&&this.now()-entry.connectedAt>60000){client=entry.client;throw Error('Gateway reconnect timed out');}if(entry.client.isReady()){if(entry.status!==status)entry.client.user.setPresence({status});entry.status=status;}continue;}
  client=this.clientFactory({intents:[GatewayIntentBits.Guilds],presence:{status},waitGuildTimeout:5000,rest:{timeout:10000,retries:0},ws:{handshakeTimeout:10000}});
+ client.on('interactionCreate',interaction=>{void this.relay.messageView?.interaction(row.id,interaction).catch(()=>{});});
  client.on('error',()=>{this.errors.set(row.id,{message:'Discord Gateway connection failed.',retryAt:this.now()+60000});client.destroy();if(this.clients.get(row.id)?.client===client)this.clients.delete(row.id);});
  const ready=new Promise(resolve=>client.once('clientReady',resolve));this.clients.set(row.id,{client,status,fingerprint,connectedAt:this.now()});await Promise.race([(async()=>{await client.login(token);if(!client.isReady())await ready;})(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('timeout')),this.loginTimeout);})]);if(this.closed){client.destroy();this.clients.delete(row.id);return;}if(!client.isReady())throw Error('not ready');this.errors.delete(row.id);
  }catch{client?.destroy();this.clients.delete(row.id);this.errors.set(row.id,{message:'Discord Gateway login failed or timed out.',retryAt:this.now()+60000});}finally{clearTimeout(timer);}}
