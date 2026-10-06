@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/QualityCopperShovel/discord-bot-swarm",
-  "revision": "097ffc789596173545fdfb13c550d0b496a98540",
-  "version": "0.26.3",
+  "revision": "73a0dfb5480aa4528ec3004910d9e3d97ae0c3b0",
+  "version": "0.26.4",
   "excluded": [
     "AGENTS.md",
     "deploy/fairystack/AGENTS.md"
@@ -14,7 +14,7 @@
     "LICENSE": "4795f7a70745d2fb66bf9b2471d93eab4966d6b08a619c0c0d56137c2c7b0184",
     "Makefile": "5751cbc5bc54c763731f9778e43a06eb2f1ba9d0d67a4926977bd46488b68591",
     "README.md": "4e30b85112f2836ad0b60bb22787e26ec7a98588146b5dcee7f1637f290367b5",
-    "VERSION": "0c5837fb59e93d275c2c439543cc54e7a4dd71a10bb6965718e6807d3f8256cc",
+    "VERSION": "826f965a3a4e4242df08f18895837c35c28bbf33bf7e8fa5d187781a764b1325",
     "account.browser.test.mjs": "4e168ec6111dd36dda29a4e35e4e2b4e5f864535e8de7f02e2bca74fe60c6c51",
     "agent-api.js": "dd26c22c439ddf683a7128779dcf8121e47cd0d764bf7f026bda575b1f0329bc",
     "agent-api.test.js": "3201a92965350e6170af3d6fd1a732175f6bc4db435c0fb551a078cd9eac8859",
@@ -99,7 +99,7 @@
     "frontend/jeremy-avatar.png": "5f8dcb1b2ed3553a4ea392003297e3d25144441646e76b556552f848603d5a88",
     "frontend/jeremy-avatar.provenance.json": "5bc9e8a6abc1a696079b282126de9ce657316b326263f08ecc2375b107d2b7d7",
     "frontend/key-storage.png": "9126c035b7500ddcb1c9524ec2c909f6067fc7c34bf6b21782258781f633faa7",
-    "frontend/style.css": "e96ba48df71bfa5952a627f95c217c1a6cb61ac933cf71a60ac01db19a9dffeb",
+    "frontend/style.css": "375cf9d4304cd2cce75ba5446f57e82a6b26d5d107150492417bdd8df0b16534",
     "frontend/wizard-route.js": "672ffd80d71ab877129608bf11ecc995b2b634f77afe4dafb4039a7b1af4d9dd",
     "http.test.js": "1e628107c226ac74986b5176adfe2e8a797a8fe1fcb99e9ea185e2c070556bbc",
     "image-loader.browser.test.mjs": "e892db65c41bb66a134974f9703edccdc31a2bd312d81c30aa8a220dd52a74b0",
@@ -113,8 +113,8 @@
     "live-research.js": "9d51e8a827500035fcab2daa7ac7f954111182b69c31bf726b288955700f53bd",
     "live-research.test.js": "8ef611d11c6eeb2b4720625beeaa2f3c7cfc13d08f4fe33850a12ea0ab459855",
     "operation-test-client.js": "ae56cb9e3b81c448d4bffda34ae52a46bc491557a55760ed1a558fa521e512d0",
-    "package-lock.json": "2f63b1e78d9770b4142a0d0dfe45b5a20eb423e72d73fffb410d330fa57c90b7",
-    "package.json": "0c1795de0ebe8cc91717ac63b9f455c869ab6e7f2dc508feb6106ab2667ffe35",
+    "package-lock.json": "66d8cb425672323dc6b0fb6d87b9cb4106be4539a6c0f30e8948d861092a08b1",
+    "package.json": "487065092741525a426f6691eeda590beadf74d5d992705ff7cf54c14505f642",
     "platform.test.js": "920065fc95f89c86c62dd7b0974ba514e0f5bc3f5750a1611e74f64de9ce09dd",
     "relay-records.js": "9585a862010d6f236f5e26e2dfb10d7a2a5b580a5093a03aae2f83da8c599d06",
     "relay-records.test.js": "6f15884090308bc0277a46f88d11028504e3d7ba81752d7fd58d13ff78c2473e",

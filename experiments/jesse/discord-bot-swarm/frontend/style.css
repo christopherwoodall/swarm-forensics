@@ -62,3 +62,5 @@ textarea.secret-token{white-space:pre;overflow-wrap:normal;word-break:normal;ove
 .agent-connected{color:var(--green);background:var(--surface);padding:8px 10px;font-weight:600}
 
 .connection-actions .header-button{text-decoration:none;display:inline-flex;align-items:center}
+
+#auth-buttons{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px}
