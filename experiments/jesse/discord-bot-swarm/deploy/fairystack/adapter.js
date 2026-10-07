@@ -5,5 +5,5 @@ export function fairystackConfig(root){
  const manifestPath=path.join(root,'fairystack.json'),authPath=path.join(root,'deploy/fairystack/auth-config.json');
  if(!fs.existsSync(manifestPath)||!fs.existsSync(authPath))return null;
  const manifest=JSON.parse(fs.readFileSync(manifestPath)),a=JSON.parse(fs.readFileSync(authPath));
- return {publicOrigin:`https://${manifest.public_host}`,databaseHost:'/var/run/postgresql',auth:{mode:'authreturn',appId:a.appId,clientId:a.clientId,issuer:`https://cognito-idp.${a.region}.amazonaws.com/${a.userPoolId}`,script:'https://authreturn.com/static/auth_component.js'}};
+ return {publicOrigin:`https://${manifest.public_host}`,databaseHost:'/var/run/postgresql',auth:{mode:'authreturn',appId:a.appId,clientId:a.clientId,issuer:`https://cognito-idp.${a.region}.amazonaws.com/${a.userPoolId}`,...(a.legacyIssuer?{legacyIssuer:a.legacyIssuer}:{}),script:'https://authreturn.com/static/auth_component.js'}};
 }

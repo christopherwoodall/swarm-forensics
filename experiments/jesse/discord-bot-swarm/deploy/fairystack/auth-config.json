@@ -1,6 +1,7 @@
 {
   "appId": "discord-bot-swarm-multi",
-  "region": "us-east-1",
-  "userPoolId": "us-east-1_RRCsxhzgS",
-  "clientId": "63fhmisjp7180va865056lq2q4"
+  "region": "us-east-2",
+  "userPoolId": "us-east-2_Emf4kJxyp",
+  "clientId": "2rp2nah3fvi8e6ktusgch9b90n",
+  "legacyIssuer": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_RRCsxhzgS"
 }
