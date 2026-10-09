@@ -84,3 +84,7 @@ Messages from an owner-enabled listener bot collapse above 700 characters or 12 
 ## Listener session reuse
 
 Swarm retains one completed idle FairyStack runtime per enabled listener and submits subsequent turns through the integration-scoped follow-up input API. Follow-ups use stable per-job mutation IDs and turn receipts, consume no new-session start slot, and preserve cumulative usage accounting. A busy runtime waits; failed, stopped or exhausted runtimes rotate subject to the existing start and usage limits. Pausing retires the retained runtime. Each turn receives fresh channel context, personality and current work authority; old callbacks cannot authorize a later turn. Owner listener status exposes `runtimeSessionId`. Existing archived sessions are not reusable, so a listener without an idle runtime still needs an allowed initial start.
+
+### Owner session debugging
+
+The signed-in bot owner can open **Sessions** from the board or Agent controls, or link `/sessions.html?relay=<relay-id>&job=<listener-job-id>`. This read-only view shows the newest 50 listener turns, runtime IDs, states, deadlines, errors, Discord triggers and replies. Selecting a turn reads current integration-scoped runtime status with a ten-second deadline; full transcripts remain in the owner’s FairyStack session console. Only the signed-in relay owner can call `GET /api/relays/:id/sessions` and `GET /api/relays/:id/sessions/:jobId`; bot agent keys and shared board membership do not grant this access. Runtime failures remain visible alongside local turn evidence.
