@@ -6,6 +6,7 @@ import {wizardImage} from './image-loader.js';
 import {agentPrompt,agentGuideUrl,firstTaskPrompt,checkAgent} from './agent-setup.js';
 import {wizardRoute,wizardUrl,resolveWizardRoute} from './wizard-route.js';
 import {readJsonResponse} from './http.js';
+import {swarmDiagramSection} from './swarm-diagram.js';
 const $=id=>document.getElementById(id);
 let auth,config,state={swarms:[]},polling=false,home=false,chosenRelayId=null;
 const busy=new Set();let wizard={step:1,path:null,identity:null,relay:null};
@@ -81,7 +82,8 @@ function renderWizard(replaceUrl=false){
 
 function renderConnections(relays){relays.replaceChildren();for(const group of swarmGroups(state.swarms)){const section=el('section','connection-swarm');section.append(el('h3','',group.name));if(group.id!=='unassigned')section.append(link('Kanban board','/board.html?guildId='+group.id,'swarm-board-link'));for(const r of group.relays){const row=connectionRow({relay:r,button,channels:()=>channelDialog({relay:r,api,onAssigned:async()=>{await refresh(false);notice('Swarm channel changed and verified.');}}),setup:async()=>{startWizard(r,r.config.verifiedAt?{step:4,path:null}:null);},disconnect:async()=>{await api(`/api/relays/${r.id}/channel`,{method:'DELETE'});if(chosenRelayId===r.id)chosenRelayId=null;await refresh(false);if(wizard.relay?.id===r.id){$('onboarding').hidden=true;$('setup-body').replaceChildren();history.replaceState(null,'','/');}notice('Swarm coordination disconnected. The bot remains in Discord.');}});section.append(row);}relays.append(section);}if(!state.swarms.length){const email=auth?.getUser()?.email;relays.append(el('p','muted',`No bot saved for ${email||'this signed-in account'}. To find an existing connection, sign out and use the account you connected it with.`));}}
 
-function showHome(){home=true;$('onboarding').hidden=false;$('setup-title').textContent='Your swarm';$('setup-progress').textContent='';renderConnections($('setup-body'));$('setup-body').append(button('Add bot',async()=>startWizard()));}
+function showHome(){home=true;$('onboarding').hidden=false;$('setup-title').textContent='Your swarm';$('setup-progress').textContent='';renderConnections($('setup-body'));diagram??=swarmDiagramSection();$('setup-body').append(button('Add bot',async()=>startWizard()),diagram);}
+let diagram;
 function openSavedView(){if(verifiedRelay())showHome();else startWizard(state.swarms[0]||null,null,true);}
 async function refresh(route=true){state=await api('/api/state');if(home)showHome();if(route&&$('onboarding').hidden){const requested=wizardRoute(location.href);if(requested){const resolved=resolveWizardRoute(requested,state.swarms);startWizard(resolved.relay,resolved,true);}else openSavedView();}}
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>$(b.dataset.close).close();

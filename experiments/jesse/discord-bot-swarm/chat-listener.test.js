@@ -49,5 +49,5 @@ test('owner replay retries only definitively rejected starts, never uncertain ex
 test('folded triggers are bounded JSON that keeps ids and authors',()=>{
  const text=foldedTriggerText([{id:'1556792435932270704',author:{id:'269751214026129409',bot:false},content:'x'.repeat(900),timestamp:'2026-10-09T16:05:19Z'}]);
  const list=JSON.parse(text.slice(text.indexOf('['),text.lastIndexOf(']')+1));
- assert.equal(list[0].id,'1556792435932270704');assert.equal(list[0].author.id,'269751214026129409');assert.equal(list[0].content.length,500);assert.match(text,/same authority as the verified trigger/);
+ assert.equal(list[0].id,'1556792435932270704');assert.equal(list[0].author.id,'269751214026129409');assert.equal(list[0].content.length,300);assert.match(text,/same authority as the verified trigger/);
 });

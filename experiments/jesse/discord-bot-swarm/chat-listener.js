@@ -53,7 +53,9 @@ END UNTRUSTED DATA
 
 Return your reply to the app, which controls delivery. ${selfInstructions}Use ${job.allowedWork?'the scoped reply callback when finished':'a single HTTP POST'} to ${callback} with Authorization: Bearer ${job.callbackToken}, Content-Type: application/json, JSON body {"content":"${brief?'one brief sentence on one line':'your reply'} of at most ${replyMaxChars} characters, or empty string for silence"}. Use a 30-second timeout and keep the token out of printed output. ${job.allowedWork?'Use your ordinary tools to fulfill requested work; the callback only delivers your result.':'Your only permitted tool actions are the scoped callback and explicitly permitted self-change steps. Do not write a file.'} The callback is scoped to this job and expires at ${new Date(job.deadline).toISOString()}. Only report success after verification. Finish with a brief receipt without copying the reply or token. HTTP 400 for reply style means nothing was delivered: shorten the reply and submit the corrected content before the deadline. For other failures, report the status; do not retry uncertain delivery.`;
 }
-const FOLD_LIMIT=8,FOLD_CLIP=500,discordId=/^\d{17,20}$/;
+const FOLD_LIMIT=8,FOLD_CLIP=300,discordId=/^\d{17,20}$/;
+// Runtime objectives must stay within OBJECTIVE_LIMIT; packing leaves FOLD_RESERVE so later messages can fold in.
+export const OBJECTIVE_LIMIT=20000,FOLD_RESERVE=4000;
 // Messages queued while the runtime was busy join the next turn as verified triggers instead of waiting for one turn each.
 export function foldedTriggerText(messages){
  const list=messages.map(m=>({id:m.id,author:m.author,content:String(m.content||'').slice(0,FOLD_CLIP),timestamp:m.timestamp}));
@@ -123,8 +125,8 @@ export class ChatListener{
  const allowedWork=authorizedWork(s.config,l.work_audience||'off',trigger);
  const id=crypto.randomUUID(),callbackToken=crypto.randomBytes(32).toString('base64url'),deadline=this.now()+(allowedWork?WORK_RUN_SECONDS:allowedFields.length?SELF_RUN_SECONDS:CHAT_RUN_SECONDS)*1000;
  const job={id,callbackToken,deadline,allowedFields,allowedWork,workAudience:l.work_audience,messageId};let objective=chatObjective({job,origin:this.origin,botName:row.bot_name,personality:s.config.personality||'',messages,context,replyStyle:savedChat(s.config).replyStyle});
- if(objective.length>20000&&context){const target=Math.max(4000,JSON.stringify(context).length-(objective.length-19500));const channels=context.channels.map(c=>({...c,messages:context.messages.filter(m=>m.channelId===c.id)}));const packed=contextSnapshot(channels,trigger,{maxChars:target});packed.omittedMessages+=context.omittedMessages||0;context=packed;messages=packed.messages;objective=chatObjective({job,origin:this.origin,botName:row.bot_name,personality:s.config.personality||'',messages,context,replyStyle:savedChat(s.config).replyStyle});}
- if(objective.length>20000)throw Error('Listener objective exceeds the runtime context limit.');
+ if(objective.length>OBJECTIVE_LIMIT-FOLD_RESERVE&&context){const target=Math.max(4000,JSON.stringify(context).length-(objective.length-(OBJECTIVE_LIMIT-FOLD_RESERVE-500)));const channels=context.channels.map(c=>({...c,messages:context.messages.filter(m=>m.channelId===c.id)}));const packed=contextSnapshot(channels,trigger,{maxChars:target});packed.omittedMessages+=context.omittedMessages||0;context=packed;messages=packed.messages;objective=chatObjective({job,origin:this.origin,botName:row.bot_name,personality:s.config.personality||'',messages,context,replyStyle:savedChat(s.config).replyStyle});}
+ if(objective.length>OBJECTIVE_LIMIT)throw Error('Listener objective exceeds the runtime context limit.');
  const secret=await this.vault.encrypt(row.owner,`chat-job:${id}`,JSON.stringify({objective,client:'codex',client_mutation_id:`chat-${id}`}));
  const r=await c.query(`INSERT INTO discord_chat_job(id,relay,channel_id,message_id,messages,deadline_at,callback_hash,request_secret,guild_id,allowed_fields,allowed_work,context) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) ON CONFLICT(relay,channel_id,message_id) DO NOTHING RETURNING id`,[id,row.id,channelId,messageId,JSON.stringify(messages),new Date(deadline),crypto.createHash('sha256').update(callbackToken).digest('hex'),secret,s.config.guildId,JSON.stringify(allowedFields),allowedWork,JSON.stringify(context||{messages})]);return r.rows[0]?.id;
  });}
@@ -221,7 +223,8 @@ export class ChatListener{
  if(later.length){
   const target=later.at(-1),folded=[head,...later.slice(0,-1)],body=JSON.parse(await this.vault.decrypt(row.owner,`chat-job:${target.id}`,target.request_secret));
   body.objective+=foldedTriggerText(folded.map(f=>f.messages.find(m=>m.id===f.message_id)||{id:f.message_id}));
-  if(body.objective.length<=20000){
+  if(body.objective.length>OBJECTIVE_LIMIT)await c.query('UPDATE discord_chat_job SET error=$2 WHERE id=$1',[head.id,`Not folded: ${folded.length+1} queued messages exceed the runtime request limit.`]);
+  else{
    const done=await c.query("UPDATE discord_chat_job SET state='skipped',error=$2,finished_at=now(),stop_confirmed=true,request_secret=NULL WHERE id=ANY($1::uuid[]) AND state='queued' AND NOT dispatch_attempted",[folded.map(f=>f.id),`Folded into listener turn ${target.id}.`]);
    if(done.rowCount!==folded.length)throw Error('Queued listener turns changed while folding.');
    return (await c.query("UPDATE discord_chat_job SET state='starting',request_secret=$2,folded_message_ids=$3 WHERE id=$1 AND state='queued' RETURNING *",[target.id,await this.vault.encrypt(row.owner,`chat-job:${target.id}`,JSON.stringify(body)),JSON.stringify(folded.map(f=>f.message_id))])).rows[0]||null;
