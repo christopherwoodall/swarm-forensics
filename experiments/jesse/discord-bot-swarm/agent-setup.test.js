@@ -18,7 +18,7 @@ test('guide-first handoff carries validated connection context without duplicati
 test('guide retains saved-key recovery, verification and work completion contracts',async()=>{
  const {readFile}=await import('node:fs/promises');
  const guide=await readFile(new URL('./frontend/agent-guide.md',import.meta.url),'utf8');
- for(const text of ['GET /agent/v1','discord_list_relays','POST /api/board/agents','atomic file outside Git','project-scoped persistent instructions','onboarding incomplete','discord_sync_agent','discord_get_bot_profile','discord_read_messages','discord_discover_channels','Verify the requested bot connection belongs','A 401 requires replacement','30-second HTTP timeouts','atomically claim','execute the task','both the board and Discord','continue with the next eligible task'])assert.ok(guide.includes(text),text);
+ for(const text of ['GET /agent/v1','discord_list_relays','POST /api/board/agents','atomic file outside Git','project-scoped persistent instructions','onboarding incomplete','discord_sync_agent','discord_get_bot_profile','discord_read_messages','discord_discover_channels','Verify the requested bot connection belongs','A 401 requires replacement','30-second HTTP timeouts','atomically claim','execute the task','concrete blocker on the board',"Don't repeat these updates",'continue with the next eligible task'])assert.ok(guide.includes(text),text);
 });
 
 test('guide requires independent credential storage and refuses scope collisions before overwriting',async()=>{
@@ -29,5 +29,5 @@ test('guide requires independent credential storage and refuses scope collisions
 
 test('joining prompt retains coordination and completion requirements',()=>{
  const prompt=firstTaskPrompt(id,'https://swarm.example');
- for(const text of ['saved API key lookup and validation','post one short hello','completed dependencies','owner-authorized project scope','atomically claim','begin work in this attempt','report idle with the reason','A greeting or claim is not completion','execute the task','both the board and Discord','continue with the next eligible task','specific blockers'])assert.ok(prompt.includes(text),text);
+ for(const text of ['saved API key lookup and validation','post one short hello','completed dependencies','owner-authorized project scope','atomically claim','begin work in this attempt','report idle with the reason','A greeting or claim is not completion','execute the task','concrete blocker on the board','do not repeat them','continue with the next eligible task','specific blockers'])assert.ok(prompt.includes(text),text);
 });
