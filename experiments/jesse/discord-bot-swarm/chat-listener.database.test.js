@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import pg from 'pg';
 import {databaseConfig} from './config.js';
 import {Vault} from './vault.js';
-import {ChatListener,listenerSchema,snowflakeAt} from './chat-listener.js';
+import {ChatListener,listenerSchema,snowflakeAt,OBJECTIVE_LIMIT,FOLD_RESERVE} from './chat-listener.js';
 const config=databaseConfig(process.env,null,{test:true}),schema='chat_test_'+crypto.randomBytes(6).toString('hex');
 const setup=new pg.Pool(config);await setup.query(`CREATE SCHEMA ${schema}`);await setup.end();
 const pool=new pg.Pool({...config,options:`-c search_path=${schema}`});
@@ -188,4 +188,14 @@ test('messages queued behind a busy turn fold into one turn that keeps every ver
  assert.match(objective,/Queued while you were busy/);assert.ok(objective.includes('Semi are you awake?')&&objective.includes(queued[1].id));
  const sent=calls.filter(c=>c.opts?.body?.client_mutation_id===`chat-${ids[2]}`).at(-1)?.opts.body;assert.ok((sent.objective||sent.input).includes('Semi are you awake?'));
  assert.equal(calls.filter(c=>ids.slice(0,2).some(id=>c.opts?.body?.client_mutation_id===`chat-${id}`)).length,0);
+});
+test('turns packed from large real contexts still leave room to fold queued messages',async()=>{
+ const r=await row();await l.workRequests('owner',r.id,'channel');
+ const history=Array.from({length:80},(_,i)=>({id:snowflakeAt(clock-100000+i),author:{id:'816894571693735946',bot:false},content:`older chatter ${i} `+'x'.repeat(380),timestamp:new Date(clock-100000+i).toISOString(),channelId:channel,channelName:'swarm'}));
+ const ids=[];
+ for(const [n,content] of [[1,'Can we add a sessions view for debugging?'],[2,'And link bots to their pages when mentioned']]){const m={id:snowflakeAt(clock+n),author:{id:'269751214026129409',bot:false},content,timestamp:new Date(clock+n).toISOString(),channelId:channel,channelName:'swarm'};const context={messages:[...history,m],channels:[{id:channel,name:'swarm',guildId:guild}],omittedMessages:0};ids.push(await l.enqueue(r,channel,m.id,context.messages,context));}
+ for(const id of ids){const saved=(await pool.query('SELECT request_secret FROM discord_chat_job WHERE id=$1',[id])).rows[0];assert.ok(JSON.parse(await vault.decrypt('owner',`chat-job:${id}`,saved.request_secret)).objective.length<=OBJECTIVE_LIMIT-FOLD_RESERVE);}
+ await l.jobs(r);
+ const rows=(await pool.query('SELECT state,error,folded_message_ids FROM discord_chat_job WHERE id=ANY($1::uuid[]) ORDER BY created_at',[ids])).rows;
+ assert.deepEqual(rows.map(x=>x.state),['skipped','running']);assert.equal(rows[0].error,`Folded into listener turn ${ids[1]}.`);assert.equal(rows[1].folded_message_ids.length,1);
 });

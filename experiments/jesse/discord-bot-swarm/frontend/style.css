@@ -64,3 +64,5 @@ textarea.secret-token{white-space:pre;overflow-wrap:normal;word-break:normal;ove
 .connection-actions .header-button{text-decoration:none;display:inline-flex;align-items:center}
 
 #auth-buttons{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px}
+
+.swarm-diagram{position:relative;left:50%;transform:translateX(-50%);width:min(1052px,calc(100vw - 32px));margin-top:40px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:20px;--graph-detail-surface:var(--surface);--graph-detail-ink:var(--ink);--graph-detail-muted:var(--muted);--graph-detail-line:var(--line);--graph-detail-alt:var(--soft);--graph-detail-height:96px}.swarm-diagram h2{margin:0 0 12px;font-size:20px;color:var(--ink)}.swarm-diagram .diagram{overflow-x:auto}.swarm-diagram svg{display:block;width:100%;min-width:760px;height:auto}.swarm-diagram graph-detail-overlay{position:sticky;top:8px;z-index:1;margin-bottom:12px}.diagram-status{color:var(--muted);margin:0}.diagram-dark{display:none}@media(prefers-color-scheme:dark){.diagram-light{display:none}.diagram-dark{display:block}}

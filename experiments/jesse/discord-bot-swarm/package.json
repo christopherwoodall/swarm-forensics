@@ -1,6 +1,6 @@
 {
   "name": "discord-bot-swarm",
-  "version": "0.31.1",
+  "version": "0.32.1",
   "description": "Bounded collective cognition experiments with replayable traces",
   "main": "server.js",
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "make lint",
     "test:browser": "npm run test:wizard && node --test channel-picker.browser.test.mjs chat-config.browser.test.mjs connections.browser.test.mjs swarm-board.browser.test.mjs account.browser.test.mjs",
     "build": "node scripts/build.js",
+    "diagram": "node scripts/render-diagram.js",
     "test:platform": "node --test platform.test.js",
     "test:wizard": "node --test wizard.browser.test.mjs image-loader.browser.test.mjs",
     "test:board:browser": "node kanban.browser.test.mjs",
