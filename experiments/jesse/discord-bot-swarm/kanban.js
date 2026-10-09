@@ -82,6 +82,8 @@ export class Kanban{
    SELECT id,row_number() OVER (ORDER BY updated_at DESC,id DESC) AS done_rank FROM kanban_tasks WHERE board_key=$1 AND state='done'
   ), classified AS (
    SELECT t.*,COALESCE(a.name,CASE WHEN t.assignee LIKE 'owner:%' THEN 'Owner' END) AS agent_name,
+   CASE WHEN t.assignee IS NULL THEN NULL WHEN t.assignee LIKE 'owner:%' THEN 'human' WHEN a.relay_id IS NOT NULL THEN 'bot' ELSE 'agent' END AS claimant_kind,
+   a.relay_id AS claimant_relay_id,CASE WHEN a.relay_id IS NOT NULL THEN s.config->>'name' END AS claimant_bot_name,
    t.state='done' AND (t.updated_at<=now()-$2*interval '1 day' OR d.done_rank>$3) AS archived,
    CASE WHEN t.state IN ('in_progress','blocked') AND (t.lease_until<=now() OR a.revoked_at IS NOT NULL OR a.expires_at<=now() OR (a.relay_id IS NOT NULL AND (s.config->>'verifiedAt' IS NULL OR 'guild:'||COALESCE(s.config->>'guildId','')<>t.board_key)) OR (a.relay_id IS NULL AND a.id IS NOT NULL AND a.board_key<>t.board_key)) THEN 'stalled' ELSE t.state END AS effective_state
    FROM kanban_tasks t LEFT JOIN completed d ON d.id=t.id LEFT JOIN kanban_agents a ON a.id::text=t.assignee LEFT JOIN swarms s ON s.id=a.relay_id WHERE t.board_key=$1
