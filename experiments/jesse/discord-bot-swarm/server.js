@@ -6,6 +6,7 @@ import {migrateBotSettings,migrationKey} from './bot-settings-migration.js';
 import {DiscordCommands,commandSchema} from './discord-commands.js';
 import express from 'express';
 import {ChatListener,listenerSchema} from './chat-listener.js';
+import {registerSessionDebug} from './session-debug.js';
 import {agentGuideEntry} from './agent-guide-entry.js';
 import {registerChannelDiscovery} from './channel-setup.js';
 import {chatConfig,savedChat} from './chat-settings.js';
@@ -64,6 +65,7 @@ app.use('/api',(req,res,next)=>{if(!['GET','HEAD'].includes(req.method)&&req.hea
 const mutations=new Map();
 app.use('/api',(req,res,next)=>{if(['GET','HEAD'].includes(req.method))return next();if(mutations.has(req.owner))return res.status(409).json({error:'Another setup operation is in progress. Wait for it to finish.'});const token=Symbol('mutation');req.mutationToken=token;mutations.set(req.owner,token);res.once('finish',()=>{if(mutations.get(req.owner)===token)mutations.delete(req.owner);});next();});
 const route=fn=>async(req,res,next)=>{try{await fn(req,res);}catch(e){next(e);}finally{if(req.mutationToken&&mutations.get(req.owner)===req.mutationToken)mutations.delete(req.owner);}};
+registerSessionDebug(app,{pool,listener,route});
 async function getSwarm(id,owner){const s=(await pool.query('SELECT * FROM swarms WHERE id=$1 AND owner=$2',[id,owner])).rows[0];if(!s)throw Object.assign(Error('Relay not found.'),{status:404});return s;}
 app.get('/api/swarms',route(async(req,res)=>res.json({swarms:await board.boards(req.owner)})));
 app.get('/api/board',route(async(req,res)=>res.json(await board.list({owner:req.owner,guildId:req.query.guildId},{view:req.query.view,cursor:req.query.cursor}))));
