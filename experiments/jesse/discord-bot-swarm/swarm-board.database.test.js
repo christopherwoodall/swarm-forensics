@@ -11,7 +11,7 @@ const guild='123456789012345678',otherGuild='123456789012345679',relayA=crypto.r
 const a={owner:'alice',kind:'owner',actor:'owner',guildId:guild},b={owner:'bob',kind:'owner',actor:'owner',guildId:guild},other={...a,guildId:otherGuild},mid=()=>crypto.randomUUID();let pa,pb;
 before(async()=>{
  await admin.query(`CREATE SCHEMA ${namespace}`);await pool.query('CREATE TABLE swarms(id uuid PRIMARY KEY,owner text NOT NULL,config jsonb NOT NULL)');
- for(const [id,owner,guildId] of [[relayA,a.owner,guild],[relayB,b.owner,guild],[relayC,a.owner,otherGuild]])await pool.query('INSERT INTO swarms VALUES($1,$2,$3)',[id,owner,{guildId,verifiedAt:new Date().toISOString(),guildName:guildId===guild?'Shared server':'Other server'}]);
+ for(const [id,owner,guildId] of [[relayA,a.owner,guild],[relayB,b.owner,guild],[relayC,a.owner,otherGuild]])await pool.query('INSERT INTO swarms VALUES($1,$2,$3)',[id,owner,{guildId,verifiedAt:new Date().toISOString(),guildName:guildId===guild?'Shared server':'Other server',name:owner==='alice'?'Semi':'Peer bot'}]);
  await kanbanSchema(pool);
  for(const [principal,relay] of [[a,relayA],[b,relayB]]){const issued=await board.issue(principal.owner,{name:principal.owner+' agent',guildId:guild});await pool.query('UPDATE kanban_agents SET relay_id=$1 WHERE id=$2',[relay,issued.id]);const p=await board.principal(issued.token,()=>{throw Error('no fallback');});if(principal===a)pa=p;else pb=p;}
 });
@@ -64,6 +64,24 @@ test('human claims remain personal and retry IDs are scoped to their server',asy
  await board.mutate(a,{taskId:first.id,revision:2,action:'done',mutationId:mid()});
  const issued=await board.issue(b.owner,{name:'Board-only member',guildId:guild}),principal=await board.principal(issued.token,()=>{throw Error('no fallback');});
  assert.ok((await board.list(principal)).tasks.some(t=>t.id===first.id));await board.revoke(b.owner,issued.id);await assert.rejects(board.list(principal),/revoked/);
+});
+test('cards identify the claiming bot separately from runtime names and task text',async()=>{
+ const t=(await board.mutate(pa,{title:'Bacon is only a requirement',description:'Ask Bacon later',mutationId:mid()},true)).task;
+ let row=(await board.list(pb)).tasks.find(x=>x.id===t.id);
+ assert.equal(row.claimant_kind,null);assert.equal(row.claimant_bot_name,null);assert.equal(row.claimant_relay_id,null);
+ await board.mutate(pa,{taskId:t.id,revision:1,action:'claim',mutationId:mid()});
+ row=(await board.list(pb)).tasks.find(x=>x.id===t.id);
+ assert.equal(row.agent_name,'alice agent');assert.equal(row.claimant_kind,'bot');assert.equal(row.claimant_bot_name,'Semi');assert.equal(row.claimant_relay_id,relayA);
+ assert.ok(!('token_hash' in row));assert.ok(!('config' in row));
+ await pool.query("UPDATE kanban_tasks SET lease_until=now()-interval '1 second' WHERE id=$1",[t.id]);
+ row=(await board.list(pb)).tasks.find(x=>x.id===t.id);assert.equal(row.effective_state,'stalled');assert.equal(row.claimant_bot_name,'Semi');
+ await board.mutate(pa,{taskId:t.id,revision:2,action:'claim',mutationId:mid()});await board.mutate(pa,{taskId:t.id,revision:3,action:'done',mutationId:mid()});
+ const human=(await board.mutate(a,{title:'Human ownership',mutationId:mid()},true)).task;
+ await board.mutate(a,{taskId:human.id,revision:1,action:'claim',mutationId:mid()});
+ row=(await board.list(pb)).tasks.find(x=>x.id===human.id);assert.equal(row.claimant_kind,'human');assert.equal(row.claimant_relay_id,null);assert.equal(row.claimant_bot_name,null);
+ const issued=await board.issue(a.owner,{name:'Board-only worker',guildId:guild}),p=await board.principal(issued.token,()=>{throw Error('no fallback');});
+ const only=(await board.mutate(p,{title:'Independent board worker',mutationId:mid()},true)).task;await board.mutate(p,{taskId:only.id,revision:1,action:'claim',mutationId:mid()});
+ row=(await board.list(pb)).tasks.find(x=>x.id===only.id);assert.equal(row.claimant_kind,'agent');assert.equal(row.agent_name,'Board-only worker');assert.equal(row.claimant_bot_name,null);
 });
 test('moving or disconnecting a channel cancels board access for existing agent principals',async()=>{
  const t=(await board.mutate(pa,{title:'Reclaim after disconnect',mutationId:mid()},true)).task;await board.mutate(pa,{taskId:t.id,revision:1,action:'claim',mutationId:mid()});
