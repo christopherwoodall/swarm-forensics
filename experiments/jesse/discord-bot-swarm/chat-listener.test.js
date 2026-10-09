@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {eligible,chatObjective,snowflakeAt,ChatListener,CHAT_RUN_SECONDS,CHAT_REPLY_MAX_CHARS,validateChatReply,rateLimitUntil,safeUndispatchedRetry} from './chat-listener.js';
+import {eligible,chatObjective,snowflakeAt,ChatListener,CHAT_RUN_SECONDS,CHAT_REPLY_MAX_CHARS,validateChatReply,rateLimitUntil,safeUndispatchedRetry,foldedTriggerText} from './chat-listener.js';
 const now=1791239000000,botId='1556011112946729031';
 const human={id:'1556792435932270704',author:{id:'123456789012345678',bot:false},content:'hello',timestamp:new Date(now).toISOString()};
 test('chat eligibility respects Off, mentions/replies, freshness, and never loops on bots',()=>{
@@ -46,3 +46,8 @@ test('runtime requests load encrypted per-owner key each call and use finite dea
 test('rate limits without retry metadata wait one minute, explicit daily reset is retained',()=>{assert.equal(rateLimitUntil({},now),now+60000);assert.equal(rateLimitUntil({retryAt:(now+3600000)/1000},now),now+3600000);assert.equal(rateLimitUntil({retryAt:(now-1)/1000},now),now+10000);});
 
 test('owner replay retries only definitively rejected starts, never uncertain execution or delivery',()=>{const safe={state:'failed',stop_confirmed:true,dispatch_attempted:false,session_id:null,message_receipt:null};assert.equal(safeUndispatchedRetry(safe),true);for(const change of [{state:'running'},{dispatch_attempted:true},{stop_confirmed:false},{session_id:'runtime'},{message_receipt:'receipt'}])assert.equal(safeUndispatchedRetry({...safe,...change}),false);});
+test('folded triggers are bounded JSON that keeps ids and authors',()=>{
+ const text=foldedTriggerText([{id:'1556792435932270704',author:{id:'269751214026129409',bot:false},content:'x'.repeat(900),timestamp:'2026-10-09T16:05:19Z'}]);
+ const list=JSON.parse(text.slice(text.indexOf('['),text.lastIndexOf(']')+1));
+ assert.equal(list[0].id,'1556792435932270704');assert.equal(list[0].author.id,'269751214026129409');assert.equal(list[0].content.length,500);assert.match(text,/same authority as the verified trigger/);
+});

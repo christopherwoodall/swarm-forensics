@@ -170,3 +170,22 @@ test('pause reconciles an uncertain follow-up exactly once before cancelling its
 test('a cancelled unknown initial admission is reconciled before the next job can start',async()=>{
  const r=await row();await l.cleanup();const unknown=await l.enqueue(r,channel,'unknown-create',[]);await pool.query("UPDATE discord_chat_job SET state='cancelled',dispatch_attempted=true,finished_at=now() WHERE id=$1",[unknown]);const next=await l.enqueue(r,channel,'next-after-unknown',[]);const before=calls.length;await l.jobs(r);assert.equal(calls.slice(before).some(c=>c.opts.body?.client_mutation_id===`chat-${next}`),false);await l.cleanup();assert.equal(calls.slice(before).filter(c=>c.opts.body?.client_mutation_id===`chat-${unknown}`).length,1);await l.jobs(r);assert.equal(calls.slice(before).filter(c=>c.opts.body?.client_mutation_id===`chat-${next}`).length,1);
 });
+test('messages queued behind a busy turn fold into one turn that keeps every verified trigger',async()=>{
+ const r=await row();await l.workRequests('owner',r.id,'channel');calls=[];
+ const msg=(n,content,author='269751214026129409')=>({id:snowflakeAt(clock+n),author:{id:author,bot:false},content,timestamp:new Date(clock+n).toISOString()});
+ const work=msg(1,'Semi check the board'),first=await l.enqueue(r,channel,work.id,[work]);await l.jobs(r);
+ assert.equal((await pool.query('SELECT state FROM discord_chat_job WHERE id=$1',[first])).rows[0].state,'running');
+ const queued=[msg(2,'Semi are you awake?'),msg(3,'lol','816894571693735946'),msg(4,'ok')],ids=[];
+ for(const m of queued)ids.push(await l.enqueue(r,channel,m.id,queued.filter(x=>BigInt(x.id)<=BigInt(m.id))));
+ assert.equal((await pool.query("SELECT count(*)::int AS n FROM discord_chat_job WHERE id=ANY($1::uuid[]) AND state='queued'",[ids])).rows[0].n,3);
+ await pool.query("UPDATE discord_chat_job SET state='skipped',finished_at=now(),stop_confirmed=true,request_secret=NULL WHERE id=$1",[first]);
+ await l.jobs(r);
+ const rows=(await pool.query('SELECT state,error,folded_message_ids,request_secret,allowed_work FROM discord_chat_job WHERE id=ANY($1::uuid[]) ORDER BY created_at',[ids])).rows;
+ assert.deepEqual(rows.map(x=>x.state),['skipped','skipped','running']);
+ assert.ok(rows.slice(0,2).every(x=>x.error===`Folded into listener turn ${ids[2]}.`&&x.request_secret===null));
+ assert.deepEqual(rows[2].folded_message_ids,[queued[0].id,queued[1].id]);assert.equal(rows[2].allowed_work,true);
+ const objective=JSON.parse(await vault.decrypt('owner',`chat-job:${ids[2]}`,rows[2].request_secret)).objective;
+ assert.match(objective,/Queued while you were busy/);assert.ok(objective.includes('Semi are you awake?')&&objective.includes(queued[1].id));
+ const sent=calls.filter(c=>c.opts?.body?.client_mutation_id===`chat-${ids[2]}`).at(-1)?.opts.body;assert.ok((sent.objective||sent.input).includes('Semi are you awake?'));
+ assert.equal(calls.filter(c=>ids.slice(0,2).some(id=>c.opts?.body?.client_mutation_id===`chat-${id}`)).length,0);
+});
